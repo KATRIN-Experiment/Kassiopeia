@@ -3,7 +3,7 @@
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|—    |—    |[`NamedRandomGenerator`](#kommonnamedrandomgenerator<br>[`Random`](#kdummyrandom<br>[`geometry`](#kginterface<br>[`geometry_printer`](#kggeometryprinter<br>[`kassiopeia`](#ksroot<br>[`kemfield`](#kemroot<br>[`messages`](#kmessagetable<br>[`root_window`](#krootwindow<br>[`run`](#kapplicationrunner<br>[`vtk_window`](#kvtkwindow|*`KommonNamedRandomGenerator`*<br>*`KDummyRandom`*<br>*`KGInterface`*<br>*`KGGeometryPrinter`*<br>*`KSRoot`*<br>*`KEMRoot`*<br>*`KMessageTable`*<br>*`KROOTWindow`*<br>*`KApplicationRunner`*<br>*`KVTKWindow`*|—    |—    |
+|—    |—    |[`NamedRandomGenerator`](#kommonnamedrandomgenerator)<br>[`Random`](#kdummyrandom)<br>[`geometry`](#kginterface)<br>[`geometry_printer`](#kggeometryprinter)<br>[`kassiopeia`](#ksroot)<br>[`kemfield`](#kemroot)<br>[`messages`](#kmessagetable)<br>[`root_window`](#krootwindow)<br>[`run`](#kapplicationrunner)<br>[`vtk_window`](#kvtkwindow)|*`KommonNamedRandomGenerator`*<br>*`KDummyRandom`*<br>*`KGInterface`*<br>*`KGGeometryPrinter`*<br>*`KSRoot`*<br>*`KEMRoot`*<br>*`KMessageTable`*<br>*`KROOTWindow`*<br>*`KApplicationRunner`*<br>*`KVTKWindow`*|—    |—    |
 
 ## KommonNamedRandomGenerator
 Example:
@@ -50,7 +50,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kginterface">`geometry`</a>|[*KGInterfaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGInterfaceBuilder.cc)|[`annulus_surface`](#kgannulussurface<br>[`appearance`](#kgappearanceattributor<br>[`axial_mesh`](#kgaxialmeshattributor<br>[`beam_space`](#kgwrappedspace\<kgbeam\><br>[`beam_surface`](#kgwrappedsurface\<kgbeam\><br>[`box_space`](#kgboxspace<br>[`circle_wire_space`](#kgwrappedspace\<kgcirclewire\><br>[`circle_wire_surface`](#kgwrappedsurface\<kgcirclewire\><br>[`circular_wire_pins_space`](#kgwrappedspace\<kgcircularwirepins\><br>[`circular_wire_pins_surface`](#kgwrappedsurface\<kgcircularwirepins\><br>[`complex_annulus_surface`](#kgwrappedsurface\<kgcomplexannulus\><br>[`cone_space`](#kgconespace<br>[`cone_surface`](#kgconesurface<br>[`conic_section_port_housing_space`](#kgwrappedspace\<kgconicsectporthousing\><br>[`conic_section_port_housing_surface`](#kgwrappedsurface\<kgconicsectporthousing\><br>[`conical_wire_array_space`](#kgwrappedspace\<kgconicalwirearray\><br>[`conical_wire_array_surface`](#kgwrappedsurface\<kgconicalwirearray\><br>[`cut_cone_space`](#kgcutconespace<br>[`cut_cone_surface`](#kgcutconesurface<br>[`cut_cone_tube_space`](#kgcutconetubespace<br>[`cut_torus_surface`](#kgcuttorussurface<br>[`cylinder_space`](#kgcylinderspace<br>[`cylinder_surface`](#kgcylindersurface<br>[`cylinder_tube_space`](#kgcylindertubespace<br>[`discrete_rotational_mesh`](#kgdiscreterotationalmeshattributor<br>[`disk_surface`](#kgdisksurface<br>[`electromagnet`](#kgelectromagnetattributor<br>[`extruded_arc_segment_surface`](#kgextrudedarcsegmentsurface<br>[`extruded_circle_space`](#kgextrudedcirclespace<br>[`extruded_circle_surface`](#kgextrudedcirclesurface<br>[`extruded_line_segment_surface`](#kgextrudedlinesegmentsurface<br>[`extruded_poly_line_surface`](#kgextrudedpolylinesurface<br>[`extruded_poly_loop_space`](#kgextrudedpolyloopspace<br>[`extruded_poly_loop_surface`](#kgextrudedpolyloopsurface<br>[`extruded_space`](#kgwrappedspace\<kgextrudedobject\><br>[`extruded_surface`](#kgwrappedsurface\<kgextrudedobject\><br>[`flattened_circle_surface`](#kgflattenedcirclesurface<br>[`flattened_poly_loop_surface`](#kgflattenedpolyloopsurface<br>[`linear_wire_grid_space`](#kgwrappedspace\<kglinearwiregrid\><br>[`linear_wire_grid_surface`](#kgwrappedsurface\<kglinearwiregrid\><br>[`mesh`](#kgmeshattributor<br>[`mesh_deformer`](#kgmeshdeformer<br>[`mesh_refiner`](#kgmeshrefiner<br>[`port_housing_space`](#kgwrappedspace\<kgporthousing\><br>[`port_housing_surface`](#kgwrappedsurface\<kgporthousing\><br>[`quadratic_wire_grid_space`](#kgwrappedspace\<kgquadraticwiregrid\><br>[`quadratic_wire_grid_surface`](#kgwrappedsurface\<kgquadraticwiregrid\><br>[`rod_space`](#kgwrappedspace\<kgrod\><br>[`rod_surface`](#kgwrappedsurface\<kgrod\><br>[`rotated_arc_segment_space`](#kgrotatedarcsegmentspace<br>[`rotated_arc_segment_surface`](#kgrotatedarcsegmentsurface<br>[`rotated_circle_space`](#kgrotatedcirclespace<br>[`rotated_circle_surface`](#kgrotatedcirclesurface<br>[`rotated_line_segment_space`](#kgrotatedlinesegmentspace<br>[`rotated_line_segment_surface`](#kgrotatedlinesegmentsurface<br>[`rotated_poly_line_space`](#kgrotatedpolylinespace<br>[`rotated_poly_line_surface`](#kgrotatedpolylinesurface<br>[`rotated_poly_loop_space`](#kgrotatedpolyloopspace<br>[`rotated_poly_loop_surface`](#kgrotatedpolyloopsurface<br>[`rotated_space`](#kgwrappedspace\<kgrotatedobject\><br>[`rotated_surface`](#kgwrappedsurface\<kgrotatedobject\><br>[`shell_arc_segment_surface`](#kgshellarcsegmentsurface<br>[`shell_circle_surface`](#kgshellcirclesurface<br>[`shell_line_segment_surface`](#kgshelllinesegmentsurface<br>[`shell_poly_line_surface`](#kgshellpolylinesurface<br>[`shell_poly_loop_surface`](#kgshellpolyloopsurface<br>[`space`](#kgspace<br>[`stl_file_space`](#kgwrappedspace\<kgstlfile\><br>[`stl_file_surface`](#kgwrappedsurface\<kgstlfile\><br>[`surface`](#kgsurface<br>[`torus_space`](#kgtorusspace<br>[`torus_surface`](#kgtorussurface|*`KGAnnulusSurface`*<br>*`KGAppearanceAttributor`*<br>*`KGAxialMeshAttributor`*<br>*`KGWrappedSpace<KGBeam>`*<br>*`KGWrappedSurface<KGBeam>`*<br>*`KGBoxSpace`*<br>*`KGWrappedSpace<KGCircleWire>`*<br>*`KGWrappedSurface<KGCircleWire>`*<br>*`KGWrappedSpace<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGComplexAnnulus>`*<br>*`KGConeSpace`*<br>*`KGConeSurface`*<br>*`KGWrappedSpace<KGConicSectPortHousing>`*<br>*`KGWrappedSurface<KGConicSectPortHousing>`*<br>*`KGWrappedSpace<KGConicalWireArray>`*<br>*`KGWrappedSurface<KGConicalWireArray>`*<br>*`KGCutConeSpace`*<br>*`KGCutConeSurface`*<br>*`KGCutConeTubeSpace`*<br>*`KGCutTorusSurface`*<br>*`KGCylinderSpace`*<br>*`KGCylinderSurface`*<br>*`KGCylinderTubeSpace`*<br>*`KGDiscreteRotationalMeshAttributor`*<br>*`KGDiskSurface`*<br>*`KGElectromagnetAttributor`*<br>*`KGExtrudedArcSegmentSurface`*<br>*`KGExtrudedCircleSpace`*<br>*`KGExtrudedCircleSurface`*<br>*`KGExtrudedLineSegmentSurface`*<br>*`KGExtrudedPolyLineSurface`*<br>*`KGExtrudedPolyLoopSpace`*<br>*`KGExtrudedPolyLoopSurface`*<br>*`KGWrappedSpace<KGExtrudedObject>`*<br>*`KGWrappedSurface<KGExtrudedObject>`*<br>*`KGFlattenedCircleSurface`*<br>*`KGFlattenedPolyLoopSurface`*<br>*`KGWrappedSpace<KGLinearWireGrid>`*<br>*`KGWrappedSurface<KGLinearWireGrid>`*<br>*`KGMeshAttributor`*<br>*`KGMeshDeformer`*<br>*`KGMeshRefiner`*<br>*`KGWrappedSpace<KGPortHousing>`*<br>*`KGWrappedSurface<KGPortHousing>`*<br>*`KGWrappedSpace<KGQuadraticWireGrid>`*<br>*`KGWrappedSurface<KGQuadraticWireGrid>`*<br>*`KGWrappedSpace<KGRod>`*<br>*`KGWrappedSurface<KGRod>`*<br>*`KGRotatedArcSegmentSpace`*<br>*`KGRotatedArcSegmentSurface`*<br>*`KGRotatedCircleSpace`*<br>*`KGRotatedCircleSurface`*<br>*`KGRotatedLineSegmentSpace`*<br>*`KGRotatedLineSegmentSurface`*<br>*`KGRotatedPolyLineSpace`*<br>*`KGRotatedPolyLineSurface`*<br>*`KGRotatedPolyLoopSpace`*<br>*`KGRotatedPolyLoopSurface`*<br>*`KGWrappedSpace<KGRotatedObject>`*<br>*`KGWrappedSurface<KGRotatedObject>`*<br>*`KGShellArcSegmentSurface`*<br>*`KGShellCircleSurface`*<br>*`KGShellLineSegmentSurface`*<br>*`KGShellPolyLineSurface`*<br>*`KGShellPolyLoopSurface`*<br>*`KGSpace`*<br>*`KGWrappedSpace<KGStlFile>`*<br>*`KGWrappedSurface<KGStlFile>`*<br>*`KGSurface`*<br>*`KGTorusSpace`*<br>*`KGTorusSurface`*|`reset`|*`bool`*|
+|<a name="kginterface">`geometry`</a>|[*KGInterfaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGInterfaceBuilder.cc)|[`annulus_surface`](#kgannulussurface)<br>[`appearance`](#kgappearanceattributor)<br>[`axial_mesh`](#kgaxialmeshattributor)<br>[`beam_space`](#kgwrappedspace\<kgbeam\>)<br>[`beam_surface`](#kgwrappedsurface\<kgbeam\>)<br>[`box_space`](#kgboxspace)<br>[`circle_wire_space`](#kgwrappedspace\<kgcirclewire\>)<br>[`circle_wire_surface`](#kgwrappedsurface\<kgcirclewire\>)<br>[`circular_wire_pins_space`](#kgwrappedspace\<kgcircularwirepins\>)<br>[`circular_wire_pins_surface`](#kgwrappedsurface\<kgcircularwirepins\>)<br>[`complex_annulus_surface`](#kgwrappedsurface\<kgcomplexannulus\>)<br>[`cone_space`](#kgconespace)<br>[`cone_surface`](#kgconesurface)<br>[`conic_section_port_housing_space`](#kgwrappedspace\<kgconicsectporthousing\>)<br>[`conic_section_port_housing_surface`](#kgwrappedsurface\<kgconicsectporthousing\>)<br>[`conical_wire_array_space`](#kgwrappedspace\<kgconicalwirearray\>)<br>[`conical_wire_array_surface`](#kgwrappedsurface\<kgconicalwirearray\>)<br>[`cut_cone_space`](#kgcutconespace)<br>[`cut_cone_surface`](#kgcutconesurface)<br>[`cut_cone_tube_space`](#kgcutconetubespace)<br>[`cut_torus_surface`](#kgcuttorussurface)<br>[`cylinder_space`](#kgcylinderspace)<br>[`cylinder_surface`](#kgcylindersurface)<br>[`cylinder_tube_space`](#kgcylindertubespace)<br>[`discrete_rotational_mesh`](#kgdiscreterotationalmeshattributor)<br>[`disk_surface`](#kgdisksurface)<br>[`electromagnet`](#kgelectromagnetattributor)<br>[`extruded_arc_segment_surface`](#kgextrudedarcsegmentsurface)<br>[`extruded_circle_space`](#kgextrudedcirclespace)<br>[`extruded_circle_surface`](#kgextrudedcirclesurface)<br>[`extruded_line_segment_surface`](#kgextrudedlinesegmentsurface)<br>[`extruded_poly_line_surface`](#kgextrudedpolylinesurface)<br>[`extruded_poly_loop_space`](#kgextrudedpolyloopspace)<br>[`extruded_poly_loop_surface`](#kgextrudedpolyloopsurface)<br>[`extruded_space`](#kgwrappedspace\<kgextrudedobject\>)<br>[`extruded_surface`](#kgwrappedsurface\<kgextrudedobject\>)<br>[`flattened_circle_surface`](#kgflattenedcirclesurface)<br>[`flattened_poly_loop_surface`](#kgflattenedpolyloopsurface)<br>[`linear_wire_grid_space`](#kgwrappedspace\<kglinearwiregrid\>)<br>[`linear_wire_grid_surface`](#kgwrappedsurface\<kglinearwiregrid\>)<br>[`mesh`](#kgmeshattributor)<br>[`mesh_deformer`](#kgmeshdeformer)<br>[`mesh_refiner`](#kgmeshrefiner)<br>[`port_housing_space`](#kgwrappedspace\<kgporthousing\>)<br>[`port_housing_surface`](#kgwrappedsurface\<kgporthousing\>)<br>[`quadratic_wire_grid_space`](#kgwrappedspace\<kgquadraticwiregrid\>)<br>[`quadratic_wire_grid_surface`](#kgwrappedsurface\<kgquadraticwiregrid\>)<br>[`rod_space`](#kgwrappedspace\<kgrod\>)<br>[`rod_surface`](#kgwrappedsurface\<kgrod\>)<br>[`rotated_arc_segment_space`](#kgrotatedarcsegmentspace)<br>[`rotated_arc_segment_surface`](#kgrotatedarcsegmentsurface)<br>[`rotated_circle_space`](#kgrotatedcirclespace)<br>[`rotated_circle_surface`](#kgrotatedcirclesurface)<br>[`rotated_line_segment_space`](#kgrotatedlinesegmentspace)<br>[`rotated_line_segment_surface`](#kgrotatedlinesegmentsurface)<br>[`rotated_poly_line_space`](#kgrotatedpolylinespace)<br>[`rotated_poly_line_surface`](#kgrotatedpolylinesurface)<br>[`rotated_poly_loop_space`](#kgrotatedpolyloopspace)<br>[`rotated_poly_loop_surface`](#kgrotatedpolyloopsurface)<br>[`rotated_space`](#kgwrappedspace\<kgrotatedobject\>)<br>[`rotated_surface`](#kgwrappedsurface\<kgrotatedobject\>)<br>[`shell_arc_segment_surface`](#kgshellarcsegmentsurface)<br>[`shell_circle_surface`](#kgshellcirclesurface)<br>[`shell_line_segment_surface`](#kgshelllinesegmentsurface)<br>[`shell_poly_line_surface`](#kgshellpolylinesurface)<br>[`shell_poly_loop_surface`](#kgshellpolyloopsurface)<br>[`space`](#kgspace)<br>[`stl_file_space`](#kgwrappedspace\<kgstlfile\>)<br>[`stl_file_surface`](#kgwrappedsurface\<kgstlfile\>)<br>[`surface`](#kgsurface)<br>[`torus_space`](#kgtorusspace)<br>[`torus_surface`](#kgtorussurface)|*`KGAnnulusSurface`*<br>*`KGAppearanceAttributor`*<br>*`KGAxialMeshAttributor`*<br>*`KGWrappedSpace<KGBeam>`*<br>*`KGWrappedSurface<KGBeam>`*<br>*`KGBoxSpace`*<br>*`KGWrappedSpace<KGCircleWire>`*<br>*`KGWrappedSurface<KGCircleWire>`*<br>*`KGWrappedSpace<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGComplexAnnulus>`*<br>*`KGConeSpace`*<br>*`KGConeSurface`*<br>*`KGWrappedSpace<KGConicSectPortHousing>`*<br>*`KGWrappedSurface<KGConicSectPortHousing>`*<br>*`KGWrappedSpace<KGConicalWireArray>`*<br>*`KGWrappedSurface<KGConicalWireArray>`*<br>*`KGCutConeSpace`*<br>*`KGCutConeSurface`*<br>*`KGCutConeTubeSpace`*<br>*`KGCutTorusSurface`*<br>*`KGCylinderSpace`*<br>*`KGCylinderSurface`*<br>*`KGCylinderTubeSpace`*<br>*`KGDiscreteRotationalMeshAttributor`*<br>*`KGDiskSurface`*<br>*`KGElectromagnetAttributor`*<br>*`KGExtrudedArcSegmentSurface`*<br>*`KGExtrudedCircleSpace`*<br>*`KGExtrudedCircleSurface`*<br>*`KGExtrudedLineSegmentSurface`*<br>*`KGExtrudedPolyLineSurface`*<br>*`KGExtrudedPolyLoopSpace`*<br>*`KGExtrudedPolyLoopSurface`*<br>*`KGWrappedSpace<KGExtrudedObject>`*<br>*`KGWrappedSurface<KGExtrudedObject>`*<br>*`KGFlattenedCircleSurface`*<br>*`KGFlattenedPolyLoopSurface`*<br>*`KGWrappedSpace<KGLinearWireGrid>`*<br>*`KGWrappedSurface<KGLinearWireGrid>`*<br>*`KGMeshAttributor`*<br>*`KGMeshDeformer`*<br>*`KGMeshRefiner`*<br>*`KGWrappedSpace<KGPortHousing>`*<br>*`KGWrappedSurface<KGPortHousing>`*<br>*`KGWrappedSpace<KGQuadraticWireGrid>`*<br>*`KGWrappedSurface<KGQuadraticWireGrid>`*<br>*`KGWrappedSpace<KGRod>`*<br>*`KGWrappedSurface<KGRod>`*<br>*`KGRotatedArcSegmentSpace`*<br>*`KGRotatedArcSegmentSurface`*<br>*`KGRotatedCircleSpace`*<br>*`KGRotatedCircleSurface`*<br>*`KGRotatedLineSegmentSpace`*<br>*`KGRotatedLineSegmentSurface`*<br>*`KGRotatedPolyLineSpace`*<br>*`KGRotatedPolyLineSurface`*<br>*`KGRotatedPolyLoopSpace`*<br>*`KGRotatedPolyLoopSurface`*<br>*`KGWrappedSpace<KGRotatedObject>`*<br>*`KGWrappedSurface<KGRotatedObject>`*<br>*`KGShellArcSegmentSurface`*<br>*`KGShellCircleSurface`*<br>*`KGShellLineSegmentSurface`*<br>*`KGShellPolyLineSurface`*<br>*`KGShellPolyLoopSurface`*<br>*`KGSpace`*<br>*`KGWrappedSpace<KGStlFile>`*<br>*`KGWrappedSurface<KGStlFile>`*<br>*`KGSurface`*<br>*`KGTorusSpace`*<br>*`KGTorusSurface`*|`reset`|*`bool`*|
 
 ### KGAnnulusSurface
 Example:
@@ -121,7 +121,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgbeam\>">`beam_space`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`beam`](#kgbeam|*`KGBeam`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgbeam\>">`beam_space`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`beam`](#kgbeam)|*`KGBeam`*|`name`|*`string`*|
 
 #### KGBeam
 Example:
@@ -135,17 +135,17 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgbeam">`beam`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`end_line`](#kgbeamline<br>[`start_line`](#kgbeamline|*`KGBeamLine`*<br>*`KGBeamLine`*|`axial_mesh_count`<br>`longitudinal_mesh_count`|*`int`*<br>*`int`*|
+|<a name="kgbeam">`beam`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`end_line`](#kgbeamline)<br>[`start_line`](#kgbeamline)|*`KGBeamLine`*<br>*`KGBeamLine`*|`axial_mesh_count`<br>`longitudinal_mesh_count`|*`int`*<br>*`int`*|
 
 ##### KGBeamLine
 Example:
 ```
-<start_line
+<end_line
     x1="(double)"
     x2="(double)"
     y1="(double)"
 >
-</start_line>
+</end_line>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -155,12 +155,12 @@ Example:
 ##### KGBeamLine
 Example:
 ```
-<start_line
+<end_line
     x1="(double)"
     x2="(double)"
     y1="(double)"
 >
-</start_line>
+</end_line>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -184,7 +184,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgbeam\>">`beam_surface`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`beam`](#kgbeam|*`KGBeam`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgbeam\>">`beam_surface`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`beam`](#kgbeam)|*`KGBeam`*|`name`|*`string`*|
 
 #### KGBeam
 Example:
@@ -198,7 +198,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgbeam">`beam`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`end_line`](#kgbeamline<br>[`start_line`](#kgbeamline|*`KGBeamLine`*<br>*`KGBeamLine`*|`axial_mesh_count`<br>`longitudinal_mesh_count`|*`int`*<br>*`int`*|
+|<a name="kgbeam">`beam`</a>|[*KGBeamBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`end_line`](#kgbeamline)<br>[`start_line`](#kgbeamline)|*`KGBeamLine`*<br>*`KGBeamLine`*|`axial_mesh_count`<br>`longitudinal_mesh_count`|*`int`*<br>*`int`*|
 
 ### KGBoxSpace
 Example:
@@ -232,7 +232,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgcirclewire\>">`circle_wire_space`</a>|[*KGCircleWireBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircleWireBuilder.cc)|[`circle_wire`](#kgcirclewire|*`KGCircleWire`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgcirclewire\>">`circle_wire_space`</a>|[*KGCircleWireBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircleWireBuilder.cc)|[`circle_wire`](#kgcirclewire)|*`KGCircleWire`*|`name`|*`string`*|
 
 #### KGCircleWire
 Example:
@@ -265,7 +265,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgcirclewire\>">`circle_wire_surface`</a>|[*KGCircleWireBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircleWireBuilder.cc)|[`circle_wire`](#kgcirclewire|*`KGCircleWire`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgcirclewire\>">`circle_wire_surface`</a>|[*KGCircleWireBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircleWireBuilder.cc)|[`circle_wire`](#kgcirclewire)|*`KGCircleWire`*|`name`|*`string`*|
 
 #### KGCircleWire
 Example:
@@ -299,7 +299,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgcircularwirepins\>">`circular_wire_pins_space`</a>|[*KGCircularWirePinsBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircularWirePinsBuilder.cc)|[`circular_wire_pins`](#kgcircularwirepins|*`KGCircularWirePins`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgcircularwirepins\>">`circular_wire_pins_space`</a>|[*KGCircularWirePinsBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircularWirePinsBuilder.cc)|[`circular_wire_pins`](#kgcircularwirepins)|*`KGCircularWirePins`*|`name`|*`string`*|
 
 #### KGCircularWirePins
 Example:
@@ -334,7 +334,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgcircularwirepins\>">`circular_wire_pins_surface`</a>|[*KGCircularWirePinsBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircularWirePinsBuilder.cc)|[`circular_wire_pins`](#kgcircularwirepins|*`KGCircularWirePins`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgcircularwirepins\>">`circular_wire_pins_surface`</a>|[*KGCircularWirePinsBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircularWirePinsBuilder.cc)|[`circular_wire_pins`](#kgcircularwirepins)|*`KGCircularWirePins`*|`name`|*`string`*|
 
 #### KGCircularWirePins
 Example:
@@ -376,7 +376,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgcomplexannulus\>">`complex_annulus_surface`</a>|[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)<br>[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)|[`complex_annulus`](#kgcomplexannulus|*`KGComplexAnnulus`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgcomplexannulus\>">`complex_annulus_surface`</a>|[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)<br>[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)|[`complex_annulus`](#kgcomplexannulus)|*`KGComplexAnnulus`*|`name`|*`string`*|
 
 #### KGComplexAnnulus
 Example:
@@ -391,7 +391,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgcomplexannulus">`complex_annulus`</a>|[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)<br>[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)|[`ring`](#kgcomplexannulusring|*`KGComplexAnnulusRing`*|`axial_mesh_count`<br>`radial_mesh_count`<br>`radius`|*`int`*<br>*`int`*<br>*`double`*|
+|<a name="kgcomplexannulus">`complex_annulus`</a>|[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)<br>[*KGComplexAnnulusBuilder.cc*](KGeoBag/Source/Shapes/Complex/Source/KGComplexAnnulusBuilder.cc)|[`ring`](#kgcomplexannulusring)|*`KGComplexAnnulusRing`*|`axial_mesh_count`<br>`radial_mesh_count`<br>`radius`|*`int`*<br>*`int`*<br>*`double`*|
 
 ##### KGComplexAnnulusRing
 Example:
@@ -463,7 +463,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgconicsectporthousing\>">`conic_section_port_housing_space`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`conic_section_port_housing`](#kgconicsectporthousing|*`KGConicSectPortHousing`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgconicsectporthousing\>">`conic_section_port_housing_space`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`conic_section_port_housing`](#kgconicsectporthousing)|*`KGConicSectPortHousing`*|`name`|*`string`*|
 
 #### KGConicSectPortHousing
 Example:
@@ -478,7 +478,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgconicsectporthousing">`conic_section_port_housing`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`orthogonal_port`](#kgconicsectporthousingorthogonalport<br>[`paraxial_port`](#kgconicsectporthousingparaxialport|*`KGConicSectPortHousingOrthogonalPort`*<br>*`KGConicSectPortHousingParaxialPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`r1`<br>`r2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+|<a name="kgconicsectporthousing">`conic_section_port_housing`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`orthogonal_port`](#kgconicsectporthousingorthogonalport)<br>[`paraxial_port`](#kgconicsectporthousingparaxialport)|*`KGConicSectPortHousingOrthogonalPort`*<br>*`KGConicSectPortHousingParaxialPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`r1`<br>`r2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
 ##### KGConicSectPortHousingOrthogonalPort
 Example:
@@ -528,7 +528,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgconicsectporthousing\>">`conic_section_port_housing_surface`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`conic_section_port_housing`](#kgconicsectporthousing|*`KGConicSectPortHousing`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgconicsectporthousing\>">`conic_section_port_housing_surface`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`conic_section_port_housing`](#kgconicsectporthousing)|*`KGConicSectPortHousing`*|`name`|*`string`*|
 
 #### KGConicSectPortHousing
 Example:
@@ -543,7 +543,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgconicsectporthousing">`conic_section_port_housing`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`orthogonal_port`](#kgconicsectporthousingorthogonalport<br>[`paraxial_port`](#kgconicsectporthousingparaxialport|*`KGConicSectPortHousingOrthogonalPort`*<br>*`KGConicSectPortHousingParaxialPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`r1`<br>`r2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+|<a name="kgconicsectporthousing">`conic_section_port_housing`</a>|[*KGConicSectPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`orthogonal_port`](#kgconicsectporthousingorthogonalport)<br>[`paraxial_port`](#kgconicsectporthousingparaxialport)|*`KGConicSectPortHousingOrthogonalPort`*<br>*`KGConicSectPortHousingParaxialPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`r1`<br>`r2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
 ### KGWrappedSpace\<KGConicalWireArray\>
 Example:
@@ -563,7 +563,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgconicalwirearray\>">`conical_wire_array_space`</a>|[*KGConicalWireArrayBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicalWireArrayBuilder.cc)|[`conical_wire_array`](#kgconicalwirearray|*`KGConicalWireArray`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgconicalwirearray\>">`conical_wire_array_space`</a>|[*KGConicalWireArrayBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicalWireArrayBuilder.cc)|[`conical_wire_array`](#kgconicalwirearray)|*`KGConicalWireArray`*|`name`|*`string`*|
 
 #### KGConicalWireArray
 Example:
@@ -598,7 +598,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgconicalwirearray\>">`conical_wire_array_surface`</a>|[*KGConicalWireArrayBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicalWireArrayBuilder.cc)|[`conical_wire_array`](#kgconicalwirearray|*`KGConicalWireArray`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgconicalwirearray\>">`conical_wire_array_surface`</a>|[*KGConicalWireArrayBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicalWireArrayBuilder.cc)|[`conical_wire_array`](#kgconicalwirearray)|*`KGConicalWireArray`*|`name`|*`string`*|
 
 #### KGConicalWireArray
 Example:
@@ -785,7 +785,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedarcsegmentsurface">`extruded_arc_segment_surface`</a>|[*KGExtrudedArcSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment|*`KGPlanarArcSegment`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedarcsegmentsurface">`extruded_arc_segment_surface`</a>|[*KGExtrudedArcSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment)|*`KGPlanarArcSegment`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KGPlanarArcSegment
 Example:
@@ -822,7 +822,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedcirclespace">`extruded_circle_space`</a>|[*KGExtrudedCircleSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc)|[`circle`](#kgplanarcircle|*`KGPlanarCircle`*|`extruded_mesh_power`<br>`flattened_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedcirclespace">`extruded_circle_space`</a>|[*KGExtrudedCircleSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`extruded_mesh_power`<br>`flattened_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KGPlanarCircle
 Example:
@@ -859,7 +859,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedcirclesurface">`extruded_circle_surface`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle|*`KGPlanarCircle`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedcirclesurface">`extruded_circle_surface`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KGPlanarCircle
 Example:
@@ -896,7 +896,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedlinesegmentsurface">`extruded_line_segment_surface`</a>|[*KGExtrudedLineSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment|*`KGPlanarLineSegment`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedlinesegmentsurface">`extruded_line_segment_surface`</a>|[*KGExtrudedLineSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment)|*`KGPlanarLineSegment`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KGPlanarLineSegment
 Example:
@@ -936,7 +936,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedpolylinesurface">`extruded_poly_line_surface`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline|*`KGPlanarPolyLine`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedpolylinesurface">`extruded_poly_line_surface`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline)|*`KGPlanarPolyLine`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KGPlanarPolyLine
 Example:
@@ -947,17 +947,17 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments<br>[`next_line`](#kgplanarpolylinelinearguments<br>[`previous_arc`](#kgplanarpolylinearcarguments<br>[`previous_line`](#kgplanarpolylinelinearguments<br>[`start_point`](#kgplanarpolylinestartpointarguments|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments)<br>[`next_line`](#kgplanarpolylinelinearguments)<br>[`previous_arc`](#kgplanarpolylinearcarguments)<br>[`previous_line`](#kgplanarpolylinelinearguments)<br>[`start_point`](#kgplanarpolylinestartpointarguments)|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
 
 ##### KGPlanarPolyLineArcArguments
 Example:
 ```
-<next_arc
+<previous_arc
     radius="(double)"
     right="(bool)"
     short="(bool)"
 >
-</next_arc>
+</previous_arc>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -982,12 +982,12 @@ Example:
 ##### KGPlanarPolyLineArcArguments
 Example:
 ```
-<next_arc
+<previous_arc
     radius="(double)"
     right="(bool)"
     short="(bool)"
 >
-</next_arc>
+</previous_arc>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1046,7 +1046,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedpolyloopspace">`extruded_poly_loop_space`</a>|[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop|*`KGPlanarPolyLoop`*|`extruded_mesh_power`<br>`flattened_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedpolyloopspace">`extruded_poly_loop_space`</a>|[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`extruded_mesh_power`<br>`flattened_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KGPlanarPolyLoop
 Example:
@@ -1057,7 +1057,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments<br>[`last_line`](#kgplanarpolylooplastlinearguments<br>[`next_arc`](#kgplanarpolylooparcarguments<br>[`next_line`](#kgplanarpolylooplinearguments<br>[`previous_arc`](#kgplanarpolylooparcarguments<br>[`previous_line`](#kgplanarpolylooplinearguments<br>[`start_point`](#kgplanarpolyloopstartpointarguments|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
 ##### KGPlanarPolyLoopLastArcArguments
 Example:
@@ -1090,12 +1090,12 @@ Example:
 ##### KGPlanarPolyLoopArcArguments
 Example:
 ```
-<next_arc
+<previous_arc
     radius="(double)"
     right="(bool)"
     short="(bool)"
 >
-</next_arc>
+</previous_arc>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1120,12 +1120,12 @@ Example:
 ##### KGPlanarPolyLoopArcArguments
 Example:
 ```
-<next_arc
+<previous_arc
     radius="(double)"
     right="(bool)"
     short="(bool)"
 >
-</next_arc>
+</previous_arc>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1177,7 +1177,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedpolyloopsurface">`extruded_poly_loop_surface`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop|*`KGPlanarPolyLoop`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedpolyloopsurface">`extruded_poly_loop_surface`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KGPlanarPolyLoop
 Example:
@@ -1188,7 +1188,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments<br>[`last_line`](#kgplanarpolylooplastlinearguments<br>[`next_arc`](#kgplanarpolylooparcarguments<br>[`next_line`](#kgplanarpolylooplinearguments<br>[`previous_arc`](#kgplanarpolylooparcarguments<br>[`previous_line`](#kgplanarpolylooplinearguments<br>[`start_point`](#kgplanarpolyloopstartpointarguments|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
 ### KGWrappedSpace\<KGExtrudedObject\>
 Example:
@@ -1215,7 +1215,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgextrudedobject\>">`extruded_space`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`extruded_object`](#kgextrudedobject|*`KGExtrudedObject`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgextrudedobject\>">`extruded_space`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`extruded_object`](#kgextrudedobject)|*`KGExtrudedObject`*|`name`|*`string`*|
 
 #### KGExtrudedObject
 Example:
@@ -1230,7 +1230,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedobject">`extruded_object`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`inner_arc`](#kgextrudedobjectarc<br>[`inner_line`](#kgextrudedobjectline<br>[`outer_arc`](#kgextrudedobjectarc<br>[`outer_line`](#kgextrudedobjectline|*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*<br>*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*|`closed_form`<br>`extruded_mesh_count`<br>`extruded_mesh_power`<br>`longitudinal_mesh_count`<br>`longitudinal_mesh_power`<br>`mesh_merge_distance`<br>`refine_mesh`<br>`z_max`<br>`z_min`|*`bool`*<br>*`int`*<br>*`double`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedobject">`extruded_object`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`inner_arc`](#kgextrudedobjectarc)<br>[`inner_line`](#kgextrudedobjectline)<br>[`outer_arc`](#kgextrudedobjectarc)<br>[`outer_line`](#kgextrudedobjectline)|*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*<br>*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*|`closed_form`<br>`extruded_mesh_count`<br>`extruded_mesh_power`<br>`longitudinal_mesh_count`<br>`longitudinal_mesh_power`<br>`mesh_merge_distance`<br>`refine_mesh`<br>`z_max`<br>`z_min`|*`bool`*<br>*`int`*<br>*`double`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`double`*<br>*`double`*|
 
 ##### KGExtrudedObjectArc
 Example:
@@ -1250,12 +1250,12 @@ Example:
 ##### KGExtrudedObjectLine
 Example:
 ```
-<outer_line
+<inner_line
     x1="(double)"
     x2="(double)"
     y1="(double)"
 >
-</outer_line>
+</inner_line>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1280,12 +1280,12 @@ Example:
 ##### KGExtrudedObjectLine
 Example:
 ```
-<outer_line
+<inner_line
     x1="(double)"
     x2="(double)"
     y1="(double)"
 >
-</outer_line>
+</inner_line>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1310,7 +1310,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgextrudedobject\>">`extruded_surface`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`extruded_object`](#kgextrudedobject|*`KGExtrudedObject`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgextrudedobject\>">`extruded_surface`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`extruded_object`](#kgextrudedobject)|*`KGExtrudedObject`*|`name`|*`string`*|
 
 #### KGExtrudedObject
 Example:
@@ -1325,7 +1325,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgextrudedobject">`extruded_object`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`inner_arc`](#kgextrudedobjectarc<br>[`inner_line`](#kgextrudedobjectline<br>[`outer_arc`](#kgextrudedobjectarc<br>[`outer_line`](#kgextrudedobjectline|*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*<br>*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*|`closed_form`<br>`extruded_mesh_count`<br>`extruded_mesh_power`<br>`longitudinal_mesh_count`<br>`longitudinal_mesh_power`<br>`mesh_merge_distance`<br>`refine_mesh`<br>`z_max`<br>`z_min`|*`bool`*<br>*`int`*<br>*`double`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`double`*<br>*`double`*|
+|<a name="kgextrudedobject">`extruded_object`</a>|[*KGExtrudedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`inner_arc`](#kgextrudedobjectarc)<br>[`inner_line`](#kgextrudedobjectline)<br>[`outer_arc`](#kgextrudedobjectarc)<br>[`outer_line`](#kgextrudedobjectline)|*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*<br>*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*|`closed_form`<br>`extruded_mesh_count`<br>`extruded_mesh_power`<br>`longitudinal_mesh_count`<br>`longitudinal_mesh_power`<br>`mesh_merge_distance`<br>`refine_mesh`<br>`z_max`<br>`z_min`|*`bool`*<br>*`int`*<br>*`double`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`double`*<br>*`double`*|
 
 ### KGFlattenedCircleSurface
 Example:
@@ -1347,7 +1347,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgflattenedcirclesurface">`flattened_circle_surface`</a>|[*KGFlattenedCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle|*`KGPlanarCircle`*|`flattened_mesh_power`<br>`name`<br>`z`|*`double`*<br>*`string`*<br>*`double`*|
+|<a name="kgflattenedcirclesurface">`flattened_circle_surface`</a>|[*KGFlattenedCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`flattened_mesh_power`<br>`name`<br>`z`|*`double`*<br>*`string`*<br>*`double`*|
 
 #### KGPlanarCircle
 Example:
@@ -1380,7 +1380,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgflattenedpolyloopsurface">`flattened_poly_loop_surface`</a>|[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop|*`KGPlanarPolyLoop`*|`flattened_mesh_power`<br>`name`<br>`z`|*`double`*<br>*`string`*<br>*`double`*|
+|<a name="kgflattenedpolyloopsurface">`flattened_poly_loop_surface`</a>|[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`flattened_mesh_power`<br>`name`<br>`z`|*`double`*<br>*`string`*<br>*`double`*|
 
 #### KGPlanarPolyLoop
 Example:
@@ -1391,7 +1391,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments<br>[`last_line`](#kgplanarpolylooplastlinearguments<br>[`next_arc`](#kgplanarpolylooparcarguments<br>[`next_line`](#kgplanarpolylooplinearguments<br>[`previous_arc`](#kgplanarpolylooparcarguments<br>[`previous_line`](#kgplanarpolylooplinearguments<br>[`start_point`](#kgplanarpolyloopstartpointarguments|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
 ### KGWrappedSpace\<KGLinearWireGrid\>
 Example:
@@ -1411,7 +1411,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kglinearwiregrid\>">`linear_wire_grid_space`</a>|[*KGLinearWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGLinearWireGridBuilder.cc)|[`linear_wire_grid`](#kglinearwiregrid|*`KGLinearWireGrid`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kglinearwiregrid\>">`linear_wire_grid_space`</a>|[*KGLinearWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGLinearWireGridBuilder.cc)|[`linear_wire_grid`](#kglinearwiregrid)|*`KGLinearWireGrid`*|`name`|*`string`*|
 
 #### KGLinearWireGrid
 Example:
@@ -1446,7 +1446,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kglinearwiregrid\>">`linear_wire_grid_surface`</a>|[*KGLinearWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGLinearWireGridBuilder.cc)|[`linear_wire_grid`](#kglinearwiregrid|*`KGLinearWireGrid`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kglinearwiregrid\>">`linear_wire_grid_surface`</a>|[*KGLinearWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGLinearWireGridBuilder.cc)|[`linear_wire_grid`](#kglinearwiregrid)|*`KGLinearWireGrid`*|`name`|*`string`*|
 
 #### KGLinearWireGrid
 Example:
@@ -1532,7 +1532,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgporthousing\>">`port_housing_space`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`port_housing`](#kgporthousing|*`KGPortHousing`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgporthousing\>">`port_housing_space`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`port_housing`](#kgporthousing)|*`KGPortHousing`*|`name`|*`string`*|
 
 #### KGPortHousing
 Example:
@@ -1547,7 +1547,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgporthousing">`port_housing`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`circular_port`](#kgporthousingcircularport<br>[`rectangular_port`](#kgporthousingrectangularport|*`KGPortHousingCircularPort`*<br>*`KGPortHousingRectangularPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`radius`<br>`x1`<br>`x2`<br>`y1`<br>`y2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+|<a name="kgporthousing">`port_housing`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`circular_port`](#kgporthousingcircularport)<br>[`rectangular_port`](#kgporthousingrectangularport)|*`KGPortHousingCircularPort`*<br>*`KGPortHousingRectangularPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`radius`<br>`x1`<br>`x2`<br>`y1`<br>`y2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
 ##### KGPortHousingCircularPort
 Example:
@@ -1597,7 +1597,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgporthousing\>">`port_housing_surface`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`port_housing`](#kgporthousing|*`KGPortHousing`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgporthousing\>">`port_housing_surface`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`port_housing`](#kgporthousing)|*`KGPortHousing`*|`name`|*`string`*|
 
 #### KGPortHousing
 Example:
@@ -1612,7 +1612,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgporthousing">`port_housing`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`circular_port`](#kgporthousingcircularport<br>[`rectangular_port`](#kgporthousingrectangularport|*`KGPortHousingCircularPort`*<br>*`KGPortHousingRectangularPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`radius`<br>`x1`<br>`x2`<br>`y1`<br>`y2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+|<a name="kgporthousing">`port_housing`</a>|[*KGPortHousingBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`circular_port`](#kgporthousingcircularport)<br>[`rectangular_port`](#kgporthousingrectangularport)|*`KGPortHousingCircularPort`*<br>*`KGPortHousingRectangularPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`radius`<br>`x1`<br>`x2`<br>`y1`<br>`y2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
 ### KGWrappedSpace\<KGQuadraticWireGrid\>
 Example:
@@ -1632,7 +1632,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgquadraticwiregrid\>">`quadratic_wire_grid_space`</a>|[*KGQuadraticWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGQuadraticWireGridBuilder.cc)|[`quadratic_wire_grid`](#kgquadraticwiregrid|*`KGQuadraticWireGrid`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgquadraticwiregrid\>">`quadratic_wire_grid_space`</a>|[*KGQuadraticWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGQuadraticWireGridBuilder.cc)|[`quadratic_wire_grid`](#kgquadraticwiregrid)|*`KGQuadraticWireGrid`*|`name`|*`string`*|
 
 #### KGQuadraticWireGrid
 Example:
@@ -1667,7 +1667,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgquadraticwiregrid\>">`quadratic_wire_grid_surface`</a>|[*KGQuadraticWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGQuadraticWireGridBuilder.cc)|[`quadratic_wire_grid`](#kgquadraticwiregrid|*`KGQuadraticWireGrid`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgquadraticwiregrid\>">`quadratic_wire_grid_surface`</a>|[*KGQuadraticWireGridBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGQuadraticWireGridBuilder.cc)|[`quadratic_wire_grid`](#kgquadraticwiregrid)|*`KGQuadraticWireGrid`*|`name`|*`string`*|
 
 #### KGQuadraticWireGrid
 Example:
@@ -1709,7 +1709,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgrod\>">`rod_space`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`rod`](#kgrod|*`KGRod`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgrod\>">`rod_space`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`rod`](#kgrod)|*`KGRod`*|`name`|*`string`*|
 
 #### KGRod
 Example:
@@ -1724,7 +1724,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrod">`rod`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`vertex`](#kgrodvertex|*`KGRodVertex`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`name`<br>`radius`|*`int`*<br>*`int`*<br>*`string`*<br>*`double`*|
+|<a name="kgrod">`rod`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`vertex`](#kgrodvertex)|*`KGRodVertex`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`name`<br>`radius`|*`int`*<br>*`int`*<br>*`string`*<br>*`double`*|
 
 ##### KGRodVertex
 Example:
@@ -1759,7 +1759,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgrod\>">`rod_surface`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`rod`](#kgrod|*`KGRod`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgrod\>">`rod_surface`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`rod`](#kgrod)|*`KGRod`*|`name`|*`string`*|
 
 #### KGRod
 Example:
@@ -1774,7 +1774,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrod">`rod`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`vertex`](#kgrodvertex|*`KGRodVertex`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`name`<br>`radius`|*`int`*<br>*`int`*<br>*`string`*<br>*`double`*|
+|<a name="kgrod">`rod`</a>|[*KGRodBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`vertex`](#kgrodvertex)|*`KGRodVertex`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`name`<br>`radius`|*`int`*<br>*`int`*<br>*`string`*<br>*`double`*|
 
 ### KGRotatedArcSegmentSpace
 Example:
@@ -1795,7 +1795,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedarcsegmentspace">`rotated_arc_segment_space`</a>|[*KGRotatedArcSegmentSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedArcSegmentSpaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment|*`KGPlanarArcSegment`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
+|<a name="kgrotatedarcsegmentspace">`rotated_arc_segment_space`</a>|[*KGRotatedArcSegmentSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedArcSegmentSpaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment)|*`KGPlanarArcSegment`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
 
 #### KGPlanarArcSegment
 Example:
@@ -1830,7 +1830,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedarcsegmentsurface">`rotated_arc_segment_surface`</a>|[*KGRotatedArcSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment|*`KGPlanarArcSegment`*|`name`|*`string`*|
+|<a name="kgrotatedarcsegmentsurface">`rotated_arc_segment_surface`</a>|[*KGRotatedArcSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment)|*`KGPlanarArcSegment`*|`name`|*`string`*|
 
 #### KGPlanarArcSegment
 Example:
@@ -1865,7 +1865,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedcirclespace">`rotated_circle_space`</a>|[*KGRotatedCircleSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)|[`circle`](#kgplanarcircle|*`KGPlanarCircle`*|`name`|*`string`*|
+|<a name="kgrotatedcirclespace">`rotated_circle_space`</a>|[*KGRotatedCircleSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`name`|*`string`*|
 
 #### KGPlanarCircle
 Example:
@@ -1900,7 +1900,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedcirclesurface">`rotated_circle_surface`</a>|[*KGRotatedCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle|*`KGPlanarCircle`*|`name`|*`string`*|
+|<a name="kgrotatedcirclesurface">`rotated_circle_surface`</a>|[*KGRotatedCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`name`|*`string`*|
 
 #### KGPlanarCircle
 Example:
@@ -1936,7 +1936,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedlinesegmentspace">`rotated_line_segment_space`</a>|[*KGRotatedLineSegmentSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment|*`KGPlanarLineSegment`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
+|<a name="kgrotatedlinesegmentspace">`rotated_line_segment_space`</a>|[*KGRotatedLineSegmentSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment)|*`KGPlanarLineSegment`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
 
 #### KGPlanarLineSegment
 Example:
@@ -1971,7 +1971,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedlinesegmentsurface">`rotated_line_segment_surface`</a>|[*KGRotatedLineSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment|*`KGPlanarLineSegment`*|`name`|*`string`*|
+|<a name="kgrotatedlinesegmentsurface">`rotated_line_segment_surface`</a>|[*KGRotatedLineSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment)|*`KGPlanarLineSegment`*|`name`|*`string`*|
 
 #### KGPlanarLineSegment
 Example:
@@ -2003,7 +2003,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedpolylinespace">`rotated_poly_line_space`</a>|[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)|[`poly_line`](#kgplanarpolyline|*`KGPlanarPolyLine`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
+|<a name="kgrotatedpolylinespace">`rotated_poly_line_space`</a>|[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)|[`poly_line`](#kgplanarpolyline)|*`KGPlanarPolyLine`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
 
 #### KGPlanarPolyLine
 Example:
@@ -2014,7 +2014,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments<br>[`next_line`](#kgplanarpolylinelinearguments<br>[`previous_arc`](#kgplanarpolylinearcarguments<br>[`previous_line`](#kgplanarpolylinelinearguments<br>[`start_point`](#kgplanarpolylinestartpointarguments|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments)<br>[`next_line`](#kgplanarpolylinelinearguments)<br>[`previous_arc`](#kgplanarpolylinearcarguments)<br>[`previous_line`](#kgplanarpolylinelinearguments)<br>[`start_point`](#kgplanarpolylinestartpointarguments)|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
 
 ### KGRotatedPolyLineSurface
 Example:
@@ -2030,7 +2030,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedpolylinesurface">`rotated_poly_line_surface`</a>|[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline|*`KGPlanarPolyLine`*|`name`|*`string`*|
+|<a name="kgrotatedpolylinesurface">`rotated_poly_line_surface`</a>|[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline)|*`KGPlanarPolyLine`*|`name`|*`string`*|
 
 #### KGPlanarPolyLine
 Example:
@@ -2041,7 +2041,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments<br>[`next_line`](#kgplanarpolylinelinearguments<br>[`previous_arc`](#kgplanarpolylinearcarguments<br>[`previous_line`](#kgplanarpolylinelinearguments<br>[`start_point`](#kgplanarpolylinestartpointarguments|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments)<br>[`next_line`](#kgplanarpolylinelinearguments)<br>[`previous_arc`](#kgplanarpolylinearcarguments)<br>[`previous_line`](#kgplanarpolylinelinearguments)<br>[`start_point`](#kgplanarpolylinestartpointarguments)|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
 
 ### KGRotatedPolyLoopSpace
 Example:
@@ -2057,7 +2057,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedpolyloopspace">`rotated_poly_loop_space`</a>|[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop|*`KGPlanarPolyLoop`*|`name`|*`string`*|
+|<a name="kgrotatedpolyloopspace">`rotated_poly_loop_space`</a>|[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`name`|*`string`*|
 
 #### KGPlanarPolyLoop
 Example:
@@ -2068,7 +2068,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments<br>[`last_line`](#kgplanarpolylooplastlinearguments<br>[`next_arc`](#kgplanarpolylooparcarguments<br>[`next_line`](#kgplanarpolylooplinearguments<br>[`previous_arc`](#kgplanarpolylooparcarguments<br>[`previous_line`](#kgplanarpolylooplinearguments<br>[`start_point`](#kgplanarpolyloopstartpointarguments|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
 ### KGRotatedPolyLoopSurface
 Example:
@@ -2084,7 +2084,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedpolyloopsurface">`rotated_poly_loop_surface`</a>|[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop|*`KGPlanarPolyLoop`*|`name`|*`string`*|
+|<a name="kgrotatedpolyloopsurface">`rotated_poly_loop_surface`</a>|[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`name`|*`string`*|
 
 #### KGPlanarPolyLoop
 Example:
@@ -2095,7 +2095,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments<br>[`last_line`](#kgplanarpolylooplastlinearguments<br>[`next_arc`](#kgplanarpolylooparcarguments<br>[`next_line`](#kgplanarpolylooplinearguments<br>[`previous_arc`](#kgplanarpolylooparcarguments<br>[`previous_line`](#kgplanarpolylooplinearguments<br>[`start_point`](#kgplanarpolyloopstartpointarguments|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
 ### KGWrappedSpace\<KGRotatedObject\>
 Example:
@@ -2122,7 +2122,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgrotatedobject\>">`rotated_space`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`rotated_object`](#kgrotatedobject|*`KGRotatedObject`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgrotatedobject\>">`rotated_space`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`rotated_object`](#kgrotatedobject)|*`KGRotatedObject`*|`name`|*`string`*|
 
 #### KGRotatedObject
 Example:
@@ -2137,7 +2137,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedobject">`rotated_object`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`arc`](#kgrotatedobjectarc<br>[`line`](#kgrotatedobjectline|*`KGRotatedObjectArc`*<br>*`KGRotatedObjectLine`*|`longitudinal_mesh_count`<br>`longitudinal_mesh_count_end`<br>`longitudinal_mesh_count_start`<br>`longitudinal_mesh_power`|*`int`*<br>*`int`*<br>*`int`*<br>*`double`*|
+|<a name="kgrotatedobject">`rotated_object`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`arc`](#kgrotatedobjectarc)<br>[`line`](#kgrotatedobjectline)|*`KGRotatedObjectArc`*<br>*`KGRotatedObjectLine`*|`longitudinal_mesh_count`<br>`longitudinal_mesh_count_end`<br>`longitudinal_mesh_count_start`<br>`longitudinal_mesh_power`|*`int`*<br>*`int`*<br>*`int`*<br>*`double`*|
 
 ##### KGRotatedObjectArc
 Example:
@@ -2187,7 +2187,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgrotatedobject\>">`rotated_surface`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`rotated_object`](#kgrotatedobject|*`KGRotatedObject`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgrotatedobject\>">`rotated_surface`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`rotated_object`](#kgrotatedobject)|*`KGRotatedObject`*|`name`|*`string`*|
 
 #### KGRotatedObject
 Example:
@@ -2202,7 +2202,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgrotatedobject">`rotated_object`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`arc`](#kgrotatedobjectarc<br>[`line`](#kgrotatedobjectline|*`KGRotatedObjectArc`*<br>*`KGRotatedObjectLine`*|`longitudinal_mesh_count`<br>`longitudinal_mesh_count_end`<br>`longitudinal_mesh_count_start`<br>`longitudinal_mesh_power`|*`int`*<br>*`int`*<br>*`int`*<br>*`double`*|
+|<a name="kgrotatedobject">`rotated_object`</a>|[*KGRotatedObjectBuilder.cc*](KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`arc`](#kgrotatedobjectarc)<br>[`line`](#kgrotatedobjectline)|*`KGRotatedObjectArc`*<br>*`KGRotatedObjectLine`*|`longitudinal_mesh_count`<br>`longitudinal_mesh_count_end`<br>`longitudinal_mesh_count_start`<br>`longitudinal_mesh_power`|*`int`*<br>*`int`*<br>*`int`*<br>*`double`*|
 
 ### KGShellArcSegmentSurface
 Example:
@@ -2224,7 +2224,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgshellarcsegmentsurface">`shell_arc_segment_surface`</a>|[*KGShellArcSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment|*`KGPlanarArcSegment`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
+|<a name="kgshellarcsegmentsurface">`shell_arc_segment_surface`</a>|[*KGShellArcSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment)|*`KGPlanarArcSegment`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
 #### KGPlanarArcSegment
 Example:
@@ -2261,7 +2261,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgshellcirclesurface">`shell_circle_surface`</a>|[*KGShellCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle|*`KGPlanarCircle`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
+|<a name="kgshellcirclesurface">`shell_circle_surface`</a>|[*KGShellCircleSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
 #### KGPlanarCircle
 Example:
@@ -2298,7 +2298,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgshelllinesegmentsurface">`shell_line_segment_surface`</a>|[*KGShellLineSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment|*`KGPlanarLineSegment`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
+|<a name="kgshelllinesegmentsurface">`shell_line_segment_surface`</a>|[*KGShellLineSegmentSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment)|*`KGPlanarLineSegment`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
 #### KGPlanarLineSegment
 Example:
@@ -2331,7 +2331,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgshellpolylinesurface">`shell_poly_line_surface`</a>|[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline|*`KGPlanarPolyLine`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
+|<a name="kgshellpolylinesurface">`shell_poly_line_surface`</a>|[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline)|*`KGPlanarPolyLine`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
 #### KGPlanarPolyLine
 Example:
@@ -2342,7 +2342,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments<br>[`next_line`](#kgplanarpolylinelinearguments<br>[`previous_arc`](#kgplanarpolylinearcarguments<br>[`previous_line`](#kgplanarpolylinelinearguments<br>[`start_point`](#kgplanarpolylinestartpointarguments|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments)<br>[`next_line`](#kgplanarpolylinelinearguments)<br>[`previous_arc`](#kgplanarpolylinearcarguments)<br>[`previous_line`](#kgplanarpolylinelinearguments)<br>[`start_point`](#kgplanarpolylinestartpointarguments)|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
 
 ### KGShellPolyLoopSurface
 Example:
@@ -2360,7 +2360,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgshellpolyloopsurface">`shell_poly_loop_surface`</a>|[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop|*`KGPlanarPolyLoop`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
+|<a name="kgshellpolyloopsurface">`shell_poly_loop_surface`</a>|[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
 #### KGPlanarPolyLoop
 Example:
@@ -2371,7 +2371,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments<br>[`last_line`](#kgplanarpolylooplastlinearguments<br>[`next_arc`](#kgplanarpolylooparcarguments<br>[`next_line`](#kgplanarpolylooplinearguments<br>[`previous_arc`](#kgplanarpolylooparcarguments<br>[`previous_line`](#kgplanarpolylooplinearguments<br>[`start_point`](#kgplanarpolyloopstartpointarguments|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
+|<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
 ### KGSpace
 Example:
@@ -2393,7 +2393,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgspace">`space`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)|[`space`](#kgspace<br>[`surface`](#kgsurface<br>[`transformation`](#ktransformation|*`KGSpace`*<br>*`KGSurface`*<br>*`KTransformation`*|`name`<br>`node`<br>`tree`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgspace">`space`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)|[`space`](#kgspace)<br>[`surface`](#kgsurface)<br>[`transformation`](#ktransformation)|*`KGSpace`*<br>*`KGSurface`*<br>*`KTransformation`*|`name`<br>`node`<br>`tree`|*`string`*<br>*`string`*<br>*`string`*|
 
 #### KGSpace
 Example:
@@ -2408,7 +2408,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgspace">`space`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)|[`space`](#kgspace<br>[`surface`](#kgsurface<br>[`transformation`](#ktransformation|*`KGSpace`*<br>*`KGSurface`*<br>*`KTransformation`*|`name`<br>`node`<br>`tree`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgspace">`space`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)|[`space`](#kgspace)<br>[`surface`](#kgsurface)<br>[`transformation`](#ktransformation)|*`KGSpace`*<br>*`KGSurface`*<br>*`KTransformation`*|`name`<br>`node`<br>`tree`|*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KGSurface
 Example:
@@ -2429,7 +2429,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgsurface">`surface`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)<br>[*KGSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSurfaceBuilder.cc)|[`transformation`](#ktransformation|*`KTransformation`*|`name`<br>`node`|*`string`*<br>*`string`*|
+|<a name="kgsurface">`surface`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)<br>[*KGSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSurfaceBuilder.cc)|[`transformation`](#ktransformation)|*`KTransformation`*|`name`<br>`node`|*`string`*<br>*`string`*|
 
 ###### KTransformation
 Example:
@@ -2479,7 +2479,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedspace\<kgstlfile\>">`stl_file_space`</a>|[*KGStlFileBuilder.cc*](KGeoBag/Source/Bindings/Shapes/External/Source/KGStlFileBuilder.cc)|[`stl_file`](#kgstlfile|*`KGStlFile`*|`name`|*`string`*|
+|<a name="kgwrappedspace\<kgstlfile\>">`stl_file_space`</a>|[*KGStlFileBuilder.cc*](KGeoBag/Source/Bindings/Shapes/External/Source/KGStlFileBuilder.cc)|[`stl_file`](#kgstlfile)|*`KGStlFile`*|`name`|*`string`*|
 
 #### KGStlFile
 Example:
@@ -2514,7 +2514,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgwrappedsurface\<kgstlfile\>">`stl_file_surface`</a>|[*KGStlFileBuilder.cc*](KGeoBag/Source/Bindings/Shapes/External/Source/KGStlFileBuilder.cc)|[`stl_file`](#kgstlfile|*`KGStlFile`*|`name`|*`string`*|
+|<a name="kgwrappedsurface\<kgstlfile\>">`stl_file_surface`</a>|[*KGStlFileBuilder.cc*](KGeoBag/Source/Bindings/Shapes/External/Source/KGStlFileBuilder.cc)|[`stl_file`](#kgstlfile)|*`KGStlFile`*|`name`|*`string`*|
 
 #### KGStlFile
 Example:
@@ -2543,7 +2543,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgsurface">`surface`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)<br>[*KGSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSurfaceBuilder.cc)|[`transformation`](#ktransformation|*`KTransformation`*|`name`<br>`node`|*`string`*<br>*`string`*|
+|<a name="kgsurface">`surface`</a>|[*KGSpaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)<br>[*KGSurfaceBuilder.cc*](KGeoBag/Source/Bindings/Core/Source/KGSurfaceBuilder.cc)|[`transformation`](#ktransformation)|*`KTransformation`*|`name`<br>`node`|*`string`*<br>*`string`*|
 
 ### KGTorusSpace
 Example:
@@ -2604,7 +2604,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksroot">`kassiopeia`</a>|[*KSRootBuilder.cxx*](Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx)|[`kess_elastic_elsepa`](#kesselasticelsepa<br>[`kess_inelastic_bethefano`](#kessinelasticbethefano<br>[`kess_inelastic_penn`](#kessinelasticpenn<br>[`kess_surface_interaction`](#kesssurfaceinteraction<br>[`ks_command_group`](#kscommandgroup<br>[`ks_command_member`](#kscommandmemberdata<br>[`ks_component_delta`](#kscomponentdeltadata<br>[`ks_component_group`](#kscomponentgroup<br>[`ks_component_integral`](#kscomponentintegraldata<br>[`ks_component_math`](#kscomponentmathdata<br>[`ks_component_maximum`](#kscomponentmaximumdata<br>[`ks_component_maximum_at`](#kscomponentmaximumatdata<br>[`ks_component_member`](#kscomponentmemberdata<br>[`ks_component_minimum`](#kscomponentminimumdata<br>[`ks_component_minimum_at`](#kscomponentminimumatdata<br>[`ks_root_electric_field`](#ksrootelectricfield<br>[`ks_root_event_modifier`](#ksrooteventmodifier<br>[`ks_root_generator`](#ksrootgenerator<br>[`ks_root_magnetic_field`](#ksrootmagneticfield<br>[`ks_root_run_modifier`](#ksrootrunmodifier<br>[`ks_root_space_interaction`](#ksrootspaceinteraction<br>[`ks_root_space_navigator`](#ksrootspacenavigator<br>[`ks_root_step_modifier`](#ksrootstepmodifier<br>[`ks_root_surface_interaction`](#ksrootsurfaceinteraction<br>[`ks_root_surface_navigator`](#ksrootsurfacenavigator<br>[`ks_root_terminator`](#ksrootterminator<br>[`ks_root_track_modifier`](#ksroottrackmodifier<br>[`ks_root_trajectory`](#ksroottrajectory<br>[`ks_root_writer`](#ksrootwriter<br>[`ks_simulation`](#kssimulation<br>[`ksfield_electric_constant`](#kelectrostaticconstantfield<br>[`ksfield_electric_induced_azi`](#kinducedazimuthalelectricfield<br>[`ksfield_electric_potentialmap`](#kelectrostaticpotentialmap<br>[`ksfield_electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator<br>[`ksfield_electric_quadrupole`](#kelectricquadrupolefield<br>[`ksfield_electric_ramped`](#krampedelectricfield<br>[`ksfield_electric_ramped_2fields`](#krampedelectric2field<br>[`ksfield_electromagnet`](#kgstaticelectromagnetfield<br>[`ksfield_electrostatic`](#kgelectrostaticboundaryfield<br>[`ksfield_magnetic_constant`](#kmagnetostaticconstantfield<br>[`ksfield_magnetic_dipole`](#kmagneticdipolefield<br>[`ksfield_magnetic_fieldmap`](#kmagnetostaticfieldmap<br>[`ksfield_magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator<br>[`ksfield_magnetic_ramped`](#krampedmagneticfield<br>[`ksfield_magnetic_super_position`](#kmagneticsuperpositionfield<br>[`ksgen_direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`ksgen_direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`ksgen_direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`ksgen_energy_beta_decay`](#ksgenenergybetadecay<br>[`ksgen_energy_beta_recoil`](#ksgenenergybetarecoil<br>[`ksgen_energy_composite`](#ksgenenergycomposite<br>[`ksgen_energy_krypton_event`](#ksgenenergykryptonevent<br>[`ksgen_energy_lead_event`](#ksgenenergyleadevent<br>[`ksgen_energy_radon_event`](#ksgenenergyradonevent<br>[`ksgen_energy_rydberg`](#ksgenenergyrydberg<br>[`ksgen_generator_composite`](#ksgengeneratorcomposite<br>[`ksgen_generator_file`](#ksgengeneratortextfile<br>[`ksgen_generator_simulation`](#ksgengeneratorsimulation<br>[`ksgen_l_composite`](#ksgenlcomposite<br>[`ksgen_l_statistical`](#ksgenlstatistical<br>[`ksgen_l_uniform_max_n`](#ksgenluniformmaxn<br>[`ksgen_momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`ksgen_n_composite`](#ksgenncomposite<br>[`ksgen_position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`ksgen_position_flux_tube`](#ksgenpositionfluxtube<br>[`ksgen_position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`ksgen_position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`ksgen_position_mask`](#ksgenpositionmask<br>[`ksgen_position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`ksgen_position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`ksgen_position_space_random`](#ksgenpositionspacerandom<br>[`ksgen_position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`ksgen_position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`ksgen_position_surface_random`](#ksgenpositionsurfacerandom<br>[`ksgen_spin_composite`](#ksgenspincomposite<br>[`ksgen_spin_composite_relative`](#ksgenspinrelativecomposite<br>[`ksgen_time_composite`](#ksgentimecomposite<br>[`ksgen_value_angle_cosine`](#ksgenvalueanglecosine<br>[`ksgen_value_angle_spherical`](#ksgenvalueanglespherical<br>[`ksgen_value_boltzmann`](#ksgenvalueboltzmann<br>[`ksgen_value_fix`](#ksgenvaluefix<br>[`ksgen_value_formula`](#ksgenvalueformula<br>[`ksgen_value_gauss`](#ksgenvaluegauss<br>[`ksgen_value_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`ksgen_value_histogram`](#ksgenvaluehistogram<br>[`ksgen_value_list`](#ksgenvaluelist<br>[`ksgen_value_pareto`](#ksgenvaluepareto<br>[`ksgen_value_radius_cylindrical`](#ksgenvalueradiuscylindrical<br>[`ksgen_value_radius_fraction`](#ksgenvalueradiusfraction<br>[`ksgen_value_radius_spherical`](#ksgenvalueradiusspherical<br>[`ksgen_value_set`](#ksgenvalueset<br>[`ksgen_value_uniform`](#ksgenvalueuniform<br>[`ksgen_value_z_frustrum`](#ksgenvaluezfrustrum<br>[`ksgeo_side`](#ksgeoside<br>[`ksgeo_space`](#ksgeospace<br>[`ksgeo_surface`](#ksgeosurface<br>[`ksint_calculator_constant`](#ksintcalculatorconstant<br>[`ksint_calculator_ion`](#ksintcalculatorion<br>[`ksint_decay`](#ksintdecay<br>[`ksint_decay_calculator_death_const_rate`](#ksintdecaycalculatordeathconstrate<br>[`ksint_decay_calculator_ferenc_bbr_transition`](#ksintdecaycalculatorferencbbrtransition<br>[`ksint_decay_calculator_ferenc_ionisation`](#ksintdecaycalculatorferencionisation<br>[`ksint_decay_calculator_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous<br>[`ksint_decay_calculator_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation<br>[`ksint_decay_calculator_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation<br>[`ksint_decay_calculator_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation<br>[`ksint_decay_calculator_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous<br>[`ksint_density_constant`](#ksintdensityconstant<br>[`ksint_scattering`](#ksintscattering<br>[`ksint_spin_flip`](#ksintspinflip<br>[`ksint_spin_flip_pulse`](#ksintspinflippulse<br>[`ksint_spin_rotate_y_pulse`](#ksintspinrotateypulse<br>[`ksint_surface_UCN`](#ksintsurfaceucn<br>[`ksint_surface_diffuse`](#ksintsurfacediffuse<br>[`ksint_surface_multiplication`](#ksintsurfacemultiplication<br>[`ksint_surface_specular`](#ksintsurfacespecular<br>[`ksint_surface_spin_flip`](#ksintsurfacespinflip<br>[`ksmod_dynamic_enhancement`](#ksmoddynamicenhancement<br>[`ksmod_event_report`](#ksmodeventreport<br>[`ksmod_split_on_turn`](#ksmodsplitonturn<br>[`ksnav_meshed_space`](#ksnavmeshedspace<br>[`ksnav_space`](#ksnavspace<br>[`ksnav_surface`](#ksnavsurface<br>[`ksterm_death`](#kstermdeath<br>[`ksterm_magnetron`](#kstermmagnetron<br>[`ksterm_max_energy`](#kstermmaxenergy<br>[`ksterm_max_length`](#kstermmaxlength<br>[`ksterm_max_long_energy`](#kstermmaxlongenergy<br>[`ksterm_max_r`](#kstermmaxr<br>[`ksterm_max_step_time`](#kstermmaxsteptime<br>[`ksterm_max_steps`](#kstermmaxsteps<br>[`ksterm_max_time`](#kstermmaxtime<br>[`ksterm_max_total_time`](#kstermmaxtotaltime<br>[`ksterm_max_z`](#kstermmaxz<br>[`ksterm_min_distance`](#kstermmindistance<br>[`ksterm_min_energy`](#kstermminenergy<br>[`ksterm_min_long_energy`](#kstermminlongenergy<br>[`ksterm_min_r`](#kstermminr<br>[`ksterm_min_z`](#kstermminz<br>[`ksterm_output`](#kstermoutputdata<br>[`ksterm_secondaries`](#kstermsecondaries<br>[`ksterm_stepsize`](#kstermstepsize<br>[`ksterm_trapped`](#kstermtrapped<br>[`kstraj_control_B_change`](#kstrajcontrolbchange<br>[`kstraj_control_cyclotron`](#kstrajcontrolcyclotron<br>[`kstraj_control_energy`](#kstrajcontrolenergy<br>[`kstraj_control_length`](#kstrajcontrollength<br>[`kstraj_control_m_dot`](#kstrajcontrolmdot<br>[`kstraj_control_magnetic_moment`](#kstrajcontrolmagneticmoment<br>[`kstraj_control_momentum_numerical_error`](#kstrajcontrolmomentumnumericalerror<br>[`kstraj_control_position_numerical_error`](#kstrajcontrolpositionnumericalerror<br>[`kstraj_control_spin_precession`](#kstrajcontrolspinprecession<br>[`kstraj_control_time`](#kstrajcontroltime<br>[`kstraj_integrator_rk54`](#kstrajintegratorrk54<br>[`kstraj_integrator_rk65`](#kstrajintegratorrk65<br>[`kstraj_integrator_rk8`](#kstrajintegratorrk8<br>[`kstraj_integrator_rk86`](#kstrajintegratorrk86<br>[`kstraj_integrator_rk87`](#kstrajintegratorrk87<br>[`kstraj_integrator_rkdp54`](#kstrajintegratorrkdp54<br>[`kstraj_integrator_rkdp853`](#kstrajintegratorrkdp853<br>[`kstraj_integrator_sym4`](#kstrajintegratorsym4<br>[`kstraj_interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`kstraj_interpolator_fast`](#kstrajinterpolatorfast<br>[`kstraj_interpolator_hermite`](#kstrajinterpolatorhermite<br>[`kstraj_term_constant_force_propagation`](#kstrajtermconstantforcepropagation<br>[`kstraj_term_drift`](#kstrajtermdrift<br>[`kstraj_term_gravity`](#kstrajtermgravity<br>[`kstraj_term_gyration`](#kstrajtermgyration<br>[`kstraj_term_propagation`](#kstrajtermpropagation<br>[`kstraj_term_synchrotron`](#kstrajtermsynchrotron<br>[`kstraj_trajectory_adiabatic`](#kstrajtrajectoryadiabatic<br>[`kstraj_trajectory_adiabatic_spin`](#kstrajtrajectoryadiabaticspin<br>[`kstraj_trajectory_electric`](#kstrajtrajectoryelectric<br>[`kstraj_trajectory_exact`](#kstrajtrajectoryexact<br>[`kstraj_trajectory_exact_spin`](#kstrajtrajectoryexactspin<br>[`kstraj_trajectory_exact_trapped`](#kstrajtrajectoryexacttrapped<br>[`kstraj_trajectory_linear`](#kstrajtrajectorylinear<br>[`kstraj_trajectory_magnetic`](#kstrajtrajectorymagnetic<br>[`kswrite_ascii`](#kswriteascii<br>[`kswrite_root`](#kswriteroot<br>[`kswrite_root_condition_output`](#kswriterootconditionoutputdata<br>[`kswrite_root_condition_periodic`](#kswriterootconditionperiodicdata<br>[`kswrite_root_condition_step`](#kswriterootconditionstepdata<br>[`kswrite_root_condition_terminator`](#kswriterootconditionterminatordata<br>[`kswrite_vtk`](#kswritevtk<br>[`output`](#kscomponentmemberdata<br>[`output_delta`](#kscomponentdeltadata<br>[`output_group`](#kscomponentgroup<br>[`output_integral`](#kscomponentintegraldata<br>[`output_math`](#kscomponentmathdata<br>[`output_maximum`](#kscomponentmaximumdata<br>[`output_maximum_at`](#kscomponentmaximumatdata<br>[`output_minimum`](#kscomponentminimumdata<br>[`output_minimum_at`](#kscomponentminimumatdata|*`KESSElasticElsepa`*<br>*`KESSInelasticBetheFano`*<br>*`KESSInelasticPenn`*<br>*`KESSSurfaceInteraction`*<br>*`KSCommandGroup`*<br>*`KSCommandMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMemberData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*<br>*`KSRootElectricField`*<br>*`KSRootEventModifier`*<br>*`KSRootGenerator`*<br>*`KSRootMagneticField`*<br>*`KSRootRunModifier`*<br>*`KSRootSpaceInteraction`*<br>*`KSRootSpaceNavigator`*<br>*`KSRootStepModifier`*<br>*`KSRootSurfaceInteraction`*<br>*`KSRootSurfaceNavigator`*<br>*`KSRootTerminator`*<br>*`KSRootTrackModifier`*<br>*`KSRootTrajectory`*<br>*`KSRootWriter`*<br>*`KSSimulation`*<br>*`KElectrostaticConstantField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KRampedElectricField`*<br>*`KRampedElectric2Field`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KRampedMagneticField`*<br>*`KMagneticSuperpositionField`*<br>*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenGeneratorComposite`*<br>*`KSGenGeneratorTextFile`*<br>*`KSGenGeneratorSimulation`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueZFrustrum`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorIon`*<br>*`KSIntDecay`*<br>*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*<br>*`KSIntDensityConstant`*<br>*`KSIntScattering`*<br>*`KSIntSpinFlip`*<br>*`KSIntSpinFlipPulse`*<br>*`KSIntSpinRotateYPulse`*<br>*`KSIntSurfaceUCN`*<br>*`KSIntSurfaceDiffuse`*<br>*`KSIntSurfaceMultiplication`*<br>*`KSIntSurfaceSpecular`*<br>*`KSIntSurfaceSpinFlip`*<br>*`KSModDynamicEnhancement`*<br>*`KSModEventReport`*<br>*`KSModSplitOnTurn`*<br>*`KSNavMeshedSpace`*<br>*`KSNavSpace`*<br>*`KSNavSurface`*<br>*`KSTermDeath`*<br>*`KSTermMagnetron`*<br>*`KSTermMaxEnergy`*<br>*`KSTermMaxLength`*<br>*`KSTermMaxLongEnergy`*<br>*`KSTermMaxR`*<br>*`KSTermMaxStepTime`*<br>*`KSTermMaxSteps`*<br>*`KSTermMaxTime`*<br>*`KSTermMaxTotalTime`*<br>*`KSTermMaxZ`*<br>*`KSTermMinDistance`*<br>*`KSTermMinEnergy`*<br>*`KSTermMinLongEnergy`*<br>*`KSTermMinR`*<br>*`KSTermMinZ`*<br>*`KSTermOutputData`*<br>*`KSTermSecondaries`*<br>*`KSTermStepsize`*<br>*`KSTermTrapped`*<br>*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermConstantForcePropagation`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*<br>*`KSTrajTrajectoryAdiabatic`*<br>*`KSTrajTrajectoryAdiabaticSpin`*<br>*`KSTrajTrajectoryElectric`*<br>*`KSTrajTrajectoryExact`*<br>*`KSTrajTrajectoryExactSpin`*<br>*`KSTrajTrajectoryExactTrapped`*<br>*`KSTrajTrajectoryLinear`*<br>*`KSTrajTrajectoryMagnetic`*<br>*`KSWriteASCII`*<br>*`KSWriteROOT`*<br>*`KSWriteROOTConditionOutputData`*<br>*`KSWriteROOTConditionPeriodicData`*<br>*`KSWriteROOTConditionStepData`*<br>*`KSWriteROOTConditionTerminatorData`*<br>*`KSWriteVTK`*<br>*`KSComponentMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*|—    |—    |
+|<a name="ksroot">`kassiopeia`</a>|[*KSRootBuilder.cxx*](Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx)|[`kess_elastic_elsepa`](#kesselasticelsepa)<br>[`kess_inelastic_bethefano`](#kessinelasticbethefano)<br>[`kess_inelastic_penn`](#kessinelasticpenn)<br>[`kess_surface_interaction`](#kesssurfaceinteraction)<br>[`ks_command_group`](#kscommandgroup)<br>[`ks_command_member`](#kscommandmemberdata)<br>[`ks_component_delta`](#kscomponentdeltadata)<br>[`ks_component_group`](#kscomponentgroup)<br>[`ks_component_integral`](#kscomponentintegraldata)<br>[`ks_component_math`](#kscomponentmathdata)<br>[`ks_component_maximum`](#kscomponentmaximumdata)<br>[`ks_component_maximum_at`](#kscomponentmaximumatdata)<br>[`ks_component_member`](#kscomponentmemberdata)<br>[`ks_component_minimum`](#kscomponentminimumdata)<br>[`ks_component_minimum_at`](#kscomponentminimumatdata)<br>[`ks_root_electric_field`](#ksrootelectricfield)<br>[`ks_root_event_modifier`](#ksrooteventmodifier)<br>[`ks_root_generator`](#ksrootgenerator)<br>[`ks_root_magnetic_field`](#ksrootmagneticfield)<br>[`ks_root_run_modifier`](#ksrootrunmodifier)<br>[`ks_root_space_interaction`](#ksrootspaceinteraction)<br>[`ks_root_space_navigator`](#ksrootspacenavigator)<br>[`ks_root_step_modifier`](#ksrootstepmodifier)<br>[`ks_root_surface_interaction`](#ksrootsurfaceinteraction)<br>[`ks_root_surface_navigator`](#ksrootsurfacenavigator)<br>[`ks_root_terminator`](#ksrootterminator)<br>[`ks_root_track_modifier`](#ksroottrackmodifier)<br>[`ks_root_trajectory`](#ksroottrajectory)<br>[`ks_root_writer`](#ksrootwriter)<br>[`ks_simulation`](#kssimulation)<br>[`ksfield_electric_constant`](#kelectrostaticconstantfield)<br>[`ksfield_electric_induced_azi`](#kinducedazimuthalelectricfield)<br>[`ksfield_electric_potentialmap`](#kelectrostaticpotentialmap)<br>[`ksfield_electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator)<br>[`ksfield_electric_quadrupole`](#kelectricquadrupolefield)<br>[`ksfield_electric_ramped`](#krampedelectricfield)<br>[`ksfield_electric_ramped_2fields`](#krampedelectric2field)<br>[`ksfield_electromagnet`](#kgstaticelectromagnetfield)<br>[`ksfield_electrostatic`](#kgelectrostaticboundaryfield)<br>[`ksfield_magnetic_constant`](#kmagnetostaticconstantfield)<br>[`ksfield_magnetic_dipole`](#kmagneticdipolefield)<br>[`ksfield_magnetic_fieldmap`](#kmagnetostaticfieldmap)<br>[`ksfield_magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator)<br>[`ksfield_magnetic_ramped`](#krampedmagneticfield)<br>[`ksfield_magnetic_super_position`](#kmagneticsuperpositionfield)<br>[`ksgen_direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`ksgen_direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`ksgen_direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`ksgen_energy_beta_decay`](#ksgenenergybetadecay)<br>[`ksgen_energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`ksgen_energy_composite`](#ksgenenergycomposite)<br>[`ksgen_energy_krypton_event`](#ksgenenergykryptonevent)<br>[`ksgen_energy_lead_event`](#ksgenenergyleadevent)<br>[`ksgen_energy_radon_event`](#ksgenenergyradonevent)<br>[`ksgen_energy_rydberg`](#ksgenenergyrydberg)<br>[`ksgen_generator_composite`](#ksgengeneratorcomposite)<br>[`ksgen_generator_file`](#ksgengeneratortextfile)<br>[`ksgen_generator_simulation`](#ksgengeneratorsimulation)<br>[`ksgen_l_composite`](#ksgenlcomposite)<br>[`ksgen_l_statistical`](#ksgenlstatistical)<br>[`ksgen_l_uniform_max_n`](#ksgenluniformmaxn)<br>[`ksgen_momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`ksgen_n_composite`](#ksgenncomposite)<br>[`ksgen_position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`ksgen_position_flux_tube`](#ksgenpositionfluxtube)<br>[`ksgen_position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`ksgen_position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`ksgen_position_mask`](#ksgenpositionmask)<br>[`ksgen_position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`ksgen_position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`ksgen_position_space_random`](#ksgenpositionspacerandom)<br>[`ksgen_position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`ksgen_position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`ksgen_position_surface_random`](#ksgenpositionsurfacerandom)<br>[`ksgen_spin_composite`](#ksgenspincomposite)<br>[`ksgen_spin_composite_relative`](#ksgenspinrelativecomposite)<br>[`ksgen_time_composite`](#ksgentimecomposite)<br>[`ksgen_value_angle_cosine`](#ksgenvalueanglecosine)<br>[`ksgen_value_angle_spherical`](#ksgenvalueanglespherical)<br>[`ksgen_value_boltzmann`](#ksgenvalueboltzmann)<br>[`ksgen_value_fix`](#ksgenvaluefix)<br>[`ksgen_value_formula`](#ksgenvalueformula)<br>[`ksgen_value_gauss`](#ksgenvaluegauss)<br>[`ksgen_value_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`ksgen_value_histogram`](#ksgenvaluehistogram)<br>[`ksgen_value_list`](#ksgenvaluelist)<br>[`ksgen_value_pareto`](#ksgenvaluepareto)<br>[`ksgen_value_radius_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`ksgen_value_radius_fraction`](#ksgenvalueradiusfraction)<br>[`ksgen_value_radius_spherical`](#ksgenvalueradiusspherical)<br>[`ksgen_value_set`](#ksgenvalueset)<br>[`ksgen_value_uniform`](#ksgenvalueuniform)<br>[`ksgen_value_z_frustrum`](#ksgenvaluezfrustrum)<br>[`ksgeo_side`](#ksgeoside)<br>[`ksgeo_space`](#ksgeospace)<br>[`ksgeo_surface`](#ksgeosurface)<br>[`ksint_calculator_constant`](#ksintcalculatorconstant)<br>[`ksint_calculator_ion`](#ksintcalculatorion)<br>[`ksint_decay`](#ksintdecay)<br>[`ksint_decay_calculator_death_const_rate`](#ksintdecaycalculatordeathconstrate)<br>[`ksint_decay_calculator_ferenc_bbr_transition`](#ksintdecaycalculatorferencbbrtransition)<br>[`ksint_decay_calculator_ferenc_ionisation`](#ksintdecaycalculatorferencionisation)<br>[`ksint_decay_calculator_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous)<br>[`ksint_decay_calculator_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation)<br>[`ksint_decay_calculator_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation)<br>[`ksint_decay_calculator_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation)<br>[`ksint_decay_calculator_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous)<br>[`ksint_density_constant`](#ksintdensityconstant)<br>[`ksint_scattering`](#ksintscattering)<br>[`ksint_spin_flip`](#ksintspinflip)<br>[`ksint_spin_flip_pulse`](#ksintspinflippulse)<br>[`ksint_spin_rotate_y_pulse`](#ksintspinrotateypulse)<br>[`ksint_surface_UCN`](#ksintsurfaceucn)<br>[`ksint_surface_diffuse`](#ksintsurfacediffuse)<br>[`ksint_surface_multiplication`](#ksintsurfacemultiplication)<br>[`ksint_surface_specular`](#ksintsurfacespecular)<br>[`ksint_surface_spin_flip`](#ksintsurfacespinflip)<br>[`ksmod_dynamic_enhancement`](#ksmoddynamicenhancement)<br>[`ksmod_event_report`](#ksmodeventreport)<br>[`ksmod_split_on_turn`](#ksmodsplitonturn)<br>[`ksnav_meshed_space`](#ksnavmeshedspace)<br>[`ksnav_space`](#ksnavspace)<br>[`ksnav_surface`](#ksnavsurface)<br>[`ksterm_death`](#kstermdeath)<br>[`ksterm_magnetron`](#kstermmagnetron)<br>[`ksterm_max_energy`](#kstermmaxenergy)<br>[`ksterm_max_length`](#kstermmaxlength)<br>[`ksterm_max_long_energy`](#kstermmaxlongenergy)<br>[`ksterm_max_r`](#kstermmaxr)<br>[`ksterm_max_step_time`](#kstermmaxsteptime)<br>[`ksterm_max_steps`](#kstermmaxsteps)<br>[`ksterm_max_time`](#kstermmaxtime)<br>[`ksterm_max_total_time`](#kstermmaxtotaltime)<br>[`ksterm_max_z`](#kstermmaxz)<br>[`ksterm_min_distance`](#kstermmindistance)<br>[`ksterm_min_energy`](#kstermminenergy)<br>[`ksterm_min_long_energy`](#kstermminlongenergy)<br>[`ksterm_min_r`](#kstermminr)<br>[`ksterm_min_z`](#kstermminz)<br>[`ksterm_output`](#kstermoutputdata)<br>[`ksterm_secondaries`](#kstermsecondaries)<br>[`ksterm_stepsize`](#kstermstepsize)<br>[`ksterm_trapped`](#kstermtrapped)<br>[`kstraj_control_B_change`](#kstrajcontrolbchange)<br>[`kstraj_control_cyclotron`](#kstrajcontrolcyclotron)<br>[`kstraj_control_energy`](#kstrajcontrolenergy)<br>[`kstraj_control_length`](#kstrajcontrollength)<br>[`kstraj_control_m_dot`](#kstrajcontrolmdot)<br>[`kstraj_control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`kstraj_control_momentum_numerical_error`](#kstrajcontrolmomentumnumericalerror)<br>[`kstraj_control_position_numerical_error`](#kstrajcontrolpositionnumericalerror)<br>[`kstraj_control_spin_precession`](#kstrajcontrolspinprecession)<br>[`kstraj_control_time`](#kstrajcontroltime)<br>[`kstraj_integrator_rk54`](#kstrajintegratorrk54)<br>[`kstraj_integrator_rk65`](#kstrajintegratorrk65)<br>[`kstraj_integrator_rk8`](#kstrajintegratorrk8)<br>[`kstraj_integrator_rk86`](#kstrajintegratorrk86)<br>[`kstraj_integrator_rk87`](#kstrajintegratorrk87)<br>[`kstraj_integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`kstraj_integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`kstraj_integrator_sym4`](#kstrajintegratorsym4)<br>[`kstraj_interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`kstraj_interpolator_fast`](#kstrajinterpolatorfast)<br>[`kstraj_interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`kstraj_term_constant_force_propagation`](#kstrajtermconstantforcepropagation)<br>[`kstraj_term_drift`](#kstrajtermdrift)<br>[`kstraj_term_gravity`](#kstrajtermgravity)<br>[`kstraj_term_gyration`](#kstrajtermgyration)<br>[`kstraj_term_propagation`](#kstrajtermpropagation)<br>[`kstraj_term_synchrotron`](#kstrajtermsynchrotron)<br>[`kstraj_trajectory_adiabatic`](#kstrajtrajectoryadiabatic)<br>[`kstraj_trajectory_adiabatic_spin`](#kstrajtrajectoryadiabaticspin)<br>[`kstraj_trajectory_electric`](#kstrajtrajectoryelectric)<br>[`kstraj_trajectory_exact`](#kstrajtrajectoryexact)<br>[`kstraj_trajectory_exact_spin`](#kstrajtrajectoryexactspin)<br>[`kstraj_trajectory_exact_trapped`](#kstrajtrajectoryexacttrapped)<br>[`kstraj_trajectory_linear`](#kstrajtrajectorylinear)<br>[`kstraj_trajectory_magnetic`](#kstrajtrajectorymagnetic)<br>[`kswrite_ascii`](#kswriteascii)<br>[`kswrite_root`](#kswriteroot)<br>[`kswrite_root_condition_output`](#kswriterootconditionoutputdata)<br>[`kswrite_root_condition_periodic`](#kswriterootconditionperiodicdata)<br>[`kswrite_root_condition_step`](#kswriterootconditionstepdata)<br>[`kswrite_root_condition_terminator`](#kswriterootconditionterminatordata)<br>[`kswrite_vtk`](#kswritevtk)<br>[`output`](#kscomponentmemberdata)<br>[`output_delta`](#kscomponentdeltadata)<br>[`output_group`](#kscomponentgroup)<br>[`output_integral`](#kscomponentintegraldata)<br>[`output_math`](#kscomponentmathdata)<br>[`output_maximum`](#kscomponentmaximumdata)<br>[`output_maximum_at`](#kscomponentmaximumatdata)<br>[`output_minimum`](#kscomponentminimumdata)<br>[`output_minimum_at`](#kscomponentminimumatdata)|*`KESSElasticElsepa`*<br>*`KESSInelasticBetheFano`*<br>*`KESSInelasticPenn`*<br>*`KESSSurfaceInteraction`*<br>*`KSCommandGroup`*<br>*`KSCommandMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMemberData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*<br>*`KSRootElectricField`*<br>*`KSRootEventModifier`*<br>*`KSRootGenerator`*<br>*`KSRootMagneticField`*<br>*`KSRootRunModifier`*<br>*`KSRootSpaceInteraction`*<br>*`KSRootSpaceNavigator`*<br>*`KSRootStepModifier`*<br>*`KSRootSurfaceInteraction`*<br>*`KSRootSurfaceNavigator`*<br>*`KSRootTerminator`*<br>*`KSRootTrackModifier`*<br>*`KSRootTrajectory`*<br>*`KSRootWriter`*<br>*`KSSimulation`*<br>*`KElectrostaticConstantField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KRampedElectricField`*<br>*`KRampedElectric2Field`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KRampedMagneticField`*<br>*`KMagneticSuperpositionField`*<br>*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenGeneratorComposite`*<br>*`KSGenGeneratorTextFile`*<br>*`KSGenGeneratorSimulation`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueZFrustrum`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorIon`*<br>*`KSIntDecay`*<br>*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*<br>*`KSIntDensityConstant`*<br>*`KSIntScattering`*<br>*`KSIntSpinFlip`*<br>*`KSIntSpinFlipPulse`*<br>*`KSIntSpinRotateYPulse`*<br>*`KSIntSurfaceUCN`*<br>*`KSIntSurfaceDiffuse`*<br>*`KSIntSurfaceMultiplication`*<br>*`KSIntSurfaceSpecular`*<br>*`KSIntSurfaceSpinFlip`*<br>*`KSModDynamicEnhancement`*<br>*`KSModEventReport`*<br>*`KSModSplitOnTurn`*<br>*`KSNavMeshedSpace`*<br>*`KSNavSpace`*<br>*`KSNavSurface`*<br>*`KSTermDeath`*<br>*`KSTermMagnetron`*<br>*`KSTermMaxEnergy`*<br>*`KSTermMaxLength`*<br>*`KSTermMaxLongEnergy`*<br>*`KSTermMaxR`*<br>*`KSTermMaxStepTime`*<br>*`KSTermMaxSteps`*<br>*`KSTermMaxTime`*<br>*`KSTermMaxTotalTime`*<br>*`KSTermMaxZ`*<br>*`KSTermMinDistance`*<br>*`KSTermMinEnergy`*<br>*`KSTermMinLongEnergy`*<br>*`KSTermMinR`*<br>*`KSTermMinZ`*<br>*`KSTermOutputData`*<br>*`KSTermSecondaries`*<br>*`KSTermStepsize`*<br>*`KSTermTrapped`*<br>*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermConstantForcePropagation`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*<br>*`KSTrajTrajectoryAdiabatic`*<br>*`KSTrajTrajectoryAdiabaticSpin`*<br>*`KSTrajTrajectoryElectric`*<br>*`KSTrajTrajectoryExact`*<br>*`KSTrajTrajectoryExactSpin`*<br>*`KSTrajTrajectoryExactTrapped`*<br>*`KSTrajTrajectoryLinear`*<br>*`KSTrajTrajectoryMagnetic`*<br>*`KSWriteASCII`*<br>*`KSWriteROOT`*<br>*`KSWriteROOTConditionOutputData`*<br>*`KSWriteROOTConditionPeriodicData`*<br>*`KSWriteROOTConditionStepData`*<br>*`KSWriteROOTConditionTerminatorData`*<br>*`KSWriteVTK`*<br>*`KSComponentMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*|—    |—    |
 
 ### KESSElasticElsepa
 Example:
@@ -2666,7 +2666,7 @@ Example:
 ### KSCommandGroup
 Example:
 ```
-<command_group
+<ks_command_group
     command="(string)"
     name="(string)"
 >
@@ -2676,26 +2676,26 @@ Example:
     >
     </command_group>
 
-</command_group>
+</ks_command_group>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kscommandgroup">`ks_command_group`</a>|[*KSCommandGroupBuilder.cxx*](Kassiopeia/Bindings/Objects/Source/KSCommandGroupBuilder.cxx)|[`command_group`](#kscommandgroup|*`KSCommandGroup`*|`command`<br>`name`|*`string`*<br>*`string`*|
+|<a name="kscommandgroup">`ks_command_group`</a>|[*KSCommandGroupBuilder.cxx*](Kassiopeia/Bindings/Objects/Source/KSCommandGroupBuilder.cxx)|[`command_group`](#kscommandgroup)|*`KSCommandGroup`*|`command`<br>`name`|*`string`*<br>*`string`*|
 
 #### KSCommandGroup
 Example:
 ```
-<command_group
+<ks_command_group
     command="(string)"
     name="(string)"
 >
-</command_group>
+</ks_command_group>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kscommandgroup">`command_group`</a>|[*KSCommandGroupBuilder.cxx*](Kassiopeia/Bindings/Objects/Source/KSCommandGroupBuilder.cxx)|[`command_group`](#kscommandgroup|*`KSCommandGroup`*|`command`<br>`name`|*`string`*<br>*`string`*|
+|<a name="kscommandgroup">`command_group`</a>|[*KSCommandGroupBuilder.cxx*](Kassiopeia/Bindings/Objects/Source/KSCommandGroupBuilder.cxx)|[`command_group`](#kscommandgroup)|*`KSCommandGroup`*|`command`<br>`name`|*`string`*<br>*`string`*|
 
 ### KSCommandMemberData
 Example:
@@ -2715,12 +2715,12 @@ Example:
 ### KSComponentDeltaData
 Example:
 ```
-<ks_component_delta
+<output_delta
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_delta>
+</output_delta>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2740,12 +2740,12 @@ Example:
 ### KSComponentIntegralData
 Example:
 ```
-<component_integral
+<output_integral
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_integral>
+</output_integral>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2770,12 +2770,12 @@ Example:
 ### KSComponentMaximumData
 Example:
 ```
-<ks_component_maximum
+<component_maximum
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_maximum>
+</component_maximum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2785,12 +2785,12 @@ Example:
 ### KSComponentMaximumAtData
 Example:
 ```
-<ks_component_maximum_at
+<component_maximum_at
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_maximum_at>
+</component_maximum_at>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2815,12 +2815,12 @@ Example:
 ### KSComponentMinimumData
 Example:
 ```
-<component_minimum
+<output_minimum
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_minimum>
+</output_minimum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2830,12 +2830,12 @@ Example:
 ### KSComponentMinimumAtData
 Example:
 ```
-<component_minimum_at
+<ks_component_minimum_at
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_minimum_at>
+</ks_component_minimum_at>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3056,12 +3056,12 @@ Example:
 ### KElectrostaticConstantField
 Example:
 ```
-<ksfield_electric_constant
+<constant_electric_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_electric_constant>
+</constant_electric_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3117,17 +3117,17 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kelectrostaticpotentialmapcalculator">`ksfield_electric_potentialmap_calculator`</a>|[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electric_constant`](#kelectrostaticconstantfield<br>[`field_electric_quadrupole`](#kelectricquadrupolefield<br>[`field_electrostatic`](#kgelectrostaticboundaryfield|*`KElectrostaticConstantField`*<br>*`KElectricQuadrupoleField`*<br>*`KGElectrostaticBoundaryField`*|`center`<br>`compute_field`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*|
+|<a name="kelectrostaticpotentialmapcalculator">`ksfield_electric_potentialmap_calculator`</a>|[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electric_constant`](#kelectrostaticconstantfield)<br>[`field_electric_quadrupole`](#kelectricquadrupolefield)<br>[`field_electrostatic`](#kgelectrostaticboundaryfield)|*`KElectrostaticConstantField`*<br>*`KElectricQuadrupoleField`*<br>*`KGElectrostaticBoundaryField`*|`center`<br>`compute_field`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*|
 
 #### KElectrostaticConstantField
 Example:
 ```
-<ksfield_electric_constant
+<constant_electric_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_electric_constant>
+</constant_electric_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3152,19 +3152,19 @@ Example:
 #### KGElectrostaticBoundaryField
 Example:
 ```
-<field_electrostatic
+<ksfield_electrostatic
     directory="(string)"
     file="(string)"
     hash_threshold="(double)"
 >
     <boundary_element_info/>
 
-</field_electrostatic>
+</ksfield_electrostatic>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgelectrostaticboundaryfield">`field_electrostatic`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay<br>[`cached_bem_solver`](#kcachedchargedensitysolver<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver<br>[`timer`](#kelectrostaticboundaryfieldtimer<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgelectrostaticboundaryfield">`field_electrostatic`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay)<br>[`cached_bem_solver`](#kcachedchargedensitysolver)<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver)<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver)<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver)<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver)<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver)<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver)<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver)<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold)<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver)<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold)<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver)<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold)<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver)<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver)<br>[`timer`](#kelectrostaticboundaryfieldtimer)<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor)<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver)|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KBoundaryElementInfoDisplay
 Example:
@@ -3179,11 +3179,11 @@ Example:
 ##### KCachedChargeDensitySolver
 Example:
 ```
-<cached_bem_solver
+<cached_charge_density_solver
     hash="(string)"
     name="(string)"
 >
-</cached_bem_solver>
+</cached_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3193,11 +3193,11 @@ Example:
 ##### KCachedChargeDensitySolver
 Example:
 ```
-<cached_bem_solver
+<cached_charge_density_solver
     hash="(string)"
     name="(string)"
 >
-</cached_bem_solver>
+</cached_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3222,7 +3222,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kexplicitsuperpositioncachedchargedensitysolver">`explicit_superposition_cached_bem_solver`</a>|[*KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc)|[`component`](#kexplicitsuperpositionsolutioncomponent|*`KExplicitSuperpositionSolutionComponent`*|`name`|*`string`*|
+|<a name="kexplicitsuperpositioncachedchargedensitysolver">`explicit_superposition_cached_bem_solver`</a>|[*KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc)|[`component`](#kexplicitsuperpositionsolutioncomponent)|*`KExplicitSuperpositionSolutionComponent`*|`name`|*`string`*|
 
 ###### KExplicitSuperpositionSolutionComponent
 Example:
@@ -3250,7 +3250,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kexplicitsuperpositioncachedchargedensitysolver">`explicit_superposition_cached_charge_density_solver`</a>|[*KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc)|[`component`](#kexplicitsuperpositionsolutioncomponent|*`KExplicitSuperpositionSolutionComponent`*|`name`|*`string`*|
+|<a name="kexplicitsuperpositioncachedchargedensitysolver">`explicit_superposition_cached_charge_density_solver`</a>|[*KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc)|[`component`](#kexplicitsuperpositionsolutioncomponent)|*`KExplicitSuperpositionSolutionComponent`*|`name`|*`string`*|
 
 ##### KElectricFastMultipoleFieldSolver
 Example:
@@ -3272,7 +3272,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kelectricfastmultipolefieldsolver">`fast_multipole_field_solver`</a>|[*KElectricFastMultipoleFieldSolverBuilder.cc*](KEMField/Source/Bindings/FieldSolvers/Electric/src/KElectricFastMultipoleFieldSolverBuilder.cc)|[`viewer`](#kfmvtkelectrostatictreeviewerdata|*`KFMVTKElectrostaticTreeViewerData`*|`insertion_ratio`<br>`region_expansion_factor`<br>`use_caching`<br>`use_opencl`<br>`use_region_size_estimation`<br>`world_cube_center_x`<br>`world_cube_center_y`<br>`world_cube_center_z`<br>`world_cube_length`|*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+|<a name="kelectricfastmultipolefieldsolver">`fast_multipole_field_solver`</a>|[*KElectricFastMultipoleFieldSolverBuilder.cc*](KEMField/Source/Bindings/FieldSolvers/Electric/src/KElectricFastMultipoleFieldSolverBuilder.cc)|[`viewer`](#kfmvtkelectrostatictreeviewerdata)|*`KFMVTKElectrostaticTreeViewerData`*|`insertion_ratio`<br>`region_expansion_factor`<br>`use_caching`<br>`use_opencl`<br>`use_region_size_estimation`<br>`world_cube_center_x`<br>`world_cube_center_y`<br>`world_cube_center_z`<br>`world_cube_length`|*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
 ###### KFMVTKElectrostaticTreeViewerData
 Example:
@@ -3292,11 +3292,11 @@ Example:
 ##### KGaussSeidelChargeDensitySolver
 Example:
 ```
-<gauss_seidel_bem_solver
+<gauss_seidel_charge_density_solver
     integrator="(string)"
     use_opencl="(bool)"
 >
-</gauss_seidel_bem_solver>
+</gauss_seidel_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3306,11 +3306,11 @@ Example:
 ##### KGaussSeidelChargeDensitySolver
 Example:
 ```
-<gauss_seidel_bem_solver
+<gauss_seidel_charge_density_solver
     integrator="(string)"
     use_opencl="(bool)"
 >
-</gauss_seidel_bem_solver>
+</gauss_seidel_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3320,10 +3320,10 @@ Example:
 ##### KGaussianEliminationChargeDensitySolver
 Example:
 ```
-<gaussian_elimination_charge_density_solver
+<gaussian_elimination_bem_solver
     integrator="(string)"
 >
-</gaussian_elimination_charge_density_solver>
+</gaussian_elimination_bem_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3333,10 +3333,10 @@ Example:
 ##### KGaussianEliminationChargeDensitySolver
 Example:
 ```
-<gaussian_elimination_charge_density_solver
+<gaussian_elimination_bem_solver
     integrator="(string)"
 >
-</gaussian_elimination_charge_density_solver>
+</gaussian_elimination_bem_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3377,17 +3377,17 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kkrylovchargedensitysolverold">`krylov_bem_solver`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|[`fftm_multiplication`](#kfmelectrostaticparameters<br>[`preconditioner_electrostatic_parameters`](#kfmelectrostaticparameters|*`KFMElectrostaticParameters`*<br>*`KFMElectrostaticParameters`*|`preconditioner`<br>`preconditioner_tolerance`<br>`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`string`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
+|<a name="kkrylovchargedensitysolverold">`krylov_bem_solver`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|[`fftm_multiplication`](#kfmelectrostaticparameters)<br>[`preconditioner_electrostatic_parameters`](#kfmelectrostaticparameters)|*`KFMElectrostaticParameters`*<br>*`KFMElectrostaticParameters`*|`preconditioner`<br>`preconditioner_tolerance`<br>`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`string`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
 ###### KFMElectrostaticParameters
 Example:
 ```
-<fftm_multiplication
+<preconditioner_electrostatic_parameters
     bias_degree="(double)"
     insertion_ratio="(double)"
     region_expansion_factor="(double)"
 >
-</fftm_multiplication>
+</preconditioner_electrostatic_parameters>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3397,12 +3397,12 @@ Example:
 ###### KFMElectrostaticParameters
 Example:
 ```
-<fftm_multiplication
+<preconditioner_electrostatic_parameters
     bias_degree="(double)"
     insertion_ratio="(double)"
     region_expansion_factor="(double)"
 >
-</fftm_multiplication>
+</preconditioner_electrostatic_parameters>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3412,7 +3412,7 @@ Example:
 ##### KKrylovChargeDensitySolver
 Example:
 ```
-<krylov_charge_density_solver
+<krylov_bem_solver_new
     show_plot="(bool)"
     solver_name="(string)"
     time_limit_in_seconds="(double)"
@@ -3431,12 +3431,12 @@ Example:
 
     </krylov_preconditioner>
 
-</krylov_charge_density_solver>
+</krylov_bem_solver_new>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kkrylovchargedensitysolver">`krylov_bem_solver_new`</a>|[*KKrylovChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
+|<a name="kkrylovchargedensitysolver">`krylov_bem_solver_new`</a>|[*KKrylovChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator)|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
 ###### KKrylovPreconditionerGenerator
 Example:
@@ -3451,7 +3451,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kkrylovpreconditionergenerator">`krylov_preconditioner`</a>|[*KKrylovPreconditionerGeneratorBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovPreconditionerGeneratorBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
+|<a name="kkrylovpreconditionergenerator">`krylov_preconditioner`</a>|[*KKrylovPreconditionerGeneratorBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovPreconditionerGeneratorBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator)|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
 ####### KKrylovPreconditionerGenerator
 Example:
@@ -3466,7 +3466,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kkrylovpreconditionergenerator">`krylov_preconditioner`</a>|[*KKrylovPreconditionerGeneratorBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovPreconditionerGeneratorBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
+|<a name="kkrylovpreconditionergenerator">`krylov_preconditioner`</a>|[*KKrylovPreconditionerGeneratorBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovPreconditionerGeneratorBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator)|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
 ##### KKrylovChargeDensitySolverOld
 Example:
@@ -3481,22 +3481,22 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kkrylovchargedensitysolverold">`krylov_bem_solver_old`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|[`fftm_multiplication`](#kfmelectrostaticparameters<br>[`preconditioner_electrostatic_parameters`](#kfmelectrostaticparameters|*`KFMElectrostaticParameters`*<br>*`KFMElectrostaticParameters`*|`preconditioner`<br>`preconditioner_tolerance`<br>`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`string`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
+|<a name="kkrylovchargedensitysolverold">`krylov_bem_solver_old`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|[`fftm_multiplication`](#kfmelectrostaticparameters)<br>[`preconditioner_electrostatic_parameters`](#kfmelectrostaticparameters)|*`KFMElectrostaticParameters`*<br>*`KFMElectrostaticParameters`*|`preconditioner`<br>`preconditioner_tolerance`<br>`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`string`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
 ##### KKrylovChargeDensitySolver
 Example:
 ```
-<krylov_charge_density_solver
+<krylov_bem_solver_new
     show_plot="(bool)"
     solver_name="(string)"
     time_limit_in_seconds="(double)"
 >
-</krylov_charge_density_solver>
+</krylov_bem_solver_new>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kkrylovchargedensitysolver">`krylov_charge_density_solver`</a>|[*KKrylovChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
+|<a name="kkrylovchargedensitysolver">`krylov_charge_density_solver`</a>|[*KKrylovChargeDensitySolverBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator)|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
 ##### KKrylovChargeDensitySolverOld
 Example:
@@ -3511,7 +3511,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kkrylovchargedensitysolverold">`krylov_charge_density_solver_old`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|[`fftm_multiplication`](#kfmelectrostaticparameters<br>[`preconditioner_electrostatic_parameters`](#kfmelectrostaticparameters|*`KFMElectrostaticParameters`*<br>*`KFMElectrostaticParameters`*|`preconditioner`<br>`preconditioner_tolerance`<br>`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`string`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
+|<a name="kkrylovchargedensitysolverold">`krylov_charge_density_solver_old`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|[`fftm_multiplication`](#kfmelectrostaticparameters)<br>[`preconditioner_electrostatic_parameters`](#kfmelectrostaticparameters)|*`KFMElectrostaticParameters`*<br>*`KFMElectrostaticParameters`*|`preconditioner`<br>`preconditioner_tolerance`<br>`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`string`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
 ##### KRobinHoodChargeDensitySolver
 Example:
@@ -3643,7 +3643,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgstaticelectromagnetfield">`ksfield_electromagnet`</a>|[*KStaticElectromagnetFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KStaticElectromagnetFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`integrating_field_solver`](#kintegratingmagnetostaticfieldsolver<br>[`zonal_harmonic_field_solver`](#kzonalharmonicmagnetostaticfieldsolver|*`KIntegratingMagnetostaticFieldSolver`*<br>*`KZonalHarmonicMagnetostaticFieldSolver`*|`directory`<br>`directory_magfield3`<br>`file`<br>`name`<br>`save_magfield3`<br>`spaces`<br>`surfaces`<br>`system`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgstaticelectromagnetfield">`ksfield_electromagnet`</a>|[*KStaticElectromagnetFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KStaticElectromagnetFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`integrating_field_solver`](#kintegratingmagnetostaticfieldsolver)<br>[`zonal_harmonic_field_solver`](#kzonalharmonicmagnetostaticfieldsolver)|*`KIntegratingMagnetostaticFieldSolver`*<br>*`KZonalHarmonicMagnetostaticFieldSolver`*|`directory`<br>`directory_magfield3`<br>`file`<br>`name`<br>`save_magfield3`<br>`spaces`<br>`surfaces`<br>`system`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KIntegratingMagnetostaticFieldSolver
 Example:
@@ -3673,27 +3673,27 @@ Example:
 ### KGElectrostaticBoundaryField
 Example:
 ```
-<field_electrostatic
+<ksfield_electrostatic
     directory="(string)"
     file="(string)"
     hash_threshold="(double)"
 >
-</field_electrostatic>
+</ksfield_electrostatic>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgelectrostaticboundaryfield">`ksfield_electrostatic`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay<br>[`cached_bem_solver`](#kcachedchargedensitysolver<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver<br>[`timer`](#kelectrostaticboundaryfieldtimer<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgelectrostaticboundaryfield">`ksfield_electrostatic`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay)<br>[`cached_bem_solver`](#kcachedchargedensitysolver)<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver)<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver)<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver)<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver)<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver)<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver)<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver)<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold)<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver)<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold)<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver)<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold)<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver)<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver)<br>[`timer`](#kelectrostaticboundaryfieldtimer)<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor)<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver)|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KMagnetostaticConstantField
 Example:
 ```
-<ksfield_magnetic_constant
+<constant_magnetic_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_magnetic_constant>
+</constant_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3745,7 +3745,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kmagnetostaticfieldmapcalculator">`ksfield_magnetic_fieldmap_calculator`</a>|[*KMagnetostaticFieldmapBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electromagnet`](#kstaticelectromagnetfield<br>[`field_magnetic_constant`](#kmagnetostaticconstantfield<br>[`field_magnetic_dipole`](#kmagneticdipolefieldbuilder|*`KStaticElectromagnetField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleFieldBuilder`*|`center`<br>`compute_gradient`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`<br>`time`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kmagnetostaticfieldmapcalculator">`ksfield_magnetic_fieldmap_calculator`</a>|[*KMagnetostaticFieldmapBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electromagnet`](#kstaticelectromagnetfield)<br>[`field_magnetic_constant`](#kmagnetostaticconstantfield)<br>[`field_magnetic_dipole`](#kmagneticdipolefieldbuilder)|*`KStaticElectromagnetField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleFieldBuilder`*|`center`<br>`compute_gradient`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`<br>`time`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 #### KStaticElectromagnetField
 Example:
@@ -3760,12 +3760,12 @@ Example:
 #### KMagnetostaticConstantField
 Example:
 ```
-<ksfield_magnetic_constant
+<constant_magnetic_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_magnetic_constant>
+</constant_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3785,12 +3785,12 @@ Example:
 ### KRampedMagneticField
 Example:
 ```
-<ksfield_magnetic_ramped
+<ramped_magnetic_field
     name="(string)"
     num_cycles="(int)"
     ramp_down_delay="(double)"
 >
-</ksfield_magnetic_ramped>
+</ramped_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3800,7 +3800,7 @@ Example:
 ### KMagneticSuperpositionField
 Example:
 ```
-<ksfield_magnetic_super_position
+<magnetic_superposition_field
     name="(string)"
     require="(string)"
     use_caching="(bool)"
@@ -3811,12 +3811,12 @@ Example:
     >
     </add_field>
 
-</ksfield_magnetic_super_position>
+</magnetic_superposition_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kmagneticsuperpositionfield">`ksfield_magnetic_super_position`</a>|[*KMagneticSuperpositionFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagneticSuperpositionFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`add_field`](#kmagneticsuperpositionfieldentry|*`KMagneticSuperpositionFieldEntry`*|`name`<br>`require`<br>`use_caching`|*`string`*<br>*`string`*<br>*`bool`*|
+|<a name="kmagneticsuperpositionfield">`ksfield_magnetic_super_position`</a>|[*KMagneticSuperpositionFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagneticSuperpositionFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`add_field`](#kmagneticsuperpositionfieldentry)|*`KMagneticSuperpositionFieldEntry`*|`name`<br>`require`<br>`use_caching`|*`string`*<br>*`string`*<br>*`bool`*|
 
 #### KMagneticSuperpositionFieldEntry
 Example:
@@ -3851,16 +3851,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgendirectionsphericalcomposite">`ksgen_direction_spherical_composite`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgendirectionsphericalcomposite">`ksgen_direction_spherical_composite`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3870,12 +3870,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3885,12 +3885,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3900,12 +3900,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3915,12 +3915,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3930,12 +3930,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3945,12 +3945,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3960,12 +3960,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3990,11 +3990,11 @@ Example:
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4004,12 +4004,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4019,12 +4019,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4034,12 +4034,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4049,12 +4049,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4064,12 +4064,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4079,12 +4079,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4109,12 +4109,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4124,7 +4124,7 @@ Example:
 ### KSGenDirectionSphericalMagneticField
 Example:
 ```
-<direction_spherical_magnetic_field
+<ksgen_direction_spherical_magnetic_field
     magnetic_field_name="(string)"
     name="(string)"
     phi="(string)"
@@ -4135,21 +4135,21 @@ Example:
     >
     </phi_fix>
 
-</direction_spherical_magnetic_field>
+</ksgen_direction_spherical_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgendirectionsphericalmagneticfield">`ksgen_direction_spherical_magnetic_field`</a>|[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`magnetic_field_name`<br>`name`<br>`phi`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgendirectionsphericalmagneticfield">`ksgen_direction_spherical_magnetic_field`</a>|[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`magnetic_field_name`<br>`name`<br>`phi`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4159,12 +4159,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4174,12 +4174,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4189,12 +4189,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4204,12 +4204,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4219,12 +4219,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4234,12 +4234,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4249,12 +4249,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4279,11 +4279,11 @@ Example:
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4293,12 +4293,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4308,12 +4308,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4323,12 +4323,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4338,12 +4338,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4353,12 +4353,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4368,12 +4368,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4398,12 +4398,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4413,7 +4413,7 @@ Example:
 ### KSGenDirectionSurfaceComposite
 Example:
 ```
-<ksgen_direction_surface_composite
+<direction_surface_composite
     name="(string)"
     outside="(bool)"
     phi="(string)"
@@ -4424,21 +4424,21 @@ Example:
     >
     </phi_fix>
 
-</ksgen_direction_surface_composite>
+</direction_surface_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgendirectionsurfacecomposite">`ksgen_direction_surface_composite`</a>|[*KSGenDirectionSurfaceCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`outside`<br>`phi`<br>`surfaces`<br>`theta`|*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgendirectionsurfacecomposite">`ksgen_direction_surface_composite`</a>|[*KSGenDirectionSurfaceCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`outside`<br>`phi`<br>`surfaces`<br>`theta`|*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4448,12 +4448,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4463,12 +4463,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4478,12 +4478,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4493,12 +4493,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4508,12 +4508,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4523,12 +4523,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4538,12 +4538,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4568,11 +4568,11 @@ Example:
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4582,12 +4582,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4597,12 +4597,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4612,12 +4612,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4627,12 +4627,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4642,12 +4642,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4657,12 +4657,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4687,12 +4687,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4748,7 +4748,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenenergycomposite">`ksgen_energy_composite`</a>|[*KSGenEnergyCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`energy_boltzmann`](#ksgenvalueboltzmann<br>[`energy_fix`](#ksgenvaluefix<br>[`energy_formula`](#ksgenvalueformula<br>[`energy_gauss`](#ksgenvaluegauss<br>[`energy_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`energy_histogram`](#ksgenvaluehistogram<br>[`energy_list`](#ksgenvaluelist<br>[`energy_set`](#ksgenvalueset<br>[`energy_uniform`](#ksgenvalueuniform|*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`energy`<br>`name`|*`string`*<br>*`string`*|
+|<a name="ksgenenergycomposite">`ksgen_energy_composite`</a>|[*KSGenEnergyCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`energy_boltzmann`](#ksgenvalueboltzmann)<br>[`energy_fix`](#ksgenvaluefix)<br>[`energy_formula`](#ksgenvalueformula)<br>[`energy_gauss`](#ksgenvaluegauss)<br>[`energy_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`energy_histogram`](#ksgenvaluehistogram)<br>[`energy_list`](#ksgenvaluelist)<br>[`energy_set`](#ksgenvalueset)<br>[`energy_uniform`](#ksgenvalueuniform)|*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`energy`<br>`name`|*`string`*<br>*`string`*|
 
 #### KSGenValueBoltzmann
 Example:
@@ -4768,11 +4768,11 @@ Example:
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4782,12 +4782,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4797,12 +4797,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4812,12 +4812,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4827,12 +4827,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4842,12 +4842,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4857,12 +4857,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4872,12 +4872,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4964,7 +4964,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`ksgen_generator_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`ksgen_generator_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSGenDirectionSphericalComposite
 Example:
@@ -4979,37 +4979,37 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgendirectionsphericalcomposite">`direction_spherical_composite`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgendirectionsphericalcomposite">`direction_spherical_composite`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenDirectionSphericalMagneticField
 Example:
 ```
-<direction_spherical_magnetic_field
+<ksgen_direction_spherical_magnetic_field
     magnetic_field_name="(string)"
     name="(string)"
     phi="(string)"
 >
-</direction_spherical_magnetic_field>
+</ksgen_direction_spherical_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgendirectionsphericalmagneticfield">`direction_spherical_magnetic_field`</a>|[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`magnetic_field_name`<br>`name`<br>`phi`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgendirectionsphericalmagneticfield">`direction_spherical_magnetic_field`</a>|[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`magnetic_field_name`<br>`name`<br>`phi`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenDirectionSurfaceComposite
 Example:
 ```
-<ksgen_direction_surface_composite
+<direction_surface_composite
     name="(string)"
     outside="(bool)"
     phi="(string)"
 >
-</ksgen_direction_surface_composite>
+</direction_surface_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgendirectionsurfacecomposite">`direction_surface_composite`</a>|[*KSGenDirectionSurfaceCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`outside`<br>`phi`<br>`surfaces`<br>`theta`|*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgendirectionsurfacecomposite">`direction_surface_composite`</a>|[*KSGenDirectionSurfaceCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`outside`<br>`phi`<br>`surfaces`<br>`theta`|*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenEnergyBetaDecay
 Example:
@@ -5053,7 +5053,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenenergycomposite">`energy_composite`</a>|[*KSGenEnergyCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`energy_boltzmann`](#ksgenvalueboltzmann<br>[`energy_fix`](#ksgenvaluefix<br>[`energy_formula`](#ksgenvalueformula<br>[`energy_gauss`](#ksgenvaluegauss<br>[`energy_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`energy_histogram`](#ksgenvaluehistogram<br>[`energy_list`](#ksgenvaluelist<br>[`energy_set`](#ksgenvalueset<br>[`energy_uniform`](#ksgenvalueuniform|*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`energy`<br>`name`|*`string`*<br>*`string`*|
+|<a name="ksgenenergycomposite">`energy_composite`</a>|[*KSGenEnergyCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`energy_boltzmann`](#ksgenvalueboltzmann)<br>[`energy_fix`](#ksgenvaluefix)<br>[`energy_formula`](#ksgenvalueformula)<br>[`energy_gauss`](#ksgenvaluegauss)<br>[`energy_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`energy_histogram`](#ksgenvaluehistogram)<br>[`energy_list`](#ksgenvaluelist)<br>[`energy_set`](#ksgenvalueset)<br>[`energy_uniform`](#ksgenvalueuniform)|*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`energy`<br>`name`|*`string`*<br>*`string`*|
 
 #### KSGenEnergyKryptonEvent
 Example:
@@ -5118,7 +5118,7 @@ Example:
 #### KSGenLComposite
 Example:
 ```
-<ksgen_l_composite
+<l_composite
     l_value="(string)"
     name="(string)"
 >
@@ -5128,21 +5128,21 @@ Example:
     >
     </l_fix>
 
-</ksgen_l_composite>
+</l_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenlcomposite">`l_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)|[`l_fix`](#ksgenvaluefix<br>[`l_formula`](#ksgenvalueformula<br>[`l_gauss`](#ksgenvaluegauss<br>[`l_list`](#ksgenvaluelist<br>[`l_set`](#ksgenvalueset<br>[`l_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`l_value`<br>`name`|*`string`*<br>*`string`*|
+|<a name="ksgenlcomposite">`l_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)|[`l_fix`](#ksgenvaluefix)<br>[`l_formula`](#ksgenvalueformula)<br>[`l_gauss`](#ksgenvaluegauss)<br>[`l_list`](#ksgenvaluelist)<br>[`l_set`](#ksgenvalueset)<br>[`l_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`l_value`<br>`name`|*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5152,12 +5152,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5167,12 +5167,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5182,12 +5182,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5197,12 +5197,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5212,12 +5212,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5240,10 +5240,10 @@ Example:
 #### KSGenLUniformMaxN
 Example:
 ```
-<l_uniform_max_n
+<ksgen_l_uniform_max_n
     name="(string)"
 >
-</l_uniform_max_n>
+</ksgen_l_uniform_max_n>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5253,7 +5253,7 @@ Example:
 #### KSGenMomentumRectangularComposite
 Example:
 ```
-<momentum_rectangular_composite
+<ksgen_momentum_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
@@ -5264,21 +5264,21 @@ Example:
     >
     </x_fix>
 
-</momentum_rectangular_composite>
+</ksgen_momentum_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenmomentumrectangularcomposite">`momentum_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix<br>[`x_formula`](#ksgenvalueformula<br>[`x_gauss`](#ksgenvaluegauss<br>[`x_histogram`](#ksgenvaluehistogram<br>[`x_list`](#ksgenvaluelist<br>[`x_set`](#ksgenvalueset<br>[`x_uniform`](#ksgenvalueuniform<br>[`y_fix`](#ksgenvaluefix<br>[`y_formula`](#ksgenvalueformula<br>[`y_gauss`](#ksgenvaluegauss<br>[`y_histogram`](#ksgenvaluehistogram<br>[`y_list`](#ksgenvaluelist<br>[`y_set`](#ksgenvalueset<br>[`y_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenmomentumrectangularcomposite">`momentum_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix)<br>[`x_formula`](#ksgenvalueformula)<br>[`x_gauss`](#ksgenvaluegauss)<br>[`x_histogram`](#ksgenvaluehistogram)<br>[`x_list`](#ksgenvaluelist)<br>[`x_set`](#ksgenvalueset)<br>[`x_uniform`](#ksgenvalueuniform)<br>[`y_fix`](#ksgenvaluefix)<br>[`y_formula`](#ksgenvalueformula)<br>[`y_gauss`](#ksgenvaluegauss)<br>[`y_histogram`](#ksgenvaluehistogram)<br>[`y_list`](#ksgenvaluelist)<br>[`y_set`](#ksgenvalueset)<br>[`y_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5288,12 +5288,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5303,12 +5303,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5318,12 +5318,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5333,12 +5333,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5348,12 +5348,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5363,12 +5363,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5378,11 +5378,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5392,12 +5392,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5407,12 +5407,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5422,12 +5422,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5437,12 +5437,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5452,12 +5452,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5467,12 +5467,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5482,11 +5482,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5496,12 +5496,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5511,12 +5511,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5526,12 +5526,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5541,12 +5541,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5556,12 +5556,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5571,12 +5571,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5586,7 +5586,7 @@ Example:
 #### KSGenNComposite
 Example:
 ```
-<ksgen_n_composite
+<n_composite
     n_value="(string)"
     name="(string)"
 >
@@ -5596,21 +5596,21 @@ Example:
     >
     </n_fix>
 
-</ksgen_n_composite>
+</n_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenncomposite">`n_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)|[`n_fix`](#ksgenvaluefix<br>[`n_formula`](#ksgenvalueformula<br>[`n_gauss`](#ksgenvaluegauss<br>[`n_list`](#ksgenvaluelist<br>[`n_pareto`](#ksgenvaluepareto<br>[`n_set`](#ksgenvalueset<br>[`n_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`n_value`<br>`name`|*`string`*<br>*`string`*|
+|<a name="ksgenncomposite">`n_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)|[`n_fix`](#ksgenvaluefix)<br>[`n_formula`](#ksgenvalueformula)<br>[`n_gauss`](#ksgenvaluegauss)<br>[`n_list`](#ksgenvaluelist)<br>[`n_pareto`](#ksgenvaluepareto)<br>[`n_set`](#ksgenvalueset)<br>[`n_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`n_value`<br>`name`|*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5620,12 +5620,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5635,12 +5635,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5650,12 +5650,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5680,12 +5680,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5695,12 +5695,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5710,11 +5710,11 @@ Example:
 #### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5724,12 +5724,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5739,12 +5739,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5754,12 +5754,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5769,12 +5769,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5799,12 +5799,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5814,12 +5814,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5845,16 +5845,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositioncylindricalcomposite">`position_cylindrical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_fraction`](#ksgenvalueradiusfraction<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositioncylindricalcomposite">`position_cylindrical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_fraction`](#ksgenvalueradiusfraction)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5864,12 +5864,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5879,12 +5879,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5894,12 +5894,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5909,12 +5909,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5924,12 +5924,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5939,12 +5939,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5954,12 +5954,12 @@ Example:
 ##### KSGenValueRadiusCylindrical
 Example:
 ```
-<r_cylindrical
+<ksgen_value_radius_cylindrical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</r_cylindrical>
+</ksgen_value_radius_cylindrical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5969,11 +5969,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5983,12 +5983,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6011,12 +6011,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6026,12 +6026,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6041,12 +6041,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6056,12 +6056,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6071,12 +6071,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6086,11 +6086,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6100,12 +6100,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6115,12 +6115,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6130,12 +6130,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6145,12 +6145,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6160,12 +6160,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6175,12 +6175,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6206,16 +6206,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionfluxtube">`position_flux_tube`</a>|[*KSGenPositionFluxTubeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_formula`](#ksgenvalueformula<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFormula`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`flux`<br>`magnetic_field_name`<br>`n_integration_step`<br>`name`<br>`only_surface`<br>`phi`<br>`space`<br>`surface`<br>`z`|*`double`*<br>*`string`*<br>*`int`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionfluxtube">`position_flux_tube`</a>|[*KSGenPositionFluxTubeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_formula`](#ksgenvalueformula)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFormula`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`flux`<br>`magnetic_field_name`<br>`n_integration_step`<br>`name`<br>`only_surface`<br>`phi`<br>`space`<br>`surface`<br>`z`|*`double`*<br>*`string`*<br>*`int`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6225,12 +6225,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6240,12 +6240,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6255,12 +6255,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6270,12 +6270,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6285,11 +6285,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6299,12 +6299,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6314,12 +6314,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6329,12 +6329,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6344,12 +6344,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6359,7 +6359,7 @@ Example:
 #### KSGenPositionFrustrumComposite
 Example:
 ```
-<ksgen_position_frustrum_composite
+<position_frustrum_composite
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -6370,21 +6370,21 @@ Example:
     >
     </phi_fix>
 
-</ksgen_position_frustrum_composite>
+</position_frustrum_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionfrustrumcomposite">`position_frustrum_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r1_fix`](#ksgenvaluefix<br>[`r2_fix`](#ksgenvaluefix<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_fraction`](#ksgenvalueradiusfraction<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_uniform`](#ksgenvalueuniform<br>[`z1_fix`](#ksgenvaluefix<br>[`z2_fix`](#ksgenvaluefix<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_frustrum`](#ksgenvaluezfrustrum<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueZFrustrum`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`r1`<br>`r2`<br>`space`<br>`surface`<br>`z`<br>`z1`<br>`z2`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionfrustrumcomposite">`position_frustrum_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r1_fix`](#ksgenvaluefix)<br>[`r2_fix`](#ksgenvaluefix)<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_fraction`](#ksgenvalueradiusfraction)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`z1_fix`](#ksgenvaluefix)<br>[`z2_fix`](#ksgenvaluefix)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_frustrum`](#ksgenvaluezfrustrum)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueZFrustrum`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`r1`<br>`r2`<br>`space`<br>`surface`<br>`z`<br>`z1`<br>`z2`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6394,12 +6394,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6409,12 +6409,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6424,12 +6424,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6439,12 +6439,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6454,12 +6454,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6469,12 +6469,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6484,11 +6484,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6498,11 +6498,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6512,12 +6512,12 @@ Example:
 ##### KSGenValueRadiusCylindrical
 Example:
 ```
-<r_cylindrical
+<ksgen_value_radius_cylindrical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</r_cylindrical>
+</ksgen_value_radius_cylindrical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6527,11 +6527,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6541,12 +6541,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6569,12 +6569,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6584,12 +6584,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6599,12 +6599,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6614,12 +6614,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6629,12 +6629,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6644,11 +6644,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6658,11 +6658,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6672,11 +6672,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6686,12 +6686,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6701,12 +6701,12 @@ Example:
 ##### KSGenValueZFrustrum
 Example:
 ```
-<ksgen_value_z_frustrum
+<z_frustrum
     name="(string)"
     r1="(double)"
     r2="(double)"
 >
-</ksgen_value_z_frustrum>
+</z_frustrum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6716,12 +6716,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6731,12 +6731,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6746,12 +6746,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6761,12 +6761,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6776,12 +6776,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6791,12 +6791,12 @@ Example:
 #### KSGenPositionHomogeneousFluxTube
 Example:
 ```
-<ksgen_position_homogeneous_flux_tube
+<position_homogeneous_flux_tube
     flux="(double)"
     magnetic_field_name="(string)"
     n_integration_step="(int)"
 >
-</ksgen_position_homogeneous_flux_tube>
+</position_homogeneous_flux_tube>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6806,7 +6806,7 @@ Example:
 #### KSGenPositionMask
 Example:
 ```
-<position_mask
+<ksgen_position_mask
     name="(string)"
     spaces_allowed="(string)"
     spaces_forbidden="(string)"
@@ -6818,12 +6818,12 @@ Example:
     >
     </position_cylindrical_composite>
 
-</position_mask>
+</ksgen_position_mask>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionmask">`position_mask`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_random`](#ksgenpositionsurfacerandom|*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceRandom`*|`name`<br>`spaces_allowed`<br>`spaces_forbidden`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionmask">`position_mask`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)|*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceRandom`*|`name`<br>`spaces_allowed`<br>`spaces_forbidden`|*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenPositionCylindricalComposite
 Example:
@@ -6838,16 +6838,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositioncylindricalcomposite">`position_cylindrical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_fraction`](#ksgenvalueradiusfraction<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositioncylindricalcomposite">`position_cylindrical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_fraction`](#ksgenvalueradiusfraction)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenPositionMeshSurfaceRandom
 Example:
 ```
-<ksgen_position_mesh_surface_random
+<position_mesh_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</ksgen_position_mesh_surface_random>
+</position_mesh_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6857,7 +6857,7 @@ Example:
 ##### KSGenPositionRectangularComposite
 Example:
 ```
-<ksgen_position_rectangular_composite
+<position_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
@@ -6868,21 +6868,21 @@ Example:
     >
     </x_fix>
 
-</ksgen_position_rectangular_composite>
+</position_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionrectangularcomposite">`position_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix<br>[`x_formula`](#ksgenvalueformula<br>[`x_gauss`](#ksgenvaluegauss<br>[`x_histogram`](#ksgenvaluehistogram<br>[`x_list`](#ksgenvaluelist<br>[`x_set`](#ksgenvalueset<br>[`x_uniform`](#ksgenvalueuniform<br>[`y_fix`](#ksgenvaluefix<br>[`y_formula`](#ksgenvalueformula<br>[`y_gauss`](#ksgenvaluegauss<br>[`y_histogram`](#ksgenvaluehistogram<br>[`y_list`](#ksgenvaluelist<br>[`y_set`](#ksgenvalueset<br>[`y_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionrectangularcomposite">`position_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix)<br>[`x_formula`](#ksgenvalueformula)<br>[`x_gauss`](#ksgenvaluegauss)<br>[`x_histogram`](#ksgenvaluehistogram)<br>[`x_list`](#ksgenvaluelist)<br>[`x_set`](#ksgenvalueset)<br>[`x_uniform`](#ksgenvalueuniform)<br>[`y_fix`](#ksgenvaluefix)<br>[`y_formula`](#ksgenvalueformula)<br>[`y_gauss`](#ksgenvaluegauss)<br>[`y_histogram`](#ksgenvaluehistogram)<br>[`y_list`](#ksgenvaluelist)<br>[`y_set`](#ksgenvalueset)<br>[`y_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ###### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6892,12 +6892,12 @@ Example:
 ###### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6907,12 +6907,12 @@ Example:
 ###### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6922,12 +6922,12 @@ Example:
 ###### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6937,12 +6937,12 @@ Example:
 ###### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6952,12 +6952,12 @@ Example:
 ###### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6967,12 +6967,12 @@ Example:
 ###### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6982,11 +6982,11 @@ Example:
 ###### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6996,12 +6996,12 @@ Example:
 ###### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7011,12 +7011,12 @@ Example:
 ###### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7026,12 +7026,12 @@ Example:
 ###### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7041,12 +7041,12 @@ Example:
 ###### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7056,12 +7056,12 @@ Example:
 ###### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7071,12 +7071,12 @@ Example:
 ###### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7086,11 +7086,11 @@ Example:
 ###### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7100,12 +7100,12 @@ Example:
 ###### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7115,12 +7115,12 @@ Example:
 ###### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7130,12 +7130,12 @@ Example:
 ###### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7145,12 +7145,12 @@ Example:
 ###### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7160,12 +7160,12 @@ Example:
 ###### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7175,12 +7175,12 @@ Example:
 ###### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7204,7 +7204,7 @@ Example:
 ##### KSGenPositionSphericalComposite
 Example:
 ```
-<ksgen_position_spherical_composite
+<position_spherical_composite
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -7215,21 +7215,21 @@ Example:
     >
     </phi_fix>
 
-</ksgen_position_spherical_composite>
+</position_spherical_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionsphericalcomposite">`position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_spherical`](#ksgenvalueradiusspherical<br>[`r_uniform`](#ksgenvalueuniform<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionsphericalcomposite">`position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_spherical`](#ksgenvalueradiusspherical)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ###### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7239,12 +7239,12 @@ Example:
 ###### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7254,12 +7254,12 @@ Example:
 ###### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7269,12 +7269,12 @@ Example:
 ###### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7284,12 +7284,12 @@ Example:
 ###### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7299,12 +7299,12 @@ Example:
 ###### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7314,12 +7314,12 @@ Example:
 ###### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7329,11 +7329,11 @@ Example:
 ###### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7343,12 +7343,12 @@ Example:
 ###### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7358,12 +7358,12 @@ Example:
 ###### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7373,12 +7373,12 @@ Example:
 ###### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7388,12 +7388,12 @@ Example:
 ###### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7403,12 +7403,12 @@ Example:
 ###### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7418,12 +7418,12 @@ Example:
 ###### KSGenValueRadiusSpherical
 Example:
 ```
-<r_spherical
+<ksgen_value_radius_spherical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</r_spherical>
+</ksgen_value_radius_spherical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7433,12 +7433,12 @@ Example:
 ###### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7448,11 +7448,11 @@ Example:
 ###### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7462,12 +7462,12 @@ Example:
 ###### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7477,12 +7477,12 @@ Example:
 ###### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7492,12 +7492,12 @@ Example:
 ###### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7507,12 +7507,12 @@ Example:
 ###### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7522,12 +7522,12 @@ Example:
 ###### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7552,12 +7552,12 @@ Example:
 ###### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7567,11 +7567,11 @@ Example:
 ##### KSGenPositionSurfaceRandom
 Example:
 ```
-<position_surface_random
+<ksgen_position_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</position_surface_random>
+</ksgen_position_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7581,11 +7581,11 @@ Example:
 #### KSGenPositionMeshSurfaceRandom
 Example:
 ```
-<ksgen_position_mesh_surface_random
+<position_mesh_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</ksgen_position_mesh_surface_random>
+</position_mesh_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7595,17 +7595,17 @@ Example:
 #### KSGenPositionRectangularComposite
 Example:
 ```
-<ksgen_position_rectangular_composite
+<position_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
 >
-</ksgen_position_rectangular_composite>
+</position_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionrectangularcomposite">`position_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix<br>[`x_formula`](#ksgenvalueformula<br>[`x_gauss`](#ksgenvaluegauss<br>[`x_histogram`](#ksgenvaluehistogram<br>[`x_list`](#ksgenvaluelist<br>[`x_set`](#ksgenvalueset<br>[`x_uniform`](#ksgenvalueuniform<br>[`y_fix`](#ksgenvaluefix<br>[`y_formula`](#ksgenvalueformula<br>[`y_gauss`](#ksgenvaluegauss<br>[`y_histogram`](#ksgenvaluehistogram<br>[`y_list`](#ksgenvaluelist<br>[`y_set`](#ksgenvalueset<br>[`y_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionrectangularcomposite">`position_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix)<br>[`x_formula`](#ksgenvalueformula)<br>[`x_gauss`](#ksgenvaluegauss)<br>[`x_histogram`](#ksgenvaluehistogram)<br>[`x_list`](#ksgenvaluelist)<br>[`x_set`](#ksgenvalueset)<br>[`x_uniform`](#ksgenvalueuniform)<br>[`y_fix`](#ksgenvaluefix)<br>[`y_formula`](#ksgenvalueformula)<br>[`y_gauss`](#ksgenvaluegauss)<br>[`y_histogram`](#ksgenvaluehistogram)<br>[`y_list`](#ksgenvaluelist)<br>[`y_set`](#ksgenvalueset)<br>[`y_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenPositionSpaceRandom
 Example:
@@ -7624,26 +7624,26 @@ Example:
 #### KSGenPositionSphericalComposite
 Example:
 ```
-<ksgen_position_spherical_composite
+<position_spherical_composite
     name="(string)"
     phi="(string)"
     r="(string)"
 >
-</ksgen_position_spherical_composite>
+</position_spherical_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionsphericalcomposite">`position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_spherical`](#ksgenvalueradiusspherical<br>[`r_uniform`](#ksgenvalueuniform<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionsphericalcomposite">`position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_spherical`](#ksgenvalueradiusspherical)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenPositionSurfaceAdjustmentStep
 Example:
 ```
-<ksgen_position_surface_adjustment_step
+<position_surface_adjustment_step
     length="(double)"
     name="(string)"
 >
-</ksgen_position_surface_adjustment_step>
+</position_surface_adjustment_step>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7653,11 +7653,11 @@ Example:
 #### KSGenPositionSurfaceRandom
 Example:
 ```
-<position_surface_random
+<ksgen_position_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</position_surface_random>
+</ksgen_position_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7667,7 +7667,7 @@ Example:
 #### KSGenSpinComposite
 Example:
 ```
-<ksgen_spin_composite
+<spin_composite
     name="(string)"
     phi="(string)"
     space="(string)"
@@ -7678,21 +7678,21 @@ Example:
     >
     </phi_fix>
 
-</ksgen_spin_composite>
+</spin_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenspincomposite">`spin_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenspincomposite">`spin_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7702,12 +7702,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7717,12 +7717,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7732,12 +7732,12 @@ Example:
 ##### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7747,12 +7747,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7762,12 +7762,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7777,12 +7777,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7792,12 +7792,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7822,11 +7822,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7836,12 +7836,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7851,12 +7851,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7866,12 +7866,12 @@ Example:
 ##### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7881,12 +7881,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7896,12 +7896,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7911,12 +7911,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7941,12 +7941,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7956,7 +7956,7 @@ Example:
 #### KSGenSpinRelativeComposite
 Example:
 ```
-<ksgen_spin_composite_relative
+<spin_relative_composite
     name="(string)"
     phi="(string)"
     space="(string)"
@@ -7967,21 +7967,21 @@ Example:
     >
     </phi_fix>
 
-</ksgen_spin_composite_relative>
+</spin_relative_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenspinrelativecomposite">`spin_relative_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenspinrelativecomposite">`spin_relative_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7991,12 +7991,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8006,12 +8006,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8021,12 +8021,12 @@ Example:
 ##### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8036,12 +8036,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8051,12 +8051,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8066,12 +8066,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8081,12 +8081,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8111,11 +8111,11 @@ Example:
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8125,12 +8125,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8140,12 +8140,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8155,12 +8155,12 @@ Example:
 ##### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8170,12 +8170,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8185,12 +8185,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8200,12 +8200,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8230,12 +8230,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8245,7 +8245,7 @@ Example:
 #### KSGenTimeComposite
 Example:
 ```
-<time_composite
+<ksgen_time_composite
     name="(string)"
     time_value="(string)"
 >
@@ -8255,21 +8255,21 @@ Example:
     >
     </time_fix>
 
-</time_composite>
+</ksgen_time_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgentimecomposite">`time_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)|[`time_fix`](#ksgenvaluefix<br>[`time_formula`](#ksgenvalueformula<br>[`time_gauss`](#ksgenvaluegauss<br>[`time_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`time_histogram`](#ksgenvaluehistogram<br>[`time_list`](#ksgenvaluelist<br>[`time_set`](#ksgenvalueset<br>[`time_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`time_value`|*`string`*<br>*`string`*|
+|<a name="ksgentimecomposite">`time_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)|[`time_fix`](#ksgenvaluefix)<br>[`time_formula`](#ksgenvalueformula)<br>[`time_gauss`](#ksgenvaluegauss)<br>[`time_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`time_histogram`](#ksgenvaluehistogram)<br>[`time_list`](#ksgenvaluelist)<br>[`time_set`](#ksgenvalueset)<br>[`time_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`time_value`|*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8279,12 +8279,12 @@ Example:
 ##### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8294,12 +8294,12 @@ Example:
 ##### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8309,12 +8309,12 @@ Example:
 ##### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8324,12 +8324,12 @@ Example:
 ##### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8339,12 +8339,12 @@ Example:
 ##### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8354,12 +8354,12 @@ Example:
 ##### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8369,12 +8369,12 @@ Example:
 ##### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8414,16 +8414,16 @@ Example:
 ### KSGenLComposite
 Example:
 ```
-<ksgen_l_composite
+<l_composite
     l_value="(string)"
     name="(string)"
 >
-</ksgen_l_composite>
+</l_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenlcomposite">`ksgen_l_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)|[`l_fix`](#ksgenvaluefix<br>[`l_formula`](#ksgenvalueformula<br>[`l_gauss`](#ksgenvaluegauss<br>[`l_list`](#ksgenvaluelist<br>[`l_set`](#ksgenvalueset<br>[`l_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`l_value`<br>`name`|*`string`*<br>*`string`*|
+|<a name="ksgenlcomposite">`ksgen_l_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)|[`l_fix`](#ksgenvaluefix)<br>[`l_formula`](#ksgenvalueformula)<br>[`l_gauss`](#ksgenvaluegauss)<br>[`l_list`](#ksgenvaluelist)<br>[`l_set`](#ksgenvalueset)<br>[`l_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`l_value`<br>`name`|*`string`*<br>*`string`*|
 
 ### KSGenLStatistical
 Example:
@@ -8441,10 +8441,10 @@ Example:
 ### KSGenLUniformMaxN
 Example:
 ```
-<l_uniform_max_n
+<ksgen_l_uniform_max_n
     name="(string)"
 >
-</l_uniform_max_n>
+</ksgen_l_uniform_max_n>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8454,31 +8454,31 @@ Example:
 ### KSGenMomentumRectangularComposite
 Example:
 ```
-<momentum_rectangular_composite
+<ksgen_momentum_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
 >
-</momentum_rectangular_composite>
+</ksgen_momentum_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenmomentumrectangularcomposite">`ksgen_momentum_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix<br>[`x_formula`](#ksgenvalueformula<br>[`x_gauss`](#ksgenvaluegauss<br>[`x_histogram`](#ksgenvaluehistogram<br>[`x_list`](#ksgenvaluelist<br>[`x_set`](#ksgenvalueset<br>[`x_uniform`](#ksgenvalueuniform<br>[`y_fix`](#ksgenvaluefix<br>[`y_formula`](#ksgenvalueformula<br>[`y_gauss`](#ksgenvaluegauss<br>[`y_histogram`](#ksgenvaluehistogram<br>[`y_list`](#ksgenvaluelist<br>[`y_set`](#ksgenvalueset<br>[`y_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenmomentumrectangularcomposite">`ksgen_momentum_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix)<br>[`x_formula`](#ksgenvalueformula)<br>[`x_gauss`](#ksgenvaluegauss)<br>[`x_histogram`](#ksgenvaluehistogram)<br>[`x_list`](#ksgenvaluelist)<br>[`x_set`](#ksgenvalueset)<br>[`x_uniform`](#ksgenvalueuniform)<br>[`y_fix`](#ksgenvaluefix)<br>[`y_formula`](#ksgenvalueformula)<br>[`y_gauss`](#ksgenvaluegauss)<br>[`y_histogram`](#ksgenvaluehistogram)<br>[`y_list`](#ksgenvaluelist)<br>[`y_set`](#ksgenvalueset)<br>[`y_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenNComposite
 Example:
 ```
-<ksgen_n_composite
+<n_composite
     n_value="(string)"
     name="(string)"
 >
-</ksgen_n_composite>
+</n_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenncomposite">`ksgen_n_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)|[`n_fix`](#ksgenvaluefix<br>[`n_formula`](#ksgenvalueformula<br>[`n_gauss`](#ksgenvaluegauss<br>[`n_list`](#ksgenvaluelist<br>[`n_pareto`](#ksgenvaluepareto<br>[`n_set`](#ksgenvalueset<br>[`n_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`n_value`<br>`name`|*`string`*<br>*`string`*|
+|<a name="ksgenncomposite">`ksgen_n_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)|[`n_fix`](#ksgenvaluefix)<br>[`n_formula`](#ksgenvalueformula)<br>[`n_gauss`](#ksgenvaluegauss)<br>[`n_list`](#ksgenvaluelist)<br>[`n_pareto`](#ksgenvaluepareto)<br>[`n_set`](#ksgenvalueset)<br>[`n_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`n_value`<br>`name`|*`string`*<br>*`string`*|
 
 ### KSGenPositionCylindricalComposite
 Example:
@@ -8493,7 +8493,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositioncylindricalcomposite">`ksgen_position_cylindrical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_fraction`](#ksgenvalueradiusfraction<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositioncylindricalcomposite">`ksgen_position_cylindrical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_fraction`](#ksgenvalueradiusfraction)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenPositionFluxTube
 Example:
@@ -8508,32 +8508,32 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionfluxtube">`ksgen_position_flux_tube`</a>|[*KSGenPositionFluxTubeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_formula`](#ksgenvalueformula<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFormula`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`flux`<br>`magnetic_field_name`<br>`n_integration_step`<br>`name`<br>`only_surface`<br>`phi`<br>`space`<br>`surface`<br>`z`|*`double`*<br>*`string`*<br>*`int`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionfluxtube">`ksgen_position_flux_tube`</a>|[*KSGenPositionFluxTubeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_formula`](#ksgenvalueformula)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFormula`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`flux`<br>`magnetic_field_name`<br>`n_integration_step`<br>`name`<br>`only_surface`<br>`phi`<br>`space`<br>`surface`<br>`z`|*`double`*<br>*`string`*<br>*`int`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenPositionFrustrumComposite
 Example:
 ```
-<ksgen_position_frustrum_composite
+<position_frustrum_composite
     name="(string)"
     phi="(string)"
     r="(string)"
 >
-</ksgen_position_frustrum_composite>
+</position_frustrum_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionfrustrumcomposite">`ksgen_position_frustrum_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r1_fix`](#ksgenvaluefix<br>[`r2_fix`](#ksgenvaluefix<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_fraction`](#ksgenvalueradiusfraction<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_uniform`](#ksgenvalueuniform<br>[`z1_fix`](#ksgenvaluefix<br>[`z2_fix`](#ksgenvaluefix<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_frustrum`](#ksgenvaluezfrustrum<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueZFrustrum`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`r1`<br>`r2`<br>`space`<br>`surface`<br>`z`<br>`z1`<br>`z2`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionfrustrumcomposite">`ksgen_position_frustrum_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r1_fix`](#ksgenvaluefix)<br>[`r2_fix`](#ksgenvaluefix)<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_fraction`](#ksgenvalueradiusfraction)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`z1_fix`](#ksgenvaluefix)<br>[`z2_fix`](#ksgenvaluefix)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_frustrum`](#ksgenvaluezfrustrum)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueZFrustrum`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`r1`<br>`r2`<br>`space`<br>`surface`<br>`z`<br>`z1`<br>`z2`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenPositionHomogeneousFluxTube
 Example:
 ```
-<ksgen_position_homogeneous_flux_tube
+<position_homogeneous_flux_tube
     flux="(double)"
     magnetic_field_name="(string)"
     n_integration_step="(int)"
 >
-</ksgen_position_homogeneous_flux_tube>
+</position_homogeneous_flux_tube>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8543,26 +8543,26 @@ Example:
 ### KSGenPositionMask
 Example:
 ```
-<position_mask
+<ksgen_position_mask
     name="(string)"
     spaces_allowed="(string)"
     spaces_forbidden="(string)"
 >
-</position_mask>
+</ksgen_position_mask>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionmask">`ksgen_position_mask`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_random`](#ksgenpositionsurfacerandom|*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceRandom`*|`name`<br>`spaces_allowed`<br>`spaces_forbidden`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionmask">`ksgen_position_mask`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)|*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceRandom`*|`name`<br>`spaces_allowed`<br>`spaces_forbidden`|*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenPositionMeshSurfaceRandom
 Example:
 ```
-<ksgen_position_mesh_surface_random
+<position_mesh_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</ksgen_position_mesh_surface_random>
+</position_mesh_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8572,17 +8572,17 @@ Example:
 ### KSGenPositionRectangularComposite
 Example:
 ```
-<ksgen_position_rectangular_composite
+<position_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
 >
-</ksgen_position_rectangular_composite>
+</position_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionrectangularcomposite">`ksgen_position_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix<br>[`x_formula`](#ksgenvalueformula<br>[`x_gauss`](#ksgenvaluegauss<br>[`x_histogram`](#ksgenvaluehistogram<br>[`x_list`](#ksgenvaluelist<br>[`x_set`](#ksgenvalueset<br>[`x_uniform`](#ksgenvalueuniform<br>[`y_fix`](#ksgenvaluefix<br>[`y_formula`](#ksgenvalueformula<br>[`y_gauss`](#ksgenvaluegauss<br>[`y_histogram`](#ksgenvaluehistogram<br>[`y_list`](#ksgenvaluelist<br>[`y_set`](#ksgenvalueset<br>[`y_uniform`](#ksgenvalueuniform<br>[`z_fix`](#ksgenvaluefix<br>[`z_formula`](#ksgenvalueformula<br>[`z_gauss`](#ksgenvaluegauss<br>[`z_histogram`](#ksgenvaluehistogram<br>[`z_list`](#ksgenvaluelist<br>[`z_set`](#ksgenvalueset<br>[`z_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionrectangularcomposite">`ksgen_position_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix)<br>[`x_formula`](#ksgenvalueformula)<br>[`x_gauss`](#ksgenvaluegauss)<br>[`x_histogram`](#ksgenvaluehistogram)<br>[`x_list`](#ksgenvaluelist)<br>[`x_set`](#ksgenvalueset)<br>[`x_uniform`](#ksgenvalueuniform)<br>[`y_fix`](#ksgenvaluefix)<br>[`y_formula`](#ksgenvalueformula)<br>[`y_gauss`](#ksgenvaluegauss)<br>[`y_histogram`](#ksgenvaluehistogram)<br>[`y_list`](#ksgenvaluelist)<br>[`y_set`](#ksgenvalueset)<br>[`y_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenPositionSpaceRandom
 Example:
@@ -8601,26 +8601,26 @@ Example:
 ### KSGenPositionSphericalComposite
 Example:
 ```
-<ksgen_position_spherical_composite
+<position_spherical_composite
     name="(string)"
     phi="(string)"
     r="(string)"
 >
-</ksgen_position_spherical_composite>
+</position_spherical_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenpositionsphericalcomposite">`ksgen_position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`r_fix`](#ksgenvaluefix<br>[`r_formula`](#ksgenvalueformula<br>[`r_gauss`](#ksgenvaluegauss<br>[`r_histogram`](#ksgenvaluehistogram<br>[`r_list`](#ksgenvaluelist<br>[`r_set`](#ksgenvalueset<br>[`r_spherical`](#ksgenvalueradiusspherical<br>[`r_uniform`](#ksgenvalueuniform<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenpositionsphericalcomposite">`ksgen_position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_spherical`](#ksgenvalueradiusspherical)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenPositionSurfaceAdjustmentStep
 Example:
 ```
-<ksgen_position_surface_adjustment_step
+<position_surface_adjustment_step
     length="(double)"
     name="(string)"
 >
-</ksgen_position_surface_adjustment_step>
+</position_surface_adjustment_step>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8630,11 +8630,11 @@ Example:
 ### KSGenPositionSurfaceRandom
 Example:
 ```
-<position_surface_random
+<ksgen_position_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</position_surface_random>
+</ksgen_position_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8644,46 +8644,46 @@ Example:
 ### KSGenSpinComposite
 Example:
 ```
-<ksgen_spin_composite
+<spin_composite
     name="(string)"
     phi="(string)"
     space="(string)"
 >
-</ksgen_spin_composite>
+</spin_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenspincomposite">`ksgen_spin_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenspincomposite">`ksgen_spin_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenSpinRelativeComposite
 Example:
 ```
-<ksgen_spin_composite_relative
+<spin_relative_composite
     name="(string)"
     phi="(string)"
     space="(string)"
 >
-</ksgen_spin_composite_relative>
+</spin_relative_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenspinrelativecomposite">`ksgen_spin_composite_relative`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix<br>[`phi_formula`](#ksgenvalueformula<br>[`phi_gauss`](#ksgenvaluegauss<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`phi_histogram`](#ksgenvaluehistogram<br>[`phi_list`](#ksgenvaluelist<br>[`phi_set`](#ksgenvalueset<br>[`phi_uniform`](#ksgenvalueuniform<br>[`theta_cosine`](#ksgenvalueanglecosine<br>[`theta_fix`](#ksgenvaluefix<br>[`theta_formula`](#ksgenvalueformula<br>[`theta_gauss`](#ksgenvaluegauss<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`theta_histogram`](#ksgenvaluehistogram<br>[`theta_list`](#ksgenvaluelist<br>[`theta_set`](#ksgenvalueset<br>[`theta_spherical`](#ksgenvalueanglespherical<br>[`theta_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenspinrelativecomposite">`ksgen_spin_composite_relative`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSGenTimeComposite
 Example:
 ```
-<time_composite
+<ksgen_time_composite
     name="(string)"
     time_value="(string)"
 >
-</time_composite>
+</ksgen_time_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgentimecomposite">`ksgen_time_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)|[`time_fix`](#ksgenvaluefix<br>[`time_formula`](#ksgenvalueformula<br>[`time_gauss`](#ksgenvaluegauss<br>[`time_generalized_gauss`](#ksgenvaluegeneralizedgauss<br>[`time_histogram`](#ksgenvaluehistogram<br>[`time_list`](#ksgenvaluelist<br>[`time_set`](#ksgenvalueset<br>[`time_uniform`](#ksgenvalueuniform|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`time_value`|*`string`*<br>*`string`*|
+|<a name="ksgentimecomposite">`ksgen_time_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)|[`time_fix`](#ksgenvaluefix)<br>[`time_formula`](#ksgenvalueformula)<br>[`time_gauss`](#ksgenvaluegauss)<br>[`time_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`time_histogram`](#ksgenvaluehistogram)<br>[`time_list`](#ksgenvaluelist)<br>[`time_set`](#ksgenvalueset)<br>[`time_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`time_value`|*`string`*<br>*`string`*|
 
 ### KSGenValueAngleCosine
 Example:
@@ -8733,11 +8733,11 @@ Example:
 ### KSGenValueFix
 Example:
 ```
-<l_fix
+<z2_fix
     name="(string)"
     value="(double)"
 >
-</l_fix>
+</z2_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8747,12 +8747,12 @@ Example:
 ### KSGenValueFormula
 Example:
 ```
-<theta_formula
+<z_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</theta_formula>
+</z_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8762,12 +8762,12 @@ Example:
 ### KSGenValueGauss
 Example:
 ```
-<energy_gauss
+<ksgen_value_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</energy_gauss>
+</ksgen_value_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8777,12 +8777,12 @@ Example:
 ### KSGenValueGeneralizedGauss
 Example:
 ```
-<phi_generalized_gauss
+<energy_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</phi_generalized_gauss>
+</energy_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8792,12 +8792,12 @@ Example:
 ### KSGenValueHistogram
 Example:
 ```
-<ksgen_value_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</ksgen_value_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8807,12 +8807,12 @@ Example:
 ### KSGenValueList
 Example:
 ```
-<theta_list
+<y_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</theta_list>
+</y_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8837,12 +8837,12 @@ Example:
 ### KSGenValueRadiusCylindrical
 Example:
 ```
-<r_cylindrical
+<ksgen_value_radius_cylindrical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</r_cylindrical>
+</ksgen_value_radius_cylindrical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8865,12 +8865,12 @@ Example:
 ### KSGenValueRadiusSpherical
 Example:
 ```
-<r_spherical
+<ksgen_value_radius_spherical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</r_spherical>
+</ksgen_value_radius_spherical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8880,12 +8880,12 @@ Example:
 ### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<theta_set
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
-</ksgen_value_set>
+</theta_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8895,12 +8895,12 @@ Example:
 ### KSGenValueUniform
 Example:
 ```
-<n_uniform
+<time_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</n_uniform>
+</time_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8910,12 +8910,12 @@ Example:
 ### KSGenValueZFrustrum
 Example:
 ```
-<ksgen_value_z_frustrum
+<z_frustrum
     name="(string)"
     r1="(double)"
     r2="(double)"
 >
-</ksgen_value_z_frustrum>
+</z_frustrum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -8937,7 +8937,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgeoside">`ksgeo_side`</a>|[*KSGeoSideBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata<br>[`add_step_output`](#kscommandmemberaddstepoutputdata<br>[`add_terminator`](#kscommandmemberaddterminatordata<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata<br>[`command`](#kscommandmemberdata<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata<br>[`remove_terminator`](#kscommandmemberremoveterminatordata<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgeoside">`ksgeo_side`</a>|[*KSGeoSideBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata)<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata)<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata)<br>[`add_step_output`](#kscommandmemberaddstepoutputdata)<br>[`add_terminator`](#kscommandmemberaddterminatordata)<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata)<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata)<br>[`command`](#kscommandmemberdata)<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata)<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata)<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata)<br>[`remove_terminator`](#kscommandmemberremoveterminatordata)<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata)<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata)|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSCommandMemberAddElectricFieldData
 Example:
@@ -9087,18 +9087,18 @@ Example:
 ### KSGeoSpace
 Example:
 ```
-<ksgeo_space
+<geo_space
     name="(string)"
     spaces="(string)"
 >
     <add_control/>
 
-</ksgeo_space>
+</geo_space>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgeospace">`ksgeo_space`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_control`](#kscommandmemberaddcontroldata<br>[`add_electric_field`](#kscommandmemberaddelectricfielddata<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata<br>[`add_space_interaction`](#kscommandmemberaddspaceinteractiondata<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata<br>[`add_step_output`](#kscommandmemberaddstepoutputdata<br>[`add_term`](#kscommandmemberaddtermdata<br>[`add_terminator`](#kscommandmemberaddterminatordata<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata<br>[`clear_density`](#kscommandmembercleardensitydata<br>[`clear_step_data`](#kscommandmemberclearstepdatadata<br>[`clear_step_point`](#kscommandmemberclearsteppointdata<br>[`clear_track_data`](#kscommandmembercleartrackdatadata<br>[`clear_track_point`](#kscommandmembercleartrackpointdata<br>[`clear_trajectory`](#kscommandmembercleartrajectorydata<br>[`command`](#kscommandmemberdata<br>[`geo_side`](#ksgeoside<br>[`geo_space`](#ksgeospace<br>[`geo_surface`](#ksgeosurface<br>[`remove_control`](#kscommandmemberremovecontroldata<br>[`remove_electric_field`](#kscommandmemberremoveelectricfielddata<br>[`remove_magnetic_field`](#kscommandmemberremovemagneticfielddata<br>[`remove_space_interaction`](#kscommandmemberremovespaceinteractiondata<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata<br>[`remove_term`](#kscommandmemberremovetermdata<br>[`remove_terminator`](#kscommandmemberremoveterminatordata<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata<br>[`set_density`](#kscommandmembersetdensitydata<br>[`set_step_data`](#kscommandmembersetstepdatadata<br>[`set_step_point`](#kscommandmembersetsteppointdata<br>[`set_track_data`](#kscommandmembersettrackdatadata<br>[`set_track_point`](#kscommandmembersettrackpointdata<br>[`set_trajectory`](#kscommandmembersettrajectorydata|*`KSCommandMemberAddControlData`*<br>*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddSpaceInteractionData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTermData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearDensityData`*<br>*`KSCommandMemberClearStepDataData`*<br>*`KSCommandMemberClearStepPointData`*<br>*`KSCommandMemberClearTrackDataData`*<br>*`KSCommandMemberClearTrackPointData`*<br>*`KSCommandMemberClearTrajectoryData`*<br>*`KSCommandMemberData`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSCommandMemberRemoveControlData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveMagneticFieldData`*<br>*`KSCommandMemberRemoveSpaceInteractionData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTermData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetDensityData`*<br>*`KSCommandMemberSetStepDataData`*<br>*`KSCommandMemberSetStepPointData`*<br>*`KSCommandMemberSetTrackDataData`*<br>*`KSCommandMemberSetTrackPointData`*<br>*`KSCommandMemberSetTrajectoryData`*|`name`<br>`spaces`|*`string`*<br>*`string`*|
+|<a name="ksgeospace">`ksgeo_space`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_control`](#kscommandmemberaddcontroldata)<br>[`add_electric_field`](#kscommandmemberaddelectricfielddata)<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata)<br>[`add_space_interaction`](#kscommandmemberaddspaceinteractiondata)<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata)<br>[`add_step_output`](#kscommandmemberaddstepoutputdata)<br>[`add_term`](#kscommandmemberaddtermdata)<br>[`add_terminator`](#kscommandmemberaddterminatordata)<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata)<br>[`clear_density`](#kscommandmembercleardensitydata)<br>[`clear_step_data`](#kscommandmemberclearstepdatadata)<br>[`clear_step_point`](#kscommandmemberclearsteppointdata)<br>[`clear_track_data`](#kscommandmembercleartrackdatadata)<br>[`clear_track_point`](#kscommandmembercleartrackpointdata)<br>[`clear_trajectory`](#kscommandmembercleartrajectorydata)<br>[`command`](#kscommandmemberdata)<br>[`geo_side`](#ksgeoside)<br>[`geo_space`](#ksgeospace)<br>[`geo_surface`](#ksgeosurface)<br>[`remove_control`](#kscommandmemberremovecontroldata)<br>[`remove_electric_field`](#kscommandmemberremoveelectricfielddata)<br>[`remove_magnetic_field`](#kscommandmemberremovemagneticfielddata)<br>[`remove_space_interaction`](#kscommandmemberremovespaceinteractiondata)<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata)<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata)<br>[`remove_term`](#kscommandmemberremovetermdata)<br>[`remove_terminator`](#kscommandmemberremoveterminatordata)<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata)<br>[`set_density`](#kscommandmembersetdensitydata)<br>[`set_step_data`](#kscommandmembersetstepdatadata)<br>[`set_step_point`](#kscommandmembersetsteppointdata)<br>[`set_track_data`](#kscommandmembersettrackdatadata)<br>[`set_track_point`](#kscommandmembersettrackpointdata)<br>[`set_trajectory`](#kscommandmembersettrajectorydata)|*`KSCommandMemberAddControlData`*<br>*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddSpaceInteractionData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTermData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearDensityData`*<br>*`KSCommandMemberClearStepDataData`*<br>*`KSCommandMemberClearStepPointData`*<br>*`KSCommandMemberClearTrackDataData`*<br>*`KSCommandMemberClearTrackPointData`*<br>*`KSCommandMemberClearTrajectoryData`*<br>*`KSCommandMemberData`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSCommandMemberRemoveControlData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveMagneticFieldData`*<br>*`KSCommandMemberRemoveSpaceInteractionData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTermData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetDensityData`*<br>*`KSCommandMemberSetStepDataData`*<br>*`KSCommandMemberSetStepPointData`*<br>*`KSCommandMemberSetTrackDataData`*<br>*`KSCommandMemberSetTrackPointData`*<br>*`KSCommandMemberSetTrajectoryData`*|`name`<br>`spaces`|*`string`*<br>*`string`*|
 
 #### KSCommandMemberAddControlData
 Example:
@@ -9278,38 +9278,38 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgeoside">`geo_side`</a>|[*KSGeoSideBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata<br>[`add_step_output`](#kscommandmemberaddstepoutputdata<br>[`add_terminator`](#kscommandmemberaddterminatordata<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata<br>[`command`](#kscommandmemberdata<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata<br>[`remove_terminator`](#kscommandmemberremoveterminatordata<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgeoside">`geo_side`</a>|[*KSGeoSideBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata)<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata)<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata)<br>[`add_step_output`](#kscommandmemberaddstepoutputdata)<br>[`add_terminator`](#kscommandmemberaddterminatordata)<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata)<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata)<br>[`command`](#kscommandmemberdata)<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata)<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata)<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata)<br>[`remove_terminator`](#kscommandmemberremoveterminatordata)<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata)<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata)|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGeoSpace
 Example:
 ```
-<ksgeo_space
+<geo_space
     name="(string)"
     spaces="(string)"
 >
-</ksgeo_space>
+</geo_space>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgeospace">`geo_space`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_control`](#kscommandmemberaddcontroldata<br>[`add_electric_field`](#kscommandmemberaddelectricfielddata<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata<br>[`add_space_interaction`](#kscommandmemberaddspaceinteractiondata<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata<br>[`add_step_output`](#kscommandmemberaddstepoutputdata<br>[`add_term`](#kscommandmemberaddtermdata<br>[`add_terminator`](#kscommandmemberaddterminatordata<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata<br>[`clear_density`](#kscommandmembercleardensitydata<br>[`clear_step_data`](#kscommandmemberclearstepdatadata<br>[`clear_step_point`](#kscommandmemberclearsteppointdata<br>[`clear_track_data`](#kscommandmembercleartrackdatadata<br>[`clear_track_point`](#kscommandmembercleartrackpointdata<br>[`clear_trajectory`](#kscommandmembercleartrajectorydata<br>[`command`](#kscommandmemberdata<br>[`geo_side`](#ksgeoside<br>[`geo_space`](#ksgeospace<br>[`geo_surface`](#ksgeosurface<br>[`remove_control`](#kscommandmemberremovecontroldata<br>[`remove_electric_field`](#kscommandmemberremoveelectricfielddata<br>[`remove_magnetic_field`](#kscommandmemberremovemagneticfielddata<br>[`remove_space_interaction`](#kscommandmemberremovespaceinteractiondata<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata<br>[`remove_term`](#kscommandmemberremovetermdata<br>[`remove_terminator`](#kscommandmemberremoveterminatordata<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata<br>[`set_density`](#kscommandmembersetdensitydata<br>[`set_step_data`](#kscommandmembersetstepdatadata<br>[`set_step_point`](#kscommandmembersetsteppointdata<br>[`set_track_data`](#kscommandmembersettrackdatadata<br>[`set_track_point`](#kscommandmembersettrackpointdata<br>[`set_trajectory`](#kscommandmembersettrajectorydata|*`KSCommandMemberAddControlData`*<br>*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddSpaceInteractionData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTermData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearDensityData`*<br>*`KSCommandMemberClearStepDataData`*<br>*`KSCommandMemberClearStepPointData`*<br>*`KSCommandMemberClearTrackDataData`*<br>*`KSCommandMemberClearTrackPointData`*<br>*`KSCommandMemberClearTrajectoryData`*<br>*`KSCommandMemberData`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSCommandMemberRemoveControlData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveMagneticFieldData`*<br>*`KSCommandMemberRemoveSpaceInteractionData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTermData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetDensityData`*<br>*`KSCommandMemberSetStepDataData`*<br>*`KSCommandMemberSetStepPointData`*<br>*`KSCommandMemberSetTrackDataData`*<br>*`KSCommandMemberSetTrackPointData`*<br>*`KSCommandMemberSetTrajectoryData`*|`name`<br>`spaces`|*`string`*<br>*`string`*|
+|<a name="ksgeospace">`geo_space`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|[`add_control`](#kscommandmemberaddcontroldata)<br>[`add_electric_field`](#kscommandmemberaddelectricfielddata)<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata)<br>[`add_space_interaction`](#kscommandmemberaddspaceinteractiondata)<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata)<br>[`add_step_output`](#kscommandmemberaddstepoutputdata)<br>[`add_term`](#kscommandmemberaddtermdata)<br>[`add_terminator`](#kscommandmemberaddterminatordata)<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata)<br>[`clear_density`](#kscommandmembercleardensitydata)<br>[`clear_step_data`](#kscommandmemberclearstepdatadata)<br>[`clear_step_point`](#kscommandmemberclearsteppointdata)<br>[`clear_track_data`](#kscommandmembercleartrackdatadata)<br>[`clear_track_point`](#kscommandmembercleartrackpointdata)<br>[`clear_trajectory`](#kscommandmembercleartrajectorydata)<br>[`command`](#kscommandmemberdata)<br>[`geo_side`](#ksgeoside)<br>[`geo_space`](#ksgeospace)<br>[`geo_surface`](#ksgeosurface)<br>[`remove_control`](#kscommandmemberremovecontroldata)<br>[`remove_electric_field`](#kscommandmemberremoveelectricfielddata)<br>[`remove_magnetic_field`](#kscommandmemberremovemagneticfielddata)<br>[`remove_space_interaction`](#kscommandmemberremovespaceinteractiondata)<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata)<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata)<br>[`remove_term`](#kscommandmemberremovetermdata)<br>[`remove_terminator`](#kscommandmemberremoveterminatordata)<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata)<br>[`set_density`](#kscommandmembersetdensitydata)<br>[`set_step_data`](#kscommandmembersetstepdatadata)<br>[`set_step_point`](#kscommandmembersetsteppointdata)<br>[`set_track_data`](#kscommandmembersettrackdatadata)<br>[`set_track_point`](#kscommandmembersettrackpointdata)<br>[`set_trajectory`](#kscommandmembersettrajectorydata)|*`KSCommandMemberAddControlData`*<br>*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddSpaceInteractionData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTermData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearDensityData`*<br>*`KSCommandMemberClearStepDataData`*<br>*`KSCommandMemberClearStepPointData`*<br>*`KSCommandMemberClearTrackDataData`*<br>*`KSCommandMemberClearTrackPointData`*<br>*`KSCommandMemberClearTrajectoryData`*<br>*`KSCommandMemberData`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSCommandMemberRemoveControlData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveMagneticFieldData`*<br>*`KSCommandMemberRemoveSpaceInteractionData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTermData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetDensityData`*<br>*`KSCommandMemberSetStepDataData`*<br>*`KSCommandMemberSetStepPointData`*<br>*`KSCommandMemberSetTrackDataData`*<br>*`KSCommandMemberSetTrackPointData`*<br>*`KSCommandMemberSetTrajectoryData`*|`name`<br>`spaces`|*`string`*<br>*`string`*|
 
 ##### KSGeoSurface
 Example:
 ```
-<ksgeo_surface
+<geo_surface
     name="(string)"
     spaces="(string)"
     surfaces="(string)"
 >
     <add_electric_field/>
 
-</ksgeo_surface>
+</geo_surface>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgeosurface">`geo_surface`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata<br>[`add_step_output`](#kscommandmemberaddstepoutputdata<br>[`add_terminator`](#kscommandmemberaddterminatordata<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata<br>[`command`](#kscommandmemberdata<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata<br>[`remove_terminator`](#kscommandmemberremoveterminatordata<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgeosurface">`geo_surface`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata)<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata)<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata)<br>[`add_step_output`](#kscommandmemberaddstepoutputdata)<br>[`add_terminator`](#kscommandmemberaddterminatordata)<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata)<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata)<br>[`command`](#kscommandmemberdata)<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata)<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata)<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata)<br>[`remove_terminator`](#kscommandmemberremoveterminatordata)<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata)<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata)|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
 
 ###### KSCommandMemberAddElectricFieldData
 Example:
@@ -9609,17 +9609,17 @@ Example:
 ### KSGeoSurface
 Example:
 ```
-<ksgeo_surface
+<geo_surface
     name="(string)"
     spaces="(string)"
     surfaces="(string)"
 >
-</ksgeo_surface>
+</geo_surface>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgeosurface">`ksgeo_surface`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata<br>[`add_step_output`](#kscommandmemberaddstepoutputdata<br>[`add_terminator`](#kscommandmemberaddterminatordata<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata<br>[`command`](#kscommandmemberdata<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata<br>[`remove_terminator`](#kscommandmemberremoveterminatordata<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
+|<a name="ksgeosurface">`ksgeo_surface`</a>|[*KSGeoSpaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata)<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata)<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata)<br>[`add_step_output`](#kscommandmemberaddstepoutputdata)<br>[`add_terminator`](#kscommandmemberaddterminatordata)<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata)<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata)<br>[`command`](#kscommandmemberdata)<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata)<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata)<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata)<br>[`remove_terminator`](#kscommandmemberremoveterminatordata)<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata)<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata)|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
 
 ### KSIntCalculatorConstant
 Example:
@@ -9638,11 +9638,11 @@ Example:
 ### KSIntCalculatorIon
 Example:
 ```
-<ksint_calculator_ion
+<calculator_ion
     gas="(string)"
     name="(string)"
 >
-</ksint_calculator_ion>
+</calculator_ion>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -9675,21 +9675,21 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecay">`ksint_decay`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)|[`decay_death_const_rate`](#ksintdecaycalculatordeathconstrate<br>[`decay_ferenc_bbr`](#ksintdecaycalculatorferencbbrtransition<br>[`decay_ferenc_ionisation`](#ksintdecaycalculatorferencionisation<br>[`decay_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous<br>[`decay_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation<br>[`decay_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation<br>[`decay_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation<br>[`decay_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous|*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*|`calculator`<br>`calculators`<br>`enhancement`<br>`name`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*|
+|<a name="ksintdecay">`ksint_decay`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)|[`decay_death_const_rate`](#ksintdecaycalculatordeathconstrate)<br>[`decay_ferenc_bbr`](#ksintdecaycalculatorferencbbrtransition)<br>[`decay_ferenc_ionisation`](#ksintdecaycalculatorferencionisation)<br>[`decay_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous)<br>[`decay_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation)<br>[`decay_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation)<br>[`decay_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation)<br>[`decay_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous)|*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*|`calculator`<br>`calculators`<br>`enhancement`<br>`name`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*|
 
 #### KSIntDecayCalculatorDeathConstRate
 Example:
 ```
-<ksint_decay_calculator_death_const_rate
+<decay_death_const_rate
     life_time="(double)"
     name="(string)"
 >
-</ksint_decay_calculator_death_const_rate>
+</decay_death_const_rate>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatordeathconstrate">`decay_death_const_rate`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`life_time`<br>`name`|*`double`*<br>*`string`*|
+|<a name="ksintdecaycalculatordeathconstrate">`decay_death_const_rate`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`life_time`<br>`name`|*`double`*<br>*`string`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9704,7 +9704,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSIntDecayCalculatorFerencBBRTransition
 Example:
@@ -9725,7 +9725,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorferencbbrtransition">`decay_ferenc_bbr`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorferencbbrtransition">`decay_ferenc_bbr`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9740,12 +9740,12 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSIntDecayCalculatorFerencIonisation
 Example:
 ```
-<decay_ferenc_ionisation
+<ksint_decay_calculator_ferenc_ionisation
     name="(string)"
     temperature="(double)"
 >
@@ -9756,12 +9756,12 @@ Example:
     >
     </decay_product_generator>
 
-</decay_ferenc_ionisation>
+</ksint_decay_calculator_ferenc_ionisation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorferencionisation">`decay_ferenc_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorferencionisation">`decay_ferenc_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9776,12 +9776,12 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSIntDecayCalculatorFerencSpontaneous
 Example:
 ```
-<decay_ferenc_spontaneous
+<ksint_decay_calculator_ferenc_spontaneous
     name="(string)"
 >
     <decay_product_generator
@@ -9791,12 +9791,12 @@ Example:
     >
     </decay_product_generator>
 
-</decay_ferenc_spontaneous>
+</ksint_decay_calculator_ferenc_spontaneous>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorferencspontaneous">`decay_ferenc_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`|*`string`*|
+|<a name="ksintdecaycalculatorferencspontaneous">`decay_ferenc_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`|*`string`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9811,12 +9811,12 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSIntDecayCalculatorGlukhovDeExcitation
 Example:
 ```
-<ksint_decay_calculator_glukhov_deexcitation
+<decay_glukhov_deexcitation
     name="(string)"
     temperature="(double)"
 >
@@ -9827,12 +9827,12 @@ Example:
     >
     </decay_product_generator>
 
-</ksint_decay_calculator_glukhov_deexcitation>
+</decay_glukhov_deexcitation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovdeexcitation">`decay_glukhov_deexcitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorglukhovdeexcitation">`decay_glukhov_deexcitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9847,7 +9847,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSIntDecayCalculatorGlukhovExcitation
 Example:
@@ -9868,7 +9868,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovexcitation">`decay_glukhov_excitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorglukhovexcitation">`decay_glukhov_excitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9883,7 +9883,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSIntDecayCalculatorGlukhovIonisation
 Example:
@@ -9904,7 +9904,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovionisation">`decay_glukhov_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorglukhovionisation">`decay_glukhov_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9919,12 +9919,12 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSIntDecayCalculatorGlukhovSpontaneous
 Example:
 ```
-<ksint_decay_calculator_glukhov_spontaneous
+<decay_glukhov_spontaneous
     name="(string)"
 >
     <decay_product_generator
@@ -9934,12 +9934,12 @@ Example:
     >
     </decay_product_generator>
 
-</ksint_decay_calculator_glukhov_spontaneous>
+</decay_glukhov_spontaneous>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovspontaneous">`decay_glukhov_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`|*`string`*|
+|<a name="ksintdecaycalculatorglukhovspontaneous">`decay_glukhov_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`|*`string`*|
 
 ##### KSGenGeneratorComposite
 Example:
@@ -9954,21 +9954,21 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite<br>[`energy_beta_decay`](#ksgenenergybetadecay<br>[`energy_beta_recoil`](#ksgenenergybetarecoil<br>[`energy_composite`](#ksgenenergycomposite<br>[`energy_krypton_event`](#ksgenenergykryptonevent<br>[`energy_lead_event`](#ksgenenergyleadevent<br>[`energy_radon_event`](#ksgenenergyradonevent<br>[`energy_rydberg`](#ksgenenergyrydberg<br>[`l_composite`](#ksgenlcomposite<br>[`l_statistical`](#ksgenlstatistical<br>[`l_uniform_max_n`](#ksgenluniformmaxn<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite<br>[`n_composite`](#ksgenncomposite<br>[`pid_fix`](#ksgenvaluefix<br>[`pid_formula`](#ksgenvalueformula<br>[`pid_gauss`](#ksgenvaluegauss<br>[`pid_histogram`](#ksgenvaluehistogram<br>[`pid_list`](#ksgenvaluelist<br>[`pid_pareto`](#ksgenvaluepareto<br>[`pid_set`](#ksgenvalueset<br>[`pid_uniform`](#ksgenvalueuniform<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite<br>[`position_flux_tube`](#ksgenpositionfluxtube<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube<br>[`position_mask`](#ksgenpositionmask<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite<br>[`position_space_random`](#ksgenpositionspacerandom<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep<br>[`position_surface_random`](#ksgenpositionsurfacerandom<br>[`spin_composite`](#ksgenspincomposite<br>[`spin_relative_composite`](#ksgenspinrelativecomposite<br>[`time_composite`](#ksgentimecomposite|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 ### KSIntDecayCalculatorDeathConstRate
 Example:
 ```
-<ksint_decay_calculator_death_const_rate
+<decay_death_const_rate
     life_time="(double)"
     name="(string)"
 >
-</ksint_decay_calculator_death_const_rate>
+</decay_death_const_rate>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatordeathconstrate">`ksint_decay_calculator_death_const_rate`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`life_time`<br>`name`|*`double`*<br>*`string`*|
+|<a name="ksintdecaycalculatordeathconstrate">`ksint_decay_calculator_death_const_rate`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`life_time`<br>`name`|*`double`*<br>*`string`*|
 
 ### KSIntDecayCalculatorFerencBBRTransition
 Example:
@@ -9982,48 +9982,48 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorferencbbrtransition">`ksint_decay_calculator_ferenc_bbr_transition`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorferencbbrtransition">`ksint_decay_calculator_ferenc_bbr_transition`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ### KSIntDecayCalculatorFerencIonisation
 Example:
 ```
-<decay_ferenc_ionisation
+<ksint_decay_calculator_ferenc_ionisation
     name="(string)"
     temperature="(double)"
 >
-</decay_ferenc_ionisation>
+</ksint_decay_calculator_ferenc_ionisation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorferencionisation">`ksint_decay_calculator_ferenc_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorferencionisation">`ksint_decay_calculator_ferenc_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ### KSIntDecayCalculatorFerencSpontaneous
 Example:
 ```
-<decay_ferenc_spontaneous
+<ksint_decay_calculator_ferenc_spontaneous
     name="(string)"
 >
-</decay_ferenc_spontaneous>
+</ksint_decay_calculator_ferenc_spontaneous>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorferencspontaneous">`ksint_decay_calculator_ferenc_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`|*`string`*|
+|<a name="ksintdecaycalculatorferencspontaneous">`ksint_decay_calculator_ferenc_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`|*`string`*|
 
 ### KSIntDecayCalculatorGlukhovDeExcitation
 Example:
 ```
-<ksint_decay_calculator_glukhov_deexcitation
+<decay_glukhov_deexcitation
     name="(string)"
     temperature="(double)"
 >
-</ksint_decay_calculator_glukhov_deexcitation>
+</decay_glukhov_deexcitation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovdeexcitation">`ksint_decay_calculator_glukhov_deexcitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorglukhovdeexcitation">`ksint_decay_calculator_glukhov_deexcitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ### KSIntDecayCalculatorGlukhovExcitation
 Example:
@@ -10037,7 +10037,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovexcitation">`ksint_decay_calculator_glukhov_excitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorglukhovexcitation">`ksint_decay_calculator_glukhov_excitation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ### KSIntDecayCalculatorGlukhovIonisation
 Example:
@@ -10051,30 +10051,30 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovionisation">`ksint_decay_calculator_glukhov_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
+|<a name="ksintdecaycalculatorglukhovionisation">`ksint_decay_calculator_glukhov_ionisation`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
 ### KSIntDecayCalculatorGlukhovSpontaneous
 Example:
 ```
-<ksint_decay_calculator_glukhov_spontaneous
+<decay_glukhov_spontaneous
     name="(string)"
 >
-</ksint_decay_calculator_glukhov_spontaneous>
+</decay_glukhov_spontaneous>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintdecaycalculatorglukhovspontaneous">`ksint_decay_calculator_glukhov_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite|*`KSGenGeneratorComposite`*|`name`|*`string`*|
+|<a name="ksintdecaycalculatorglukhovspontaneous">`ksint_decay_calculator_glukhov_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`|*`string`*|
 
 ### KSIntDensityConstant
 Example:
 ```
-<ksint_density_constant
+<density_constant
     density="(double)"
     name="(string)"
     pressure="(double)"
 >
-</ksint_density_constant>
+</density_constant>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10101,7 +10101,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintscattering">`ksint_scattering`</a>|[*KSIntScatteringBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|[`calculator_argon`](#ksintcalculatorargonset<br>[`calculator_constant`](#ksintcalculatorconstant<br>[`calculator_hydrogen`](#ksintcalculatorhydrogenset<br>[`calculator_ion`](#ksintcalculatorion<br>[`calculator_kess`](#ksintcalculatorkessset<br>[`density_constant`](#ksintdensityconstant|*`KSIntCalculatorArgonSet`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorHydrogenSet`*<br>*`KSIntCalculatorIon`*<br>*`KSIntCalculatorKESSSet`*<br>*`KSIntDensityConstant`*|`calculator`<br>`calculators`<br>`density`<br>`enhancement`<br>`name`<br>`split`|*`string`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`bool`*|
+|<a name="ksintscattering">`ksint_scattering`</a>|[*KSIntScatteringBuilder.cxx*](Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|[`calculator_argon`](#ksintcalculatorargonset)<br>[`calculator_constant`](#ksintcalculatorconstant)<br>[`calculator_hydrogen`](#ksintcalculatorhydrogenset)<br>[`calculator_ion`](#ksintcalculatorion)<br>[`calculator_kess`](#ksintcalculatorkessset)<br>[`density_constant`](#ksintdensityconstant)|*`KSIntCalculatorArgonSet`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorHydrogenSet`*<br>*`KSIntCalculatorIon`*<br>*`KSIntCalculatorKESSSet`*<br>*`KSIntDensityConstant`*|`calculator`<br>`calculators`<br>`density`<br>`enhancement`<br>`name`<br>`split`|*`string`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`bool`*|
 
 #### KSIntCalculatorArgonSet
 Example:
@@ -10150,11 +10150,11 @@ Example:
 #### KSIntCalculatorIon
 Example:
 ```
-<ksint_calculator_ion
+<calculator_ion
     gas="(string)"
     name="(string)"
 >
-</ksint_calculator_ion>
+</calculator_ion>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10179,12 +10179,12 @@ Example:
 #### KSIntDensityConstant
 Example:
 ```
-<ksint_density_constant
+<density_constant
     density="(double)"
     name="(string)"
     pressure="(double)"
 >
-</ksint_density_constant>
+</density_constant>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10677,11 +10677,11 @@ Example:
 ### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10691,11 +10691,11 @@ Example:
 ### KSTrajControlCyclotron
 Example:
 ```
-<control_cyclotron
+<kstraj_control_cyclotron
     fraction="(double)"
     name="(string)"
 >
-</control_cyclotron>
+</kstraj_control_cyclotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10705,12 +10705,12 @@ Example:
 ### KSTrajControlEnergy
 Example:
 ```
-<control_energy
+<kstraj_control_energy
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
-</control_energy>
+</kstraj_control_energy>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10720,11 +10720,11 @@ Example:
 ### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10734,11 +10734,11 @@ Example:
 ### KSTrajControlMDot
 Example:
 ```
-<kstraj_control_m_dot
+<control_m_dot
     fraction="(double)"
     name="(string)"
 >
-</kstraj_control_m_dot>
+</control_m_dot>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10748,12 +10748,12 @@ Example:
 ### KSTrajControlMagneticMoment
 Example:
 ```
-<control_magnetic_moment
+<kstraj_control_magnetic_moment
     lower_limit="(double)"
     name="(string)"
     upper_limit="(double)"
 >
-</control_magnetic_moment>
+</kstraj_control_magnetic_moment>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10763,12 +10763,12 @@ Example:
 ### KSTrajControlMomentumNumericalError
 Example:
 ```
-<control_momentum_error
+<kstraj_control_momentum_numerical_error
     absolute_momentum_error="(double)"
     name="(string)"
     safety_factor="(double)"
 >
-</control_momentum_error>
+</kstraj_control_momentum_numerical_error>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10793,11 +10793,11 @@ Example:
 ### KSTrajControlSpinPrecession
 Example:
 ```
-<control_spin_precession
+<kstraj_control_spin_precession
     fraction="(double)"
     name="(string)"
 >
-</control_spin_precession>
+</kstraj_control_spin_precession>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10821,10 +10821,10 @@ Example:
 ### KSTrajIntegratorRK54
 Example:
 ```
-<integrator_rk54
+<kstraj_integrator_rk54
     name="(string)"
 >
-</integrator_rk54>
+</kstraj_integrator_rk54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10834,10 +10834,10 @@ Example:
 ### KSTrajIntegratorRK65
 Example:
 ```
-<kstraj_integrator_rk65
+<integrator_rk65
     name="(string)"
 >
-</kstraj_integrator_rk65>
+</integrator_rk65>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10847,10 +10847,10 @@ Example:
 ### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10886,10 +10886,10 @@ Example:
 ### KSTrajIntegratorRKDP54
 Example:
 ```
-<integrator_rkdp54
+<kstraj_integrator_rkdp54
     name="(string)"
 >
-</integrator_rkdp54>
+</kstraj_integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10978,10 +10978,10 @@ Example:
 ### KSTrajTermDrift
 Example:
 ```
-<kstraj_term_drift
+<term_drift
     name="(string)"
 >
-</kstraj_term_drift>
+</term_drift>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11005,10 +11005,10 @@ Example:
 ### KSTrajTermGyration
 Example:
 ```
-<kstraj_term_gyration
+<term_gyration
     name="(string)"
 >
-</kstraj_term_gyration>
+</term_gyration>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11018,11 +11018,11 @@ Example:
 ### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11032,12 +11032,12 @@ Example:
 ### KSTrajTermSynchrotron
 Example:
 ```
-<kstraj_term_synchrotron
+<term_synchrotron
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
-</kstraj_term_synchrotron>
+</term_synchrotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11063,16 +11063,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kstrajtrajectoryadiabatic">`kstraj_trajectory_adiabatic`</a>|[*KSTrajTrajectoryAdiabaticBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange<br>[`control_cyclotron`](#kstrajcontrolcyclotron<br>[`control_energy`](#kstrajcontrolenergy<br>[`control_length`](#kstrajcontrollength<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror<br>[`control_time`](#kstrajcontroltime<br>[`integrator_rk54`](#kstrajintegratorrk54<br>[`integrator_rk65`](#kstrajintegratorrk65<br>[`integrator_rk8`](#kstrajintegratorrk8<br>[`integrator_rk86`](#kstrajintegratorrk86<br>[`integrator_rk87`](#kstrajintegratorrk87<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`interpolator_fast`](#kstrajinterpolatorfast<br>[`interpolator_hermite`](#kstrajinterpolatorhermite<br>[`term_drift`](#kstrajtermdrift<br>[`term_gyration`](#kstrajtermgyration<br>[`term_propagation`](#kstrajtermpropagation<br>[`term_synchrotron`](#kstrajtermsynchrotron|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`cyclotron_fraction`<br>`name`<br>`piecewise_tolerance`<br>`use_true_position`|*`double`*<br>*`string`*<br>*`double`*<br>*`bool`*|
+|<a name="kstrajtrajectoryadiabatic">`kstraj_trajectory_adiabatic`</a>|[*KSTrajTrajectoryAdiabaticBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_drift`](#kstrajtermdrift)<br>[`term_gyration`](#kstrajtermgyration)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`cyclotron_fraction`<br>`name`<br>`piecewise_tolerance`<br>`use_true_position`|*`double`*<br>*`string`*<br>*`double`*<br>*`bool`*|
 
 #### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11082,11 +11082,11 @@ Example:
 #### KSTrajControlCyclotron
 Example:
 ```
-<control_cyclotron
+<kstraj_control_cyclotron
     fraction="(double)"
     name="(string)"
 >
-</control_cyclotron>
+</kstraj_control_cyclotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11096,12 +11096,12 @@ Example:
 #### KSTrajControlEnergy
 Example:
 ```
-<control_energy
+<kstraj_control_energy
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
-</control_energy>
+</kstraj_control_energy>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11111,11 +11111,11 @@ Example:
 #### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11125,12 +11125,12 @@ Example:
 #### KSTrajControlMagneticMoment
 Example:
 ```
-<control_magnetic_moment
+<kstraj_control_magnetic_moment
     lower_limit="(double)"
     name="(string)"
     upper_limit="(double)"
 >
-</control_magnetic_moment>
+</kstraj_control_magnetic_moment>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11140,12 +11140,12 @@ Example:
 #### KSTrajControlMomentumNumericalError
 Example:
 ```
-<control_momentum_error
+<kstraj_control_momentum_numerical_error
     absolute_momentum_error="(double)"
     name="(string)"
     safety_factor="(double)"
 >
-</control_momentum_error>
+</kstraj_control_momentum_numerical_error>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11184,10 +11184,10 @@ Example:
 #### KSTrajIntegratorRK54
 Example:
 ```
-<integrator_rk54
+<kstraj_integrator_rk54
     name="(string)"
 >
-</integrator_rk54>
+</kstraj_integrator_rk54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11197,10 +11197,10 @@ Example:
 #### KSTrajIntegratorRK65
 Example:
 ```
-<kstraj_integrator_rk65
+<integrator_rk65
     name="(string)"
 >
-</kstraj_integrator_rk65>
+</integrator_rk65>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11210,10 +11210,10 @@ Example:
 #### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11249,10 +11249,10 @@ Example:
 #### KSTrajIntegratorRKDP54
 Example:
 ```
-<integrator_rkdp54
+<kstraj_integrator_rkdp54
     name="(string)"
 >
-</integrator_rkdp54>
+</kstraj_integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11314,10 +11314,10 @@ Example:
 #### KSTrajTermDrift
 Example:
 ```
-<kstraj_term_drift
+<term_drift
     name="(string)"
 >
-</kstraj_term_drift>
+</term_drift>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11327,10 +11327,10 @@ Example:
 #### KSTrajTermGyration
 Example:
 ```
-<kstraj_term_gyration
+<term_gyration
     name="(string)"
 >
-</kstraj_term_gyration>
+</term_gyration>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11340,11 +11340,11 @@ Example:
 #### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11354,12 +11354,12 @@ Example:
 #### KSTrajTermSynchrotron
 Example:
 ```
-<kstraj_term_synchrotron
+<term_synchrotron
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
-</kstraj_term_synchrotron>
+</term_synchrotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11384,16 +11384,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kstrajtrajectoryadiabaticspin">`kstraj_trajectory_adiabatic_spin`</a>|[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange<br>[`control_cyclotron`](#kstrajcontrolcyclotron<br>[`control_energy`](#kstrajcontrolenergy<br>[`control_length`](#kstrajcontrollength<br>[`control_m_dot`](#kstrajcontrolmdot<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror<br>[`control_spin_precession`](#kstrajcontrolspinprecession<br>[`control_time`](#kstrajcontroltime<br>[`integrator_rk54`](#kstrajintegratorrk54<br>[`integrator_rk65`](#kstrajintegratorrk65<br>[`integrator_rk8`](#kstrajintegratorrk8<br>[`integrator_rk86`](#kstrajintegratorrk86<br>[`integrator_rk87`](#kstrajintegratorrk87<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`interpolator_fast`](#kstrajinterpolatorfast<br>[`interpolator_hermite`](#kstrajinterpolatorhermite<br>[`term_gravity`](#kstrajtermgravity<br>[`term_propagation`](#kstrajtermpropagation<br>[`term_synchrotron`](#kstrajtermsynchrotron|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
+|<a name="kstrajtrajectoryadiabaticspin">`kstraj_trajectory_adiabatic_spin`</a>|[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_m_dot`](#kstrajcontrolmdot)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_spin_precession`](#kstrajcontrolspinprecession)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_gravity`](#kstrajtermgravity)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
 #### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11403,11 +11403,11 @@ Example:
 #### KSTrajControlCyclotron
 Example:
 ```
-<control_cyclotron
+<kstraj_control_cyclotron
     fraction="(double)"
     name="(string)"
 >
-</control_cyclotron>
+</kstraj_control_cyclotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11417,12 +11417,12 @@ Example:
 #### KSTrajControlEnergy
 Example:
 ```
-<control_energy
+<kstraj_control_energy
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
-</control_energy>
+</kstraj_control_energy>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11432,11 +11432,11 @@ Example:
 #### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11446,11 +11446,11 @@ Example:
 #### KSTrajControlMDot
 Example:
 ```
-<kstraj_control_m_dot
+<control_m_dot
     fraction="(double)"
     name="(string)"
 >
-</kstraj_control_m_dot>
+</control_m_dot>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11460,12 +11460,12 @@ Example:
 #### KSTrajControlMagneticMoment
 Example:
 ```
-<control_magnetic_moment
+<kstraj_control_magnetic_moment
     lower_limit="(double)"
     name="(string)"
     upper_limit="(double)"
 >
-</control_magnetic_moment>
+</kstraj_control_magnetic_moment>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11475,12 +11475,12 @@ Example:
 #### KSTrajControlMomentumNumericalError
 Example:
 ```
-<control_momentum_error
+<kstraj_control_momentum_numerical_error
     absolute_momentum_error="(double)"
     name="(string)"
     safety_factor="(double)"
 >
-</control_momentum_error>
+</kstraj_control_momentum_numerical_error>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11505,11 +11505,11 @@ Example:
 #### KSTrajControlSpinPrecession
 Example:
 ```
-<control_spin_precession
+<kstraj_control_spin_precession
     fraction="(double)"
     name="(string)"
 >
-</control_spin_precession>
+</kstraj_control_spin_precession>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11533,10 +11533,10 @@ Example:
 #### KSTrajIntegratorRK54
 Example:
 ```
-<integrator_rk54
+<kstraj_integrator_rk54
     name="(string)"
 >
-</integrator_rk54>
+</kstraj_integrator_rk54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11546,10 +11546,10 @@ Example:
 #### KSTrajIntegratorRK65
 Example:
 ```
-<kstraj_integrator_rk65
+<integrator_rk65
     name="(string)"
 >
-</kstraj_integrator_rk65>
+</integrator_rk65>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11559,10 +11559,10 @@ Example:
 #### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11598,10 +11598,10 @@ Example:
 #### KSTrajIntegratorRKDP54
 Example:
 ```
-<integrator_rkdp54
+<kstraj_integrator_rkdp54
     name="(string)"
 >
-</integrator_rkdp54>
+</kstraj_integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11677,11 +11677,11 @@ Example:
 #### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11691,12 +11691,12 @@ Example:
 #### KSTrajTermSynchrotron
 Example:
 ```
-<kstraj_term_synchrotron
+<term_synchrotron
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
-</kstraj_term_synchrotron>
+</term_synchrotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11721,16 +11721,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kstrajtrajectoryelectric">`kstraj_trajectory_electric`</a>|[*KSTrajTrajectoryElectricBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryElectricBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange<br>[`control_length`](#kstrajcontrollength<br>[`control_time`](#kstrajcontroltime<br>[`integrator_rk54`](#kstrajintegratorrk54<br>[`integrator_rk65`](#kstrajintegratorrk65<br>[`integrator_rk8`](#kstrajintegratorrk8<br>[`integrator_rk86`](#kstrajintegratorrk86<br>[`integrator_rk87`](#kstrajintegratorrk87<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`interpolator_fast`](#kstrajinterpolatorfast<br>[`interpolator_hermite`](#kstrajinterpolatorhermite<br>[`term_propagation`](#kstrajtermpropagation|*`KSTrajControlBChange`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
+|<a name="kstrajtrajectoryelectric">`kstraj_trajectory_electric`</a>|[*KSTrajTrajectoryElectricBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryElectricBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_length`](#kstrajcontrollength)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_propagation`](#kstrajtermpropagation)|*`KSTrajControlBChange`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
 #### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11740,11 +11740,11 @@ Example:
 #### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11768,10 +11768,10 @@ Example:
 #### KSTrajIntegratorRK54
 Example:
 ```
-<integrator_rk54
+<kstraj_integrator_rk54
     name="(string)"
 >
-</integrator_rk54>
+</kstraj_integrator_rk54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11781,10 +11781,10 @@ Example:
 #### KSTrajIntegratorRK65
 Example:
 ```
-<kstraj_integrator_rk65
+<integrator_rk65
     name="(string)"
 >
-</kstraj_integrator_rk65>
+</integrator_rk65>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11794,10 +11794,10 @@ Example:
 #### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11833,10 +11833,10 @@ Example:
 #### KSTrajIntegratorRKDP54
 Example:
 ```
-<integrator_rkdp54
+<kstraj_integrator_rkdp54
     name="(string)"
 >
-</integrator_rkdp54>
+</kstraj_integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11898,11 +11898,11 @@ Example:
 #### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11927,16 +11927,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kstrajtrajectoryexact">`kstraj_trajectory_exact`</a>|[*KSTrajTrajectoryExactBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange<br>[`control_cyclotron`](#kstrajcontrolcyclotron<br>[`control_energy`](#kstrajcontrolenergy<br>[`control_length`](#kstrajcontrollength<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror<br>[`control_time`](#kstrajcontroltime<br>[`integrator_rk54`](#kstrajintegratorrk54<br>[`integrator_rk65`](#kstrajintegratorrk65<br>[`integrator_rk8`](#kstrajintegratorrk8<br>[`integrator_rk86`](#kstrajintegratorrk86<br>[`integrator_rk87`](#kstrajintegratorrk87<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`interpolator_fast`](#kstrajinterpolatorfast<br>[`interpolator_hermite`](#kstrajinterpolatorhermite<br>[`term_gravity`](#kstrajtermgravity<br>[`term_propagation`](#kstrajtermpropagation<br>[`term_synchrotron`](#kstrajtermsynchrotron|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
+|<a name="kstrajtrajectoryexact">`kstraj_trajectory_exact`</a>|[*KSTrajTrajectoryExactBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_gravity`](#kstrajtermgravity)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
 #### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11946,11 +11946,11 @@ Example:
 #### KSTrajControlCyclotron
 Example:
 ```
-<control_cyclotron
+<kstraj_control_cyclotron
     fraction="(double)"
     name="(string)"
 >
-</control_cyclotron>
+</kstraj_control_cyclotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11960,12 +11960,12 @@ Example:
 #### KSTrajControlEnergy
 Example:
 ```
-<control_energy
+<kstraj_control_energy
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
-</control_energy>
+</kstraj_control_energy>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11975,11 +11975,11 @@ Example:
 #### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11989,12 +11989,12 @@ Example:
 #### KSTrajControlMagneticMoment
 Example:
 ```
-<control_magnetic_moment
+<kstraj_control_magnetic_moment
     lower_limit="(double)"
     name="(string)"
     upper_limit="(double)"
 >
-</control_magnetic_moment>
+</kstraj_control_magnetic_moment>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12004,12 +12004,12 @@ Example:
 #### KSTrajControlMomentumNumericalError
 Example:
 ```
-<control_momentum_error
+<kstraj_control_momentum_numerical_error
     absolute_momentum_error="(double)"
     name="(string)"
     safety_factor="(double)"
 >
-</control_momentum_error>
+</kstraj_control_momentum_numerical_error>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12048,10 +12048,10 @@ Example:
 #### KSTrajIntegratorRK54
 Example:
 ```
-<integrator_rk54
+<kstraj_integrator_rk54
     name="(string)"
 >
-</integrator_rk54>
+</kstraj_integrator_rk54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12061,10 +12061,10 @@ Example:
 #### KSTrajIntegratorRK65
 Example:
 ```
-<kstraj_integrator_rk65
+<integrator_rk65
     name="(string)"
 >
-</kstraj_integrator_rk65>
+</integrator_rk65>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12074,10 +12074,10 @@ Example:
 #### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12113,10 +12113,10 @@ Example:
 #### KSTrajIntegratorRKDP54
 Example:
 ```
-<integrator_rkdp54
+<kstraj_integrator_rkdp54
     name="(string)"
 >
-</integrator_rkdp54>
+</kstraj_integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12192,11 +12192,11 @@ Example:
 #### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12206,12 +12206,12 @@ Example:
 #### KSTrajTermSynchrotron
 Example:
 ```
-<kstraj_term_synchrotron
+<term_synchrotron
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
-</kstraj_term_synchrotron>
+</term_synchrotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12236,16 +12236,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kstrajtrajectoryexactspin">`kstraj_trajectory_exact_spin`</a>|[*KSTrajTrajectoryExactSpinBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange<br>[`control_cyclotron`](#kstrajcontrolcyclotron<br>[`control_energy`](#kstrajcontrolenergy<br>[`control_length`](#kstrajcontrollength<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror<br>[`control_spin_precession`](#kstrajcontrolspinprecession<br>[`control_time`](#kstrajcontroltime<br>[`integrator_rk54`](#kstrajintegratorrk54<br>[`integrator_rk65`](#kstrajintegratorrk65<br>[`integrator_rk8`](#kstrajintegratorrk8<br>[`integrator_rk86`](#kstrajintegratorrk86<br>[`integrator_rk87`](#kstrajintegratorrk87<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`interpolator_fast`](#kstrajinterpolatorfast<br>[`interpolator_hermite`](#kstrajinterpolatorhermite<br>[`term_gravity`](#kstrajtermgravity<br>[`term_propagation`](#kstrajtermpropagation<br>[`term_synchrotron`](#kstrajtermsynchrotron|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
+|<a name="kstrajtrajectoryexactspin">`kstraj_trajectory_exact_spin`</a>|[*KSTrajTrajectoryExactSpinBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_spin_precession`](#kstrajcontrolspinprecession)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_gravity`](#kstrajtermgravity)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
 #### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12255,11 +12255,11 @@ Example:
 #### KSTrajControlCyclotron
 Example:
 ```
-<control_cyclotron
+<kstraj_control_cyclotron
     fraction="(double)"
     name="(string)"
 >
-</control_cyclotron>
+</kstraj_control_cyclotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12269,12 +12269,12 @@ Example:
 #### KSTrajControlEnergy
 Example:
 ```
-<control_energy
+<kstraj_control_energy
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
-</control_energy>
+</kstraj_control_energy>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12284,11 +12284,11 @@ Example:
 #### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12298,12 +12298,12 @@ Example:
 #### KSTrajControlMagneticMoment
 Example:
 ```
-<control_magnetic_moment
+<kstraj_control_magnetic_moment
     lower_limit="(double)"
     name="(string)"
     upper_limit="(double)"
 >
-</control_magnetic_moment>
+</kstraj_control_magnetic_moment>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12313,12 +12313,12 @@ Example:
 #### KSTrajControlMomentumNumericalError
 Example:
 ```
-<control_momentum_error
+<kstraj_control_momentum_numerical_error
     absolute_momentum_error="(double)"
     name="(string)"
     safety_factor="(double)"
 >
-</control_momentum_error>
+</kstraj_control_momentum_numerical_error>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12343,11 +12343,11 @@ Example:
 #### KSTrajControlSpinPrecession
 Example:
 ```
-<control_spin_precession
+<kstraj_control_spin_precession
     fraction="(double)"
     name="(string)"
 >
-</control_spin_precession>
+</kstraj_control_spin_precession>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12371,10 +12371,10 @@ Example:
 #### KSTrajIntegratorRK54
 Example:
 ```
-<integrator_rk54
+<kstraj_integrator_rk54
     name="(string)"
 >
-</integrator_rk54>
+</kstraj_integrator_rk54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12384,10 +12384,10 @@ Example:
 #### KSTrajIntegratorRK65
 Example:
 ```
-<kstraj_integrator_rk65
+<integrator_rk65
     name="(string)"
 >
-</kstraj_integrator_rk65>
+</integrator_rk65>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12397,10 +12397,10 @@ Example:
 #### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12436,10 +12436,10 @@ Example:
 #### KSTrajIntegratorRKDP54
 Example:
 ```
-<integrator_rkdp54
+<kstraj_integrator_rkdp54
     name="(string)"
 >
-</integrator_rkdp54>
+</kstraj_integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12515,11 +12515,11 @@ Example:
 #### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12529,12 +12529,12 @@ Example:
 #### KSTrajTermSynchrotron
 Example:
 ```
-<kstraj_term_synchrotron
+<term_synchrotron
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
-</kstraj_term_synchrotron>
+</term_synchrotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12559,16 +12559,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kstrajtrajectoryexacttrapped">`kstraj_trajectory_exact_trapped`</a>|[*KSTrajTrajectoryExactTrappedBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|[`control_length`](#kstrajcontrollength<br>[`control_time`](#kstrajcontroltime<br>[`integrator_rk8`](#kstrajintegratorrk8<br>[`integrator_sym4`](#kstrajintegratorsym4<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`interpolator_fast`](#kstrajinterpolatorfast<br>[`interpolator_hermite`](#kstrajinterpolatorhermite<br>[`term_propagation`](#kstrajtermpropagation<br>[`term_synchrotron`](#kstrajtermsynchrotron|*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
+|<a name="kstrajtrajectoryexacttrapped">`kstraj_trajectory_exact_trapped`</a>|[*KSTrajTrajectoryExactTrappedBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|[`control_length`](#kstrajcontrollength)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_sym4`](#kstrajintegratorsym4)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
 #### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12592,10 +12592,10 @@ Example:
 #### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12657,11 +12657,11 @@ Example:
 #### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12671,12 +12671,12 @@ Example:
 #### KSTrajTermSynchrotron
 Example:
 ```
-<kstraj_term_synchrotron
+<term_synchrotron
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
-</kstraj_term_synchrotron>
+</term_synchrotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12715,16 +12715,16 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kstrajtrajectorymagnetic">`kstraj_trajectory_magnetic`</a>|[*KSTrajTrajectoryMagneticBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryMagneticBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange<br>[`control_length`](#kstrajcontrollength<br>[`control_time`](#kstrajcontroltime<br>[`integrator_rk54`](#kstrajintegratorrk54<br>[`integrator_rk65`](#kstrajintegratorrk65<br>[`integrator_rk8`](#kstrajintegratorrk8<br>[`integrator_rk86`](#kstrajintegratorrk86<br>[`integrator_rk87`](#kstrajintegratorrk87<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta<br>[`interpolator_fast`](#kstrajinterpolatorfast<br>[`interpolator_hermite`](#kstrajinterpolatorhermite<br>[`term_propagation`](#kstrajtermpropagation|*`KSTrajControlBChange`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
+|<a name="kstrajtrajectorymagnetic">`kstraj_trajectory_magnetic`</a>|[*KSTrajTrajectoryMagneticBuilder.cxx*](Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryMagneticBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_length`](#kstrajcontrollength)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_propagation`](#kstrajtermpropagation)|*`KSTrajControlBChange`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
 #### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12734,11 +12734,11 @@ Example:
 #### KSTrajControlLength
 Example:
 ```
-<control_length
+<kstraj_control_length
     length="(double)"
     name="(string)"
 >
-</control_length>
+</kstraj_control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12762,10 +12762,10 @@ Example:
 #### KSTrajIntegratorRK54
 Example:
 ```
-<integrator_rk54
+<kstraj_integrator_rk54
     name="(string)"
 >
-</integrator_rk54>
+</kstraj_integrator_rk54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12775,10 +12775,10 @@ Example:
 #### KSTrajIntegratorRK65
 Example:
 ```
-<kstraj_integrator_rk65
+<integrator_rk65
     name="(string)"
 >
-</kstraj_integrator_rk65>
+</integrator_rk65>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12788,10 +12788,10 @@ Example:
 #### KSTrajIntegratorRK8
 Example:
 ```
-<integrator_rk8
+<kstraj_integrator_rk8
     name="(string)"
 >
-</integrator_rk8>
+</kstraj_integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12827,10 +12827,10 @@ Example:
 #### KSTrajIntegratorRKDP54
 Example:
 ```
-<integrator_rkdp54
+<kstraj_integrator_rkdp54
     name="(string)"
 >
-</integrator_rkdp54>
+</kstraj_integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -12892,11 +12892,11 @@ Example:
 #### KSTrajTermPropagation
 Example:
 ```
-<kstraj_term_propagation
+<term_propagation
     direction="(string)"
     name="(string)"
 >
-</kstraj_term_propagation>
+</term_propagation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13026,12 +13026,12 @@ Example:
 ### KSComponentDeltaData
 Example:
 ```
-<ks_component_delta
+<output_delta
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_delta>
+</output_delta>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13051,12 +13051,12 @@ Example:
 ### KSComponentIntegralData
 Example:
 ```
-<component_integral
+<output_integral
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_integral>
+</output_integral>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13081,12 +13081,12 @@ Example:
 ### KSComponentMaximumData
 Example:
 ```
-<ks_component_maximum
+<component_maximum
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_maximum>
+</component_maximum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13096,12 +13096,12 @@ Example:
 ### KSComponentMaximumAtData
 Example:
 ```
-<ks_component_maximum_at
+<component_maximum_at
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_maximum_at>
+</component_maximum_at>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13111,12 +13111,12 @@ Example:
 ### KSComponentMinimumData
 Example:
 ```
-<component_minimum
+<output_minimum
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_minimum>
+</output_minimum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13126,12 +13126,12 @@ Example:
 ### KSComponentMinimumAtData
 Example:
 ```
-<component_minimum_at
+<ks_component_minimum_at
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_minimum_at>
+</ks_component_minimum_at>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13154,17 +13154,17 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kemroot">`kemfield`</a>|[*KEMToolboxBuilder.cc*](KEMField/Source/Bindings/Utilities/src/KEMToolboxBuilder.cc)|[`constant_electric_field`](#kelectrostaticconstantfield<br>[`constant_magnetic_field`](#kmagnetostaticconstantfield<br>[`electric_potentialmap`](#kelectrostaticpotentialmap<br>[`electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator<br>[`electric_quadrupole_field`](#kelectricquadrupolefield<br>[`electromagnet_field`](#kgstaticelectromagnetfield<br>[`electrostatic_field`](#kgelectrostaticboundaryfield<br>[`induced_azimuthal_electric_field`](#kinducedazimuthalelectricfield<br>[`linear_electric_field`](#kelectrostaticlinearfield<br>[`magnetic_dipole_field`](#kmagneticdipolefield<br>[`magnetic_fieldmap`](#kmagnetostaticfieldmap<br>[`magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator<br>[`magnetic_superposition_field`](#kmagneticsuperpositionfield<br>[`ramped_electric_field`](#krampedelectricfield<br>[`ramped_magnetic_field`](#krampedmagneticfield<br>[`ramped_transitional_electric_field`](#krampedelectric2field|*`KElectrostaticConstantField`*<br>*`KMagnetostaticConstantField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticLinearField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KMagneticSuperpositionField`*<br>*`KRampedElectricField`*<br>*`KRampedMagneticField`*<br>*`KRampedElectric2Field`*|—    |—    |
+|<a name="kemroot">`kemfield`</a>|[*KEMToolboxBuilder.cc*](KEMField/Source/Bindings/Utilities/src/KEMToolboxBuilder.cc)|[`constant_electric_field`](#kelectrostaticconstantfield)<br>[`constant_magnetic_field`](#kmagnetostaticconstantfield)<br>[`electric_potentialmap`](#kelectrostaticpotentialmap)<br>[`electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator)<br>[`electric_quadrupole_field`](#kelectricquadrupolefield)<br>[`electromagnet_field`](#kgstaticelectromagnetfield)<br>[`electrostatic_field`](#kgelectrostaticboundaryfield)<br>[`induced_azimuthal_electric_field`](#kinducedazimuthalelectricfield)<br>[`linear_electric_field`](#kelectrostaticlinearfield)<br>[`magnetic_dipole_field`](#kmagneticdipolefield)<br>[`magnetic_fieldmap`](#kmagnetostaticfieldmap)<br>[`magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator)<br>[`magnetic_superposition_field`](#kmagneticsuperpositionfield)<br>[`ramped_electric_field`](#krampedelectricfield)<br>[`ramped_magnetic_field`](#krampedmagneticfield)<br>[`ramped_transitional_electric_field`](#krampedelectric2field)|*`KElectrostaticConstantField`*<br>*`KMagnetostaticConstantField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticLinearField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KMagneticSuperpositionField`*<br>*`KRampedElectricField`*<br>*`KRampedMagneticField`*<br>*`KRampedElectric2Field`*|—    |—    |
 
 ### KElectrostaticConstantField
 Example:
 ```
-<ksfield_electric_constant
+<constant_electric_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_electric_constant>
+</constant_electric_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13174,12 +13174,12 @@ Example:
 ### KMagnetostaticConstantField
 Example:
 ```
-<ksfield_magnetic_constant
+<constant_magnetic_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_magnetic_constant>
+</constant_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13214,7 +13214,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kelectrostaticpotentialmapcalculator">`electric_potentialmap_calculator`</a>|[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electric_constant`](#kelectrostaticconstantfield<br>[`field_electric_quadrupole`](#kelectricquadrupolefield<br>[`field_electrostatic`](#kgelectrostaticboundaryfield|*`KElectrostaticConstantField`*<br>*`KElectricQuadrupoleField`*<br>*`KGElectrostaticBoundaryField`*|`center`<br>`compute_field`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*|
+|<a name="kelectrostaticpotentialmapcalculator">`electric_potentialmap_calculator`</a>|[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electric_constant`](#kelectrostaticconstantfield)<br>[`field_electric_quadrupole`](#kelectricquadrupolefield)<br>[`field_electrostatic`](#kgelectrostaticboundaryfield)|*`KElectrostaticConstantField`*<br>*`KElectricQuadrupoleField`*<br>*`KGElectrostaticBoundaryField`*|`center`<br>`compute_field`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*|
 
 ### KElectricQuadrupoleField
 Example:
@@ -13244,22 +13244,22 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgstaticelectromagnetfield">`electromagnet_field`</a>|[*KStaticElectromagnetFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KStaticElectromagnetFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`integrating_field_solver`](#kintegratingmagnetostaticfieldsolver<br>[`zonal_harmonic_field_solver`](#kzonalharmonicmagnetostaticfieldsolver|*`KIntegratingMagnetostaticFieldSolver`*<br>*`KZonalHarmonicMagnetostaticFieldSolver`*|`directory`<br>`directory_magfield3`<br>`file`<br>`name`<br>`save_magfield3`<br>`spaces`<br>`surfaces`<br>`system`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgstaticelectromagnetfield">`electromagnet_field`</a>|[*KStaticElectromagnetFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KStaticElectromagnetFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`integrating_field_solver`](#kintegratingmagnetostaticfieldsolver)<br>[`zonal_harmonic_field_solver`](#kzonalharmonicmagnetostaticfieldsolver)|*`KIntegratingMagnetostaticFieldSolver`*<br>*`KZonalHarmonicMagnetostaticFieldSolver`*|`directory`<br>`directory_magfield3`<br>`file`<br>`name`<br>`save_magfield3`<br>`spaces`<br>`surfaces`<br>`system`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KGElectrostaticBoundaryField
 Example:
 ```
-<field_electrostatic
+<ksfield_electrostatic
     directory="(string)"
     file="(string)"
     hash_threshold="(double)"
 >
-</field_electrostatic>
+</ksfield_electrostatic>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgelectrostaticboundaryfield">`electrostatic_field`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay<br>[`cached_bem_solver`](#kcachedchargedensitysolver<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver<br>[`timer`](#kelectrostaticboundaryfieldtimer<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgelectrostaticboundaryfield">`electrostatic_field`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay)<br>[`cached_bem_solver`](#kcachedchargedensitysolver)<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver)<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver)<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver)<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver)<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver)<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver)<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver)<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold)<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver)<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold)<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver)<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold)<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver)<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver)<br>[`timer`](#kelectrostaticboundaryfieldtimer)<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor)<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver)|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ### KInducedAzimuthalElectricField
 Example:
@@ -13333,22 +13333,22 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kmagnetostaticfieldmapcalculator">`magnetic_fieldmap_calculator`</a>|[*KMagnetostaticFieldmapBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electromagnet`](#kstaticelectromagnetfield<br>[`field_magnetic_constant`](#kmagnetostaticconstantfield<br>[`field_magnetic_dipole`](#kmagneticdipolefieldbuilder|*`KStaticElectromagnetField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleFieldBuilder`*|`center`<br>`compute_gradient`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`<br>`time`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
+|<a name="kmagnetostaticfieldmapcalculator">`magnetic_fieldmap_calculator`</a>|[*KMagnetostaticFieldmapBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electromagnet`](#kstaticelectromagnetfield)<br>[`field_magnetic_constant`](#kmagnetostaticconstantfield)<br>[`field_magnetic_dipole`](#kmagneticdipolefieldbuilder)|*`KStaticElectromagnetField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleFieldBuilder`*|`center`<br>`compute_gradient`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`<br>`time`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 ### KMagneticSuperpositionField
 Example:
 ```
-<ksfield_magnetic_super_position
+<magnetic_superposition_field
     name="(string)"
     require="(string)"
     use_caching="(bool)"
 >
-</ksfield_magnetic_super_position>
+</magnetic_superposition_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kmagneticsuperpositionfield">`magnetic_superposition_field`</a>|[*KMagneticSuperpositionFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagneticSuperpositionFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`add_field`](#kmagneticsuperpositionfieldentry|*`KMagneticSuperpositionFieldEntry`*|`name`<br>`require`<br>`use_caching`|*`string`*<br>*`string`*<br>*`bool`*|
+|<a name="kmagneticsuperpositionfield">`magnetic_superposition_field`</a>|[*KMagneticSuperpositionFieldBuilder.cc*](KEMField/Source/Bindings/Fields/Magnetic/src/KMagneticSuperpositionFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`add_field`](#kmagneticsuperpositionfieldentry)|*`KMagneticSuperpositionFieldEntry`*|`name`<br>`require`<br>`use_caching`|*`string`*<br>*`string`*<br>*`bool`*|
 
 ### KRampedElectricField
 Example:
@@ -13368,12 +13368,12 @@ Example:
 ### KRampedMagneticField
 Example:
 ```
-<ksfield_magnetic_ramped
+<ramped_magnetic_field
     name="(string)"
     num_cycles="(int)"
     ramp_down_delay="(double)"
 >
-</ksfield_magnetic_ramped>
+</ramped_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -13410,7 +13410,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kmessagetable">`messages`</a>|[*KMessageBuilder.cxx*](Kommon/Core/Bindings/KMessageBuilder.cxx)|[`file`](#ktextfile<br>[`message`](#kmessagedata|*`KTextFile`*<br>*`KMessageData`*|`format`<br>`log`<br>`parser_context`<br>`precision`<br>`shutdown_message`<br>`terminal`|*`string`*<br>*`string`*<br>*`bool`*<br>*`KMessagePrecision`*<br>*`bool`*<br>*`string`*|
+|<a name="kmessagetable">`messages`</a>|[*KMessageBuilder.cxx*](Kommon/Core/Bindings/KMessageBuilder.cxx)|[`file`](#ktextfile)<br>[`message`](#kmessagedata)|*`KTextFile`*<br>*`KMessageData`*|`format`<br>`log`<br>`parser_context`<br>`precision`<br>`shutdown_message`<br>`terminal`|*`string`*<br>*`string`*<br>*`bool`*<br>*`KMessagePrecision`*<br>*`bool`*<br>*`string`*|
 
 ### KTextFile
 Example:
@@ -13457,7 +13457,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="krootwindow">`root_window`</a>|[*KROOTWindowBuilder.cxx*](Kommon/Root/Utility/KROOTWindowBuilder.cxx)|[`root_geometry_painter`](#kgrootgeometrypainter<br>[`root_magfield_painter`](#ksrootmagfieldpainter<br>[`root_pad`](#krootpad<br>[`root_potential_painter`](#ksrootpotentialpainter<br>[`root_track_painter`](#ksroottrackpainter<br>[`root_zh_painter`](#ksrootzonalharmonicspainter|*`KGROOTGeometryPainter`*<br>*`KSROOTMagFieldPainter`*<br>*`KROOTPad`*<br>*`KSROOTPotentialPainter`*<br>*`KSROOTTrackPainter`*<br>*`KSROOTZonalHarmonicsPainter`*|`active`<br>`name`<br>`path`<br>`write_enabled`|*`bool`*<br>*`string`*<br>*`string`*<br>*`bool`*|
+|<a name="krootwindow">`root_window`</a>|[*KROOTWindowBuilder.cxx*](Kommon/Root/Utility/KROOTWindowBuilder.cxx)|[`root_geometry_painter`](#kgrootgeometrypainter)<br>[`root_magfield_painter`](#ksrootmagfieldpainter)<br>[`root_pad`](#krootpad)<br>[`root_potential_painter`](#ksrootpotentialpainter)<br>[`root_track_painter`](#ksroottrackpainter)<br>[`root_zh_painter`](#ksrootzonalharmonicspainter)|*`KGROOTGeometryPainter`*<br>*`KSROOTMagFieldPainter`*<br>*`KROOTPad`*<br>*`KSROOTPotentialPainter`*<br>*`KSROOTTrackPainter`*<br>*`KSROOTZonalHarmonicsPainter`*|`active`<br>`name`<br>`path`<br>`write_enabled`|*`bool`*<br>*`string`*<br>*`string`*<br>*`bool`*|
 
 ### KGROOTGeometryPainter
 Example:
@@ -13509,7 +13509,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="krootpad">`root_pad`</a>|[*KROOTWindowBuilder.cxx*](Kommon/Root/Utility/KROOTWindowBuilder.cxx)|[`root_geometry_painter`](#kgrootgeometrypainter<br>[`root_magfield_painter`](#ksrootmagfieldpainter<br>[`root_potential_painter`](#ksrootpotentialpainter<br>[`root_track_painter`](#ksroottrackpainter<br>[`root_zh_painter`](#ksrootzonalharmonicspainter|*`KGROOTGeometryPainter`*<br>*`KSROOTMagFieldPainter`*<br>*`KSROOTPotentialPainter`*<br>*`KSROOTTrackPainter`*<br>*`KSROOTZonalHarmonicsPainter`*|`name`<br>`xlow`<br>`xup`<br>`ylow`<br>`yup`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+|<a name="krootpad">`root_pad`</a>|[*KROOTWindowBuilder.cxx*](Kommon/Root/Utility/KROOTWindowBuilder.cxx)|[`root_geometry_painter`](#kgrootgeometrypainter)<br>[`root_magfield_painter`](#ksrootmagfieldpainter)<br>[`root_potential_painter`](#ksrootpotentialpainter)<br>[`root_track_painter`](#ksroottrackpainter)<br>[`root_zh_painter`](#ksrootzonalharmonicspainter)|*`KGROOTGeometryPainter`*<br>*`KSROOTMagFieldPainter`*<br>*`KSROOTPotentialPainter`*<br>*`KSROOTTrackPainter`*<br>*`KSROOTZonalHarmonicsPainter`*|`name`<br>`xlow`<br>`xup`<br>`ylow`<br>`yup`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
 #### KGROOTGeometryPainter
 Example:
@@ -13647,7 +13647,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kapplicationrunner">`run`</a>|[*KApplicationRunnerBuilder.cxx*](Kommon/Core/Bindings/KApplicationRunnerBuilder.cxx)|[`app`](#knamedreference|*`KNamedReference`*|`name`|*`string`*|
+|<a name="kapplicationrunner">`run`</a>|[*KApplicationRunnerBuilder.cxx*](Kommon/Core/Bindings/KApplicationRunnerBuilder.cxx)|[`app`](#knamedreference)|*`KNamedReference`*|`name`|*`string`*|
 
 ### KNamedReference
 Example:
@@ -13682,7 +13682,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kvtkwindow">`vtk_window`</a>|[*KVTKWindowBuilder.cxx*](Kommon/Vtk/Utility/KVTKWindowBuilder.cxx)|[`vtk_axial_mesh_painter`](#kgvtkaxialmeshpainter<br>[`vtk_distance_tester`](#kgvtkdistancetester<br>[`vtk_generator_painter`](#ksvtkgeneratorpainter<br>[`vtk_geometry_painter`](#kgvtkgeometrypainter<br>[`vtk_mesh_painter`](#kgvtkmeshpainter<br>[`vtk_normal_tester`](#kgvtknormaltester<br>[`vtk_outside_tester`](#kgvtkoutsidetester<br>[`vtk_point_tester`](#kgvtkpointtester<br>[`vtk_random_point_tester`](#kgvtkrandompointtester<br>[`vtk_track_painter`](#ksvtktrackpainter<br>[`vtk_track_terminator_painter`](#ksvtktrackterminatorpainter|*`KGVTKAxialMeshPainter`*<br>*`KGVTKDistanceTester`*<br>*`KSVTKGeneratorPainter`*<br>*`KGVTKGeometryPainter`*<br>*`KGVTKMeshPainter`*<br>*`KGVTKNormalTester`*<br>*`KGVTKOutsideTester`*<br>*`KGVTKPointTester`*<br>*`KGVTKRandomPointTester`*<br>*`KSVTKTrackPainter`*<br>*`KSVTKTrackTerminatorPainter`*|`enable_axis`<br>`enable_data`<br>`enable_display`<br>`enable_help`<br>`enable_parallel_projection`<br>`enable_write`<br>`eye_angle`<br>`frame_color_blue`<br>`frame_color_green`<br>`frame_color_red`<br>`frame_title`<br>`name`<br>`view_angle`|*`bool`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`float`*<br>*`float`*<br>*`float`*<br>*`string`*<br>*`string`*<br>*`double`*|
+|<a name="kvtkwindow">`vtk_window`</a>|[*KVTKWindowBuilder.cxx*](Kommon/Vtk/Utility/KVTKWindowBuilder.cxx)|[`vtk_axial_mesh_painter`](#kgvtkaxialmeshpainter)<br>[`vtk_distance_tester`](#kgvtkdistancetester)<br>[`vtk_generator_painter`](#ksvtkgeneratorpainter)<br>[`vtk_geometry_painter`](#kgvtkgeometrypainter)<br>[`vtk_mesh_painter`](#kgvtkmeshpainter)<br>[`vtk_normal_tester`](#kgvtknormaltester)<br>[`vtk_outside_tester`](#kgvtkoutsidetester)<br>[`vtk_point_tester`](#kgvtkpointtester)<br>[`vtk_random_point_tester`](#kgvtkrandompointtester)<br>[`vtk_track_painter`](#ksvtktrackpainter)<br>[`vtk_track_terminator_painter`](#ksvtktrackterminatorpainter)|*`KGVTKAxialMeshPainter`*<br>*`KGVTKDistanceTester`*<br>*`KSVTKGeneratorPainter`*<br>*`KGVTKGeometryPainter`*<br>*`KGVTKMeshPainter`*<br>*`KGVTKNormalTester`*<br>*`KGVTKOutsideTester`*<br>*`KGVTKPointTester`*<br>*`KGVTKRandomPointTester`*<br>*`KSVTKTrackPainter`*<br>*`KSVTKTrackTerminatorPainter`*|`enable_axis`<br>`enable_data`<br>`enable_display`<br>`enable_help`<br>`enable_parallel_projection`<br>`enable_write`<br>`eye_angle`<br>`frame_color_blue`<br>`frame_color_green`<br>`frame_color_red`<br>`frame_title`<br>`name`<br>`view_angle`|*`bool`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`float`*<br>*`float`*<br>*`float`*<br>*`string`*<br>*`string`*<br>*`double`*|
 
 ### KGVTKAxialMeshPainter
 Example:

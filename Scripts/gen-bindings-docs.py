@@ -94,8 +94,8 @@ class Node:
             print(f'label="{self.name}"; fontsize={FONT_SIZE}; fontname="{FONT_FACE},bold"; style=filled; fillcolor="{CLUSTER_COLOR}{CLUSTER_ALPHA}";')
             print(f'node [shape={NODE_SHAPE}, style=filled, fillcolor="{node_color}{NODE_ALPHA}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
 
+        print(f'"{full_name}" [label="{key}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
         if not full_name in stack:
-            print(f'"{full_name}" [label="{key}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
             stack.append(full_name)
 
         #print(f'"{self.name}";')
@@ -108,18 +108,18 @@ class Node:
 
         if with_children:
             sorted_keys = sorted(self.children.keys())
-            child_nodes = ' '.join([f'"{self.children[key].name}__{key}"' for key in sorted_keys])
+            child_nodes = ' '.join([cleanStr(f'"{self.children[key].name}__{key}"') for key in sorted_keys])
             if child_nodes:
                 print(f'{{ rank=same {child_nodes} }}')
 
             for node_key in sorted_keys:
                 node = self.children[node_key]
                 node_full_name = cleanStr(f'{node.name}__{node_key}')
-                if node_full_name in stack:
+                if node_full_name in nodes:
                     continue
 
                 print(f'"{full_name}" -> "{node_full_name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
-                print(f'"{node_full_name}" [label="{node_key}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
+                #print(f'"{node_full_name}" [label="{node_key}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
                 new_nodes = node.makeGraph(level+1, stack, nodes, key=node_key, with_children=with_children, with_attributes=with_attributes)
                 nodes.union(new_nodes)
 
@@ -307,7 +307,7 @@ class Node:
 
         if self.children:
             sorted_children = sorted(self.children.keys())
-            child_nodes = '<br>'.join([f'[`{key}`](#{escapeStr(self.children[key].name.lower())}' for key in sorted_children])
+            child_nodes = '<br>'.join([f'[`{key}`](#{escapeStr(self.children[key].name.lower())})' for key in sorted_children])
             child_types = '<br>'.join([f'*`{self.children[key].name}`*' for key in sorted_children])
         else:
             child_nodes = child_types = "—"

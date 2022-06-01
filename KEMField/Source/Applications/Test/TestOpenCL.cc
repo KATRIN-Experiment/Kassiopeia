@@ -44,10 +44,6 @@ class KOpenCLInterface
     {
         return fDevices;
     }
-    size_t GetNumberOfDevices() const
-    {
-        return fDevices.size();
-    }
     cl::Device GetDevice() const
     {
         return fDevices[fCLDeviceID];
@@ -321,24 +317,6 @@ int main(int argc, char** argv)
     //std::cout << "Process " << KMPIInterface::GetInstance()->GetProcess()<< " of " << KMPIInterface::GetInstance()->GetNProcesses() << " is starting." << std::endl;
     //std::cout << "Using gpu # " << KMPIInterface::GetInstance()->GetProcess()%2 << std::endl;
     std::cout << "---" << std::endl;
-
-    //assign devices according to the number available and local process rank
-    unsigned int proc_id = KMPIInterface::GetInstance()->GetProcess();
-    int n_dev = KOpenCLInterface::GetInstance()->GetNumberOfDevices();
-    int dev_id = proc_id % n_dev;  //fallback to global process rank if local is unavailable
-//    int local_rank = KMPIInterface::GetInstance()->GetLocalRank();
-//    if (local_rank != -1) {
-//        if (KMPIInterface::GetInstance()->SplitMode()) {
-//            dev_id = (local_rank / 2) % n_dev;
-//        }
-//        else {
-//            dev_id = (local_rank) % n_dev;
-//        }
-//    }
-    std::cout << "Setting GPU device to " << dev_id << "." << std::endl;
-    KOpenCLInterface::GetInstance()->SetGPU(dev_id);
-
-    //KOpenCLInterface::GetInstance()->SetGPU(KMPIInterface::GetInstance()->GetProcess());
 
     KOpenCLInterface::GetInstance()->SetGPU(KMPIInterface::GetInstance()->GetProcess());
 
