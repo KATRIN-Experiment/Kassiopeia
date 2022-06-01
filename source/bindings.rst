@@ -28,6 +28,9 @@ have a number of attributes. Note that in some cases, certain child elements
 and attributes are required; in other cases, they are mutually exclusive. Note
 that this information is not represented here in the documentation.
 
+Additional documentation on the XML bindings is available on GitHub:
+`Documentation/Bindings <https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Documentation/Bindings/>`_.
+
 Bindings graph
 ==============
 
