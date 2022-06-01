@@ -34,7 +34,7 @@ Bindings graph
 The graphs shows the relation between the available XML elements.
 
 .. image:: _images/bindings_full.svg
-    :width: 800px
+    :width: 1000px
     :alt: XML bindings graph
 
 List of bindings
