@@ -98,7 +98,6 @@ class Node:
         if not full_name in stack:
             stack.append(full_name)
 
-        #print(f'"{self.name}";')
         if with_attributes:
             sorted_keys = sorted(self.attributes.keys())
             for attr_key in sorted_keys:
@@ -115,13 +114,11 @@ class Node:
             for node_key in sorted_keys:
                 node = self.children[node_key]
                 node_full_name = cleanStr(f'{node.name}__{node_key}')
-                if node_full_name in nodes:
-                    continue
-
-                print(f'"{full_name}" -> "{node_full_name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
-                #print(f'"{node_full_name}" [label="{node_key}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
-                new_nodes = node.makeGraph(level+1, stack, nodes, key=node_key, with_children=with_children, with_attributes=with_attributes)
-                nodes.union(new_nodes)
+                if not node_full_name in stack:
+                    stack.append(full_name)
+                    print(f'"{full_name}" -> "{node_full_name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
+                    new_nodes = node.makeGraph(level+1, stack, nodes, key=node_key, with_children=with_children, with_attributes=with_attributes)
+                    nodes.union(new_nodes)
 
         if make_subgraph:
             print(f'}}')
@@ -170,8 +167,9 @@ class Node:
         print(f'{indent}</{key}>')
 
     def makeTableRST(self, level=0, stack=[], key='', with_sections=False):
+        global base_url
         numCols = 6
-        colWidths = (40, 80, 80, 160, 40, 40)  # in RST the columns all must have the same width
+        colWidths = (80, 240, 80, 160, 80, 40)  # in RST the columns all must have the same width
         colHeaders = ('element name', 'source files', 'child elements', 'child types', 'attributes', 'attribute types')
         headSep = ["-", "~", "^", "'"]  # starts at level 3
         if not key and self.xml_names:
@@ -214,12 +212,13 @@ class Node:
         sorted_children = sorted(self.children.keys()) if self.children else []
         sorted_attributes = sorted(self.attributes.keys()) if self.attributes else []
 
-        for i in range(max(len(sorted_files), len(sorted_children), len(sorted_attributes))):
+        numLines = max(len(sorted_files), len(sorted_children), len(sorted_attributes))
+        for i in range(numLines):
             if not sorted_files and i == 0:
                 source_files = "—"
             elif i < len(sorted_files):
                 file = sorted_files[i]
-                source_files = f'*{os.path.basename(file)}*'
+                source_files = f'`{os.path.basename(file)} <{base_url}{file}>`_'
             else:
                 source_files = ""
 
@@ -245,13 +244,14 @@ class Node:
 
             printFields([self_node, source_files, child_nodes, child_types, attr_nodes, attr_types])
 
-            # add lines between rows, but take care of multi-row segments
-            printLine([' ',
-                    ' ' if not source_files else '-',
-                    ' ' if not child_nodes else '-',
-                    ' ' if not child_types else '-',
-                    ' ' if not attr_nodes else '-',
-                    ' ' if not attr_types else '-'])
+            if i < numLines-1:
+                # add lines between rows, but take care of multi-row segments
+                printLine([' ',
+                        '-' if i < len(sorted_files)-1 else ' ',
+                        '-' if i < len(sorted_children)-1 else ' ',
+                        '-' if i < len(sorted_children)-1 else ' ',
+                        '-' if i < len(sorted_attributes)-1 else ' ',
+                        '-' if i < len(sorted_attributes)-1 else ' '])
 
             self_node = source_files = ""
 
@@ -266,6 +266,7 @@ class Node:
                     node.makeTableRST(level+1, stack, key=node_key, with_sections=with_sections)
 
     def makeTableMD(self, level=0, stack=[], key='', with_sections=False, with_examples=False):
+        global base_url
         numCols = 6
         colWidth = 5
         colHeaders = ('element name', 'source files', 'child elements', 'child types', 'attributes', 'attribute types')
@@ -301,7 +302,7 @@ class Node:
 
         if self.source_files:
             sorted_files = sorted(list(self.source_files))
-            source_files = '<br>'.join([f'[*{os.path.basename(file)}*]({file})' for file in sorted_files])
+            source_files = '<br>'.join([f'[*{os.path.basename(file)}*]({base_url}{file})' for file in sorted_files])
         else:
             source_files = "—"
 
@@ -438,6 +439,8 @@ def parseArguments():
                         help='base paths to search for bindings files')
     parser.add_argument('-r', '--root', metavar='NAME', type=str,
                         help='root node of the resulting tree')
+    parser.add_argument('-b', '--base-url', metavar='URL', type=str, default="",
+                        help='base url for links to files (e.g. GitHub tree)')
     parser.add_argument('--xml', action='store_true',
                         help='produce XML examples (.xml file)')
     parser.add_argument('--gv', action='store_true',
@@ -458,6 +461,8 @@ def parseArguments():
 
 if __name__ == "__main__":
     args = parseArguments()
+
+    base_url = args.base_url
 
     file_list = getBindingsFiles(sys.argv[1:])
     if not file_list:
