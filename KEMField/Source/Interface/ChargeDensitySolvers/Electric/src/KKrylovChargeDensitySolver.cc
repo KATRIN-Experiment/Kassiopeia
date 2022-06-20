@@ -12,6 +12,7 @@
 #include "KBoundaryMatrixGenerator.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KKrylovSolverFactory.hh"
+#include "KEMCoreMessage.hh"
 
 namespace KEMField
 {
@@ -63,6 +64,10 @@ void KKrylovChargeDensitySolver::ComputeSolution(KSurfaceContainer& container)
 
 void KKrylovChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
+    if (container.empty()) {
+        kem_cout(eWarning) << "Krylov solver got no elctrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+
     if (!FindSolution(fKrylovConfig.GetTolerance(), container))
         ComputeSolution(container);
 }

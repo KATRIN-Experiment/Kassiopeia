@@ -194,7 +194,13 @@ struct KLogger::Private
     {
         fLogger->forcedLog(level,
                            message,
+#if not defined(LOG4CXX_MAKE_VERSION)  // thank log4cxx for only defining this in later versions...
                            ::log4cxx::spi::LocationInfo(loc.fFileName, loc.fFunctionName, loc.fLineNumber));
+#elif (LOG4CXX_VERSION < LOG4CXX_MAKE_VERSION(0, 13, 0, 0))
+                           ::log4cxx::spi::LocationInfo(loc.fFileName, loc.fFunctionName, loc.fLineNumber));
+#else
+                           ::log4cxx::spi::LocationInfo(loc.fFileName, loc.fFileName, loc.fFunctionName, loc.fLineNumber));
+#endif
     }
 
     LoggerPtr fLogger;

@@ -3,21 +3,18 @@
 //
 
 #include "KXMLInitializer.hh"
+#include "KInitializationMessage.hh"
+#include "KPathResolver.h"
+#include "KGlobals.hh"
+#include "KMessage.h"
 
+#include "KIncludeProcessor.hh"
 #include "KConditionProcessor.hh"
 #include "KElementProcessor.hh"
-#include "KIncludeProcessor.hh"
-#include "KInitializationMessage.hh"
 #include "KLoopProcessor.hh"
-#include "KPathResolver.h"
 #include "KPrintProcessor.hh"
 #include "KTagProcessor.hh"
 #include "KVariableProcessor.hh"
-#include "KGlobals.hh"
-
-#include "KMessage.h"
-
-#include <memory>
 
 #ifdef KASPER_USE_ROOT
 #include "KFormulaProcessor.hh"
@@ -25,6 +22,8 @@
 
 #include "KLogger.h"
 KLOGGER("kommon.init");
+
+#include <memory>
 
 extern char** environ;
 
@@ -237,46 +236,46 @@ void KXMLInitializer::SetupProcessChain(const map<string, string>& variables, co
     if (!variables.empty()) {
         KDEBUG("Passing on " << variables.size() << " variables to processors");
     }
-    auto* tVariableProcessor = new KVariableProcessor(variables);
-    tVariableProcessor->InsertAfter(fTokenizer);
+    fVariableProcessor = new KVariableProcessor(variables);
+    fVariableProcessor->InsertAfter(fTokenizer);
 
-    auto* tIncludeProcessor = new KIncludeProcessor();
+    fIncludeProcessor = new KIncludeProcessor();
     if (!includePath.empty()) {
         KDEBUG("Setting config path: " << includePath);
-        tIncludeProcessor->SetPath(includePath);
+        fIncludeProcessor->SetPath(includePath);
     }
     for (const string& path : fDefaultIncludePaths) {
         if (fUsingDefaultPaths || fAllowConfigFileFallback) {
             KDEBUG("Adding default config path: " << path);
-            tIncludeProcessor->AddDefaultPath(path);
+            fIncludeProcessor->AddDefaultPath(path);
         }
     }
-    tIncludeProcessor->InsertAfter(tVariableProcessor);
+    fIncludeProcessor->InsertAfter(fVariableProcessor);
 
 #ifdef KASPER_USE_ROOT
-    auto* tFormulaProcessor = new KFormulaProcessor();
-    tFormulaProcessor->InsertAfter(tVariableProcessor);
-    tIncludeProcessor->InsertAfter(tFormulaProcessor);
+    fFormulaProcessor = new KFormulaProcessor();
+    fFormulaProcessor->InsertAfter(fVariableProcessor);
+    fIncludeProcessor->InsertAfter(fFormulaProcessor);
 #endif
 
-    auto* tLoopProcessor = new KLoopProcessor();
-    tLoopProcessor->InsertAfter(tIncludeProcessor);
+    fLoopProcessor = new KLoopProcessor();
+    fLoopProcessor->InsertAfter(fIncludeProcessor);
 
-    auto* tConditionProcessor = new KConditionProcessor();
-    tConditionProcessor->InsertAfter(tLoopProcessor);
+    fConditionProcessor = new KConditionProcessor();
+    fConditionProcessor->InsertAfter(fLoopProcessor);
 
-    auto* tPrintProcessor = new KPrintProcessor();
-    tPrintProcessor->InsertAfter(tConditionProcessor);
+    fPrintProcessor = new KPrintProcessor();
+    fPrintProcessor->InsertAfter(fConditionProcessor);
 
     if (!fConfigSerializer)
         fConfigSerializer = std::make_unique<KSerializationProcessor>();
-    fConfigSerializer->InsertAfter(tPrintProcessor);
+    fConfigSerializer->InsertAfter(fPrintProcessor);
 
-    auto* tTagProcessor = new KTagProcessor();
-    tTagProcessor->InsertAfter(fConfigSerializer.get());
+    fTagProcessor = new KTagProcessor();
+    fTagProcessor->InsertAfter(fConfigSerializer.get());
 
-    auto* tElementProcessor = new KElementProcessor();
-    tElementProcessor->InsertAfter(tTagProcessor);
+    fElementProcessor = new KElementProcessor();
+    fElementProcessor->InsertAfter(fTagProcessor);
 }
 
 KXMLTokenizer* KXMLInitializer::Configure(int argc, char** argv, bool processConfig)
@@ -318,8 +317,11 @@ void KXMLInitializer::UpdateVariables(const KArgumentList& args)
     if (fTokenizer == nullptr)
         return;
 
-    auto* tVariableProcessor = new KVariableProcessor(args.OptionTable());
-    tVariableProcessor->InsertAfter(fTokenizer);
+    if (fVariableProcessor)
+        delete fVariableProcessor;
+
+    fVariableProcessor = new KVariableProcessor(args.OptionTable());
+    //fVariableProcessor->InsertAfter(fTokenizer);
 }
 
 void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments, KSerializationProcessor::EConfigFormat format) const

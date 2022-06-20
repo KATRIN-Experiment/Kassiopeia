@@ -114,7 +114,25 @@ void KOpenCLInterface::InitializeOpenCL()
     fCLDeviceID = 0;
     fKernelPath = DEFAULT_KERNEL_DIR;
 
+#ifdef KEMFIELD_USE_MPI
+    //assign devices according to the number available and local process rank
+    unsigned int proc_id = KMPIInterface::GetInstance()->GetProcess();
+    int n_dev = KOpenCLInterface::GetInstance()->GetNumberOfDevices();
+    int dev_id = proc_id % n_dev;  //fallback to global process rank if local is unavailable
+    int local_rank = KMPIInterface::GetInstance()->GetLocalRank();
+    if (local_rank != -1) {
+        if (KMPIInterface::GetInstance()->SplitMode()) {
+            dev_id = (local_rank / 2) % n_dev;
+        }
+        else {
+            dev_id = (local_rank) % n_dev;
+        }
+    }
+    SetGPU(dev_id);
+#else
     SetGPU(KEMFIELD_DEFAULT_GPU_ID);
+#endif
+
 }
 
 /**

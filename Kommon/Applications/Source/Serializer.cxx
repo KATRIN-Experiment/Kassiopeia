@@ -12,6 +12,7 @@ int main(int argc, char** argv)
     if (argc == 1) {
         cout
             << "usage: ./Serializer [--yaml|--xml] <ConfigFileName.xml> [ -r variable1=value1 variable2=value ... ]"
+            << "Process a Kasper XML file and dump the resulting configuration in XML or YAML format."
             << endl;
         exit(-1);
     }

@@ -54,6 +54,10 @@ template<> inline bool KRobinHoodChargeDensitySolverBuilder::AddAttribute(KConta
         aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::UseVTK);
         return true;
     }
+    if (aContainer->GetName() == "split_mode") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::SetSplitMode);
+        return true;
+    }
     return false;
 }
 

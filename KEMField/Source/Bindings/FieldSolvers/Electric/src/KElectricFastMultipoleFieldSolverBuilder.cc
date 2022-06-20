@@ -31,7 +31,8 @@ STATICINT sKElectricFastMultipoleFieldSolverStructure =
     KElectricFastMultipoleFieldSolverBuilder::Attribute<bool>("use_caching") +
     KElectricFastMultipoleFieldSolverBuilder::Attribute<unsigned int>("verbosity") +
     KElectricFastMultipoleFieldSolverBuilder::Attribute<double>("insertion_ratio") +
-    KElectricFastMultipoleFieldSolverBuilder::Attribute<bool>("use_opencl");
+    KElectricFastMultipoleFieldSolverBuilder::Attribute<bool>("use_opencl") +
+    KElectricFastMultipoleFieldSolverBuilder::Attribute<bool>("split_mode");
 
 STATICINT sKElectrostaticBoundaryField =
     KElectrostaticBoundaryFieldBuilder::ComplexElement<KElectricFastMultipoleFieldSolver>(

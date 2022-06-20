@@ -78,6 +78,10 @@ template<> inline bool KElectricFastMultipoleFieldSolverBuilder::AddAttribute(KC
         aContainer->CopyTo(fObject, &KEMField::KElectricFastMultipoleFieldSolver::UseOpenCL);
         return true;
     }
+    if (aContainer->GetName() == "split_mode") {
+        aContainer->CopyTo(fObject, &KEMField::KElectricFastMultipoleFieldSolver::SetSplitMode);
+        return true;
+    }
     return false;
 }
 

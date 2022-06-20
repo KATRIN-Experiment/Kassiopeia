@@ -1,6 +1,7 @@
 
 set( APPLICATION_NAMES
     Serializer
+    VariableProcessor
 )
 
 set( APPLICATION_LIBRARIES

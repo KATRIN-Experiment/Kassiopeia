@@ -51,6 +51,7 @@ class KElectricFastMultipoleFieldSolver : public KElectricFieldSolver
     }
 
     void UseOpenCL(bool choice);
+    void SetSplitMode(bool choice);
 
   private:
     KEBIPolicy fIntegratorPolicy;

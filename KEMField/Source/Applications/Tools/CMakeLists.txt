@@ -6,6 +6,7 @@ if (KEMField_ENABLE_APP)
 
     set (APPLICATIONS_LIBS
         KEMFieldBindings
+        KGeoBagBindings
     )
 
     if (KEMField_USE_ROOT)

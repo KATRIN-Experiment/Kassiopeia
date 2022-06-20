@@ -10,11 +10,11 @@ MASTER_ROOT = 'KRoot'
 
 STRIP_NAMESPACES = ['std', 'detail', 'katrin', 'KGeoBag', 'KEMField']
 
-#### https://regex101.com/r/ih2tjR/1
-REGEX_PATTERN = r'(\s*(\w+)(Builder|Binding)::(Attribute|SimpleElement|ComplexElement)<\s*([\w]+::)?([\w<>]+)\s*>\s*\(\s*"(\w+)"\s*\)\s*[+;])'
+#### https://regex101.com/r/ieEZ8y/1
+REGEX_PATTERN = r'(\s*(\w+)(Builder|Binding)::(Attribute|SimpleElement|ComplexElement)<\s*([\w]+::)?([\w<> ]+)\s*>\s*\(\s*"(\w+)"\s*\)\s*[+;])'
 
-REGEX_PATTERN_TYPEDEF = r'(typedef\s+K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w<>]+)\s*>\s*(\w+)(Builder|Binding)\s*;)'
-REGEX_PATTERN_USING = r'(using\s+(\w+)(Builder|Binding)\s*=\s*K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w<>]+)\s*>\s*;)'
+REGEX_PATTERN_TYPEDEF = r'(typedef\s+K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w<> ]+)\s*>\s*(\w+)(Builder|Binding)\s*;)'
+REGEX_PATTERN_USING = r'(using\s+(\w+)(Builder|Binding)\s*=\s*K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w<> ]+)\s*>\s*;)'
 
 # GraphViz options
 FONT_SIZE = 11
@@ -58,12 +58,9 @@ class Node:
     def __lt__(self, other):
         return self.name < other.name
 
-<<<<<<< HEAD
-=======
     """
     Procuces node documentation in simple ASCII format.
     """
->>>>>>> main
     def pprint(self, level=0, stack=[], key=''):
         indent = level*'  '
         if not key and self.xml_names:
@@ -82,12 +79,9 @@ class Node:
                 print(indent + f"{node_key} = {node.name}")  #  ({self.source_file})
                 node.pprint(level+1, stack, key=node_key)
 
-<<<<<<< HEAD
-=======
     """
     Produces node documentation in GraphViz (DOT) format. Optionally includes child elements and attribute nodes.
     """
->>>>>>> main
     def makeGraph(self, level=0, stack=[], nodes=set(), key='', with_children=True, with_attributes=False):
         node_color = NODE_COLORS[(level+1) % len(NODE_COLORS)]
         make_subgraph = (level == 0) or (with_children and self.children) or (with_attributes and self.attributes)
@@ -128,27 +122,18 @@ class Node:
                 node_full_name = cleanStr(f'{node.name}__{node_key}')
                 if not node_full_name in stack:
                     stack.append(full_name)
-<<<<<<< HEAD
-                    print(f'"{full_name}" -> "{node_full_name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
-                    new_nodes = node.makeGraph(level+1, stack, nodes, key=node_key, with_children=with_children, with_attributes=with_attributes)
-                    nodes.union(new_nodes)
-=======
                 print(f'"{full_name}" -> "{node_full_name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
                 new_nodes = node.makeGraph(level+1, stack, nodes, key=node_key, with_children=with_children, with_attributes=with_attributes)
                 nodes.union(new_nodes)
->>>>>>> main
 
         if make_subgraph:
             print(f'}}')
 
         return nodes
 
-<<<<<<< HEAD
-=======
     """
     Produces node documentation in XML format (example snippet). Includes up a given number of child elements.
     """
->>>>>>> main
     def makeExampleXML(self, level=0, stack=[], key='', max_children=999, max_attributes=999, include_root=True):
         spaces = '    '
         if not key and self.xml_names:
@@ -190,14 +175,10 @@ class Node:
 
         print(f'{indent}</{key}>')
 
-<<<<<<< HEAD
-    def makeTableRST(self, level=0, stack=[], key='', with_sections=False):
-=======
     """
     Produces node documentation in reStructuredText (RST) format. Includes child elements. Section breaks are optional.
     """
     def makeTableRST(self, level=0, stack=[], nodes=set(), key='', with_sections=False):
->>>>>>> main
         global base_url
         numCols = 6
         colWidths = (80, 240, 80, 160, 80, 40)  # in RST the columns all must have the same width
@@ -209,14 +190,11 @@ class Node:
         escapeStr = lambda txt: txt.translate(dict([ (ord(c),f'\{c}') for c in "<>" ]))  # escape invalid chars
         cleanStr = lambda txt: txt.translate(dict([ (ord(c),f'_') for c in "<>" ]))  # strip invalid chars
 
-<<<<<<< HEAD
-=======
         full_name = cleanStr(f'{self.name}')
         if full_name in nodes:
             return nodes
         nodes.add(full_name)
 
->>>>>>> main
         def printLine(separators):
             assert(len(separators) == numCols)
             print(''.join([('+%s'%(colWidths[i]*separators[i])) for i in range(numCols)]) + '+')
@@ -229,15 +207,9 @@ class Node:
             if self.children or self.attributes:
                 if level < len(headSep):
                     print()
-<<<<<<< HEAD
-                    print(f'.. _{cleanStr(self.name.lower())}:')
-                    print()
-                    print(f'{self.name} (``{key}``)' if key else f'{self.name}')
-=======
                     print(f'.. _{cleanStr(self.name)}:')
                     print()
                     print(f'{self.name}')
->>>>>>> main
                     print(100*headSep[level])
 
                 print()
@@ -273,11 +245,7 @@ class Node:
                 node_key = sorted_children[i]
                 node = self.children[node_key]
                 child_nodes = f'``{node_key}``'
-<<<<<<< HEAD
-                child_types = f':ref:`{escapeStr(node.name)} <{cleanStr(node.name.lower())}>`'
-=======
                 child_types = f':ref:`{escapeStr(node.name)} <{cleanStr(node.name)}>`'
->>>>>>> main
             else:
                 child_nodes = child_types = ""
 
@@ -296,19 +264,11 @@ class Node:
             if i < numLines-1:
                 # add lines between rows, but take care of multi-row segments
                 printLine([' ',
-<<<<<<< HEAD
-                        '-' if i < len(sorted_files)-1 else ' ',
-                        '-' if i < len(sorted_children)-1 else ' ',
-                        '-' if i < len(sorted_children)-1 else ' ',
-                        '-' if i < len(sorted_attributes)-1 else ' ',
-                        '-' if i < len(sorted_attributes)-1 else ' '])
-=======
                             '-' if i < len(sorted_files)-1 else ' ',
                             '-' if i < len(sorted_children)-1 else ' ',
                             '-' if i < len(sorted_children)-1 else ' ',
                             '-' if i < len(sorted_attributes)-1 else ' ',
                             '-' if i < len(sorted_attributes)-1 else ' '])
->>>>>>> main
 
             self_node = source_files = ""
 
@@ -320,11 +280,6 @@ class Node:
                 full_name = f"{self.name}__{node_key}"
                 if not full_name in stack:
                     stack.append(full_name)
-<<<<<<< HEAD
-                    node.makeTableRST(level+1, stack, key=node_key, with_sections=with_sections)
-
-    def makeTableMD(self, level=0, stack=[], key='', with_sections=False, with_examples=False):
-=======
                     new_nodes = node.makeTableRST(level+1, stack, nodes, key=node_key, with_sections=with_sections)
                     nodes.union(new_nodes)
 
@@ -334,7 +289,6 @@ class Node:
     Produces node documentation in MarkDown (MD) format. Includes child elements. Section breaks and XML snippets are optional.
     """
     def makeTableMD(self, level=0, stack=[], nodes=set(), key='', with_sections=False, with_examples=False):
->>>>>>> main
         global base_url
         numCols = 6
         colWidth = 5
@@ -343,25 +297,18 @@ class Node:
             key = list(self.xml_names)[0]
 
         escapeStr = lambda txt: txt.translate(dict([ (ord(c),f'\{c}') for c in "<>" ]))  # escape invalid chars
-<<<<<<< HEAD
-=======
         cleanStr = lambda txt: txt.translate(dict([ (ord(c),f'_') for c in "<>" ]))  # strip invalid chars
 
         full_name = cleanStr(f'{self.name}')
         if full_name in nodes:
             return nodes
         nodes.add(full_name)
->>>>>>> main
 
         if with_sections:
             if self.children or self.attributes or self.xml_names:
                 heading = (level+1)*'#'
                 print()
-<<<<<<< HEAD
-                print(heading + f' {escapeStr(self.name)}')
-=======
                 print(f'{heading} {escapeStr(self.name)}')
->>>>>>> main
 
                 if with_examples and self.xml_names:
                     print("Example:")
@@ -410,14 +357,10 @@ class Node:
                 full_name = f"{self.name}__{node_key}"
                 if not full_name in stack:
                     stack.append(full_name)
-<<<<<<< HEAD
-                    node.makeTableMD(level+1, stack, key=node_key, with_sections=with_sections, with_examples=with_examples)
-=======
                     new_nodes = node.makeTableMD(level+1, stack, key=node_key, with_sections=with_sections, with_examples=with_examples)
                     nodes.union(new_nodes)
 
         return nodes
->>>>>>> main
 
     ## END OF class Node
 

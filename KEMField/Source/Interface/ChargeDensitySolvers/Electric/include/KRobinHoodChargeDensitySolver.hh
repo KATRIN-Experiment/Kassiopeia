@@ -77,6 +77,7 @@ class KRobinHoodChargeDensitySolver : public KChargeDensitySolver
         fUseVTK = false;
         return;
     }
+    void SetSplitMode(bool choice);
 
   private:
     void InitializeCore(KSurfaceContainer& container) override;

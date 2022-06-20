@@ -10,6 +10,7 @@
 #include "KFMElectrostaticFastMultipoleBoundaryValueSolver.hh"
 #include "KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration.hh"
 #include "KFMMessaging.hh"
+#include "KEMCoreMessage.hh"
 
 namespace KEMField
 {
@@ -26,6 +27,10 @@ KKrylovChargeDensitySolverOld::~KKrylovChargeDensitySolverOld()
 
 void KKrylovChargeDensitySolverOld::InitializeCore(KSurfaceContainer& surfaceContainer)
 {
+    if (surfaceContainer.empty()) {
+        kem_cout(eWarning) << "Krylov solver got no elctrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+
     if (fKrylovConfig->GetFFTMParams() == nullptr) {
         kfmout << "ABORTING no multiplication method set for"
                   " krylov bem solver"

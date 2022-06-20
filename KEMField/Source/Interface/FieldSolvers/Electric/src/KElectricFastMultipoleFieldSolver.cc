@@ -230,5 +230,15 @@ void KElectricFastMultipoleFieldSolver::UseOpenCL(bool choice)
     return;
 }
 
+void KElectricFastMultipoleFieldSolver::SetSplitMode(bool choice)
+{
+#ifdef KEMFIELD_USE_MPI
+    KMPIInterface::GetInstance()->SetSplitMode(choice);
+#else
+    (void)choice;  // fixes unused parameter warning
+#endif
+    return;
+}
+
 
 } /* namespace KEMField */

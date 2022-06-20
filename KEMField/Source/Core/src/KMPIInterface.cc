@@ -30,6 +30,20 @@ KMPIInterface::KMPIInterface()
 
 KMPIInterface::~KMPIInterface() = default;
 
+void KMPIInterface::SetSplitMode(bool enable)
+{
+    fSplitMode = enable;
+
+    //construct groups/communicators to evenly split up processes
+    SetupSubGroups();
+
+    //cannot make a valid split, so revert to standard mode
+    if (fSplitMode && !fValidSplit) {
+        kem_cout(eWarning) << "Invalid MPI split mode detected - revert to standard mode." << eom;
+        fSplitMode = false;
+    };
+}
+
 void KMPIInterface::Initialize(int* argc, char*** argv, bool split_mode)
 {
     /* Let the system do what it needs to start up MPI */
@@ -60,16 +74,7 @@ void KMPIInterface::Initialize(int* argc, char*** argv, bool split_mode)
     //local rank of process 3 is 1, and the local rank of process 5 is 2
     DetermineLocalRank();
 
-    fSplitMode = split_mode;
-
-
-    //construct groups/communicators to evenly split up processes
-    SetupSubGroups();
-
-    //cannot make a valid split, so revert to standard mode
-    if (!fValidSplit) {
-        fSplitMode = false;
-    };
+    SetSplitMode(split_mode);
 }
 
 void KMPIInterface::Finalize()

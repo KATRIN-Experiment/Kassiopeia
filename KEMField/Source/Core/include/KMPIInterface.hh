@@ -19,6 +19,8 @@ class KMPIInterface
     void Initialize(int* argc, char*** argv, bool split_mode = true);
     void Finalize();
 
+    void SetSplitMode(bool enable = true);
+
     bool Check() const {
         return (fProcess >= 0) && (fNProcesses > 0);
     }

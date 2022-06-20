@@ -25,10 +25,46 @@ template<class T> inline void hash_combine(std::size_t& seed, T const& v)
     seed ^= std::hash<T>()(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 }
 
+template<class ContainerT> inline void hash_pair(std::size_t& seed, ContainerT arr)
+{
+    hash_combine(seed, arr.first);
+    hash_combine(seed, arr.second);
+}
+template<class ContainerT> inline void hash_pair_sequence(std::size_t& seed, ContainerT arr)
+{
+    for (const auto& it : arr) {
+        hash_combine(seed, it.first);
+        hash_combine(seed, it.second);
+    }
+}
+
 template<class It> inline void hash_range(std::size_t& seed, It first, It last)
 {
     for (; first != last; ++first) {
         hash_combine(seed, *first);
+    }
+}
+template<class ContainerT> inline void hash_sequence(std::size_t& seed, ContainerT arr)
+{
+    for (const auto& it : arr) {
+        hash_combine(seed, it);
+    }
+}
+
+template<class It> inline void hash_range2(std::size_t& seed, It first, It last)
+{
+    for (; first != last; ++first) {
+        for (It first2 = *first; first2 != *first.end(); ++first2) {
+            hash_combine(seed, *first2);
+        }
+    }
+}
+template<class ContainerT> inline void hash_sequence2(std::size_t& seed, ContainerT arr)
+{
+    for (const auto& it : arr) {
+        for (const auto& it2 : it) {
+            hash_combine(seed, it2);
+        }
     }
 }
 

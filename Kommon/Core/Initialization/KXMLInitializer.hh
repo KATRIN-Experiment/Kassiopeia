@@ -10,6 +10,7 @@
 #include "KSingleton.h"
 #include "KTextFile.h"
 #include "KXMLTokenizer.hh"
+#include "KElementProcessor.hh"
 
 #include <map>
 #include <memory>
@@ -18,6 +19,14 @@
 
 namespace katrin
 {
+
+class KVariableProcessor;
+class KIncludeProcessor;
+class KFormulaProcessor;
+class KLoopProcessor;
+class KConditionProcessor;
+class KPrintProcessor;
+class KTagProcessor;
 
 class KXMLInitializer : public KSingleton<KXMLInitializer>
 {
@@ -53,6 +62,11 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
         return fTokenizer;
     }
 
+    const KVariableProcessor* GetVariableProcessor() const
+    {
+        return fVariableProcessor;
+    }
+
     const std::string GetSerializedConfig(KSerializationProcessor::EConfigFormat format) const {
         return fConfigSerializer ? fConfigSerializer->GetConfig(format) : "";
     }
@@ -74,6 +88,15 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
     std::unique_ptr<KSerializationProcessor> fConfigSerializer;
 
     KXMLTokenizer* fTokenizer;
+    KVariableProcessor* fVariableProcessor;
+    KIncludeProcessor* fIncludeProcessor;
+    KFormulaProcessor* fFormulaProcessor;
+    KLoopProcessor* fLoopProcessor;
+    KConditionProcessor* fConditionProcessor;
+    KPrintProcessor* fPrintProcessor;
+    KTagProcessor* fTagProcessor;
+    KElementProcessor* fElementProcessor;
+
     KArgumentList fArguments;
     int fVerbosityLevel;
     std::string fDefaultConfigFile;
