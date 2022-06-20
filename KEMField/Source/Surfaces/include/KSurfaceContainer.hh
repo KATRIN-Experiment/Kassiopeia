@@ -52,13 +52,24 @@ class KSurfaceContainer
 * @author T.J. Corona
 */
 
-    class iterator /*: public std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>*/
+#if __cplusplus >= 201703L
+    class iterator
+#else
+    class iterator : public std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>
+#endif
     {
       public:
+#if __cplusplus >= 201703L
         using iterator_category = std::bidirectional_iterator_tag;
         using value_type = KSurfacePrimitive*;
         using reference = value_type&;
         using pointer = value_type*;
+#else
+        using iterator_category = std::bidirectional_iterator_tag;
+        using value_type = std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::value_type;
+        using reference = std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::reference;
+        using pointer = std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::pointer;
+#endif
 
         friend class KSurfaceContainer;
 

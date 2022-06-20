@@ -17,7 +17,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kommonnamedrandomgenerator">`NamedRandomGenerator`</a>|[*KNamedRandomGeneratorBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Bindings/KNamedRandomGeneratorBuilder.cxx)|—    |—    |`Name`<br>`Seed`|*`string`*<br>*`SeedType`*|
+=======
+|<a name="kommonnamedrandomgenerator">`NamedRandomGenerator`</a>|[*KNamedRandomGeneratorBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Random/KNamedRandomGeneratorBuilder.cxx)|—    |—    |`Name`<br>`Seed`|*`string`*<br>*`SeedType`*|
+>>>>>>> main
 
 ## KDummyRandom
 Example:
@@ -30,7 +34,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kdummyrandom">`Random`</a>|[*KRandomBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Bindings/KRandomBuilder.cxx)|—    |—    |`Seed`|*`int32_t`*|
+=======
+|<a name="kdummyrandom">`Random`</a>|[*KRandomBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Random/KRandomBuilder.cxx)|—    |—    |`Seed`|*`int32_t`*|
+>>>>>>> main
 
 ## KGInterface
 Example:
@@ -50,7 +58,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kginterface">`geometry`</a>|[*KGInterfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGInterfaceBuilder.cc)|[`annulus_surface`](#kgannulussurface)<br>[`appearance`](#kgappearanceattributor)<br>[`axial_mesh`](#kgaxialmeshattributor)<br>[`beam_space`](#kgwrappedspace\<kgbeam\>)<br>[`beam_surface`](#kgwrappedsurface\<kgbeam\>)<br>[`box_space`](#kgboxspace)<br>[`circle_wire_space`](#kgwrappedspace\<kgcirclewire\>)<br>[`circle_wire_surface`](#kgwrappedsurface\<kgcirclewire\>)<br>[`circular_wire_pins_space`](#kgwrappedspace\<kgcircularwirepins\>)<br>[`circular_wire_pins_surface`](#kgwrappedsurface\<kgcircularwirepins\>)<br>[`complex_annulus_surface`](#kgwrappedsurface\<kgcomplexannulus\>)<br>[`cone_space`](#kgconespace)<br>[`cone_surface`](#kgconesurface)<br>[`conic_section_port_housing_space`](#kgwrappedspace\<kgconicsectporthousing\>)<br>[`conic_section_port_housing_surface`](#kgwrappedsurface\<kgconicsectporthousing\>)<br>[`conical_wire_array_space`](#kgwrappedspace\<kgconicalwirearray\>)<br>[`conical_wire_array_surface`](#kgwrappedsurface\<kgconicalwirearray\>)<br>[`cut_cone_space`](#kgcutconespace)<br>[`cut_cone_surface`](#kgcutconesurface)<br>[`cut_cone_tube_space`](#kgcutconetubespace)<br>[`cut_torus_surface`](#kgcuttorussurface)<br>[`cylinder_space`](#kgcylinderspace)<br>[`cylinder_surface`](#kgcylindersurface)<br>[`cylinder_tube_space`](#kgcylindertubespace)<br>[`discrete_rotational_mesh`](#kgdiscreterotationalmeshattributor)<br>[`disk_surface`](#kgdisksurface)<br>[`electromagnet`](#kgelectromagnetattributor)<br>[`extruded_arc_segment_surface`](#kgextrudedarcsegmentsurface)<br>[`extruded_circle_space`](#kgextrudedcirclespace)<br>[`extruded_circle_surface`](#kgextrudedcirclesurface)<br>[`extruded_line_segment_surface`](#kgextrudedlinesegmentsurface)<br>[`extruded_poly_line_surface`](#kgextrudedpolylinesurface)<br>[`extruded_poly_loop_space`](#kgextrudedpolyloopspace)<br>[`extruded_poly_loop_surface`](#kgextrudedpolyloopsurface)<br>[`extruded_space`](#kgwrappedspace\<kgextrudedobject\>)<br>[`extruded_surface`](#kgwrappedsurface\<kgextrudedobject\>)<br>[`flattened_circle_surface`](#kgflattenedcirclesurface)<br>[`flattened_poly_loop_surface`](#kgflattenedpolyloopsurface)<br>[`linear_wire_grid_space`](#kgwrappedspace\<kglinearwiregrid\>)<br>[`linear_wire_grid_surface`](#kgwrappedsurface\<kglinearwiregrid\>)<br>[`mesh`](#kgmeshattributor)<br>[`mesh_deformer`](#kgmeshdeformer)<br>[`mesh_refiner`](#kgmeshrefiner)<br>[`port_housing_space`](#kgwrappedspace\<kgporthousing\>)<br>[`port_housing_surface`](#kgwrappedsurface\<kgporthousing\>)<br>[`quadratic_wire_grid_space`](#kgwrappedspace\<kgquadraticwiregrid\>)<br>[`quadratic_wire_grid_surface`](#kgwrappedsurface\<kgquadraticwiregrid\>)<br>[`rod_space`](#kgwrappedspace\<kgrod\>)<br>[`rod_surface`](#kgwrappedsurface\<kgrod\>)<br>[`rotated_arc_segment_space`](#kgrotatedarcsegmentspace)<br>[`rotated_arc_segment_surface`](#kgrotatedarcsegmentsurface)<br>[`rotated_circle_space`](#kgrotatedcirclespace)<br>[`rotated_circle_surface`](#kgrotatedcirclesurface)<br>[`rotated_line_segment_space`](#kgrotatedlinesegmentspace)<br>[`rotated_line_segment_surface`](#kgrotatedlinesegmentsurface)<br>[`rotated_poly_line_space`](#kgrotatedpolylinespace)<br>[`rotated_poly_line_surface`](#kgrotatedpolylinesurface)<br>[`rotated_poly_loop_space`](#kgrotatedpolyloopspace)<br>[`rotated_poly_loop_surface`](#kgrotatedpolyloopsurface)<br>[`rotated_space`](#kgwrappedspace\<kgrotatedobject\>)<br>[`rotated_surface`](#kgwrappedsurface\<kgrotatedobject\>)<br>[`shell_arc_segment_surface`](#kgshellarcsegmentsurface)<br>[`shell_circle_surface`](#kgshellcirclesurface)<br>[`shell_line_segment_surface`](#kgshelllinesegmentsurface)<br>[`shell_poly_line_surface`](#kgshellpolylinesurface)<br>[`shell_poly_loop_surface`](#kgshellpolyloopsurface)<br>[`space`](#kgspace)<br>[`stl_file_space`](#kgwrappedspace\<kgstlfile\>)<br>[`stl_file_surface`](#kgwrappedsurface\<kgstlfile\>)<br>[`surface`](#kgsurface)<br>[`torus_space`](#kgtorusspace)<br>[`torus_surface`](#kgtorussurface)|*`KGAnnulusSurface`*<br>*`KGAppearanceAttributor`*<br>*`KGAxialMeshAttributor`*<br>*`KGWrappedSpace<KGBeam>`*<br>*`KGWrappedSurface<KGBeam>`*<br>*`KGBoxSpace`*<br>*`KGWrappedSpace<KGCircleWire>`*<br>*`KGWrappedSurface<KGCircleWire>`*<br>*`KGWrappedSpace<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGComplexAnnulus>`*<br>*`KGConeSpace`*<br>*`KGConeSurface`*<br>*`KGWrappedSpace<KGConicSectPortHousing>`*<br>*`KGWrappedSurface<KGConicSectPortHousing>`*<br>*`KGWrappedSpace<KGConicalWireArray>`*<br>*`KGWrappedSurface<KGConicalWireArray>`*<br>*`KGCutConeSpace`*<br>*`KGCutConeSurface`*<br>*`KGCutConeTubeSpace`*<br>*`KGCutTorusSurface`*<br>*`KGCylinderSpace`*<br>*`KGCylinderSurface`*<br>*`KGCylinderTubeSpace`*<br>*`KGDiscreteRotationalMeshAttributor`*<br>*`KGDiskSurface`*<br>*`KGElectromagnetAttributor`*<br>*`KGExtrudedArcSegmentSurface`*<br>*`KGExtrudedCircleSpace`*<br>*`KGExtrudedCircleSurface`*<br>*`KGExtrudedLineSegmentSurface`*<br>*`KGExtrudedPolyLineSurface`*<br>*`KGExtrudedPolyLoopSpace`*<br>*`KGExtrudedPolyLoopSurface`*<br>*`KGWrappedSpace<KGExtrudedObject>`*<br>*`KGWrappedSurface<KGExtrudedObject>`*<br>*`KGFlattenedCircleSurface`*<br>*`KGFlattenedPolyLoopSurface`*<br>*`KGWrappedSpace<KGLinearWireGrid>`*<br>*`KGWrappedSurface<KGLinearWireGrid>`*<br>*`KGMeshAttributor`*<br>*`KGMeshDeformer`*<br>*`KGMeshRefiner`*<br>*`KGWrappedSpace<KGPortHousing>`*<br>*`KGWrappedSurface<KGPortHousing>`*<br>*`KGWrappedSpace<KGQuadraticWireGrid>`*<br>*`KGWrappedSurface<KGQuadraticWireGrid>`*<br>*`KGWrappedSpace<KGRod>`*<br>*`KGWrappedSurface<KGRod>`*<br>*`KGRotatedArcSegmentSpace`*<br>*`KGRotatedArcSegmentSurface`*<br>*`KGRotatedCircleSpace`*<br>*`KGRotatedCircleSurface`*<br>*`KGRotatedLineSegmentSpace`*<br>*`KGRotatedLineSegmentSurface`*<br>*`KGRotatedPolyLineSpace`*<br>*`KGRotatedPolyLineSurface`*<br>*`KGRotatedPolyLoopSpace`*<br>*`KGRotatedPolyLoopSurface`*<br>*`KGWrappedSpace<KGRotatedObject>`*<br>*`KGWrappedSurface<KGRotatedObject>`*<br>*`KGShellArcSegmentSurface`*<br>*`KGShellCircleSurface`*<br>*`KGShellLineSegmentSurface`*<br>*`KGShellPolyLineSurface`*<br>*`KGShellPolyLoopSurface`*<br>*`KGSpace`*<br>*`KGWrappedSpace<KGStlFile>`*<br>*`KGWrappedSurface<KGStlFile>`*<br>*`KGSurface`*<br>*`KGTorusSpace`*<br>*`KGTorusSurface`*|`reset`|*`bool`*|
+=======
+|<a name="kginterface">`geometry`</a>|[*KGInterfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGInterfaceBuilder.cc)|[`annulus_surface`](#kgannulussurface)<br>[`appearance`](#kgappearanceattributor)<br>[`axial_mesh`](#kgaxialmeshattributor)<br>[`beam_space`](#kgwrappedspace\<kgbeam\>)<br>[`beam_surface`](#kgwrappedsurface\<kgbeam\>)<br>[`box_space`](#kgboxspace)<br>[`circle_wire_space`](#kgwrappedspace\<kgcirclewire\>)<br>[`circle_wire_surface`](#kgwrappedsurface\<kgcirclewire\>)<br>[`circular_wire_pins_space`](#kgwrappedspace\<kgcircularwirepins\>)<br>[`circular_wire_pins_surface`](#kgwrappedsurface\<kgcircularwirepins\>)<br>[`complex_annulus_surface`](#kgwrappedsurface\<kgcomplexannulus\>)<br>[`cone_space`](#kgconespace)<br>[`cone_surface`](#kgconesurface)<br>[`conic_section_port_housing_space`](#kgwrappedspace\<kgconicsectporthousing\>)<br>[`conic_section_port_housing_surface`](#kgwrappedsurface\<kgconicsectporthousing\>)<br>[`conical_wire_array_space`](#kgwrappedspace\<kgconicalwirearray\>)<br>[`conical_wire_array_surface`](#kgwrappedsurface\<kgconicalwirearray\>)<br>[`cut_cone_space`](#kgcutconespace)<br>[`cut_cone_surface`](#kgcutconesurface)<br>[`cut_cone_tube_space`](#kgcutconetubespace)<br>[`cut_torus_surface`](#kgcuttorussurface)<br>[`cylinder_space`](#kgcylinderspace)<br>[`cylinder_surface`](#kgcylindersurface)<br>[`cylinder_tube_space`](#kgcylindertubespace)<br>[`discrete_rotational_mesh`](#kgdiscreterotationalmeshattributor)<br>[`disk_surface`](#kgdisksurface)<br>[`electromagnet`](#kgelectromagnetattributor)<br>[`extruded_arc_segment_surface`](#kgextrudedarcsegmentsurface)<br>[`extruded_circle_space`](#kgextrudedcirclespace)<br>[`extruded_circle_surface`](#kgextrudedcirclesurface)<br>[`extruded_line_segment_surface`](#kgextrudedlinesegmentsurface)<br>[`extruded_poly_line_surface`](#kgextrudedpolylinesurface)<br>[`extruded_poly_loop_space`](#kgextrudedpolyloopspace)<br>[`extruded_poly_loop_surface`](#kgextrudedpolyloopsurface)<br>[`extruded_space`](#kgwrappedspace\<kgextrudedobject\>)<br>[`extruded_surface`](#kgwrappedsurface\<kgextrudedobject\>)<br>[`flattened_circle_surface`](#kgflattenedcirclesurface)<br>[`flattened_poly_loop_surface`](#kgflattenedpolyloopsurface)<br>[`linear_wire_grid_space`](#kgwrappedspace\<kglinearwiregrid\>)<br>[`linear_wire_grid_surface`](#kgwrappedsurface\<kglinearwiregrid\>)<br>[`mesh`](#kgmeshattributor)<br>[`mesh_deformer`](#kgmeshdeformer)<br>[`port_housing_space`](#kgwrappedspace\<kgporthousing\>)<br>[`port_housing_surface`](#kgwrappedsurface\<kgporthousing\>)<br>[`quadratic_wire_grid_space`](#kgwrappedspace\<kgquadraticwiregrid\>)<br>[`quadratic_wire_grid_surface`](#kgwrappedsurface\<kgquadraticwiregrid\>)<br>[`rod_space`](#kgwrappedspace\<kgrod\>)<br>[`rod_surface`](#kgwrappedsurface\<kgrod\>)<br>[`rotated_arc_segment_space`](#kgrotatedarcsegmentspace)<br>[`rotated_arc_segment_surface`](#kgrotatedarcsegmentsurface)<br>[`rotated_circle_space`](#kgrotatedcirclespace)<br>[`rotated_circle_surface`](#kgrotatedcirclesurface)<br>[`rotated_line_segment_space`](#kgrotatedlinesegmentspace)<br>[`rotated_line_segment_surface`](#kgrotatedlinesegmentsurface)<br>[`rotated_poly_line_space`](#kgrotatedpolylinespace)<br>[`rotated_poly_line_surface`](#kgrotatedpolylinesurface)<br>[`rotated_poly_loop_space`](#kgrotatedpolyloopspace)<br>[`rotated_poly_loop_surface`](#kgrotatedpolyloopsurface)<br>[`rotated_space`](#kgwrappedspace\<kgrotatedobject\>)<br>[`rotated_surface`](#kgwrappedsurface\<kgrotatedobject\>)<br>[`shell_arc_segment_surface`](#kgshellarcsegmentsurface)<br>[`shell_circle_surface`](#kgshellcirclesurface)<br>[`shell_line_segment_surface`](#kgshelllinesegmentsurface)<br>[`shell_poly_line_surface`](#kgshellpolylinesurface)<br>[`shell_poly_loop_surface`](#kgshellpolyloopsurface)<br>[`space`](#kgspace)<br>[`stl_file_space`](#kgwrappedspace\<kgstlfile\>)<br>[`stl_file_surface`](#kgwrappedsurface\<kgstlfile\>)<br>[`surface`](#kgsurface)<br>[`torus_space`](#kgtorusspace)<br>[`torus_surface`](#kgtorussurface)|*`KGAnnulusSurface`*<br>*`KGAppearanceAttributor`*<br>*`KGAxialMeshAttributor`*<br>*`KGWrappedSpace<KGBeam>`*<br>*`KGWrappedSurface<KGBeam>`*<br>*`KGBoxSpace`*<br>*`KGWrappedSpace<KGCircleWire>`*<br>*`KGWrappedSurface<KGCircleWire>`*<br>*`KGWrappedSpace<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGCircularWirePins>`*<br>*`KGWrappedSurface<KGComplexAnnulus>`*<br>*`KGConeSpace`*<br>*`KGConeSurface`*<br>*`KGWrappedSpace<KGConicSectPortHousing>`*<br>*`KGWrappedSurface<KGConicSectPortHousing>`*<br>*`KGWrappedSpace<KGConicalWireArray>`*<br>*`KGWrappedSurface<KGConicalWireArray>`*<br>*`KGCutConeSpace`*<br>*`KGCutConeSurface`*<br>*`KGCutConeTubeSpace`*<br>*`KGCutTorusSurface`*<br>*`KGCylinderSpace`*<br>*`KGCylinderSurface`*<br>*`KGCylinderTubeSpace`*<br>*`KGDiscreteRotationalMeshAttributor`*<br>*`KGDiskSurface`*<br>*`KGElectromagnetAttributor`*<br>*`KGExtrudedArcSegmentSurface`*<br>*`KGExtrudedCircleSpace`*<br>*`KGExtrudedCircleSurface`*<br>*`KGExtrudedLineSegmentSurface`*<br>*`KGExtrudedPolyLineSurface`*<br>*`KGExtrudedPolyLoopSpace`*<br>*`KGExtrudedPolyLoopSurface`*<br>*`KGWrappedSpace<KGExtrudedObject>`*<br>*`KGWrappedSurface<KGExtrudedObject>`*<br>*`KGFlattenedCircleSurface`*<br>*`KGFlattenedPolyLoopSurface`*<br>*`KGWrappedSpace<KGLinearWireGrid>`*<br>*`KGWrappedSurface<KGLinearWireGrid>`*<br>*`KGMeshAttributor`*<br>*`KGMeshDeformer`*<br>*`KGWrappedSpace<KGPortHousing>`*<br>*`KGWrappedSurface<KGPortHousing>`*<br>*`KGWrappedSpace<KGQuadraticWireGrid>`*<br>*`KGWrappedSurface<KGQuadraticWireGrid>`*<br>*`KGWrappedSpace<KGRod>`*<br>*`KGWrappedSurface<KGRod>`*<br>*`KGRotatedArcSegmentSpace`*<br>*`KGRotatedArcSegmentSurface`*<br>*`KGRotatedCircleSpace`*<br>*`KGRotatedCircleSurface`*<br>*`KGRotatedLineSegmentSpace`*<br>*`KGRotatedLineSegmentSurface`*<br>*`KGRotatedPolyLineSpace`*<br>*`KGRotatedPolyLineSurface`*<br>*`KGRotatedPolyLoopSpace`*<br>*`KGRotatedPolyLoopSurface`*<br>*`KGWrappedSpace<KGRotatedObject>`*<br>*`KGWrappedSurface<KGRotatedObject>`*<br>*`KGShellArcSegmentSurface`*<br>*`KGShellCircleSurface`*<br>*`KGShellLineSegmentSurface`*<br>*`KGShellPolyLineSurface`*<br>*`KGShellPolyLoopSurface`*<br>*`KGSpace`*<br>*`KGWrappedSpace<KGStlFile>`*<br>*`KGWrappedSurface<KGStlFile>`*<br>*`KGSurface`*<br>*`KGTorusSpace`*<br>*`KGTorusSurface`*|`reset`|*`bool`*|
+>>>>>>> main
 
 ### KGAnnulusSurface
 Example:
@@ -152,6 +164,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgbeamline">`end_line`</a>|[*KGBeamBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|—    |—    |`x1`<br>`x2`<br>`y1`<br>`y2`<br>`z1`<br>`z2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KGBeamLine
 Example:
 ```
@@ -167,6 +180,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgbeamline">`start_line`</a>|[*KGBeamBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|—    |—    |`x1`<br>`x2`<br>`y1`<br>`y2`<br>`z1`<br>`z2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSurface\<KGBeam\>
 Example:
 ```
@@ -186,6 +201,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgbeam\>">`beam_surface`</a>|[*KGBeamBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`beam`](#kgbeam)|*`KGBeam`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGBeam
 Example:
 ```
@@ -200,6 +216,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgbeam">`beam`</a>|[*KGBeamBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGBeamBuilder.cc)|[`end_line`](#kgbeamline)<br>[`start_line`](#kgbeamline)|*`KGBeamLine`*<br>*`KGBeamLine`*|`axial_mesh_count`<br>`longitudinal_mesh_count`|*`int`*<br>*`int`*|
 
+=======
+>>>>>>> main
 ### KGBoxSpace
 Example:
 ```
@@ -267,6 +285,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgcirclewire\>">`circle_wire_surface`</a>|[*KGCircleWireBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircleWireBuilder.cc)|[`circle_wire`](#kgcirclewire)|*`KGCircleWire`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGCircleWire
 Example:
 ```
@@ -281,6 +300,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgcirclewire">`circle_wire`</a>|[*KGCircleWireBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircleWireBuilder.cc)|—    |—    |`diameter`<br>`radius`|*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGCircularWirePins\>
 Example:
 ```
@@ -336,6 +357,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgcircularwirepins\>">`circular_wire_pins_surface`</a>|[*KGCircularWirePinsBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircularWirePinsBuilder.cc)|[`circular_wire_pins`](#kgcircularwirepins)|*`KGCircularWirePins`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGCircularWirePins
 Example:
 ```
@@ -351,6 +373,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgcircularwirepins">`circular_wire_pins`</a>|[*KGCircularWirePinsBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGCircularWirePinsBuilder.cc)|—    |—    |`diameter`<br>`inner_radius`<br>`mesh_power`<br>`outer_radius`<br>`rotation_angle`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSurface\<KGComplexAnnulus\>
 Example:
 ```
@@ -530,6 +554,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgconicsectporthousing\>">`conic_section_port_housing_surface`</a>|[*KGConicSectPortHousingBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`conic_section_port_housing`](#kgconicsectporthousing)|*`KGConicSectPortHousing`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGConicSectPortHousing
 Example:
 ```
@@ -545,6 +570,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgconicsectporthousing">`conic_section_port_housing`</a>|[*KGConicSectPortHousingBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicSectPortHousingBuilder.cc)|[`orthogonal_port`](#kgconicsectporthousingorthogonalport)<br>[`paraxial_port`](#kgconicsectporthousingparaxialport)|*`KGConicSectPortHousingOrthogonalPort`*<br>*`KGConicSectPortHousingParaxialPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`r1`<br>`r2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGConicalWireArray\>
 Example:
 ```
@@ -600,6 +627,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgconicalwirearray\>">`conical_wire_array_surface`</a>|[*KGConicalWireArrayBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicalWireArrayBuilder.cc)|[`conical_wire_array`](#kgconicalwirearray)|*`KGConicalWireArray`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGConicalWireArray
 Example:
 ```
@@ -615,6 +643,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgconicalwirearray">`conical_wire_array`</a>|[*KGConicalWireArrayBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGConicalWireArrayBuilder.cc)|—    |—    |`diameter`<br>`longitudinal_mesh_power`<br>`radius1`<br>`radius2`<br>`theta_start`<br>`z1`<br>`z2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGCutConeSpace
 Example:
 ```
@@ -861,6 +891,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgextrudedcirclesurface">`extruded_circle_surface`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarCircle
 Example:
 ```
@@ -876,6 +907,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarcircle">`circle`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)<br>[*KGExtrudedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc)<br>[*KGFlattenedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)<br>[*KGShellCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|—    |—    |`radius`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGExtrudedLineSegmentSurface
 Example:
 ```
@@ -952,12 +985,20 @@ Example:
 ##### KGPlanarPolyLineArcArguments
 Example:
 ```
+<<<<<<< HEAD
 <previous_arc
+=======
+<next_arc
+>>>>>>> main
     radius="(double)"
     right="(bool)"
     short="(bool)"
 >
+<<<<<<< HEAD
 </previous_arc>
+=======
+</next_arc>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -967,18 +1008,27 @@ Example:
 ##### KGPlanarPolyLineLineArguments
 Example:
 ```
+<<<<<<< HEAD
 <next_line
+=======
+<previous_line
+>>>>>>> main
     line_mesh_power="(double)"
     x="(double)"
     y="(double)"
 >
+<<<<<<< HEAD
 </next_line>
+=======
+</previous_line>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolylinelinearguments">`next_line`</a>|[*KGPlanarPolyLineBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/PlanarShapes/Source/KGPlanarPolyLineBuilder.cc)|—    |—    |`line_mesh_power`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KGPlanarPolyLineArcArguments
 Example:
 ```
@@ -1009,6 +1059,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolylinelinearguments">`previous_line`</a>|[*KGPlanarPolyLineBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/PlanarShapes/Source/KGPlanarPolyLineBuilder.cc)|—    |—    |`line_mesh_power`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ##### KGPlanarPolyLineStartPointArguments
 Example:
 ```
@@ -1090,12 +1142,20 @@ Example:
 ##### KGPlanarPolyLoopArcArguments
 Example:
 ```
+<<<<<<< HEAD
 <previous_arc
+=======
+<next_arc
+>>>>>>> main
     radius="(double)"
     right="(bool)"
     short="(bool)"
 >
+<<<<<<< HEAD
 </previous_arc>
+=======
+</next_arc>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1105,18 +1165,27 @@ Example:
 ##### KGPlanarPolyLoopLineArguments
 Example:
 ```
+<<<<<<< HEAD
 <next_line
+=======
+<previous_line
+>>>>>>> main
     line_mesh_power="(double)"
     x="(double)"
     y="(double)"
 >
+<<<<<<< HEAD
 </next_line>
+=======
+</previous_line>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolylooplinearguments">`next_line`</a>|[*KGPlanarPolyLoopBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/PlanarShapes/Source/KGPlanarPolyLoopBuilder.cc)|—    |—    |`line_mesh_power`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KGPlanarPolyLoopArcArguments
 Example:
 ```
@@ -1147,6 +1216,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolylooplinearguments">`previous_line`</a>|[*KGPlanarPolyLoopBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/PlanarShapes/Source/KGPlanarPolyLoopBuilder.cc)|—    |—    |`line_mesh_power`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ##### KGPlanarPolyLoopStartPointArguments
 Example:
 ```
@@ -1179,6 +1250,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgextrudedpolyloopsurface">`extruded_poly_loop_surface`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`extruded_mesh_power`<br>`name`<br>`zmax`<br>`zmin`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLoop
 Example:
 ```
@@ -1190,6 +1262,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGExtrudedObject\>
 Example:
 ```
@@ -1235,12 +1309,20 @@ Example:
 ##### KGExtrudedObjectArc
 Example:
 ```
+<<<<<<< HEAD
 <inner_arc
+=======
+<outer_arc
+>>>>>>> main
     positive_orientation="(bool)"
     radius="(double)"
     x1="(double)"
 >
+<<<<<<< HEAD
 </inner_arc>
+=======
+</outer_arc>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1250,18 +1332,27 @@ Example:
 ##### KGExtrudedObjectLine
 Example:
 ```
+<<<<<<< HEAD
 <outer_line
+=======
+<inner_line
+>>>>>>> main
     x1="(double)"
     x2="(double)"
     y1="(double)"
 >
+<<<<<<< HEAD
 </outer_line>
+=======
+</inner_line>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgextrudedobjectline">`inner_line`</a>|[*KGExtrudedObjectBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|—    |—    |`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KGExtrudedObjectArc
 Example:
 ```
@@ -1292,6 +1383,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgextrudedobjectline">`outer_line`</a>|[*KGExtrudedObjectBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|—    |—    |`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSurface\<KGExtrudedObject\>
 Example:
 ```
@@ -1312,6 +1405,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgextrudedobject\>">`extruded_surface`</a>|[*KGExtrudedObjectBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`extruded_object`](#kgextrudedobject)|*`KGExtrudedObject`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGExtrudedObject
 Example:
 ```
@@ -1327,6 +1421,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgextrudedobject">`extruded_object`</a>|[*KGExtrudedObjectBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGExtrudedObjectBuilder.cc)|[`inner_arc`](#kgextrudedobjectarc)<br>[`inner_line`](#kgextrudedobjectline)<br>[`outer_arc`](#kgextrudedobjectarc)<br>[`outer_line`](#kgextrudedobjectline)|*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*<br>*`KGExtrudedObjectArc`*<br>*`KGExtrudedObjectLine`*|`closed_form`<br>`extruded_mesh_count`<br>`extruded_mesh_power`<br>`longitudinal_mesh_count`<br>`longitudinal_mesh_power`<br>`mesh_merge_distance`<br>`refine_mesh`<br>`z_max`<br>`z_min`|*`bool`*<br>*`int`*<br>*`double`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGFlattenedCircleSurface
 Example:
 ```
@@ -1349,6 +1445,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgflattenedcirclesurface">`flattened_circle_surface`</a>|[*KGFlattenedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`flattened_mesh_power`<br>`name`<br>`z`|*`double`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarCircle
 Example:
 ```
@@ -1364,6 +1461,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarcircle">`circle`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)<br>[*KGExtrudedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc)<br>[*KGFlattenedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)<br>[*KGShellCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|—    |—    |`radius`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGFlattenedPolyLoopSurface
 Example:
 ```
@@ -1382,6 +1481,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgflattenedpolyloopsurface">`flattened_poly_loop_surface`</a>|[*KGFlattenedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`flattened_mesh_power`<br>`name`<br>`z`|*`double`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLoop
 Example:
 ```
@@ -1393,6 +1493,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGLinearWireGrid\>
 Example:
 ```
@@ -1448,6 +1550,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kglinearwiregrid\>">`linear_wire_grid_surface`</a>|[*KGLinearWireGridBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGLinearWireGridBuilder.cc)|[`linear_wire_grid`](#kglinearwiregrid)|*`KGLinearWireGrid`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGLinearWireGrid
 Example:
 ```
@@ -1463,6 +1566,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kglinearwiregrid">`linear_wire_grid`</a>|[*KGLinearWireGridBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGLinearWireGridBuilder.cc)|—    |—    |`add_outer_circle`<br>`diameter`<br>`longitudinal_mesh_power`<br>`pitch`<br>`radius`|*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGMeshAttributor
 Example:
 ```
@@ -1492,6 +1597,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgmeshdeformer">`mesh_deformer`</a>|[*KGMeshDeformerBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Extensions/Deformation/Source/KGMeshDeformerBuilder.cc)|—    |—    |`spaces`<br>`surfaces`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ### KGMeshRefiner
 Example:
 ```
@@ -1507,6 +1613,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgmeshrefiner">`mesh_refiner`</a>|[*KGMeshRefinerBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Extensions/Refinement/Source/KGMeshRefinerBuilder.cc)|—    |—    |`max_area`<br>`max_aspect_ratio`<br>`max_length`<br>`spaces`<br>`surfaces`|*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGPortHousing\>
 Example:
 ```
@@ -1599,6 +1707,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgporthousing\>">`port_housing_surface`</a>|[*KGPortHousingBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`port_housing`](#kgporthousing)|*`KGPortHousing`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPortHousing
 Example:
 ```
@@ -1614,6 +1723,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgporthousing">`port_housing`</a>|[*KGPortHousingBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGPortHousingBuilder.cc)|[`circular_port`](#kgporthousingcircularport)<br>[`rectangular_port`](#kgporthousingrectangularport)|*`KGPortHousingCircularPort`*<br>*`KGPortHousingRectangularPort`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`radius`<br>`x1`<br>`x2`<br>`y1`<br>`y2`<br>`z1`<br>`z2`|*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGQuadraticWireGrid\>
 Example:
 ```
@@ -1669,6 +1780,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgquadraticwiregrid\>">`quadratic_wire_grid_surface`</a>|[*KGQuadraticWireGridBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGQuadraticWireGridBuilder.cc)|[`quadratic_wire_grid`](#kgquadraticwiregrid)|*`KGQuadraticWireGrid`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGQuadraticWireGrid
 Example:
 ```
@@ -1684,6 +1796,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgquadraticwiregrid">`quadratic_wire_grid`</a>|[*KGQuadraticWireGridBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGQuadraticWireGridBuilder.cc)|—    |—    |`add_outer_circle`<br>`diameter`<br>`pitch`<br>`radius`|*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGRod\>
 Example:
 ```
@@ -1761,6 +1875,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgrod\>">`rod_surface`</a>|[*KGRodBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`rod`](#kgrod)|*`KGRod`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGRod
 Example:
 ```
@@ -1776,6 +1891,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrod">`rod`</a>|[*KGRodBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRodBuilder.cc)|[`vertex`](#kgrodvertex)|*`KGRodVertex`*|`axial_mesh_count`<br>`longitudinal_mesh_count`<br>`name`<br>`radius`|*`int`*<br>*`int`*<br>*`string`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGRotatedArcSegmentSpace
 Example:
 ```
@@ -1797,6 +1914,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedarcsegmentspace">`rotated_arc_segment_space`</a>|[*KGRotatedArcSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedArcSegmentSpaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment)|*`KGPlanarArcSegment`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarArcSegment
 Example:
 ```
@@ -1812,6 +1930,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanararcsegment">`arc_segment`</a>|[*KGExtrudedArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedArcSegmentSurfaceBuilder.cc)<br>[*KGRotatedArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedArcSegmentSurfaceBuilder.cc)<br>[*KGRotatedArcSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedArcSegmentSpaceBuilder.cc)<br>[*KGShellArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellArcSegmentSurfaceBuilder.cc)|—    |—    |`radius`<br>`right`<br>`short`<br>`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGRotatedArcSegmentSurface
 Example:
 ```
@@ -1832,6 +1952,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedarcsegmentsurface">`rotated_arc_segment_surface`</a>|[*KGRotatedArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment)|*`KGPlanarArcSegment`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarArcSegment
 Example:
 ```
@@ -1847,6 +1968,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanararcsegment">`arc_segment`</a>|[*KGExtrudedArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedArcSegmentSurfaceBuilder.cc)<br>[*KGRotatedArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedArcSegmentSurfaceBuilder.cc)<br>[*KGRotatedArcSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedArcSegmentSpaceBuilder.cc)<br>[*KGShellArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellArcSegmentSurfaceBuilder.cc)|—    |—    |`radius`<br>`right`<br>`short`<br>`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGRotatedCircleSpace
 Example:
 ```
@@ -1867,6 +1990,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedcirclespace">`rotated_circle_space`</a>|[*KGRotatedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarCircle
 Example:
 ```
@@ -1882,6 +2006,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarcircle">`circle`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)<br>[*KGExtrudedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc)<br>[*KGFlattenedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)<br>[*KGShellCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|—    |—    |`radius`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGRotatedCircleSurface
 Example:
 ```
@@ -1902,6 +2028,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedcirclesurface">`rotated_circle_surface`</a>|[*KGRotatedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarCircle
 Example:
 ```
@@ -1917,6 +2044,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarcircle">`circle`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)<br>[*KGExtrudedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc)<br>[*KGFlattenedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)<br>[*KGShellCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|—    |—    |`radius`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGRotatedLineSegmentSpace
 Example:
 ```
@@ -1938,6 +2067,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedlinesegmentspace">`rotated_line_segment_space`</a>|[*KGRotatedLineSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment)|*`KGPlanarLineSegment`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarLineSegment
 Example:
 ```
@@ -1953,6 +2083,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarlinesegment">`line_segment`</a>|[*KGExtrudedLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedLineSegmentSurfaceBuilder.cc)<br>[*KGRotatedLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedLineSegmentSurfaceBuilder.cc)<br>[*KGRotatedLineSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc)<br>[*KGShellLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellLineSegmentSurfaceBuilder.cc)|—    |—    |`line_mesh_power`<br>`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGRotatedLineSegmentSurface
 Example:
 ```
@@ -1973,6 +2105,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedlinesegmentsurface">`rotated_line_segment_surface`</a>|[*KGRotatedLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment)|*`KGPlanarLineSegment`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarLineSegment
 Example:
 ```
@@ -1988,6 +2121,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarlinesegment">`line_segment`</a>|[*KGExtrudedLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedLineSegmentSurfaceBuilder.cc)<br>[*KGRotatedLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedLineSegmentSurfaceBuilder.cc)<br>[*KGRotatedLineSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc)<br>[*KGShellLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellLineSegmentSurfaceBuilder.cc)|—    |—    |`line_mesh_power`<br>`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGRotatedPolyLineSpace
 Example:
 ```
@@ -2005,6 +2140,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedpolylinespace">`rotated_poly_line_space`</a>|[*KGRotatedPolyLineSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)|[`poly_line`](#kgplanarpolyline)|*`KGPlanarPolyLine`*|`flattened_mesh_power`<br>`name`|*`double`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLine
 Example:
 ```
@@ -2016,6 +2152,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments)<br>[`next_line`](#kgplanarpolylinelinearguments)<br>[`previous_arc`](#kgplanarpolylinearcarguments)<br>[`previous_line`](#kgplanarpolylinelinearguments)<br>[`start_point`](#kgplanarpolylinestartpointarguments)|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGRotatedPolyLineSurface
 Example:
 ```
@@ -2032,6 +2170,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedpolylinesurface">`rotated_poly_line_surface`</a>|[*KGRotatedPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline)|*`KGPlanarPolyLine`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLine
 Example:
 ```
@@ -2043,6 +2182,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments)<br>[`next_line`](#kgplanarpolylinelinearguments)<br>[`previous_arc`](#kgplanarpolylinearcarguments)<br>[`previous_line`](#kgplanarpolylinelinearguments)<br>[`start_point`](#kgplanarpolylinestartpointarguments)|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGRotatedPolyLoopSpace
 Example:
 ```
@@ -2059,6 +2200,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedpolyloopspace">`rotated_poly_loop_space`</a>|[*KGRotatedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLoop
 Example:
 ```
@@ -2070,6 +2212,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGRotatedPolyLoopSurface
 Example:
 ```
@@ -2086,6 +2230,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedpolyloopsurface">`rotated_poly_loop_surface`</a>|[*KGRotatedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLoop
 Example:
 ```
@@ -2097,6 +2242,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGWrappedSpace\<KGRotatedObject\>
 Example:
 ```
@@ -2189,6 +2336,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgrotatedobject\>">`rotated_surface`</a>|[*KGRotatedObjectBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`rotated_object`](#kgrotatedobject)|*`KGRotatedObject`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGRotatedObject
 Example:
 ```
@@ -2204,6 +2352,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgrotatedobject">`rotated_object`</a>|[*KGRotatedObjectBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/Complex/Source/KGRotatedObjectBuilder.cc)|[`arc`](#kgrotatedobjectarc)<br>[`line`](#kgrotatedobjectline)|*`KGRotatedObjectArc`*<br>*`KGRotatedObjectLine`*|`longitudinal_mesh_count`<br>`longitudinal_mesh_count_end`<br>`longitudinal_mesh_count_start`<br>`longitudinal_mesh_power`|*`int`*<br>*`int`*<br>*`int`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGShellArcSegmentSurface
 Example:
 ```
@@ -2226,6 +2376,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgshellarcsegmentsurface">`shell_arc_segment_surface`</a>|[*KGShellArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellArcSegmentSurfaceBuilder.cc)|[`arc_segment`](#kgplanararcsegment)|*`KGPlanarArcSegment`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarArcSegment
 Example:
 ```
@@ -2241,6 +2392,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanararcsegment">`arc_segment`</a>|[*KGExtrudedArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedArcSegmentSurfaceBuilder.cc)<br>[*KGRotatedArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedArcSegmentSurfaceBuilder.cc)<br>[*KGRotatedArcSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedArcSegmentSpaceBuilder.cc)<br>[*KGShellArcSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellArcSegmentSurfaceBuilder.cc)|—    |—    |`radius`<br>`right`<br>`short`<br>`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGShellCircleSurface
 Example:
 ```
@@ -2263,6 +2416,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgshellcirclesurface">`shell_circle_surface`</a>|[*KGShellCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|[`circle`](#kgplanarcircle)|*`KGPlanarCircle`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarCircle
 Example:
 ```
@@ -2278,6 +2432,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarcircle">`circle`</a>|[*KGExtrudedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc)<br>[*KGExtrudedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc)<br>[*KGFlattenedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc)<br>[*KGRotatedCircleSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc)<br>[*KGShellCircleSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc)|—    |—    |`radius`<br>`x`<br>`y`|*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGShellLineSegmentSurface
 Example:
 ```
@@ -2300,6 +2456,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgshelllinesegmentsurface">`shell_line_segment_surface`</a>|[*KGShellLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellLineSegmentSurfaceBuilder.cc)|[`line_segment`](#kgplanarlinesegment)|*`KGPlanarLineSegment`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarLineSegment
 Example:
 ```
@@ -2315,6 +2472,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarlinesegment">`line_segment`</a>|[*KGExtrudedLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedLineSegmentSurfaceBuilder.cc)<br>[*KGRotatedLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedLineSegmentSurfaceBuilder.cc)<br>[*KGRotatedLineSegmentSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc)<br>[*KGShellLineSegmentSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellLineSegmentSurfaceBuilder.cc)|—    |—    |`line_mesh_power`<br>`x1`<br>`x2`<br>`y1`<br>`y2`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KGShellPolyLineSurface
 Example:
 ```
@@ -2333,6 +2492,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgshellpolylinesurface">`shell_poly_line_surface`</a>|[*KGShellPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`poly_line`](#kgplanarpolyline)|*`KGPlanarPolyLine`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLine
 Example:
 ```
@@ -2344,6 +2504,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyline">`poly_line`</a>|[*KGExtrudedPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLineSurfaceBuilder.cc)<br>[*KGRotatedPolyLineSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc)<br>[*KGShellPolyLineSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc)|[`next_arc`](#kgplanarpolylinearcarguments)<br>[`next_line`](#kgplanarpolylinelinearguments)<br>[`previous_arc`](#kgplanarpolylinearcarguments)<br>[`previous_line`](#kgplanarpolylinelinearguments)<br>[`start_point`](#kgplanarpolylinestartpointarguments)|*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineArcArguments`*<br>*`KGPlanarPolyLineLineArguments`*<br>*`KGPlanarPolyLineStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGShellPolyLoopSurface
 Example:
 ```
@@ -2362,6 +2524,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgshellpolyloopsurface">`shell_poly_loop_surface`</a>|[*KGShellPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`poly_loop`](#kgplanarpolyloop)|*`KGPlanarPolyLoop`*|`angle_start`<br>`angle_stop`<br>`name`<br>`shell_mesh_power`|*`double`*<br>*`double`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGPlanarPolyLoop
 Example:
 ```
@@ -2373,6 +2536,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgplanarpolyloop">`poly_loop`</a>|[*KGExtrudedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc)<br>[*KGExtrudedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc)<br>[*KGFlattenedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc)<br>[*KGRotatedPolyLoopSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc)<br>[*KGShellPolyLoopSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc)|[`last_arc`](#kgplanarpolylooplastarcarguments)<br>[`last_line`](#kgplanarpolylooplastlinearguments)<br>[`next_arc`](#kgplanarpolylooparcarguments)<br>[`next_line`](#kgplanarpolylooplinearguments)<br>[`previous_arc`](#kgplanarpolylooparcarguments)<br>[`previous_line`](#kgplanarpolylooplinearguments)<br>[`start_point`](#kgplanarpolyloopstartpointarguments)|*`KGPlanarPolyLoopLastArcArguments`*<br>*`KGPlanarPolyLoopLastLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopArcArguments`*<br>*`KGPlanarPolyLoopLineArguments`*<br>*`KGPlanarPolyLoopStartPointArguments`*|—    |—    |
 
+=======
+>>>>>>> main
 ### KGSpace
 Example:
 ```
@@ -2395,6 +2560,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgspace">`space`</a>|[*KGSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)|[`space`](#kgspace)<br>[`surface`](#kgsurface)<br>[`transformation`](#ktransformation)|*`KGSpace`*<br>*`KGSurface`*<br>*`KTransformation`*|`name`<br>`node`<br>`tree`|*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KGSpace
 Example:
 ```
@@ -2411,6 +2577,9 @@ Example:
 |<a name="kgspace">`space`</a>|[*KGSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)|[`space`](#kgspace)<br>[`surface`](#kgsurface)<br>[`transformation`](#ktransformation)|*`KGSpace`*<br>*`KGSurface`*<br>*`KTransformation`*|`name`<br>`node`<br>`tree`|*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KGSurface
+=======
+#### KGSurface
+>>>>>>> main
 Example:
 ```
 <surface
@@ -2431,6 +2600,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgsurface">`surface`</a>|[*KGSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)<br>[*KGSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSurfaceBuilder.cc)|[`transformation`](#ktransformation)|*`KTransformation`*|`name`<br>`node`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ###### KTransformation
 Example:
 ```
@@ -2446,6 +2616,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ktransformation">`transformation`</a>|[*KGSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)<br>[*KGSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSurfaceBuilder.cc)|—    |—    |`d`<br>`displacement`<br>`r_aa`<br>`r_eu`<br>`rotation_axis_angle`<br>`rotation_euler`|*`KThreeVector`*<br>*`KThreeVector`*<br>*`KThreeVector`*<br>*`KThreeVector`*<br>*`KThreeVector`*<br>*`KThreeVector`*|
 
+=======
+>>>>>>> main
 ##### KTransformation
 Example:
 ```
@@ -2516,6 +2688,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgwrappedsurface\<kgstlfile\>">`stl_file_surface`</a>|[*KGStlFileBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Shapes/External/Source/KGStlFileBuilder.cc)|[`stl_file`](#kgstlfile)|*`KGStlFile`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 #### KGStlFile
 Example:
 ```
@@ -2545,6 +2718,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgsurface">`surface`</a>|[*KGSpaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSpaceBuilder.cc)<br>[*KGSurfaceBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KGeoBag/Source/Bindings/Core/Source/KGSurfaceBuilder.cc)|[`transformation`](#ktransformation)|*`KTransformation`*|`name`<br>`node`|*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 ### KGTorusSpace
 Example:
 ```
@@ -2604,7 +2779,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksroot">`kassiopeia`</a>|[*KSRootBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx)|[`kess_elastic_elsepa`](#kesselasticelsepa)<br>[`kess_inelastic_bethefano`](#kessinelasticbethefano)<br>[`kess_inelastic_penn`](#kessinelasticpenn)<br>[`kess_surface_interaction`](#kesssurfaceinteraction)<br>[`ks_command_group`](#kscommandgroup)<br>[`ks_command_member`](#kscommandmemberdata)<br>[`ks_component_delta`](#kscomponentdeltadata)<br>[`ks_component_group`](#kscomponentgroup)<br>[`ks_component_integral`](#kscomponentintegraldata)<br>[`ks_component_math`](#kscomponentmathdata)<br>[`ks_component_maximum`](#kscomponentmaximumdata)<br>[`ks_component_maximum_at`](#kscomponentmaximumatdata)<br>[`ks_component_member`](#kscomponentmemberdata)<br>[`ks_component_minimum`](#kscomponentminimumdata)<br>[`ks_component_minimum_at`](#kscomponentminimumatdata)<br>[`ks_root_electric_field`](#ksrootelectricfield)<br>[`ks_root_event_modifier`](#ksrooteventmodifier)<br>[`ks_root_generator`](#ksrootgenerator)<br>[`ks_root_magnetic_field`](#ksrootmagneticfield)<br>[`ks_root_run_modifier`](#ksrootrunmodifier)<br>[`ks_root_space_interaction`](#ksrootspaceinteraction)<br>[`ks_root_space_navigator`](#ksrootspacenavigator)<br>[`ks_root_step_modifier`](#ksrootstepmodifier)<br>[`ks_root_surface_interaction`](#ksrootsurfaceinteraction)<br>[`ks_root_surface_navigator`](#ksrootsurfacenavigator)<br>[`ks_root_terminator`](#ksrootterminator)<br>[`ks_root_track_modifier`](#ksroottrackmodifier)<br>[`ks_root_trajectory`](#ksroottrajectory)<br>[`ks_root_writer`](#ksrootwriter)<br>[`ks_simulation`](#kssimulation)<br>[`ksfield_electric_constant`](#kelectrostaticconstantfield)<br>[`ksfield_electric_induced_azi`](#kinducedazimuthalelectricfield)<br>[`ksfield_electric_potentialmap`](#kelectrostaticpotentialmap)<br>[`ksfield_electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator)<br>[`ksfield_electric_quadrupole`](#kelectricquadrupolefield)<br>[`ksfield_electric_ramped`](#krampedelectricfield)<br>[`ksfield_electric_ramped_2fields`](#krampedelectric2field)<br>[`ksfield_electromagnet`](#kgstaticelectromagnetfield)<br>[`ksfield_electrostatic`](#kgelectrostaticboundaryfield)<br>[`ksfield_magnetic_constant`](#kmagnetostaticconstantfield)<br>[`ksfield_magnetic_dipole`](#kmagneticdipolefield)<br>[`ksfield_magnetic_fieldmap`](#kmagnetostaticfieldmap)<br>[`ksfield_magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator)<br>[`ksfield_magnetic_ramped`](#krampedmagneticfield)<br>[`ksfield_magnetic_super_position`](#kmagneticsuperpositionfield)<br>[`ksgen_direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`ksgen_direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`ksgen_direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`ksgen_energy_beta_decay`](#ksgenenergybetadecay)<br>[`ksgen_energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`ksgen_energy_composite`](#ksgenenergycomposite)<br>[`ksgen_energy_krypton_event`](#ksgenenergykryptonevent)<br>[`ksgen_energy_lead_event`](#ksgenenergyleadevent)<br>[`ksgen_energy_radon_event`](#ksgenenergyradonevent)<br>[`ksgen_energy_rydberg`](#ksgenenergyrydberg)<br>[`ksgen_generator_composite`](#ksgengeneratorcomposite)<br>[`ksgen_generator_file`](#ksgengeneratortextfile)<br>[`ksgen_generator_simulation`](#ksgengeneratorsimulation)<br>[`ksgen_l_composite`](#ksgenlcomposite)<br>[`ksgen_l_statistical`](#ksgenlstatistical)<br>[`ksgen_l_uniform_max_n`](#ksgenluniformmaxn)<br>[`ksgen_momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`ksgen_n_composite`](#ksgenncomposite)<br>[`ksgen_position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`ksgen_position_flux_tube`](#ksgenpositionfluxtube)<br>[`ksgen_position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`ksgen_position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`ksgen_position_mask`](#ksgenpositionmask)<br>[`ksgen_position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`ksgen_position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`ksgen_position_space_random`](#ksgenpositionspacerandom)<br>[`ksgen_position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`ksgen_position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`ksgen_position_surface_random`](#ksgenpositionsurfacerandom)<br>[`ksgen_spin_composite`](#ksgenspincomposite)<br>[`ksgen_spin_composite_relative`](#ksgenspinrelativecomposite)<br>[`ksgen_time_composite`](#ksgentimecomposite)<br>[`ksgen_value_angle_cosine`](#ksgenvalueanglecosine)<br>[`ksgen_value_angle_spherical`](#ksgenvalueanglespherical)<br>[`ksgen_value_boltzmann`](#ksgenvalueboltzmann)<br>[`ksgen_value_fix`](#ksgenvaluefix)<br>[`ksgen_value_formula`](#ksgenvalueformula)<br>[`ksgen_value_gauss`](#ksgenvaluegauss)<br>[`ksgen_value_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`ksgen_value_histogram`](#ksgenvaluehistogram)<br>[`ksgen_value_list`](#ksgenvaluelist)<br>[`ksgen_value_pareto`](#ksgenvaluepareto)<br>[`ksgen_value_radius_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`ksgen_value_radius_fraction`](#ksgenvalueradiusfraction)<br>[`ksgen_value_radius_spherical`](#ksgenvalueradiusspherical)<br>[`ksgen_value_set`](#ksgenvalueset)<br>[`ksgen_value_uniform`](#ksgenvalueuniform)<br>[`ksgen_value_z_frustrum`](#ksgenvaluezfrustrum)<br>[`ksgeo_side`](#ksgeoside)<br>[`ksgeo_space`](#ksgeospace)<br>[`ksgeo_surface`](#ksgeosurface)<br>[`ksint_calculator_constant`](#ksintcalculatorconstant)<br>[`ksint_calculator_ion`](#ksintcalculatorion)<br>[`ksint_decay`](#ksintdecay)<br>[`ksint_decay_calculator_death_const_rate`](#ksintdecaycalculatordeathconstrate)<br>[`ksint_decay_calculator_ferenc_bbr_transition`](#ksintdecaycalculatorferencbbrtransition)<br>[`ksint_decay_calculator_ferenc_ionisation`](#ksintdecaycalculatorferencionisation)<br>[`ksint_decay_calculator_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous)<br>[`ksint_decay_calculator_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation)<br>[`ksint_decay_calculator_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation)<br>[`ksint_decay_calculator_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation)<br>[`ksint_decay_calculator_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous)<br>[`ksint_density_constant`](#ksintdensityconstant)<br>[`ksint_scattering`](#ksintscattering)<br>[`ksint_spin_flip`](#ksintspinflip)<br>[`ksint_spin_flip_pulse`](#ksintspinflippulse)<br>[`ksint_spin_rotate_y_pulse`](#ksintspinrotateypulse)<br>[`ksint_surface_UCN`](#ksintsurfaceucn)<br>[`ksint_surface_diffuse`](#ksintsurfacediffuse)<br>[`ksint_surface_multiplication`](#ksintsurfacemultiplication)<br>[`ksint_surface_specular`](#ksintsurfacespecular)<br>[`ksint_surface_spin_flip`](#ksintsurfacespinflip)<br>[`ksmod_dynamic_enhancement`](#ksmoddynamicenhancement)<br>[`ksmod_event_report`](#ksmodeventreport)<br>[`ksmod_split_on_turn`](#ksmodsplitonturn)<br>[`ksnav_meshed_space`](#ksnavmeshedspace)<br>[`ksnav_space`](#ksnavspace)<br>[`ksnav_surface`](#ksnavsurface)<br>[`ksterm_death`](#kstermdeath)<br>[`ksterm_magnetron`](#kstermmagnetron)<br>[`ksterm_max_energy`](#kstermmaxenergy)<br>[`ksterm_max_length`](#kstermmaxlength)<br>[`ksterm_max_long_energy`](#kstermmaxlongenergy)<br>[`ksterm_max_r`](#kstermmaxr)<br>[`ksterm_max_step_time`](#kstermmaxsteptime)<br>[`ksterm_max_steps`](#kstermmaxsteps)<br>[`ksterm_max_time`](#kstermmaxtime)<br>[`ksterm_max_total_time`](#kstermmaxtotaltime)<br>[`ksterm_max_z`](#kstermmaxz)<br>[`ksterm_min_distance`](#kstermmindistance)<br>[`ksterm_min_energy`](#kstermminenergy)<br>[`ksterm_min_long_energy`](#kstermminlongenergy)<br>[`ksterm_min_r`](#kstermminr)<br>[`ksterm_min_z`](#kstermminz)<br>[`ksterm_output`](#kstermoutputdata)<br>[`ksterm_secondaries`](#kstermsecondaries)<br>[`ksterm_stepsize`](#kstermstepsize)<br>[`ksterm_trapped`](#kstermtrapped)<br>[`kstraj_control_B_change`](#kstrajcontrolbchange)<br>[`kstraj_control_cyclotron`](#kstrajcontrolcyclotron)<br>[`kstraj_control_energy`](#kstrajcontrolenergy)<br>[`kstraj_control_length`](#kstrajcontrollength)<br>[`kstraj_control_m_dot`](#kstrajcontrolmdot)<br>[`kstraj_control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`kstraj_control_momentum_numerical_error`](#kstrajcontrolmomentumnumericalerror)<br>[`kstraj_control_position_numerical_error`](#kstrajcontrolpositionnumericalerror)<br>[`kstraj_control_spin_precession`](#kstrajcontrolspinprecession)<br>[`kstraj_control_time`](#kstrajcontroltime)<br>[`kstraj_integrator_rk54`](#kstrajintegratorrk54)<br>[`kstraj_integrator_rk65`](#kstrajintegratorrk65)<br>[`kstraj_integrator_rk8`](#kstrajintegratorrk8)<br>[`kstraj_integrator_rk86`](#kstrajintegratorrk86)<br>[`kstraj_integrator_rk87`](#kstrajintegratorrk87)<br>[`kstraj_integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`kstraj_integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`kstraj_integrator_sym4`](#kstrajintegratorsym4)<br>[`kstraj_interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`kstraj_interpolator_fast`](#kstrajinterpolatorfast)<br>[`kstraj_interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`kstraj_term_constant_force_propagation`](#kstrajtermconstantforcepropagation)<br>[`kstraj_term_drift`](#kstrajtermdrift)<br>[`kstraj_term_gravity`](#kstrajtermgravity)<br>[`kstraj_term_gyration`](#kstrajtermgyration)<br>[`kstraj_term_propagation`](#kstrajtermpropagation)<br>[`kstraj_term_synchrotron`](#kstrajtermsynchrotron)<br>[`kstraj_trajectory_adiabatic`](#kstrajtrajectoryadiabatic)<br>[`kstraj_trajectory_adiabatic_spin`](#kstrajtrajectoryadiabaticspin)<br>[`kstraj_trajectory_electric`](#kstrajtrajectoryelectric)<br>[`kstraj_trajectory_exact`](#kstrajtrajectoryexact)<br>[`kstraj_trajectory_exact_spin`](#kstrajtrajectoryexactspin)<br>[`kstraj_trajectory_exact_trapped`](#kstrajtrajectoryexacttrapped)<br>[`kstraj_trajectory_linear`](#kstrajtrajectorylinear)<br>[`kstraj_trajectory_magnetic`](#kstrajtrajectorymagnetic)<br>[`kswrite_ascii`](#kswriteascii)<br>[`kswrite_root`](#kswriteroot)<br>[`kswrite_root_condition_output`](#kswriterootconditionoutputdata)<br>[`kswrite_root_condition_periodic`](#kswriterootconditionperiodicdata)<br>[`kswrite_root_condition_step`](#kswriterootconditionstepdata)<br>[`kswrite_root_condition_terminator`](#kswriterootconditionterminatordata)<br>[`kswrite_vtk`](#kswritevtk)<br>[`output`](#kscomponentmemberdata)<br>[`output_delta`](#kscomponentdeltadata)<br>[`output_group`](#kscomponentgroup)<br>[`output_integral`](#kscomponentintegraldata)<br>[`output_math`](#kscomponentmathdata)<br>[`output_maximum`](#kscomponentmaximumdata)<br>[`output_maximum_at`](#kscomponentmaximumatdata)<br>[`output_minimum`](#kscomponentminimumdata)<br>[`output_minimum_at`](#kscomponentminimumatdata)|*`KESSElasticElsepa`*<br>*`KESSInelasticBetheFano`*<br>*`KESSInelasticPenn`*<br>*`KESSSurfaceInteraction`*<br>*`KSCommandGroup`*<br>*`KSCommandMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMemberData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*<br>*`KSRootElectricField`*<br>*`KSRootEventModifier`*<br>*`KSRootGenerator`*<br>*`KSRootMagneticField`*<br>*`KSRootRunModifier`*<br>*`KSRootSpaceInteraction`*<br>*`KSRootSpaceNavigator`*<br>*`KSRootStepModifier`*<br>*`KSRootSurfaceInteraction`*<br>*`KSRootSurfaceNavigator`*<br>*`KSRootTerminator`*<br>*`KSRootTrackModifier`*<br>*`KSRootTrajectory`*<br>*`KSRootWriter`*<br>*`KSSimulation`*<br>*`KElectrostaticConstantField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KRampedElectricField`*<br>*`KRampedElectric2Field`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KRampedMagneticField`*<br>*`KMagneticSuperpositionField`*<br>*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenGeneratorComposite`*<br>*`KSGenGeneratorTextFile`*<br>*`KSGenGeneratorSimulation`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueZFrustrum`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorIon`*<br>*`KSIntDecay`*<br>*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*<br>*`KSIntDensityConstant`*<br>*`KSIntScattering`*<br>*`KSIntSpinFlip`*<br>*`KSIntSpinFlipPulse`*<br>*`KSIntSpinRotateYPulse`*<br>*`KSIntSurfaceUCN`*<br>*`KSIntSurfaceDiffuse`*<br>*`KSIntSurfaceMultiplication`*<br>*`KSIntSurfaceSpecular`*<br>*`KSIntSurfaceSpinFlip`*<br>*`KSModDynamicEnhancement`*<br>*`KSModEventReport`*<br>*`KSModSplitOnTurn`*<br>*`KSNavMeshedSpace`*<br>*`KSNavSpace`*<br>*`KSNavSurface`*<br>*`KSTermDeath`*<br>*`KSTermMagnetron`*<br>*`KSTermMaxEnergy`*<br>*`KSTermMaxLength`*<br>*`KSTermMaxLongEnergy`*<br>*`KSTermMaxR`*<br>*`KSTermMaxStepTime`*<br>*`KSTermMaxSteps`*<br>*`KSTermMaxTime`*<br>*`KSTermMaxTotalTime`*<br>*`KSTermMaxZ`*<br>*`KSTermMinDistance`*<br>*`KSTermMinEnergy`*<br>*`KSTermMinLongEnergy`*<br>*`KSTermMinR`*<br>*`KSTermMinZ`*<br>*`KSTermOutputData`*<br>*`KSTermSecondaries`*<br>*`KSTermStepsize`*<br>*`KSTermTrapped`*<br>*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermConstantForcePropagation`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*<br>*`KSTrajTrajectoryAdiabatic`*<br>*`KSTrajTrajectoryAdiabaticSpin`*<br>*`KSTrajTrajectoryElectric`*<br>*`KSTrajTrajectoryExact`*<br>*`KSTrajTrajectoryExactSpin`*<br>*`KSTrajTrajectoryExactTrapped`*<br>*`KSTrajTrajectoryLinear`*<br>*`KSTrajTrajectoryMagnetic`*<br>*`KSWriteASCII`*<br>*`KSWriteROOT`*<br>*`KSWriteROOTConditionOutputData`*<br>*`KSWriteROOTConditionPeriodicData`*<br>*`KSWriteROOTConditionStepData`*<br>*`KSWriteROOTConditionTerminatorData`*<br>*`KSWriteVTK`*<br>*`KSComponentMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*|—    |—    |
+=======
+|<a name="ksroot">`kassiopeia`</a>|[*KSRootBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx)|[`kess_elastic_elsepa`](#kesselasticelsepa)<br>[`kess_inelastic_bethefano`](#kessinelasticbethefano)<br>[`kess_inelastic_penn`](#kessinelasticpenn)<br>[`kess_surface_interaction`](#kesssurfaceinteraction)<br>[`ks_command_group`](#kscommandgroup)<br>[`ks_command_member`](#kscommandmemberdata)<br>[`ks_component_delta`](#kscomponentdeltadata)<br>[`ks_component_group`](#kscomponentgroup)<br>[`ks_component_integral`](#kscomponentintegraldata)<br>[`ks_component_math`](#kscomponentmathdata)<br>[`ks_component_maximum`](#kscomponentmaximumdata)<br>[`ks_component_maximum_at`](#kscomponentmaximumatdata)<br>[`ks_component_member`](#kscomponentmemberdata)<br>[`ks_component_minimum`](#kscomponentminimumdata)<br>[`ks_component_minimum_at`](#kscomponentminimumatdata)<br>[`ks_root_electric_field`](#ksrootelectricfield)<br>[`ks_root_event_modifier`](#ksrooteventmodifier)<br>[`ks_root_generator`](#ksrootgenerator)<br>[`ks_root_magnetic_field`](#ksrootmagneticfield)<br>[`ks_root_run_modifier`](#ksrootrunmodifier)<br>[`ks_root_space_interaction`](#ksrootspaceinteraction)<br>[`ks_root_space_navigator`](#ksrootspacenavigator)<br>[`ks_root_step_modifier`](#ksrootstepmodifier)<br>[`ks_root_surface_interaction`](#ksrootsurfaceinteraction)<br>[`ks_root_surface_navigator`](#ksrootsurfacenavigator)<br>[`ks_root_terminator`](#ksrootterminator)<br>[`ks_root_track_modifier`](#ksroottrackmodifier)<br>[`ks_root_trajectory`](#ksroottrajectory)<br>[`ks_root_writer`](#ksrootwriter)<br>[`ks_simulation`](#kssimulation)<br>[`ksfield_electric_constant`](#kelectrostaticconstantfield)<br>[`ksfield_electric_induced_azi`](#kinducedazimuthalelectricfield)<br>[`ksfield_electric_potentialmap`](#kelectrostaticpotentialmap)<br>[`ksfield_electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator)<br>[`ksfield_electric_quadrupole`](#kelectricquadrupolefield)<br>[`ksfield_electric_ramped`](#krampedelectricfield)<br>[`ksfield_electric_ramped_2fields`](#krampedelectric2field)<br>[`ksfield_electromagnet`](#kgstaticelectromagnetfield)<br>[`ksfield_electrostatic`](#kgelectrostaticboundaryfield)<br>[`ksfield_magnetic_constant`](#kmagnetostaticconstantfield)<br>[`ksfield_magnetic_dipole`](#kmagneticdipolefield)<br>[`ksfield_magnetic_fieldmap`](#kmagnetostaticfieldmap)<br>[`ksfield_magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator)<br>[`ksfield_magnetic_ramped`](#krampedmagneticfield)<br>[`ksfield_magnetic_super_position`](#kmagneticsuperpositionfield)<br>[`ksgen_direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`ksgen_direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`ksgen_energy_beta_decay`](#ksgenenergybetadecay)<br>[`ksgen_energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`ksgen_energy_composite`](#ksgenenergycomposite)<br>[`ksgen_energy_krypton_event`](#ksgenenergykryptonevent)<br>[`ksgen_energy_lead_event`](#ksgenenergyleadevent)<br>[`ksgen_energy_radon_event`](#ksgenenergyradonevent)<br>[`ksgen_energy_rydberg`](#ksgenenergyrydberg)<br>[`ksgen_generator_composite`](#ksgengeneratorcomposite)<br>[`ksgen_generator_file`](#ksgengeneratortextfile)<br>[`ksgen_generator_simulation`](#ksgengeneratorsimulation)<br>[`ksgen_l_composite`](#ksgenlcomposite)<br>[`ksgen_l_statistical`](#ksgenlstatistical)<br>[`ksgen_l_uniform_max_n`](#ksgenluniformmaxn)<br>[`ksgen_momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`ksgen_n_composite`](#ksgenncomposite)<br>[`ksgen_position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`ksgen_position_flux_tube`](#ksgenpositionfluxtube)<br>[`ksgen_position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`ksgen_position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`ksgen_position_mask`](#ksgenpositionmask)<br>[`ksgen_position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`ksgen_position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`ksgen_position_space_random`](#ksgenpositionspacerandom)<br>[`ksgen_position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`ksgen_position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`ksgen_position_surface_random`](#ksgenpositionsurfacerandom)<br>[`ksgen_spin_composite`](#ksgenspincomposite)<br>[`ksgen_spin_composite_relative`](#ksgenspinrelativecomposite)<br>[`ksgen_time_composite`](#ksgentimecomposite)<br>[`ksgen_value_angle_cosine`](#ksgenvalueanglecosine)<br>[`ksgen_value_angle_spherical`](#ksgenvalueanglespherical)<br>[`ksgen_value_boltzmann`](#ksgenvalueboltzmann)<br>[`ksgen_value_fix`](#ksgenvaluefix)<br>[`ksgen_value_formula`](#ksgenvalueformula)<br>[`ksgen_value_gauss`](#ksgenvaluegauss)<br>[`ksgen_value_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`ksgen_value_histogram`](#ksgenvaluehistogram)<br>[`ksgen_value_list`](#ksgenvaluelist)<br>[`ksgen_value_pareto`](#ksgenvaluepareto)<br>[`ksgen_value_radius_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`ksgen_value_radius_fraction`](#ksgenvalueradiusfraction)<br>[`ksgen_value_radius_spherical`](#ksgenvalueradiusspherical)<br>[`ksgen_value_set`](#ksgenvalueset)<br>[`ksgen_value_uniform`](#ksgenvalueuniform)<br>[`ksgen_value_z_frustrum`](#ksgenvaluezfrustrum)<br>[`ksgeo_side`](#ksgeoside)<br>[`ksgeo_space`](#ksgeospace)<br>[`ksgeo_surface`](#ksgeosurface)<br>[`ksint_calculator_constant`](#ksintcalculatorconstant)<br>[`ksint_calculator_ion`](#ksintcalculatorion)<br>[`ksint_decay`](#ksintdecay)<br>[`ksint_decay_calculator_death_const_rate`](#ksintdecaycalculatordeathconstrate)<br>[`ksint_decay_calculator_ferenc_bbr_transition`](#ksintdecaycalculatorferencbbrtransition)<br>[`ksint_decay_calculator_ferenc_ionisation`](#ksintdecaycalculatorferencionisation)<br>[`ksint_decay_calculator_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous)<br>[`ksint_decay_calculator_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation)<br>[`ksint_decay_calculator_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation)<br>[`ksint_decay_calculator_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation)<br>[`ksint_decay_calculator_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous)<br>[`ksint_density_constant`](#ksintdensityconstant)<br>[`ksint_scattering`](#ksintscattering)<br>[`ksint_spin_flip`](#ksintspinflip)<br>[`ksint_spin_flip_pulse`](#ksintspinflippulse)<br>[`ksint_spin_rotate_y_pulse`](#ksintspinrotateypulse)<br>[`ksint_surface_UCN`](#ksintsurfaceucn)<br>[`ksint_surface_diffuse`](#ksintsurfacediffuse)<br>[`ksint_surface_multiplication`](#ksintsurfacemultiplication)<br>[`ksint_surface_specular`](#ksintsurfacespecular)<br>[`ksint_surface_spin_flip`](#ksintsurfacespinflip)<br>[`ksmod_dynamic_enhancement`](#ksmoddynamicenhancement)<br>[`ksmod_event_report`](#ksmodeventreport)<br>[`ksmod_split_on_turn`](#ksmodsplitonturn)<br>[`ksnav_meshed_space`](#ksnavmeshedspace)<br>[`ksnav_space`](#ksnavspace)<br>[`ksnav_surface`](#ksnavsurface)<br>[`ksterm_death`](#kstermdeath)<br>[`ksterm_magnetron`](#kstermmagnetron)<br>[`ksterm_max_energy`](#kstermmaxenergy)<br>[`ksterm_max_length`](#kstermmaxlength)<br>[`ksterm_max_long_energy`](#kstermmaxlongenergy)<br>[`ksterm_max_r`](#kstermmaxr)<br>[`ksterm_max_step_time`](#kstermmaxsteptime)<br>[`ksterm_max_steps`](#kstermmaxsteps)<br>[`ksterm_max_time`](#kstermmaxtime)<br>[`ksterm_max_total_time`](#kstermmaxtotaltime)<br>[`ksterm_max_z`](#kstermmaxz)<br>[`ksterm_min_distance`](#kstermmindistance)<br>[`ksterm_min_energy`](#kstermminenergy)<br>[`ksterm_min_long_energy`](#kstermminlongenergy)<br>[`ksterm_min_r`](#kstermminr)<br>[`ksterm_min_z`](#kstermminz)<br>[`ksterm_output`](#kstermoutputdata)<br>[`ksterm_secondaries`](#kstermsecondaries)<br>[`ksterm_stepsize`](#kstermstepsize)<br>[`ksterm_trapped`](#kstermtrapped)<br>[`kstraj_control_B_change`](#kstrajcontrolbchange)<br>[`kstraj_control_cyclotron`](#kstrajcontrolcyclotron)<br>[`kstraj_control_energy`](#kstrajcontrolenergy)<br>[`kstraj_control_length`](#kstrajcontrollength)<br>[`kstraj_control_m_dot`](#kstrajcontrolmdot)<br>[`kstraj_control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`kstraj_control_momentum_numerical_error`](#kstrajcontrolmomentumnumericalerror)<br>[`kstraj_control_position_numerical_error`](#kstrajcontrolpositionnumericalerror)<br>[`kstraj_control_spin_precession`](#kstrajcontrolspinprecession)<br>[`kstraj_control_time`](#kstrajcontroltime)<br>[`kstraj_integrator_rk54`](#kstrajintegratorrk54)<br>[`kstraj_integrator_rk65`](#kstrajintegratorrk65)<br>[`kstraj_integrator_rk8`](#kstrajintegratorrk8)<br>[`kstraj_integrator_rk86`](#kstrajintegratorrk86)<br>[`kstraj_integrator_rk87`](#kstrajintegratorrk87)<br>[`kstraj_integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`kstraj_integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`kstraj_integrator_sym4`](#kstrajintegratorsym4)<br>[`kstraj_interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`kstraj_interpolator_fast`](#kstrajinterpolatorfast)<br>[`kstraj_interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`kstraj_term_constant_force_propagation`](#kstrajtermconstantforcepropagation)<br>[`kstraj_term_drift`](#kstrajtermdrift)<br>[`kstraj_term_gravity`](#kstrajtermgravity)<br>[`kstraj_term_gyration`](#kstrajtermgyration)<br>[`kstraj_term_propagation`](#kstrajtermpropagation)<br>[`kstraj_term_synchrotron`](#kstrajtermsynchrotron)<br>[`kstraj_trajectory_adiabatic`](#kstrajtrajectoryadiabatic)<br>[`kstraj_trajectory_adiabatic_spin`](#kstrajtrajectoryadiabaticspin)<br>[`kstraj_trajectory_electric`](#kstrajtrajectoryelectric)<br>[`kstraj_trajectory_exact`](#kstrajtrajectoryexact)<br>[`kstraj_trajectory_exact_spin`](#kstrajtrajectoryexactspin)<br>[`kstraj_trajectory_exact_trapped`](#kstrajtrajectoryexacttrapped)<br>[`kstraj_trajectory_linear`](#kstrajtrajectorylinear)<br>[`kstraj_trajectory_magnetic`](#kstrajtrajectorymagnetic)<br>[`kswrite_ascii`](#kswriteascii)<br>[`kswrite_root`](#kswriteroot)<br>[`kswrite_root_condition_output`](#kswriterootconditionoutputdata)<br>[`kswrite_root_condition_periodic`](#kswriterootconditionperiodicdata)<br>[`kswrite_root_condition_step`](#kswriterootconditionstepdata)<br>[`kswrite_root_condition_terminator`](#kswriterootconditionterminatordata)<br>[`kswrite_vtk`](#kswritevtk)<br>[`output`](#kscomponentmemberdata)<br>[`output_delta`](#kscomponentdeltadata)<br>[`output_group`](#kscomponentgroup)<br>[`output_integral`](#kscomponentintegraldata)<br>[`output_math`](#kscomponentmathdata)<br>[`output_maximum`](#kscomponentmaximumdata)<br>[`output_maximum_at`](#kscomponentmaximumatdata)<br>[`output_minimum`](#kscomponentminimumdata)<br>[`output_minimum_at`](#kscomponentminimumatdata)|*`KESSElasticElsepa`*<br>*`KESSInelasticBetheFano`*<br>*`KESSInelasticPenn`*<br>*`KESSSurfaceInteraction`*<br>*`KSCommandGroup`*<br>*`KSCommandMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMemberData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*<br>*`KSRootElectricField`*<br>*`KSRootEventModifier`*<br>*`KSRootGenerator`*<br>*`KSRootMagneticField`*<br>*`KSRootRunModifier`*<br>*`KSRootSpaceInteraction`*<br>*`KSRootSpaceNavigator`*<br>*`KSRootStepModifier`*<br>*`KSRootSurfaceInteraction`*<br>*`KSRootSurfaceNavigator`*<br>*`KSRootTerminator`*<br>*`KSRootTrackModifier`*<br>*`KSRootTrajectory`*<br>*`KSRootWriter`*<br>*`KSSimulation`*<br>*`KElectrostaticConstantField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KRampedElectricField`*<br>*`KRampedElectric2Field`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KRampedMagneticField`*<br>*`KMagneticSuperpositionField`*<br>*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenGeneratorComposite`*<br>*`KSGenGeneratorTextFile`*<br>*`KSGenGeneratorSimulation`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueBoltzmann`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueZFrustrum`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorIon`*<br>*`KSIntDecay`*<br>*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*<br>*`KSIntDensityConstant`*<br>*`KSIntScattering`*<br>*`KSIntSpinFlip`*<br>*`KSIntSpinFlipPulse`*<br>*`KSIntSpinRotateYPulse`*<br>*`KSIntSurfaceUCN`*<br>*`KSIntSurfaceDiffuse`*<br>*`KSIntSurfaceMultiplication`*<br>*`KSIntSurfaceSpecular`*<br>*`KSIntSurfaceSpinFlip`*<br>*`KSModDynamicEnhancement`*<br>*`KSModEventReport`*<br>*`KSModSplitOnTurn`*<br>*`KSNavMeshedSpace`*<br>*`KSNavSpace`*<br>*`KSNavSurface`*<br>*`KSTermDeath`*<br>*`KSTermMagnetron`*<br>*`KSTermMaxEnergy`*<br>*`KSTermMaxLength`*<br>*`KSTermMaxLongEnergy`*<br>*`KSTermMaxR`*<br>*`KSTermMaxStepTime`*<br>*`KSTermMaxSteps`*<br>*`KSTermMaxTime`*<br>*`KSTermMaxTotalTime`*<br>*`KSTermMaxZ`*<br>*`KSTermMinDistance`*<br>*`KSTermMinEnergy`*<br>*`KSTermMinLongEnergy`*<br>*`KSTermMinR`*<br>*`KSTermMinZ`*<br>*`KSTermOutputData`*<br>*`KSTermSecondaries`*<br>*`KSTermStepsize`*<br>*`KSTermTrapped`*<br>*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermConstantForcePropagation`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*<br>*`KSTrajTrajectoryAdiabatic`*<br>*`KSTrajTrajectoryAdiabaticSpin`*<br>*`KSTrajTrajectoryElectric`*<br>*`KSTrajTrajectoryExact`*<br>*`KSTrajTrajectoryExactSpin`*<br>*`KSTrajTrajectoryExactTrapped`*<br>*`KSTrajTrajectoryLinear`*<br>*`KSTrajTrajectoryMagnetic`*<br>*`KSWriteASCII`*<br>*`KSWriteROOT`*<br>*`KSWriteROOTConditionOutputData`*<br>*`KSWriteROOTConditionPeriodicData`*<br>*`KSWriteROOTConditionStepData`*<br>*`KSWriteROOTConditionTerminatorData`*<br>*`KSWriteVTK`*<br>*`KSComponentMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*|—    |—    |
+>>>>>>> main
 
 ### KESSElasticElsepa
 Example:
@@ -2683,6 +2862,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandgroup">`ks_command_group`</a>|[*KSCommandGroupBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Objects/Source/KSCommandGroupBuilder.cxx)|[`command_group`](#kscommandgroup)|*`KSCommandGroup`*|`command`<br>`name`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KSCommandGroup
 Example:
 ```
@@ -2701,11 +2881,21 @@ Example:
 Example:
 ```
 <ks_command_member
+=======
+### KSCommandMemberData
+Example:
+```
+<command
+>>>>>>> main
     child="(string)"
     field="(string)"
     name="(string)"
 >
+<<<<<<< HEAD
 </ks_command_member>
+=======
+</command>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2740,12 +2930,20 @@ Example:
 ### KSComponentIntegralData
 Example:
 ```
+<<<<<<< HEAD
 <component_integral
+=======
+<ks_component_integral
+>>>>>>> main
     component="(string)"
     group="(string)"
     name="(string)"
 >
+<<<<<<< HEAD
 </component_integral>
+=======
+</ks_component_integral>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2785,12 +2983,20 @@ Example:
 ### KSComponentMaximumAtData
 Example:
 ```
+<<<<<<< HEAD
 <component_maximum_at
+=======
+<output_maximum_at
+>>>>>>> main
     component="(string)"
     group="(string)"
     name="(string)"
 >
+<<<<<<< HEAD
 </component_maximum_at>
+=======
+</output_maximum_at>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2815,12 +3021,20 @@ Example:
 ### KSComponentMinimumData
 Example:
 ```
+<<<<<<< HEAD
 <output_minimum
+=======
+<component_minimum
+>>>>>>> main
     component="(string)"
     group="(string)"
     name="(string)"
 >
+<<<<<<< HEAD
 </output_minimum>
+=======
+</component_minimum>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2830,12 +3044,20 @@ Example:
 ### KSComponentMinimumAtData
 Example:
 ```
+<<<<<<< HEAD
 <component_minimum_at
+=======
+<output_minimum_at
+>>>>>>> main
     component="(string)"
     group="(string)"
     name="(string)"
 >
+<<<<<<< HEAD
 </component_minimum_at>
+=======
+</output_minimum_at>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3056,12 +3278,20 @@ Example:
 ### KElectrostaticConstantField
 Example:
 ```
+<<<<<<< HEAD
 <ksfield_electric_constant
+=======
+<constant_electric_field
+>>>>>>> main
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
+<<<<<<< HEAD
 </ksfield_electric_constant>
+=======
+</constant_electric_field>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3085,12 +3315,20 @@ Example:
 ### KElectrostaticPotentialmap
 Example:
 ```
+<<<<<<< HEAD
 <ksfield_electric_potentialmap
+=======
+<electric_potentialmap
+>>>>>>> main
     directory="(string)"
     file="(string)"
     interpolation="(string)"
 >
+<<<<<<< HEAD
 </ksfield_electric_potentialmap>
+=======
+</electric_potentialmap>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3100,7 +3338,11 @@ Example:
 ### KElectrostaticPotentialmapCalculator
 Example:
 ```
+<<<<<<< HEAD
 <ksfield_electric_potentialmap_calculator
+=======
+<electric_potentialmap_calculator
+>>>>>>> main
     center="(KEMStreamableThreeVector)"
     compute_field="(bool)"
     directory="(string)"
@@ -3112,13 +3354,18 @@ Example:
     >
     </field_electric_constant>
 
+<<<<<<< HEAD
 </ksfield_electric_potentialmap_calculator>
+=======
+</electric_potentialmap_calculator>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kelectrostaticpotentialmapcalculator">`ksfield_electric_potentialmap_calculator`</a>|[*KElectrostaticPotentialmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`field_electric_constant`](#kelectrostaticconstantfield)<br>[`field_electric_quadrupole`](#kelectricquadrupolefield)<br>[`field_electrostatic`](#kgelectrostaticboundaryfield)|*`KElectrostaticConstantField`*<br>*`KElectricQuadrupoleField`*<br>*`KGElectrostaticBoundaryField`*|`center`<br>`compute_field`<br>`directory`<br>`field`<br>`file`<br>`force_update`<br>`length`<br>`mirror_x`<br>`mirror_y`<br>`mirror_z`<br>`name`<br>`spaces`<br>`spacing`|*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KEMStreamableThreeVector`*<br>*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KElectrostaticConstantField
 Example:
 ```
@@ -3134,6 +3381,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kelectrostaticconstantfield">`field_electric_constant`</a>|[*KElectrostaticConstantFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticConstantFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|—    |—    |`field`<br>`location`<br>`name`<br>`offset_potential`|*`KEMStreamableThreeVector`*<br>*`KEMStreamableThreeVector`*<br>*`string`*<br>*`double`*|
 
+=======
+>>>>>>> main
 #### KElectricQuadrupoleField
 Example:
 ```
@@ -3152,19 +3401,31 @@ Example:
 #### KGElectrostaticBoundaryField
 Example:
 ```
+<<<<<<< HEAD
 <field_electrostatic
+=======
+<ksfield_electrostatic
+>>>>>>> main
     directory="(string)"
     file="(string)"
     hash_threshold="(double)"
 >
     <boundary_element_info/>
 
+<<<<<<< HEAD
 </field_electrostatic>
+=======
+</ksfield_electrostatic>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kgelectrostaticboundaryfield">`field_electrostatic`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay)<br>[`cached_bem_solver`](#kcachedchargedensitysolver)<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver)<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver)<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver)<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver)<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver)<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver)<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver)<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold)<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver)<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold)<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver)<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold)<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver)<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver)<br>[`timer`](#kelectrostaticboundaryfieldtimer)<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor)<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver)|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+=======
+|<a name="kgelectrostaticboundaryfield">`field_electrostatic`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay)<br>[`cached_bem_solver`](#kcachedchargedensitysolver)<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver)<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver)<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver)<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver)<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver)<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold)<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver)<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold)<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver)<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold)<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver)<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver)<br>[`timer`](#kelectrostaticboundaryfieldtimer)<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor)<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver)|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+>>>>>>> main
 
 ##### KBoundaryElementInfoDisplay
 Example:
@@ -3179,17 +3440,26 @@ Example:
 ##### KCachedChargeDensitySolver
 Example:
 ```
+<<<<<<< HEAD
 <cached_charge_density_solver
     hash="(string)"
     name="(string)"
 >
 </cached_charge_density_solver>
+=======
+<cached_bem_solver
+    hash="(string)"
+    name="(string)"
+>
+</cached_bem_solver>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kcachedchargedensitysolver">`cached_bem_solver`</a>|[*KCachedChargeDensitySolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KCachedChargeDensitySolverBuilder.cc)|—    |—    |`hash`<br>`name`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KCachedChargeDensitySolver
 Example:
 ```
@@ -3208,6 +3478,12 @@ Example:
 Example:
 ```
 <explicit_superposition_cached_charge_density_solver
+=======
+##### KExplicitSuperpositionCachedChargeDensitySolver
+Example:
+```
+<explicit_superposition_cached_bem_solver
+>>>>>>> main
     name="(string)"
 >
     <component
@@ -3217,7 +3493,11 @@ Example:
     >
     </component>
 
+<<<<<<< HEAD
 </explicit_superposition_cached_charge_density_solver>
+=======
+</explicit_superposition_cached_bem_solver>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3239,6 +3519,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kexplicitsuperpositionsolutioncomponent">`component`</a>|[*KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc)|—    |—    |`hash`<br>`name`<br>`scale`|*`string`*<br>*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KExplicitSuperpositionCachedChargeDensitySolver
 Example:
 ```
@@ -3252,6 +3533,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kexplicitsuperpositioncachedchargedensitysolver">`explicit_superposition_cached_charge_density_solver`</a>|[*KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KExplicitSuperpositionCachedChargeDensitySolverBuilder.cc)|[`component`](#kexplicitsuperpositionsolutioncomponent)|*`KExplicitSuperpositionSolutionComponent`*|`name`|*`string`*|
 
+=======
+>>>>>>> main
 ##### KElectricFastMultipoleFieldSolver
 Example:
 ```
@@ -3289,6 +3572,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kfmvtkelectrostatictreeviewerdata">`viewer`</a>|[*KFMVTKElectrostaticTreeViewerBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Electric/src/KFMVTKElectrostaticTreeViewerBuilder.cc)|—    |—    |`file`<br>`save`<br>`view`|*`string`*<br>*`bool`*<br>*`bool`*|
 
+<<<<<<< HEAD
 ##### KGaussSeidelChargeDensitySolver
 Example:
 ```
@@ -3324,12 +3608,22 @@ Example:
     integrator="(string)"
 >
 </gaussian_elimination_bem_solver>
+=======
+##### KGaussianEliminationChargeDensitySolver
+Example:
+```
+<gaussian_elimination_charge_density_solver
+    integrator="(string)"
+>
+</gaussian_elimination_charge_density_solver>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgaussianeliminationchargedensitysolver">`gaussian_elimination_bem_solver`</a>|[*KGaussianEliminationChargeDensitySolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KGaussianEliminationChargeDensitySolverBuilder.cc)|—    |—    |`integrator`|*`string`*|
 
+<<<<<<< HEAD
 ##### KGaussianEliminationChargeDensitySolver
 Example:
 ```
@@ -3343,6 +3637,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgaussianeliminationchargedensitysolver">`gaussian_elimination_charge_density_solver`</a>|[*KGaussianEliminationChargeDensitySolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KGaussianEliminationChargeDensitySolverBuilder.cc)|—    |—    |`integrator`|*`string`*|
 
+=======
+>>>>>>> main
 ##### KIntegratingElectrostaticFieldSolver
 Example:
 ```
@@ -3394,6 +3690,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kfmelectrostaticparameters">`fftm_multiplication`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|—    |—    |`bias_degree`<br>`insertion_ratio`<br>`region_expansion_factor`<br>`strategy`<br>`use_caching`<br>`use_region_size_estimation`<br>`world_cube_center_x`<br>`world_cube_center_y`<br>`world_cube_center_z`<br>`world_cube_length`|*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ###### KFMElectrostaticParameters
 Example:
 ```
@@ -3409,6 +3706,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kfmelectrostaticparameters">`preconditioner_electrostatic_parameters`</a>|[*KKrylovChargeDensitySolverOldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc)|—    |—    |`bias_degree`<br>`insertion_ratio`<br>`region_expansion_factor`<br>`strategy`<br>`use_caching`<br>`use_region_size_estimation`<br>`world_cube_center_x`<br>`world_cube_center_y`<br>`world_cube_center_z`<br>`world_cube_length`|*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`bool`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ##### KKrylovChargeDensitySolver
 Example:
 ```
@@ -3453,6 +3752,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kkrylovpreconditionergenerator">`krylov_preconditioner`</a>|[*KKrylovPreconditionerGeneratorBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KKrylovPreconditionerGeneratorBuilder.cc)|[`krylov_preconditioner`](#kkrylovpreconditionergenerator)|*`KKrylovPreconditionerGenerator`*|`show_plot`<br>`solver_name`<br>`time_limit_in_seconds`<br>`tolerance`<br>`use_display`<br>`use_timer`|*`bool`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
+<<<<<<< HEAD
 ####### KKrylovPreconditionerGenerator
 Example:
 ```
@@ -3517,17 +3817,28 @@ Example:
 Example:
 ```
 <robin_hood_charge_density_solver
+=======
+##### KRobinHoodChargeDensitySolver
+Example:
+```
+<robin_hood_bem_solver
+>>>>>>> main
     cache_matrix_elements="(bool)"
     integrator="(string)"
     tolerance="(double)"
 >
+<<<<<<< HEAD
 </robin_hood_charge_density_solver>
+=======
+</robin_hood_bem_solver>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="krobinhoodchargedensitysolver">`robin_hood_bem_solver`</a>|[*KRobinHoodChargeDensitySolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KRobinHoodChargeDensitySolverBuilder.cc)|—    |—    |`cache_matrix_elements`<br>`integrator`<br>`tolerance`<br>`use_opencl`<br>`use_vtk`|*`bool`*<br>*`string`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
+<<<<<<< HEAD
 ##### KRobinHoodChargeDensitySolver
 Example:
 ```
@@ -3543,6 +3854,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="krobinhoodchargedensitysolver">`robin_hood_charge_density_solver`</a>|[*KRobinHoodChargeDensitySolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/ChargeDensitySolvers/Electric/src/KRobinHoodChargeDensitySolverBuilder.cc)|—    |—    |`cache_matrix_elements`<br>`integrator`<br>`tolerance`<br>`use_opencl`<br>`use_vtk`|*`bool`*<br>*`string`*<br>*`double`*<br>*`bool`*<br>*`bool`*|
 
+=======
+>>>>>>> main
 ##### KElectrostaticBoundaryFieldTimer
 Example:
 ```
@@ -3581,6 +3894,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kelectriczhfieldsolver">`zonal_harmonic_field_solver`</a>|[*KElectricZHFieldSolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Electric/src/KElectricZHFieldSolverBuilder.cc)|—    |—    |`central_sourcepoint_end`<br>`central_sourcepoint_fractional_distance`<br>`central_sourcepoint_spacing`<br>`central_sourcepoint_start`<br>`coaxiality_tolerance`<br>`convergence_parameter`<br>`convergence_ratio`<br>`integrator`<br>`number_of_bifurcations`<br>`number_of_central_coefficients`<br>`number_of_remote_coefficients`<br>`number_of_remote_sourcepoints`<br>`proximity_to_sourcepoint`<br>`remote_sourcepoint_end`<br>`remote_sourcepoint_start`<br>`use_fractional_central_sourcepoint_spacing`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`int`*<br>*`int`*<br>*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`bool`*|
 
 ### KElectricQuadrupoleField
@@ -3597,16 +3911,27 @@ Example:
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kelectricquadrupolefield">`ksfield_electric_quadrupole`</a>|[*KElectricQuadrupoleFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectricQuadrupoleFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|—    |—    |`length`<br>`location`<br>`name`<br>`radius`<br>`strength`|*`double`*<br>*`KEMStreamableThreeVector`*<br>*`string`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="kelectriczhfieldsolver">`zonal_harmonic_field_solver`</a>|[*KElectricZHFieldSolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Electric/src/KElectricZHFieldSolverBuilder.cc)|—    |—    |`central_sourcepoint_end`<br>`central_sourcepoint_fractional_distance`<br>`central_sourcepoint_spacing`<br>`central_sourcepoint_start`<br>`coaxiality_tolerance`<br>`convergence_parameter`<br>`convergence_ratio`<br>`integrator`<br>`number_of_central_coefficients`<br>`number_of_remote_coefficients`<br>`number_of_remote_sourcepoints`<br>`proximity_to_sourcepoint`<br>`remote_sourcepoint_end`<br>`remote_sourcepoint_start`<br>`use_fractional_central_sourcepoint_spacing`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`int`*<br>*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`bool`*|
+>>>>>>> main
 
 ### KRampedElectricField
 Example:
 ```
+<<<<<<< HEAD
 <ksfield_electric_ramped
+=======
+<ramped_electric_field
+>>>>>>> main
     name="(string)"
     num_cycles="(int)"
     ramp_down_delay="(double)"
 >
+<<<<<<< HEAD
 </ksfield_electric_ramped>
+=======
+</ramped_electric_field>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3668,6 +3993,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kzonalharmonicmagnetostaticfieldsolver">`zonal_harmonic_field_solver`</a>|[*KZonalHarmonicMagnetostaticFieldSolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Magnetic/src/KZonalHarmonicMagnetostaticFieldSolverBuilder.cc)|—    |—    |`central_sourcepoint_end`<br>`central_sourcepoint_fractional_distance`<br>`central_sourcepoint_spacing`<br>`central_sourcepoint_start`<br>`coaxiality_tolerance`<br>`convergence_parameter`<br>`convergence_ratio`<br>`number_of_bifurcations`<br>`number_of_central_coefficients`<br>`number_of_remote_coefficients`<br>`number_of_remote_sourcepoints`<br>`proximity_to_sourcepoint`<br>`remote_sourcepoint_end`<br>`remote_sourcepoint_start`<br>`use_fractional_central_sourcepoint_spacing`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`int`*<br>*`int`*<br>*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`bool`*|
 
 ### KGElectrostaticBoundaryField
@@ -3684,16 +4010,27 @@ Example:
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kgelectrostaticboundaryfield">`ksfield_electrostatic`</a>|[*KElectrostaticBoundaryFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc)<br>[*KElectrostaticPotentialmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`boundary_element_info`](#kboundaryelementinfodisplay)<br>[`cached_bem_solver`](#kcachedchargedensitysolver)<br>[`cached_charge_density_solver`](#kcachedchargedensitysolver)<br>[`explicit_superposition_cached_bem_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`explicit_superposition_cached_charge_density_solver`](#kexplicitsuperpositioncachedchargedensitysolver)<br>[`fast_multipole_field_solver`](#kelectricfastmultipolefieldsolver)<br>[`gauss_seidel_bem_solver`](#kgaussseidelchargedensitysolver)<br>[`gauss_seidel_charge_density_solver`](#kgaussseidelchargedensitysolver)<br>[`gaussian_elimination_bem_solver`](#kgaussianeliminationchargedensitysolver)<br>[`gaussian_elimination_charge_density_solver`](#kgaussianeliminationchargedensitysolver)<br>[`integrating_field_solver`](#kintegratingelectrostaticfieldsolver)<br>[`krylov_bem_solver`](#kkrylovchargedensitysolverold)<br>[`krylov_bem_solver_new`](#kkrylovchargedensitysolver)<br>[`krylov_bem_solver_old`](#kkrylovchargedensitysolverold)<br>[`krylov_charge_density_solver`](#kkrylovchargedensitysolver)<br>[`krylov_charge_density_solver_old`](#kkrylovchargedensitysolverold)<br>[`robin_hood_bem_solver`](#krobinhoodchargedensitysolver)<br>[`robin_hood_charge_density_solver`](#krobinhoodchargedensitysolver)<br>[`timer`](#kelectrostaticboundaryfieldtimer)<br>[`viewer`](#kvtkviewerasboundaryfieldvisitor)<br>[`zonal_harmonic_field_solver`](#kelectriczhfieldsolver)|*`KBoundaryElementInfoDisplay`*<br>*`KCachedChargeDensitySolver`*<br>*`KCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KExplicitSuperpositionCachedChargeDensitySolver`*<br>*`KElectricFastMultipoleFieldSolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussSeidelChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KGaussianEliminationChargeDensitySolver`*<br>*`KIntegratingElectrostaticFieldSolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KKrylovChargeDensitySolver`*<br>*`KKrylovChargeDensitySolverOld`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KRobinHoodChargeDensitySolver`*<br>*`KElectrostaticBoundaryFieldTimer`*<br>*`KVTKViewerAsBoundaryFieldVisitor`*<br>*`KElectricZHFieldSolver`*|`directory`<br>`file`<br>`hash_threshold`<br>`maximum_element_aspect_ratio`<br>`minimum_element_area`<br>`name`<br>`spaces`<br>`surfaces`<br>`symmetry`<br>`system`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+=======
+|<a name="kzonalharmonicmagnetostaticfieldsolver">`zonal_harmonic_field_solver`</a>|[*KZonalHarmonicMagnetostaticFieldSolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Magnetic/src/KZonalHarmonicMagnetostaticFieldSolverBuilder.cc)|—    |—    |`central_sourcepoint_end`<br>`central_sourcepoint_fractional_distance`<br>`central_sourcepoint_spacing`<br>`central_sourcepoint_start`<br>`coaxiality_tolerance`<br>`convergence_parameter`<br>`convergence_ratio`<br>`number_of_central_coefficients`<br>`number_of_remote_coefficients`<br>`number_of_remote_sourcepoints`<br>`proximity_to_sourcepoint`<br>`remote_sourcepoint_end`<br>`remote_sourcepoint_start`<br>`use_fractional_central_sourcepoint_spacing`|*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`int`*<br>*`int`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`bool`*|
+>>>>>>> main
 
 ### KMagnetostaticConstantField
 Example:
 ```
+<<<<<<< HEAD
 <field_magnetic_constant
+=======
+<ksfield_magnetic_constant
+>>>>>>> main
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
+<<<<<<< HEAD
 </field_magnetic_constant>
+=======
+</ksfield_magnetic_constant>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3718,12 +4055,20 @@ Example:
 ### KMagnetostaticFieldmap
 Example:
 ```
+<<<<<<< HEAD
 <magnetic_fieldmap
+=======
+<ksfield_magnetic_fieldmap
+>>>>>>> main
     directory="(string)"
     file="(string)"
     interpolation="(string)"
 >
+<<<<<<< HEAD
 </magnetic_fieldmap>
+=======
+</ksfield_magnetic_fieldmap>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3757,6 +4102,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstaticelectromagnetfield">`field_electromagnet`</a>|[*KMagnetostaticFieldmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 #### KMagnetostaticConstantField
 Example:
 ```
@@ -3772,6 +4118,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kmagnetostaticconstantfield">`field_magnetic_constant`</a>|[*KMagnetostaticConstantFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Magnetic/src/KMagnetostaticConstantFieldBuilder.cc)<br>[*KMagnetostaticFieldmapBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|—    |—    |`field`<br>`location`<br>`name`|*`KEMStreamableThreeVector`*<br>*`KEMStreamableThreeVector`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KMagneticDipoleFieldBuilder
 Example:
 ```
@@ -3785,12 +4133,20 @@ Example:
 ### KRampedMagneticField
 Example:
 ```
+<<<<<<< HEAD
 <ksfield_magnetic_ramped
+=======
+<ramped_magnetic_field
+>>>>>>> main
     name="(string)"
     num_cycles="(int)"
     ramp_down_delay="(double)"
 >
+<<<<<<< HEAD
 </ksfield_magnetic_ramped>
+=======
+</ramped_magnetic_field>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3800,7 +4156,11 @@ Example:
 ### KMagneticSuperpositionField
 Example:
 ```
+<<<<<<< HEAD
 <ksfield_magnetic_super_position
+=======
+<magnetic_superposition_field
+>>>>>>> main
     name="(string)"
     require="(string)"
     use_caching="(bool)"
@@ -3811,7 +4171,11 @@ Example:
     >
     </add_field>
 
+<<<<<<< HEAD
 </ksfield_magnetic_super_position>
+=======
+</magnetic_superposition_field>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3835,7 +4199,11 @@ Example:
 ### KSGenDirectionSphericalComposite
 Example:
 ```
+<<<<<<< HEAD
 <direction_spherical_composite
+=======
+<ksgen_direction_spherical_composite
+>>>>>>> main
     name="(string)"
     phi="(string)"
     space="(string)"
@@ -3846,7 +4214,11 @@ Example:
     >
     </phi_fix>
 
+<<<<<<< HEAD
 </direction_spherical_composite>
+=======
+</ksgen_direction_spherical_composite>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3856,31 +4228,55 @@ Example:
 #### KSGenValueFix
 Example:
 ```
+<<<<<<< HEAD
 <y_fix
     name="(string)"
     value="(double)"
 >
 </y_fix>
+=======
+<x_fix
+    name="(string)"
+    value="(double)"
+>
+</x_fix>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvaluefix">`phi_fix`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueFixBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueFixBuilder.cxx)|—    |—    |`name`<br>`value`|*`string`*<br>*`double`*|
+=======
+|<a name="ksgenvaluefix">`phi_fix`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueFixBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueFixBuilder.cxx)|—    |—    |`name`<br>`value`|*`string`*<br>*`double`*|
+>>>>>>> main
 
 #### KSGenValueFormula
 Example:
 ```
+<<<<<<< HEAD
 <r_formula
+=======
+<phi_formula
+>>>>>>> main
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
+<<<<<<< HEAD
 </r_formula>
+=======
+</phi_formula>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvalueformula">`phi_formula`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueFormulaBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueFormulaBuilder.cxx)|—    |—    |`name`<br>`value_formula`<br>`value_max`<br>`value_min`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenvalueformula">`phi_formula`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueFormulaBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueFormulaBuilder.cxx)|—    |—    |`name`<br>`value_formula`<br>`value_max`<br>`value_min`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
+>>>>>>> main
 
 #### KSGenValueGauss
 Example:
@@ -3895,7 +4291,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvaluegauss">`phi_gauss`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueGaussBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueGaussBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_mean`<br>`value_min`<br>`value_sigma`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenvaluegauss">`phi_gauss`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueGaussBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueGaussBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_mean`<br>`value_min`<br>`value_sigma`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+>>>>>>> main
 
 #### KSGenValueGeneralizedGauss
 Example:
@@ -3910,67 +4310,119 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvaluegeneralizedgauss">`phi_generalized_gauss`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueGeneralizedGaussBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueGeneralizedGaussBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_mean`<br>`value_min`<br>`value_sigma`<br>`value_skew`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenvaluegeneralizedgauss">`phi_generalized_gauss`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueGeneralizedGaussBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueGeneralizedGaussBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_mean`<br>`value_min`<br>`value_sigma`<br>`value_skew`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
+>>>>>>> main
 
 #### KSGenValueHistogram
 Example:
 ```
+<<<<<<< HEAD
 <theta_histogram
+=======
+<r_histogram
+>>>>>>> main
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
+<<<<<<< HEAD
 </theta_histogram>
+=======
+</r_histogram>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvaluehistogram">`phi_histogram`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueHistogramBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueHistogramBuilder.cxx)|—    |—    |`base`<br>`formula`<br>`histogram`<br>`name`<br>`path`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+=======
+|<a name="ksgenvaluehistogram">`phi_histogram`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueHistogramBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueHistogramBuilder.cxx)|—    |—    |`base`<br>`formula`<br>`histogram`<br>`name`<br>`path`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
+>>>>>>> main
 
 #### KSGenValueList
 Example:
 ```
+<<<<<<< HEAD
 <theta_list
+=======
+<energy_list
+>>>>>>> main
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
+<<<<<<< HEAD
 </theta_list>
+=======
+</energy_list>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvaluelist">`phi_list`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueListBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueListBuilder.cxx)|—    |—    |`add_value`<br>`name`<br>`randomize`|*`double`*<br>*`string`*<br>*`bool`*|
+=======
+|<a name="ksgenvaluelist">`phi_list`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueListBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueListBuilder.cxx)|—    |—    |`add_value`<br>`name`<br>`randomize`|*`double`*<br>*`string`*<br>*`bool`*|
+>>>>>>> main
 
 #### KSGenValueSet
 Example:
 ```
+<<<<<<< HEAD
 <l_set
+=======
+<r_set
+>>>>>>> main
     name="(string)"
     value_increment="(double)"
     value_start="(double)"
 >
+<<<<<<< HEAD
 </l_set>
+=======
+</r_set>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvalueset">`phi_set`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueSetBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueSetBuilder.cxx)|—    |—    |`name`<br>`value_increment`<br>`value_start`<br>`value_stop`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenvalueset">`phi_set`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueSetBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueSetBuilder.cxx)|—    |—    |`name`<br>`value_increment`<br>`value_start`<br>`value_stop`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*|
+>>>>>>> main
 
 #### KSGenValueUniform
 Example:
 ```
+<<<<<<< HEAD
 <energy_uniform
+=======
+<y_uniform
+>>>>>>> main
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
+<<<<<<< HEAD
 </energy_uniform>
+=======
+</y_uniform>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvalueuniform">`phi_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenvalueuniform">`phi_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
+>>>>>>> main
 
 #### KSGenValueAngleCosine
 Example:
@@ -3985,6 +4437,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvalueanglecosine">`theta_cosine`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenValueAngleCosineBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueAngleCosineBuilder.cxx)|—    |—    |`angle_max`<br>`angle_min`<br>`mode`<br>`name`|*`double`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSGenValueFix
@@ -4090,20 +4543,32 @@ Example:
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueset">`theta_set`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueSetBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueSetBuilder.cxx)|—    |—    |`name`<br>`value_increment`<br>`value_start`<br>`value_stop`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenvalueanglecosine">`theta_cosine`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenValueAngleCosineBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueAngleCosineBuilder.cxx)|—    |—    |`angle_max`<br>`angle_min`<br>`mode`<br>`name`|*`double`*<br>*`double`*<br>*`string`*<br>*`string`*|
+>>>>>>> main
 
 #### KSGenValueAngleSpherical
 Example:
 ```
+<<<<<<< HEAD
 <ksgen_value_angle_spherical
+=======
+<theta_spherical
+>>>>>>> main
     angle_max="(double)"
     angle_min="(double)"
     name="(string)"
 >
+<<<<<<< HEAD
 </ksgen_value_angle_spherical>
+=======
+</theta_spherical>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenvalueanglespherical">`theta_spherical`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenValueAngleSphericalBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueAngleSphericalBuilder.cxx)|—    |—    |`angle_max`<br>`angle_min`<br>`name`|*`double`*<br>*`double`*<br>*`string`*|
 
 #### KSGenValueUniform
@@ -4409,11 +4874,18 @@ Example:
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`theta_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenvalueanglespherical">`theta_spherical`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenValueAngleSphericalBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueAngleSphericalBuilder.cxx)|—    |—    |`angle_max`<br>`angle_min`<br>`name`|*`double`*<br>*`double`*<br>*`string`*|
+>>>>>>> main
 
 ### KSGenDirectionSurfaceComposite
 Example:
 ```
+<<<<<<< HEAD
 <direction_surface_composite
+=======
+<ksgen_direction_surface_composite
+>>>>>>> main
     name="(string)"
     outside="(bool)"
     phi="(string)"
@@ -4424,13 +4896,18 @@ Example:
     >
     </phi_fix>
 
+<<<<<<< HEAD
 </direction_surface_composite>
+=======
+</ksgen_direction_surface_composite>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgendirectionsurfacecomposite">`ksgen_direction_surface_composite`</a>|[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`outside`<br>`phi`<br>`surfaces`<br>`theta`|*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KSGenValueFix
 Example:
 ```
@@ -4703,11 +5180,21 @@ Example:
 Example:
 ```
 <ksgen_energy_beta_decay
+=======
+### KSGenEnergyBetaDecay
+Example:
+```
+<energy_beta_decay
+>>>>>>> main
     daughter_z="(int)"
     endpoint_ev="(double)"
     max_energy="(double)"
 >
+<<<<<<< HEAD
 </ksgen_energy_beta_decay>
+=======
+</energy_beta_decay>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4717,12 +5204,20 @@ Example:
 ### KSGenEnergyBetaRecoil
 Example:
 ```
+<<<<<<< HEAD
 <ksgen_energy_beta_recoil
+=======
+<energy_beta_recoil
+>>>>>>> main
     max_energy="(double)"
     min_energy="(double)"
     name="(string)"
 >
+<<<<<<< HEAD
 </ksgen_energy_beta_recoil>
+=======
+</energy_beta_recoil>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4732,7 +5227,11 @@ Example:
 ### KSGenEnergyComposite
 Example:
 ```
+<<<<<<< HEAD
 <energy_composite
+=======
+<ksgen_energy_composite
+>>>>>>> main
     energy="(string)"
     name="(string)"
 >
@@ -4743,7 +5242,11 @@ Example:
     >
     </energy_boltzmann>
 
+<<<<<<< HEAD
 </energy_composite>
+=======
+</ksgen_energy_composite>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4753,18 +5256,27 @@ Example:
 #### KSGenValueBoltzmann
 Example:
 ```
+<<<<<<< HEAD
 <energy_boltzmann
+=======
+<ksgen_value_boltzmann
+>>>>>>> main
     name="(string)"
     unit_eV="(bool)"
     value_kT="(double)"
 >
+<<<<<<< HEAD
 </energy_boltzmann>
+=======
+</ksgen_value_boltzmann>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueboltzmann">`energy_boltzmann`</a>|[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenValueBoltzmannBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueBoltzmannBuilder.cxx)|—    |—    |`name`<br>`unit_eV`<br>`value_kT`<br>`value_mass`|*`string`*<br>*`bool`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KSGenValueFix
 Example:
 ```
@@ -4888,11 +5400,21 @@ Example:
 Example:
 ```
 <ksgen_energy_krypton_event
+=======
+### KSGenEnergyKryptonEvent
+Example:
+```
+<energy_krypton_event
+>>>>>>> main
     do_auger="(bool)"
     do_conversion="(bool)"
     force_conversion="(bool)"
 >
+<<<<<<< HEAD
 </ksgen_energy_krypton_event>
+=======
+</energy_krypton_event>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4964,6 +5486,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgengeneratorcomposite">`ksgen_generator_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
 #### KSGenDirectionSphericalComposite
@@ -5114,11 +5637,18 @@ Example:
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenenergyrydberg">`energy_rydberg`</a>|[*KSGenEnergyRydbergBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyRydbergBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)|—    |—    |`deposited_energy`<br>`ionization_energy`<br>`name`|*`double`*<br>*`double`*<br>*`string`*|
+=======
+|<a name="ksgengeneratorcomposite">`ksgen_generator_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
+>>>>>>> main
 
 #### KSGenLComposite
 Example:
 ```
+<<<<<<< HEAD
 <ksgen_l_composite
+=======
+<l_composite
+>>>>>>> main
     l_value="(string)"
     name="(string)"
 >
@@ -5128,13 +5658,18 @@ Example:
     >
     </l_fix>
 
+<<<<<<< HEAD
 </ksgen_l_composite>
+=======
+</l_composite>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenlcomposite">`l_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)|[`l_fix`](#ksgenvaluefix)<br>[`l_formula`](#ksgenvalueformula)<br>[`l_gauss`](#ksgenvaluegauss)<br>[`l_list`](#ksgenvaluelist)<br>[`l_set`](#ksgenvalueset)<br>[`l_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`l_value`<br>`name`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -5231,6 +5766,15 @@ Example:
     name="(string)"
 >
 </ksgen_l_statistical>
+=======
+#### KSGenLStatistical
+Example:
+```
+<l_statistical
+    name="(string)"
+>
+</l_statistical>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5271,6 +5815,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenmomentumrectangularcomposite">`momentum_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix)<br>[`x_formula`](#ksgenvalueformula)<br>[`x_gauss`](#ksgenvaluegauss)<br>[`x_histogram`](#ksgenvaluehistogram)<br>[`x_list`](#ksgenvaluelist)<br>[`x_set`](#ksgenvalueset)<br>[`x_uniform`](#ksgenvalueuniform)<br>[`y_fix`](#ksgenvaluefix)<br>[`y_formula`](#ksgenvalueformula)<br>[`y_gauss`](#ksgenvaluegauss)<br>[`y_histogram`](#ksgenvaluehistogram)<br>[`y_list`](#ksgenvaluelist)<br>[`y_set`](#ksgenvalueset)<br>[`y_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -5583,6 +6128,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`z_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 #### KSGenNComposite
 Example:
 ```
@@ -5603,6 +6150,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenncomposite">`n_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)|[`n_fix`](#ksgenvaluefix)<br>[`n_formula`](#ksgenvalueformula)<br>[`n_gauss`](#ksgenvaluegauss)<br>[`n_list`](#ksgenvaluelist)<br>[`n_pareto`](#ksgenvaluepareto)<br>[`n_set`](#ksgenvalueset)<br>[`n_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`n_value`<br>`name`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -5662,6 +6210,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvaluelist">`n_list`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueListBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueListBuilder.cxx)|—    |—    |`add_value`<br>`name`<br>`randomize`|*`double`*<br>*`string`*<br>*`bool`*|
 
+=======
+>>>>>>> main
 ##### KSGenValuePareto
 Example:
 ```
@@ -5677,6 +6227,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvaluepareto">`n_pareto`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenValueParetoBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueParetoBuilder.cxx)|—    |—    |`cutoff`<br>`name`<br>`offset`<br>`slope`<br>`value_max`<br>`value_min`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenValueSet
 Example:
 ```
@@ -5830,6 +6381,12 @@ Example:
 Example:
 ```
 <position_cylindrical_composite
+=======
+#### KSGenPositionCylindricalComposite
+Example:
+```
+<ksgen_position_cylindrical_composite
+>>>>>>> main
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -5840,13 +6397,18 @@ Example:
     >
     </phi_fix>
 
+<<<<<<< HEAD
 </position_cylindrical_composite>
+=======
+</ksgen_position_cylindrical_composite>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositioncylindricalcomposite">`position_cylindrical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_fraction`](#ksgenvalueradiusfraction)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -5955,17 +6517,28 @@ Example:
 Example:
 ```
 <ksgen_value_radius_cylindrical
+=======
+##### KSGenValueRadiusCylindrical
+Example:
+```
+<r_cylindrical
+>>>>>>> main
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
+<<<<<<< HEAD
 </ksgen_value_radius_cylindrical>
+=======
+</r_cylindrical>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueradiuscylindrical">`r_cylindrical`</a>|[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenValueRadiusCylindricalBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueRadiusCylindricalBuilder.cxx)|—    |—    |`name`<br>`radius_max`<br>`radius_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -6002,12 +6575,22 @@ Example:
     name="(string)"
 >
 </ksgen_value_radius_fraction>
+=======
+##### KSGenValueRadiusFraction
+Example:
+```
+<r_fraction
+    name="(string)"
+>
+</r_fraction>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueradiusfraction">`r_fraction`</a>|[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenValueRadiusFractionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueRadiusFractionBuilder.cxx)|—    |—    |`name`|*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueGauss
 Example:
 ```
@@ -6191,6 +6774,12 @@ Example:
 Example:
 ```
 <ksgen_position_flux_tube
+=======
+#### KSGenPositionFluxTube
+Example:
+```
+<position_flux_tube
+>>>>>>> main
     flux="(double)"
     magnetic_field_name="(string)"
     n_integration_step="(int)"
@@ -6201,11 +6790,16 @@ Example:
     >
     </phi_fix>
 
+<<<<<<< HEAD
 </ksgen_position_flux_tube>
+=======
+</position_flux_tube>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ksgenpositionfluxtube">`position_flux_tube`</a>|[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_formula`](#ksgenvalueformula)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFormula`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`flux`<br>`magnetic_field_name`<br>`n_integration_step`<br>`name`<br>`only_surface`<br>`phi`<br>`space`<br>`surface`<br>`z`|*`double`*<br>*`string`*<br>*`int`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 ##### KSGenValueFix
@@ -6355,6 +6949,9 @@ Example:
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`z_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
+=======
+|<a name="ksgenpositionfluxtube">`position_flux_tube`</a>|[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_formula`](#ksgenvalueformula)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFormula`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`flux`<br>`magnetic_field_name`<br>`n_integration_step`<br>`name`<br>`only_surface`<br>`phi`<br>`z`|*`double`*<br>*`string`*<br>*`int`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*|
+>>>>>>> main
 
 #### KSGenPositionFrustrumComposite
 Example:
@@ -6377,6 +6974,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositionfrustrumcomposite">`position_frustrum_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r1_fix`](#ksgenvaluefix)<br>[`r2_fix`](#ksgenvaluefix)<br>[`r_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_fraction`](#ksgenvalueradiusfraction)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`z1_fix`](#ksgenvaluefix)<br>[`z2_fix`](#ksgenvaluefix)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_frustrum`](#ksgenvaluezfrustrum)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueZFrustrum`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`r1`<br>`r2`<br>`space`<br>`surface`<br>`z`<br>`z1`<br>`z2`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -6702,17 +7300,28 @@ Example:
 Example:
 ```
 <ksgen_value_z_frustrum
+=======
+##### KSGenValueZFrustrum
+Example:
+```
+<z_frustrum
+>>>>>>> main
     name="(string)"
     r1="(double)"
     r2="(double)"
 >
+<<<<<<< HEAD
 </ksgen_value_z_frustrum>
+=======
+</z_frustrum>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvaluezfrustrum">`z_frustrum`</a>|[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenValueZFrustrumBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueZFrustrumBuilder.cxx)|—    |—    |`name`<br>`r1`<br>`r2`<br>`z1`<br>`z2`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenValueGauss
 Example:
 ```
@@ -6788,6 +7397,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`z_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 #### KSGenPositionHomogeneousFluxTube
 Example:
 ```
@@ -6825,6 +7436,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositionmask">`position_mask`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)|[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)|*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceRandom`*|`name`<br>`spaces_allowed`<br>`spaces_forbidden`|*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenPositionCylindricalComposite
 Example:
 ```
@@ -6848,6 +7460,16 @@ Example:
     surfaces="(string)"
 >
 </ksgen_position_mesh_surface_random>
+=======
+##### KSGenPositionMeshSurfaceRandom
+Example:
+```
+<position_mesh_surface_random
+    name="(string)"
+    surfaces="(string)"
+>
+</position_mesh_surface_random>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -6857,7 +7479,11 @@ Example:
 ##### KSGenPositionRectangularComposite
 Example:
 ```
+<<<<<<< HEAD
 <position_rectangular_composite
+=======
+<ksgen_position_rectangular_composite
+>>>>>>> main
     name="(string)"
     space="(string)"
     surface="(string)"
@@ -6868,13 +7494,18 @@ Example:
     >
     </x_fix>
 
+<<<<<<< HEAD
 </position_rectangular_composite>
+=======
+</ksgen_position_rectangular_composite>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositionrectangularcomposite">`position_rectangular_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)|[`x_fix`](#ksgenvaluefix)<br>[`x_formula`](#ksgenvalueformula)<br>[`x_gauss`](#ksgenvaluegauss)<br>[`x_histogram`](#ksgenvaluehistogram)<br>[`x_list`](#ksgenvaluelist)<br>[`x_set`](#ksgenvalueset)<br>[`x_uniform`](#ksgenvalueuniform)<br>[`y_fix`](#ksgenvaluefix)<br>[`y_formula`](#ksgenvalueformula)<br>[`y_gauss`](#ksgenvaluegauss)<br>[`y_histogram`](#ksgenvaluehistogram)<br>[`y_list`](#ksgenvaluelist)<br>[`y_set`](#ksgenvalueset)<br>[`y_uniform`](#ksgenvalueuniform)<br>[`z_fix`](#ksgenvaluefix)<br>[`z_formula`](#ksgenvalueformula)<br>[`z_gauss`](#ksgenvaluegauss)<br>[`z_histogram`](#ksgenvaluehistogram)<br>[`z_list`](#ksgenvaluelist)<br>[`z_set`](#ksgenvalueset)<br>[`z_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`space`<br>`surface`<br>`x`<br>`y`<br>`z`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ###### KSGenValueFix
 Example:
 ```
@@ -7195,6 +7826,16 @@ Example:
     spaces="(string)"
 >
 </ksgen_position_space_random>
+=======
+##### KSGenPositionSpaceRandom
+Example:
+```
+<position_space_random
+    name="(string)"
+    spaces="(string)"
+>
+</position_space_random>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -7222,6 +7863,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositionsphericalcomposite">`position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_spherical`](#ksgenvalueradiusspherical)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ###### KSGenValueFix
 Example:
 ```
@@ -7415,6 +8057,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueset">`r_set`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueSetBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueSetBuilder.cxx)|—    |—    |`name`<br>`value_increment`<br>`value_start`<br>`value_stop`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ###### KSGenValueRadiusSpherical
 Example:
 ```
@@ -7430,6 +8074,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueradiusspherical">`r_spherical`</a>|[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenValueRadiusSphericalBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueRadiusSphericalBuilder.cxx)|—    |—    |`name`<br>`radius_max`<br>`radius_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ###### KSGenValueUniform
 Example:
 ```
@@ -7564,6 +8209,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`theta_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ##### KSGenPositionSurfaceRandom
 Example:
 ```
@@ -7578,6 +8225,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositionsurfacerandom">`position_surface_random`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSurfaceRandomBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSurfaceRandomBuilder.cxx)|—    |—    |`name`<br>`surfaces`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KSGenPositionMeshSurfaceRandom
 Example:
 ```
@@ -7636,6 +8284,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositionsphericalcomposite">`position_spherical_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionMaskBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionMaskBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`r_fix`](#ksgenvaluefix)<br>[`r_formula`](#ksgenvalueformula)<br>[`r_gauss`](#ksgenvaluegauss)<br>[`r_histogram`](#ksgenvaluehistogram)<br>[`r_list`](#ksgenvaluelist)<br>[`r_set`](#ksgenvalueset)<br>[`r_spherical`](#ksgenvalueradiusspherical)<br>[`r_uniform`](#ksgenvalueuniform)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueUniform`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`r`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSGenPositionSurfaceAdjustmentStep
 Example:
 ```
@@ -7650,6 +8300,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenpositionsurfaceadjustmentstep">`position_surface_adjustment_step`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenPositionSurfaceAdjustmentStepBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSurfaceAdjustmentStepBuilder.cxx)|—    |—    |`length`<br>`name`|*`double`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KSGenPositionSurfaceRandom
 Example:
 ```
@@ -7668,6 +8319,12 @@ Example:
 Example:
 ```
 <ksgen_spin_composite
+=======
+#### KSGenSpinComposite
+Example:
+```
+<spin_composite
+>>>>>>> main
     name="(string)"
     phi="(string)"
     space="(string)"
@@ -7678,13 +8335,18 @@ Example:
     >
     </phi_fix>
 
+<<<<<<< HEAD
 </ksgen_spin_composite>
+=======
+</spin_composite>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenspincomposite">`spin_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -7953,6 +8615,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`theta_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 #### KSGenSpinRelativeComposite
 Example:
 ```
@@ -7974,6 +8638,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenspinrelativecomposite">`spin_relative_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)|[`phi_fix`](#ksgenvaluefix)<br>[`phi_formula`](#ksgenvalueformula)<br>[`phi_gauss`](#ksgenvaluegauss)<br>[`phi_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`phi_histogram`](#ksgenvaluehistogram)<br>[`phi_list`](#ksgenvaluelist)<br>[`phi_set`](#ksgenvalueset)<br>[`phi_uniform`](#ksgenvalueuniform)<br>[`theta_cosine`](#ksgenvalueanglecosine)<br>[`theta_fix`](#ksgenvaluefix)<br>[`theta_formula`](#ksgenvalueformula)<br>[`theta_gauss`](#ksgenvaluegauss)<br>[`theta_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`theta_histogram`](#ksgenvaluehistogram)<br>[`theta_list`](#ksgenvaluelist)<br>[`theta_set`](#ksgenvalueset)<br>[`theta_spherical`](#ksgenvalueanglespherical)<br>[`theta_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueUniform`*|`name`<br>`phi`<br>`space`<br>`surface`<br>`theta`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -8242,6 +8907,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`theta_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 #### KSGenTimeComposite
 Example:
 ```
@@ -8262,6 +8929,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgentimecomposite">`time_composite`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)|[`time_fix`](#ksgenvaluefix)<br>[`time_formula`](#ksgenvalueformula)<br>[`time_gauss`](#ksgenvaluegauss)<br>[`time_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`time_histogram`](#ksgenvaluehistogram)<br>[`time_list`](#ksgenvaluelist)<br>[`time_set`](#ksgenvalueset)<br>[`time_uniform`](#ksgenvalueuniform)|*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*|`name`<br>`time_value`|*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenValueFix
 Example:
 ```
@@ -8381,6 +9049,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgenvalueuniform">`time_uniform`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenEnergyCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx)<br>[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSGenLCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenLCompositeBuilder.cxx)<br>[*KSGenMomentumRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx)<br>[*KSGenNCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenNCompositeBuilder.cxx)<br>[*KSGenPositionCylindricalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx)<br>[*KSGenPositionFluxTubeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFluxTubeBuilder.cxx)<br>[*KSGenPositionFrustrumCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx)<br>[*KSGenPositionRectangularCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx)<br>[*KSGenPositionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenTimeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx)<br>[*KSGenValueUniformBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueUniformBuilder.cxx)|—    |—    |`name`<br>`value_max`<br>`value_min`|*`string`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KSGenGeneratorTextFile
 Example:
 ```
@@ -8411,6 +9081,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgengeneratorsimulation">`ksgen_generator_simulation`</a>|[*KSGenGeneratorSimulationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorSimulationBuilder.cxx)|—    |—    |`base`<br>`direction_x`<br>`direction_y`<br>`direction_z`<br>`energy`<br>`generator`<br>`kinetic_energy_field`<br>`momentum_field`<br>`name`<br>`path`<br>`pid_field`<br>`position_field`<br>`position_x`<br>`position_y`<br>`position_z`<br>`terminator`<br>`time`<br>`time_field`<br>`track_group`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ### KSGenLComposite
 Example:
 ```
@@ -8926,13 +9597,23 @@ Example:
 Example:
 ```
 <ksgeo_side
+=======
+### KSGeoSide
+Example:
+```
+<geo_side
+>>>>>>> main
     name="(string)"
     spaces="(string)"
     surfaces="(string)"
 >
     <add_electric_field/>
 
+<<<<<<< HEAD
 </ksgeo_side>
+=======
+</geo_side>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -9009,6 +9690,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberclearsurfaceinteractiondata">`clear_surface_interaction`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 #### KSCommandMemberData
 Example:
 ```
@@ -9024,6 +9706,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberdata">`command`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)<br>[*KSCommandMemberBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Objects/Source/KSCommandMemberBuilder.cxx)|—    |—    |`child`<br>`field`<br>`name`<br>`parent`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSCommandMemberRemoveElectricFieldData
 Example:
 ```
@@ -9110,6 +9794,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberaddcontroldata">`add_control`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 #### KSCommandMemberAddElectricFieldData
 Example:
 ```
@@ -9130,6 +9815,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberaddmagneticfielddata">`add_magnetic_field`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
+=======
+>>>>>>> main
 #### KSCommandMemberAddSpaceInteractionData
 Example:
 ```
@@ -9140,6 +9827,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberaddspaceinteractiondata">`add_space_interaction`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 #### KSCommandMemberAddStepModifierData
 Example:
 ```
@@ -9160,6 +9848,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberaddstepoutputdata">`add_step_output`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
+=======
+>>>>>>> main
 #### KSCommandMemberAddTermData
 Example:
 ```
@@ -9170,6 +9860,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberaddtermdata">`add_term`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 #### KSCommandMemberAddTerminatorData
 Example:
 ```
@@ -9190,6 +9881,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberaddtrackoutputdata">`add_track_output`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
+=======
+>>>>>>> main
 #### KSCommandMemberClearDensityData
 Example:
 ```
@@ -9250,6 +9943,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmembercleartrajectorydata">`clear_trajectory`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 #### KSCommandMemberData
 Example:
 ```
@@ -9298,19 +9992,30 @@ Example:
 Example:
 ```
 <geo_surface
+=======
+#### KSGeoSurface
+Example:
+```
+<ksgeo_surface
+>>>>>>> main
     name="(string)"
     spaces="(string)"
     surfaces="(string)"
 >
     <add_electric_field/>
 
+<<<<<<< HEAD
 </geo_surface>
+=======
+</ksgeo_surface>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgeosurface">`geo_surface`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|[`add_electric_field`](#kscommandmemberaddelectricfielddata)<br>[`add_magnetic_field`](#kscommandmemberaddmagneticfielddata)<br>[`add_step_modifier`](#kscommandmemberaddstepmodifierdata)<br>[`add_step_output`](#kscommandmemberaddstepoutputdata)<br>[`add_terminator`](#kscommandmemberaddterminatordata)<br>[`add_track_output`](#kscommandmemberaddtrackoutputdata)<br>[`clear_surface_interaction`](#kscommandmemberclearsurfaceinteractiondata)<br>[`command`](#kscommandmemberdata)<br>[`remove_magnetic_field`](#kscommandmemberremoveelectricfielddata)<br>[`remove_step_modifier`](#kscommandmemberremovestepmodifierdata)<br>[`remove_step_output`](#kscommandmemberremovestepoutputdata)<br>[`remove_terminator`](#kscommandmemberremoveterminatordata)<br>[`remove_track_output`](#kscommandmemberremovetrackoutputdata)<br>[`set_surface_interaction`](#kscommandmembersetsurfaceinteractiondata)|*`KSCommandMemberAddElectricFieldData`*<br>*`KSCommandMemberAddMagneticFieldData`*<br>*`KSCommandMemberAddStepModifierData`*<br>*`KSCommandMemberAddStepOutputData`*<br>*`KSCommandMemberAddTerminatorData`*<br>*`KSCommandMemberAddTrackOutputData`*<br>*`KSCommandMemberClearSurfaceInteractionData`*<br>*`KSCommandMemberData`*<br>*`KSCommandMemberRemoveElectricFieldData`*<br>*`KSCommandMemberRemoveStepModifierData`*<br>*`KSCommandMemberRemoveStepOutputData`*<br>*`KSCommandMemberRemoveTerminatorData`*<br>*`KSCommandMemberRemoveTrackOutputData`*<br>*`KSCommandMemberSetSurfaceInteractionData`*|`name`<br>`spaces`<br>`surfaces`|*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ###### KSCommandMemberAddElectricFieldData
 Example:
 ```
@@ -9457,6 +10162,9 @@ Example:
 |<a name="kscommandmembersetsurfaceinteractiondata">`set_surface_interaction`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
 ##### KSCommandMemberRemoveControlData
+=======
+#### KSCommandMemberRemoveControlData
+>>>>>>> main
 Example:
 ```
 <remove_control/>
@@ -9466,6 +10174,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberremovecontroldata">`remove_control`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberRemoveElectricFieldData
 Example:
 ```
@@ -9477,6 +10186,9 @@ Example:
 |<a name="kscommandmemberremoveelectricfielddata">`remove_electric_field`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
 ##### KSCommandMemberRemoveMagneticFieldData
+=======
+#### KSCommandMemberRemoveMagneticFieldData
+>>>>>>> main
 Example:
 ```
 <remove_magnetic_field/>
@@ -9486,7 +10198,11 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberremovemagneticfielddata">`remove_magnetic_field`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberRemoveSpaceInteractionData
+=======
+#### KSCommandMemberRemoveSpaceInteractionData
+>>>>>>> main
 Example:
 ```
 <remove_space_interaction/>
@@ -9496,6 +10212,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberremovespaceinteractiondata">`remove_space_interaction`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberRemoveStepModifierData
 Example:
 ```
@@ -9517,6 +10234,9 @@ Example:
 |<a name="kscommandmemberremovestepoutputdata">`remove_step_output`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
 ##### KSCommandMemberRemoveTermData
+=======
+#### KSCommandMemberRemoveTermData
+>>>>>>> main
 Example:
 ```
 <remove_term/>
@@ -9526,6 +10246,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmemberremovetermdata">`remove_term`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberRemoveTerminatorData
 Example:
 ```
@@ -9547,6 +10268,9 @@ Example:
 |<a name="kscommandmemberremovetrackoutputdata">`remove_track_output`</a>|[*KSGeoSideBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSideBuilder.cxx)<br>[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)<br>[*KSGeoSurfaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSurfaceBuilder.cxx)|—    |—    |—    |—    |
 
 ##### KSCommandMemberSetDensityData
+=======
+#### KSCommandMemberSetDensityData
+>>>>>>> main
 Example:
 ```
 <set_density/>
@@ -9556,7 +10280,11 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmembersetdensitydata">`set_density`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberSetStepDataData
+=======
+#### KSCommandMemberSetStepDataData
+>>>>>>> main
 Example:
 ```
 <set_step_data/>
@@ -9566,7 +10294,11 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmembersetstepdatadata">`set_step_data`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberSetStepPointData
+=======
+#### KSCommandMemberSetStepPointData
+>>>>>>> main
 Example:
 ```
 <set_step_point/>
@@ -9576,7 +10308,11 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmembersetsteppointdata">`set_step_point`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberSetTrackDataData
+=======
+#### KSCommandMemberSetTrackDataData
+>>>>>>> main
 Example:
 ```
 <set_track_data/>
@@ -9586,7 +10322,11 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmembersettrackdatadata">`set_track_data`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberSetTrackPointData
+=======
+#### KSCommandMemberSetTrackPointData
+>>>>>>> main
 Example:
 ```
 <set_track_point/>
@@ -9596,7 +10336,11 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmembersettrackpointdata">`set_track_point`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ##### KSCommandMemberSetTrajectoryData
+=======
+#### KSCommandMemberSetTrajectoryData
+>>>>>>> main
 Example:
 ```
 <set_trajectory/>
@@ -9606,6 +10350,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscommandmembersettrajectorydata">`set_trajectory`</a>|[*KSGeoSpaceBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Geometry/Source/KSGeoSpaceBuilder.cxx)|—    |—    |—    |—    |
 
+<<<<<<< HEAD
 ### KSGeoSurface
 Example:
 ```
@@ -9629,6 +10374,16 @@ Example:
     name="(string)"
 >
 </calculator_constant>
+=======
+### KSIntCalculatorConstant
+Example:
+```
+<ksint_calculator_constant
+    cross_section="(double)"
+    name="(string)"
+>
+</ksint_calculator_constant>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -9680,17 +10435,26 @@ Example:
 #### KSIntDecayCalculatorDeathConstRate
 Example:
 ```
+<<<<<<< HEAD
 <ksint_decay_calculator_death_const_rate
     life_time="(double)"
     name="(string)"
 >
 </ksint_decay_calculator_death_const_rate>
+=======
+<decay_death_const_rate
+    life_time="(double)"
+    name="(string)"
+>
+</decay_death_const_rate>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatordeathconstrate">`decay_death_const_rate`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`life_time`<br>`name`|*`double`*<br>*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -9706,6 +10470,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSIntDecayCalculatorFerencBBRTransition
 Example:
 ```
@@ -9727,6 +10493,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatorferencbbrtransition">`decay_ferenc_bbr`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -9742,6 +10509,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSIntDecayCalculatorFerencIonisation
 Example:
 ```
@@ -9763,6 +10532,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatorferencionisation">`decay_ferenc_ionisation`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -9778,6 +10548,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSIntDecayCalculatorFerencSpontaneous
 Example:
 ```
@@ -9798,6 +10570,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatorferencspontaneous">`decay_ferenc_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -9817,6 +10590,12 @@ Example:
 Example:
 ```
 <ksint_decay_calculator_glukhov_deexcitation
+=======
+#### KSIntDecayCalculatorGlukhovDeExcitation
+Example:
+```
+<decay_glukhov_deexcitation
+>>>>>>> main
     name="(string)"
     temperature="(double)"
 >
@@ -9827,13 +10606,18 @@ Example:
     >
     </decay_product_generator>
 
+<<<<<<< HEAD
 </ksint_decay_calculator_glukhov_deexcitation>
+=======
+</decay_glukhov_deexcitation>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatorglukhovdeexcitation">`decay_glukhov_deexcitation`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -9853,6 +10637,12 @@ Example:
 Example:
 ```
 <ksint_decay_calculator_glukhov_excitation
+=======
+#### KSIntDecayCalculatorGlukhovExcitation
+Example:
+```
+<decay_glukhov_excitation
+>>>>>>> main
     name="(string)"
     temperature="(double)"
 >
@@ -9863,13 +10653,18 @@ Example:
     >
     </decay_product_generator>
 
+<<<<<<< HEAD
 </ksint_decay_calculator_glukhov_excitation>
+=======
+</decay_glukhov_excitation>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatorglukhovexcitation">`decay_glukhov_excitation`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -9889,6 +10684,12 @@ Example:
 Example:
 ```
 <ksint_decay_calculator_glukhov_ionisation
+=======
+#### KSIntDecayCalculatorGlukhovIonisation
+Example:
+```
+<decay_glukhov_ionisation
+>>>>>>> main
     name="(string)"
     temperature="(double)"
 >
@@ -9899,13 +10700,18 @@ Example:
     >
     </decay_product_generator>
 
+<<<<<<< HEAD
 </ksint_decay_calculator_glukhov_ionisation>
+=======
+</decay_glukhov_ionisation>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatorglukhovionisation">`decay_glukhov_ionisation`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`<br>`temperature`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -9921,6 +10727,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksgengeneratorcomposite">`decay_product_generator`</a>|[*KSGenGeneratorCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx)<br>[*KSIntDecayCalculatorDeathConstRateBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorDeathConstRateBuilder.cxx)<br>[*KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx)<br>[*KSIntDecayCalculatorFerencIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorFerencSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorFerencSpontaneousBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovDeExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovExcitationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovExcitationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovIonisationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovIonisationBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`energy_beta_decay`](#ksgenenergybetadecay)<br>[`energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`energy_composite`](#ksgenenergycomposite)<br>[`energy_krypton_event`](#ksgenenergykryptonevent)<br>[`energy_lead_event`](#ksgenenergyleadevent)<br>[`energy_radon_event`](#ksgenenergyradonevent)<br>[`energy_rydberg`](#ksgenenergyrydberg)<br>[`l_composite`](#ksgenlcomposite)<br>[`l_statistical`](#ksgenlstatistical)<br>[`l_uniform_max_n`](#ksgenluniformmaxn)<br>[`momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`n_composite`](#ksgenncomposite)<br>[`pid_fix`](#ksgenvaluefix)<br>[`pid_formula`](#ksgenvalueformula)<br>[`pid_gauss`](#ksgenvaluegauss)<br>[`pid_histogram`](#ksgenvaluehistogram)<br>[`pid_list`](#ksgenvaluelist)<br>[`pid_pareto`](#ksgenvaluepareto)<br>[`pid_set`](#ksgenvalueset)<br>[`pid_uniform`](#ksgenvalueuniform)<br>[`position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`position_flux_tube`](#ksgenpositionfluxtube)<br>[`position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`position_mask`](#ksgenpositionmask)<br>[`position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`position_space_random`](#ksgenpositionspacerandom)<br>[`position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`position_surface_random`](#ksgenpositionsurfacerandom)<br>[`spin_composite`](#ksgenspincomposite)<br>[`spin_relative_composite`](#ksgenspinrelativecomposite)<br>[`time_composite`](#ksgentimecomposite)|*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*|`creator`<br>`name`<br>`pid`<br>`special`<br>`string_id`|*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSIntDecayCalculatorGlukhovSpontaneous
 Example:
 ```
@@ -9941,6 +10749,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdecaycalculatorglukhovspontaneous">`decay_glukhov_spontaneous`</a>|[*KSIntDecayBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayBuilder.cxx)<br>[*KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDecayCalculatorGlukhovSpontaneousBuilder.cxx)|[`decay_product_generator`](#ksgengeneratorcomposite)|*`KSGenGeneratorComposite`*|`name`|*`string`*|
 
+<<<<<<< HEAD
 ##### KSGenGeneratorComposite
 Example:
 ```
@@ -10070,11 +10879,21 @@ Example:
 Example:
 ```
 <density_constant
+=======
+### KSIntDensityConstant
+Example:
+```
+<ksint_density_constant
+>>>>>>> main
     density="(double)"
     name="(string)"
     pressure="(double)"
 >
+<<<<<<< HEAD
 </density_constant>
+=======
+</ksint_density_constant>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10118,6 +10937,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintcalculatorargonset">`calculator_argon`</a>|[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`double_ionisation`<br>`elastic`<br>`excitation`<br>`name`<br>`single_ionisation`|*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`bool`*|
 
+<<<<<<< HEAD
 #### KSIntCalculatorConstant
 Example:
 ```
@@ -10132,6 +10952,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintcalculatorconstant">`calculator_constant`</a>|[*KSIntCalculatorConstantBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntCalculatorConstantBuilder.cxx)<br>[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`cross_section`<br>`name`|*`double`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSIntCalculatorHydrogenSet
 Example:
 ```
@@ -10147,6 +10969,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintcalculatorhydrogenset">`calculator_hydrogen`</a>|[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`elastic`<br>`excitation`<br>`ionisation`<br>`molecule`<br>`name`|*`bool`*<br>*`bool`*<br>*`bool`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 #### KSIntCalculatorIon
 Example:
 ```
@@ -10161,6 +10984,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintcalculatorion">`calculator_ion`</a>|[*KSIntCalculatorIonBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntCalculatorIonBuilder.cxx)<br>[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`gas`<br>`name`|*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 #### KSIntCalculatorKESSSet
 Example:
 ```
@@ -10176,6 +11001,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintcalculatorkessset">`calculator_kess`</a>|[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`auger_relaxation`<br>`elastic`<br>`inelastic`<br>`name`<br>`photo_absorbtion`|*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`bool`*|
 
+<<<<<<< HEAD
 #### KSIntDensityConstant
 Example:
 ```
@@ -10191,6 +11017,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintdensityconstant">`density_constant`</a>|[*KSIntDensityConstantBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntDensityConstantBuilder.cxx)<br>[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`density`<br>`name`<br>`pressure`<br>`pressure_mbar`<br>`temperature`|*`double`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ### KSIntSpinFlip
 Example:
 ```
@@ -10677,11 +11505,19 @@ Example:
 ### KSTrajControlBChange
 Example:
 ```
+<<<<<<< HEAD
 <control_B_change
     fraction="(double)"
     name="(string)"
 >
 </control_B_change>
+=======
+<kstraj_control_B_change
+    fraction="(double)"
+    name="(string)"
+>
+</kstraj_control_B_change>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10705,12 +11541,20 @@ Example:
 ### KSTrajControlEnergy
 Example:
 ```
+<<<<<<< HEAD
 <control_energy
+=======
+<kstraj_control_energy
+>>>>>>> main
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
+<<<<<<< HEAD
 </control_energy>
+=======
+</kstraj_control_energy>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10734,11 +11578,19 @@ Example:
 ### KSTrajControlMDot
 Example:
 ```
+<<<<<<< HEAD
 <control_m_dot
     fraction="(double)"
     name="(string)"
 >
 </control_m_dot>
+=======
+<kstraj_control_m_dot
+    fraction="(double)"
+    name="(string)"
+>
+</kstraj_control_m_dot>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10778,12 +11630,20 @@ Example:
 ### KSTrajControlPositionNumericalError
 Example:
 ```
+<<<<<<< HEAD
 <kstraj_control_position_numerical_error
+=======
+<control_position_error
+>>>>>>> main
     absolute_position_error="(double)"
     name="(string)"
     safety_factor="(double)"
 >
+<<<<<<< HEAD
 </kstraj_control_position_numerical_error>
+=======
+</control_position_error>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10793,11 +11653,19 @@ Example:
 ### KSTrajControlSpinPrecession
 Example:
 ```
+<<<<<<< HEAD
 <control_spin_precession
     fraction="(double)"
     name="(string)"
 >
 </control_spin_precession>
+=======
+<kstraj_control_spin_precession
+    fraction="(double)"
+    name="(string)"
+>
+</kstraj_control_spin_precession>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10807,11 +11675,19 @@ Example:
 ### KSTrajControlTime
 Example:
 ```
+<<<<<<< HEAD
 <kstraj_control_time
     name="(string)"
     time="(double)"
 >
 </kstraj_control_time>
+=======
+<control_time
+    name="(string)"
+    time="(double)"
+>
+</control_time>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10834,10 +11710,17 @@ Example:
 ### KSTrajIntegratorRK65
 Example:
 ```
+<<<<<<< HEAD
 <kstraj_integrator_rk65
     name="(string)"
 >
 </kstraj_integrator_rk65>
+=======
+<integrator_rk65
+    name="(string)"
+>
+</integrator_rk65>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10860,10 +11743,17 @@ Example:
 ### KSTrajIntegratorRK86
 Example:
 ```
+<<<<<<< HEAD
 <kstraj_integrator_rk86
     name="(string)"
 >
 </kstraj_integrator_rk86>
+=======
+<integrator_rk86
+    name="(string)"
+>
+</integrator_rk86>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10873,10 +11763,17 @@ Example:
 ### KSTrajIntegratorRK87
 Example:
 ```
+<<<<<<< HEAD
 <integrator_rk87
     name="(string)"
 >
 </integrator_rk87>
+=======
+<kstraj_integrator_rk87
+    name="(string)"
+>
+</kstraj_integrator_rk87>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10886,10 +11783,17 @@ Example:
 ### KSTrajIntegratorRKDP54
 Example:
 ```
+<<<<<<< HEAD
 <integrator_rkdp54
     name="(string)"
 >
 </integrator_rkdp54>
+=======
+<kstraj_integrator_rkdp54
+    name="(string)"
+>
+</kstraj_integrator_rkdp54>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10912,10 +11816,17 @@ Example:
 ### KSTrajIntegratorSym4
 Example:
 ```
+<<<<<<< HEAD
 <integrator_sym4
     name="(string)"
 >
 </integrator_sym4>
+=======
+<kstraj_integrator_sym4
+    name="(string)"
+>
+</kstraj_integrator_sym4>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10938,10 +11849,17 @@ Example:
 ### KSTrajInterpolatorFast
 Example:
 ```
+<<<<<<< HEAD
 <kstraj_interpolator_fast
     name="(string)"
 >
 </kstraj_interpolator_fast>
+=======
+<interpolator_fast
+    name="(string)"
+>
+</interpolator_fast>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -10991,11 +11909,19 @@ Example:
 ### KSTrajTermGravity
 Example:
 ```
+<<<<<<< HEAD
 <kstraj_term_gravity
     gravity="(KThreeVector)"
     name="(string)"
 >
 </kstraj_term_gravity>
+=======
+<term_gravity
+    gravity="(KThreeVector)"
+    name="(string)"
+>
+</term_gravity>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11005,10 +11931,17 @@ Example:
 ### KSTrajTermGyration
 Example:
 ```
+<<<<<<< HEAD
 <term_gyration
     name="(string)"
 >
 </term_gyration>
+=======
+<kstraj_term_gyration
+    name="(string)"
+>
+</kstraj_term_gyration>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11018,11 +11951,19 @@ Example:
 ### KSTrajTermPropagation
 Example:
 ```
+<<<<<<< HEAD
 <term_propagation
     direction="(string)"
     name="(string)"
 >
 </term_propagation>
+=======
+<kstraj_term_propagation
+    direction="(string)"
+    name="(string)"
+>
+</kstraj_term_propagation>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11032,12 +11973,20 @@ Example:
 ### KSTrajTermSynchrotron
 Example:
 ```
+<<<<<<< HEAD
 <kstraj_term_synchrotron
+=======
+<term_synchrotron
+>>>>>>> main
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
+<<<<<<< HEAD
 </kstraj_term_synchrotron>
+=======
+</term_synchrotron>
+>>>>>>> main
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -11065,6 +12014,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtrajectoryadiabatic">`kstraj_trajectory_adiabatic`</a>|[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_drift`](#kstrajtermdrift)<br>[`term_gyration`](#kstrajtermgyration)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`cyclotron_fraction`<br>`name`<br>`piecewise_tolerance`<br>`use_true_position`|*`double`*<br>*`string`*<br>*`double`*<br>*`bool`*|
 
+<<<<<<< HEAD
 #### KSTrajControlBChange
 Example:
 ```
@@ -11366,6 +12316,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtermsynchrotron">`term_synchrotron`</a>|[*KSTrajTermSynchrotronBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTermSynchrotronBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)<br>[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|—    |—    |`enhancement`<br>`name`<br>`old_methode`|*`double`*<br>*`string`*<br>*`bool`*|
 
+=======
+>>>>>>> main
 ### KSTrajTrajectoryAdiabaticSpin
 Example:
 ```
@@ -11386,6 +12338,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtrajectoryadiabaticspin">`kstraj_trajectory_adiabatic_spin`</a>|[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_m_dot`](#kstrajcontrolmdot)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_spin_precession`](#kstrajcontrolspinprecession)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_gravity`](#kstrajtermgravity)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KSTrajControlBChange
 Example:
 ```
@@ -11703,6 +12656,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtermsynchrotron">`term_synchrotron`</a>|[*KSTrajTermSynchrotronBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTermSynchrotronBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)<br>[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|—    |—    |`enhancement`<br>`name`<br>`old_methode`|*`double`*<br>*`string`*<br>*`bool`*|
 
+=======
+>>>>>>> main
 ### KSTrajTrajectoryElectric
 Example:
 ```
@@ -11723,6 +12678,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtrajectoryelectric">`kstraj_trajectory_electric`</a>|[*KSTrajTrajectoryElectricBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryElectricBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_length`](#kstrajcontrollength)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_propagation`](#kstrajtermpropagation)|*`KSTrajControlBChange`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KSTrajControlBChange
 Example:
 ```
@@ -11909,6 +12865,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtermpropagation">`term_propagation`</a>|[*KSTrajTermPropagationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTermPropagationBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)<br>[*KSTrajTrajectoryElectricBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryElectricBuilder.cxx)<br>[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)<br>[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)<br>[*KSTrajTrajectoryMagneticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryMagneticBuilder.cxx)|—    |—    |`direction`<br>`name`|*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 ### KSTrajTrajectoryExact
 Example:
 ```
@@ -11929,6 +12887,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtrajectoryexact">`kstraj_trajectory_exact`</a>|[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_gravity`](#kstrajtermgravity)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KSTrajControlBChange
 Example:
 ```
@@ -12218,6 +13177,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtermsynchrotron">`term_synchrotron`</a>|[*KSTrajTermSynchrotronBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTermSynchrotronBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)<br>[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|—    |—    |`enhancement`<br>`name`<br>`old_methode`|*`double`*<br>*`string`*<br>*`bool`*|
 
+=======
+>>>>>>> main
 ### KSTrajTrajectoryExactSpin
 Example:
 ```
@@ -12238,6 +13199,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtrajectoryexactspin">`kstraj_trajectory_exact_spin`</a>|[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_cyclotron`](#kstrajcontrolcyclotron)<br>[`control_energy`](#kstrajcontrolenergy)<br>[`control_length`](#kstrajcontrollength)<br>[`control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`control_momentum_error`](#kstrajcontrolmomentumnumericalerror)<br>[`control_position_error`](#kstrajcontrolpositionnumericalerror)<br>[`control_spin_precession`](#kstrajcontrolspinprecession)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_gravity`](#kstrajtermgravity)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KSTrajControlBChange
 Example:
 ```
@@ -12541,6 +13503,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtermsynchrotron">`term_synchrotron`</a>|[*KSTrajTermSynchrotronBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTermSynchrotronBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)<br>[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|—    |—    |`enhancement`<br>`name`<br>`old_methode`|*`double`*<br>*`string`*<br>*`bool`*|
 
+=======
+>>>>>>> main
 ### KSTrajTrajectoryExactTrapped
 Example:
 ```
@@ -12561,6 +13525,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtrajectoryexacttrapped">`kstraj_trajectory_exact_trapped`</a>|[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|[`control_length`](#kstrajcontrollength)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_sym4`](#kstrajintegratorsym4)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_propagation`](#kstrajtermpropagation)<br>[`term_synchrotron`](#kstrajtermsynchrotron)|*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KSTrajControlLength
 Example:
 ```
@@ -12683,6 +13648,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtermsynchrotron">`term_synchrotron`</a>|[*KSTrajTermSynchrotronBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTermSynchrotronBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)<br>[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)|—    |—    |`enhancement`<br>`name`<br>`old_methode`|*`double`*<br>*`string`*<br>*`bool`*|
 
+=======
+>>>>>>> main
 ### KSTrajTrajectoryLinear
 Example:
 ```
@@ -12717,6 +13684,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtrajectorymagnetic">`kstraj_trajectory_magnetic`</a>|[*KSTrajTrajectoryMagneticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryMagneticBuilder.cxx)|[`control_B_change`](#kstrajcontrolbchange)<br>[`control_length`](#kstrajcontrollength)<br>[`control_time`](#kstrajcontroltime)<br>[`integrator_rk54`](#kstrajintegratorrk54)<br>[`integrator_rk65`](#kstrajintegratorrk65)<br>[`integrator_rk8`](#kstrajintegratorrk8)<br>[`integrator_rk86`](#kstrajintegratorrk86)<br>[`integrator_rk87`](#kstrajintegratorrk87)<br>[`integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`interpolator_fast`](#kstrajinterpolatorfast)<br>[`interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`term_propagation`](#kstrajtermpropagation)|*`KSTrajControlBChange`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermPropagation`*|`name`<br>`piecewise_tolerance`|*`string`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KSTrajControlBChange
 Example:
 ```
@@ -12903,6 +13871,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kstrajtermpropagation">`term_propagation`</a>|[*KSTrajTermPropagationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTermPropagationBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx)<br>[*KSTrajTrajectoryAdiabaticSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx)<br>[*KSTrajTrajectoryElectricBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryElectricBuilder.cxx)<br>[*KSTrajTrajectoryExactBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx)<br>[*KSTrajTrajectoryExactSpinBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx)<br>[*KSTrajTrajectoryExactTrappedBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx)<br>[*KSTrajTrajectoryMagneticBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Trajectories/Source/KSTrajTrajectoryMagneticBuilder.cxx)|—    |—    |`direction`<br>`name`|*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 ### KSWriteASCII
 Example:
 ```
@@ -13008,6 +13978,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kswritevtk">`kswrite_vtk`</a>|[*KSWriteVTKBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Writers/Source/KSWriteVTKBuilder.cxx)|—    |—    |`base`<br>`name`<br>`path`|*`string`*<br>*`string`*<br>*`string`*|
 
+<<<<<<< HEAD
 ### KSComponentMemberData
 Example:
 ```
@@ -13138,6 +14109,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kscomponentminimumatdata">`output_minimum_at`</a>|[*KSComponentMinimumAtBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Objects/Source/KSComponentMinimumAtBuilder.cxx)|—    |—    |`component`<br>`group`<br>`name`<br>`parent`<br>`source`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 ## KEMRoot
 Example:
 ```
@@ -13156,6 +14129,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kemroot">`kemfield`</a>|[*KEMToolboxBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Utilities/src/KEMToolboxBuilder.cc)|[`constant_electric_field`](#kelectrostaticconstantfield)<br>[`constant_magnetic_field`](#kmagnetostaticconstantfield)<br>[`electric_potentialmap`](#kelectrostaticpotentialmap)<br>[`electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator)<br>[`electric_quadrupole_field`](#kelectricquadrupolefield)<br>[`electromagnet_field`](#kgstaticelectromagnetfield)<br>[`electrostatic_field`](#kgelectrostaticboundaryfield)<br>[`induced_azimuthal_electric_field`](#kinducedazimuthalelectricfield)<br>[`linear_electric_field`](#kelectrostaticlinearfield)<br>[`magnetic_dipole_field`](#kmagneticdipolefield)<br>[`magnetic_fieldmap`](#kmagnetostaticfieldmap)<br>[`magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator)<br>[`magnetic_superposition_field`](#kmagneticsuperpositionfield)<br>[`ramped_electric_field`](#krampedelectricfield)<br>[`ramped_magnetic_field`](#krampedmagneticfield)<br>[`ramped_transitional_electric_field`](#krampedelectric2field)|*`KElectrostaticConstantField`*<br>*`KMagnetostaticConstantField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticLinearField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KMagneticSuperpositionField`*<br>*`KRampedElectricField`*<br>*`KRampedMagneticField`*<br>*`KRampedElectric2Field`*|—    |—    |
 
+<<<<<<< HEAD
 ### KElectrostaticConstantField
 Example:
 ```
@@ -13275,6 +14249,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kinducedazimuthalelectricfield">`induced_azimuthal_electric_field`</a>|[*KInducedAzimuthalElectricFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KInducedAzimuthalElectricFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|—    |—    |`name`<br>`root_field`|*`string`*<br>*`string`*|
 
+=======
+>>>>>>> main
 ### KElectrostaticLinearField
 Example:
 ```
@@ -13290,6 +14266,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="kelectrostaticlinearfield">`linear_electric_field`</a>|[*KElectrostaticLinearFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KElectrostaticLinearFieldBuilder.cc)|—    |—    |`U1`<br>`U2`<br>`name`<br>`surface`<br>`z1`<br>`z2`|*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 ### KMagneticDipoleField
 Example:
 ```
@@ -13395,6 +14372,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="krampedelectric2field">`ramped_transitional_electric_field`</a>|[*KRampedElectric2FieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Electric/src/KRampedElectric2FieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|—    |—    |`focus_exponent`<br>`focus_time`<br>`name`<br>`num_cycles`<br>`potential_scaling`<br>`ramp_down_delay`<br>`ramp_down_time`<br>`ramp_up_delay`<br>`ramp_up_time`<br>`ramping_type`<br>`root_field_1`<br>`root_field_2`<br>`small_spectrometer`<br>`time_constant`<br>`time_scaling`|*`double`*<br>*`double`*<br>*`string`*<br>*`int`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`double`*<br>*`double`*|
 
+=======
+>>>>>>> main
 ## KMessageTable
 Example:
 ```
@@ -13410,7 +14389,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kmessagetable">`messages`</a>|[*KMessageBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Bindings/KMessageBuilder.cxx)|[`file`](#ktextfile)<br>[`message`](#kmessagedata)|*`KTextFile`*<br>*`KMessageData`*|`format`<br>`log`<br>`parser_context`<br>`precision`<br>`shutdown_message`<br>`terminal`|*`string`*<br>*`string`*<br>*`bool`*<br>*`KMessagePrecision`*<br>*`bool`*<br>*`string`*|
+=======
+|<a name="kmessagetable">`messages`</a>|[*KMessageBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Utility/KMessageBuilder.cxx)|[`file`](#ktextfile)<br>[`message`](#kmessagedata)|*`KTextFile`*<br>*`KMessageData`*|`format`<br>`log`<br>`parser_context`<br>`precision`<br>`shutdown_message`<br>`terminal`|*`string`*<br>*`string`*<br>*`bool`*<br>*`KMessagePrecision`*<br>*`bool`*<br>*`string`*|
+>>>>>>> main
 
 ### KTextFile
 Example:
@@ -13420,7 +14403,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="ktextfile">`file`</a>|[*KMessageBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Bindings/KMessageBuilder.cxx)|—    |—    |—    |—    |
+=======
+|<a name="ktextfile">`file`</a>|[*KMessageBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Utility/KMessageBuilder.cxx)|—    |—    |—    |—    |
+>>>>>>> main
 
 ### KMessageData
 Example:
@@ -13435,7 +14422,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kmessagedata">`message`</a>|[*KMessageBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Bindings/KMessageBuilder.cxx)|—    |—    |`format`<br>`key`<br>`log`<br>`parser_context`<br>`precision`<br>`shutdown_message`<br>`terminal`|*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KMessagePrecision`*<br>*`bool`*<br>*`string`*|
+=======
+|<a name="kmessagedata">`message`</a>|[*KMessageBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Utility/KMessageBuilder.cxx)|—    |—    |`format`<br>`key`<br>`log`<br>`parser_context`<br>`precision`<br>`shutdown_message`<br>`terminal`|*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`KMessagePrecision`*<br>*`bool`*<br>*`string`*|
+>>>>>>> main
 
 ## KROOTWindow
 Example:
@@ -13511,6 +14502,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="krootpad">`root_pad`</a>|[*KROOTWindowBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Root/Utility/KROOTWindowBuilder.cxx)|[`root_geometry_painter`](#kgrootgeometrypainter)<br>[`root_magfield_painter`](#ksrootmagfieldpainter)<br>[`root_potential_painter`](#ksrootpotentialpainter)<br>[`root_track_painter`](#ksroottrackpainter)<br>[`root_zh_painter`](#ksrootzonalharmonicspainter)|*`KGROOTGeometryPainter`*<br>*`KSROOTMagFieldPainter`*<br>*`KSROOTPotentialPainter`*<br>*`KSROOTTrackPainter`*<br>*`KSROOTZonalHarmonicsPainter`*|`name`<br>`xlow`<br>`xup`<br>`ylow`<br>`yup`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*|
 
+<<<<<<< HEAD
 #### KGROOTGeometryPainter
 Example:
 ```
@@ -13541,6 +14533,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksrootmagfieldpainter">`root_magfield_painter`</a>|[*KSROOTMagFieldPainterBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Visualization/Source/KSROOTMagFieldPainterBuilder.cxx)|—    |—    |`axial_symmetry`<br>`draw`<br>`magnetic_field`<br>`magnetic_gradient_numerical`<br>`name`<br>`plot`<br>`r_max`<br>`r_steps`<br>`x_axis`<br>`y_axis`<br>`z_axis_logscale`<br>`z_fix`<br>`z_max`<br>`z_min`<br>`z_steps`|*`bool`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`int`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`int`*|
 
+=======
+>>>>>>> main
 #### KSROOTPotentialPainter
 Example:
 ```
@@ -13586,6 +14580,7 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksrootzonalharmonicspainter">`root_zh_painter`</a>|[*KSROOTZonalHarmonicsPainterBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Visualization/Source/KSROOTZonalHarmonicsPainterBuilder.cxx)|—    |—    |`electric_field`<br>`file`<br>`geometry_type`<br>`magnetic_field`<br>`name`<br>`path`<br>`r_dist`<br>`r_max`<br>`r_min`<br>`r_steps`<br>`radial_safety_margin`<br>`write`<br>`x_axis`<br>`y_axis`<br>`z_dist`<br>`z_max`<br>`z_min`<br>`z_steps`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`int`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`int`*|
 
+<<<<<<< HEAD
 ### KSROOTPotentialPainter
 Example:
 ```
@@ -13631,6 +14626,8 @@ Example:
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksrootzonalharmonicspainter">`root_zh_painter`</a>|[*KSROOTZonalHarmonicsPainterBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Visualization/Source/KSROOTZonalHarmonicsPainterBuilder.cxx)|—    |—    |`electric_field`<br>`file`<br>`geometry_type`<br>`magnetic_field`<br>`name`<br>`path`<br>`r_dist`<br>`r_max`<br>`r_min`<br>`r_steps`<br>`radial_safety_margin`<br>`write`<br>`x_axis`<br>`y_axis`<br>`z_dist`<br>`z_max`<br>`z_min`<br>`z_steps`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`int`*<br>*`double`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`int`*|
 
+=======
+>>>>>>> main
 ## KApplicationRunner
 Example:
 ```
@@ -13647,7 +14644,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="kapplicationrunner">`run`</a>|[*KApplicationRunnerBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Bindings/KApplicationRunnerBuilder.cxx)|[`app`](#knamedreference)|*`KNamedReference`*|`name`|*`string`*|
+=======
+|<a name="kapplicationrunner">`run`</a>|[*KApplicationRunnerBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Utility/KApplicationRunnerBuilder.cxx)|[`app`](#knamedreference)|*`KNamedReference`*|`name`|*`string`*|
+>>>>>>> main
 
 ### KNamedReference
 Example:
@@ -13660,7 +14661,11 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
+<<<<<<< HEAD
 |<a name="knamedreference">`app`</a>|[*KApplicationRunnerBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Bindings/KApplicationRunnerBuilder.cxx)|—    |—    |`Name`|*`string`*|
+=======
+|<a name="knamedreference">`app`</a>|[*KApplicationRunnerBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Core/Utility/KApplicationRunnerBuilder.cxx)|—    |—    |`Name`|*`string`*|
+>>>>>>> main
 
 ## KVTKWindow
 Example:

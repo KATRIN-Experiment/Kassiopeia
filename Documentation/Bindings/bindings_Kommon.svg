@@ -9,6 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1878)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-1878 526,-1878 526,4 -4,4"/>
 <g id="clust1" class="cluster">
+<<<<<<< HEAD
 <title>cluster_KApplicationRunner</title>
 <polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="60.5,-8 60.5,-134 513,-134 513,-8 60.5,-8"/>
 <text text-anchor="middle" x="286.75" y="-121.2" font-family="sans-serif,bold" font-size="11.00">KApplicationRunner</text>
@@ -37,6 +38,36 @@
 <title>cluster_KDummyRandom</title>
 <polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="56.5,-734 56.5,-806 314.5,-806 314.5,-734 56.5,-734"/>
 <text text-anchor="middle" x="185.5" y="-793.2" font-family="sans-serif,bold" font-size="11.00">KDummyRandom</text>
+=======
+<title>cluster_KommonNamedRandomGenerator</title>
+<polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="8,-8 8,-134 314.5,-134 314.5,-8 8,-8"/>
+<text text-anchor="middle" x="161.25" y="-121.2" font-family="sans-serif,bold" font-size="11.00">KommonNamedRandomGenerator</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_KDummyRandom</title>
+<polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="56.5,-142 56.5,-214 314.5,-214 314.5,-142 56.5,-142"/>
+<text text-anchor="middle" x="185.5" y="-201.2" font-family="sans-serif,bold" font-size="11.00">KDummyRandom</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_KApplicationRunner</title>
+<polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="60.5,-222 60.5,-348 513,-348 513,-222 60.5,-222"/>
+<text text-anchor="middle" x="286.75" y="-335.2" font-family="sans-serif,bold" font-size="11.00">KApplicationRunner</text>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_KNamedReference</title>
+<polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="384,-248 384,-320 505,-320 505,-248 384,-248"/>
+<text text-anchor="middle" x="444.5" y="-307.2" font-family="sans-serif,bold" font-size="11.00">KNamedReference</text>
+</g>
+<g id="clust6" class="cluster">
+<title>cluster_KMessageTable</title>
+<polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="52.5,-356 52.5,-806 514,-806 514,-356 52.5,-356"/>
+<text text-anchor="middle" x="283.25" y="-793.2" font-family="sans-serif,bold" font-size="11.00">KMessageTable</text>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_KMessageData</title>
+<polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="382,-382 382,-778 506,-778 506,-382 382,-382"/>
+<text text-anchor="middle" x="444" y="-765.2" font-family="sans-serif,bold" font-size="11.00">KMessageData</text>
+>>>>>>> main
 </g>
 <g id="clust9" class="cluster">
 <title>cluster_KROOTWindow</title>
@@ -53,6 +84,7 @@
 <polygon fill="#a0a0a0" fill-opacity="0.125490" stroke="black" stroke-width="2" points="46.5,-1146 46.5,-1866 356,-1866 356,-1146 46.5,-1146"/>
 <text text-anchor="middle" x="201.25" y="-1853.2" font-family="sans-serif,bold" font-size="11.00">KVTKWindow</text>
 </g>
+<<<<<<< HEAD
 <!-- KApplicationRunner__run -->
 <g id="node1" class="node">
 <title>KApplicationRunner__run</title>
@@ -328,6 +360,283 @@
 <title>KDummyRandom__Random&#45;&gt;KDummyRandom__Random__Seed</title>
 <path fill="none" stroke="black" d="M126.55,-760C158.17,-760 207.94,-760 241.84,-760"/>
 <polygon fill="black" stroke="black" points="242.25,-763.5 252.25,-760 242.25,-756.5 242.25,-763.5"/>
+=======
+<!-- KommonNamedRandomGenerator__NamedRandomGenerator -->
+<g id="node1" class="node">
+<title>KommonNamedRandomGenerator__NamedRandomGenerator</title>
+<polygon fill="#ff7c00" fill-opacity="0.627451" stroke="black" points="175,-79 16,-79 16,-43 175,-43 175,-79"/>
+<text text-anchor="middle" x="95.5" y="-58.2" font-family="sans-serif,bold" font-size="11.00">NamedRandomGenerator</text>
+</g>
+<!-- KommonNamedRandomGenerator__NamedRandomGenerator__Name -->
+<g id="node2" class="node">
+<title>KommonNamedRandomGenerator__NamedRandomGenerator__Name</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="306.5,-52 252.5,-52 252.5,-16 306.5,-16 306.5,-52"/>
+<text text-anchor="middle" x="279.5" y="-31.5" font-family="sans-serif" font-size="10.00">Name</text>
+</g>
+<!-- KommonNamedRandomGenerator__NamedRandomGenerator&#45;&gt;KommonNamedRandomGenerator__NamedRandomGenerator__Name -->
+<g id="edge1" class="edge">
+<title>KommonNamedRandomGenerator__NamedRandomGenerator&#45;&gt;KommonNamedRandomGenerator__NamedRandomGenerator__Name</title>
+<path fill="none" stroke="black" d="M175,-49.35C198.38,-45.89 222.88,-42.25 242.17,-39.39"/>
+<polygon fill="black" stroke="black" points="242.94,-42.81 252.31,-37.88 241.91,-35.89 242.94,-42.81"/>
+</g>
+<!-- KommonNamedRandomGenerator__NamedRandomGenerator__Seed -->
+<g id="node3" class="node">
+<title>KommonNamedRandomGenerator__NamedRandomGenerator__Seed</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="306.5,-106 252.5,-106 252.5,-70 306.5,-70 306.5,-106"/>
+<text text-anchor="middle" x="279.5" y="-85.5" font-family="sans-serif" font-size="10.00">Seed</text>
+</g>
+<!-- KommonNamedRandomGenerator__NamedRandomGenerator&#45;&gt;KommonNamedRandomGenerator__NamedRandomGenerator__Seed -->
+<g id="edge2" class="edge">
+<title>KommonNamedRandomGenerator__NamedRandomGenerator&#45;&gt;KommonNamedRandomGenerator__NamedRandomGenerator__Seed</title>
+<path fill="none" stroke="black" d="M175,-72.65C198.38,-76.11 222.88,-79.75 242.17,-82.61"/>
+<polygon fill="black" stroke="black" points="241.91,-86.11 252.31,-84.12 242.94,-79.19 241.91,-86.11"/>
+</g>
+<!-- KDummyRandom__Random -->
+<g id="node4" class="node">
+<title>KDummyRandom__Random</title>
+<polygon fill="#ff7c00" fill-opacity="0.627451" stroke="black" points="126.5,-186 64.5,-186 64.5,-150 126.5,-150 126.5,-186"/>
+<text text-anchor="middle" x="95.5" y="-165.2" font-family="sans-serif,bold" font-size="11.00">Random</text>
+</g>
+<!-- KDummyRandom__Random__Seed -->
+<g id="node5" class="node">
+<title>KDummyRandom__Random__Seed</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="306.5,-186 252.5,-186 252.5,-150 306.5,-150 306.5,-186"/>
+<text text-anchor="middle" x="279.5" y="-165.5" font-family="sans-serif" font-size="10.00">Seed</text>
+</g>
+<!-- KDummyRandom__Random&#45;&gt;KDummyRandom__Random__Seed -->
+<g id="edge3" class="edge">
+<title>KDummyRandom__Random&#45;&gt;KDummyRandom__Random__Seed</title>
+<path fill="none" stroke="black" d="M126.55,-168C158.17,-168 207.94,-168 241.84,-168"/>
+<polygon fill="black" stroke="black" points="242.25,-171.5 252.25,-168 242.25,-164.5 242.25,-171.5"/>
+</g>
+<!-- KApplicationRunner__run -->
+<g id="node6" class="node">
+<title>KApplicationRunner__run</title>
+<polygon fill="#ff7c00" fill-opacity="0.627451" stroke="black" points="122.5,-293 68.5,-293 68.5,-257 122.5,-257 122.5,-293"/>
+<text text-anchor="middle" x="95.5" y="-272.2" font-family="sans-serif,bold" font-size="11.00">run</text>
+</g>
+<!-- KApplicationRunner__run__name -->
+<g id="node7" class="node">
+<title>KApplicationRunner__run__name</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="306.5,-266 252.5,-266 252.5,-230 306.5,-230 306.5,-266"/>
+<text text-anchor="middle" x="279.5" y="-245.5" font-family="sans-serif" font-size="10.00">name</text>
+</g>
+<!-- KApplicationRunner__run&#45;&gt;KApplicationRunner__run__name -->
+<g id="edge4" class="edge">
+<title>KApplicationRunner__run&#45;&gt;KApplicationRunner__run__name</title>
+<path fill="none" stroke="black" d="M122.58,-271.13C154.07,-266.46 207.2,-258.58 242.56,-253.33"/>
+<polygon fill="black" stroke="black" points="243.09,-256.79 252.47,-251.86 242.07,-249.87 243.09,-256.79"/>
+</g>
+<!-- KNamedReference__app -->
+<g id="node8" class="node">
+<title>KNamedReference__app</title>
+<polygon fill="#ff7c00" fill-opacity="0.627451" stroke="black" points="306.5,-320 252.5,-320 252.5,-284 306.5,-284 306.5,-320"/>
+<text text-anchor="middle" x="279.5" y="-299.2" font-family="sans-serif,bold" font-size="11.00">app</text>
+</g>
+<!-- KApplicationRunner__run&#45;&gt;KNamedReference__app -->
+<g id="edge5" class="edge">
+<title>KApplicationRunner__run&#45;&gt;KNamedReference__app</title>
+<path fill="none" stroke="black" d="M122.58,-278.87C154.07,-283.54 207.2,-291.42 242.56,-296.67"/>
+<polygon fill="black" stroke="black" points="242.07,-300.13 252.47,-298.14 243.09,-293.21 242.07,-300.13"/>
+</g>
+<!-- KNamedReference__app__Name -->
+<g id="node9" class="node">
+<title>KNamedReference__app__Name</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="471,-292 417,-292 417,-256 471,-256 471,-292"/>
+<text text-anchor="middle" x="444" y="-271.5" font-family="sans-serif" font-size="10.00">Name</text>
+</g>
+<!-- KNamedReference__app&#45;&gt;KNamedReference__app__Name -->
+<g id="edge6" class="edge">
+<title>KNamedReference__app&#45;&gt;KNamedReference__app__Name</title>
+<path fill="none" stroke="black" d="M306.61,-297.5C333.73,-292.83 376.39,-285.48 406.77,-280.24"/>
+<polygon fill="black" stroke="black" points="407.7,-283.63 416.96,-278.49 406.51,-276.74 407.7,-283.63"/>
+</g>
+<!-- KMessageTable__messages -->
+<g id="node10" class="node">
+<title>KMessageTable__messages</title>
+<polygon fill="#ff7c00" fill-opacity="0.627451" stroke="black" points="130.5,-589 60.5,-589 60.5,-553 130.5,-553 130.5,-589"/>
+<text text-anchor="middle" x="95.5" y="-568.2" font-family="sans-serif,bold" font-size="11.00">messages</text>
+</g>
+<!-- KMessageTable__messages__format -->
+<g id="node11" class="node">
+<title>KMessageTable__messages__format</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="306.5,-400 252.5,-400 252.5,-364 306.5,-364 306.5,-400"/>
+<text text-anchor="middle" x="279.5" y="-379.5" font-family="sans-serif" font-size="10.00">format</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KMessageTable__messages__format -->
+<g id="edge7" class="edge">
+<title>KMessageTable__messages&#45;&gt;KMessageTable__messages__format</title>
+<path fill="none" stroke="black" d="M104.91,-552.85C121.04,-519.87 159.36,-449.75 211,-409 220.26,-401.7 231.74,-396.13 242.6,-392"/>
+<polygon fill="black" stroke="black" points="244.03,-395.21 252.31,-388.61 241.72,-388.6 244.03,-395.21"/>
+</g>
+<!-- KMessageTable__messages__log -->
+<g id="node12" class="node">
+<title>KMessageTable__messages__log</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="306.5,-454 252.5,-454 252.5,-418 306.5,-418 306.5,-454"/>
+<text text-anchor="middle" x="279.5" y="-433.5" font-family="sans-serif" font-size="10.00">log</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KMessageTable__messages__log -->
+<g id="edge8" class="edge">
+<title>KMessageTable__messages&#45;&gt;KMessageTable__messages__log</title>
+<path fill="none" stroke="black" d="M111.88,-552.73C132.43,-529.29 170.93,-488.59 211,-463 220.77,-456.76 232.23,-451.52 242.89,-447.37"/>
+<polygon fill="black" stroke="black" points="244.23,-450.61 252.4,-443.86 241.8,-444.04 244.23,-450.61"/>
+</g>
+<!-- KMessageTable__messages__parser_context -->
+<g id="node13" class="node">
+<title>KMessageTable__messages__parser_context</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="322.5,-508 236.5,-508 236.5,-472 322.5,-472 322.5,-508"/>
+<text text-anchor="middle" x="279.5" y="-487.5" font-family="sans-serif" font-size="10.00">parser_context</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KMessageTable__messages__parser_context -->
+<g id="edge9" class="edge">
+<title>KMessageTable__messages&#45;&gt;KMessageTable__messages__parser_context</title>
+<path fill="none" stroke="black" d="M130.57,-554.27C153.22,-543.32 183.69,-528.89 211,-517 216.06,-514.8 221.37,-512.56 226.68,-510.36"/>
+<polygon fill="black" stroke="black" points="228.28,-513.49 236.21,-506.46 225.63,-507.01 228.28,-513.49"/>
+</g>
+<!-- KMessageTable__messages__precision -->
+<g id="node14" class="node">
+<title>KMessageTable__messages__precision</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="308.5,-562 250.5,-562 250.5,-526 308.5,-526 308.5,-562"/>
+<text text-anchor="middle" x="279.5" y="-541.5" font-family="sans-serif" font-size="10.00">precision</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KMessageTable__messages__precision -->
+<g id="edge10" class="edge">
+<title>KMessageTable__messages&#45;&gt;KMessageTable__messages__precision</title>
+<path fill="none" stroke="black" d="M130.73,-565.92C161.95,-561.29 208.01,-554.46 240.39,-549.65"/>
+<polygon fill="black" stroke="black" points="241.01,-553.1 250.39,-548.17 239.98,-546.18 241.01,-553.1"/>
+</g>
+<!-- KMessageTable__messages__shutdown_message -->
+<g id="node15" class="node">
+<title>KMessageTable__messages__shutdown_message</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="333.5,-616 225.5,-616 225.5,-580 333.5,-580 333.5,-616"/>
+<text text-anchor="middle" x="279.5" y="-595.5" font-family="sans-serif" font-size="10.00">shutdown_message</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KMessageTable__messages__shutdown_message -->
+<g id="edge11" class="edge">
+<title>KMessageTable__messages&#45;&gt;KMessageTable__messages__shutdown_message</title>
+<path fill="none" stroke="black" d="M130.73,-576.08C154.49,-579.6 186.83,-584.4 215.2,-588.61"/>
+<polygon fill="black" stroke="black" points="215.05,-592.12 225.45,-590.13 216.07,-585.2 215.05,-592.12"/>
+</g>
+<!-- KMessageTable__messages__terminal -->
+<g id="node16" class="node">
+<title>KMessageTable__messages__terminal</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="307.5,-670 251.5,-670 251.5,-634 307.5,-634 307.5,-670"/>
+<text text-anchor="middle" x="279.5" y="-649.5" font-family="sans-serif" font-size="10.00">terminal</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KMessageTable__messages__terminal -->
+<g id="edge12" class="edge">
+<title>KMessageTable__messages&#45;&gt;KMessageTable__messages__terminal</title>
+<path fill="none" stroke="black" d="M130.57,-587.73C153.22,-598.68 183.69,-613.11 211,-625 221,-629.35 231.93,-633.84 242.04,-637.88"/>
+<polygon fill="black" stroke="black" points="240.83,-641.16 251.41,-641.6 243.4,-634.66 240.83,-641.16"/>
+</g>
+<!-- KTextFile__file -->
+<g id="node17" class="node">
+<title>KTextFile__file</title>
+<polygon fill="#ff7c00" fill-opacity="0.627451" stroke="black" points="306.5,-724 252.5,-724 252.5,-688 306.5,-688 306.5,-724"/>
+<text text-anchor="middle" x="279.5" y="-703.2" font-family="sans-serif,bold" font-size="11.00">file</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KTextFile__file -->
+<g id="edge13" class="edge">
+<title>KMessageTable__messages&#45;&gt;KTextFile__file</title>
+<path fill="none" stroke="black" d="M111.88,-589.27C132.43,-612.71 170.93,-653.41 211,-679 220.77,-685.24 232.23,-690.48 242.89,-694.63"/>
+<polygon fill="black" stroke="black" points="241.8,-697.96 252.4,-698.14 244.23,-691.39 241.8,-697.96"/>
+</g>
+<!-- KMessageData__message -->
+<g id="node18" class="node">
+<title>KMessageData__message</title>
+<polygon fill="#ff7c00" fill-opacity="0.627451" stroke="black" points="312,-778 247,-778 247,-742 312,-742 312,-778"/>
+<text text-anchor="middle" x="279.5" y="-757.2" font-family="sans-serif,bold" font-size="11.00">message</text>
+</g>
+<!-- KMessageTable__messages&#45;&gt;KMessageData__message -->
+<g id="edge14" class="edge">
+<title>KMessageTable__messages&#45;&gt;KMessageData__message</title>
+<path fill="none" stroke="black" d="M104.91,-589.15C121.04,-622.13 159.36,-692.25 211,-733 218.8,-739.15 228.17,-744.07 237.43,-747.94"/>
+<polygon fill="black" stroke="black" points="236.36,-751.28 246.95,-751.59 238.87,-744.74 236.36,-751.28"/>
+</g>
+<!-- KMessageData__message__format -->
+<g id="node19" class="node">
+<title>KMessageData__message__format</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="471,-750 417,-750 417,-714 471,-714 471,-750"/>
+<text text-anchor="middle" x="444" y="-729.5" font-family="sans-serif" font-size="10.00">format</text>
+</g>
+<!-- KMessageData__message&#45;&gt;KMessageData__message__format -->
+<g id="edge15" class="edge">
+<title>KMessageData__message&#45;&gt;KMessageData__message__format</title>
+<path fill="none" stroke="black" d="M312.22,-754.53C339.45,-749.84 378.68,-743.08 407.06,-738.19"/>
+<polygon fill="black" stroke="black" points="407.72,-741.63 416.99,-736.48 406.54,-734.73 407.72,-741.63"/>
+</g>
+<!-- KMessageData__message__key -->
+<g id="node20" class="node">
+<title>KMessageData__message__key</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="471,-696 417,-696 417,-660 471,-660 471,-696"/>
+<text text-anchor="middle" x="444" y="-675.5" font-family="sans-serif" font-size="10.00">key</text>
+</g>
+<!-- KMessageData__message&#45;&gt;KMessageData__message__key -->
+<g id="edge16" class="edge">
+<title>KMessageData__message&#45;&gt;KMessageData__message__key</title>
+<path fill="none" stroke="black" d="M312.19,-752.36C326.33,-748.05 342.75,-741.74 356,-733 370.18,-723.65 368.17,-714.86 382,-705 389.76,-699.47 398.82,-694.7 407.56,-690.79"/>
+<polygon fill="black" stroke="black" points="408.98,-693.98 416.83,-686.87 406.26,-687.54 408.98,-693.98"/>
+</g>
+<!-- KMessageData__message__log -->
+<g id="node21" class="node">
+<title>KMessageData__message__log</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="471,-642 417,-642 417,-606 471,-606 471,-642"/>
+<text text-anchor="middle" x="444" y="-621.5" font-family="sans-serif" font-size="10.00">log</text>
+</g>
+<!-- KMessageData__message&#45;&gt;KMessageData__message__log -->
+<g id="edge17" class="edge">
+<title>KMessageData__message&#45;&gt;KMessageData__message__log</title>
+<path fill="none" stroke="black" d="M312.35,-755.32C327.38,-751.6 344.5,-744.92 356,-733 382.54,-705.48 356.49,-679.48 382,-651 388.77,-643.45 398.04,-637.9 407.32,-633.87"/>
+<polygon fill="black" stroke="black" points="408.8,-637.05 416.88,-630.21 406.29,-630.52 408.8,-637.05"/>
+</g>
+<!-- KMessageData__message__parser_context -->
+<g id="node22" class="node">
+<title>KMessageData__message__parser_context</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="487,-588 401,-588 401,-552 487,-552 487,-588"/>
+<text text-anchor="middle" x="444" y="-567.5" font-family="sans-serif" font-size="10.00">parser_context</text>
+</g>
+<!-- KMessageData__message&#45;&gt;KMessageData__message__parser_context -->
+<g id="edge18" class="edge">
+<title>KMessageData__message&#45;&gt;KMessageData__message__parser_context</title>
+<path fill="none" stroke="black" d="M312.2,-756.07C327.58,-752.53 345.04,-745.79 356,-733 396.03,-686.26 343.71,-645.18 382,-597 384.87,-593.38 388.33,-590.24 392.13,-587.51"/>
+<polygon fill="black" stroke="black" points="394.16,-590.36 400.86,-582.16 390.51,-584.39 394.16,-590.36"/>
+</g>
+<!-- KMessageData__message__precision -->
+<g id="node23" class="node">
+<title>KMessageData__message__precision</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="473,-534 415,-534 415,-498 473,-498 473,-534"/>
+<text text-anchor="middle" x="444" y="-513.5" font-family="sans-serif" font-size="10.00">precision</text>
+</g>
+<!-- KMessageData__message&#45;&gt;KMessageData__message__precision -->
+<g id="edge19" class="edge">
+<title>KMessageData__message&#45;&gt;KMessageData__message__precision</title>
+<path fill="none" stroke="black" d="M312.11,-756.39C327.65,-752.94 345.3,-746.19 356,-733 409.7,-666.82 330.76,-611.11 382,-543 387.89,-535.17 396.55,-529.57 405.51,-525.57"/>
+<polygon fill="black" stroke="black" points="406.78,-528.84 414.84,-521.97 404.25,-522.31 406.78,-528.84"/>
+</g>
+<!-- KMessageData__message__shutdown_message -->
+<g id="node24" class="node">
+<title>KMessageData__message__shutdown_message</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="498,-480 390,-480 390,-444 498,-444 498,-480"/>
+<text text-anchor="middle" x="444" y="-459.5" font-family="sans-serif" font-size="10.00">shutdown_message</text>
+</g>
+<!-- KMessageData__message&#45;&gt;KMessageData__message__shutdown_message -->
+<g id="edge20" class="edge">
+<title>KMessageData__message&#45;&gt;KMessageData__message__shutdown_message</title>
+<path fill="none" stroke="black" d="M312.27,-756.52C327.86,-753.1 345.5,-746.35 356,-733 423.45,-647.3 317.74,-577.11 382,-489 382.46,-488.37 382.94,-487.75 383.43,-487.15"/>
+<polygon fill="black" stroke="black" points="385.98,-489.56 390.72,-480.09 381.11,-484.53 385.98,-489.56"/>
+</g>
+<!-- KMessageData__message__terminal -->
+<g id="node25" class="node">
+<title>KMessageData__message__terminal</title>
+<polygon fill="#f0f0f0" fill-opacity="0.627451" stroke="black" points="472,-426 416,-426 416,-390 472,-390 472,-426"/>
+<text text-anchor="middle" x="444" y="-405.5" font-family="sans-serif" font-size="10.00">terminal</text>
+</g>
+<!-- KMessageData__message&#45;&gt;KMessageData__message__terminal -->
+<g id="edge21" class="edge">
+<title>KMessageData__message&#45;&gt;KMessageData__message__terminal</title>
+<path fill="none" stroke="black" d="M312.37,-756.6C327.99,-753.21 345.63,-746.45 356,-733 396.61,-680.37 343.35,-489.08 382,-435 387.9,-426.75 396.9,-420.98 406.19,-416.97"/>
+<polygon fill="black" stroke="black" points="407.7,-420.14 415.86,-413.39 405.27,-413.58 407.7,-420.14"/>
+>>>>>>> main
 </g>
 <!-- KROOTWindow__root_window -->
 <g id="node26" class="node">
