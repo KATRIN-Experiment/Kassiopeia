@@ -53,9 +53,9 @@ class KSurfaceContainer
 */
 
 #if __cplusplus >= 201703L
-    class iterator : public std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>
-#else
     class iterator
+#else
+    class iterator : public std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>
 #endif
     {
       public:
