@@ -177,8 +177,6 @@ void KEMRootFieldCanvas::DrawGeomRZ(const std::string& conicSectfile, const std:
                 }
             }
         }
-
-        fclose(inputwire);
     }
 
     // Read in magnet coils
