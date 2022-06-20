@@ -22,6 +22,10 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
+if(NOT CMAKE_CXX_STANDARD MATCHES "14|17|20")
+    message(FATAL_ERROR "Unsupported C++ standard: ${CMAKE_CXX_STANDARD}")
+endif()
+
 # Additional compiler version checks, see https://en.cppreference.com/w/cpp/compiler_support
 if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
     if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
