@@ -11,15 +11,18 @@
     reset="(bool)"
 >
     <annulus_surface
+        axial_mesh_count="(unsigned int)"
         name="(string)"
         r1="(double)"
         r2="(double)"
+        radial_mesh_count="(unsigned int)"
         radial_mesh_power="(double)"
         z="(double)"
     >
     </annulus_surface>
 
     <appearance
+        arc="(unsigned int)"
         color="(KGRGBAColor)"
         name="(string)"
         spaces="(string)"
@@ -78,12 +81,15 @@
 
     <box_space
         name="(string)"
+        x_mesh_count="(unsigned int)"
         x_mesh_power="(double)"
         xa="(double)"
         xb="(double)"
+        y_mesh_count="(unsigned int)"
         y_mesh_power="(double)"
         ya="(double)"
         yb="(double)"
+        z_mesh_count="(unsigned int)"
         z_mesh_power="(double)"
         za="(double)"
         zb="(double)"
@@ -95,6 +101,7 @@
     >
         <circle_wire
             diameter="(double)"
+            mesh_count="(unsigned int)"
             radius="(double)"
         >
         </circle_wire>
@@ -106,6 +113,7 @@
     >
         <circle_wire
             diameter="(double)"
+            mesh_count="(unsigned int)"
             radius="(double)"
         >
         </circle_wire>
@@ -118,7 +126,9 @@
         <circular_wire_pins
             diameter="(double)"
             inner_radius="(double)"
+            mesh_count="(unsigned int)"
             mesh_power="(double)"
+            n_pins="(unsigned int)"
             outer_radius="(double)"
             rotation_angle="(double)"
         >
@@ -132,7 +142,9 @@
         <circular_wire_pins
             diameter="(double)"
             inner_radius="(double)"
+            mesh_count="(unsigned int)"
             mesh_power="(double)"
+            n_pins="(unsigned int)"
             outer_radius="(double)"
             rotation_angle="(double)"
         >
@@ -160,8 +172,11 @@
     </complex_annulus_surface>
 
     <cone_space
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
+        radial_mesh_count="(unsigned int)"
         radial_mesh_power="(double)"
         rb="(double)"
         za="(double)"
@@ -170,6 +185,8 @@
     </cone_space>
 
     <cone_surface
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
         rb="(double)"
@@ -237,10 +254,12 @@
     >
         <conical_wire_array
             diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
             longitudinal_mesh_power="(double)"
             radius1="(double)"
             radius2="(double)"
             theta_start="(double)"
+            wire_count="(unsigned int)"
             z1="(double)"
             z2="(double)"
         >
@@ -253,10 +272,12 @@
     >
         <conical_wire_array
             diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
             longitudinal_mesh_power="(double)"
             radius1="(double)"
             radius2="(double)"
             theta_start="(double)"
+            wire_count="(unsigned int)"
             z1="(double)"
             z2="(double)"
         >
@@ -265,10 +286,13 @@
     </conical_wire_array_surface>
 
     <cut_cone_space
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
         r1="(double)"
         r2="(double)"
+        radial_mesh_count="(unsigned int)"
         radial_mesh_power="(double)"
         z1="(double)"
         z2="(double)"
@@ -276,6 +300,8 @@
     </cut_cone_space>
 
     <cut_cone_surface
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
         r1="(double)"
@@ -286,12 +312,15 @@
     </cut_cone_surface>
 
     <cut_cone_tube_space
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
         r11="(double)"
         r12="(double)"
         r21="(double)"
         r22="(double)"
+        radial_mesh_count="(unsigned int)"
         radial_mesh_power="(double)"
         z1="(double)"
         z2="(double)"
@@ -299,22 +328,27 @@
     </cut_cone_tube_space>
 
     <cut_torus_surface
+        axial_mesh_count="(unsigned int)"
         name="(string)"
         r1="(double)"
         r2="(double)"
         radius="(double)"
         right="(bool)"
         short="(bool)"
+        toroidal_mesh_count="(unsigned int)"
         z1="(double)"
         z2="(double)"
     >
     </cut_torus_surface>
 
     <cylinder_space
+        axial_mesh_count="(unsigned int)"
         length="(double)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
         r="(double)"
+        radial_mesh_count="(unsigned int)"
         radial_mesh_power="(double)"
         z1="(double)"
         z2="(double)"
@@ -322,7 +356,9 @@
     </cylinder_space>
 
     <cylinder_surface
+        axial_mesh_count="(unsigned int)"
         length="(double)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
         r="(double)"
@@ -332,11 +368,14 @@
     </cylinder_surface>
 
     <cylinder_tube_space
+        axial_mesh_count="(unsigned int)"
         length="(double)"
+        longitudinal_mesh_count="(unsigned int)"
         longitudinal_mesh_power="(double)"
         name="(string)"
         r1="(double)"
         r2="(double)"
+        radial_mesh_count="(unsigned int)"
         radial_mesh_power="(double)"
         z1="(double)"
         z2="(double)"
@@ -353,8 +392,10 @@
     </discrete_rotational_mesh>
 
     <disk_surface
+        axial_mesh_count="(unsigned int)"
         name="(string)"
         r="(double)"
+        radial_mesh_count="(unsigned int)"
         radial_mesh_power="(double)"
         z="(double)"
     >
@@ -372,12 +413,14 @@
     </electromagnet>
 
     <extruded_arc_segment_surface
+        extruded_mesh_count="(unsigned int)"
         extruded_mesh_power="(double)"
         name="(string)"
         zmax="(double)"
         zmin="(double)"
     >
         <arc_segment
+            arc_mesh_count="(unsigned int)"
             radius="(double)"
             right="(bool)"
             short="(bool)"
@@ -391,13 +434,16 @@
     </extruded_arc_segment_surface>
 
     <extruded_circle_space
+        extruded_mesh_count="(unsigned int)"
         extruded_mesh_power="(double)"
+        flattened_mesh_count="(unsigned int)"
         flattened_mesh_power="(double)"
         name="(string)"
         zmax="(double)"
         zmin="(double)"
     >
         <circle
+            circle_mesh_count="(unsigned int)"
             radius="(double)"
             x="(double)"
             y="(double)"
@@ -407,12 +453,14 @@
     </extruded_circle_space>
 
     <extruded_circle_surface
+        extruded_mesh_count="(unsigned int)"
         extruded_mesh_power="(double)"
         name="(string)"
         zmax="(double)"
         zmin="(double)"
     >
         <circle
+            circle_mesh_count="(unsigned int)"
             radius="(double)"
             x="(double)"
             y="(double)"
@@ -422,12 +470,14 @@
     </extruded_circle_surface>
 
     <extruded_line_segment_surface
+        extruded_mesh_count="(unsigned int)"
         extruded_mesh_power="(double)"
         name="(string)"
         zmax="(double)"
         zmin="(double)"
     >
         <line_segment
+            line_mesh_count="(unsigned int)"
             line_mesh_power="(double)"
             x1="(double)"
             x2="(double)"
@@ -439,6 +489,7 @@
     </extruded_line_segment_surface>
 
     <extruded_poly_line_surface
+        extruded_mesh_count="(unsigned int)"
         extruded_mesh_power="(double)"
         name="(string)"
         zmax="(double)"
@@ -446,6 +497,7 @@
     >
         <poly_line>
             <next_arc
+                arc_mesh_count="(unsigned int)"
                 radius="(double)"
                 right="(bool)"
                 short="(bool)"
@@ -455,6 +507,7 @@
             </next_arc>
 
             <next_line
+                line_mesh_count="(unsigned int)"
                 line_mesh_power="(double)"
                 x="(double)"
                 y="(double)"
@@ -462,6 +515,7 @@
             </next_line>
 
             <previous_arc
+                arc_mesh_count="(unsigned int)"
                 radius="(double)"
                 right="(bool)"
                 short="(bool)"
@@ -471,6 +525,7 @@
             </previous_arc>
 
             <previous_line
+                line_mesh_count="(unsigned int)"
                 line_mesh_power="(double)"
                 x="(double)"
                 y="(double)"
@@ -488,7 +543,9 @@
     </extruded_poly_line_surface>
 
     <extruded_poly_loop_space
+        extruded_mesh_count="(unsigned int)"
         extruded_mesh_power="(double)"
+        flattened_mesh_count="(unsigned int)"
         flattened_mesh_power="(double)"
         name="(string)"
         zmax="(double)"
@@ -496,6 +553,7 @@
     >
         <poly_loop>
             <last_arc
+                arc_mesh_count="(unsigned int)"
                 radius="(double)"
                 right="(bool)"
                 short="(bool)"
@@ -503,11 +561,13 @@
             </last_arc>
 
             <last_line
+                line_mesh_count="(unsigned int)"
                 line_mesh_power="(double)"
             >
             </last_line>
 
             <next_arc
+                arc_mesh_count="(unsigned int)"
                 radius="(double)"
                 right="(bool)"
                 short="(bool)"
@@ -517,6 +577,7 @@
             </next_arc>
 
             <next_line
+                line_mesh_count="(unsigned int)"
                 line_mesh_power="(double)"
                 x="(double)"
                 y="(double)"
@@ -524,6 +585,7 @@
             </next_line>
 
             <previous_arc
+                arc_mesh_count="(unsigned int)"
                 radius="(double)"
                 right="(bool)"
                 short="(bool)"
@@ -533,6 +595,7 @@
             </previous_arc>
 
             <previous_line
+                line_mesh_count="(unsigned int)"
                 line_mesh_power="(double)"
                 x="(double)"
                 y="(double)"
@@ -550,6 +613,7 @@
     </extruded_poly_loop_space>
 
     <extruded_poly_loop_surface
+        extruded_mesh_count="(unsigned int)"
         extruded_mesh_power="(double)"
         name="(string)"
         zmax="(double)"
@@ -633,11 +697,13 @@
     </extruded_surface>
 
     <flattened_circle_surface
+        flattened_mesh_count="(unsigned int)"
         flattened_mesh_power="(double)"
         name="(string)"
         z="(double)"
     >
         <circle
+            circle_mesh_count="(unsigned int)"
             radius="(double)"
             x="(double)"
             y="(double)"
@@ -647,6 +713,7 @@
     </flattened_circle_surface>
 
     <flattened_poly_loop_surface
+        flattened_mesh_count="(unsigned int)"
         flattened_mesh_power="(double)"
         name="(string)"
         z="(double)"
@@ -662,6 +729,7 @@
         <linear_wire_grid
             add_outer_circle="(bool)"
             diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
             longitudinal_mesh_power="(double)"
             pitch="(double)"
             radius="(double)"
@@ -676,6 +744,7 @@
         <linear_wire_grid
             add_outer_circle="(bool)"
             diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
             longitudinal_mesh_power="(double)"
             pitch="(double)"
             radius="(double)"
@@ -697,18 +766,16 @@
     >
     </mesh_deformer>
 
-<<<<<<< HEAD
     <mesh_refiner
         max_area="(double)"
         max_aspect_ratio="(double)"
         max_length="(double)"
+        max_refinement_steps="(unsigned int)"
         spaces="(string)"
         surfaces="(string)"
     >
     </mesh_refiner>
 
-=======
->>>>>>> main
     <port_housing_space
         name="(string)"
     >
@@ -768,6 +835,7 @@
         <quadratic_wire_grid
             add_outer_circle="(bool)"
             diameter="(double)"
+            mesh_count_per_pitch="(unsigned int)"
             pitch="(double)"
             radius="(double)"
         >
@@ -781,6 +849,7 @@
         <quadratic_wire_grid
             add_outer_circle="(bool)"
             diameter="(double)"
+            mesh_count_per_pitch="(unsigned int)"
             pitch="(double)"
             radius="(double)"
         >
@@ -822,10 +891,13 @@
     </rod_surface>
 
     <rotated_arc_segment_space
+        flattened_mesh_count="(unsigned int)"
         flattened_mesh_power="(double)"
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <arc_segment
+            arc_mesh_count="(unsigned int)"
             radius="(double)"
             right="(bool)"
             short="(bool)"
@@ -840,8 +912,10 @@
 
     <rotated_arc_segment_surface
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <arc_segment
+            arc_mesh_count="(unsigned int)"
             radius="(double)"
             right="(bool)"
             short="(bool)"
@@ -856,8 +930,10 @@
 
     <rotated_circle_space
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <circle
+            circle_mesh_count="(unsigned int)"
             radius="(double)"
             x="(double)"
             y="(double)"
@@ -868,8 +944,10 @@
 
     <rotated_circle_surface
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <circle
+            circle_mesh_count="(unsigned int)"
             radius="(double)"
             x="(double)"
             y="(double)"
@@ -879,10 +957,13 @@
     </rotated_circle_surface>
 
     <rotated_line_segment_space
+        flattened_mesh_count="(unsigned int)"
         flattened_mesh_power="(double)"
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <line_segment
+            line_mesh_count="(unsigned int)"
             line_mesh_power="(double)"
             x1="(double)"
             x2="(double)"
@@ -895,8 +976,10 @@
 
     <rotated_line_segment_surface
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <line_segment
+            line_mesh_count="(unsigned int)"
             line_mesh_power="(double)"
             x1="(double)"
             x2="(double)"
@@ -908,8 +991,10 @@
     </rotated_line_segment_surface>
 
     <rotated_poly_line_space
+        flattened_mesh_count="(unsigned int)"
         flattened_mesh_power="(double)"
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <poly_line>
         </poly_line>
@@ -918,6 +1003,7 @@
 
     <rotated_poly_line_surface
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <poly_line>
         </poly_line>
@@ -926,6 +1012,7 @@
 
     <rotated_poly_loop_space
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <poly_loop>
         </poly_loop>
@@ -934,6 +1021,7 @@
 
     <rotated_poly_loop_surface
         name="(string)"
+        rotated_mesh_count="(unsigned int)"
     >
         <poly_loop>
         </poly_loop>
@@ -988,9 +1076,11 @@
         angle_start="(double)"
         angle_stop="(double)"
         name="(string)"
+        shell_mesh_count="(unsigned int)"
         shell_mesh_power="(double)"
     >
         <arc_segment
+            arc_mesh_count="(unsigned int)"
             radius="(double)"
             right="(bool)"
             short="(bool)"
@@ -1007,9 +1097,11 @@
         angle_start="(double)"
         angle_stop="(double)"
         name="(string)"
+        shell_mesh_count="(unsigned int)"
         shell_mesh_power="(double)"
     >
         <circle
+            circle_mesh_count="(unsigned int)"
             radius="(double)"
             x="(double)"
             y="(double)"
@@ -1022,9 +1114,11 @@
         angle_start="(double)"
         angle_stop="(double)"
         name="(string)"
+        shell_mesh_count="(unsigned int)"
         shell_mesh_power="(double)"
     >
         <line_segment
+            line_mesh_count="(unsigned int)"
             line_mesh_power="(double)"
             x1="(double)"
             x2="(double)"
@@ -1039,6 +1133,7 @@
         angle_start="(double)"
         angle_stop="(double)"
         name="(string)"
+        shell_mesh_count="(unsigned int)"
         shell_mesh_power="(double)"
     >
         <poly_line>
@@ -1050,6 +1145,7 @@
         angle_start="(double)"
         angle_stop="(double)"
         name="(string)"
+        shell_mesh_count="(unsigned int)"
         shell_mesh_power="(double)"
     >
         <poly_loop>
@@ -1132,17 +1228,21 @@
     </surface>
 
     <torus_space
+        axial_mesh_count="(unsigned int)"
         name="(string)"
         r="(double)"
         radius="(double)"
+        toroidal_mesh_count="(unsigned int)"
         z="(double)"
     >
     </torus_space>
 
     <torus_surface
+        axial_mesh_count="(unsigned int)"
         name="(string)"
         r="(double)"
         radius="(double)"
+        toroidal_mesh_count="(unsigned int)"
         z="(double)"
     >
     </torus_surface>
@@ -1158,7 +1258,9 @@
     write_xml="(bool)"
 >
 </geometry_printer>
-<kassiopeia>
+<kassiopeia
+    random_seed="(unsigned int)"
+>
     <kess_elastic_elsepa
         name="(string)"
     >
@@ -1363,12 +1465,16 @@
         add_static_track_modifier="(string)"
         command="(string)"
         electric_field="(string)"
+        events="(unsigned int)"
         generator="(string)"
         magnetic_field="(string)"
         name="(string)"
+        run="(unsigned int)"
+        seed="(unsigned int)"
         space="(string)"
         space_interaction="(string)"
         space_navigator="(string)"
+        step_report_iteration="(unsigned int)"
         surface="(string)"
         surface_interaction="(string)"
         surface_navigator="(string)"
@@ -1435,6 +1541,7 @@
         <field_electrostatic
             directory="(string)"
             file="(string)"
+            hash_masked_bits="(unsigned int)"
             hash_threshold="(double)"
             maximum_element_aspect_ratio="(double)"
             minimum_element_area="(double)"
@@ -1476,11 +1583,18 @@
             </explicit_superposition_cached_charge_density_solver>
 
             <fast_multipole_field_solver
+                expansion_degree="(unsigned int)"
                 insertion_ratio="(double)"
+                maximum_tree_depth="(unsigned int)"
+                neighbor_order="(unsigned int)"
                 region_expansion_factor="(double)"
+                split_mode="(bool)"
+                top_level_divisions="(unsigned int)"
+                tree_level_divisions="(unsigned int)"
                 use_caching="(bool)"
                 use_opencl="(bool)"
                 use_region_size_estimation="(bool)"
+                verbosity="(unsigned int)"
                 world_cube_center_x="(double)"
                 world_cube_center_y="(double)"
                 world_cube_center_z="(double)"
@@ -1489,13 +1603,12 @@
                 <viewer
                     file="(string)"
                     save="(bool)"
-                    view="(bool)"
+                    view="(bool )"
                 >
                 </viewer>
 
             </fast_multipole_field_solver>
 
-<<<<<<< HEAD
             <gauss_seidel_bem_solver
                 integrator="(string)"
                 use_opencl="(bool)"
@@ -1508,8 +1621,6 @@
             >
             </gauss_seidel_charge_density_solver>
 
-=======
->>>>>>> main
             <gaussian_elimination_bem_solver
                 integrator="(string)"
             >
@@ -1527,22 +1638,36 @@
             </integrating_field_solver>
 
             <krylov_bem_solver
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                max_preconditioner_iterations="(unsigned int)"
                 preconditioner="(string)"
+                preconditioner_degree="(unsigned int)"
                 preconditioner_tolerance="(double)"
                 show_plot="(bool)"
                 solver_name="(string)"
+                time_check_interval="(unsigned int)"
                 time_limit_in_seconds="(double)"
                 tolerance="(double)"
                 use_display="(bool)"
                 use_timer="(bool)"
             >
                 <fftm_multiplication
+                    allowed_fraction="(unsigned int)"
+                    allowed_number="(unsigned int)"
                     bias_degree="(double)"
+                    expansion_degree="(unsigned int)"
                     insertion_ratio="(double)"
+                    maximum_tree_depth="(unsigned int)"
+                    neighbor_order="(unsigned int)"
                     region_expansion_factor="(double)"
                     strategy="(string)"
+                    top_level_divisions="(unsigned int)"
+                    tree_level_divisions="(unsigned int)"
                     use_caching="(bool)"
                     use_region_size_estimation="(bool)"
+                    verbosity="(unsigned int)"
                     world_cube_center_x="(double)"
                     world_cube_center_y="(double)"
                     world_cube_center_z="(double)"
@@ -1551,12 +1676,20 @@
                 </fftm_multiplication>
 
                 <preconditioner_electrostatic_parameters
+                    allowed_fraction="(unsigned int)"
+                    allowed_number="(unsigned int)"
                     bias_degree="(double)"
+                    expansion_degree="(unsigned int)"
                     insertion_ratio="(double)"
+                    maximum_tree_depth="(unsigned int)"
+                    neighbor_order="(unsigned int)"
                     region_expansion_factor="(double)"
                     strategy="(string)"
+                    top_level_divisions="(unsigned int)"
+                    tree_level_divisions="(unsigned int)"
                     use_caching="(bool)"
                     use_region_size_estimation="(bool)"
+                    verbosity="(unsigned int)"
                     world_cube_center_x="(double)"
                     world_cube_center_y="(double)"
                     world_cube_center_z="(double)"
@@ -1567,24 +1700,36 @@
             </krylov_bem_solver>
 
             <krylov_bem_solver_new
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
                 show_plot="(bool)"
                 solver_name="(string)"
+                time_check_interval="(unsigned int)"
                 time_limit_in_seconds="(double)"
                 tolerance="(double)"
                 use_display="(bool)"
                 use_timer="(bool)"
             >
                 <krylov_preconditioner
+                    intermediate_save_interval="(unsigned int)"
+                    iterations_between_restarts="(unsigned int)"
+                    max_iterations="(unsigned int)"
                     show_plot="(bool)"
                     solver_name="(string)"
+                    time_check_interval="(unsigned int)"
                     time_limit_in_seconds="(double)"
                     tolerance="(double)"
                     use_display="(bool)"
                     use_timer="(bool)"
                 >
                     <krylov_preconditioner
+                        intermediate_save_interval="(unsigned int)"
+                        iterations_between_restarts="(unsigned int)"
+                        max_iterations="(unsigned int)"
                         show_plot="(bool)"
                         solver_name="(string)"
+                        time_check_interval="(unsigned int)"
                         time_limit_in_seconds="(double)"
                         tolerance="(double)"
                         use_display="(bool)"
@@ -1597,10 +1742,16 @@
             </krylov_bem_solver_new>
 
             <krylov_bem_solver_old
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                max_preconditioner_iterations="(unsigned int)"
                 preconditioner="(string)"
+                preconditioner_degree="(unsigned int)"
                 preconditioner_tolerance="(double)"
                 show_plot="(bool)"
                 solver_name="(string)"
+                time_check_interval="(unsigned int)"
                 time_limit_in_seconds="(double)"
                 tolerance="(double)"
                 use_display="(bool)"
@@ -1609,8 +1760,12 @@
             </krylov_bem_solver_old>
 
             <krylov_charge_density_solver
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
                 show_plot="(bool)"
                 solver_name="(string)"
+                time_check_interval="(unsigned int)"
                 time_limit_in_seconds="(double)"
                 tolerance="(double)"
                 use_display="(bool)"
@@ -1619,10 +1774,16 @@
             </krylov_charge_density_solver>
 
             <krylov_charge_density_solver_old
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                max_preconditioner_iterations="(unsigned int)"
                 preconditioner="(string)"
+                preconditioner_degree="(unsigned int)"
                 preconditioner_tolerance="(double)"
                 show_plot="(bool)"
                 solver_name="(string)"
+                time_check_interval="(unsigned int)"
                 time_limit_in_seconds="(double)"
                 tolerance="(double)"
                 use_display="(bool)"
@@ -1632,19 +1793,29 @@
 
             <robin_hood_bem_solver
                 cache_matrix_elements="(bool)"
+                check_sub_interval="(unsigned int)"
+                display_interval="(unsigned int)"
                 integrator="(string)"
+                plot_interval="(unsigned int)"
+                split_mode="(bool)"
                 tolerance="(double)"
                 use_opencl="(bool)"
                 use_vtk="(bool)"
+                write_interval="(unsigned int)"
             >
             </robin_hood_bem_solver>
 
             <robin_hood_charge_density_solver
                 cache_matrix_elements="(bool)"
+                check_sub_interval="(unsigned int)"
+                display_interval="(unsigned int)"
                 integrator="(string)"
+                plot_interval="(unsigned int)"
+                split_mode="(bool)"
                 tolerance="(double)"
                 use_opencl="(bool)"
                 use_vtk="(bool)"
+                write_interval="(unsigned int)"
             >
             </robin_hood_charge_density_solver>
 
@@ -1669,10 +1840,7 @@
                 convergence_parameter="(double)"
                 convergence_ratio="(double)"
                 integrator="(string)"
-<<<<<<< HEAD
                 number_of_bifurcations="(int)"
-=======
->>>>>>> main
                 number_of_central_coefficients="(int)"
                 number_of_remote_coefficients="(int)"
                 number_of_remote_sourcepoints="(int)"
@@ -1749,10 +1917,7 @@
             coaxiality_tolerance="(double)"
             convergence_parameter="(double)"
             convergence_ratio="(double)"
-<<<<<<< HEAD
             number_of_bifurcations="(int)"
-=======
->>>>>>> main
             number_of_central_coefficients="(int)"
             number_of_remote_coefficients="(int)"
             number_of_remote_sourcepoints="(int)"
@@ -1768,6 +1933,7 @@
     <ksfield_electrostatic
         directory="(string)"
         file="(string)"
+        hash_masked_bits="(unsigned int)"
         hash_threshold="(double)"
         maximum_element_aspect_ratio="(double)"
         minimum_element_area="(double)"
@@ -1917,6 +2083,7 @@
 
         <phi_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -1989,6 +2156,7 @@
 
         <theta_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -2011,7 +2179,6 @@
 
     </ksgen_direction_spherical_composite>
 
-<<<<<<< HEAD
     <ksgen_direction_spherical_magnetic_field
         magnetic_field_name="(string)"
         name="(string)"
@@ -2069,6 +2236,7 @@
 
         <phi_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -2141,6 +2309,7 @@
 
         <theta_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -2163,8 +2332,6 @@
 
     </ksgen_direction_spherical_magnetic_field>
 
-=======
->>>>>>> main
     <ksgen_direction_surface_composite
         name="(string)"
         outside="(bool)"
@@ -2223,6 +2390,7 @@
 
         <phi_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -2295,6 +2463,7 @@
 
         <theta_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -2398,6 +2567,7 @@
 
         <energy_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -2463,7 +2633,6 @@
         >
         </direction_spherical_composite>
 
-<<<<<<< HEAD
         <direction_spherical_magnetic_field
             magnetic_field_name="(string)"
             name="(string)"
@@ -2472,8 +2641,6 @@
         >
         </direction_spherical_magnetic_field>
 
-=======
->>>>>>> main
         <direction_surface_composite
             name="(string)"
             outside="(bool)"
@@ -2577,6 +2744,7 @@
 
             <l_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -2651,6 +2819,7 @@
 
             <x_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -2705,6 +2874,7 @@
 
             <y_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -2759,6 +2929,7 @@
 
             <z_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -2820,6 +2991,7 @@
 
             <n_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -2886,6 +3058,7 @@
 
         <pid_set
             name="(string)"
+            value_count="(unsigned int)"
             value_increment="(double)"
             value_start="(double)"
             value_stop="(double)"
@@ -2948,6 +3121,7 @@
 
             <phi_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3014,6 +3188,7 @@
 
             <r_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3068,6 +3243,7 @@
 
             <z_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3090,11 +3266,8 @@
             name="(string)"
             only_surface="(bool)"
             phi="(string)"
-<<<<<<< HEAD
             space="(string)"
             surface="(string)"
-=======
->>>>>>> main
             z="(string)"
         >
             <phi_fix
@@ -3114,6 +3287,7 @@
 
             <phi_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3160,6 +3334,7 @@
 
             <z_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3228,6 +3403,7 @@
 
             <phi_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3306,6 +3482,7 @@
 
             <r_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3381,6 +3558,7 @@
 
             <z_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3410,6 +3588,7 @@
         </position_homogeneous_flux_tube>
 
         <position_mask
+            max_retries="(unsigned int)"
             name="(string)"
             spaces_allowed="(string)"
             spaces_forbidden="(string)"
@@ -3479,6 +3658,7 @@
 
                 <x_set
                     name="(string)"
+                    value_count="(unsigned int)"
                     value_increment="(double)"
                     value_start="(double)"
                     value_stop="(double)"
@@ -3533,6 +3713,7 @@
 
                 <y_set
                     name="(string)"
+                    value_count="(unsigned int)"
                     value_increment="(double)"
                     value_start="(double)"
                     value_stop="(double)"
@@ -3587,6 +3768,7 @@
 
                 <z_set
                     name="(string)"
+                    value_count="(unsigned int)"
                     value_increment="(double)"
                     value_start="(double)"
                     value_stop="(double)"
@@ -3657,6 +3839,7 @@
 
                 <phi_set
                     name="(string)"
+                    value_count="(unsigned int)"
                     value_increment="(double)"
                     value_start="(double)"
                     value_stop="(double)"
@@ -3711,6 +3894,7 @@
 
                 <r_set
                     name="(string)"
+                    value_count="(unsigned int)"
                     value_increment="(double)"
                     value_start="(double)"
                     value_stop="(double)"
@@ -3772,6 +3956,7 @@
 
                 <theta_set
                     name="(string)"
+                    value_count="(unsigned int)"
                     value_increment="(double)"
                     value_start="(double)"
                     value_stop="(double)"
@@ -3794,11 +3979,7 @@
 
             </position_spherical_composite>
 
-            <position_surface_random
-                name="(string)"
-                surfaces="(string)"
-            >
-            </position_surface_random>
+            <position_surface_random/>
 
         </position_mask>
 
@@ -3904,6 +4085,7 @@
 
             <phi_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -3976,6 +4158,7 @@
 
             <theta_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -4056,6 +4239,7 @@
 
             <phi_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -4128,6 +4312,7 @@
 
             <theta_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -4205,6 +4390,7 @@
 
             <time_set
                 name="(string)"
+                value_count="(unsigned int)"
                 value_increment="(double)"
                 value_start="(double)"
                 value_stop="(double)"
@@ -4301,11 +4487,8 @@
         name="(string)"
         only_surface="(bool)"
         phi="(string)"
-<<<<<<< HEAD
         space="(string)"
         surface="(string)"
-=======
->>>>>>> main
         z="(string)"
     >
     </ksgen_position_flux_tube>
@@ -4338,6 +4521,7 @@
     </ksgen_position_homogeneous_flux_tube>
 
     <ksgen_position_mask
+        max_retries="(unsigned int)"
         name="(string)"
         spaces_allowed="(string)"
         spaces_forbidden="(string)"
@@ -4515,6 +4699,7 @@
 
     <ksgen_value_set
         name="(string)"
+        value_count="(unsigned int)"
         value_increment="(double)"
         value_start="(double)"
         value_stop="(double)"
@@ -4733,7 +4918,10 @@
     >
         <decay_death_const_rate
             life_time="(double)"
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
         >
             <decay_product_generator
                 creator="(string)"
@@ -4747,7 +4935,10 @@
         </decay_death_const_rate>
 
         <decay_ferenc_bbr
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
             temperature="(double)"
         >
             <decay_product_generator
@@ -4762,7 +4953,10 @@
         </decay_ferenc_bbr>
 
         <decay_ferenc_ionisation
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
             temperature="(double)"
         >
             <decay_product_generator
@@ -4777,7 +4971,10 @@
         </decay_ferenc_ionisation>
 
         <decay_ferenc_spontaneous
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
         >
             <decay_product_generator
                 creator="(string)"
@@ -4791,7 +4988,10 @@
         </decay_ferenc_spontaneous>
 
         <decay_glukhov_deexcitation
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
             temperature="(double)"
         >
             <decay_product_generator
@@ -4806,7 +5006,10 @@
         </decay_glukhov_deexcitation>
 
         <decay_glukhov_excitation
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
             temperature="(double)"
         >
             <decay_product_generator
@@ -4821,7 +5024,10 @@
         </decay_glukhov_excitation>
 
         <decay_glukhov_ionisation
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
             temperature="(double)"
         >
             <decay_product_generator
@@ -4836,7 +5042,10 @@
         </decay_glukhov_ionisation>
 
         <decay_glukhov_spontaneous
+            max_pid="(long long)"
+            min_pid="(long long)"
             name="(string)"
+            target_pid="(long long)"
         >
             <decay_product_generator
                 creator="(string)"
@@ -4853,47 +5062,71 @@
 
     <ksint_decay_calculator_death_const_rate
         life_time="(double)"
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
     >
     </ksint_decay_calculator_death_const_rate>
 
     <ksint_decay_calculator_ferenc_bbr_transition
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
         temperature="(double)"
     >
     </ksint_decay_calculator_ferenc_bbr_transition>
 
     <ksint_decay_calculator_ferenc_ionisation
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
         temperature="(double)"
     >
     </ksint_decay_calculator_ferenc_ionisation>
 
     <ksint_decay_calculator_ferenc_spontaneous
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
     >
     </ksint_decay_calculator_ferenc_spontaneous>
 
     <ksint_decay_calculator_glukhov_deexcitation
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
         temperature="(double)"
     >
     </ksint_decay_calculator_glukhov_deexcitation>
 
     <ksint_decay_calculator_glukhov_excitation
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
         temperature="(double)"
     >
     </ksint_decay_calculator_glukhov_excitation>
 
     <ksint_decay_calculator_glukhov_ionisation
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
         temperature="(double)"
     >
     </ksint_decay_calculator_glukhov_ionisation>
 
     <ksint_decay_calculator_glukhov_spontaneous
+        max_pid="(long long)"
+        min_pid="(long long)"
         name="(string)"
+        target_pid="(long long)"
     >
     </ksint_decay_calculator_glukhov_spontaneous>
 
@@ -5052,6 +5285,8 @@
         enter_split="(bool)"
         exit_split="(bool)"
         fail_check="(bool)"
+        max_octree_depth="(unsigned int)"
+        n_allowed_elements="(unsigned int)"
         name="(string)"
         octree_file="(string)"
         path="(string)"
@@ -5120,6 +5355,7 @@
 
     <ksterm_max_steps
         name="(string)"
+        steps="(unsigned int)"
     >
     </ksterm_max_steps>
 
@@ -5363,7 +5599,9 @@
     </kstraj_term_synchrotron>
 
     <kstraj_trajectory_adiabatic
+        attempt_limit="(unsigned int)"
         cyclotron_fraction="(double)"
+        max_segments="(unsigned int)"
         name="(string)"
         piecewise_tolerance="(double)"
         use_true_position="(bool)"
@@ -5505,6 +5743,8 @@
     </kstraj_trajectory_adiabatic>
 
     <kstraj_trajectory_adiabatic_spin
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
         name="(string)"
         piecewise_tolerance="(double)"
     >
@@ -5653,6 +5893,8 @@
     </kstraj_trajectory_adiabatic_spin>
 
     <kstraj_trajectory_electric
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
         name="(string)"
         piecewise_tolerance="(double)"
     >
@@ -5733,6 +5975,8 @@
     </kstraj_trajectory_electric>
 
     <kstraj_trajectory_exact
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
         name="(string)"
         piecewise_tolerance="(double)"
     >
@@ -5869,6 +6113,8 @@
     </kstraj_trajectory_exact>
 
     <kstraj_trajectory_exact_spin
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
         name="(string)"
         piecewise_tolerance="(double)"
     >
@@ -6011,6 +6257,8 @@
     </kstraj_trajectory_exact_spin>
 
     <kstraj_trajectory_exact_trapped
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
         name="(string)"
         piecewise_tolerance="(double)"
     >
@@ -6036,20 +6284,11 @@
         >
         </integrator_sym4>
 
-        <interpolator_crk
-            name="(string)"
-        >
-        </interpolator_crk>
+        <interpolator_crk/>
 
-        <interpolator_fast
-            name="(string)"
-        >
-        </interpolator_fast>
+        <interpolator_fast/>
 
-        <interpolator_hermite
-            name="(string)"
-        >
-        </interpolator_hermite>
+        <interpolator_hermite/>
 
         <term_propagation
             direction="(string)"
@@ -6073,6 +6312,8 @@
     </kstraj_trajectory_linear>
 
     <kstraj_trajectory_magnetic
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
         name="(string)"
         piecewise_tolerance="(double)"
     >
@@ -6156,6 +6397,7 @@
         base="(string)"
         name="(string)"
         path="(string)"
+        precision="(unsigned int)"
     >
     </kswrite_ascii>
 
@@ -6344,6 +6586,7 @@
     <electrostatic_field
         directory="(string)"
         file="(string)"
+        hash_masked_bits="(unsigned int)"
         hash_threshold="(double)"
         maximum_element_aspect_ratio="(double)"
         minimum_element_area="(double)"
@@ -6485,6 +6728,8 @@
 </messages>
 <root_window
     active="(bool)"
+    canvas_height="(unsigned int)"
+    canvas_width="(unsigned int)"
     name="(string)"
     path="(string)"
     write_enabled="(bool)"
@@ -6609,7 +6854,7 @@
         <root_zh_painter
             electric_field="(string)"
             file="(string)"
-            geometry_type="(string)"
+            geometry_type="(string )"
             magnetic_field="(string)"
             name="(string)"
             path="(string)"
@@ -6617,7 +6862,7 @@
             r_max="(double)"
             r_min="(double)"
             r_steps="(int)"
-            radial_safety_margin="(double)"
+            radial_safety_margin="(double )"
             write="(bool)"
             x_axis="(string)"
             y_axis="(string)"
@@ -6673,7 +6918,7 @@
     <root_zh_painter
         electric_field="(string)"
         file="(string)"
-        geometry_type="(string)"
+        geometry_type="(string )"
         magnetic_field="(string)"
         name="(string)"
         path="(string)"
@@ -6681,7 +6926,7 @@
         r_max="(double)"
         r_min="(double)"
         r_steps="(int)"
-        radial_safety_margin="(double)"
+        radial_safety_margin="(double )"
         write="(bool)"
         x_axis="(string)"
         y_axis="(string)"
@@ -6703,6 +6948,7 @@
 
 </run>
 <vtk_window
+    depth_peeling="(unsigned int)"
     enable_axis="(bool)"
     enable_data="(bool)"
     enable_display="(bool)"
@@ -6713,11 +6959,15 @@
     frame_color_blue="(float)"
     frame_color_green="(float)"
     frame_color_red="(float)"
+    frame_size_x="(unsigned int)"
+    frame_size_y="(unsigned int)"
     frame_title="(string)"
+    multi_samples="(unsigned int)"
     name="(string)"
     view_angle="(double)"
 >
     <vtk_axial_mesh_painter
+        arc_count="(unsigned int)"
         color_mode="(string)"
         file="(string)"
         name="(string)"
@@ -6728,6 +6978,7 @@
 
     <vtk_distance_tester
         name="(string)"
+        sample_count="(unsigned int)"
         sample_disk_normal="(KThreeVector)"
         sample_disk_origin="(KThreeVector)"
         sample_disk_radius="(double)"
@@ -6762,6 +7013,7 @@
     </vtk_geometry_painter>
 
     <vtk_mesh_painter
+        arc_count="(unsigned int)"
         color_mode="(string)"
         file="(string)"
         name="(string)"
@@ -6777,6 +7029,7 @@
         normal_length="(double)"
         point_color="(KGRGBColor)"
         sample_color="(KGRGBColor)"
+        sample_count="(unsigned int)"
         sample_disk_normal="(KThreeVector)"
         sample_disk_origin="(KThreeVector)"
         sample_disk_radius="(double)"
@@ -6790,6 +7043,7 @@
         inside_color="(KGRGBColor)"
         name="(string)"
         outside_color="(KGRGBColor)"
+        sample_count="(unsigned int)"
         sample_disk_normal="(KThreeVector)"
         sample_disk_origin="(KThreeVector)"
         sample_disk_radius="(double)"
@@ -6804,6 +7058,7 @@
         name="(string)"
         point_color="(KGRGBColor)"
         sample_color="(KGRGBColor)"
+        sample_count="(unsigned int)"
         sample_disk_normal="(KThreeVector)"
         sample_disk_origin="(KThreeVector)"
         sample_disk_radius="(double)"

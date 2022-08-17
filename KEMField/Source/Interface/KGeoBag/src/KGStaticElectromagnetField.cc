@@ -106,13 +106,6 @@ void KGStaticElectromagnetField::ConfigureSurfaceContainer()
         space->AcceptNode(&(*fConverter));
     }
 
-    if (container->empty()) {
-        kem_cout(eWarning) << "WARNING:"
-                           << "electromagnet field solver <" << GetName() << "> has zero surface or space elements"
-                           << eom;
-        //std::exit(-1);
-    }
-
     SetContainer(container);
 }
 

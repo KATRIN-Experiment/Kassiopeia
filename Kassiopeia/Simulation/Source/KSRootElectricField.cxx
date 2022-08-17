@@ -51,6 +51,7 @@ void KSRootElectricField::CalculatePotential(const KThreeVector& aSamplePoint, c
             fElectricFields.ElementAt(tIndex)->CalculatePotential(aSamplePoint, aSampleTime, fCurrentPotential);
             aPotential += fCurrentPotential;
         }
+        fieldmsg_debug("electric potential at " << aSamplePoint << " is <" << aPotential << ">" << eom);
     }
     catch (KSException const& e) {
         aPotential = numeric_limits<double>::quiet_NaN();
@@ -71,6 +72,7 @@ void KSRootElectricField::CalculateField(const KThreeVector& aSamplePoint, const
             fElectricFields.ElementAt(tIndex)->CalculateField(aSamplePoint, aSampleTime, fCurrentField);
             aField += fCurrentField;
         }
+        fieldmsg_debug("electric field at " << aSamplePoint << " is " << aField << eom);
     }
     catch (KSException const& e) {
         aField = KThreeVector::sInvalid;
@@ -91,6 +93,7 @@ void KSRootElectricField::CalculateGradient(const KThreeVector& aSamplePoint, co
             fElectricFields.ElementAt(tIndex)->CalculateGradient(aSamplePoint, aSampleTime, fCurrentGradient);
             aGradient += fCurrentGradient;
         }
+        fieldmsg_debug("electric field gradient at " << aSamplePoint << " is " << aGradient << eom);
     }
     catch (KSException const& e) {
         aGradient = KThreeMatrix::sInvalid;
@@ -115,6 +118,7 @@ void KSRootElectricField::CalculateFieldAndPotential(const KThreeVector& aSample
                                                                           fCurrentPotential);
             aField += fCurrentField;
             aPotential += fCurrentPotential;
+            fieldmsg_debug("electric field and potential at " << aSamplePoint << " is " << aField << " and <" << aPotential << ">" << eom);
         }
     }
     catch (KSException const& e) {

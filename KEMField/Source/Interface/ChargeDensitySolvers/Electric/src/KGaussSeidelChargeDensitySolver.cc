@@ -61,6 +61,10 @@ KGaussSeidelChargeDensitySolver::~KGaussSeidelChargeDensitySolver()
 
 void KGaussSeidelChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
+    if (container.empty()) {
+        kem_cout(eError) << "ERROR: Gauss-Seidel solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+    
     if (FindSolution(0., container) == false) {
         if (fUseOpenCL) {
 #ifdef KEMFIELD_USE_OPENCL

@@ -73,7 +73,9 @@ void KSVTKTrackPainter::Render()
     const KSThreeVector& tPointVariable = tPointObject.Get<KSThreeVector>(fPointVariable);
 
     KSReadObjectROOT& tColorObject = tStep.GetObject(fColorObject);
-    const KSDouble& tColorVariable = tColorObject.Get<KSDouble>(fColorVariable);
+    const KSDouble* tColorVariable = nullptr;
+    if (! fColorVariable.empty())
+        tColorVariable = &(tColorObject.Get<KSDouble>(fColorVariable));
 
     bool tActive;
     vector<vtkIdType> tIds;
@@ -97,7 +99,7 @@ void KSVTKTrackPainter::Render()
                         if ((tPointObject.Valid() == true) && (tColorObject.Valid() == true)) {
                             vismsg_debug("output became active at <" << tStepIndex << ">" << eom);
 
-                            fColors->InsertNextValue(tColorVariable.Value());
+                            fColors->InsertNextValue(tColorVariable ? tColorVariable->Value() : 0.);
                             tIds.push_back(fPoints->InsertNextPoint(tPointVariable.Value().X(),
                                                                     tPointVariable.Value().Y(),
                                                                     tPointVariable.Value().Z()));
@@ -107,7 +109,7 @@ void KSVTKTrackPainter::Render()
                     }
                     else {
                         if ((tPointObject.Valid() == true) && (tColorObject.Valid() == true)) {
-                            fColors->InsertNextValue(tColorVariable.Value());
+                            fColors->InsertNextValue(tColorVariable ? tColorVariable->Value() : 0.);
                             tIds.push_back(fPoints->InsertNextPoint(tPointVariable.Value().X(),
                                                                     tPointVariable.Value().Y(),
                                                                     tPointVariable.Value().Z()));

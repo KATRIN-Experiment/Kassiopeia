@@ -32,6 +32,10 @@ KExplicitSuperpositionCachedChargeDensitySolver::~KExplicitSuperpositionCachedCh
 
 void KExplicitSuperpositionCachedChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
+    if (container.empty()) {
+        kem_cout(eError) << "ERROR: superposition solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+
     bool tSolution = false;
     bool tCompleteSolution = false;
 

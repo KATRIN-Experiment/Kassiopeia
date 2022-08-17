@@ -41,6 +41,10 @@ void KKrylovChargeDensitySolver::SetPreconditionerGenerator(const KSmartPointer<
 
 void KKrylovChargeDensitySolver::ComputeSolution(KSurfaceContainer& container)
 {
+    if (container.empty()) {
+        kem_cout(eError) << "ERROR: Krylov solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+
     /* Here I assume that the electrostatic vector space basis consists of one
      * ValueType per surface element and that these are arranged in the same order
      * as in the KSurface container. */
@@ -65,7 +69,7 @@ void KKrylovChargeDensitySolver::ComputeSolution(KSurfaceContainer& container)
 void KKrylovChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
     if (container.empty()) {
-        kem_cout(eWarning) << "Krylov solver got no elctrode elements (did you forget to setup a geometry mesh?)" << eom;
+        kem_cout(eError) << "ERROR: Krylov solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
     }
 
     if (!FindSolution(fKrylovConfig.GetTolerance(), container))

@@ -83,7 +83,7 @@ KRobinHoodChargeDensitySolver::~KRobinHoodChargeDensitySolver()
 void KRobinHoodChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
     if (container.empty()) {
-        kem_cout(eWarning) << "RobinHood solver got no elctrode elements (did you forget to setup a geometry mesh?)" << eom;
+        kem_cout(eError) << "ERROR: RobinHood solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
     }
 
     if (FindSolution(fTolerance, container) == false) {

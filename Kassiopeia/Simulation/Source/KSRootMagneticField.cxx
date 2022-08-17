@@ -42,6 +42,7 @@ void KSRootMagneticField::CalculatePotential(const KThreeVector& aSamplePoint, c
             fMagneticFields.ElementAt(tIndex)->CalculatePotential(aSamplePoint, aSampleTime, fCurrentPotential);
             aPotential += fCurrentPotential;
         }
+        fieldmsg_debug("magnetic potential at " << aSamplePoint << " is <" << aPotential << ">" << eom);
     }
     catch (KSException const& e) {
         aPotential = KThreeVector::sInvalid;
@@ -62,6 +63,7 @@ void KSRootMagneticField::CalculateField(const KThreeVector& aSamplePoint, const
             fMagneticFields.ElementAt(tIndex)->CalculateField(aSamplePoint, aSampleTime, fCurrentField);
             aField += fCurrentField;
         }
+        fieldmsg_debug("magnetic field at " << aSamplePoint << " is " << aField << eom);
     }
     catch (KSException const& e) {
         aField = KThreeVector::sInvalid;
@@ -82,6 +84,7 @@ void KSRootMagneticField::CalculateGradient(const KThreeVector& aSamplePoint, co
             fMagneticFields.ElementAt(tIndex)->CalculateGradient(aSamplePoint, aSampleTime, fCurrentGradient);
             aGradient += fCurrentGradient;
         }
+        fieldmsg_debug("magnetic field gradient at " << aSamplePoint << " is " << aGradient << eom);
     }
     catch (KSException const& e) {
         aGradient = KThreeMatrix::sInvalid;
@@ -108,6 +111,7 @@ void KSRootMagneticField::CalculateFieldAndGradient(const KThreeVector& aSampleP
             aField += fCurrentField;
             aGradient += fCurrentGradient;
         }
+        fieldmsg_debug("magnetic field and gradient at " << aSamplePoint << " is " << aField << " and " << aGradient << eom);
     }
     catch (KSException const& e) {
         aField = KThreeVector::sInvalid;

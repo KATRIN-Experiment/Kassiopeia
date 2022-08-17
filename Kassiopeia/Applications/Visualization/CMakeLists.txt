@@ -3,6 +3,12 @@ if (Kassiopeia_ENABLE_APP)
 
     set( APPLICATIONS_VISUALIZATION_BASENAMES )
 
+    if( Kassiopeia_USE_VTK )
+        list( APPEND APPLICATIONS_VISUALIZATION_BASENAMES
+            TrackViewer
+        )
+    endif( Kassiopeia_USE_VTK )
+
     if( Kassiopeia_USE_ROOT )
         list( APPEND APPLICATIONS_VISUALIZATION_BASENAMES
             ZonalHarmonicViewerROOT
@@ -13,12 +19,14 @@ if (Kassiopeia_ENABLE_APP)
         ${CMAKE_CURRENT_SOURCE_DIR}/Source
     )
 
-    foreach( BASENAME ${APPLICATIONS_VISUALIZATION_BASENAMES} )
-        add_executable( ${BASENAME} ${APPLICATIONS_VISUALIZATION_PATH}/${BASENAME}.cxx )
-        target_link_libraries( ${BASENAME}
-            KassiopeiaBindings KGeoBagBindings KEMFieldBindings )
-    endforeach( BASENAME )
+    if( NOT BUILD_KSC )
+        foreach( BASENAME ${APPLICATIONS_VISUALIZATION_BASENAMES} )
+            add_executable( ${BASENAME} ${APPLICATIONS_VISUALIZATION_PATH}/${BASENAME}.cxx )
+            target_link_libraries( ${BASENAME}
+                KassiopeiaBindings KGeoBagBindings KEMFieldBindings )
+        endforeach( BASENAME )
 
-    kasper_install_executables( ${APPLICATIONS_VISUALIZATION_BASENAMES} )
+        kasper_install_executables( ${APPLICATIONS_VISUALIZATION_BASENAMES} )
+    endif( NOT BUILD_KSC )
 
 endif(Kassiopeia_ENABLE_APP)

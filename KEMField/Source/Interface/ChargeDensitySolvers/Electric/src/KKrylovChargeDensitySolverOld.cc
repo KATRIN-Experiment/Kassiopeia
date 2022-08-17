@@ -28,7 +28,7 @@ KKrylovChargeDensitySolverOld::~KKrylovChargeDensitySolverOld()
 void KKrylovChargeDensitySolverOld::InitializeCore(KSurfaceContainer& surfaceContainer)
 {
     if (surfaceContainer.empty()) {
-        kem_cout(eWarning) << "Krylov solver got no elctrode elements (did you forget to setup a geometry mesh?)" << eom;
+        kem_cout(eError) << "ERROR: Krylov solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
     }
 
     if (fKrylovConfig->GetFFTMParams() == nullptr) {

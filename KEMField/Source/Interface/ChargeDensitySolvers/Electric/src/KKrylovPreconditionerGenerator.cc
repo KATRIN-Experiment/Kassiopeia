@@ -38,6 +38,10 @@ void KKrylovPreconditionerGenerator::SetPreconditionerGenerator(const KSmartPoin
 KSmartPointer<KSquareMatrix<KKrylovPreconditionerGenerator::ValueType>>
 KKrylovPreconditionerGenerator::Build(const KSurfaceContainer& container) const
 {
+    if (container.empty()) {
+        kem_cout(eError) << "ERROR: Krylov preconditioner got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+
     KSmartPointer<KSquareMatrix<ValueType>> A = fMatrixGenerator->Build(container);
     KSmartPointer<KSquareMatrix<ValueType>> P;
     if (fPreconditionerGenerator.Is())
