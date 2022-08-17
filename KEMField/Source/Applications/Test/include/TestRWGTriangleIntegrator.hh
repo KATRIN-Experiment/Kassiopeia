@@ -490,10 +490,10 @@ void FieldPotTriRWG(double* triData, const double* P, double* result)
 
         // compute IqL
 
-        double IqLFieldAndPotentialUp[4];
+        double IqLFieldAndPotentialUp[4] = {};
         IqLFieldAndPotential(triData, upEps, 9, 9, 9, IqLFieldAndPotentialUp); /* no line correction */
 
-        double IqLFieldAndPotentialDown[4];
+        double IqLFieldAndPotentialDown[4] = {};
         IqLFieldAndPotential(triData, downEps, 9, 9, 9, IqLFieldAndPotentialDown); /* no line correction */
 
         result[0] = M_ONEOVER_4PI_EPS0 * 0.5 *
@@ -518,7 +518,7 @@ void FieldPotTriRWG(double* triData, const double* P, double* result)
 
     const double triSolidAngle = SolidAngleTriangle(triData, P);
 
-    double IqLFieldAndPhi[4];
+    double IqLFieldAndPhi[4] = {};
     IqLFieldAndPotential(triData, P, correctionCounter, correctionLineIndex, distToLineMin, IqLFieldAndPhi);
 
 
