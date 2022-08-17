@@ -47,11 +47,11 @@ if (${PROJECT_NAME}_ENABLE_FM_TEST)
         TestMatrixSingularValueDecomposition
         TestMultidimensionalFastFourierTransform
         TestMultipoleCalculators
-        TestMultipoleExpansionSpeed
+#        TestMultipoleExpansionSpeed
         TestNumericalIntegrator
         TestPinchonJMatrixCalculator
         TestQuadratureTableCalculator
-        TestSingleTriangleMultipoleExpansion
+#        TestSingleTriangleMultipoleExpansion
         TestStructuredASCII
         TestStructuredASCIICompressed
         TestVectorMath

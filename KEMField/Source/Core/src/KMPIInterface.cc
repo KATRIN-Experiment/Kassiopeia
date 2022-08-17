@@ -116,7 +116,7 @@ void KMPIInterface::BeginSequentialProcess()
    */
 void KMPIInterface::EndSequentialProcess()
 {
-    int flag;
+    int flag = 0;
 
     if (fProcess < (fNProcesses - 1))
         MPI_Send(&flag, 1, MPI_INT, fProcess + 1, 50, MPI_COMM_WORLD);

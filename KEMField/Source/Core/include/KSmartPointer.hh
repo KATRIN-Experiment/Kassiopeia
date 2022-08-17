@@ -67,7 +67,7 @@ template<typename T> class KSmartPointer
     {
         if (fRef->Release() == 0) {
             delete fpData;
-            delete fRef;
+            //delete fRef;
         }
     }
 
