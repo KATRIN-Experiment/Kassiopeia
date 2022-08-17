@@ -21,6 +21,9 @@ kasper_module_debug()
 # set(KOMMON_HEADER_FILES)
 # set(KOMMON_SOURCE_FILES)
 
+set( KASPER_USE_TBB OFF CACHE BOOL "Use the Intel TBB library in Kommon")
+mark_as_advanced( FORCE KASPER_USE_TBB )
+
 # subdirectories
 add_subdirectory( cmake )
 add_subdirectory( Documentation )
