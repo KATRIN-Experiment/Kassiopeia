@@ -3,6 +3,7 @@
 ## Changes from v3.8.0 (2021-08-27) to v3.8.2 (2022-08-17)
 ### Changelog
 - **2022-08-17:** Update from Kasper develop (29fdc9df) [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//505c68412beabdcbe6dc0e90b4bc60df23b8e36e)
+- **2022-08-17:** Update changelog for v3.8.2 [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//a31ab7680d9885286cb9e865f88d10e85519dcd4)
 ### Docker
 ### Documentation
 - **2022-08-17:** Update from Kasper develop (29fdc9df) [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//505c68412beabdcbe6dc0e90b4bc60df23b8e36e)
@@ -18,6 +19,7 @@
 ### Examples
 ### KEMField
 - **2022-08-17:** Update from Kasper develop (29fdc9df) [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//505c68412beabdcbe6dc0e90b4bc60df23b8e36e)
+- **2022-08-17:** KEMField: build fixes [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//aa98d64a5192a9c3f4e3ff09c8e41db611e1747c)
 - **2022-08-17:** Bump version numbers [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//a38b1bd42cb07ff1952be1fa4efa52cf95bcd96b)
 - **2022-06-20:** Update from Kasper develop (3de992d7) [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//4a6f0f37e181d5c7706d903f550388108175de0f)
 - **2022-06-20:** fix std::iterator for c++17, from #62 [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//41be4cc932cace76e43655615860e1def2c53266)
