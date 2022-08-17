@@ -17,7 +17,7 @@ set( Boost_USE_STATIC_LIBS OFF )
 set( Boost_USE_MULTITHREADED ON )
 set( Boost_USE_STATIC_RUNTIME OFF )
 
-set( CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard whose features are requested to build this target" )
+set( CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested to build this target" )
 mark_as_advanced( FORCE CMAKE_CXX_STANDARD )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS ON )
