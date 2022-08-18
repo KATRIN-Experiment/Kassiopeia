@@ -30,7 +30,9 @@ class KFMDenseBoundaryIntegralMatrix : public KSquareMatrix<typename FastMultipo
     /**
          * leave memory management of the FastMultipoleIntegrator to caller
          */
-    KFMDenseBoundaryIntegralMatrix(FastMultipoleIntegrator& integrator) : fIntegrator(&integrator, true)
+    KFMDenseBoundaryIntegralMatrix(FastMultipoleIntegrator& integrator) :
+        //fIntegrator(&integrator, true)
+        fIntegrator(&integrator)
     {
         fDimension = fIntegrator->Dimension();
         fZero = 0.0;
@@ -39,7 +41,7 @@ class KFMDenseBoundaryIntegralMatrix : public KSquareMatrix<typename FastMultipo
     /**
          * let smart pointer solve the memory management of FastMultipoleIntegrator
          */
-    KFMDenseBoundaryIntegralMatrix(KSmartPointer<FastMultipoleIntegrator> integrator) : fIntegrator(integrator)
+    KFMDenseBoundaryIntegralMatrix(std::shared_ptr<FastMultipoleIntegrator> integrator) : fIntegrator(integrator)
     {
         fDimension = fIntegrator->Dimension();
         fZero = 0.0;
@@ -97,7 +99,7 @@ class KFMDenseBoundaryIntegralMatrix : public KSquareMatrix<typename FastMultipo
 
   protected:
     //data
-    const KSmartPointer<FastMultipoleIntegrator> fIntegrator;
+    const std::shared_ptr<FastMultipoleIntegrator> fIntegrator;
     unsigned int fDimension;
     ValueType fZero;
     mutable ValueType fTemp;

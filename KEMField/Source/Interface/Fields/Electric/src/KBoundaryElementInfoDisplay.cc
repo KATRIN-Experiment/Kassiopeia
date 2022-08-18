@@ -22,7 +22,7 @@ KBoundaryElementInfoDisplay::~KBoundaryElementInfoDisplay() = default;
 
 void KBoundaryElementInfoDisplay::PreVisit(KElectrostaticBoundaryField& field)
 {
-    KSmartPointer<KSurfaceContainer> container = field.GetContainer();
+    auto container = field.GetContainer();
     container->size();
     cout << "Discretized geometry elements: " << container->size();
     cout << endl;

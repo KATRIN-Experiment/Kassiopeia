@@ -75,7 +75,7 @@ void KSROOTZonalHarmonicsPainter::Render()
 
         //vismsg(eNormal) << "retrieve converter from electric field" << eom;
         auto tElConverter = tElField->GetConverter();
-        if (tElConverter.Null())
+        if (! tElConverter)
             vismsg(eError) << "Electric Field has no Converter! " << eom;
 
         //vismsg(eNormal) << "retrieve ZH solver from electric field" << eom;

@@ -38,24 +38,26 @@ namespace KEMField
  * unpreconditioned implementation is optimized and can not accept a
  * preconditioner. */
 template<typename ValueType>
-KSmartPointer<KIterativeKrylovSolver<ValueType>>
-KBuildKrylovSolver(const KKrylovSolverConfiguration& config, KSmartPointer<const KSquareMatrix<ValueType>> matrix,
-                   KSmartPointer<const KSquareMatrix<ValueType>> preconditioner = NULL);
+std::shared_ptr<KIterativeKrylovSolver<ValueType>>
+KBuildKrylovSolver(const KKrylovSolverConfiguration& config,
+                   std::shared_ptr<const KSquareMatrix<ValueType>> matrix,
+                   std::shared_ptr<const KSquareMatrix<ValueType>> preconditioner = nullptr);
 
 /* private implementation class */
 
 template<typename ValueType> class KKrylovSolverFactory
 {
 
-    friend KSmartPointer<KIterativeKrylovSolver<ValueType>>
+    friend std::shared_ptr<KIterativeKrylovSolver<ValueType>>
     KBuildKrylovSolver<ValueType>(const KKrylovSolverConfiguration& config,
-                                  KSmartPointer<const KSquareMatrix<ValueType>> matrix,
-                                  KSmartPointer<const KSquareMatrix<ValueType>> preconditioner);
+                                  std::shared_ptr<const KSquareMatrix<ValueType>> matrix,
+                                  std::shared_ptr<const KSquareMatrix<ValueType>> preconditioner);
 
-    KKrylovSolverFactory(const KKrylovSolverConfiguration& config, KSmartPointer<const KSquareMatrix<ValueType>> matrix,
-                         KSmartPointer<const KSquareMatrix<ValueType>> preconditioner = NULL);
+    KKrylovSolverFactory(const KKrylovSolverConfiguration& config,
+                         std::shared_ptr<const KSquareMatrix<ValueType>> matrix,
+                         std::shared_ptr<const KSquareMatrix<ValueType>> preconditioner = nullptr);
 
-    KSmartPointer<KIterativeKrylovSolver<ValueType>> getSolver()
+    std::shared_ptr<KIterativeKrylovSolver<ValueType>> getSolver()
     {
         return fSolver;
     }
@@ -71,15 +73,16 @@ template<typename ValueType> class KKrylovSolverFactory
     void SetMatrix();
 
     const KKrylovSolverConfiguration fConfig;
-    const KSmartPointer<const KSquareMatrix<ValueType>> fMatrix;
-    const KSmartPointer<const KSquareMatrix<ValueType>> fPreconditioner;
-    KSmartPointer<KIterativeKrylovSolver<ValueType>> fSolver;
+    const std::shared_ptr<const KSquareMatrix<ValueType>> fMatrix;
+    const std::shared_ptr<const KSquareMatrix<ValueType>> fPreconditioner;
+    std::shared_ptr<KIterativeKrylovSolver<ValueType>> fSolver;
 };
 
 template<typename ValueType>
-KSmartPointer<KIterativeKrylovSolver<ValueType>>
-KBuildKrylovSolver(const KKrylovSolverConfiguration& config, KSmartPointer<const KSquareMatrix<ValueType>> matrix,
-                   KSmartPointer<const KSquareMatrix<ValueType>> preconditioner)
+std::shared_ptr<KIterativeKrylovSolver<ValueType>>
+KBuildKrylovSolver(const KKrylovSolverConfiguration& config,
+                   std::shared_ptr<const KSquareMatrix<ValueType>> matrix,
+                   std::shared_ptr<const KSquareMatrix<ValueType>> preconditioner)
 {
     KKrylovSolverFactory<ValueType> factory(config, matrix, preconditioner);
     return factory.getSolver();
@@ -87,8 +90,8 @@ KBuildKrylovSolver(const KKrylovSolverConfiguration& config, KSmartPointer<const
 
 template<typename ValueType>
 KKrylovSolverFactory<ValueType>::KKrylovSolverFactory(const KKrylovSolverConfiguration& config,
-                                                      KSmartPointer<const KSquareMatrix<ValueType>> matrix,
-                                                      KSmartPointer<const KSquareMatrix<ValueType>> preconditioner) :
+                                                      std::shared_ptr<const KSquareMatrix<ValueType>> matrix,
+                                                      std::shared_ptr<const KSquareMatrix<ValueType>> preconditioner) :
     fConfig(config),
     fMatrix(matrix),
     fPreconditioner(preconditioner)
@@ -98,7 +101,7 @@ KKrylovSolverFactory<ValueType>::KKrylovSolverFactory(const KKrylovSolverConfigu
 
 template<typename ValueType> void KKrylovSolverFactory<ValueType>::Build()
 {
-    if (fPreconditioner.Null())
+    if (! fPreconditioner)
         CreateStandard();
     else
         CreatePreconditioned();
@@ -111,9 +114,9 @@ template<typename ValueType> void KKrylovSolverFactory<ValueType>::CreateStandar
 {
     std::string type = fConfig.GetSolverName();
     if (type == "gmres")
-        fSolver = new KSimpleIterativeKrylovSolver<ValueType, KGeneralizedMinimalResidual>;
+        fSolver = std::make_shared<KSimpleIterativeKrylovSolver<ValueType, KGeneralizedMinimalResidual>>();
     else if (type == "bicgstab")
-        fSolver = new KSimpleIterativeKrylovSolver<ValueType, KBiconjugateGradientStabilized>;
+        fSolver = std::make_shared<KSimpleIterativeKrylovSolver<ValueType, KBiconjugateGradientStabilized>>();
     else
         throw KEMSimpleException("Unknown solver type: " + type +
                                  ". Please ensure solver type is given in lower case.");
@@ -134,10 +137,9 @@ template<typename ValueType>
 template<template<typename> class Trait>
 void KKrylovSolverFactory<ValueType>::CreateWithPreconditioner()
 {
-    KSmartPointer<KPreconditionedIterativeKrylovSolver<ValueType, Trait>> solver =
-        new KPreconditionedIterativeKrylovSolver<ValueType, Trait>;
+    auto solver = std::make_shared<KPreconditionedIterativeKrylovSolver<ValueType, Trait>>();
 
-    KSmartPointer<KPreconditioner<ValueType>> transformedPrecon = new KMatrixPreconditioner<ValueType>(fPreconditioner);
+    auto transformedPrecon = std::make_shared<KMatrixPreconditioner<ValueType>>(fPreconditioner);
 
     solver->SetPreconditioner(transformedPrecon);
     fSolver = solver;
@@ -146,7 +148,8 @@ void KKrylovSolverFactory<ValueType>::CreateWithPreconditioner()
 template<typename ValueType> void KKrylovSolverFactory<ValueType>::SetConfig()
 {
 
-    KSmartPointer<KIterativeKrylovRestartCondition> restartCond(new KIterativeKrylovRestartCondition);
+    auto restartCond = std::make_shared<KIterativeKrylovRestartCondition>();
+
     restartCond->SetNumberOfIterationsBetweenRestart(fConfig.GetIterationsBetweenRestart());
     fSolver->SetRestartCondition(restartCond);
 

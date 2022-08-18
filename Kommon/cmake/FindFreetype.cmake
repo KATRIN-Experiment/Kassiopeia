@@ -1,9 +1,6 @@
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
 # file Copyright.txt or https://cmake.org/licensing for details.
 
-# XXX: Copied from CMake, but includes vtkDetectLibraryType.
-# See https://gitlab.kitware.com/cmake/cmake/-/issues/18564
-
 #[=======================================================================[.rst:
 FindFreetype
 ------------
@@ -113,7 +110,7 @@ if(NOT FREETYPE_LIBRARY)
     PATH_SUFFIXES
       lib
   )
-  include(SelectLibraryConfigurations)
+  include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
   select_library_configurations(FREETYPE)
 else()
   # on Windows, ensure paths are in canonical format (forward slahes):
@@ -155,7 +152,7 @@ if(FREETYPE_INCLUDE_DIR_freetype2 AND FREETYPE_H)
   endforeach()
 endif()
 
-include(FindPackageHandleStandardArgs)
+include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 
 find_package_handle_standard_args(
   Freetype
@@ -173,29 +170,7 @@ mark_as_advanced(
 
 if(Freetype_FOUND)
   if(NOT TARGET Freetype::Freetype)
-    include(vtkDetectLibraryType)
-    set(freetype_library_type UNKNOWN)
-    if (FREETYPE_LIBRARY_RELEASE)
-      vtk_detect_library_type(freetype_release_library_type
-        PATH "${FREETYPE_LIBRARY_RELEASE}")
-    endif ()
-    if (FREETYPE_LIBRARY_DEBUG)
-      vtk_detect_library_type(freetype_debug_library_type
-        PATH "${FREETYPE_LIBRARY_DEBUG}")
-    endif ()
-    if (freetype_release_library_type AND freetype_debug_library_type)
-      if (freetype_release_library_type STREQUAL freetype_debug_library_type)
-        set(freetype_library_type "${freetype_release_library_type}")
-      endif ()
-    elseif (freetype_release_library_type)
-      set(freetype_library_type "${freetype_release_library_type}")
-    elseif (freetype_debug_library_type)
-      set(freetype_library_type "${freetype_debug_library_type}")
-    endif ()
-    add_library(Freetype::Freetype "${freetype_library_type}" IMPORTED)
-    unset(freetype_release_library_type)
-    unset(freetype_debug_library_type)
-    unset(freetype_library_type)
+    add_library(Freetype::Freetype UNKNOWN IMPORTED)
     set_target_properties(Freetype::Freetype PROPERTIES
       INTERFACE_INCLUDE_DIRECTORIES "${FREETYPE_INCLUDE_DIRS}")
 
@@ -204,8 +179,7 @@ if(Freetype_FOUND)
         IMPORTED_CONFIGURATIONS RELEASE)
       set_target_properties(Freetype::Freetype PROPERTIES
         IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "C"
-        IMPORTED_LOCATION_RELEASE "${FREETYPE_LIBRARY_RELEASE}"
-        IMPORTED_IMPLIB_RELEASE "${FREETYPE_LIBRARY_RELEASE}")
+        IMPORTED_LOCATION_RELEASE "${FREETYPE_LIBRARY_RELEASE}")
     endif()
 
     if(FREETYPE_LIBRARY_DEBUG)
@@ -213,15 +187,13 @@ if(Freetype_FOUND)
         IMPORTED_CONFIGURATIONS DEBUG)
       set_target_properties(Freetype::Freetype PROPERTIES
         IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "C"
-        IMPORTED_LOCATION_DEBUG "${FREETYPE_LIBRARY_DEBUG}"
-        IMPORTED_IMPLIB_DEBUG "${FREETYPE_LIBRARY_DEBUG}")
+        IMPORTED_LOCATION_DEBUG "${FREETYPE_LIBRARY_DEBUG}")
     endif()
 
     if(NOT FREETYPE_LIBRARY_RELEASE AND NOT FREETYPE_LIBRARY_DEBUG)
       set_target_properties(Freetype::Freetype PROPERTIES
         IMPORTED_LINK_INTERFACE_LANGUAGES "C"
-        IMPORTED_LOCATION "${FREETYPE_LIBRARY}"
-        IMPORTED_IMPLIB "${FREETYPE_LIBRARY}")
+        IMPORTED_LOCATION "${FREETYPE_LIBRARY}")
     endif()
   endif()
 endif()

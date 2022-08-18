@@ -38,38 +38,38 @@ KElectrostaticBoundaryIntegrator KElectrostaticBoundaryIntegratorFactory::MakeDe
 
 KElectrostaticBoundaryIntegrator KElectrostaticBoundaryIntegratorFactory::MakeAnalytic()
 {
-    return KElectrostaticBoundaryIntegrator(new KElectrostaticAnalyticTriangleIntegrator,
-                                            new KElectrostaticAnalyticRectangleIntegrator,
-                                            new KElectrostaticAnalyticLineSegmentIntegrator,
-                                            new KElectrostaticAnalyticConicSectionIntegrator,
-                                            new KElectrostaticAnalyticRingIntegrator);
+    return KElectrostaticBoundaryIntegrator(std::make_shared<KElectrostaticAnalyticTriangleIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticRectangleIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticLineSegmentIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticConicSectionIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticRingIntegrator>());
 }
 
 KElectrostaticBoundaryIntegrator KElectrostaticBoundaryIntegratorFactory::MakeNumeric()
 {
-    return KElectrostaticBoundaryIntegrator(new KElectrostaticCubatureTriangleIntegrator,
-                                            new KElectrostaticCubatureRectangleIntegrator,
-                                            new KElectrostaticQuadratureLineSegmentIntegrator,
-                                            new KElectrostaticAnalyticConicSectionIntegrator,
-                                            new KElectrostaticAnalyticRingIntegrator);
+    return KElectrostaticBoundaryIntegrator(std::make_shared<KElectrostaticCubatureTriangleIntegrator>(),
+                                            std::make_shared<KElectrostaticCubatureRectangleIntegrator>(),
+                                            std::make_shared<KElectrostaticQuadratureLineSegmentIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticConicSectionIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticRingIntegrator>());
 }
 
 KElectrostaticBoundaryIntegrator KElectrostaticBoundaryIntegratorFactory::MakeRWG()
 {
-    return KElectrostaticBoundaryIntegrator(new KElectrostaticRWGTriangleIntegrator,
-                                            new KElectrostaticRWGRectangleIntegrator,
-                                            new KElectrostaticAnalyticLineSegmentIntegrator,
-                                            new KElectrostaticAnalyticConicSectionIntegrator,
-                                            new KElectrostaticAnalyticRingIntegrator);
+    return KElectrostaticBoundaryIntegrator(std::make_shared<KElectrostaticRWGTriangleIntegrator>(),
+                                            std::make_shared<KElectrostaticRWGRectangleIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticLineSegmentIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticConicSectionIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticRingIntegrator>());
 }
 
 KElectrostaticBoundaryIntegrator KElectrostaticBoundaryIntegratorFactory::MakeReference()
 {
-    return KElectrostaticBoundaryIntegrator(new KElectrostaticBiQuadratureTriangleIntegrator,
-                                            new KElectrostaticBiQuadratureRectangleIntegrator,
-                                            new KElectrostatic256NodeQuadratureLineSegmentIntegrator,
-                                            new KElectrostaticAnalyticConicSectionIntegrator,
-                                            new KElectrostaticAnalyticRingIntegrator);
+    return KElectrostaticBoundaryIntegrator(std::make_shared<KElectrostaticBiQuadratureTriangleIntegrator>(),
+                                            std::make_shared<KElectrostaticBiQuadratureRectangleIntegrator>(),
+                                            std::make_shared<KElectrostatic256NodeQuadratureLineSegmentIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticConicSectionIntegrator>(),
+                                            std::make_shared<KElectrostaticAnalyticRingIntegrator>());
 }
 
 KElectrostaticBoundaryIntegrator KElectrostaticBoundaryIntegratorFactory::Make(const std::string& name)

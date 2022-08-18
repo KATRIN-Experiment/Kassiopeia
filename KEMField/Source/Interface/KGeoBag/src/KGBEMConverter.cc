@@ -205,7 +205,11 @@ KPosition KGBEMConverter::LocalToInternal(const katrin::KTwoVector& aVector)
 KGBEMMeshConverter::KGBEMMeshConverter() = default;
 KGBEMMeshConverter::KGBEMMeshConverter(KEMField::KSurfaceContainer& aContainer)
 {
-    fSurfaceContainer = &aContainer;
+    fSurfaceContainer.reset(&aContainer);
+}
+KGBEMMeshConverter::KGBEMMeshConverter(std::shared_ptr<KEMField::KSurfaceContainer> aContainer)
+{
+    fSurfaceContainer = aContainer;
 }
 KGBEMMeshConverter::~KGBEMMeshConverter() = default;
 
@@ -306,7 +310,11 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
 KGBEMAxialMeshConverter::KGBEMAxialMeshConverter() = default;
 KGBEMAxialMeshConverter::KGBEMAxialMeshConverter(KEMField::KSurfaceContainer& aContainer)
 {
-     fSurfaceContainer = &aContainer;
+    fSurfaceContainer.reset(&aContainer);
+}
+KGBEMAxialMeshConverter::KGBEMAxialMeshConverter(std::shared_ptr<KEMField::KSurfaceContainer> aContainer)
+{
+     fSurfaceContainer = aContainer;
 }
 KGBEMAxialMeshConverter::~KGBEMAxialMeshConverter() = default;
 
@@ -391,7 +399,11 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
 KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter() = default;
 KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter(KEMField::KSurfaceContainer& aContainer)
 {
-     fSurfaceContainer = &aContainer;
+    fSurfaceContainer.reset(&aContainer);
+}
+KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter(std::shared_ptr<KEMField::KSurfaceContainer> aContainer)
+{
+     fSurfaceContainer = aContainer;
 }
 KGBEMDiscreteRotationalMeshConverter::~KGBEMDiscreteRotationalMeshConverter() = default;
 

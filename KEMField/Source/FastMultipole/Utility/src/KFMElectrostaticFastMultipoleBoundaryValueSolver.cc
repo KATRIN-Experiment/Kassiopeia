@@ -543,12 +543,12 @@ std::vector<std::string> KFMElectrostaticFastMultipoleBoundaryValueSolver::GetPa
 //solving is delegated to these functions
 void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContainer& surfaceContainer)
 {
-    KSmartPointer<FastMultipoleEBI> fm_integrator(new FastMultipoleEBI(fDirectIntegrator, surfaceContainer));
-    KSmartPointer<FastMultipoleMatrix> fmA = CreateMatrix(surfaceContainer, fm_integrator);
+    std::shared_ptr<FastMultipoleEBI> fm_integrator(new FastMultipoleEBI(fDirectIntegrator, surfaceContainer));
+    std::shared_ptr<FastMultipoleMatrix> fmA = CreateMatrix(surfaceContainer, fm_integrator);
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KSimpleIterativeKrylovSolver<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual> gmres;
@@ -639,7 +639,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_Jacobi(KSurfac
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual> pgmres;
@@ -737,12 +737,12 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_ImplicitKrylov
     FastMultipoleDenseMatrix alt_denseA(*alt_fm_integrator);
     FastMultipoleSparseMatrix sparseA(surfaceContainer, *fm_integrator);
     FastMultipoleMatrix fmA(denseA, sparseA);
-    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, sparseA));
+    std::shared_ptr<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, sparseA));
 
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual> pgmres;
@@ -760,8 +760,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_ImplicitKrylov
     config.SetTolerance(fPreconditionerTolerance);
     config.SetUseDisplay(fUseDisplay);
     config.SetDisplayName("Preconditioner: ");
-    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType>> IKP =
-        KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
+    auto IKP = KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
 
     if (fUseCheckpoints) {
         //do not need to delete this visitor, as it is deleted by the solver
@@ -850,12 +849,12 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImp
     FastMultipoleSparseMatrix alt_sparseA(surfaceContainer, *alt_fm_integrator);
 
     FastMultipoleMatrix fmA(denseA, sparseA);
-    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, alt_sparseA));
+    std::shared_ptr<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, alt_sparseA));
 
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual> pgmres;
@@ -873,8 +872,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImp
     config.SetTolerance(fPreconditionerTolerance);
     config.SetUseDisplay(fUseDisplay);
     config.SetDisplayName("Preconditioner: ");
-    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType>> IKP =
-        KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
+    auto IKP = KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
 
     if (fUseCheckpoints) {
         //do not need to delete this visitor, as it is deleted by the solver
@@ -958,7 +956,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB(KSurfaceCon
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KSimpleIterativeKrylovSolver<FastMultipoleEBI::ValueType, KBiconjugateGradientStabilized> bicgstab;
@@ -1051,7 +1049,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_Jacobi(KSur
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedBiconjugateGradientStabilized>
@@ -1152,12 +1150,12 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKry
     FastMultipoleDenseMatrix alt_denseA(*alt_fm_integrator);
     FastMultipoleSparseMatrix sparseA(surfaceContainer, *fm_integrator);
     FastMultipoleMatrix fmA(denseA, sparseA);
-    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, sparseA));
+    std::shared_ptr<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, sparseA));
 
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedBiconjugateGradientStabilized>
@@ -1177,8 +1175,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKry
     config.SetTolerance(fPreconditionerTolerance);
     config.SetUseDisplay(fUseDisplay);
     config.SetDisplayName("Preconditioner: ");
-    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType>> IKP =
-        KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
+    auto IKP = KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
 
     if (fUseCheckpoints) {
         //do not need to delete this visitor, as it is deleted by the solver
@@ -1268,12 +1265,12 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_Independent
     FastMultipoleSparseMatrix alt_sparseA(surfaceContainer, *alt_fm_integrator);
 
     FastMultipoleMatrix fmA(denseA, sparseA);
-    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, alt_sparseA));
+    std::shared_ptr<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, alt_sparseA));
 
     KBoundaryIntegralSolutionVector<FastMultipoleEBI> fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<FastMultipoleEBI> fmb(surfaceContainer, *fm_integrator);
 
-    auto* restart_cond = new KIterativeKrylovRestartCondition();
+    auto restart_cond = std::make_shared<KIterativeKrylovRestartCondition>();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedBiconjugateGradientStabilized>
@@ -1292,8 +1289,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_Independent
     config.SetTolerance(fPreconditionerTolerance);
     config.SetUseDisplay(fUseDisplay);
     config.SetDisplayName("Preconditioner: ");
-    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType>> IKP =
-        KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
+    auto IKP = KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config, alt_fmA);
 
     if (fUseCheckpoints) {
         //do not need to delete this visitor, as it is deleted by the solver
@@ -1432,15 +1428,15 @@ timespec KFMElectrostaticFastMultipoleBoundaryValueSolver::TimeDifference(timesp
 }
 #endif
 
-KSmartPointer<FastMultipoleMatrix> KFMElectrostaticFastMultipoleBoundaryValueSolver::CreateMatrix(
-    const KSurfaceContainer& surfaceContainer, const KSmartPointer<FastMultipoleEBI>& fm_integrator) const
+std::shared_ptr<FastMultipoleMatrix> KFMElectrostaticFastMultipoleBoundaryValueSolver::CreateMatrix(
+    const KSurfaceContainer& surfaceContainer, const std::shared_ptr<FastMultipoleEBI>& fm_integrator) const
 {
     fm_integrator->Initialize(fSolverParameters);
 
-    KSmartPointer<FastMultipoleDenseMatrix> denseA(new FastMultipoleDenseMatrix(fm_integrator));
-    KSmartPointer<FastMultipoleSparseMatrix> sparseA(new FastMultipoleSparseMatrix(surfaceContainer, fm_integrator));
+    std::shared_ptr<FastMultipoleDenseMatrix> denseA(new FastMultipoleDenseMatrix(fm_integrator));
+    std::shared_ptr<FastMultipoleSparseMatrix> sparseA(new FastMultipoleSparseMatrix(surfaceContainer, fm_integrator));
 
-    return KSmartPointer<FastMultipoleMatrix>(new FastMultipoleMatrix(denseA, sparseA));
+    return std::make_shared<FastMultipoleMatrix>(denseA, sparseA);
 }
 
 }  // namespace KEMField

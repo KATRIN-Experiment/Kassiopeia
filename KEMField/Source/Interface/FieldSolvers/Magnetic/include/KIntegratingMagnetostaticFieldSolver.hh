@@ -11,7 +11,8 @@
 #include "KElectromagnetIntegratingFieldSolver.hh"
 #include "KElectromagnetIntegrator.hh"
 #include "KMagneticFieldSolver.hh"
-#include "KSmartPointer.hh"
+
+#include <memory>
 
 namespace KEMField
 {
@@ -30,7 +31,7 @@ class KIntegratingMagnetostaticFieldSolver : public KMagneticFieldSolver
 
   private:
     KElectromagnetIntegrator fIntegrator;
-    KSmartPointer<KIntegratingFieldSolver<KElectromagnetIntegrator>> fIntegratingFieldSolver;
+    std::shared_ptr<KIntegratingFieldSolver<KElectromagnetIntegrator>> fIntegratingFieldSolver;
 };
 
 } /* namespace KEMField */

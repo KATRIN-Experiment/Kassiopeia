@@ -22,7 +22,7 @@ class KFastMultipoleMatrixGenerator : public KBoundaryMatrixGenerator<KFMElectro
     KFastMultipoleMatrixGenerator();
     ~KFastMultipoleMatrixGenerator() override;
 
-    KSmartPointer<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const override;
+    std::shared_ptr<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const override;
 
     void SetDirectIntegrator(const KElectrostaticBoundaryIntegrator& integrator)
     {
@@ -113,9 +113,9 @@ class KFastMultipoleMatrixGenerator : public KBoundaryMatrixGenerator<KFMElectro
 
 
   private:
-    KSmartPointer<KFMElectrostaticTypes::FastMultipoleMatrix>
+    std::shared_ptr<KFMElectrostaticTypes::FastMultipoleMatrix>
     CreateMatrix(const KSurfaceContainer& surfaceContainer,
-                 const KSmartPointer<KFMElectrostaticTypes::FastMultipoleEBI>&) const;
+                 const std::shared_ptr<KFMElectrostaticTypes::FastMultipoleEBI>&) const;
 
     KFMElectrostaticParameters fParameters;
     KElectrostaticBoundaryIntegrator fDirectIntegrator;

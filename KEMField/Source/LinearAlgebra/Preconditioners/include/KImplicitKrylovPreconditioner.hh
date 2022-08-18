@@ -8,7 +8,6 @@
 #include "KPreconditioner.hh"
 #include "KSimpleMatrix.hh"
 #include "KSimpleVector.hh"
-#include "KSmartPointer.hh"
 #include "KSquareMatrix.hh"
 #include "KVector.hh"
 
@@ -33,7 +32,7 @@ namespace KEMField
 template<typename ValueType> class KImplicitKrylovPreconditioner : public KPreconditioner<ValueType>
 {
   public:
-    KImplicitKrylovPreconditioner(KSmartPointer<KIterativeKrylovSolver<ValueType>> solver) : fZero(0.), fSolver(solver)
+    KImplicitKrylovPreconditioner(std::shared_ptr<KIterativeKrylovSolver<ValueType>> solver) : fZero(0.), fSolver(solver)
     {}
 
     ~KImplicitKrylovPreconditioner() override = default;
@@ -43,7 +42,7 @@ template<typename ValueType> class KImplicitKrylovPreconditioner : public KPreco
         return std::string("implicit_krylov");
     }
 
-    KSmartPointer<KIterativeKrylovSolver<ValueType>> GetSolver()
+    std::shared_ptr<KIterativeKrylovSolver<ValueType>> GetSolver()
     {
         return fSolver;
     }
@@ -85,23 +84,23 @@ template<typename ValueType> class KImplicitKrylovPreconditioner : public KPreco
   protected:
     ValueType fZero;
 
-    KSmartPointer<KIterativeKrylovSolver<ValueType>> fSolver;
+    std::shared_ptr<KIterativeKrylovSolver<ValueType>> fSolver;
 };
 
 template<typename ValueType>
-KSmartPointer<KPreconditioner<ValueType>>
-KBuildKrylovPreconditioner(KSmartPointer<KIterativeKrylovSolver<ValueType>> solver)
+std::shared_ptr<KPreconditioner<ValueType>>
+KBuildKrylovPreconditioner(std::shared_ptr<KIterativeKrylovSolver<ValueType>> solver)
 {
-    return new KImplicitKrylovPreconditioner<ValueType>(solver);
+    return std::make_shared<KImplicitKrylovPreconditioner<ValueType>>(solver);
 }
 
 template<typename ValueType>
-KSmartPointer<KPreconditioner<ValueType>>
+std::shared_ptr<KPreconditioner<ValueType>>
 KBuildKrylovPreconditioner(const KKrylovSolverConfiguration& config,
-                           KSmartPointer<const KSquareMatrix<ValueType>> matrix,
-                           KSmartPointer<const KSquareMatrix<ValueType>> preconditioner = nullptr)
+                           std::shared_ptr<const KSquareMatrix<ValueType>> matrix,
+                           std::shared_ptr<const KSquareMatrix<ValueType>> preconditioner = nullptr)
 {
-    KSmartPointer<KIterativeKrylovSolver<ValueType>> solver = KBuildKrylovSolver(config, matrix, preconditioner);
+    auto solver = KBuildKrylovSolver(config, matrix, preconditioner);
     return KBuildKrylovPreconditioner<ValueType>(solver);
 }
 

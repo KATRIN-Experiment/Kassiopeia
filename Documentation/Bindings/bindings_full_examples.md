@@ -852,12 +852,12 @@ Example:
 ##### KGPlanarPolyLineArcArguments
 Example:
 ```
-<previous_arc
+<next_arc
     arc_mesh_count="(unsigned int)"
     radius="(double)"
     right="(bool)"
 >
-</previous_arc>
+</next_arc>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -961,12 +961,12 @@ Example:
 ##### KGPlanarPolyLoopArcArguments
 Example:
 ```
-<previous_arc
+<next_arc
     arc_mesh_count="(unsigned int)"
     radius="(double)"
     right="(bool)"
 >
-</previous_arc>
+</next_arc>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2102,7 +2102,7 @@ Example:
 ### KSCommandGroup
 Example:
 ```
-<ks_command_group
+<command_group
     command="(string)"
     name="(string)"
 >
@@ -2112,7 +2112,7 @@ Example:
     >
     </command_group>
 
-</ks_command_group>
+</command_group>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2122,12 +2122,12 @@ Example:
 ### KSCommandMemberData
 Example:
 ```
-<command
+<ks_command_member
     child="(string)"
     field="(string)"
     name="(string)"
 >
-</command>
+</ks_command_member>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2137,12 +2137,12 @@ Example:
 ### KSComponentDeltaData
 Example:
 ```
-<component_delta
+<ks_component_delta
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_delta>
+</ks_component_delta>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2152,7 +2152,7 @@ Example:
 ### KSComponentGroup
 Example:
 ```
-<output_group/>
+<ks_component_group/>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2162,12 +2162,12 @@ Example:
 ### KSComponentIntegralData
 Example:
 ```
-<output_integral
+<ks_component_integral
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</output_integral>
+</ks_component_integral>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2222,12 +2222,12 @@ Example:
 ### KSComponentMemberData
 Example:
 ```
-<output
+<component_member
     field="(string)"
     name="(string)"
     parent="(string)"
 >
-</output>
+</component_member>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2237,12 +2237,12 @@ Example:
 ### KSComponentMinimumData
 Example:
 ```
-<output_minimum
+<component_minimum
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</output_minimum>
+</component_minimum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2252,12 +2252,12 @@ Example:
 ### KSComponentMinimumAtData
 Example:
 ```
-<output_minimum_at
+<ks_component_minimum_at
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</output_minimum_at>
+</ks_component_minimum_at>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2478,12 +2478,12 @@ Example:
 ### KElectrostaticConstantField
 Example:
 ```
-<field_electric_constant
+<constant_electric_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</field_electric_constant>
+</constant_electric_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2493,11 +2493,11 @@ Example:
 ### KInducedAzimuthalElectricField
 Example:
 ```
-<ksfield_electric_induced_azi
+<induced_azimuthal_electric_field
     name="(string)"
     root_field="(string)"
 >
-</ksfield_electric_induced_azi>
+</induced_azimuthal_electric_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2507,12 +2507,12 @@ Example:
 ### KElectrostaticPotentialmap
 Example:
 ```
-<electric_potentialmap
+<ksfield_electric_potentialmap
     directory="(string)"
     file="(string)"
     interpolation="(string)"
 >
-</electric_potentialmap>
+</ksfield_electric_potentialmap>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2544,12 +2544,12 @@ Example:
 #### KElectricQuadrupoleField
 Example:
 ```
-<ksfield_electric_quadrupole
+<electric_quadrupole_field
     length="(double)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_electric_quadrupole>
+</electric_quadrupole_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2600,7 +2600,7 @@ Example:
 ##### KExplicitSuperpositionCachedChargeDensitySolver
 Example:
 ```
-<explicit_superposition_cached_bem_solver
+<explicit_superposition_cached_charge_density_solver
     name="(string)"
 >
     <component
@@ -2610,7 +2610,7 @@ Example:
     >
     </component>
 
-</explicit_superposition_cached_bem_solver>
+</explicit_superposition_cached_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2794,12 +2794,12 @@ Example:
 ##### KRobinHoodChargeDensitySolver
 Example:
 ```
-<robin_hood_bem_solver
+<robin_hood_charge_density_solver
     cache_matrix_elements="(bool)"
     check_sub_interval="(unsigned int)"
     display_interval="(unsigned int)"
 >
-</robin_hood_bem_solver>
+</robin_hood_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2864,12 +2864,12 @@ Example:
 ### KRampedElectric2Field
 Example:
 ```
-<ramped_transitional_electric_field
+<ksfield_electric_ramped_2fields
     focus_exponent="(double)"
     focus_time="(double)"
     name="(string)"
 >
-</ramped_transitional_electric_field>
+</ksfield_electric_ramped_2fields>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2879,14 +2879,14 @@ Example:
 ### KGStaticElectromagnetField
 Example:
 ```
-<electromagnet_field
+<ksfield_electromagnet
     directory="(string)"
     directory_magfield3="(string)"
     file="(string)"
 >
     <integrating_field_solver/>
 
-</electromagnet_field>
+</ksfield_electromagnet>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2921,12 +2921,12 @@ Example:
 ### KMagnetostaticConstantField
 Example:
 ```
-<constant_magnetic_field
+<ksfield_magnetic_constant
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</constant_magnetic_field>
+</ksfield_magnetic_constant>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2951,12 +2951,12 @@ Example:
 ### KMagnetostaticFieldmap
 Example:
 ```
-<ksfield_magnetic_fieldmap
+<magnetic_fieldmap
     directory="(string)"
     file="(string)"
     interpolation="(string)"
 >
-</ksfield_magnetic_fieldmap>
+</magnetic_fieldmap>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2966,14 +2966,14 @@ Example:
 ### KMagnetostaticFieldmapCalculator
 Example:
 ```
-<magnetic_fieldmap_calculator
+<ksfield_magnetic_fieldmap_calculator
     center="(KEMStreamableThreeVector)"
     compute_gradient="(bool)"
     directory="(string)"
 >
     <field_electromagnet/>
 
-</magnetic_fieldmap_calculator>
+</ksfield_magnetic_fieldmap_calculator>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3018,7 +3018,7 @@ Example:
 ### KMagneticSuperpositionField
 Example:
 ```
-<magnetic_superposition_field
+<ksfield_magnetic_super_position
     name="(string)"
     require="(string)"
     use_caching="(bool)"
@@ -3029,7 +3029,7 @@ Example:
     >
     </add_field>
 
-</magnetic_superposition_field>
+</ksfield_magnetic_super_position>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3074,11 +3074,11 @@ Example:
 #### KSGenValueFix
 Example:
 ```
-<x_fix
+<pid_fix
     name="(string)"
     value="(double)"
 >
-</x_fix>
+</pid_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3088,12 +3088,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<r_formula
+<y_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</r_formula>
+</y_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3103,12 +3103,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<l_gauss
+<pid_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</l_gauss>
+</pid_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3118,12 +3118,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<time_generalized_gauss
+<phi_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</time_generalized_gauss>
+</phi_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3133,12 +3133,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<energy_histogram
+<r_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</energy_histogram>
+</r_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3148,12 +3148,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<l_list
+<n_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</l_list>
+</n_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3163,12 +3163,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<ksgen_value_set
+<r_set
     name="(string)"
     value_count="(unsigned int)"
     value_increment="(double)"
 >
-</ksgen_value_set>
+</r_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3178,12 +3178,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<time_uniform
+<energy_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</time_uniform>
+</energy_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3265,12 +3265,12 @@ Example:
 ### KSGenEnergyBetaDecay
 Example:
 ```
-<energy_beta_decay
+<ksgen_energy_beta_decay
     daughter_z="(int)"
     endpoint_ev="(double)"
     max_energy="(double)"
 >
-</energy_beta_decay>
+</ksgen_energy_beta_decay>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3346,12 +3346,12 @@ Example:
 ### KSGenEnergyLeadEvent
 Example:
 ```
-<energy_lead_event
+<ksgen_energy_lead_event
     do_auger="(bool)"
     do_conversion="(bool)"
     force_conversion="(bool)"
 >
-</energy_lead_event>
+</ksgen_energy_lead_event>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3376,12 +3376,12 @@ Example:
 ### KSGenEnergyRydberg
 Example:
 ```
-<ksgen_energy_rydberg
+<energy_rydberg
     deposited_energy="(double)"
     ionization_energy="(double)"
     name="(string)"
 >
-</ksgen_energy_rydberg>
+</energy_rydberg>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3413,7 +3413,7 @@ Example:
 #### KSGenLComposite
 Example:
 ```
-<l_composite
+<ksgen_l_composite
     l_value="(string)"
     name="(string)"
 >
@@ -3423,7 +3423,7 @@ Example:
     >
     </l_fix>
 
-</l_composite>
+</ksgen_l_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3446,10 +3446,10 @@ Example:
 #### KSGenLUniformMaxN
 Example:
 ```
-<ksgen_l_uniform_max_n
+<l_uniform_max_n
     name="(string)"
 >
-</ksgen_l_uniform_max_n>
+</l_uniform_max_n>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3459,7 +3459,7 @@ Example:
 #### KSGenMomentumRectangularComposite
 Example:
 ```
-<momentum_rectangular_composite
+<ksgen_momentum_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
@@ -3470,7 +3470,7 @@ Example:
     >
     </x_fix>
 
-</momentum_rectangular_composite>
+</ksgen_momentum_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3515,7 +3515,7 @@ Example:
 #### KSGenPositionCylindricalComposite
 Example:
 ```
-<position_cylindrical_composite
+<ksgen_position_cylindrical_composite
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -3526,7 +3526,7 @@ Example:
     >
     </phi_fix>
 
-</position_cylindrical_composite>
+</ksgen_position_cylindrical_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3536,12 +3536,12 @@ Example:
 ##### KSGenValueRadiusCylindrical
 Example:
 ```
-<r_cylindrical
+<ksgen_value_radius_cylindrical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</r_cylindrical>
+</ksgen_value_radius_cylindrical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3551,10 +3551,10 @@ Example:
 ##### KSGenValueRadiusFraction
 Example:
 ```
-<r_fraction
+<ksgen_value_radius_fraction
     name="(string)"
 >
-</r_fraction>
+</ksgen_value_radius_fraction>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3585,7 +3585,7 @@ Example:
 #### KSGenPositionFrustrumComposite
 Example:
 ```
-<position_frustrum_composite
+<ksgen_position_frustrum_composite
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -3596,7 +3596,7 @@ Example:
     >
     </phi_fix>
 
-</position_frustrum_composite>
+</ksgen_position_frustrum_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3606,12 +3606,12 @@ Example:
 ##### KSGenValueZFrustrum
 Example:
 ```
-<ksgen_value_z_frustrum
+<z_frustrum
     name="(string)"
     r1="(double)"
     r2="(double)"
 >
-</ksgen_value_z_frustrum>
+</z_frustrum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3621,12 +3621,12 @@ Example:
 #### KSGenPositionHomogeneousFluxTube
 Example:
 ```
-<position_homogeneous_flux_tube
+<ksgen_position_homogeneous_flux_tube
     flux="(double)"
     magnetic_field_name="(string)"
     n_integration_step="(int)"
 >
-</position_homogeneous_flux_tube>
+</ksgen_position_homogeneous_flux_tube>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3636,7 +3636,7 @@ Example:
 #### KSGenPositionMask
 Example:
 ```
-<ksgen_position_mask
+<position_mask
     max_retries="(unsigned int)"
     name="(string)"
     spaces_allowed="(string)"
@@ -3648,7 +3648,7 @@ Example:
     >
     </position_cylindrical_composite>
 
-</ksgen_position_mask>
+</position_mask>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3672,7 +3672,7 @@ Example:
 ##### KSGenPositionRectangularComposite
 Example:
 ```
-<position_rectangular_composite
+<ksgen_position_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
@@ -3683,7 +3683,7 @@ Example:
     >
     </x_fix>
 
-</position_rectangular_composite>
+</ksgen_position_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3707,7 +3707,7 @@ Example:
 ##### KSGenPositionSphericalComposite
 Example:
 ```
-<ksgen_position_spherical_composite
+<position_spherical_composite
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -3718,7 +3718,7 @@ Example:
     >
     </phi_fix>
 
-</ksgen_position_spherical_composite>
+</position_spherical_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3753,11 +3753,11 @@ Example:
 #### KSGenPositionSurfaceAdjustmentStep
 Example:
 ```
-<ksgen_position_surface_adjustment_step
+<position_surface_adjustment_step
     length="(double)"
     name="(string)"
 >
-</ksgen_position_surface_adjustment_step>
+</position_surface_adjustment_step>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3767,11 +3767,11 @@ Example:
 #### KSGenPositionSurfaceRandom
 Example:
 ```
-<position_surface_random
+<ksgen_position_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</position_surface_random>
+</ksgen_position_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3781,7 +3781,7 @@ Example:
 #### KSGenSpinComposite
 Example:
 ```
-<ksgen_spin_composite
+<spin_composite
     name="(string)"
     phi="(string)"
     space="(string)"
@@ -3792,7 +3792,7 @@ Example:
     >
     </phi_fix>
 
-</ksgen_spin_composite>
+</spin_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3823,7 +3823,7 @@ Example:
 #### KSGenTimeComposite
 Example:
 ```
-<time_composite
+<ksgen_time_composite
     name="(string)"
     time_value="(string)"
 >
@@ -3833,7 +3833,7 @@ Example:
     >
     </time_fix>
 
-</time_composite>
+</ksgen_time_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3873,14 +3873,14 @@ Example:
 ### KSGeoSide
 Example:
 ```
-<ksgeo_side
+<geo_side
     name="(string)"
     spaces="(string)"
     surfaces="(string)"
 >
     <add_electric_field/>
 
-</ksgeo_side>
+</geo_side>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3960,7 +3960,7 @@ Example:
 #### KSCommandMemberRemoveElectricFieldData
 Example:
 ```
-<remove_electric_field/>
+<remove_magnetic_field/>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4243,11 +4243,11 @@ Example:
 ### KSIntCalculatorConstant
 Example:
 ```
-<calculator_constant
+<ksint_calculator_constant
     cross_section="(double)"
     name="(string)"
 >
-</calculator_constant>
+</ksint_calculator_constant>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4257,11 +4257,11 @@ Example:
 ### KSIntCalculatorIon
 Example:
 ```
-<ksint_calculator_ion
+<calculator_ion
     gas="(string)"
     name="(string)"
 >
-</ksint_calculator_ion>
+</calculator_ion>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4300,12 +4300,12 @@ Example:
 #### KSIntDecayCalculatorDeathConstRate
 Example:
 ```
-<ksint_decay_calculator_death_const_rate
+<decay_death_const_rate
     life_time="(double)"
     max_pid="(long long)"
     min_pid="(long long)"
 >
-</ksint_decay_calculator_death_const_rate>
+</decay_death_const_rate>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4315,7 +4315,7 @@ Example:
 #### KSIntDecayCalculatorFerencBBRTransition
 Example:
 ```
-<decay_ferenc_bbr
+<ksint_decay_calculator_ferenc_bbr_transition
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4327,7 +4327,7 @@ Example:
     >
     </decay_product_generator>
 
-</decay_ferenc_bbr>
+</ksint_decay_calculator_ferenc_bbr_transition>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4337,7 +4337,7 @@ Example:
 #### KSIntDecayCalculatorFerencIonisation
 Example:
 ```
-<decay_ferenc_ionisation
+<ksint_decay_calculator_ferenc_ionisation
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4349,7 +4349,7 @@ Example:
     >
     </decay_product_generator>
 
-</decay_ferenc_ionisation>
+</ksint_decay_calculator_ferenc_ionisation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4359,7 +4359,7 @@ Example:
 #### KSIntDecayCalculatorFerencSpontaneous
 Example:
 ```
-<decay_ferenc_spontaneous
+<ksint_decay_calculator_ferenc_spontaneous
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4371,7 +4371,7 @@ Example:
     >
     </decay_product_generator>
 
-</decay_ferenc_spontaneous>
+</ksint_decay_calculator_ferenc_spontaneous>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4381,7 +4381,7 @@ Example:
 #### KSIntDecayCalculatorGlukhovDeExcitation
 Example:
 ```
-<decay_glukhov_deexcitation
+<ksint_decay_calculator_glukhov_deexcitation
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4393,7 +4393,7 @@ Example:
     >
     </decay_product_generator>
 
-</decay_glukhov_deexcitation>
+</ksint_decay_calculator_glukhov_deexcitation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4403,7 +4403,7 @@ Example:
 #### KSIntDecayCalculatorGlukhovExcitation
 Example:
 ```
-<ksint_decay_calculator_glukhov_excitation
+<decay_glukhov_excitation
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4415,7 +4415,7 @@ Example:
     >
     </decay_product_generator>
 
-</ksint_decay_calculator_glukhov_excitation>
+</decay_glukhov_excitation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4447,7 +4447,7 @@ Example:
 #### KSIntDecayCalculatorGlukhovSpontaneous
 Example:
 ```
-<decay_glukhov_spontaneous
+<ksint_decay_calculator_glukhov_spontaneous
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4459,7 +4459,7 @@ Example:
     >
     </decay_product_generator>
 
-</decay_glukhov_spontaneous>
+</ksint_decay_calculator_glukhov_spontaneous>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5049,11 +5049,11 @@ Example:
 ### KSTrajControlCyclotron
 Example:
 ```
-<kstraj_control_cyclotron
+<control_cyclotron
     fraction="(double)"
     name="(string)"
 >
-</kstraj_control_cyclotron>
+</control_cyclotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5063,12 +5063,12 @@ Example:
 ### KSTrajControlEnergy
 Example:
 ```
-<kstraj_control_energy
+<control_energy
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
-</kstraj_control_energy>
+</control_energy>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5078,11 +5078,11 @@ Example:
 ### KSTrajControlLength
 Example:
 ```
-<kstraj_control_length
+<control_length
     length="(double)"
     name="(string)"
 >
-</kstraj_control_length>
+</control_length>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5165,11 +5165,11 @@ Example:
 ### KSTrajControlTime
 Example:
 ```
-<control_time
+<kstraj_control_time
     name="(string)"
     time="(double)"
 >
-</control_time>
+</kstraj_control_time>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5205,10 +5205,10 @@ Example:
 ### KSTrajIntegratorRK8
 Example:
 ```
-<kstraj_integrator_rk8
+<integrator_rk8
     name="(string)"
 >
-</kstraj_integrator_rk8>
+</integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5218,10 +5218,10 @@ Example:
 ### KSTrajIntegratorRK86
 Example:
 ```
-<integrator_rk86
+<kstraj_integrator_rk86
     name="(string)"
 >
-</integrator_rk86>
+</kstraj_integrator_rk86>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5231,10 +5231,10 @@ Example:
 ### KSTrajIntegratorRK87
 Example:
 ```
-<integrator_rk87
+<kstraj_integrator_rk87
     name="(string)"
 >
-</integrator_rk87>
+</kstraj_integrator_rk87>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5296,10 +5296,10 @@ Example:
 ### KSTrajInterpolatorFast
 Example:
 ```
-<kstraj_interpolator_fast
+<interpolator_fast
     name="(string)"
 >
-</kstraj_interpolator_fast>
+</interpolator_fast>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5309,10 +5309,10 @@ Example:
 ### KSTrajInterpolatorHermite
 Example:
 ```
-<kstraj_interpolator_hermite
+<interpolator_hermite
     name="(string)"
 >
-</kstraj_interpolator_hermite>
+</interpolator_hermite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5336,10 +5336,10 @@ Example:
 ### KSTrajTermDrift
 Example:
 ```
-<kstraj_term_drift
+<term_drift
     name="(string)"
 >
-</kstraj_term_drift>
+</term_drift>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5349,11 +5349,11 @@ Example:
 ### KSTrajTermGravity
 Example:
 ```
-<term_gravity
+<kstraj_term_gravity
     gravity="(KThreeVector)"
     name="(string)"
 >
-</term_gravity>
+</kstraj_term_gravity>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
