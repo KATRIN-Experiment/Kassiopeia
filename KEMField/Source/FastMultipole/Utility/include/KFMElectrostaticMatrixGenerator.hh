@@ -17,8 +17,7 @@ namespace KEMField
 class KFMElectrostaticMatrixGenerator : public KBoundaryMatrixGenerator<KFMElectrostaticTypes::ValueType>
 {
   public:
-    KSmartPointer<KSquareMatrix<KFMElectrostaticTypes::ValueType>> Build(const KSurfaceContainer* container) const;
-
+    std::shared_ptr<KSquareMatrix<KFMElectrostaticTypes::ValueType>> Build(const KSurfaceContainer* container) const;
 
   private:
 };

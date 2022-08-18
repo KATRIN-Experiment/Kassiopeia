@@ -24,25 +24,25 @@ KFastMultipoleMatrixGenerator::~KFastMultipoleMatrixGenerator() = default;
 //    TODO Auto-generated destructor stub
 //}
 
-KSmartPointer<KSquareMatrix<KFastMultipoleMatrixGenerator::ValueType>>
+std::shared_ptr<KSquareMatrix<KFastMultipoleMatrixGenerator::ValueType>>
 KFastMultipoleMatrixGenerator::Build(const KSurfaceContainer& container) const
 {
-    KSmartPointer<FastMultipoleEBI> fm_integrator(new FastMultipoleEBI(fDirectIntegrator, container));
-    KSmartPointer<FastMultipoleMatrix> fmA = CreateMatrix(container, fm_integrator);
+    std::shared_ptr<FastMultipoleEBI> fm_integrator(new FastMultipoleEBI(fDirectIntegrator, container));
+    auto fmA = CreateMatrix(container, fm_integrator);
     return fmA;
 }
 
-KSmartPointer<FastMultipoleMatrix>
+std::shared_ptr<FastMultipoleMatrix>
 KFastMultipoleMatrixGenerator::CreateMatrix(const KSurfaceContainer& surfaceContainer,
-                                            const KSmartPointer<FastMultipoleEBI>& fm_integrator) const
+                                            const std::shared_ptr<FastMultipoleEBI>& fm_integrator) const
 {
     fm_integrator->Initialize(fParameters);
 
-    KSmartPointer<FastMultipoleSparseMatrix> sparseA(new FastMultipoleSparseMatrix(surfaceContainer, fm_integrator));
+    std::shared_ptr<FastMultipoleSparseMatrix> sparseA(new FastMultipoleSparseMatrix(surfaceContainer, fm_integrator));
 
-    KSmartPointer<FastMultipoleDenseMatrix> denseA(new FastMultipoleDenseMatrix(fm_integrator));
+    std::shared_ptr<FastMultipoleDenseMatrix> denseA(new FastMultipoleDenseMatrix(fm_integrator));
 
-    return KSmartPointer<FastMultipoleMatrix>(new FastMultipoleMatrix(denseA, sparseA));
+    return std::make_shared<FastMultipoleMatrix>(denseA, sparseA);
 }
 
 } /* namespace KEMField */

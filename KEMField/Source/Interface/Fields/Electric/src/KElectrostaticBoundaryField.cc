@@ -26,32 +26,32 @@ KElectrostaticBoundaryField::KElectrostaticBoundaryField() :
 
 KElectrostaticBoundaryField::~KElectrostaticBoundaryField() = default;
 
-void KElectrostaticBoundaryField::SetChargeDensitySolver(const KSmartPointer<KChargeDensitySolver>& solver)
+void KElectrostaticBoundaryField::SetChargeDensitySolver(const std::shared_ptr<KChargeDensitySolver>& solver)
 {
     fChargeDensitySolver = solver;
 }
 
-KSmartPointer<KChargeDensitySolver> KElectrostaticBoundaryField::GetChargeDensitySolver()
+std::shared_ptr<KChargeDensitySolver> KElectrostaticBoundaryField::GetChargeDensitySolver()
 {
     return fChargeDensitySolver;
 }
 
-void KElectrostaticBoundaryField::SetFieldSolver(const KSmartPointer<KElectricFieldSolver>& solver)
+void KElectrostaticBoundaryField::SetFieldSolver(const std::shared_ptr<KElectricFieldSolver>& solver)
 {
     fFieldSolver = solver;
 }
 
-KSmartPointer<KElectricFieldSolver> KElectrostaticBoundaryField::GetFieldSolver()
+std::shared_ptr<KElectricFieldSolver> KElectrostaticBoundaryField::GetFieldSolver()
 {
     return fFieldSolver;
 }
 
-void KElectrostaticBoundaryField::SetContainer(const KSmartPointer<KSurfaceContainer>& container)
+void KElectrostaticBoundaryField::SetContainer(const std::shared_ptr<KSurfaceContainer>& container)
 {
     fContainer = container;
 }
 
-KSmartPointer<KSurfaceContainer> KElectrostaticBoundaryField::GetContainer() const
+std::shared_ptr<KSurfaceContainer> KElectrostaticBoundaryField::GetContainer() const
 {
     return fContainer;
 }
@@ -92,12 +92,12 @@ void KElectrostaticBoundaryField::InitializeCore()
     VisitorPostprocessing();
 }
 
-void KElectrostaticBoundaryField::AddVisitor(const KSmartPointer<Visitor>& visitor)
+void KElectrostaticBoundaryField::AddVisitor(const std::shared_ptr<Visitor>& visitor)
 {
     fVisitors.push_back(visitor);
 }
 
-vector<KSmartPointer<KElectrostaticBoundaryField::Visitor>> KElectrostaticBoundaryField::GetVisitors()
+vector<std::shared_ptr<KElectrostaticBoundaryField::Visitor>> KElectrostaticBoundaryField::GetVisitors()
 {
     return fVisitors;
 }

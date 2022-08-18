@@ -18,7 +18,7 @@ set (KEMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFundamentalTypeCounter.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFundamentalTypes.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KMPIEnvironment.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/KSmartPointer.hh
+    #${CMAKE_CURRENT_SOURCE_DIR}/include/KSmartPointer.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KTimer.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KTypeManipulation.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KTypelist.hh

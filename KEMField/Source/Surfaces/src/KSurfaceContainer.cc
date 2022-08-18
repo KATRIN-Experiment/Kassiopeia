@@ -7,11 +7,14 @@ KSurfaceContainer::KSurfaceContainer() : fIsOwner(true)
     for (auto& i : fPartialSurfaceData)
         for (auto& j : i)
             j = nullptr;
+
+    fSurfaceData = std::make_shared<KSurfaceData>();
 }
 
 KSurfaceContainer::~KSurfaceContainer()
 {
     clear();
+    fSurfaceData.reset();
 }
 
 bool operator==(const KSurfaceContainer& lhs, const KSurfaceContainer& rhs)
@@ -35,8 +38,8 @@ void KSurfaceContainer::push_back(KSurfacePrimitive* aSurface)
     int boundaryPolicy = aSurface->GetID().BoundaryID;
     int shapePolicy = aSurface->GetID().ShapeID;
 
-    auto it = fSurfaceData.begin();
-    for (; it != fSurfaceData.end(); ++it)
+    auto it = fSurfaceData->begin();
+    for (; it != fSurfaceData->end(); ++it)
         if (!(*it)->empty())
             if ((*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
                 (*it)->operator[](0)->GetID().ShapeID == shapePolicy) {
@@ -44,19 +47,19 @@ void KSurfaceContainer::push_back(KSurfacePrimitive* aSurface)
                 return;
             }
 
-    fSurfaceData.push_back(new KSurfaceArray(1, aSurface));
+    fSurfaceData->push_back(new KSurfaceArray(1, aSurface));
 }
 
 KSurfacePrimitive* KSurfaceContainer::FirstSurfaceType(unsigned int i) const
 {
-    return (i < fSurfaceData.size() ? fSurfaceData.at(i)->at(0) : nullptr);
+    return (i < fSurfaceData->size() ? fSurfaceData->at(i)->at(0) : nullptr);
 }
 
 KSurfacePrimitive* KSurfaceContainer::operator[](const unsigned int& i) const
 {
     unsigned int j = i;
-    auto surfaceDataIt = fSurfaceData.begin();
-    for (; surfaceDataIt != fSurfaceData.end(); ++surfaceDataIt) {
+    auto surfaceDataIt = fSurfaceData->begin();
+    for (; surfaceDataIt != fSurfaceData->end(); ++surfaceDataIt) {
         if (j >= (*surfaceDataIt)->size())
             j -= (*surfaceDataIt)->size();
         else {
@@ -69,13 +72,13 @@ KSurfacePrimitive* KSurfaceContainer::operator[](const unsigned int& i) const
 
     // unsigned int j=i;
     // unsigned int size;
-    // for (unsigned int k=0;k<fSurfaceData.size();k++)
+    // for (unsigned int k=0;k<fSurfaceData->size();k++)
     // {
-    //   size = fSurfaceData.at(k)->size();
+    //   size = fSurfaceData->at(k)->size();
     //   if (j>=size)
     // 	j-=size;
     //   else
-    // 	return (fSurfaceData.at(k)->at(j));
+    // 	return (fSurfaceData->at(k)->at(j));
     // }
     // return NULL;
 }
@@ -83,7 +86,7 @@ KSurfacePrimitive* KSurfaceContainer::operator[](const unsigned int& i) const
 unsigned int KSurfaceContainer::size() const
 {
     unsigned int i = 0;
-    for (auto* it : fSurfaceData)
+    for (auto* it : *fSurfaceData)
         i += it->size();
     return i;
 }
@@ -112,21 +115,19 @@ KSurfaceContainer::iterator KSurfaceContainer::end() const
 
 void KSurfaceContainer::clear()
 {
-    KSurfaceDataIt dataIt;
-    KSurfaceArrayIt arrayIt;
-
-    for (dataIt = fSurfaceData.begin(); dataIt != fSurfaceData.end(); ++dataIt) {
+    for (auto & dataIt : *fSurfaceData) {
         if (fIsOwner)
-            for (arrayIt = (*dataIt)->begin(); arrayIt != (*dataIt)->end(); ++arrayIt)
-                delete *arrayIt;
-        (*dataIt)->clear();
-        delete *dataIt;
+            for (auto & arrayIt : *dataIt)
+                delete arrayIt;
+        dataIt->clear();
+        delete dataIt;
     }
-    fSurfaceData.clear();
+    fSurfaceData->clear();
 }
 
 KSurfaceContainer::SmartDataPointer KSurfaceContainer::GetSurfaceData() const
 {
-    return SmartDataPointer(&fSurfaceData, true);
+    //return SmartDataPointer(&fSurfaceData, true);
+    return fSurfaceData;
 }
 }  // namespace KEMField

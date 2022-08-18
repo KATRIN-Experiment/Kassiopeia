@@ -31,7 +31,7 @@ class KGStaticElectromagnetField : public KStaticElectromagnetField
     void SetSaveMagfield3(bool aFlag);
     void SetDirectoryMagfield3(const std::string& aDirectory);
 
-    KSmartPointer<KGeoBag::KGElectromagnetConverter> GetConverter();
+    std::shared_ptr<KGeoBag::KGElectromagnetConverter> GetConverter();
 
     const std::vector<KGeoBag::KGSurface*>& GetSurfaces() const { return fSurfaces; }
     const std::vector<KGeoBag::KGSpace*>& GetSpaces() const { return fSpaces; }
@@ -49,7 +49,7 @@ class KGStaticElectromagnetField : public KStaticElectromagnetField
     std::vector<KGeoBag::KGSurface*> fSurfaces;
     std::vector<KGeoBag::KGSpace*> fSpaces;
 
-    KSmartPointer<KGeoBag::KGElectromagnetConverter> fConverter;
+    std::shared_ptr<KGeoBag::KGElectromagnetConverter> fConverter;
 
     bool fSaveMagfield3;
     std::string fDirectoryMagfield3;

@@ -10,14 +10,14 @@ if [ "${VERSION}" != "${RELEASE}" -a "v${VERSION}" != "${RELEASE}" ]; then
     exit 1
 fi
 
-shift 1
-
 echo "-- building $IMAGE:$VERSION ..."
-sudo docker build -t $IMAGE $@ . || exit $?
+sudo docker build -t $IMAGE --no-cache . || exit $?
 sudo docker run -it katrinexperiment/kassiopeia UnitTestKasper || exit $?
 
 ######
+
 #exit 0
+
 ######
 
 echo "-- pushing to DockerHub ..."

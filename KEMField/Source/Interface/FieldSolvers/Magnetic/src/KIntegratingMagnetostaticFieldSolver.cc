@@ -15,9 +15,9 @@ KIntegratingMagnetostaticFieldSolver::KIntegratingMagnetostaticFieldSolver() = d
 
 void KIntegratingMagnetostaticFieldSolver::InitializeCore(KElectromagnetContainer& container)
 {
-    if (!fIntegratingFieldSolver.Null())
+    if (fIntegratingFieldSolver)
         return;
-    fIntegratingFieldSolver = new KIntegratingFieldSolver<KElectromagnetIntegrator>(container, fIntegrator);
+    fIntegratingFieldSolver = std::make_shared<KIntegratingFieldSolver<KElectromagnetIntegrator>>(container, fIntegrator);
 }
 
 KFieldVector KIntegratingMagnetostaticFieldSolver::MagneticPotentialCore(const KPosition& P) const

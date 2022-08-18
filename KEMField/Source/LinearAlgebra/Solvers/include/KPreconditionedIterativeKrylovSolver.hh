@@ -37,7 +37,7 @@ class KPreconditionedIterativeKrylovSolver : public KIterativeKrylovSolver<Value
 
     void Solve(const Matrix& A, Preconditioner& P, Vector& x, const Vector& b);
 
-    void SetPreconditioner(KSmartPointer<Preconditioner> preconditioner)
+    void SetPreconditioner(std::shared_ptr<Preconditioner> preconditioner)
     {
         fPreconditioner = preconditioner;
     }
@@ -99,7 +99,7 @@ class KPreconditionedIterativeKrylovSolver : public KIterativeKrylovSolver<Value
     bool fUseRelativeTolerance;
     double fInitialResidual;
 
-    KSmartPointer<Preconditioner> fPreconditioner;
+    std::shared_ptr<Preconditioner> fPreconditioner;
 };
 
 template<typename ValueType, template<typename> class ParallelTrait>

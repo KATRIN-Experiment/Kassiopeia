@@ -52,18 +52,17 @@ class KEMToolbox : public katrin::KSingleton<KEMToolbox>
 
   private:
     bool checkKeyIsFree(std::string name);
-    KSmartPointer<katrin::KContainer> GetContainer(std::string name);
+    std::shared_ptr<katrin::KContainer> GetContainer(std::string name);
 
-    typedef std::pair<std::string, KSmartPointer<katrin::KContainer>> NameAndContainer;
-
-    using ContainerMap = std::map<std::string, KSmartPointer<katrin::KContainer>>;
+    typedef std::pair<std::string, std::shared_ptr<katrin::KContainer>> NameAndContainer;
+    using ContainerMap = std::map<std::string, std::shared_ptr<katrin::KContainer>>;
 
     ContainerMap fObjects;
 };
 
 template<class Object> void KEMToolbox::Add(std::string name, Object* ptr)
 {
-    KSmartPointer<katrin::KContainer> container = new katrin::KContainer();
+    auto container = std::make_shared<katrin::KContainer>();
     container->Set(ptr);
     checkKeyIsFree(name);
     fObjects.insert(NameAndContainer(name, container));
@@ -71,7 +70,7 @@ template<class Object> void KEMToolbox::Add(std::string name, Object* ptr)
 
 template<class Object> Object* KEMToolbox::Get(std::string name)
 {
-    KSmartPointer<katrin::KContainer> container = GetContainer(name);
+    auto container = GetContainer(name);
     Object* object = container->AsPointer<Object>();
     if (!object)
         throw KKeyNotFoundException("KEMToolbox", name, KKeyNotFoundException::wrongType);

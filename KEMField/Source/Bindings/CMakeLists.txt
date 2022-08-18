@@ -6,7 +6,7 @@ set (KEMFIELD_BINDINGS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolboxHelper.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolboxBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMBindingsMessage.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KSmartPointerRelease.hh
+    #${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KSmartPointerRelease.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KBoundaryElementInfoDisplayBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectricQuadrupoleFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticConstantFieldBuilder.hh

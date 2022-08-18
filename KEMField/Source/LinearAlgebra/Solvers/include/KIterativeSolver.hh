@@ -5,6 +5,7 @@
 #include "KVector.hh"
 
 #include <climits>
+#include <vector>
 
 namespace KEMField
 {

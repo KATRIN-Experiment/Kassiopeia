@@ -2,9 +2,10 @@
 #define KELECTROSTATICBOUNDARYINTEGRATOR_DEF
 
 #include "KElectrostaticElementIntegrator.hh"
-#include "KSmartPointer.hh"
 #include "KSurfacePrimitive.hh"
 #include "KSurfaceVisitors.hh"
+
+#include <memory>
 
 namespace KEMField
 {
@@ -43,11 +44,11 @@ class KElectrostaticBoundaryIntegrator
     using Kind = ElectrostaticSingleThread;
 
     KElectrostaticBoundaryIntegrator(
-        const KSmartPointer<KElectrostaticElementIntegrator<KTriangle>>& triangleIntegrator,
-        const KSmartPointer<KElectrostaticElementIntegrator<KRectangle>>& rectangleIntegrator,
-        const KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>>& lineSegmentIntegrator,
-        const KSmartPointer<KElectrostaticElementIntegrator<KConicSection>>& conicSectionIntegrator,
-        const KSmartPointer<KElectrostaticElementIntegrator<KRing>>& ringIntegrator);
+        const std::shared_ptr<KElectrostaticElementIntegrator<KTriangle>>& triangleIntegrator,
+        const std::shared_ptr<KElectrostaticElementIntegrator<KRectangle>>& rectangleIntegrator,
+        const std::shared_ptr<KElectrostaticElementIntegrator<KLineSegment>>& lineSegmentIntegrator,
+        const std::shared_ptr<KElectrostaticElementIntegrator<KConicSection>>& conicSectionIntegrator,
+        const std::shared_ptr<KElectrostaticElementIntegrator<KRing>>& ringIntegrator);
 
     KElectrostaticBoundaryIntegrator(const KElectrostaticBoundaryIntegrator& integrator);
     KElectrostaticBoundaryIntegrator& operator=(const KElectrostaticBoundaryIntegrator& integrator);
@@ -60,9 +61,9 @@ class KElectrostaticBoundaryIntegrator
     ValueType& BasisValue(KSurfacePrimitive* surface, unsigned int);
 
     //triangle integrator getter and setter and evaluation functions
-    KSmartPointer<KElectrostaticElementIntegrator<KTriangle>> GetTriangleIntegrator();
+    std::shared_ptr<KElectrostaticElementIntegrator<KTriangle>> GetTriangleIntegrator();
 
-    void SetTriangleIntegrator(const KSmartPointer<KElectrostaticElementIntegrator<KTriangle>>& triangleIntegrator);
+    void SetTriangleIntegrator(const std::shared_ptr<KElectrostaticElementIntegrator<KTriangle>>& triangleIntegrator);
 
     double Potential(const KTriangle* source, const KPosition& P) const;
     KFieldVector ElectricField(const KTriangle* source, const KPosition& P) const;
@@ -73,13 +74,13 @@ class KElectrostaticBoundaryIntegrator
     std::pair<KFieldVector, double> ElectricFieldAndPotential(const KTriangleGroup* source, const KPosition& P) const;
 
   private:
-    KSmartPointer<KElectrostaticElementIntegrator<KTriangle>> fTriangleIntegrator;
+    std::shared_ptr<KElectrostaticElementIntegrator<KTriangle>> fTriangleIntegrator;
 
   public:
     //Rectangle integrator getter and setter and evaluation functions
-    KSmartPointer<KElectrostaticElementIntegrator<KRectangle>> GetRectangleIntegrator();
+    std::shared_ptr<KElectrostaticElementIntegrator<KRectangle>> GetRectangleIntegrator();
 
-    void SetRectangleIntegrator(const KSmartPointer<KElectrostaticElementIntegrator<KRectangle>>& RectangleIntegrator);
+    void SetRectangleIntegrator(const std::shared_ptr<KElectrostaticElementIntegrator<KRectangle>>& RectangleIntegrator);
 
     double Potential(const KRectangle* source, const KPosition& P) const;
     KFieldVector ElectricField(const KRectangle* source, const KPosition& P) const;
@@ -90,14 +91,14 @@ class KElectrostaticBoundaryIntegrator
     std::pair<KFieldVector, double> ElectricFieldAndPotential(const KRectangleGroup* source, const KPosition& P) const;
 
   private:
-    KSmartPointer<KElectrostaticElementIntegrator<KRectangle>> fRectangleIntegrator;
+    std::shared_ptr<KElectrostaticElementIntegrator<KRectangle>> fRectangleIntegrator;
 
   public:
     //LineSegment integrator getter and setter and evaluation functions
-    KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>> GetLineSegmentIntegrator();
+    std::shared_ptr<KElectrostaticElementIntegrator<KLineSegment>> GetLineSegmentIntegrator();
 
     void
-    SetLineSegmentIntegrator(const KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>>& LineSegmentIntegrator);
+    SetLineSegmentIntegrator(const std::shared_ptr<KElectrostaticElementIntegrator<KLineSegment>>& LineSegmentIntegrator);
 
     double Potential(const KLineSegment* source, const KPosition& P) const;
     KFieldVector ElectricField(const KLineSegment* source, const KPosition& P) const;
@@ -109,14 +110,14 @@ class KElectrostaticBoundaryIntegrator
                                                               const KPosition& P) const;
 
   private:
-    KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>> fLineSegmentIntegrator;
+    std::shared_ptr<KElectrostaticElementIntegrator<KLineSegment>> fLineSegmentIntegrator;
 
   public:
     //ConicSection integrator getter and setter and evaluation functions
-    KSmartPointer<KElectrostaticElementIntegrator<KConicSection>> GetConicSectionIntegrator();
+    std::shared_ptr<KElectrostaticElementIntegrator<KConicSection>> GetConicSectionIntegrator();
 
     void SetConicSectionIntegrator(
-        const KSmartPointer<KElectrostaticElementIntegrator<KConicSection>>& ConicSectionIntegrator);
+        const std::shared_ptr<KElectrostaticElementIntegrator<KConicSection>>& ConicSectionIntegrator);
 
     double Potential(const KConicSection* source, const KPosition& P) const;
     KFieldVector ElectricField(const KConicSection* source, const KPosition& P) const;
@@ -128,13 +129,13 @@ class KElectrostaticBoundaryIntegrator
                                                               const KPosition& P) const;
 
   private:
-    KSmartPointer<KElectrostaticElementIntegrator<KConicSection>> fConicSectionIntegrator;
+    std::shared_ptr<KElectrostaticElementIntegrator<KConicSection>> fConicSectionIntegrator;
 
   public:
     //Ring integrator getter and setter and evaluation functions
-    KSmartPointer<KElectrostaticElementIntegrator<KRing>> GetRingIntegrator();
+    std::shared_ptr<KElectrostaticElementIntegrator<KRing>> GetRingIntegrator();
 
-    void SetRingIntegrator(const KSmartPointer<KElectrostaticElementIntegrator<KRing>>& ringIntegrator);
+    void SetRingIntegrator(const std::shared_ptr<KElectrostaticElementIntegrator<KRing>>& ringIntegrator);
 
     double Potential(const KRing* source, const KPosition& P) const;
     KFieldVector ElectricField(const KRing* source, const KPosition& P) const;
@@ -145,7 +146,7 @@ class KElectrostaticBoundaryIntegrator
     std::pair<KFieldVector, double> ElectricFieldAndPotential(const KRingGroup* source, const KPosition& P) const;
 
   private:
-    KSmartPointer<KElectrostaticElementIntegrator<KRing>> fRingIntegrator;
+    std::shared_ptr<KElectrostaticElementIntegrator<KRing>> fRingIntegrator;
 
   protected:
     class ShapeVisitor : public KSelectiveVisitor<KShapeVisitor, AcceptedShapes>

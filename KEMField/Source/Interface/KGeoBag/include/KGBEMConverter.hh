@@ -51,7 +51,7 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     ~KGBEMConverter() override;
 
   public:
-    void SetSurfaceContainer(KEMField::KSurfaceContainer* aContainer)
+    void SetSurfaceContainer(std::shared_ptr<KEMField::KSurfaceContainer> aContainer)
     {
         fSurfaceContainer = aContainer;
         return;
@@ -74,7 +74,7 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     }
 
   protected:
-    KEMField::KSurfaceContainer* fSurfaceContainer;
+    std::shared_ptr<KEMField::KSurfaceContainer> fSurfaceContainer;
     double fMinimumArea;
     double fMaximumAspectRatio;
     int fVerbosity;
@@ -310,6 +310,7 @@ class KGBEMMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KEMField::
   public:
     KGBEMMeshConverter();
     KGBEMMeshConverter(KEMField::KSurfaceContainer& aContainer);
+    KGBEMMeshConverter(std::shared_ptr<KEMField::KSurfaceContainer> aContainer);
     ~KGBEMMeshConverter() override;
 
   protected:
@@ -325,6 +326,7 @@ class KGBEMAxialMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KEMFi
   public:
     KGBEMAxialMeshConverter();
     KGBEMAxialMeshConverter(KEMField::KSurfaceContainer& aContainer);
+    KGBEMAxialMeshConverter(std::shared_ptr<KEMField::KSurfaceContainer> aContainer);
     ~KGBEMAxialMeshConverter() override;
 
   protected:
@@ -340,6 +342,7 @@ class KGBEMDiscreteRotationalMeshConverter : public KGDualHierarchy<KGBEMConvert
   public:
     KGBEMDiscreteRotationalMeshConverter();
     KGBEMDiscreteRotationalMeshConverter(KEMField::KSurfaceContainer& aContainer);
+    KGBEMDiscreteRotationalMeshConverter(std::shared_ptr<KEMField::KSurfaceContainer> aContainer);
     ~KGBEMDiscreteRotationalMeshConverter() override;
 
   protected:

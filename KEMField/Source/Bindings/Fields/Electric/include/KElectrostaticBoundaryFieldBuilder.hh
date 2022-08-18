@@ -11,7 +11,6 @@
 #include "KComplexElement.hh"
 #include "KEMBindingsMessage.hh"
 #include "KGElectrostaticBoundaryField.hh"
-#include "KSmartPointerRelease.hh"
 #include "KIntegratingElectrostaticFieldSolver.hh"
 
 namespace katrin
@@ -112,8 +111,8 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddElement(KContainer
 {
     if (anElement->Is<KEMField::KChargeDensitySolver>()) {
         if (!(fObject->GetChargeDensitySolver())) {
-            KEMField::KSmartPointer<KEMField::KChargeDensitySolver> solver =
-                ReleaseToSmartPtr<KEMField::KChargeDensitySolver>(anElement);
+            std::shared_ptr<KEMField::KChargeDensitySolver> solver;
+            anElement->ReleaseTo(solver);
             fObject->SetChargeDensitySolver(solver);
         }
         else {
@@ -123,8 +122,8 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddElement(KContainer
     }
     else if (anElement->Is<KEMField::KElectricFieldSolver>()) {
         if (!(fObject->GetFieldSolver())) {
-            KEMField::KSmartPointer<KEMField::KElectricFieldSolver> solver =
-                ReleaseToSmartPtr<KEMField::KElectricFieldSolver>(anElement);
+            std::shared_ptr<KEMField::KElectricFieldSolver> solver;
+            anElement->ReleaseTo(solver);
             fObject->SetFieldSolver(solver);
         }
         else {
@@ -132,8 +131,8 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddElement(KContainer
         }
     }
     else if (anElement->Is<KEMField::KElectrostaticBoundaryField::Visitor>()) {
-        KEMField::KSmartPointer<KEMField::KElectrostaticBoundaryField::Visitor> visitor =
-            ReleaseToSmartPtr<KEMField::KElectrostaticBoundaryField::Visitor>(anElement);
+        std::shared_ptr<KEMField::KElectrostaticBoundaryField::Visitor> visitor;
+        anElement->ReleaseTo(visitor);
         fObject->AddVisitor(visitor);
     }
     else
@@ -151,7 +150,7 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::End()
     else if (!fObject->GetFieldSolver()) {
         BINDINGMSG(eWarning) << " No electric field solver set in field "
                            << GetName() << " - falling back to integrating solver!" << eom;
-        auto solver = new KEMField::KIntegratingElectrostaticFieldSolver();
+        auto solver = std::make_shared<KEMField::KIntegratingElectrostaticFieldSolver>();
         fObject->SetFieldSolver(solver);
         return true;
     }

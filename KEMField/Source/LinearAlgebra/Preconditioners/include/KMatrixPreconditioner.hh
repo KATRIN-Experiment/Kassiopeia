@@ -9,7 +9,8 @@
 #define KMATRIXPRECONDITIONER_HH_
 
 #include "KPreconditioner.hh"
-#include "KSmartPointer.hh"
+
+#include <memory>
 
 namespace KEMField
 {
@@ -23,7 +24,7 @@ namespace KEMField
 template<typename ValueType> class KMatrixPreconditioner : public KPreconditioner<ValueType>
 {
   public:
-    explicit KMatrixPreconditioner(KSmartPointer<const KSquareMatrix<ValueType>> matrix);
+    explicit KMatrixPreconditioner(std::shared_ptr<const KSquareMatrix<ValueType>> matrix);
     ~KMatrixPreconditioner() override = default;
 
     std::string Name() override
@@ -59,11 +60,11 @@ template<typename ValueType> class KMatrixPreconditioner : public KPreconditione
     }
 
   private:
-    KSmartPointer<const KSquareMatrix<ValueType>> fMatrix;
+    std::shared_ptr<const KSquareMatrix<ValueType>> fMatrix;
 };
 
 template<typename ValueType>
-KMatrixPreconditioner<ValueType>::KMatrixPreconditioner(KSmartPointer<const KSquareMatrix<ValueType>> matrix) :
+KMatrixPreconditioner<ValueType>::KMatrixPreconditioner(std::shared_ptr<const KSquareMatrix<ValueType>> matrix) :
     fMatrix(matrix)
 {}
 
