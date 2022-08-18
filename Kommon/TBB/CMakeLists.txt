@@ -1,18 +1,14 @@
 find_package( TBB REQUIRED )
 
 # headers
-set( KOMMON_TBB_HEADER_FILENAMES
+set( KOMMON_TBB_HEADER_FILES
     Utility/KMathIntegratorThreaded.h
 )
 
 # source
-#set( KOMMON_TBB_SOURCE_FILENAMES
+#set( KOMMON_TBB_SOURCE_FILES
 #    Utility/KMathIntegratorThreaded.cxx
 #)
-
-# propagate path variable to parent scope
-#kasper_append_paths( KOMMON_HEADER_FILES ${KOMMON_TBB_HEADER_FILENAMES} )
-#kasper_append_paths( KOMMON_SOURCE_FILES ${KOMMON_TBB_SOURCE_FILENAMES} )
 
 
 # get header paths from collected header files
@@ -29,5 +25,5 @@ target_link_libraries(KommonCore
         ${TBB_LIBRARIES}
 )
 
-kasper_install_libraries( KommonCore )
-kasper_install_headers( ${KOMMON_TBB_HEADER_FILENAMES} )
+#kasper_install_libraries( KommonCore )
+kasper_install_headers( ${KOMMON_TBB_HEADER_FILES} )

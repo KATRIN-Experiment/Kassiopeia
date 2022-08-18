@@ -29,11 +29,12 @@ RUN cd /usr/src/kasper && \
     mkdir -p build && \
     pushd build && \
     cmake -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_CXX_STANDARD=14 \
           -DCMAKE_INSTALL_PREFIX=/usr/local \
           -DBUILD_UNIT_TESTS=ON \
           -DKASPER_USE_ROOT=ON \
           -DKASPER_USE_VTK=ON \
-          -DKASPER_USE_TBB=ON \
+          -DKASPER_USE_TBB=OFF \
           -DKEMField_USE_OPENCL=OFF \
        .. && \
     make -j $((($(nproc)+1)/2)) && \
