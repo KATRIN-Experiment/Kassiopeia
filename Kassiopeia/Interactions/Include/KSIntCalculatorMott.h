@@ -9,7 +9,7 @@
  * KSintCalculatorMott.h
  * 
  * Date: August 22, 2022
- * Author: Junior Peña (juniorpe)
+ * Author: Junior Peña (juniorpena)
  */
 
 namespace Kassiopeia
