@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Visualization Techniques &mdash; Kassiopeia 3.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -104,15 +106,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="visualization-techniques">
-<span id="visualization-label"></span><h1>Visualization Techniques<a class="headerlink" href="#visualization-techniques" title="Permalink to this headline"><span>#</span></a></h1>
+  <section id="visualization-techniques">
+<span id="visualization-label"></span><h1>Visualization Techniques<a class="headerlink" href="#visualization-techniques" title="Permalink to this heading"><span>#</span></a></h1>
 <p>The <em>Kasper</em> software provides some visualization techniques that can help with the design and optimization of a
 simulation, and with interpreting its results. In general, there are options for 2D visualization using the <a class="reference external" href="https://root.cern.ch/">ROOT</a>
 software and for 3D visualization using the <a class="reference external" href="http://www.vtk.org/">VTK</a> toolkit. The VTK output files can also be viewed and combined with
 external software such as <a class="reference external" href="https://www.paraview.org/">ParaView</a>.</p>
 <p>The examples in this section are based on the <code class="docutils literal notranslate"><span class="pre">DipoleTrapSimulation.xml</span></code> file, which may be extended accordingly to
 test the features explained here.</p>
-<div class="contents local topic" id="on-this-page">
+<nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#kgeobag-visualization" id="id2">KGeoBag visualization</a></p>
@@ -133,9 +135,9 @@ test the features explained here.</p>
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="kgeobag-visualization">
-<h2><a class="toc-backref" href="#id2">KGeoBag visualization</a><a class="headerlink" href="#kgeobag-visualization" title="Permalink to this headline"><span>#</span></a></h2>
+</nav>
+<section id="kgeobag-visualization">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">KGeoBag visualization</a><a class="headerlink" href="#kgeobag-visualization" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The <em>KGeoBag</em> module provides a set of stand-alone visualization tools that are described under <a class="reference internal" href="tools.html#tools-label"><span class="std std-ref">Additional Simulation Tools</span></a>. These
 are suited to display the simulation geometry and other geometric elements, such as the mesh used for field calculation
 and/or navigation.</p>
@@ -147,8 +149,8 @@ regardless of the setting in the configuration file, e.g.:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia -b DipoleTrapSimulation.xml
 </pre></div>
 </div>
-<div class="section" id="geometry-visualization">
-<h3><a class="toc-backref" href="#id3">Geometry visualization</a><a class="headerlink" href="#geometry-visualization" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="geometry-visualization">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Geometry visualization</a><a class="headerlink" href="#geometry-visualization" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The <em>KGeoBag</em> module provides painter classes for the geometry which are covered below in the <em>Kassiopeia</em> section.
 In addition, the mesh geometry can be viewed as well:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;vtk_window</span>
@@ -167,8 +169,8 @@ In addition, the mesh geometry can be viewed as well:</p>
 </div>
 <p>The axial mesh painter needs a defined mesh (<code class="docutils literal notranslate"><span class="pre">&lt;axial_mesh&gt;</span></code> XML element, see <a class="reference internal" href="configuration.html#configuration-label"><span class="std std-ref">Configuring Your Own Simulation</span></a>). An
 <code class="docutils literal notranslate"><span class="pre">&lt;vtk_mesh_painter&gt;</span></code> exists as well, to be used with an asymmetric mesh (defined via <code class="docutils literal notranslate"><span class="pre">&lt;mesh&gt;</span></code>.)</p>
-<div class="section" id="using-python">
-<h4>Using Python<a class="headerlink" href="#using-python" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="using-python">
+<h4>Using Python<a class="headerlink" href="#using-python" title="Permalink to this heading"><span>#</span></a></h4>
 <p>It is possible to draw a geometry visualization in Python. This is especially useful if you run your analysis in Python as well (see <a class="reference internal" href="output.html#output-label"><span class="std std-ref">Understanding Simulation Output</span></a> for examples.)</p>
 <p>The <a class="reference external" href="https://www.pyvista.org/">PyVista</a> Python package makes it easy to operate on the <a class="reference external" href="http://www.vtk.org/">VTK</a> output files that are produced by <em>KGeoBag</em> and the other <em>Kasper</em> modules. (Note that this method only works if <a class="reference external" href="http://www.vtk.org/">VTK</a> was enabled at build time.) In the XML snippets above, the different VTK painters will produce output files if the <code class="docutils literal notranslate"><span class="pre">enable_write</span></code> attribute is set. These files contain the 3D geometry in the <cite>vtp</cite> format and can be read in Python. In order to get a 2D view of the geometry, one also needs to create a slice that transforms the 3D surfaces into 2D lines.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
@@ -196,19 +198,19 @@ In addition, the mesh geometry can be viewed as well:</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="kassiopieia-visualization">
-<h2><a class="toc-backref" href="#id4">Kassiopieia visualization</a><a class="headerlink" href="#kassiopieia-visualization" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+</section>
+<section id="kassiopieia-visualization">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Kassiopieia visualization</a><a class="headerlink" href="#kassiopieia-visualization" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The <em>Kassiopieia</em> module provides a set of stand-alone visualization tools that are described under <a class="reference internal" href="tools.html#tools-label"><span class="std std-ref">Additional Simulation Tools</span></a>.
 The user may also specify visualization elements in the configuration file, which may be combined with the viewers
 provided by <em>KGeoBag</em>. In fact this is often needed, if one wants to see e.g. the simulated trajectories within
 the simulation geometry.</p>
-<div class="section" id="track-visualization">
-<h3><a class="toc-backref" href="#id5">Track visualization</a><a class="headerlink" href="#track-visualization" title="Permalink to this headline"><span>#</span></a></h3>
-<div class="section" id="using-vtk">
-<h4>Using VTK<a class="headerlink" href="#using-vtk" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="track-visualization">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Track visualization</a><a class="headerlink" href="#track-visualization" title="Permalink to this heading"><span>#</span></a></h3>
+<section id="using-vtk">
+<h4>Using VTK<a class="headerlink" href="#using-vtk" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Below is an example that combines the <a class="reference external" href="http://www.vtk.org/">VTK</a> geometry painter of <em>KGeoBag</em> with a visualization of the simulated tracks
 (<code class="docutils literal notranslate"><span class="pre">vtk_track_painter</span></code>) and the track terminator positions (<code class="docutils literal notranslate"><span class="pre">vtk_track_terminator_painter</span></code>). Note that in order
 to use visualizations of simulation data, a <a class="reference external" href="https://root.cern.ch/">ROOT</a> output file has to exist.</p>
@@ -254,10 +256,10 @@ to use visualizations of simulation data, a <a class="reference external" href="
 <p>The options <code class="docutils literal notranslate"><span class="pre">enable_display</span></code> and <code class="docutils literal notranslate"><span class="pre">enable_write</span></code> of the <code class="docutils literal notranslate"><span class="pre">&lt;vtk_window&gt;</span></code> element specify if a viewer window should be
 shown, and if an output file should be written. The output files can be viewed e.g. in the <a class="reference external" href="https://www.paraview.org/">ParaView</a> software. There
 also exists a <code class="docutils literal notranslate"><span class="pre">&lt;vtk_generator_painter&gt;</span></code> element that is intended to visualize configured generators in the simulation.</p>
-</div>
-</div>
-<div class="section" id="using-root">
-<h3><a class="toc-backref" href="#id6">Using ROOT</a><a class="headerlink" href="#using-root" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="using-root">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Using ROOT</a><a class="headerlink" href="#using-root" title="Permalink to this heading"><span>#</span></a></h3>
 <p>A similar 2D visualization can be achieved using the <a class="reference external" href="https://root.cern.ch/">ROOT</a> visualization elements. The example below will present a view
 of the 3D geometry projected onto the Z-X plane.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root_window</span>
@@ -293,20 +295,20 @@ of the 3D geometry projected onto the Z-X plane.</p>
 corresponding parameters. The projection mode has to be adjusted for the individual geometry painters. Another element,
 <code class="docutils literal notranslate"><span class="pre">&lt;root_zonal_harmonic_painter&gt;</span></code>, can visualize the convergence radius and source points of the zonal harmonic
 approximation that can be used for electric and magnetic field solving.</p>
-<div class="section" id="id1">
-<h4>Using Python<a class="headerlink" href="#id1" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="id1">
+<h4>Using Python<a class="headerlink" href="#id1" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The track painters export <a class="reference external" href="http://www.vtk.org/">VTK</a> output files that can be visualized in Python with the <a class="reference external" href="https://www.pyvista.org/">PyVista</a> module, as shown above.</p>
-</div>
-</div>
-</div>
-<div class="section" id="kemfield-visualization">
-<h2><a class="toc-backref" href="#id7">KEMField visualization</a><a class="headerlink" href="#kemfield-visualization" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+</section>
+<section id="kemfield-visualization">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">KEMField visualization</a><a class="headerlink" href="#kemfield-visualization" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The <em>KEMField</em> modules provides a special visualization that is only available for electrostatic geometries. In contrast
 to the geometry viewers from <em>KGeoBag</em>, the <em>KEMField</em> viewer also includes extra information about the mesh elements,
 the applied electric potentials, and the calculated charge densities. It is therefore extremely valuable for the design
 of such geometries.</p>
-<div class="section" id="electrode-geometry">
-<h3><a class="toc-backref" href="#id8">Electrode Geometry</a><a class="headerlink" href="#electrode-geometry" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="electrode-geometry">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Electrode Geometry</a><a class="headerlink" href="#electrode-geometry" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The viewer is instantiated with the XML element <code class="docutils literal notranslate"><span class="pre">&lt;viewer&gt;</span></code> under the <code class="docutils literal notranslate"><span class="pre">&lt;ksfield_electrostatic&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;electrostatic_field&gt;</span></code>
 tag. For example, expanding the <code class="docutils literal notranslate"><span class="pre">DipoleTrapSimulation.xml</span></code> file:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;kemfield&gt;</span>
@@ -338,9 +340,9 @@ tag. For example, expanding the <code class="docutils literal notranslate"><span
 <p>The options <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">view</span></code> specify if an output file should be written to the given filename, and if a viewer
 window should be shown. The options <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> and <code class="docutils literal notranslate"><span class="pre">postprocessing</span></code> indicate if the visualization is to be
 performed before or after calculating the charge densities (if both are true, the visualization is performed twice).</p>
-</div>
-<div class="section" id="field-maps">
-<h3><a class="toc-backref" href="#id9">Field maps</a><a class="headerlink" href="#field-maps" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="field-maps">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Field maps</a><a class="headerlink" href="#field-maps" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Although not primarily a visualization feature, the option to compute electric and magnetic field maps with <em>KEMField</em>
 can also be used to provide input for the <a class="reference external" href="https://www.paraview.org/">ParaView</a> software that can be combined with other visualization output files.
 Field maps can be calculated in 2D or 3D mode, and both variants can readily be used in ParaView.</p>
@@ -385,9 +387,9 @@ the dimensions is equal to zero.) To speed up the computation, it is possible to
 (<code class="docutils literal notranslate"><span class="pre">compute_gradient</span></code>) or electric field (<code class="docutils literal notranslate"><span class="pre">compute_field</span></code>), or to make use of existing symmetries in either dimension.
 Note that the symmetry is not checked against the actual geometry, so it’s a responsibility of the user to set this up
 correctly.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

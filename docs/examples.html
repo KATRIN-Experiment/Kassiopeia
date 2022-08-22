@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Examples and Tests &mdash; Kassiopeia 3.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -103,10 +105,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="examples-and-tests">
-<h1>Examples and Tests<a class="headerlink" href="#examples-and-tests" title="Permalink to this headline"><span>#</span></a></h1>
+  <section id="examples-and-tests">
+<h1>Examples and Tests<a class="headerlink" href="#examples-and-tests" title="Permalink to this heading"><span>#</span></a></h1>
 <p>This section presents some of the example configurations that are distributed with Kassiopeia.</p>
-<div class="contents local topic" id="on-this-page">
+<nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#running-kassiopeia" id="id7">Running Kassiopeia</a></p>
@@ -125,9 +127,9 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="running-kassiopeia">
-<h2><a class="toc-backref" href="#id7">Running Kassiopeia</a><a class="headerlink" href="#running-kassiopeia" title="Permalink to this headline"><span>#</span></a></h2>
+</nav>
+<section id="running-kassiopeia">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Running Kassiopeia</a><a class="headerlink" href="#running-kassiopeia" title="Permalink to this heading"><span>#</span></a></h2>
 <p>After installation, and assuming the proper environmental variables have been set by running the script
 <code class="docutils literal notranslate"><span class="pre">kasperenv.sh</span></code>, <em>Kassiopeia</em> can be run directly from the command prompt. The script sets the environment variables
 accordingly so that the variable <code class="docutils literal notranslate"><span class="pre">KASPERSYS</span></code> points to the installation directory, and <em>Kassiopeia</em> can be found
@@ -145,17 +147,17 @@ syntax can be used. Here all variable names are prefixed with <code class="docut
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia &lt;path-to-xml-config-file&gt; --&lt;variable1&gt;<span class="o">=</span>&lt;value1&gt; --&lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
 </pre></div>
 </div>
-<div class="section" id="verbosity-levels">
-<h3><a class="toc-backref" href="#id8">Verbosity levels</a><a class="headerlink" href="#verbosity-levels" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="verbosity-levels">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Verbosity levels</a><a class="headerlink" href="#verbosity-levels" title="Permalink to this heading"><span>#</span></a></h3>
 <p>As a quick means to change the output verbosity (i.e. the amount of messages shown on the terminal while the program
 is running), the <code class="docutils literal notranslate"><span class="pre">-v</span></code> and <code class="docutils literal notranslate"><span class="pre">-q</span></code> flags can be used. Each option raises/lowers the verbosity level, so that the
 following example would raise the level by one unit. Try it with one of the example XML files below!</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia &lt;path-to-xml-config-file&gt; -v -q -v
 </pre></div>
 </div>
-</div>
-<div class="section" id="output-files">
-<h3><a class="toc-backref" href="#id9">Output files</a><a class="headerlink" href="#output-files" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="output-files">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Output files</a><a class="headerlink" href="#output-files" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Upon completion of a simulation, the ROOT output files may be found in the directory
 <code class="docutils literal notranslate"><span class="pre">&lt;kassiopeia-install-path&gt;/output/Kassiopeia</span></code> (where <code class="docutils literal notranslate"><span class="pre">&lt;kassiopeia-install-path&gt;</span></code> usually can be replaced by
 <code class="docutils literal notranslate"><span class="pre">$KASPERSYS</span></code>.) These output files can then be processed or analyzed by an external program, such as <code class="docutils literal notranslate"><span class="pre">root</span></code>. If
@@ -165,10 +167,10 @@ following example would raise the level by one unit. Try it with one of the exam
 simulation while allowing <em>Kassiopeia</em> to clean up and save the accumulated data to file, the user may type <code class="docutils literal notranslate"><span class="pre">Crtl-C</span></code>
 just once in the terminal. To immediately exit the simulation (without cleaning up or saving data), the user may press
 the key combination <code class="docutils literal notranslate"><span class="pre">Crtl-C</span></code> again, which leads to program termination.</p>
-</div>
-</div>
-<div class="section" id="example-configurations">
-<h2><a class="toc-backref" href="#id10">Example configurations</a><a class="headerlink" href="#example-configurations" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="example-configurations">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Example configurations</a><a class="headerlink" href="#example-configurations" title="Permalink to this heading"><span>#</span></a></h2>
 <p>Next in this section, we will investigate a number of pre-configured example files that are shipped with <em>Kassiopeia</em>.
 These files serve as a working example of various features of the simulation, but also as a reference for your own
 configurations. Please take some time to investigate these example files.</p>
@@ -176,8 +178,8 @@ configurations. Please take some time to investigate these example files.</p>
 <blockquote>
 <div><p><code class="docutils literal notranslate"><span class="pre">$KASPERSYS/config/Kassiopeia/Examples/</span></code></p>
 </div></blockquote>
-<div class="section" id="the-dipole-trap-example">
-<h3><a class="toc-backref" href="#id11">The Dipole Trap Example</a><a class="headerlink" href="#the-dipole-trap-example" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="the-dipole-trap-example">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">The Dipole Trap Example</a><a class="headerlink" href="#the-dipole-trap-example" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The first example is a simulation of a simple dipole trap, or rather, a magnetic mirror device. It consists of two
 dipole magnets positioned some distance apart along the same axis to form a magnetic bottle. To make the simulation
 slightly less trivial and more suitable to show <em>Kassiopeia</em> features, a ring electrode has been added near the center
@@ -211,17 +213,17 @@ histogramming using the ROOT <a class="reference external" href="https://root.ce
 As an example, plotting the electric potential experienced by the electron as a function of its $z$ position produces
 the following graph.</p>
 <a class="reference internal image-reference" href="_images/dipole_potential_vs_z.png"><img alt="_images/dipole_potential_vs_z.png" src="_images/dipole_potential_vs_z.png" style="width: 500pt;" /></a>
-<div class="section" id="trajectory-visualization">
-<h4>Trajectory Visualization<a class="headerlink" href="#trajectory-visualization" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="trajectory-visualization">
+<h4>Trajectory Visualization<a class="headerlink" href="#trajectory-visualization" title="Permalink to this heading"><span>#</span></a></h4>
 <p>For more advanced visualization <em>Kassiopeia</em> may be linked against the <a class="reference external" href="http://www.vtk.org/">VTK</a> library. If this is done, the
 <code class="docutils literal notranslate"><span class="pre">DipoleTrapSimulation.xml</span></code> example will include a configuration which will open an interactive VTK visualization
 window upon completion of the simulation. The output of which shows the electron’s track colored by angle between its
 momentum vector and the magnetic field. The following image demonstrates the VTK visualization of the simulation.</p>
 <a class="reference internal image-reference" href="_images/dipole_vtk.png"><img alt="_images/dipole_vtk.png" src="_images/dipole_vtk.png" style="width: 500pt;" /></a>
-</div>
-</div>
-<div class="section" id="the-quadrupole-trap-example">
-<h3><a class="toc-backref" href="#id12">The Quadrupole Trap Example</a><a class="headerlink" href="#the-quadrupole-trap-example" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="the-quadrupole-trap-example">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">The Quadrupole Trap Example</a><a class="headerlink" href="#the-quadrupole-trap-example" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The second example to demonstrate the capabilities of <em>Kassiopeia</em> is that of a quadrupole (Penning) trap. This sort of
 trap is similar to those which are used to measure the electron $g$-factor to extreme precision. To run this example,
 locate the XML file in the config directory, and at the command prompt enter:</p>
@@ -233,8 +235,8 @@ is used, upon the completion of the simulation a visualization window will appea
 following figure. The large green tube is the solenoid magnet, while the amber hyperboloid surfaces within it are the
 electrode surfaces. The electron tracks can be seen as short lines at the center.</p>
 <a class="reference internal image-reference" href="_images/quadrupole_vtk.png"><img alt="_images/quadrupole_vtk.png" src="_images/quadrupole_vtk.png" style="width: 500pt;" /></a>
-<div class="section" id="simulation-analysis">
-<h4>Simulation Analysis<a class="headerlink" href="#simulation-analysis" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="simulation-analysis">
+<h4>Simulation Analysis<a class="headerlink" href="#simulation-analysis" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Furthermore, a very simple analysis program example <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapAnalysis</span></code> can be run on the resulting <code class="docutils literal notranslate"><span class="pre">.root</span></code>
 file. To do this, execute the following after the output file was created:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>QuadrupoleTrapAnalysis <span class="nv">$KASPERSYS</span>/output/Kassiopeia/QuadrupoleTrapSimulation.root
@@ -249,13 +251,13 @@ iterate over the particle tracking data stored in a ROOT TTree file. It is also 
 by other means, e.g. using Python scripts and the <a class="reference external" href="https://root.cern/manual/python/">PyROOT</a> or <a class="reference external" href="https://pypi.org/project/uproot/">uproot</a> modules, but this is out of scope for this section.</p>
 <p>Analysis can also be performed by other means, e.g. in a Python notebook. An example for the quadrupole trap simulation
 is available in: <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Kassiopeia/AnalysisExamples/QuadrupoleTrapAnalysis.ipynb">QuadrupoleTrapAnalysis.ipynb</a></p>
-</div>
-</div>
-<div class="section" id="the-photomultiplier-tube-example">
-<h3><a class="toc-backref" href="#id13">The Photomultiplier Tube Example</a><a class="headerlink" href="#the-photomultiplier-tube-example" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="the-photomultiplier-tube-example">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">The Photomultiplier Tube Example</a><a class="headerlink" href="#the-photomultiplier-tube-example" title="Permalink to this heading"><span>#</span></a></h3>
 <p>As a demonstration of some of the more advanced features of <em>Kassiopeia</em> (particularly its 3D capabilities), an example
 of particle tracking in a photomultiplier tube is also included. This convifuration was also featured in the
-<em>Kassiopeia</em> paper <a class="footnote-reference brackets" href="#id6" id="id3">*</a>.</p>
+<em>Kassiopeia</em> paper <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>*<span class="fn-bracket">]</span></a>.</p>
 <p>Since the dimensions of the linear system that needs to be solved in order to compute the electric field is rather large
 (~150K mesh elements), the initialization of the electric field may take some time. If the user has the appropriate
 device (e.g. a GPU) it is recommended that the field solving sub-module <em>KEMField</em> is augmented with OpenCL in order to
@@ -264,8 +266,8 @@ take advantage of hardware acceleration. This is done by setting the <code class
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/PhotoMultiplierTubeSimulation.xml
 </pre></div>
 </div>
-<div class="section" id="visualization-with-paraview">
-<h4>Visualization with ParaView<a class="headerlink" href="#visualization-with-paraview" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="visualization-with-paraview">
+<h4>Visualization with ParaView<a class="headerlink" href="#visualization-with-paraview" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Depending on the capability of your computer this example may take several hours to run, and you may want to execute it
 overnight. If you have enabled <a class="reference external" href="http://www.vtk.org/">VTK</a>, an <code class="docutils literal notranslate"><span class="pre">.vtp</span></code> output file called:</p>
 <blockquote>
@@ -277,25 +279,21 @@ stores visualization data about the electrode mesh elements used by <em>KEMField
 external program <a class="reference external" href="http://www.paraview.org/">Paraview</a> for data selection and viewing, or other suitable software. An example is shown in the
 following figure.</p>
 <a class="reference internal image-reference" href="_images/pmt_paraview.png"><img alt="_images/pmt_paraview.png" src="_images/pmt_paraview.png" style="width: 500pt;" /></a>
-</div>
-</div>
-<div class="section" id="the-mesh-simulation-example">
-<h3><a class="toc-backref" href="#id14">The Mesh Simulation Example</a><a class="headerlink" href="#the-mesh-simulation-example" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="the-mesh-simulation-example">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">The Mesh Simulation Example</a><a class="headerlink" href="#the-mesh-simulation-example" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The mesh simulation uses a geometry from an external <a class="reference external" href="https://en.wikipedia.org/wiki/STL_%28file_format%29">STL</a> file, which is a format widely used in 3D design software.
 The external geometry must provide a surface mesh in order to be usable with <em>KEMField</em> and <em>Kassiopeia</em>. In this
 example, an electric field is defined by two copies of the so-called <cite>Menger sponge</cite> cubes that are placed next to each
 other. Particles are tracked along a linear trajectory, which are reflected when they hit one of the cube surfaces.</p>
 <a class="reference internal image-reference" href="_images/mesh_simulation.png"><img alt="_images/mesh_simulation.png" src="_images/mesh_simulation.png" style="width: 500pt;" /></a>
-</div>
-<div class="section" id="other-examples">
-<h3><a class="toc-backref" href="#id15">Other Examples</a><a class="headerlink" href="#other-examples" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="other-examples">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Other Examples</a><a class="headerlink" href="#other-examples" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Some other examples which explore other concepts
 also distributed with Kassiopeia, and are described in the following table.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 39%" />
-<col style="width: 61%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="2"><p>Other simulation examples</p></th>
 </tr>
@@ -337,16 +335,17 @@ octree-based navigator.</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="footnote brackets">
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">*</a></span></dt>
-<dd><ol class="upperalpha simple" start="4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id6" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">*</a><span class="fn-bracket">]</span></span>
+<ol class="upperalpha simple" start="4">
 <li><p>Furse <em>et al.</em> (2017) New J. Phys. <strong>19</strong> 053012, <a class="reference external" href="https://doi.org/10.1088/1367-2630/aa6950">doi:10.1088/1367-2630/aa6950</a></p></li>
 </ol>
-</dd>
-</dl>
-</div>
-</div>
-</div>
+</aside>
+</aside>
+</section>
+</section>
+</section>
 
 
            </div>

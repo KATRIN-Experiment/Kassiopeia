@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Introduction &mdash; Kassiopeia 3.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -83,23 +85,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"><span>#</span></a></h1>
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"><span>#</span></a></h1>
 <p><strong>Kassiopeia</strong> is a software package for the purpose of tracking particles in complex geometries and electromagnetic
 fields. It was originally developed for the simulation of the <a class="reference external" href="https://www.katrin.kit.edu">KATRIN</a> experiment, but was designed to be extremely
 flexible and has broad applicability to systems with similar problems.</p>
 <p>It is primarily of interest for examining the behavior of particles in electrostatic and magnetostatic systems at
 relatively low energy scales (&lt;100keV). It also provides a mechanism to incorporate scattering interactions with dilute
 gases and offers specialized treatment of electron transport in silicon baseddetectors.</p>
-<div class="contents local topic" id="on-this-page">
+<nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#the-kasper-framework" id="id1">The Kasper framework</a></p></li>
 <li><p><a class="reference internal" href="#extending-functionality" id="id2">Extending Functionality</a></p></li>
 </ul>
-</div>
-<div class="section" id="the-kasper-framework">
-<h2><a class="toc-backref" href="#id1">The Kasper framework</a><a class="headerlink" href="#the-kasper-framework" title="Permalink to this headline"><span>#</span></a></h2>
+</nav>
+<section id="the-kasper-framework">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">The Kasper framework</a><a class="headerlink" href="#the-kasper-framework" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The <em>Kassiopeia</em> software relies upon three separate, but concurrently distributed libraries. These are <em>Kommon</em>,
 <em>KGeoBag</em>, and <em>KEMField</em> and part of the <strong>Kasper</strong> framework.</p>
 <ul class="simple">
@@ -113,9 +115,9 @@ a bounary element method (BEM), solving for the field at arbitrary locations fro
 constructing field maps for fast evaluation. <em>Kassiopeia</em> incorporates these three libraries in order to solve the
 equation of motion of a particle and deal with any stochastic interactions to which it might be subjected.</p></li>
 </ul>
-</div>
-<div class="section" id="extending-functionality">
-<h2><a class="toc-backref" href="#id2">Extending Functionality</a><a class="headerlink" href="#extending-functionality" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+<section id="extending-functionality">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Extending Functionality</a><a class="headerlink" href="#extending-functionality" title="Permalink to this heading"><span>#</span></a></h2>
 <p>Using <em>Kassiopeia</em> and its associated libraries can involve varying levels of complexity, depending on the end users
 needs. If the pre-existing features of <em>Kassiopeia</em> are sufficient, no additional code is needed and a simulation can be
 configured entirely through a plain text XML file. If a user needs a physics process which is not yet incorporated (e.g
@@ -123,8 +125,8 @@ scattering on neon), it is relatively straightforward to create and include a ne
 <p>Furthermore, the object oriented approach of <em>Kassiopeia</em> provides a clear path for advanced users who wish to use
 certain specific features in their own novel applications. Code contributions that extend <em>Kassiopeia’s</em> functionality
 can be submitted through GitHub and are always welcome.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

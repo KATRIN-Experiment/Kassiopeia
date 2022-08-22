@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Additional Simulation Tools &mdash; Kassiopeia 3.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -95,13 +97,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="additional-simulation-tools">
-<span id="tools-label"></span><h1>Additional Simulation Tools<a class="headerlink" href="#additional-simulation-tools" title="Permalink to this headline"><span>#</span></a></h1>
+  <section id="additional-simulation-tools">
+<span id="tools-label"></span><h1>Additional Simulation Tools<a class="headerlink" href="#additional-simulation-tools" title="Permalink to this heading"><span>#</span></a></h1>
 <p>The main application for simulations is <code class="docutils literal notranslate"><span class="pre">Kassiopeia</span></code>. The XML interface allows flexible configuration that is suited
 to many tasks. However, sometimes a more direct approach to certain investigations is needed. This is typically the
 case during simulation design and debugging, and for field calculations that do not require a full-scale simulation. In
 the following, additional tools that are included with <em>Kassiopeia</em>, <em>KEMField</em> and <em>KGeoBag</em> are presented.</p>
-<div class="contents local topic" id="on-this-page">
+<nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#geometry-viewers" id="id3">Geometry viewers</a></p>
@@ -122,9 +124,9 @@ the following, additional tools that are included with <em>Kassiopeia</em>, <em>
 </li>
 <li><p><a class="reference internal" href="#simulation-tools" id="id10">Simulation tools</a></p></li>
 </ul>
-</div>
-<div class="section" id="geometry-viewers">
-<h2><a class="toc-backref" href="#id3">Geometry viewers</a><a class="headerlink" href="#geometry-viewers" title="Permalink to this headline"><span>#</span></a></h2>
+</nav>
+<section id="geometry-viewers">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Geometry viewers</a><a class="headerlink" href="#geometry-viewers" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The geometry viewwers are intended to help with constructing and optimizing a simulation geometry that is typically
 used with <em>Kassiopeia</em> and <em>KEMField</em>. In most cases, the simulation requires a sophistocated geometry setup where
 additional tools are beneficial.</p>
@@ -139,8 +141,8 @@ elements will be displayed accordingly.</p></li>
 boxes, surfaces as black lines. In order to project the geometry onto a 2D plane, the center point and direction
 of the plane must be defined. By default, the ROOT viewer draws the geometry in the Y-Z plane.</p></li>
 </ul>
-<div class="section" id="usage">
-<h3><a class="toc-backref" href="#id4">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="usage">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Usage</a><a class="headerlink" href="#usage" title="Permalink to this heading"><span>#</span></a></h3>
 <p>All listed programs will show a brief usage summary if called without arguments. The applications are called with a
 configuration file name and a valid geometry path, e.g.:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>GeometryViewer QuadrupoleTrapSimulation.xml <span class="s1">&#39;world/@electrode_tag&#39;</span>
@@ -155,15 +157,15 @@ configuration file name and a valid geometry path, e.g.:</p>
 <p>Below is an example of the <a class="reference external" href="https://root.cern.ch/">ROOT</a> geometry viewer:</p>
 <a class="reference internal image-reference" href="_images/tools_geometry_viewer_root.png"><img alt="_images/tools_geometry_viewer_root.png" src="_images/tools_geometry_viewer_root.png" style="width: 500pt;" /></a>
 <p>As shown above, it is possible to specify multiple geometry paths as well.</p>
-</div>
-<div class="section" id="advanced-visualization">
-<h3><a class="toc-backref" href="#id5">Advanced visualization</a><a class="headerlink" href="#advanced-visualization" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="advanced-visualization">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Advanced visualization</a><a class="headerlink" href="#advanced-visualization" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Note that in addition to these geometry viewers, <em>Kassiopeia</em> also supports to define visualizations in the
 configuration file directly so that no additional commands are necessary. For details see <a class="reference internal" href="visualization.html#visualization-label"><span class="std std-ref">Visualization Techniques</span></a>.</p>
-</div>
-</div>
-<div class="section" id="mesh-viewers">
-<h2><a class="toc-backref" href="#id6">Mesh viewers</a><a class="headerlink" href="#mesh-viewers" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="mesh-viewers">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Mesh viewers</a><a class="headerlink" href="#mesh-viewers" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The mesh viewers are intended to help with constructing and optimizing an electrostatic geometry that is provided
 to <em>KEMField</em>. In this case a mesh needs to be defined according to the selected symmetry level. The viewers show
 the defined mesh in a <a class="reference external" href="http://www.vtk.org/">VTK</a> window, coloring each mesh element individually.</p>
@@ -173,8 +175,8 @@ configuration file with the <code class="docutils literal notranslate"><span cla
 <li><p><code class="docutils literal notranslate"><span class="pre">MeshViewer</span></code> opens a visualization window showing the asymmetric (3D) mesh. A corresponding mesh must be defined in
 the configuration file with the <code class="docutils literal notranslate"><span class="pre">&lt;mesh</span> <span class="pre">.../&gt;</span></code> element.</p></li>
 </ul>
-<div class="section" id="id1">
-<h3><a class="toc-backref" href="#id7">Usage</a><a class="headerlink" href="#id1" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="id1">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Usage</a><a class="headerlink" href="#id1" title="Permalink to this heading"><span>#</span></a></h3>
 <p>All listed programs will show a brief usage summary if called without arguments. The viewers are called with a
 configuration file name and a valid geometry path, e.g.:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>AxialMeshViewer QuadrupoleTrapSimulation.xml <span class="s1">&#39;world/@electrode_tag&#39;</span>
@@ -185,10 +187,10 @@ to all electrode elements. Note that because the configuration file is processed
 there may be additional messages or windows shown (e.g. the internal <a class="reference external" href="http://www.vtk.org/">VTK</a> geometry viewer). Below is an example of the
 axial mesh viewer:</p>
 <a class="reference internal image-reference" href="_images/tools_axial_mesh_viewer.png"><img alt="_images/tools_axial_mesh_viewer.png" src="_images/tools_axial_mesh_viewer.png" style="width: 500pt;" /></a>
-</div>
-</div>
-<div class="section" id="field-calculation">
-<h2><a class="toc-backref" href="#id8">Field calculation</a><a class="headerlink" href="#field-calculation" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="field-calculation">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Field calculation</a><a class="headerlink" href="#field-calculation" title="Permalink to this heading"><span>#</span></a></h2>
 <p>Although <em>Kassiopeia</em> is quite powerful in terms of configuration options, sometimes it is necessary to calculate the
 electric or magnetic field at one or more defined points in the geometry. This is especially useful to compare
 different geometry setups, or during the design stage when full-scale simulations are not yet feasible. The field
@@ -216,8 +218,8 @@ and so on. In addition, there is:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">SimpleMagneticGradientCalculator</span></code> calculates the magnetic field and its gradient at a single point in the global
 coordinate system, and prints the results to the terminal.</p></li>
 </ul>
-<div class="section" id="id2">
-<h3><a class="toc-backref" href="#id9">Usage</a><a class="headerlink" href="#id2" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="id2">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Usage</a><a class="headerlink" href="#id2" title="Permalink to this heading"><span>#</span></a></h3>
 <p>All listed programs will show a brief usage summary if called without arguments. For example, the
 <code class="docutils literal notranslate"><span class="pre">SimpleElectricFieldCalculatorAlongZaxis</span></code> will show a message:</p>
 <div class="highlight- notranslate"><div class="highlight"><pre><span></span>usage: ./SimpleElectricFieldCalculatorAlongZaxis &lt;config_file.xml&gt; &lt;z1&gt; &lt;z2&gt; &lt;dz&gt; &lt;output_file.txt&gt; &lt;electric_field_name1&gt; [&lt;electric_field_name2&gt; &lt;...&gt;]
@@ -226,10 +228,10 @@ coordinate system, and prints the results to the terminal.</p></li>
 <p>which indicates that at least 6 arguments are required: the name of a configuration file with at least one defined
 electric field; the start and stop position and step distance on the z-axis; the name of an output file; and the name
 of an electric field. If multiple fields are specified, their contributions will be summed up.</p>
-</div>
-</div>
-<div class="section" id="simulation-tools">
-<h2><a class="toc-backref" href="#id10">Simulation tools</a><a class="headerlink" href="#simulation-tools" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="simulation-tools">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Simulation tools</a><a class="headerlink" href="#simulation-tools" title="Permalink to this heading"><span>#</span></a></h2>
 <p>Finally, some helper tools are provided with <em>Kassiopeia</em> that can be used together with simulations.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ROOTFileMerge</span></code> combines several simulation output files into a single file with all runs/events combined. This is
@@ -243,8 +245,8 @@ by the simulations. The program generates an output text file that contains one 
 with information about its position, energy, and so on.</p></li>
 </ul>
 <p>All listed programs will show a brief usage summary if called without arguments.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

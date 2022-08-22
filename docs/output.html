@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Understanding Simulation Output &mdash; Kassiopeia 3.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -68,8 +70,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#vtk-output-files">VTK output files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id13">Data structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id14">Accessing simulation data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Data structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Accessing simulation data</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#using-paraview">Using ParaView</a></li>
 </ul>
 </li>
@@ -109,38 +111,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="understanding-simulation-output">
-<span id="output-label"></span><h1>Understanding Simulation Output<a class="headerlink" href="#understanding-simulation-output" title="Permalink to this headline"><span>#</span></a></h1>
+  <section id="understanding-simulation-output">
+<span id="output-label"></span><h1>Understanding Simulation Output<a class="headerlink" href="#understanding-simulation-output" title="Permalink to this heading"><span>#</span></a></h1>
 <p>This section provides a description of the output files created by a <em>Kassiopeia</em> simulation, along with examples to
 read and analyze the files.</p>
-<div class="contents local topic" id="on-this-page">
+<nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#output-configuration" id="id15">Output configuration</a></p>
+<li><p><a class="reference internal" href="#output-configuration" id="id3">Output configuration</a></p>
 <ul>
-<li><p><a class="reference internal" href="#groups-and-fields" id="id16">Groups and fields</a></p></li>
-<li><p><a class="reference internal" href="#output-structure" id="id17">Output structure</a></p></li>
+<li><p><a class="reference internal" href="#groups-and-fields" id="id4">Groups and fields</a></p></li>
+<li><p><a class="reference internal" href="#output-structure" id="id5">Output structure</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#root-output-files" id="id18">ROOT output files</a></p>
+<li><p><a class="reference internal" href="#root-output-files" id="id6">ROOT output files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#data-structure" id="id19">Data structure</a></p></li>
-<li><p><a class="reference internal" href="#accessing-simulation-data" id="id20">Accessing simulation data</a></p></li>
-<li><p><a class="reference internal" href="#python-notebook" id="id21">Python notebook</a></p></li>
-<li><p><a class="reference internal" href="#geometry-visualization" id="id22">Geometry visualization</a></p></li>
+<li><p><a class="reference internal" href="#data-structure" id="id7">Data structure</a></p></li>
+<li><p><a class="reference internal" href="#accessing-simulation-data" id="id8">Accessing simulation data</a></p></li>
+<li><p><a class="reference internal" href="#python-notebook" id="id9">Python notebook</a></p></li>
+<li><p><a class="reference internal" href="#geometry-visualization" id="id10">Geometry visualization</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#vtk-output-files" id="id23">VTK output files</a></p>
+<li><p><a class="reference internal" href="#vtk-output-files" id="id11">VTK output files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id13" id="id24">Data structure</a></p></li>
-<li><p><a class="reference internal" href="#id14" id="id25">Accessing simulation data</a></p></li>
-<li><p><a class="reference internal" href="#ascii-output-files" id="id26">ASCII output files</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id12">Data structure</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id13">Accessing simulation data</a></p></li>
+<li><p><a class="reference internal" href="#ascii-output-files" id="id14">ASCII output files</a></p></li>
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="output-configuration">
-<h2><a class="toc-backref" href="#id15">Output configuration</a><a class="headerlink" href="#output-configuration" title="Permalink to this headline"><span>#</span></a></h2>
+</nav>
+<section id="output-configuration">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Output configuration</a><a class="headerlink" href="#output-configuration" title="Permalink to this heading"><span>#</span></a></h2>
 <p>Generally, <em>Kassiopeia</em> output is written to <a class="reference external" href="https://root.cern.ch/">ROOT</a> output (.root) files that store simulation data at the run, event,
 track and step level. In addition, if <em>Kassiopeia</em> was compiled with <a class="reference external" href="http://www.vtk.org/">VTK</a> support, output files in VTK polydata (.vtp)
 format may be written. These files are mainly intended for visualization, e.g. with the <a class="reference external" href="http://www.paraview.org/">ParaView</a> software. It is
@@ -148,8 +150,8 @@ also possible to write simulation data as plaintext ASCII files, however this is
 <p>As explained in <a class="reference internal" href="configuration.html#configuration-label"><span class="std std-ref">Configuring Your Own Simulation</span></a>, the output format is configured by the available writers. Writers use the
 description of the output format in the XML configuration file, which specifies the output fields that will be written
 to file. Different output descriptions may be used for different writers.</p>
-<div class="section" id="groups-and-fields">
-<h3><a class="toc-backref" href="#id16">Groups and fields</a><a class="headerlink" href="#groups-and-fields" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="groups-and-fields">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Groups and fields</a><a class="headerlink" href="#groups-and-fields" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Structured output formats like ROOT and VTK allow to combine several output fields into a common group. This is not
 only useful for analyzing the simulation results, but also allows to distinguish between data produces at the run,
 event, track and step levels. An output group may be defined by the structure:</p>
@@ -166,8 +168,8 @@ event, track and step levels. An output group may be defined by the structure:</
 </div>
 <p>In this case, the output file will have one group <cite>output_step_world</cite> that contains one member field <cite>step_id</cite> and is
 updated at the step level, meaning that one entry will be added to the member field with each simulation step.</p>
-<p>In the case above, the member field <cite>step_id</cite> refers to an attribute of the step class <a href="#id1"><span class="problematic" id="id2">:kassiopeia:`KSStep`</span></a>. Similar
-fields are available in the other classes, such as <a href="#id3"><span class="problematic" id="id4">:kassiopeia:`KSTrack`</span></a>. However, in a typical simulation one also
+<p>In the case above, the member field <cite>step_id</cite> refers to an attribute of the step class <cite>KSStep</cite>. Similar
+fields are available in the other classes, such as <cite>KSTrack</cite>. However, in a typical simulation one also
 wants to access physical attributes of the simulated particle. This is possible at the step level as well. In this case,
 one may access the initial or final state of the particle in each step (where the initial state of one step equals the
 final state of the preceding step, unless it is the first step in which the particle was generated). For example:</p>
@@ -244,9 +246,9 @@ members.</p></li>
 <span class="nt">&lt;/output_group&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="output-structure">
-<h3><a class="toc-backref" href="#id17">Output structure</a><a class="headerlink" href="#output-structure" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="output-structure">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Output structure</a><a class="headerlink" href="#output-structure" title="Permalink to this heading"><span>#</span></a></h3>
 <p>For the remainder of this section, we will refer to the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> example file to discuss the
 output fields and their structure. Here is the (slightly shortened) output confuguration of this example:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;component_step_world&quot;</span><span class="nt">&gt;</span>
@@ -365,15 +367,15 @@ output fields and their structure. Here is the (slightly shortened) output confu
 by connecting arrows and the different node shapes. The output groups and fields are what is visible in the output file.
 Member fields either refer to a particle state of a step/track, or to attributes at the step/track level directly. The
 field <cite>z_length</cite> is a special case, since an intermediate field is necessary to perform the integration at track level.</p>
-</div>
-</div>
-<div class="section" id="root-output-files">
-<h2><a class="toc-backref" href="#id18">ROOT output files</a><a class="headerlink" href="#root-output-files" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="root-output-files">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">ROOT output files</a><a class="headerlink" href="#root-output-files" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The <a class="reference external" href="https://root.cern.ch/">ROOT</a> output format is the standard file format that <em>Kassiopeia</em> produces. It supports flexible configuration,
 structured data fields, and efficient storage on disk. The data fields are placed in ROOT’s <code class="docutils literal notranslate"><span class="pre">TTree</span></code> and <code class="docutils literal notranslate"><span class="pre">TLeaf</span></code>
 objects that are created for each output group and member field, respectively.</p>
-<div class="section" id="data-structure">
-<h3><a class="toc-backref" href="#id19">Data structure</a><a class="headerlink" href="#data-structure" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="data-structure">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Data structure</a><a class="headerlink" href="#data-structure" title="Permalink to this heading"><span>#</span></a></h3>
 <p>In the output file, several tree structures are present that open into a list of leafs, corresponding to the simulation
 data. Here is an example view in the <a class="reference external" href="https://root.cern.ch/">ROOT</a> <code class="docutils literal notranslate"><span class="pre">TBrowser</span></code>:</p>
 <a class="reference internal image-reference" href="_images/root_output.png"><img alt="_images/root_output.png" src="_images/root_output.png" style="width: 350pt;" /></a>
@@ -387,7 +389,7 @@ created in the output file. In the example shown here, the <cite>component_step_
 e.g. <cite>position_x</cite>, <cite>position_y</cite>, <cite>position_z</cite>. All output fields are sorted by the respective index, e.g. step data
 is sorted by <cite>STEP_INDEX</cite> (which is a continually increasing integer number). This allows direct access to any
 specific data field at any output level. Note that the step index can be different than the <cite>step id</cite>, which is an
-attribute of the <a href="#id5"><span class="problematic" id="id6">:kassiopeia:`KSStep`</span></a> class and thus defined by the simulation.</p></li>
+attribute of the <cite>KSStep</cite> class and thus defined by the simulation.</p></li>
 <li><p><cite>…_PRESENCE</cite> indicates which segments in the data array contain valid data. This tree contains the fields <cite>INDEX</cite>,
 referring to the start index in the output data, and <cite>LENGTH</cite>, referring to the length of one segment. When reading
 values from the data arrays, these fields should be checked so that only valid data is used.</p></li>
@@ -419,17 +421,17 @@ track segments. Similarly,</p></li>
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="accessing-simulation-data">
-<h3><a class="toc-backref" href="#id20">Accessing simulation data</a><a class="headerlink" href="#accessing-simulation-data" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="accessing-simulation-data">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Accessing simulation data</a><a class="headerlink" href="#accessing-simulation-data" title="Permalink to this heading"><span>#</span></a></h3>
 <p>In most cases, for example when using the <a class="reference external" href="https://root.cern.ch/">ROOT</a> <code class="docutils literal notranslate"><span class="pre">TBrowser</span></code>, one may just look into the <cite>STEP_DATA</cite> and <cite>TRACK_DATA</cite>
 fields to find the relevant information. For more sophisticated analyses, other means of accessing the data are
 available.</p>
-<div class="section" id="using-kassiopeia">
-<h4>Using Kassiopeia<a class="headerlink" href="#using-kassiopeia" title="Permalink to this headline"><span>#</span></a></h4>
-<p><em>Kassiopeia</em> includes a simple analysis application that uses the <a href="#id7"><span class="problematic" id="id8">:kassiopeia:`KSReadFileROOT`</span></a> class to iterate through
+<section id="using-kassiopeia">
+<h4>Using Kassiopeia<a class="headerlink" href="#using-kassiopeia" title="Permalink to this heading"><span>#</span></a></h4>
+<p><em>Kassiopeia</em> includes a simple analysis application that uses the <cite>KSReadFileROOT</cite> class to iterate through
 the step output produced by the <cite>QuadrupoleTrapSimulation.xml</cite> example. Its code is available at
-<a href="#id9"><span class="problematic" id="id10">:gh-file:`Kassiopeia/Applications/Examples/Source/QuadrupoleTrapAnalysis.cxx`</span></a> and it serves as a general example
+<a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Applications/Examples/Source/QuadrupoleTrapAnalysis.cxx">GitHub: Kassiopeia/Applications/Examples/Source/QuadrupoleTrapAnalysis.cxx</a> and it serves as a general example
 of using this method.</p>
 <p>In this case, the simulation output can be accessed in a structured way, using the run/event/track/step levels and
 iterating through each component:</p>
@@ -450,13 +452,13 @@ iterating through each component:</p>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>Individual output fields are accessed via an instance of <a href="#id11"><span class="problematic" id="id12">:kassiopeia:`KSReadObjectROOT`</span></a>, as shown in the example. The
+<p>Individual output fields are accessed via an instance of <cite>KSReadObjectROOT</cite>, as shown in the example. The
 benefit of using this method is that it uses <em>Kassiopeia’s</em> internal classes that are fully compatible with the writer
 class that produced the output file. On the other hand, it requires writing a custom C++ application that needs
 to be compiled against <em>Kasper</em>.</p>
-</div>
-<div class="section" id="using-root">
-<h4>Using ROOT<a class="headerlink" href="#using-root" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="using-root">
+<h4>Using ROOT<a class="headerlink" href="#using-root" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Alternatively, the output can be access directly from a <a class="reference external" href="https://root.cern.ch/">ROOT</a> program. In this case, the ouput is accessible through
 the <cite>TTreeReader</cite> interface:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">TFile</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="s">&quot;QuadrupoleTrapSimulation.root&quot;</span><span class="p">);</span><span class="w"></span>
@@ -510,9 +512,9 @@ over the steps only processes valid output fields:</p>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="using-python">
-<h4>Using Python<a class="headerlink" href="#using-python" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="using-python">
+<h4>Using Python<a class="headerlink" href="#using-python" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Another common method of analysis makes use of Python libraries such as <a class="reference external" href="https://numpy.org/">NumPy</a> and <a class="reference external" href="https://pandas.pydata.org/">Pandas</a>. Several methods of getting
 the <em>Kassiopeia</em> output into a Python script are available:</p>
 <ul class="simple">
@@ -530,9 +532,9 @@ dataframe. With some extra work, it is possible to include the relations between
 <p>All three methods will be briefly explained in this section, in the form of a simple example that reproduces the
 <cite>QuadrupoleTrapAnalysis.cxx</cite> code introduced above. The examples use the <a class="reference external" href="https://root.cern.ch/">ROOT</a> file <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.root</span></code>
 produced by the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> example.</p>
-</div>
-<div class="section" id="using-python-with-kassiopeiareader">
-<h4>Using Python with KassiopeiaReader<a class="headerlink" href="#using-python-with-kassiopeiareader" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="using-python-with-kassiopeiareader">
+<h4>Using Python with KassiopeiaReader<a class="headerlink" href="#using-python-with-kassiopeiareader" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">KassiopeiaReader</span></code> Python module provides an iterator interface to a selected output group in a <em>Kassiopeia</em>
 file. It can easily be used to retrieve e.g. all track or step output from a simulation. Correctly iterating over
 more advanced output definitions take more effort, however. The <cite>QuadrupoleTrapSimulation</cite> is a good example for this,
@@ -602,9 +604,9 @@ then very straightforward to iterate over the range of steps beloging to the cur
 iterator accordingly. In this example we retrieve the value <code class="docutils literal notranslate"><span class="pre">orbital_magnetic_moment</span></code> for each step, determine
 its minimum/maximum over the entire track, and then calculate and print a mean deviation.</p>
 <p>All output values should be in agreement with the C++ program.</p>
-</div>
-<div class="section" id="using-python-with-uproot-pandas">
-<h4>Using Python with uproot / Pandas<a class="headerlink" href="#using-python-with-uproot-pandas" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="using-python-with-uproot-pandas">
+<h4>Using Python with uproot / Pandas<a class="headerlink" href="#using-python-with-uproot-pandas" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The same result can be achieved by using the <a class="reference external" href="https://pypi.org/project/uproot/">uproot</a> package with <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> dataframes. In this case, PyROOT isn’t needed
 and the analysis can run without <a class="reference external" href="https://root.cern.ch/">ROOT</a> dependencies. Applying the knowledge about <em>Kassiopeia’s</em> output structure
 that we gathered in the section above, we can write the following snippet:</p>
@@ -753,26 +755,26 @@ The code below shows how this can be done with <code class="docutils literal not
 <p>Keep in mind that while this approach is pretty flexible, it easily consumes a lot of memory because of the combination
 of large data frames. This is especially true when the output fields contain a large number of elements. In that case,
 it is advisable to select only the necessary fields before the merge steps.</p>
-</div>
-</div>
-<div class="section" id="python-notebook">
-<h3><a class="toc-backref" href="#id21">Python notebook</a><a class="headerlink" href="#python-notebook" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="python-notebook">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Python notebook</a><a class="headerlink" href="#python-notebook" title="Permalink to this heading"><span>#</span></a></h3>
 <p>A complete analysis using Pandas dataframes for the <cite>QuadrupoleTrapSimulation.xml</cite> example is available in the form of a Python notebook: <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Kassiopeia/AnalysisExamples/QuadrupoleTrapAnalysis.ipynb">QuadrupoleTrapAnalysis.ipynb</a></p>
-</div>
-<div class="section" id="geometry-visualization">
-<h3><a class="toc-backref" href="#id22">Geometry visualization</a><a class="headerlink" href="#geometry-visualization" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="geometry-visualization">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Geometry visualization</a><a class="headerlink" href="#geometry-visualization" title="Permalink to this heading"><span>#</span></a></h3>
 <p>It is often useful to combine a view of the simulation geometry with a plot of the step data. In Python this can be done with the help of <a class="reference external" href="http://www.vtk.org/">VTK</a> files created by <em>KGeoBag</em>. For more details, see <a class="reference internal" href="visualization.html#visualization-label"><span class="std std-ref">Visualization Techniques</span></a>.</p>
-</div>
-</div>
-<div class="section" id="vtk-output-files">
-<h2><a class="toc-backref" href="#id23">VTK output files</a><a class="headerlink" href="#vtk-output-files" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="vtk-output-files">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">VTK output files</a><a class="headerlink" href="#vtk-output-files" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The <a class="reference external" href="http://www.vtk.org/">VTK</a> output format can be used in addition to the standard format and is mainly intended for visualization purposes.
 The most flexible way to visualize simulation output is by using the <a class="reference external" href="http://www.paraview.org/">ParaView</a> software, which can import the output
 files created by <em>Kassiopeia</em>. The VTK format supports flexible configuration and can be set up independently of the
 ROOT output. The VTK writer creates indepdendent files at the track and step level, which typically hold the position
 as the main data field (required for 3D visualization), and any number of additional data fields.</p>
-<div class="section" id="id13">
-<h3><a class="toc-backref" href="#id24">Data structure</a><a class="headerlink" href="#id13" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="id1">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Data structure</a><a class="headerlink" href="#id1" title="Permalink to this heading"><span>#</span></a></h3>
 <p>In the output file, several tree structures are present that open into a list of leafs, corresponding to the simulation
 data. Here is an example view in <a class="reference external" href="http://www.paraview.org/">ParaView</a>:</p>
 <a class="reference internal image-reference" href="_images/paraview_sheet.png"><img alt="_images/paraview_sheet.png" src="_images/paraview_sheet.png" style="width: 500pt;" /></a>
@@ -782,14 +784,14 @@ corresponds to one step in the simulation. As with the ROOT output, the step dat
 into individual tracks. However, because the 3D representation of the steps is stored as a <code class="docutils literal notranslate"><span class="pre">vtkPolyLine</span></code>, the
 visualization can dinstignuish between individual tracks: Each track in the simulation corresponds to a polyline in the
 VTK step file.</p>
-</div>
-<div class="section" id="id14">
-<h3><a class="toc-backref" href="#id25">Accessing simulation data</a><a class="headerlink" href="#id14" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Accessing simulation data</a><a class="headerlink" href="#id2" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Because the <a class="reference external" href="http://www.vtk.org/">VTK</a> output is mainly intended for visualization, we will only cover the use of the standard software
 <a class="reference external" href="http://www.paraview.org/">ParaView</a> in this guide. In principle, VTK data files can also be used to store and access simulation output (and e.g.
 read their contents using Python), but this approach is less flexible than with <a class="reference external" href="https://root.cern.ch/">ROOT</a> output and not advised.</p>
-<div class="section" id="using-paraview">
-<h4>Using ParaView<a class="headerlink" href="#using-paraview" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="using-paraview">
+<h4>Using ParaView<a class="headerlink" href="#using-paraview" title="Permalink to this heading"><span>#</span></a></h4>
 <p>ParaView offers a quite sophisticated interface for various kinds of visualization. With the output files generated
 by the quadrupole trap simulation, one may reproduce the following image by loading the VTK step file
 (<code class="docutils literal notranslate"><span class="pre">output/Kassiopeia/QuadrupoleTrapSimulationStep.vtp</span></code>) and the geometry file created by the <cite>geometry_painter</cite> after
@@ -808,10 +810,10 @@ investigate the underlying data with typical plotting tools like shown here:</p>
 <div><p><a class="reference external" href="https://www.paraview.org/Wiki/The_ParaView_Tutorial">https://www.paraview.org/Wiki/The_ParaView_Tutorial</a></p>
 <p><a class="reference external" href="https://docs.paraview.org/en/latest/">https://docs.paraview.org/en/latest/</a></p>
 </div></blockquote>
-</div>
-</div>
-<div class="section" id="ascii-output-files">
-<h3><a class="toc-backref" href="#id26">ASCII output files</a><a class="headerlink" href="#ascii-output-files" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="ascii-output-files">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">ASCII output files</a><a class="headerlink" href="#ascii-output-files" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The ASCII output writer creates a simple, space-separated file that contains all the output values defined in the
 configuration file. Each row corresponds to one step and each column to one output field. A new file is created
 for each track, with the label <code class="docutils literal notranslate"><span class="pre">Track#.txt</span></code> added to the configured output file name. This format is useful for
@@ -828,9 +830,9 @@ working with plotting tools such as <a class="reference external" href="http://w
 </div>
 <p>However, because the storage is rather inefficient it should not be used for large-scale simulations. File sizes on
 the order of several Gigabytes can be easily produced by a typical Monte-Carlo simulation!</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

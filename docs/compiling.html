@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting starting with Kassiopiea &mdash; Kassiopeia 3.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -110,9 +112,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="getting-starting-with-kassiopiea">
-<h1>Getting starting with Kassiopiea<a class="headerlink" href="#getting-starting-with-kassiopiea" title="Permalink to this headline"><span>#</span></a></h1>
-<div class="contents local topic" id="on-this-page">
+  <section id="getting-starting-with-kassiopiea">
+<h1>Getting starting with Kassiopiea<a class="headerlink" href="#getting-starting-with-kassiopiea" title="Permalink to this heading"><span>#</span></a></h1>
+<nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#downloading-the-code" id="id1">Downloading the code</a></p></li>
@@ -142,9 +144,9 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="downloading-the-code">
-<h2><a class="toc-backref" href="#id1">Downloading the code</a><a class="headerlink" href="#downloading-the-code" title="Permalink to this headline"><span>#</span></a></h2>
+</nav>
+<section id="downloading-the-code">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Downloading the code</a><a class="headerlink" href="#downloading-the-code" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The most recent version of <em>Kassiopeia</em> and its accompanying libraries can be found on its public github page:</p>
 <blockquote>
 <div><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia">https://github.com/KATRIN-Experiment/Kassiopeia</a></p>
@@ -166,9 +168,9 @@ needing to download a fresh copy of the source. This can be done simply by execu
 <blockquote>
 <div><p><a class="reference external" href="https://docs.github.com/en/github/getting-started-with-github">https://docs.github.com/en/github/getting-started-with-github</a></p>
 </div></blockquote>
-</div>
-<div class="section" id="supported-operating-systems-and-hardware-requirements">
-<h2><a class="toc-backref" href="#id2">Supported operating systems and hardware requirements</a><a class="headerlink" href="#supported-operating-systems-and-hardware-requirements" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+<section id="supported-operating-systems-and-hardware-requirements">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Supported operating systems and hardware requirements</a><a class="headerlink" href="#supported-operating-systems-and-hardware-requirements" title="Permalink to this heading"><span>#</span></a></h2>
 <p><em>Kassiopeia</em> is supported and intended to run on systems running either Linux or MacOS X. Currently, it has been
 compiled and tested to run on fresh installations of the Linux distributions Fedora 31 and Ubuntu 20.04 LTS. It is also
 expected to compile and run on other Linux distributions, however this has not been tested, and the steps needed to
@@ -181,9 +183,9 @@ computer specifications or better are recommended:</p>
 <li><p>RAM: 4 GB</p></li>
 <li><p>Free Disk Space: 10 GB</p></li>
 </ul>
-</div>
-<div class="section" id="docker-image">
-<h2><a class="toc-backref" href="#id3">Docker image</a><a class="headerlink" href="#docker-image" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+<section id="docker-image">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Docker image</a><a class="headerlink" href="#docker-image" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The section below outlines the necessary steps to build <em>Kassiopeia</em> on a local Linux/MacOS system. Due the the number
 of external dependencies that may conflict with what is available, it is often more feasible to use the <a class="reference external" href="https://www.docker.com/">Docker</a> image
 that is provided for the recent <em>Kassiopeia</em> releases. The images can be downloaded from one of the two locations:</p>
@@ -205,9 +207,9 @@ In order to use the <a class="reference external" href="https://www.docker.com/"
 <blockquote>
 <div><p><a class="reference external" href="https://docs.docker.com/">https://docs.docker.com/</a></p>
 </div></blockquote>
-</div>
-<div class="section" id="required-software-dependencies">
-<h2><a class="toc-backref" href="#id4">Required software dependencies</a><a class="headerlink" href="#required-software-dependencies" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+<section id="required-software-dependencies">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Required software dependencies</a><a class="headerlink" href="#required-software-dependencies" title="Permalink to this heading"><span>#</span></a></h2>
 <p><em>Kassiopeia</em> has been designed with an eye towards keeping reliance on external software packages and libraries to a
 minimum. That being said, there are a few packages which are required in order to build the software.</p>
 <p>The first and most obvious is a C/C++ compiler which is new enough to support the C++14 standard. The two recommended
@@ -218,8 +220,8 @@ the command line. However, it is extremely useful to install the command line cu
 in order to easily configure optional dependencies.</p>
 <p>Thirdly, <em>Kassiopeia</em> requires the <a class="reference external" href="http://www.boost.org/">Boost</a> framework to be available for extended compilation features. It is not
 possible to compile <em>Kassiopeia</em> without a recent version of <a class="reference external" href="http://www.boost.org/">Boost</a>! The minimum required version is 1.61.</p>
-<div class="section" id="minimum-requirements">
-<h3><a class="toc-backref" href="#id5">Minimum requirements</a><a class="headerlink" href="#minimum-requirements" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="minimum-requirements">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Minimum requirements</a><a class="headerlink" href="#minimum-requirements" title="Permalink to this heading"><span>#</span></a></h3>
 <p>On a Debian/Ubuntu Linux system the minimum software packages required by the Kassiopiea
 build system can be installed through the use of the package manager through the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get update -y <span class="o">&amp;&amp;</span> apt-get install -y <span class="se">\</span>
@@ -237,9 +239,9 @@ build system can be installed through the use of the package manager through the
     ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel tbb-devel vtk-devel zlib-devel
 </pre></div>
 </div>
-</div>
-<div class="section" id="required-dependencies">
-<h3><a class="toc-backref" href="#id6">Required dependencies</a><a class="headerlink" href="#required-dependencies" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="required-dependencies">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Required dependencies</a><a class="headerlink" href="#required-dependencies" title="Permalink to this heading"><span>#</span></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.cmake.org/">CMake</a> version 3.13 or higher</p></li>
 <li><p>g++ version 6.1 or higher (if compiling with <a class="reference external" href="https://gcc.gnu.org/">GCC</a>)</p></li>
@@ -247,9 +249,9 @@ build system can be installed through the use of the package manager through the
 <li><p><a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a></p></li>
 <li><p><a class="reference external" href="https://root.cern.ch/">ROOT</a> version 6.16 or higher</p></li>
 </ul>
-</div>
-<div class="section" id="optional-dependencies">
-<h3><a class="toc-backref" href="#id7">Optional dependencies</a><a class="headerlink" href="#optional-dependencies" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="optional-dependencies">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Optional dependencies</a><a class="headerlink" href="#optional-dependencies" title="Permalink to this heading"><span>#</span></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="http://www.boost.org/">Boost</a> version 1.61 or higher</p></li>
 <li><p><a class="reference external" href="http://www.fftw.org/">FFTW</a> version 3.3.4 or higher</p></li>
@@ -265,9 +267,9 @@ build system can be installed through the use of the package manager through the
 <li><p><a class="reference external" href="http://www.zlib.net/">ZLIB</a></p></li>
 <li><p><a class="reference external" href="https://www.doxygen.nl/">DoxyGen</a> for building the documentation</p></li>
 </ul>
-</div>
-<div class="section" id="external-libraries">
-<h3><a class="toc-backref" href="#id8">External libraries</a><a class="headerlink" href="#external-libraries" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="external-libraries">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">External libraries</a><a class="headerlink" href="#external-libraries" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Beyond the build system, there are only two software packages which could be considered absolutely required
 dependencies, <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a> and <a class="reference external" href="https://root.cern.ch/">ROOT</a> (though this is not strictly true, if the user only wishes to compile <em>KEMField</em>).</p>
 <p>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a>) is a collection of useful numerical routines. In the commands shown above, <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a> was
@@ -304,10 +306,10 @@ configuring and compiling <em>Kassiopeia</em>.</p>
 <p>A third important dependency, which however is completely optional, is <a class="reference external" href="http://www.vtk.org/">VTK</a>. The <a class="reference external" href="http://www.vtk.org/">VTK</a> libraries are used to provide
 visualization methods directly in <em>Kassiopeia</em>, and to write output files that can be used with external software.
 On most platforms, <a class="reference external" href="http://www.vtk.org/">VTK</a> can be easily installed through the package manager, as shown above.</p>
-</div>
-</div>
-<div class="section" id="compiling-the-code-using-cmake">
-<h2><a class="toc-backref" href="#id9">Compiling the code using CMake</a><a class="headerlink" href="#compiling-the-code-using-cmake" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="compiling-the-code-using-cmake">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Compiling the code using CMake</a><a class="headerlink" href="#compiling-the-code-using-cmake" title="Permalink to this heading"><span>#</span></a></h2>
 <p>After installing the required dependencies, compiling a basic plain-vanilla version of <em>Kassiopeia</em>, with no extra
 features is a relatively simple process. For the sake of simplicity, this guide will assume that the <em>Kassiopeia</em> source
 code is located in the user’s home directory in <code class="docutils literal notranslate"><span class="pre">~/kassiopeia</span></code>.</p>
@@ -349,8 +351,8 @@ are set (or if you accept the defaults), hit <code class="docutils literal notra
 <p>or using the corresponding command for the build tool of your choice (e.g. <code class="docutils literal notranslate"><span class="pre">ninja</span></code>).</p>
 <p>As compilation can take some time, you may use multiple CPU cores to accelerate the compilation (e.g run
 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-j</span> <span class="pre">4</span> <span class="pre">install</span></code> to compile using four CPU cores).</p>
-<div class="section" id="environment-variables">
-<h3><a class="toc-backref" href="#id10">Environment variables</a><a class="headerlink" href="#environment-variables" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="environment-variables">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Environment variables</a><a class="headerlink" href="#environment-variables" title="Permalink to this heading"><span>#</span></a></h3>
 <p>After the compilation is completed and <em>Kassiopeia</em> has been installed to the installation directory, it is useful to
 set up some environment variables that allow you ton run <code class="docutils literal notranslate"><span class="pre">Kassiopeia</span></code> and other commands from any location. A script
 is provided that provides a similar functionality to the <code class="docutils literal notranslate"><span class="pre">thisroot.sh</span></code> script explained above. To set up <em>Kassiopeia</em>
@@ -369,10 +371,10 @@ with the script, copy the following lines to your <code class="docutils literal 
 <p>The <code class="docutils literal notranslate"><span class="pre">KASPERSYS</span></code> and <code class="docutils literal notranslate"><span class="pre">KEMFIELD_CACHE</span></code> can, in principle, be changed to different locations before running
 simulations. This is intended to allow more flexible configurations on multi-user systems, or when multiple independent
 instances of the <em>Kassiopeia</em> software are installed. For the typical user, the variables can be left as they are.</p>
-</div>
-</div>
-<div class="section" id="directory-structure-and-environmental-variables">
-<h2><a class="toc-backref" href="#id11">Directory structure and environmental variables</a><a class="headerlink" href="#directory-structure-and-environmental-variables" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="directory-structure-and-environmental-variables">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Directory structure and environmental variables</a><a class="headerlink" href="#directory-structure-and-environmental-variables" title="Permalink to this heading"><span>#</span></a></h2>
 <p>Once compiled, the complete set of <em>Kassiopiea</em> executables and configuration files will be found in the specified
 installation directory. The installation directory is broken down into several components, these are:</p>
 <ul class="simple">
@@ -401,8 +403,8 @@ The <code class="docutils literal notranslate"><span class="pre">cache</span></c
 reuse. The <code class="docutils literal notranslate"><span class="pre">data</span></code> directory contains raw data distributed with <em>Kassiopeia</em> needed for certain calculations (e.g.
 molecular hydrogen scattering cross sections). The <code class="docutils literal notranslate"><span class="pre">log</span></code> directory provides space to collect logging output from
 simulations, while the <code class="docutils literal notranslate"><span class="pre">output</span></code> directory is where simulation output is saved, unless otherwise specified.</p>
-<div class="section" id="executing-kassiopeia">
-<h3><a class="toc-backref" href="#id12">Executing Kassiopeia</a><a class="headerlink" href="#executing-kassiopeia" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="executing-kassiopeia">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Executing Kassiopeia</a><a class="headerlink" href="#executing-kassiopeia" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Once you have finished installing <em>Kassiopeia</em> and setting up the appropriate environmental variables you can attempt to
 run it (without arguments) by executing:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/kassiopeia/install/bin/
@@ -418,21 +420,16 @@ run it (without arguments) by executing:</p>
 </pre></div>
 </div>
 <p>then you need to (re)execute the <code class="docutils literal notranslate"><span class="pre">kasperenv.sh</span></code> script to ensure the environmental variables are set up properly.</p>
-</div>
-</div>
-<div class="section" id="configuring-optional-dependencies">
-<h2><a class="toc-backref" href="#id13">Configuring optional dependencies</a><a class="headerlink" href="#configuring-optional-dependencies" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="configuring-optional-dependencies">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Configuring optional dependencies</a><a class="headerlink" href="#configuring-optional-dependencies" title="Permalink to this heading"><span>#</span></a></h2>
 <p><em>Kassiopeia</em> has a plethora of optional dependencies which provide additional capabilities and enhance the performance
 of the software. This optional dependencies are configurable through the cmake GUI interface. However, some of these
 optional settings require additional libraries or special hardware in order to operate.</p>
 <p>The use of some external libraries, (e.g. <a class="reference external" href="https://root.cern.ch/">ROOT</a> and <a class="reference external" href="http://www.vtk.org/">VTK</a>) is collectively toggled for all sub-modules at once. The
 <em>Kassiopeia</em> simulation software can link against these libraries using the <em>Kasper</em> flags outlined in the table below:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 38%" />
-<col style="width: 43%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Collective options</p></th>
 </tr>
@@ -481,15 +478,10 @@ they have been divided according to the sub-module(s) which they modify.</p>
 <p>For performance reasons, all of the sub-modules explicitly allow the toggling of debugging messages (which are disabled
 by default). If the corresponding flags (see below) are turned on, the software may run at reduced speed, but allows
 to enable printing of additional messages during execution. This is mostly useful for in-depth debugging.</p>
-<div class="section" id="build-options">
-<h3><a class="toc-backref" href="#id14">Build options</a><a class="headerlink" href="#build-options" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="build-options">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Build options</a><a class="headerlink" href="#build-options" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The following options control the overall build process:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 23%" />
-<col style="width: 36%" />
-<col style="width: 41%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Build options</p></th>
 </tr>
@@ -524,15 +516,10 @@ to enable printing of additional messages during execution. This is mostly usefu
 <p>The <code class="docutils literal notranslate"><span class="pre">BUILD_UNIT_TESTS</span></code> flag enables the compilation of additional unit tests for some parts of the code. The tests
 only built for the active sub-modules. The unit tests uses the <a class="reference external" href="https://github.com/google/googletest/">GoogleTest</a> suite, which is embedded in the sources
 so that not external dependencies are required.</p>
-<div class="section" id="kassiopeia-module">
-<h4>Kassiopeia module<a class="headerlink" href="#kassiopeia-module" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="kassiopeia-module">
+<h4>Kassiopeia module<a class="headerlink" href="#kassiopeia-module" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The <em>Kassiopeia</em> sub-module has a rather limited set of additional options, which is:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 23%" />
-<col style="width: 36%" />
-<col style="width: 41%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Kassiopeia options</p></th>
 </tr>
@@ -548,18 +535,13 @@ so that not external dependencies are required.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="kemfield-module">
-<h4>KEMField module<a class="headerlink" href="#kemfield-module" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="kemfield-module">
+<h4>KEMField module<a class="headerlink" href="#kemfield-module" title="Permalink to this heading"><span>#</span></a></h4>
 <p>KEMField has a rather extensive set of additional compiler options so that it maybe adapted for
 use on special purpose machines (computing clusters, GPUs, etc.) for field solving tasks.
 These are listed as follows:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 24%" />
-<col style="width: 38%" />
-<col style="width: 38%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>KEMField options</p></th>
 </tr>
@@ -611,16 +593,11 @@ These are listed as follows:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="kgeobag-module">
-<h4>KGeoBag module<a class="headerlink" href="#kgeobag-module" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="kgeobag-module">
+<h4>KGeoBag module<a class="headerlink" href="#kgeobag-module" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The additional optional dependencies of the <em>KGeoBag</em> module are as follows:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 38%" />
-<col style="width: 42%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>KGeoBag options</p></th>
 </tr>
@@ -640,16 +617,11 @@ These are listed as follows:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="kommon-module">
-<h4>Kommon module<a class="headerlink" href="#kommon-module" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="kommon-module">
+<h4>Kommon module<a class="headerlink" href="#kommon-module" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The optional dependencies the <em>Kommon</em> sub-module are given in the following table:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 38%" />
-<col style="width: 43%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Kommon options</p></th>
 </tr>
@@ -669,16 +641,11 @@ These are listed as follows:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="miscellaneous-options">
-<h4>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="miscellaneous-options">
+<h4>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Some of the miscellaneous not specific to a sub-module are given below:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 28%" />
-<col style="width: 51%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Miscellaneous options</p></th>
 </tr>
@@ -712,10 +679,10 @@ These are listed as follows:</p>
 </div></blockquote>
 <p>Since this produces code compiled for the current CPU, this option should not be used on a computing cluster or other
 architectures where compiled code is shared between different machines. Be aware that this option is largely untested.</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>

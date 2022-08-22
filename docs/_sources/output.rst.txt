@@ -46,8 +46,8 @@ or, alternatively in the older XML syntax:
 In this case, the output file will have one group `output_step_world` that contains one member field `step_id` and is
 updated at the step level, meaning that one entry will be added to the member field with each simulation step.
 
-In the case above, the member field `step_id` refers to an attribute of the step class :kassiopeia:`KSStep`. Similar
-fields are available in the other classes, such as :kassiopeia:`KSTrack`. However, in a typical simulation one also
+In the case above, the member field `step_id` refers to an attribute of the step class `KSStep`. Similar
+fields are available in the other classes, such as `KSTrack`. However, in a typical simulation one also
 wants to access physical attributes of the simulated particle. This is possible at the step level as well. In this case,
 one may access the initial or final state of the particle in each step (where the initial state of one step equals the
 final state of the preceding step, unless it is the first step in which the particle was generated). For example:
@@ -287,7 +287,7 @@ in the ROOT file, distinguished by their postfix:
   e.g. `position_x`, `position_y`, `position_z`. All output fields are sorted by the respective index, e.g. step data
   is sorted by `STEP_INDEX` (which is a continually increasing integer number). This allows direct access to any
   specific data field at any output level. Note that the step index can be different than the `step id`, which is an
-  attribute of the :kassiopeia:`KSStep` class and thus defined by the simulation.
+  attribute of the `KSStep` class and thus defined by the simulation.
 * `..._PRESENCE` indicates which segments in the data array contain valid data. This tree contains the fields `INDEX`,
   referring to the start index in the output data, and `LENGTH`, referring to the length of one segment. When reading
   values from the data arrays, these fields should be checked so that only valid data is used.
@@ -328,9 +328,9 @@ available.
 Using Kassiopeia
 ~~~~~~~~~~~~~~~~
 
-*Kassiopeia* includes a simple analysis application that uses the :kassiopeia:`KSReadFileROOT` class to iterate through
+*Kassiopeia* includes a simple analysis application that uses the `KSReadFileROOT` class to iterate through
 the step output produced by the `QuadrupoleTrapSimulation.xml` example. Its code is available at
-:gh-file:`Kassiopeia/Applications/Examples/Source/QuadrupoleTrapAnalysis.cxx` and it serves as a general example
+:gh-code:`Kassiopeia/Applications/Examples/Source/QuadrupoleTrapAnalysis.cxx` and it serves as a general example
 of using this method.
 
 In this case, the simulation output can be accessed in a structured way, using the run/event/track/step levels and
@@ -354,7 +354,7 @@ iterating through each component:
             }
         }
 
-Individual output fields are accessed via an instance of :kassiopeia:`KSReadObjectROOT`, as shown in the example. The
+Individual output fields are accessed via an instance of `KSReadObjectROOT`, as shown in the example. The
 benefit of using this method is that it uses *Kassiopeia's* internal classes that are fully compatible with the writer
 class that produced the output file. On the other hand, it requires writing a custom C++ application that needs
 to be compiled against *Kasper*.

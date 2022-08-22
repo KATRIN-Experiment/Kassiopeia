@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Configuring Your Own Simulation &mdash; Kassiopeia 3.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -103,6 +105,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#output">Output</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#writers">Writers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#output-description">Output description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#output-fields">Output fields</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#navigation">Navigation</a><ul>
@@ -157,10 +160,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="configuring-your-own-simulation">
-<span id="configuration-label"></span><h1>Configuring Your Own Simulation<a class="headerlink" href="#configuring-your-own-simulation" title="Permalink to this headline"><span>#</span></a></h1>
+  <section id="configuring-your-own-simulation">
+<span id="configuration-label"></span><h1>Configuring Your Own Simulation<a class="headerlink" href="#configuring-your-own-simulation" title="Permalink to this heading"><span>#</span></a></h1>
 <p>This section gives a brief overview of what you need to know to configure your own <em>Kassiopeia</em> simulation.</p>
-<div class="contents local topic" id="on-this-page">
+<nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview-and-units" id="id29">Overview and Units</a></p></li>
@@ -200,9 +203,9 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="overview-and-units">
-<h2><a class="toc-backref" href="#id29">Overview and Units</a><a class="headerlink" href="#overview-and-units" title="Permalink to this headline"><span>#</span></a></h2>
+</nav>
+<section id="overview-and-units">
+<h2><a class="toc-backref" href="#id29" role="doc-backlink">Overview and Units</a><a class="headerlink" href="#overview-and-units" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The configuration of <em>Kassiopeia</em> is done in three main sections, plus an optional fourth. These are the <code class="docutils literal notranslate"><span class="pre">&lt;messages&gt;</span></code>
 section which describes global message verbosity, the <code class="docutils literal notranslate"><span class="pre">&lt;geometry&gt;</span></code> section which describes the system geometry and its
 extensions, the <code class="docutils literal notranslate"><span class="pre">&lt;kemfield&gt;</span></code> section which defines the electromagnetic field elements, and the <code class="docutils literal notranslate"><span class="pre">&lt;kassiopeia&gt;</span></code>
@@ -241,9 +244,9 @@ tracking simulations. Throughout the geometry, field, and simulation configurati
 using <a class="reference external" href="https://scienceworld.wolfram.com/physics/MKS.html">MKS</a> and their derived units. The exception to this rule is energy, which is specified using electron volts (eV).
 It should be noted that XML elements are parsed in order, and elements which are referenced by other elements must be
 declared before their first use.</p>
-</div>
-<div class="section" id="xml-parsing-and-features">
-<h2><a class="toc-backref" href="#id30">XML Parsing and Features</a><a class="headerlink" href="#xml-parsing-and-features" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+<section id="xml-parsing-and-features">
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">XML Parsing and Features</a><a class="headerlink" href="#xml-parsing-and-features" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The document language used for describing a Kassiopeia simulation configuration is based on standard <a class="reference external" href="https://www.w3.org/TR/xml11/">XML</a>, but has been
 augmented with several additional features to aid in complicated or repetitive tasks. For a full description of this
 language and its features, see [1].</p>
@@ -259,10 +262,10 @@ corresponding object during initialization. XML allows nesting of elements, and 
 elements with the same syntax.</p>
 <p>All elements must end with a closing statement, like <code class="docutils literal notranslate"><span class="pre">&lt;element&gt;</span> <span class="pre">...</span> <span class="pre">&lt;/element&gt;</span></code>. For elements without children, the
 syntax can be shortened to the single statement <code class="docutils literal notranslate"><span class="pre">&lt;element</span> <span class="pre">...</span> <span class="pre">/&gt;</span></code>.</p>
-<div class="section" id="general-statements">
-<h3><a class="toc-backref" href="#id31">General Statements</a><a class="headerlink" href="#general-statements" title="Permalink to this headline"><span>#</span></a></h3>
-<div class="section" id="variables">
-<h4>Variables<a class="headerlink" href="#variables" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="general-statements">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">General Statements</a><a class="headerlink" href="#general-statements" title="Permalink to this heading"><span>#</span></a></h3>
+<section id="variables">
+<h4>Variables<a class="headerlink" href="#variables" title="Permalink to this heading"><span>#</span></a></h4>
 <p>A local variable may be defined with a particular value (integer,floating point type, string, etc.) with the following
 syntax:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">&quot;my_variable&quot;</span> <span class="na">value=</span><span class="s">&quot;1.3e-5&quot;</span><span class="nt">/&gt;</span>
@@ -311,9 +314,9 @@ line call to <em>Kassiopeia</em> in the following manner:</p>
 </pre></div>
 </div>
 <p>Note that this applies to other applications that belong to <em>Kassiopeia</em> or the other modules as well.</p>
-</div>
-<div class="section" id="including-external-files">
-<h4>Including external files<a class="headerlink" href="#including-external-files" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="including-external-files">
+<h4>Including external files<a class="headerlink" href="#including-external-files" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Including external XML files is also supported through a relatively simple syntax. This is helpful when a simulation is
 too complex to be managed by a single file. A separate XML file can be included using the following:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;include</span> <span class="na">name=</span><span class="s">&quot;/path/to/file/my_file.xml&quot;</span><span class="nt">/&gt;</span>
@@ -336,9 +339,9 @@ syntax in this case is:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;include</span> <span class="na">name=</span><span class="s">&quot;/path/to/file/another_file.xml&quot;</span> <span class="na">optional=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="print-statements">
-<h4>Print statements<a class="headerlink" href="#print-statements" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="print-statements">
+<h4>Print statements<a class="headerlink" href="#print-statements" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The XML initializer allows to print the current value of a variable, or any sort of text message. The message will be
 shown during XML initialization, and it is useful for debugging and checking correct initialization. The syntax is:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">&quot;my_variable&quot;</span> <span class="na">value=</span><span class="s">&quot;42&quot;</span><span class="nt">/&gt;</span>
@@ -367,9 +370,9 @@ for an explanation of conditional expressions. The syntax for the assert stateme
 <span class="nt">&lt;assert</span> <span class="na">name=</span><span class="s">&quot;my_variable&quot;</span> <span class="na">condition=</span><span class="s">&quot;{[my_variable] eq 42}&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="conditional-expressions-and-looping">
-<h4>Conditional Expressions and Looping<a class="headerlink" href="#conditional-expressions-and-looping" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="conditional-expressions-and-looping">
+<h4>Conditional Expressions and Looping<a class="headerlink" href="#conditional-expressions-and-looping" title="Permalink to this heading"><span>#</span></a></h4>
 <p>In addition to mathematical expressions, simple boolean conditions can be specified. These are often helpful for
 swapping or toggling on/off different features, but also for setting several variables depending on the value of a “meta
 variable”. An example showing the inclusion/exclusion of a brief section of XML is shown below:</p>
@@ -384,12 +387,6 @@ variable”. An example showing the inclusion/exclusion of a brief section of XM
 two variables. Other allowed operators are listed in the table below. To combine multiple conditions into one
 expression, use brackets like <code class="docutils literal notranslate"><span class="pre">([var1]</span> <span class="pre">eq</span> <span class="pre">[var2])</span> <span class="pre">&amp;&amp;</span> <span class="pre">([var3]</span> <span class="pre">eq</span> <span class="pre">[var4])</span></code>.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 20%" />
-<col style="width: 52%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="4"><p>Conditional operators</p></th>
 </tr>
@@ -477,9 +474,9 @@ syntax for the placement of several copies of a surface with the name <code clas
 </div>
 <p>In this case, the loop variable <code class="docutils literal notranslate"><span class="pre">[i]</span></code> is used to define the name of the copy and its displacement.</p>
 <p>Loops and conditional expressions may also be nested when needed.</p>
-</div>
-<div class="section" id="comments">
-<h4>Comments<a class="headerlink" href="#comments" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="comments">
+<h4>Comments<a class="headerlink" href="#comments" title="Permalink to this heading"><span>#</span></a></h4>
 <p>It is wise to include comments in the XML files to explain certain structures or their behavior. Comment blocks are
 included by the syntax:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- This is a multi-line comment</span>
@@ -488,10 +485,10 @@ included by the syntax:</p>
 </div>
 <p>As shown above, a comment can span multiple lines. Any text between <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">...</span> <span class="pre">--&gt;</span></code> is ignored by the XML initializer,
 including any XML elements. This makes it possible to quickly comment out parts of the file, e.g. for debugging.</p>
-</div>
-</div>
-<div class="section" id="formula-expressions">
-<h3><a class="toc-backref" href="#id32">Formula Expressions</a><a class="headerlink" href="#formula-expressions" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="formula-expressions">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Formula Expressions</a><a class="headerlink" href="#formula-expressions" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The ability to calculate in-line formulas is another useful feature. The underlying implementation of the formula
 processor relies on two external libraries. First, formulas are interpreted with the <a class="reference external" href="https://github.com/codeplea/tinyexpr/">TinyExpr</a> parser. This is a very
 fast implementation that works for most simple expressions. If parsing fails, the formula is interpreted by the ROOT
@@ -512,12 +509,6 @@ using advanced <a class="reference external" href="http://root.cern.ch/root/html
 <code class="docutils literal notranslate"><span class="pre">TMath::Sqrt(x)</span></code> or <code class="docutils literal notranslate"><span class="pre">TMath::Sin(x)</span></code> are mapped to their equivalent standard function (<code class="docutils literal notranslate"><span class="pre">sqrt(x)</span></code>, <code class="docutils literal notranslate"><span class="pre">sin(x)</span></code>) that is
 natively understood by <a class="reference external" href="https://github.com/codeplea/tinyexpr/">TinyExpr</a>. The standard functions (and mathematical constants) are listed in the table below.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 15%" />
-<col style="width: 25%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="4"><p>Standard functions and constants</p></th>
 </tr>
@@ -650,9 +641,9 @@ natively understood by <a class="reference external" href="https://github.com/co
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="messaging-system">
-<h3><a class="toc-backref" href="#id33">Messaging System</a><a class="headerlink" href="#messaging-system" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="messaging-system">
+<h3><a class="toc-backref" href="#id33" role="doc-backlink">Messaging System</a><a class="headerlink" href="#messaging-system" title="Permalink to this heading"><span>#</span></a></h3>
 <p><em>Kassiopeia</em> provides a very granular means of reporting and logging simulation details of interest. This feature is
 particularly useful when modifying the code and debugging specific features. For example, at the top of the file
 <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> you can find section describing the verbosity of each simulation element and the
@@ -696,12 +687,6 @@ example, if you want a lot of detail on what’s happening in the navigation rou
 only that part of <em>Kassiopeia</em>, without being flooded with messages from everything else. The different sources are
 define by the <code class="docutils literal notranslate"><span class="pre">key</span></code> attribute of the <code class="docutils literal notranslate"><span class="pre">&lt;message&gt;</span></code> element, and explained in the table below.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 11%" />
-<col style="width: 29%" />
-<col style="width: 40%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="4"><p>Message sources</p></th>
 </tr>
@@ -895,8 +880,8 @@ define by the <code class="docutils literal notranslate"><span class="pre">key</
 </tbody>
 </table>
 <p>The different parts of the code are explained further below, along with XML configuration examples.</p>
-<div class="section" id="verbosity-levels">
-<h4>Verbosity levels<a class="headerlink" href="#verbosity-levels" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="verbosity-levels">
+<h4>Verbosity levels<a class="headerlink" href="#verbosity-levels" title="Permalink to this heading"><span>#</span></a></h4>
 <p>There are five possible verbosity levels, they are <code class="docutils literal notranslate"><span class="pre">debug</span></code>, <code class="docutils literal notranslate"><span class="pre">info</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">warning</span></code> and <code class="docutils literal notranslate"><span class="pre">error</span></code>. Of these,
 <code class="docutils literal notranslate"><span class="pre">error</span></code> is the least verbose, only reporting on fatal errors that terminate the simulation. The <code class="docutils literal notranslate"><span class="pre">normal</span></code> mode will
 include a relatively small set of details in addition to any warnings (this is the default), while <code class="docutils literal notranslate"><span class="pre">debug</span></code> will
@@ -909,9 +894,9 @@ the corresponding options for other modules.)</p>
 <p>As mentioned earlier, the verbosity level can also be changed by the command line arguments <code class="docutils literal notranslate"><span class="pre">-v</span></code> and <code class="docutils literal notranslate"><span class="pre">-q</span></code>, which
 raise or lower the verbosity level. However, this only works for sources that have not been configured explicitely
 in the <code class="docutils literal notranslate"><span class="pre">&lt;messages&gt;</span></code> section.</p>
-</div>
-<div class="section" id="additional-logging">
-<h4>Additional logging<a class="headerlink" href="#additional-logging" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="additional-logging">
+<h4>Additional logging<a class="headerlink" href="#additional-logging" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The description above applies to the <em>KMessage</em> interface, which is configured through XML files. In addition, some code
 uses the independent <em>KLogger</em> interface. If <em>Kassiopeia</em> was compiled with <a class="reference external" href="https://logging.apache.org/log4cxx/">Log4CXX</a> enabled at build time, the KLogger
 interface can be configured through its own configuration file, which is located at:</p>
@@ -921,11 +906,11 @@ interface can be configured through its own configuration file, which is located
 <p>It allows flexible logging configuration of different parts of the code, including changing the verbosity level,
 redirecting output to a log file, or customizing the message format.</p>
 <p>In <em>Kassiopeia</em>, <em>KEMField</em> and <em>KGeoBag</em>, most messages use the <em>KMessage</em> interface.</p>
-</div>
-</div>
-</div>
-<div class="section" id="geometry">
-<h2><a class="toc-backref" href="#id34">Geometry</a><a class="headerlink" href="#geometry" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+</section>
+<section id="geometry">
+<h2><a class="toc-backref" href="#id34" role="doc-backlink">Geometry</a><a class="headerlink" href="#geometry" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The geometry section of the configuration file is the first piece needed in order to assemble a simulation. At its first
 and most basic level it is responsible for defining all the different shapes that will be used, and placing them with
 respect to one another in order to construct the arrangement (often called <cite>assembly</cite>) that is needed.</p>
@@ -944,8 +929,8 @@ electromagnetic simulations.</p>
 <p>It should be noted, that the full description of the geometry need not lie within the same pair of <code class="docutils literal notranslate"><span class="pre">&lt;geometry&gt;</span></code> and
 <code class="docutils literal notranslate"><span class="pre">&lt;/geometry&gt;</span></code> brackets. This facilitates the description of separate geometry pieces in different files, which may
 then be included and used in the final assembly.</p>
-<div class="section" id="shapes-and-assemblies">
-<h3><a class="toc-backref" href="#id35">Shapes and assemblies</a><a class="headerlink" href="#shapes-and-assemblies" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="shapes-and-assemblies">
+<h3><a class="toc-backref" href="#id35" role="doc-backlink">Shapes and assemblies</a><a class="headerlink" href="#shapes-and-assemblies" title="Permalink to this heading"><span>#</span></a></h3>
 <p>To understand the basics of <em>KGeoBag</em>, let us look at a simple  example. A typical simulation geometry may look like
 the image below, where multiple spaces (B-D) and surfaces (a-b) are assembled and placed in a “world” space A:</p>
 <a class="reference internal image-reference" href="_images/geometry_picture.png"><img alt="_images/geometry_picture.png" src="_images/geometry_picture.png" style="width: 250pt;" /></a>
@@ -1020,9 +1005,9 @@ below, in order to walk you through a typical geometry configuration.</p>
 </div>
 <p>where each element is given a name, which it can be referenced with, and additional parameters dependeing on the shape.
 For example, the disk surface is defined by only two parameters <cite>r</cite> and <cite>z</cite>, while other shapes differ.</p>
-</div>
-<div class="section" id="tagging-system">
-<h3><a class="toc-backref" href="#id36">Tagging system</a><a class="headerlink" href="#tagging-system" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="tagging-system">
+<h3><a class="toc-backref" href="#id36" role="doc-backlink">Tagging system</a><a class="headerlink" href="#tagging-system" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The tagging system is used to group different elements together, for example by distinguishng between magnet and
 electrode shapes. These tags will be used later to retrieve elements and pass them to the <em>KEMField</em> module. The
 general syntax is:</p>
@@ -1032,9 +1017,9 @@ general syntax is:</p>
 </pre></div>
 </div>
 <p>and tags can be freely combined or re-used.</p>
-</div>
-<div class="section" id="assembling-elements">
-<h3><a class="toc-backref" href="#id37">Assembling elements</a><a class="headerlink" href="#assembling-elements" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="assembling-elements">
+<h3><a class="toc-backref" href="#id37" role="doc-backlink">Assembling elements</a><a class="headerlink" href="#assembling-elements" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The defined shapes are then placed into an assembly of the experiment geometry. Geometric objects are placed by
 referencing each shape by its given (and <em>unique</em>) name and placing it inside a space. This can be combined with
 specifying a transformation (relative to the assembly origin) defining the location and orientation of each object. The
@@ -1085,9 +1070,9 @@ elements must be placed. Note that in this case, the space named <code class="do
 <cite>tree</cite> attribute (and not <cite>node</cite>, as you might expect.) This is due to the fact that the assembly is a “virtual” space
 that just holds its child elements, but does not refer to an actual object. Make sure to keep this in mind for your
 own geometry configurations!</p>
-</div>
-<div class="section" id="transformations">
-<h3><a class="toc-backref" href="#id38">Transformations</a><a class="headerlink" href="#transformations" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="transformations">
+<h3><a class="toc-backref" href="#id38" role="doc-backlink">Transformations</a><a class="headerlink" href="#transformations" title="Permalink to this heading"><span>#</span></a></h3>
 <p>It should be noted that transformations applied to an assembly are collectively applied to all of the geometric elements
 within the assembly. For example, placing the dipole trap assembly within the world volume as:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;space</span> <span class="na">name=</span><span class="s">&quot;world&quot;</span> <span class="na">node=</span><span class="s">&quot;world_space&quot;</span><span class="nt">&gt;</span>
@@ -1126,9 +1111,9 @@ applied before placing the surface inside the assembly, and so it is not propaga
 because it allows to transform the origin and orientation of the reference system before assembling elements.</p>
 <p>It is best to think of the <code class="docutils literal notranslate"><span class="pre">&lt;transformation&gt;</span></code> elements as commands that are executed during XML initialization, while
 the geometry is assembled. It should be clear then that the two example assemblies yield different results.</p>
-</div>
-<div class="section" id="extensions">
-<h3><a class="toc-backref" href="#id39">Extensions</a><a class="headerlink" href="#extensions" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="extensions">
+<h3><a class="toc-backref" href="#id39" role="doc-backlink">Extensions</a><a class="headerlink" href="#extensions" title="Permalink to this heading"><span>#</span></a></h3>
 <p>In order to give physical properties to the geometry elements that have been constructed and placed, they must be
 associated with extensions. The currently available extensions are <em>meshing</em> (axially or rotationally symmetric, or
 non-symmetric), <em>visualization</em> properties, electrostatic <em>boundary conditions</em> (Dirichlet or Neumann surfaces), and
@@ -1202,10 +1187,10 @@ electric current and the number of turns can also be specified separately for ad
 supported shapes are the cylinder surface, describing a simple coil, and the rod space, describing a single wire.</p>
 <p>For further demonstrations of the possible geometry extensions please see the provided example XML files located
 at <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/KGeoBag/Source/XML/Examples">GitHub: KGeoBag/Source/XML/Examples</a>.</p>
-</div>
-</div>
-<div class="section" id="kemfield">
-<h2><a class="toc-backref" href="#id40">KEMField</a><a class="headerlink" href="#kemfield" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+<section id="kemfield">
+<h2><a class="toc-backref" href="#id40" role="doc-backlink">KEMField</a><a class="headerlink" href="#kemfield" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The field elements all live within the <em>KEMField</em> element and must be placed with start and end tags of the form:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;kemfield&gt;</span>
     <span class="cm">&lt;!-- complete description of the kemfield configuration element here --&gt;</span>
@@ -1215,8 +1200,8 @@ at <a class="reference external" href="https://github.com/KATRIN-Experiment/Kass
 <p>Note that in some configuration files, you may find the “legacy style” setup where the field elements are defined under
 the <em>Kassiopeia</em> element (see below). Although both variants are supported, it is recommended to follow the one
 described here.</p>
-<div class="section" id="fields">
-<h3><a class="toc-backref" href="#id41">Fields</a><a class="headerlink" href="#fields" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="fields">
+<h3><a class="toc-backref" href="#id41" role="doc-backlink">Fields</a><a class="headerlink" href="#fields" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Once the simulation geometry has been specified, the user may describe the types of electric and magnetic fields they
 wish associate with each geometric object. The field package <em>KEMField</em> takes care of solving the boundary value problem
 and computing the fields for electrostatic problems. It also handles the magnetic field computation from static current
@@ -1227,8 +1212,8 @@ distributions.</p>
 implementations in <em>KEMField</em>.</p>
 <p>For example, in the <code class="docutils literal notranslate"><span class="pre">DipoleTrapSimulation.xml</span></code> example the electric and magnetic fields are axially symmetric and can
 be computed using the zonal harmonics expansion.</p>
-<div class="section" id="electric">
-<h4>Electric<a class="headerlink" href="#electric" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="electric">
+<h4>Electric<a class="headerlink" href="#electric" title="Permalink to this heading"><span>#</span></a></h4>
 <p>To specify the electric field, the geometric surfaces which are electrically active must be listed in the <code class="docutils literal notranslate"><span class="pre">surfaces</span></code>
 element. It is important that the surfaces which are specified have a mesh extension and a boundary type extension. If
 either of these extensions are missing from the specified surface, they will not be included in the electrostatics
@@ -1289,9 +1274,9 @@ and computational effort.</p>
 <p>For a complete list and description of the XML bindings available for the electric field solving routines, navigate to
 the directory <code class="docutils literal notranslate"><span class="pre">$KASPERSYS/config/KEMField/Complete</span></code>. The file <code class="docutils literal notranslate"><span class="pre">ElectricFields.xml</span></code> has examples of the binding for
 initializing electric field problems (see <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/KEMField/Source/XML/Complete/ElectricFields.xml">GitHub: KEMField/Source/XML/Complete/ElectricFields.xml</a>.)</p>
-</div>
-<div class="section" id="magnetic">
-<h4>Magnetic<a class="headerlink" href="#magnetic" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="magnetic">
+<h4>Magnetic<a class="headerlink" href="#magnetic" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The specification of the magnetic field solving routines is considerably simpler since there is no need to solve a
 boundary value problem before hand. There are essentially two choices for solving magnetic fields from static current
 distributions: The zonal harmonics method for use with axially symmetric current sources, and the integrating magnetic
@@ -1332,11 +1317,11 @@ will be a “line current” that does not allow any zonal harmonic approximatio
 <p>A complete list and set of examples of the XML bindings for magnetic fields can be found in the file
 <code class="docutils literal notranslate"><span class="pre">$KASPERSYS/config/KEMField/Complete/MagneticFields.xml</span></code> (see <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/KEMField/Source/XML/Complete/MagneticFields.xml">GitHub: KEMField/Source/XML/Complete/MagneticFields.xml</a>.)</p>
 <p>Further documentation on the exact methods and parameters used in <em>KEMField</em> can be found in [2] and [3].</p>
-</div>
-</div>
-</div>
-<div class="section" id="kassiopeia">
-<h2><a class="toc-backref" href="#id42">Kassiopeia</a><a class="headerlink" href="#kassiopeia" title="Permalink to this headline"><span>#</span></a></h2>
+</section>
+</section>
+</section>
+<section id="kassiopeia">
+<h2><a class="toc-backref" href="#id42" role="doc-backlink">Kassiopeia</a><a class="headerlink" href="#kassiopeia" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The remaining elements for the simulation all live within the <em>Kassiopeia</em> element and must be placed with start and end
 tags of the form:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;kassiopeia&gt;</span>
@@ -1362,8 +1347,8 @@ is split at the third step.</p>
 associated with runs, events, tracks, and steps, and with certain modules of the simulation such as generation,
 navigation, propagation etc. which will be explained futher below.</p>
 <a class="reference internal image-reference" href="_images/sim_flow.png"><img alt="_images/sim_flow.png" src="_images/sim_flow.png" style="width: 400pt;" /></a>
-<div class="section" id="generation">
-<h3><a class="toc-backref" href="#id43">Generation</a><a class="headerlink" href="#generation" title="Permalink to this headline"><span>#</span></a></h3>
+<section id="generation">
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">Generation</a><a class="headerlink" href="#generation" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The intial state of particle’s to be tracked is set up using the generator mechanism. The abstract base class of all
 particle generators is <a href="#id5"><span class="problematic" id="id6">:kassiopeia:`KSGenerator`</span></a> and many different implementations exist. When generating a particle,
 there are five important initial parameters:</p>
@@ -1408,8 +1393,8 @@ is drawn uniformly within a cylindrical volume, defined by the parameters <code 
 fixed to zero, while its initial momentum direction is fixed along the z-axis by specifiying the corresponding angles
 <code class="docutils literal notranslate"><span class="pre">(phi,theta)</span></code> in a spherical distribution. Here the particle type is specified by the PID 11. The available particles
 and their PIDs are defined at the end of the file <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Operators/Source/KSParticleFactory.cxx">GitHub: Kassiopeia/Operators/Source/KSParticleFactory.cxx</a>.</p>
-<div class="section" id="choosing-energy-values">
-<h4>Choosing energy values<a class="headerlink" href="#choosing-energy-values" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="choosing-energy-values">
+<h4>Choosing energy values<a class="headerlink" href="#choosing-energy-values" title="Permalink to this heading"><span>#</span></a></h4>
 <p>All of the fixed values used in this composite generator may be replaced by probability distributions. The available
 probability distributions depend on the quantity they are intended to generate, but include uniform, gaussian, pareto,
 cosine, etc. The available distributions can be found in <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Generators">GitHub: Kassiopeia/Generators</a>. Also available is the ability
@@ -1461,17 +1446,12 @@ that the XML element name can also be adapted, so instead of <code class="docuti
 <span class="nt">&lt;/energy_composite&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="value-generator-types">
-<h4>Value generator types<a class="headerlink" href="#value-generator-types" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="value-generator-types">
+<h4>Value generator types<a class="headerlink" href="#value-generator-types" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The position and direction generators usually support multiple value distributions; e.g. radius (<code class="docutils literal notranslate"><span class="pre">r_gauss</span></code>),
 azimuthal angle (<code class="docutils literal notranslate"><span class="pre">phi_gauss</span></code>) and z-position (<code class="docutils literal notranslate"><span class="pre">z_gauss</span></code>) for the composite cylindrical position generator.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 32%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Generator value distributions</p></th>
 </tr>
@@ -1547,18 +1527,13 @@ azimuthal angle (<code class="docutils literal notranslate"><span class="pre">ph
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="special-creator-types">
-<h4>Special creator types<a class="headerlink" href="#special-creator-types" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="special-creator-types">
+<h4>Special creator types<a class="headerlink" href="#special-creator-types" title="Permalink to this heading"><span>#</span></a></h4>
 <p>In addition, a number of specialized generators exists. For example, the position or energy of the generated particle
 can be defined in more a sophisticated way in case a particle is generated from nuclear decays (Tritium, Krypton, Radon)
 or starts from a surface.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 32%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Energy generators (incomplete list)</p></th>
 </tr>
@@ -1595,11 +1570,6 @@ or starts from a surface.</p>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 32%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Position generators (incomplete list)</p></th>
 </tr>
@@ -1639,10 +1609,10 @@ or starts from a surface.</p>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="termination">
-<h3><a class="toc-backref" href="#id44">Termination</a><a class="headerlink" href="#termination" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="termination">
+<h3><a class="toc-backref" href="#id44" role="doc-backlink">Termination</a><a class="headerlink" href="#termination" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The converse to particle generation is termination. The abstract base class of all particle terminators is
 <a href="#id7"><span class="problematic" id="id8">:kassiopeia:`KSTerminator`</span></a>. Terminators are used to stop particle tracks in situations where further simulation of the
 particle is of no further interest. Terminators typically operate on very simple conditional logic. For example, a
@@ -1662,9 +1632,9 @@ following example:</p>
 user is encouraged to peruse the XML example files as well as the source code to determine what (if any) type of
 pre-existing terminator might be useful for their purpose. As will be explained later, one may enable/disable specific
 terminators dynamically during the simulation. This allows a very flexible configuration of particle termination.</p>
-</div>
-<div class="section" id="propagation">
-<h3><a class="toc-backref" href="#id45">Propagation</a><a class="headerlink" href="#propagation" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="propagation">
+<h3><a class="toc-backref" href="#id45" role="doc-backlink">Propagation</a><a class="headerlink" href="#propagation" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The propagation section is used to describe the physical process which is associated with the movement of a particle,
 and also the means by which the equations of motion are solved. The equations of motions are solved numerically with
 various control methods for the time step used during integration of a specific particle trajectory. The abstract base
@@ -1672,22 +1642,22 @@ class of all particle trajectories is <a href="#id9"><span class="problematic" i
 <p>There are essential five different equations of motion (trajectories) available for particle tracking in <em>Kassiopeia</em>.
 These are, exact, adiabatic, electric, magnetic, and linear. These are implemented in <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Trajectories">GitHub: Kassiopeia/Trajectories</a>
 and some specialized classes exist for spin particles.</p>
-<div class="section" id="exact-trajectory">
-<h4>Exact trajectory<a class="headerlink" href="#exact-trajectory" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="exact-trajectory">
+<h4>Exact trajectory<a class="headerlink" href="#exact-trajectory" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The first trajectory type is the so-called <em>exact</em> method, which solves the Lorentz equation for charged particles
 exactly without any approximations. It is visualized below:</p>
 <a class="reference internal image-reference" href="_images/exact_step.png"><img alt="_images/exact_step.png" src="_images/exact_step.png" style="width: 150pt;" /></a>
-</div>
-<div class="section" id="adiabatic-trajectory">
-<h4>Adiabatic trajectory<a class="headerlink" href="#adiabatic-trajectory" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="adiabatic-trajectory">
+<h4>Adiabatic trajectory<a class="headerlink" href="#adiabatic-trajectory" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The second method is the adiabatic method, which is useful for solving charged particle motion in the presence of
 smoothly varying magnetic fields. In this case, only the motion of the “guiding center” (a point on the magnetic field
 line) is computed, which allows certain approximations. One may then reconcstruct the cyclotron motion of the particle
 around the field line, however this is entirely optional. This method is visualized below:</p>
 <a class="reference internal image-reference" href="_images/adiabatic_step.png"><img alt="_images/adiabatic_step.png" src="_images/adiabatic_step.png" style="width: 150pt;" /></a>
-</div>
-<div class="section" id="electric-and-magnetic-trajectories">
-<h4>Electric and magnetic trajectories<a class="headerlink" href="#electric-and-magnetic-trajectories" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="electric-and-magnetic-trajectories">
+<h4>Electric and magnetic trajectories<a class="headerlink" href="#electric-and-magnetic-trajectories" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The next two types, electric and magnetic (not shown here), are used for tracking the field lines of static electric and
 magnetic fields respectively. Finally, the linear trajectory calculates a linear motion that is independent of any
 external fields.</p>
@@ -1706,19 +1676,11 @@ are based off the class <a href="#id15"><span class="problematic" id="id16">:kas
 or dynamic adjustment (e.g. a step size derived from the local magnetic field.) Step controls are based off the class
 <a href="#id17"><span class="problematic" id="id18">:kassiopeia:`KSMathControl`</span></a>. Multiple controls can be combined, in which case the smallest possible step is taken.</p></li>
 </ul>
-</div>
-<div class="section" id="trajectory-types">
-<h4>Trajectory types<a class="headerlink" href="#trajectory-types" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="trajectory-types">
+<h4>Trajectory types<a class="headerlink" href="#trajectory-types" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The tables below lists the available integrators, interpolators, and terms:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 17%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 30%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="6"><p>Trajectory integrators</p></th>
 </tr>
@@ -1790,11 +1752,6 @@ or dynamic adjustment (e.g. a step size derived from the local magnetic field.) 
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 35%" />
-<col style="width: 46%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Trajectory interpolators</p></th>
 </tr>
@@ -1819,11 +1776,6 @@ or dynamic adjustment (e.g. a step size derived from the local magnetic field.) 
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 32%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Trajectory terms</p></th>
 </tr>
@@ -1860,11 +1812,6 @@ or dynamic adjustment (e.g. a step size derived from the local magnetic field.) 
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 32%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>Trajectory controls</p></th>
 </tr>
@@ -1916,9 +1863,9 @@ or dynamic adjustment (e.g. a step size derived from the local magnetic field.) 
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="examples">
-<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="examples">
+<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The exact tracking method can be used where accuracy is of the utmost importance, but requires a large number of steps
 in order propagate a particle for a long time or distance. An example of its use is given below:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;kstraj_trajectory_exact</span> <span class="na">name=</span><span class="s">&quot;trajectory_exact&quot;</span> <span class="na">attempt_limit=</span><span class="s">&quot;8&quot;</span><span class="nt">&gt;</span>
@@ -1996,15 +1943,15 @@ interpolating a particle’s intermediate state and position. See below for deta
 <code class="docutils literal notranslate"><span class="pre">mesh_spaced_navigator</span></code> is in use. The parameter <code class="docutils literal notranslate"><span class="pre">use_true_position</span></code> determines whether the particle or its guiding
 center position is used for the purpose of finding intersections. If the particle’s true position is used, then the
 parameter <code class="docutils literal notranslate"><span class="pre">cyclotron_fraction</span></code> dictates the number of linear segments the semi-helical path is broken into.</p>
-</div>
-</div>
-<div class="section" id="interactions">
-<h3><a class="toc-backref" href="#id46">Interactions</a><a class="headerlink" href="#interactions" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="interactions">
+<h3><a class="toc-backref" href="#id46" role="doc-backlink">Interactions</a><a class="headerlink" href="#interactions" title="Permalink to this heading"><span>#</span></a></h3>
 <p>In between generation and termination, discrete stochastic interactions involving the particle of interest may be
 applied during tracking. These interactions are divided according to whether they are active in a volume, or on a
 surface. In both cases, the behavior ties with the <em>KGeoBag</em> module that provides the geometric information.</p>
-<div class="section" id="volume-interactions">
-<h4>Volume Interactions<a class="headerlink" href="#volume-interactions" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="volume-interactions">
+<h4>Volume Interactions<a class="headerlink" href="#volume-interactions" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Volume interactions typically involve scattering off of a gas. The abstract base class of all volume interactions is
 <a href="#id19"><span class="problematic" id="id20">:kassiopeia:`KSSpaceInteraction`</span></a>. Simple situations where the scattering interactions is treated approximately by a
 constant density and cross section can be constructed as follows:</p>
@@ -2019,9 +1966,9 @@ constant density and cross section can be constructed as follows:</p>
 are available in <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Interactions">GitHub: Kassiopeia/Interactions</a>. For more complicated interactions (e.g. involving differential or
 energy dependent cross sections) the user may need to devise their own interaction class. Volume interactions must
 always be associated with a particular volume when describing the simulation structure.</p>
-</div>
-<div class="section" id="surface-interactions">
-<h4>Surface Interactions<a class="headerlink" href="#surface-interactions" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="surface-interactions">
+<h4>Surface Interactions<a class="headerlink" href="#surface-interactions" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Surface interactions are much more limited in their scope and only occur when the track of a particle passes through a
 surface. The abstract base class of all surface interactions is <a href="#id21"><span class="problematic" id="id22">:kassiopeia:`KSSurfaceInteraction`</span></a>.</p>
 <p>For example, to cause a particle to be reflected diffusely (Lambertian) from a surface the user can specify an
@@ -2035,14 +1982,14 @@ interaction of the following type:</p>
 </div>
 <p>In order for this interaction to operate on any particles it must be associated with a surface in the simulation command
 structure.</p>
-</div>
-</div>
-<div class="section" id="output">
-<h3><a class="toc-backref" href="#id47">Output</a><a class="headerlink" href="#output" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="output">
+<h3><a class="toc-backref" href="#id47" role="doc-backlink">Output</a><a class="headerlink" href="#output" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The data which is saved as output from the simulation requires two pieces: a file writer and a description of the data
 to be saved. The abstract base class of all file writers is <a href="#id23"><span class="problematic" id="id24">:kassiopeia:`KSWriter`</span></a>.</p>
-<div class="section" id="writers">
-<h4>Writers<a class="headerlink" href="#writers" title="Permalink to this headline"><span>#</span></a></h4>
+<section id="writers">
+<h4>Writers<a class="headerlink" href="#writers" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The file writer is responsible for buffering and writing the desired information to disk. The default writer is based on
 <a class="reference external" href="https://root.cern.ch/">ROOT</a>, and stores the output in a <code class="docutils literal notranslate"><span class="pre">TTree</span></code> structure:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;kswrite_root</span>
@@ -2075,9 +2022,9 @@ one may use the following statement:</p>
 </div>
 <p>This is not recommended for large-scale simulations because the output file will quickly approach a size that will be
 extremely difficult to handle.</p>
-</div>
-<div class="section" id="output-description">
-<h4>Output description<a class="headerlink" href="#output-description" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="output-description">
+<h4>Output description<a class="headerlink" href="#output-description" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The user may tailor the data written to disk to keep precisely the quantities of interest and no more. To do this a
 description of the data components to be kept at the track and step level must be given. An example of this (taken from
 the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> example) is shown below:</p>
@@ -2168,12 +2115,932 @@ to the initial and final parameters of a track, i.e. the state at particle gener
 <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Operators/Source/KSParticle.cxx">GitHub: Kassiopeia/Operators/Source/KSParticle.cxx</a> while the step and track output fields can be found in
 <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Operators/Source/KSStep.cxx">GitHub: Kassiopeia/Operators/Source/KSStep.cxx</a> and <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Operators/Source/KSTrack.cxx">GitHub: Kassiopeia/Operators/Source/KSTrack.cxx</a>, respectively.
 Other specialized output fields are also available for some propagation or interaction terms.</p>
-</div>
-</div>
-<div class="section" id="navigation">
-<h3><a class="toc-backref" href="#id48">Navigation</a><a class="headerlink" href="#navigation" title="Permalink to this headline"><span>#</span></a></h3>
-<div class="section" id="surfaces-navigation">
-<h4>Surfaces navigation<a class="headerlink" href="#surfaces-navigation" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="output-fields">
+<h4>Output fields<a class="headerlink" href="#output-fields" title="Permalink to this heading"><span>#</span></a></h4>
+<p>Many different output fields can be used and combined in the output configuration. The table below gives an
+overview of the different fields and their types.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="5"><p>Output fields</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Name</p></th>
+<th class="head"><p>XML Element</p></th>
+<th class="head"><p>Value Type</p></th>
+<th class="head"><p>Base class</p></th>
+<th class="head"><p>Description (main parameters)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>Index Number</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">index_number</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">long</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Unique index number of the current step</p></td>
+</tr>
+<tr class="row-even"><td><p>Parent Run ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parent_run_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Run ID of the parent step/track/event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parent Event ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parent_event_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Event ID of the parent step/track/event</p></td>
+</tr>
+<tr class="row-even"><td><p>Parent Track ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parent_track_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Track ID of the parent step/track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parent Step ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parent_step_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Step ID of the parent step</p></td>
+</tr>
+<tr class="row-even"><td><p>Particle ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pid</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Assigned particle ID (PDG code)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Particle String ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Assigned particle ID (human-readable)</p></td>
+</tr>
+<tr class="row-even"><td><p>Particle Mass</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mass</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Mass of the particle (in kg)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Particle Charge</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">charge</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Charge of the particle (in C)</p></td>
+</tr>
+<tr class="row-even"><td><p>Particle Spin</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_spin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Spin magnitude of the particle (in hbar)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gyromagnetic Ratio</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gyromagnetic_ratio</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Gyromagnetic ratio of the particle (in rad/sT)</p></td>
+</tr>
+<tr class="row-even"><td><p>Main Quantum No.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Main quantum number</p></td>
+</tr>
+<tr class="row-odd"><td><p>Second Quatum No.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Secondary quantum number</p></td>
+</tr>
+<tr class="row-even"><td><p>Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Time in the simulation (in s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wallclock Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clock_time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Wallclock time (system time) at the current step</p></td>
+</tr>
+<tr class="row-even"><td><p>Step Length</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">length</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Length of the current step (in m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Position Vector</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Position at the current step (in m)</p></td>
+</tr>
+<tr class="row-even"><td><p>Momentum Vector</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">momentum</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Momentum at the current step (in kg*m/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Velocity Vector</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">velocity</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Velocity at the current step (in m/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>Spin Vector</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">spin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Spin at the current step (in hbar)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Index Number</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">spin0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Aligned Spin</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">aligned_spin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Spin Angle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">spin_angle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Speed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">speed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Total speed at the current step (in m/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lorentz Factor</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lorentz_factor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Lorentz factor at the current step</p></td>
+</tr>
+<tr class="row-even"><td><p>Kinetic Energy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kinetic_energy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Kinetic energy at the current step (in J)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kinetic Energy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kinetic_energy_ev</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Kinetic energy at the current step (in eV)</p></td>
+</tr>
+<tr class="row-even"><td><p>Polar Angle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">polar_angle_to_z</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Polar angle relative to z-axis (in deg)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Azimuthal Angle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">azimuthal_angle_to_x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Azimuthal angle relative to x-axis (in deg)</p></td>
+</tr>
+<tr class="row-even"><td><p>Magnetic Field</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">magnetic_field</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Magnetic field at the current step (in T)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Electric Field</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">electric_field</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Electric field at the current step (in V/m)</p></td>
+</tr>
+<tr class="row-even"><td><p>Magnetic Gradient</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">magnetic_gradient</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeMatrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Magnetic gradient at the current step (in T/m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Electric Potential</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">electric_potential</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Electric potential at the current step (in V)</p></td>
+</tr>
+<tr class="row-even"><td><p>Long. Momentum</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">long_momentum</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Longitudinal momentum at the current step (in kg*m/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Trans. Momentum</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">trans_momentum</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Transversal momentum at the current step (in kg*m/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>Long. Velocity</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">long_velocity</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Longitudinal velocity at the current step (in m/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Trans. Velocity</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">trans_velocity</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Transversal velocity at the current step (in m/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>Polar Angle to B</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">polar_angle_to_b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Polar (pitch) angle relative to magnetic field (in deg)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cyclotron Freq.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cyclotron_frequency</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Cyclotron frequency at the current step (in Hz)</p></td>
+</tr>
+<tr class="row-even"><td><p>Magnetic Moment</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">orbital_magnetic_moment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Orbital magnetic moment at the current step (in A*m^2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>GC Position Vector</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">guiding_center_position</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Guiding center position at the current step (in m)</p></td>
+</tr>
+<tr class="row-even"><td><p>Current Space</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">current_space_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Name of the nearest space (see <code class="docutils literal notranslate"><span class="pre">geo_space</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Current Surface</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">current_surface_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Name of the nearest surface (see <code class="docutils literal notranslate"><span class="pre">geo_surface</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Current Side</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">current_side_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p>Name of the nearest side (see <code class="docutils literal notranslate"><span class="pre">geo_side</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>GC Velocity</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gc_velocity</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrajTermDrift</span></code></p></td>
+<td><p>Guiding center velocity (in m/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>GC Long. Force</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">longitudinal_force</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrajTermDrift</span></code></p></td>
+<td><p>Longitudinal force added by drift terms (in N)</p></td>
+</tr>
+<tr class="row-odd"><td><p>GC Trans. Force</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">transverse_force</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrajTermDrift</span></code></p></td>
+<td><p>Transversal force added by drift terms (in N)</p></td>
+</tr>
+<tr class="row-even"><td><p>Gy. Phase Velocity</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">phase_velocity</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrajTermGyration</span></code></p></td>
+<td><p>Phase velocity of gyration around g.c. (in rad/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Synchrotron Force</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_force</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrajTermSynchrotron</span></code></p></td>
+<td><p>Total force added by synchrotron radiation (in N)</p></td>
+</tr>
+<tr class="row-even"><td><p>Min. Distance</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">min_distance</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTermMinDistance</span></code></p></td>
+<td><p>Distance to the nearest surface (in m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interaction Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step_number_of_interactions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSIntCalculator</span></code></p></td>
+<td><p>Number of interactions  at current step</p></td>
+</tr>
+<tr class="row-even"><td><p>Energy loss</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step_energy_loss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSIntCalculator</span></code></p></td>
+<td><p>Energy loss at current step (in eV)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Angular Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step_angular_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSIntCalculator</span></code></p></td>
+<td><p>Angular change at current step (in deg)</p></td>
+</tr>
+<tr class="row-even"><td><p>Interaction Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step_number_of_decays</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSIntDecayCalculator</span></code></p></td>
+<td><p>Number of interactions  at current step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy loss</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step_energy_loss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSIntDecayCalculator</span></code></p></td>
+<td><p>Energy loss at current step (in eV)</p></td>
+</tr>
+<tr class="row-even"><td><p>Enhancement Factor</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">enhancement_factor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSModDynamicEnhancement</span></code></p></td>
+<td><p>Step modifier enhancement factor</p></td>
+</tr>
+<tr class="row-odd"><td><p>Run ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">run_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Run ID of current run</p></td>
+</tr>
+<tr class="row-even"><td><p>Run Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">run_count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total number of runs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Total Events</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_events</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total number of events in run</p></td>
+</tr>
+<tr class="row-even"><td><p>Total Tracks</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_tracks</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total number of tracks in run</p></td>
+</tr>
+<tr class="row-odd"><td><p>Total Steps</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_steps</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total number of steps in run</p></td>
+</tr>
+<tr class="row-even"><td><p>Cont. Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total time of all events/tracks/steps in run</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cont. Length</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_length</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total length of all events/tracks/steps in run</p></td>
+</tr>
+<tr class="row-even"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total energy change during run</p></td>
+</tr>
+<tr class="row-odd"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total momentum change during run</p></td>
+</tr>
+<tr class="row-even"><td><p>Secondaries Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_secondaries</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Number of secondaries created during run</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total energy change during run</p></td>
+</tr>
+<tr class="row-even"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Total momentum change during run</p></td>
+</tr>
+<tr class="row-odd"><td><p>Number of Turns</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number_of_turns</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSRun</span></code></p></td>
+<td><p>Number of particle turns/reflections during run</p></td>
+</tr>
+<tr class="row-even"><td><p>Event ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">event_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Event ID of current event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Event Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">event_count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total number of events</p></td>
+</tr>
+<tr class="row-even"><td><p>Parent Run ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parent_run_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Run ID of parent run</p></td>
+</tr>
+<tr class="row-odd"><td><p>Total Tracks</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_tracks</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total number of tracks in event</p></td>
+</tr>
+<tr class="row-even"><td><p>Total Steps</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_steps</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total number of steps in event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cont. Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total time of all tracks/steps in event</p></td>
+</tr>
+<tr class="row-even"><td><p>Cont. Length</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_length</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total length of all tracks/steps in event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total energy change during event</p></td>
+</tr>
+<tr class="row-even"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total momentum change during event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secondaries Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_secondaries</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Number of secondaries created during event</p></td>
+</tr>
+<tr class="row-even"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total energy change during event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total momentum change during event</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of Turns</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number_of_turns</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Number of particle turns/reflections during event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generator Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Name of the generator starting this event</p></td>
+</tr>
+<tr class="row-even"><td><p>Generator Flag</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_flag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Additional flag of the used generator</p></td>
+</tr>
+<tr class="row-odd"><td><p>Primary Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_primaries</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Number of generated particles</p></td>
+</tr>
+<tr class="row-even"><td><p>Generator Energy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_energy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Total energy of the generated particles (in eV)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generator Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_min_time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Minimum time of the generated particles (in s)</p></td>
+</tr>
+<tr class="row-even"><td><p>Generator Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_max_time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Maximum time of the generated particles (in s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generator Position</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_location</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Center position of the generated particles (in m)</p></td>
+</tr>
+<tr class="row-even"><td><p>Generator Radius</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">generator_radius</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSEvent</span></code></p></td>
+<td><p>Maximum radius of the generated particles (in m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Track ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">event_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Track ID of current track</p></td>
+</tr>
+<tr class="row-even"><td><p>Track Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">event_count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total number of tracks</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parent Event ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parent_event_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Event ID of parent track</p></td>
+</tr>
+<tr class="row-even"><td><p>Total Steps</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total_steps</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total number of steps in track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cont. Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total time of all steps in track</p></td>
+</tr>
+<tr class="row-even"><td><p>Cont. Length</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_length</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total length of all steps in track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total energy change during track</p></td>
+</tr>
+<tr class="row-even"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total momentum change during track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secondaries Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_secondaries</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Number of secondaries created during track</p></td>
+</tr>
+<tr class="row-even"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total energy change during track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Total momentum change during track</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of Turns</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number_of_turns</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Number of particle turns/reflections during track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Creator Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">creator_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Name of the creator starting this track</p></td>
+</tr>
+<tr class="row-even"><td><p>Terminator Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">terminator_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Name of the terminator ending this track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Initial Particle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">initial_particle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Pointer to initial particle at begin of the track</p></td>
+</tr>
+<tr class="row-even"><td><p>Final particle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">final_particle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSTrack</span></code></p></td>
+<td><p>Pointer to final particle at end of the track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Step ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Step ID of current step</p></td>
+</tr>
+<tr class="row-even"><td><p>Step Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step_count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Total number of steps</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parent Track ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parent_track_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Track ID of parent track</p></td>
+</tr>
+<tr class="row-even"><td><p>Cont. Time</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_time</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Total time of current step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cont. Length</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_length</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Total length of current step</p></td>
+</tr>
+<tr class="row-even"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Total energy change during step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continuous_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Total momentum change during step</p></td>
+</tr>
+<tr class="row-even"><td><p>Secondaries Count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_secondaries</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Number of secondaries created during step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_energy_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Total energy change during step</p></td>
+</tr>
+<tr class="row-even"><td><p>Momentum Change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">discrete_momentum_change</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Total momentum change during step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Number of Turns</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number_of_turns</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Number of particle turns/reflections during step</p></td>
+</tr>
+<tr class="row-even"><td><p>Modifier Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">modifier_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Name of the step modifier at this step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Modifier Flag</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">modifier_flag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Additional flag for the used terminator</p></td>
+</tr>
+<tr class="row-even"><td><p>Terminator Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">terminator_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Name of the terminator ending this step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Terminator Flag</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">terminator_flag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Additional flag for the used terminator</p></td>
+</tr>
+<tr class="row-even"><td><p>Trajectory Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">trajectory_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Name of the trajectory at this step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Trajectory Center</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">trajectory_center</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Position of the trajectory bounding sphere (in m)</p></td>
+</tr>
+<tr class="row-even"><td><p>Trajectory Radius</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">trajectory_radius</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Radius of the trajectory bounding sphere (in m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Trajectory Step</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">trajectory_step</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Time of the particle propagation</p></td>
+</tr>
+<tr class="row-even"><td><p>Interaction Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">space_interaction_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Space name of the interaction at this step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interaction Flag</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">space_interaction_flag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Additional flag for the space interaction</p></td>
+</tr>
+<tr class="row-even"><td><p>Interaction Step</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">space_interaction_step</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Time of the space interaction</p></td>
+</tr>
+<tr class="row-odd"><td><p>Navigation Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">space_navigation_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Space name of the navigation at this step</p></td>
+</tr>
+<tr class="row-even"><td><p>Navigation Flag</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">space_navigation_flag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Additional flag for the space navigation</p></td>
+</tr>
+<tr class="row-odd"><td><p>Navigation Step</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">space_navigation_step</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Time of the space navigation</p></td>
+</tr>
+<tr class="row-even"><td><p>Interaction Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">surface_interaction_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Surface name of the interaction at this step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interaction Flag</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">surface_interaction_flag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Additional flag for the surface interaction</p></td>
+</tr>
+<tr class="row-even"><td><p>Navigation Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">surface_navigation_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Surface name of the navigation at this step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Navigation Flag</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">surface_navigation_flag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Additional flag for the surface navigation</p></td>
+</tr>
+<tr class="row-even"><td><p>Initial Particle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">initial_particle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Pointer to initial particle at begin of the step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Finale Particle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">final_particle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Pointer to initial particle at begin of the step</p></td>
+</tr>
+<tr class="row-even"><td><p>Intermed. Particle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">interaction_particle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Pointer to initial particle before interaction</p></td>
+</tr>
+<tr class="row-odd"><td><p>Intermed. Particle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">navigation_particle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Pointer to initial particle before navigation</p></td>
+</tr>
+<tr class="row-even"><td><p>Intermed. Particle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">terminator_particle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSParticle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KSStep</span></code></p></td>
+<td><p>Pointer to initial particle before termination</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>Intermed. Particle | <code class="docutils literal notranslate"><span class="pre">trajectory_particle</span></code>             | <code class="docutils literal notranslate"><span class="pre">KSParticle</span></code>   | <code class="docutils literal notranslate"><span class="pre">KSStep</span></code>                 | Pointer to initial particle before propagation</p></td>
+</tr>
+</tbody>
+</table>
+<p>Vector and matrix type can be accessed by their components in the written output data. For example, when the <code class="docutils literal notranslate"><span class="pre">position</span></code>
+element is used, the corresponding fields in the output data can be found under the names <code class="docutils literal notranslate"><span class="pre">position_x</span></code>, <code class="docutils literal notranslate"><span class="pre">position_y</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">position_z`.</span> <span class="pre">For</span> <span class="pre">matrix</span> <span class="pre">types,</span> <span class="pre">the</span> <span class="pre">rows</span> <span class="pre">are</span> <span class="pre">treated</span> <span class="pre">as</span> <span class="pre">3-vectors</span> <span class="pre">themselves.</span> <span class="pre">Hence,</span> <span class="pre">the</span> <span class="pre">first</span> <span class="pre">element</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">matrix</span>
+<span class="pre">field</span> <span class="pre">named</span> <span class="pre">``gradient</span></code> can be found under <code class="docutils literal notranslate"><span class="pre">gradient_x_x</span></code>, and so on.</p>
+<p>The following suffixes are available for the vector and matrix types.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Output field suffixes</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Name</p></th>
+<th class="head"><p>XML Element Suffix</p></th>
+<th class="head"><p>Base Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>X Component</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Y Component</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">y</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Z Component</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">z</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Vector Magnitude</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">magnitude</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Squared Magnitude</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">magnitude_squared</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Radial Component</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">perp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Squared Radial</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">perp_squared</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Polar Angle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">polar_angle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Azimuthal Angle</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">azimuthal_angle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeVector</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Determinant</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">determinant</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KThreeMatrix</span></code></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>Trace              | <code class="docutils literal notranslate"><span class="pre">trace</span></code>                           | <code class="docutils literal notranslate"><span class="pre">KThreeMatrix</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="navigation">
+<h3><a class="toc-backref" href="#id48" role="doc-backlink">Navigation</a><a class="headerlink" href="#navigation" title="Permalink to this heading"><span>#</span></a></h3>
+<section id="surfaces-navigation">
+<h4>Surfaces navigation<a class="headerlink" href="#surfaces-navigation" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The navigation of a particle is split into two components, surface navigation and space navigation. Surface navigation
 is very simple and only takes place when a particle has intersected an active surface. The surface navigator determines
 whether the state of the particle is modified on the surface and whether it is reflected or transmitted. It can be made
@@ -2184,9 +3051,9 @@ available for use with the declaration:</p>
 <p>As this navigator is very simple, it does not take many additional parameters. The parameters <code class="docutils literal notranslate"><span class="pre">transmission_split</span></code> and
 <code class="docutils literal notranslate"><span class="pre">reflection_split</span></code> determine whether or not a track is split in two (for the purposes of output/saving data) upon
 transmission through or reflection off a geometric surface.</p>
-</div>
-<div class="section" id="space-navigation">
-<h4>Space navigation<a class="headerlink" href="#space-navigation" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="space-navigation">
+<h4>Space navigation<a class="headerlink" href="#space-navigation" title="Permalink to this heading"><span>#</span></a></h4>
 <p>The space navigator is more complex since it is responsible for determine the location of the particle and any possible
 intersections it may have with real of virtual boundaries. It is also responsible for ensuring that the current
 simulation state matches the configuration specified by the user. The spaces that the navigator considers may be real
@@ -2199,9 +3066,9 @@ below:</p>
 </div>
 <p>As this navigator is also very simple, it does not take many additional parameters. The parameters <code class="docutils literal notranslate"><span class="pre">enter_split</span></code> and
 <code class="docutils literal notranslate"><span class="pre">exit_split</span></code> determine whether or not a track is split in two  upon entrance or exit of a geometric space.</p>
-</div>
-<div class="section" id="meshed-space-navigation">
-<h4>Meshed space navigation<a class="headerlink" href="#meshed-space-navigation" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="meshed-space-navigation">
+<h4>Meshed space navigation<a class="headerlink" href="#meshed-space-navigation" title="Permalink to this heading"><span>#</span></a></h4>
 <p>A more complex behavior is achieved by the <code class="docutils literal notranslate"><span class="pre">ksnav_meshed_space</span></code> navigator, which is intended to be used in highly
 detailed three-dimensional geometries where it has better performance over the default navigator. An example of this is
 shown in the <code class="docutils literal notranslate"><span class="pre">PhotoMultplierTube.xml</span></code> file. Its configuration is more complicated as it performs the navigations on
@@ -2220,10 +3087,10 @@ extension in the geometry specification. Furthermore, since <code class="docutil
 definition of the simulation command structure element <code class="docutils literal notranslate"><span class="pre">ksgeo_space</span></code> (see below).</p>
 <p>The mesh navigator can also be used together with geometry from exernal files, as shown in the <code class="docutils literal notranslate"><span class="pre">MeshSimulation.xml</span></code>
 example.</p>
-</div>
-</div>
-<div class="section" id="navigation-and-commands">
-<h3><a class="toc-backref" href="#id49">Navigation and Commands</a><a class="headerlink" href="#navigation-and-commands" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="navigation-and-commands">
+<h3><a class="toc-backref" href="#id49" role="doc-backlink">Navigation and Commands</a><a class="headerlink" href="#navigation-and-commands" title="Permalink to this heading"><span>#</span></a></h3>
 <p>For dyanmic configuration, <em>Kassiopeia</em> allows certain commands to be used during the calculation of a particle
 trajectory. The commands are associated with particular surfaces and spaces and are what effectively governs the state
 of the simulation as a particle is tracked. They are declared through the specification of a <code class="docutils literal notranslate"><span class="pre">ksgeo_space</span></code>. A very
@@ -2270,9 +3137,9 @@ interactions, define terminators, etc. Various spaces and their associated comma
 allowing for a very flexible and dynamic simulation configuration. For best results, it is important that the
 structure of the <code class="docutils literal notranslate"><span class="pre">geo_space</span></code> and <code class="docutils literal notranslate"><span class="pre">geo_surface</span></code> elements follows the structure of the <em>KGeoBag</em> geometry tree, i.e.
 nesting of the navigation elements should follow the same order as the underlying geometry.</p>
-</div>
-<div class="section" id="simulation">
-<h3><a class="toc-backref" href="#id50">Simulation</a><a class="headerlink" href="#simulation" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+<section id="simulation">
+<h3><a class="toc-backref" href="#id50" role="doc-backlink">Simulation</a><a class="headerlink" href="#simulation" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The final object to be declared within <code class="docutils literal notranslate"><span class="pre">&lt;kassiopeia&gt;</span></code> is the simulation element. This describes the simulation object
 <a href="#id25"><span class="problematic" id="id26">:kassiopeia:`KSSimulation`</span></a>, which is then executed by <a href="#id27"><span class="problematic" id="id28">:kassiopeia:`KSRoot`</span></a>. The simulation element specifies the global
 and initial properties of the simulation as a whole. For example in the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> example, the
@@ -2304,11 +3171,11 @@ objects to be used for the initial state of the simulation; where commands speci
 modify the actual objects used during the course of a simulation.</p>
 <p>Following the declaration of <code class="docutils literal notranslate"><span class="pre">ks_simulation</span></code>, the closing tag <code class="docutils literal notranslate"><span class="pre">&lt;/kassiopeia&gt;</span></code> is placed to complete the simulation
 configuration. When this tag is encountered by the XML parser, it triggers the simulation to run.</p>
-</div>
-<div class="section" id="visualization">
-<h3><a class="toc-backref" href="#id51">Visualization</a><a class="headerlink" href="#visualization" title="Permalink to this headline"><span>#</span></a></h3>
-<div class="section" id="vtk-visualization">
-<h4>VTK visualization<a class="headerlink" href="#vtk-visualization" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="visualization">
+<h3><a class="toc-backref" href="#id51" role="doc-backlink">Visualization</a><a class="headerlink" href="#visualization" title="Permalink to this heading"><span>#</span></a></h3>
+<section id="vtk-visualization">
+<h4>VTK visualization<a class="headerlink" href="#vtk-visualization" title="Permalink to this heading"><span>#</span></a></h4>
 <p>If <em>Kassiopeia</em> has been linked against <a class="reference external" href="http://www.vtk.org/">VTK</a> or <a class="reference external" href="https://root.cern.ch/">ROOT</a>, a simple visualization of the simulation can be made available.
 By adding the <cite>vtk_window</cite> element at the end of the configuration file, we activate a VTK window that will open when
 the simulation is complete. This element may hold a <code class="docutils literal notranslate"><span class="pre">vtk_geometry_painter</span></code> and a <code class="docutils literal notranslate"><span class="pre">`vtk_track_painter</span></code> to draw the
@@ -2347,9 +3214,9 @@ file is a follows:</p>
 </div>
 <p>Note that the visualization window must be placed outside of the <code class="docutils literal notranslate"><span class="pre">&lt;kassiopeia&gt;</span></code>…``&lt;/kassiopiea&gt;``
 environment tags.</p>
-</div>
-<div class="section" id="root-visualization">
-<h4>ROOT visualization<a class="headerlink" href="#root-visualization" title="Permalink to this headline"><span>#</span></a></h4>
+</section>
+<section id="root-visualization">
+<h4>ROOT visualization<a class="headerlink" href="#root-visualization" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Similarly, a visualization window can be activated that uses the ROOT software. In constrast to VTK, which displays
 three-dimensional geometry, the ROOT visualization is limited to two dimensions. A simple example that may be added
 to the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> file is as follows:</p>
@@ -2378,10 +3245,10 @@ to the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTr
 <span class="nt">&lt;/root_window&gt;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="common-pitfalls-and-problems">
-<h3><a class="toc-backref" href="#id52">Common Pitfalls and Problems</a><a class="headerlink" href="#common-pitfalls-and-problems" title="Permalink to this headline"><span>#</span></a></h3>
+</section>
+</section>
+<section id="common-pitfalls-and-problems">
+<h3><a class="toc-backref" href="#id52" role="doc-backlink">Common Pitfalls and Problems</a><a class="headerlink" href="#common-pitfalls-and-problems" title="Permalink to this heading"><span>#</span></a></h3>
 <p>The XML parser does have some ability to recognize simple errors in a configuration file and will generally report the
 location of an element which it is not able to process.</p>
 <p>Some errors which might occur if a file is improperly configured are:</p>
@@ -2424,9 +3291,9 @@ the message:</p>
 <p>[1] Daniel Lawrence Furse. Techniques for direct neutrino mass measurement utilizing tritium [beta]-decay. PhD thesis, Massachusetts Institute of Technology, 2015.</p>
 <p>[2] Thomas Corona. Methodology and application of high performance electrostatic field simulation in the KATRIN experiment. PhD thesis, University of North Carolina, Chapel Hill, 2014.</p>
 <p>[3] John P. Barrett. A Spatially Resolved Study of the KATRIN Main Spectrometer Using a Novel Fast Multipole Method. PhD thesis, Massachusetts Institute of Technology, 2016.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
