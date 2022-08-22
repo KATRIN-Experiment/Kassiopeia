@@ -2041,7 +2041,7 @@ overview of the different fields and their types.
 | Intermed. Particle | ``terminator_particle``             | ``KSParticle``   | ``KSStep``                 | Pointer to initial particle before termination           |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 | Intermed. Particle | ``trajectory_particle``             | ``KSParticle``   | ``KSStep``                 | Pointer to initial particle before propagation           |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 
 Vector and matrix type can be accessed by their components in the written output data. For example, when the ``position``
 element is used, the corresponding fields in the output data can be found under the names ``position_x``, ``position_y``,
@@ -2076,7 +2076,7 @@ The following suffixes are available for the vector and matrix types.
 | Determinant        | ``determinant``                     | ``KThreeMatrix`` |
 +--------------------+-------------------------------------+------------------+
 | Trace              | ``trace``                           | ``KThreeMatrix`` |
-+-----------------------------------------------------------------------------+
++--------------------+-------------------------------------+------------------+
 
 Navigation
 ----------
