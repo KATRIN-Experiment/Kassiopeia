@@ -118,6 +118,7 @@ set( BINDINGS_HEADER_FILES
     Interactions/Include/KSIntCalculatorHydrogenBuilder.h
     Interactions/Include/KSIntCalculatorIonBuilder.h
     Interactions/Include/KSIntCalculatorArgonBuilder.h
+    Interactions/Include/KSIntCalculatorMottBuilder.h
     Interactions/Include/KSIntCalculatorKESSBuilder.h
     Interactions/Include/KSIntScatteringBuilder.h
     Interactions/Include/KSIntSpinFlipBuilder.h
@@ -343,6 +344,7 @@ set( BINDINGS_SOURCE_FILES
     Interactions/Source/KSIntCalculatorHydrogenBuilder.cxx
     Interactions/Source/KSIntCalculatorIonBuilder.cxx
     Interactions/Source/KSIntCalculatorArgonBuilder.cxx
+    Interactions/Source/KSIntCalculatorMottBuilder.cxx
     Interactions/Source/KSIntCalculatorKESSBuilder.cxx
     Interactions/Source/KSIntScatteringBuilder.cxx
     Interactions/Source/KSIntSpinFlipBuilder.cxx
