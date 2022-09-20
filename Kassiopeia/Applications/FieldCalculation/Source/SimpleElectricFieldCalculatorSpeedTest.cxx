@@ -2,23 +2,22 @@
 #include "KRandom.h"
 #include "KSFieldFinder.h"
 #include "KSMainMessage.h"
-#include "KSRootElectricField.h"
-#include "KTextFile.h"
 #include "KThreeVector.hh"
 #include "KXMLInitializer.hh"
 #include "KXMLTokenizer.hh"
 
-#ifdef KEMFIELD_USE_MPI
+#ifdef KEMFIELD_USE_PETSC
+#include "KPETScInterface.hh"
+#elif KEMFIELD_USE_MPI
 #include "KMPIInterface.hh"
 #endif
-
 
 // timing function
 #include <ctime>
 #include <sys/time.h>
 
 /* Remove if already defined */
-typedef long long int64;
+using int64 = long long;
 using uint64 = unsigned long long;
 
 /* Returns the amount of milliseconds elapsed since the UNIX epoch. Works on both
@@ -55,6 +54,11 @@ int main(int argc, char** argv)
         exit(-1);
     }
 
+#ifdef KEMFIELD_USE_PETSC
+    KEMField::KPETScInterface::GetInstance()->Initialize(&argc, &argv);
+#elif KEMFIELD_USE_MPI
+    KEMField::KMPIInterface::GetInstance()->Initialize(&argc, &argv);
+#endif
 
     mainmsg(eNormal) << "starting initialization..." << eom;
 

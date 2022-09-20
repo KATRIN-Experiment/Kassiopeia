@@ -1,12 +1,16 @@
 #include "KSMainMessage.h"
-#include "KSSimulation.h"
-//#include "KSRoot.h"
 
 #include "KMessage.h"
 #include "KTextFile.h"
 #include "KToolbox.h"
 #include "KXMLInitializer.hh"
 #include "KXMLTokenizer.hh"
+
+#ifdef KEMFIELD_USE_PETSC
+#include "KPETScInterface.hh"
+#elif KEMFIELD_USE_MPI
+#include "KMPIInterface.hh"
+#endif
 
 #include <string>
 #include <vector>
@@ -24,6 +28,12 @@ int main(int argc, char** argv)
             << std::endl;
         exit(-1);
     }
+
+#ifdef KEMFIELD_USE_PETSC
+    KEMField::KPETScInterface::GetInstance()->Initialize(&argc, &argv);
+#elif KEMFIELD_USE_MPI
+    KEMField::KMPIInterface::GetInstance()->Initialize(&argc, &argv);
+#endif
 
     auto& tXML = KXMLInitializer::GetInstance();
     auto* tTokenizer = tXML.Configure(argc, argv);  // process extra files below

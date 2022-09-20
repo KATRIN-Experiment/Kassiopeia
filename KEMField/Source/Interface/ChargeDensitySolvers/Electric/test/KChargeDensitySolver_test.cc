@@ -7,20 +7,19 @@
 
 #include "KChargeDensitySolver.hh"
 #include "KGaussianEliminationChargeDensitySolver.hh"
-#include "KSmartPointer.hh"
 
 using namespace KGeoBag;
 using namespace KEMField;
 
 int main(int /*argc*/, char** /*args*/)
 {
-    KSmartPointer<KChargeDensitySolver> ptr(nullptr);
+    std::shared_ptr<KChargeDensitySolver> ptr(nullptr);
     {
         auto* raw = new KGaussianEliminationChargeDensitySolver;
-        KSmartPointer<KChargeDensitySolver> ptr1(raw);
+        std::shared_ptr<KChargeDensitySolver> ptr1(raw);
         ptr = ptr1;
     }
-    KSmartPointer<KSurfaceContainer> smartContainer = new KSurfaceContainer;
+    auto smartContainer = std::make_shared<KSurfaceContainer>();
     ptr->Initialize(*smartContainer);
     return 0;
 }

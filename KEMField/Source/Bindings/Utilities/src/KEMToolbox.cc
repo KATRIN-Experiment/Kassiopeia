@@ -16,7 +16,7 @@ namespace KEMField
 void KEMToolbox::AddContainer(KContainer& container, std::string name)
 {
     checkKeyIsFree(name);
-    KSmartPointer<KContainer> newContainer = container.ReleaseToNewContainer();
+    auto newContainer = container.ReleaseToNewContainer();
     fObjects.insert(NameAndContainer(name, newContainer));
 }
 
@@ -30,7 +30,7 @@ bool KEMToolbox::checkKeyIsFree(std::string name)
     return free;
 }
 
-KSmartPointer<KContainer> KEMToolbox::GetContainer(std::string name)
+auto KEMToolbox::GetContainer(std::string name)
 {
     const auto entry = fObjects.find(name);
     if (entry != fObjects.end())

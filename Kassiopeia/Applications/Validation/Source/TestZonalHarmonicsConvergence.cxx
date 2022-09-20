@@ -81,10 +81,12 @@ int main(int anArgc, char** anArgv)
     //          KToolbox::GetInstance().Get<KStaticElectromagnetField>( tMagFieldName );
     //    tMagField->Initialize();
 
-    KEMField::KSmartPointer<KGeoBag::KGBEMConverter> tElConverter = tElField->GetConverter();
+    auto tElConverter = tElField->GetConverter();
     //    KGElectromagnetConverter* tMagConverter = tMagField->GetConverter();
-
-    KElectricZHFieldSolver* tElZHSolver = dynamic_cast<KElectricZHFieldSolver*>(&(*tElField->GetFieldSolver()));
+    if (! tElConverter)
+        mainmsg(eError) << "Electric Field has no Converter! " << eom;
+    
+    auto* tElZHSolver = dynamic_cast<KElectricZHFieldSolver*>(&(*tElField->GetFieldSolver()));
     //    KZonalHarmonicMagnetostaticFieldSolver* tMagZHSolver = dynamic_cast<KZonalHarmonicMagnetostaticFieldSolver*>(&(*tMagField->GetFieldSolver()));
 
     double tZ = -12.2;
