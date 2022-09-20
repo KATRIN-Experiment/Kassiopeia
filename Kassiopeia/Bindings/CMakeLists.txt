@@ -165,6 +165,7 @@ set( BINDINGS_HEADER_FILES
     Terminators/Include/KSTermMinDistanceBuilder.h
     Terminators/Include/KSTermStepsizeBuilder.h
     Terminators/Include/KSTermMagnetronBuilder.h
+    Terminators/Include/KSTermZHRadiusBuilder.h
 
     # writers
     Writers/Include/KSWriteASCIIBuilder.h
@@ -390,6 +391,7 @@ set( BINDINGS_SOURCE_FILES
     Terminators/Source/KSTermMinDistanceBuilder.cxx
     Terminators/Source/KSTermStepsizeBuilder.cxx
     Terminators/Source/KSTermMagnetronBuilder.cxx
+    Terminators/Source/KSTermZHRadiusBuilder.cxx
 
     # writers
     Writers/Source/KSWriteASCIIBuilder.cxx

@@ -4,15 +4,15 @@
 enable_testing()
 
 set (UNIT_TESTS_HEADERFILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/KSmartPointerReleaseTest.hh
+    #${CMAKE_CURRENT_SOURCE_DIR}/include/KSmartPointerReleaseTest.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMToolboxFixture.hh
 )
 
 set (UNIT_TESTS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMToolboxTest.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMToolboxFixture.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/KSmartPointerReleaseTest.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/KSmartPointerRelease.cc
+    #${CMAKE_CURRENT_SOURCE_DIR}/src/KSmartPointerReleaseTest.cc
+    #${CMAKE_CURRENT_SOURCE_DIR}/src/KSmartPointerRelease.cc
 )
 
 # options not accessible from here

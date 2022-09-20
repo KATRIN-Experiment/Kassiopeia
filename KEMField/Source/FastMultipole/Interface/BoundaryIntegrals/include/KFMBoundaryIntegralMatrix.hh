@@ -16,6 +16,8 @@
 #define SPARSE_PRODUCT_TAG 701
 #endif
 
+#include <memory>
+
 namespace KEMField
 {
 
@@ -41,17 +43,17 @@ class KFMBoundaryIntegralMatrix : public KSquareMatrix<typename DenseMatrixType:
     /**
          * leave memory management of the sparse end dense matrices to caller
          */
-    KFMBoundaryIntegralMatrix(const DenseMatrixType& dm, const SparseMatrixType& sm) :
-        //fDenseMatrix(&dm, true),
-        //fSparseMatrix(&sm, true)
-        fDenseMatrix(&dm),
-        fSparseMatrix(&sm)
-    {
-        fDimension = fDenseMatrix->Dimension();
-        fX.resize(fDimension);
-        fTempDense.resize(fDimension);
-        fTempSparse.resize(fDimension);
-    }
+//    KFMBoundaryIntegralMatrix(const DenseMatrixType& dm, const SparseMatrixType& sm) :
+//        //fDenseMatrix(&dm, true),
+//        //fSparseMatrix(&sm, true)
+//        fDenseMatrix(&dm),
+//        fSparseMatrix(&sm)
+//    {
+//        fDimension = fDenseMatrix->Dimension();
+//        fX.resize(fDimension);
+//        fTempDense.resize(fDimension);
+//        fTempSparse.resize(fDimension);
+//    }
 
     /**
          * let smart pointer solve the memory management of dense and sparse matrices
@@ -66,7 +68,7 @@ class KFMBoundaryIntegralMatrix : public KSquareMatrix<typename DenseMatrixType:
         fTempSparse.resize(fDimension);
     };
 
-    ~KFMBoundaryIntegralMatrix() override{};
+    ~KFMBoundaryIntegralMatrix() override = default;
 
     unsigned int Dimension() const override
     {

@@ -21,13 +21,13 @@ class KSComponent : public KSObject
     virtual KSCommand* Command(const std::string& aField, KSComponent* aChild) = 0;
 
   public:
-    typedef enum
+    using StateType = enum
     {
         eIdle = 0,
         eInitialized = 1,
         eActivated = 2,
         eUpdated = 3
-    } StateType;
+    };
 
     const StateType& State() const;
     bool IsInitialized() const;

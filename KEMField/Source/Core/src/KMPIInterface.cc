@@ -39,9 +39,12 @@ void KMPIInterface::SetSplitMode(bool enable)
 
     //cannot make a valid split, so revert to standard mode
     if (fSplitMode && !fValidSplit) {
-        kem_cout(eWarning) << "Invalid MPI split mode detected - revert to standard mode." << eom;
+        kem_cout(eWarning) << "Invalid MPI split mode detected - revert to standard mode with " << fNProcesses << " processes." << eom;
         fSplitMode = false;
-    };
+    }
+    else if (fSplitMode) {
+        kem_cout(eNormal) << "Using MPI split mode with 2 x " << fNSubGroupProcesses << " processes" << eom;
+    }
 }
 
 void KMPIInterface::Initialize(int* argc, char*** argv, bool split_mode)

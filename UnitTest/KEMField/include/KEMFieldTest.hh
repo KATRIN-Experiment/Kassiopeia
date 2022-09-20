@@ -3,7 +3,8 @@
 
 #include "UnitTest.h"
 
-#include "gtest/gtest.h"
+extern int __argc;
+extern char** __argv;
 
 #ifdef KEMFIELD_USE_MPI
 #include "KMPIInterface.hh"
@@ -25,9 +26,9 @@ class KEMFieldTest : public TimeoutTest
         TimeoutTest::SetUp();
 
 #ifdef KEMFIELD_USE_PETSC
-        KEMField::KPETScInterface::GetInstance()->Initialize(0, nullptr);
+        KEMField::KPETScInterface::GetInstance()->Initialize(&__argc, &__argv);
 #elif KEMFIELD_USE_MPI
-        KEMField::KMPIInterface::GetInstance()->Initialize(0, nullptr);
+        KEMField::KMPIInterface::GetInstance()->Initialize(&__argc, &__argv);
 #endif
     }
 

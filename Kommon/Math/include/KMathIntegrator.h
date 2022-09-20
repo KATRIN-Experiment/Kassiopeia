@@ -580,7 +580,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGIU(XIntegrandType&&
     fIteration+=ilog2_ceil(workspace->size);	//crude approximation, since QAGIU log2(workspace->size) is non integer
     gsl_integration_workspace_free(workspace);
 
-    if (std::isnormal(fCurrentResult))
+    if (std::isnormal(fCurrentResult) or fCurrentResult==0.0)
     	return fCurrentResult;
     else
         throw KMathIntegratorException() << "Non finite result in routine QAGIU.";

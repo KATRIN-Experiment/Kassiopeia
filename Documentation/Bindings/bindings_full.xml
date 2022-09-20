@@ -5435,6 +5435,15 @@
     >
     </ksterm_trapped>
 
+    <ksterm_zh_radius
+        central_expansion="(bool)"
+        electric_field="(string)"
+        magnetic_field="(string)"
+        name="(string)"
+        remote_expansion="(bool)"
+    >
+    </ksterm_zh_radius>
+
     <kstraj_control_B_change
         fraction="(double)"
         name="(string)"

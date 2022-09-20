@@ -411,17 +411,15 @@ int main(int argc, char** argv)
     auto* precon_2_fm_integrator = new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
     precon_2_fm_integrator->Initialize(precon_2_params, fm_integrator->GetTree());
 
-    KET::FastMultipoleSparseMatrix sparseA(*surfaceContainer, *fm_integrator);
-    KET::FastMultipoleDenseMatrix denseA(*fm_integrator);
-    KEMField::KSmartPointer<KSquareMatrix<KET::ValueType>> fmA(new KET::FastMultipoleMatrix(denseA, sparseA));
+    auto sparseA = std::make_shared<KET::FastMultipoleSparseMatrix>(*surfaceContainer, *fm_integrator);
+    auto denseA = std::make_shared<KET::FastMultipoleDenseMatrix>(*fm_integrator);
+    auto fmA = std::make_shared<KET::FastMultipoleMatrix>(denseA, sparseA);
 
-    KET::FastMultipoleDenseMatrix precon_1_denseA(*precon_1_fm_integrator);
-    KEMField::KSmartPointer<KET::FastMultipoleMatrix> precon_1_fmA(
-        new KET::FastMultipoleMatrix(precon_1_denseA, sparseA));
+    auto precon_1_denseA = std::make_shared<KET::FastMultipoleDenseMatrix>(*precon_1_fm_integrator);
+    auto precon_1_fmA = std::make_shared<KET::FastMultipoleMatrix>(precon_1_denseA, sparseA);
 
-    KET::FastMultipoleDenseMatrix precon_2_denseA(*precon_1_fm_integrator);
-    KEMField::KSmartPointer<KET::FastMultipoleMatrix> precon_2_fmA(
-        new KET::FastMultipoleMatrix(precon_1_denseA, sparseA));
+    auto precon_2_denseA = std::make_shared<KET::FastMultipoleDenseMatrix>(*precon_1_fm_integrator);
+    auto precon_2_fmA = std::make_shared<KET::FastMultipoleMatrix>(precon_1_denseA, sparseA);
 
     KBoundaryIntegralSolutionVector<KET::FastMultipoleEBI> fmx(*surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector<KET::FastMultipoleEBI> fmb(*surfaceContainer, *fm_integrator);
@@ -433,8 +431,7 @@ int main(int argc, char** argv)
     precon_two_config.SetUseDisplay(true);
     precon_two_config.SetDisplayName("Preconditioner2: ");
 
-    KEMField::KSmartPointer<KPreconditioner<KET::ValueType>> precon2 =
-        KBuildKrylovPreconditioner<KET::ValueType>(precon_two_config, precon_2_fmA);
+    auto precon2 = KBuildKrylovPreconditioner<KET::ValueType>(precon_two_config, precon_2_fmA);
 
 
     KKrylovSolverConfiguration precon_one_config;
@@ -444,8 +441,7 @@ int main(int argc, char** argv)
     precon_one_config.SetUseDisplay(true);
     precon_one_config.SetDisplayName("Preconditioner1: ");
 
-    KEMField::KSmartPointer<KPreconditioner<KET::ValueType>> precon1 =
-        KBuildKrylovPreconditioner<KET::ValueType>(precon_one_config, precon_1_fmA, precon2);
+    auto precon1 = KBuildKrylovPreconditioner<KET::ValueType>(precon_one_config, precon_1_fmA, precon2);
 
     KKrylovSolverConfiguration solver_config;
     solver_config.SetSolverName("gmres");
@@ -455,8 +451,7 @@ int main(int argc, char** argv)
     solver_config.SetUseDisplay(true);
     solver_config.SetDisplayName("GMRES: ");
 
-    KEMField::KSmartPointer<KIterativeKrylovSolver<KET::ValueType>> solver =
-        KBuildKrylovSolver<KET::ValueType>(solver_config, fmA, precon1);
+    auto solver = KBuildKrylovSolver<KET::ValueType>(solver_config, fmA, precon1);
 
     solver->Solve(fmx, fmb);
     double residualNorm = solver->ResidualNorm();

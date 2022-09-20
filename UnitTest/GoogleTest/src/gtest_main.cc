@@ -31,8 +31,14 @@
 
 #include "gtest/gtest.h"
 
+// global variables, see https://stackoverflow.com/a/5262122/13211778
+int __argc;
+char** __argv;
+
 GTEST_API_ int main(int argc, char **argv) {
   printf("Running main() from gtest_main.cc\n");
   testing::InitGoogleTest(&argc, argv);
+  __argc = argc;
+  __argv = argv;
   return RUN_ALL_TESTS();
 }
