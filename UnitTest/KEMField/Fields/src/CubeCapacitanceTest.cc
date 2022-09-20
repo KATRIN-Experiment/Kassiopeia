@@ -30,12 +30,11 @@
 
 #ifdef KEMFIELD_USE_OPENCL
 #include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
-#include "KOpenCLsurfaceContainer->hh"
+#include "KOpenCLSurfaceContainer.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
 #include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
-#include "KOpenCLsurfaceContainer->hh"
 #ifdef KEMFIELD_USE_MPI
 #include "KRobinHood_MPI_OpenCL.hh"
 #else
@@ -215,8 +214,8 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_RobinHoodRWG_OpenCL)
     double accuracy = 1.e-4;
     int increment = 100;
 
-    KOpenCLSurfaceContainer* oclSurfaceContainer = new KOpenCLSurfaceContainer(surfaceContainer);
-    KOpenCLElectrostaticBoundaryIntegrator integrator = KoclEBIFactory::MakeRWG(oclSurfaceContainer);
+    KOpenCLSurfaceContainer* oclSurfaceContainer = new KOpenCLSurfaceContainer(*surfaceContainer);
+    KOpenCLElectrostaticBoundaryIntegrator integrator = KoclEBIFactory::MakeRWG(*oclSurfaceContainer);
     KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> A(*oclSurfaceContainer, integrator);
     KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> b(*oclSurfaceContainer, integrator);
     KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(*oclSurfaceContainer, integrator);

@@ -29,7 +29,7 @@ KOpenCLInterface* KOpenCLInterface::fOpenCLInterface = 0;
 
 KOpenCLInterface::KOpenCLInterface() : fActiveData(NULL)
 {
-    InitializeOpenCL();
+    Initialize();
 }
 
 KOpenCLInterface::~KOpenCLInterface()
@@ -52,7 +52,7 @@ KOpenCLInterface* KOpenCLInterface::GetInstance()
 /**
    * Queries the host for available OpenCL platforms, and constructs a Context.
    */
-void KOpenCLInterface::InitializeOpenCL()
+void KOpenCLInterface::Initialize()
 {
     // Disable CUDA caching, since it doesn't check if included .cl files have
     // changed
