@@ -104,6 +104,8 @@ class KOpenCLInterface
   public:
     static KOpenCLInterface* GetInstance();
 
+    void Initialize();
+
     cl::Context GetContext() const
     {
         return *fContext;
@@ -141,8 +143,6 @@ class KOpenCLInterface
   protected:
     KOpenCLInterface();
     virtual ~KOpenCLInterface();
-
-    void InitializeOpenCL();
 
     static KOpenCLInterface* fOpenCLInterface;
 
