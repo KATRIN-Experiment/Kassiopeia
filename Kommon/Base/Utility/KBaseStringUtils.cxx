@@ -45,10 +45,11 @@ std::string KBaseStringUtils::Replace(const std::string value, const std::string
         std::string result(value);
         auto pos = result.find(from);
         auto from_len = from.length();
+        auto to_len = to.length();
         while(pos != std::string::npos)
         {
             result.replace(pos, from_len, to);
-            pos = result.find(from);
+            pos = result.find(from, pos + to_len);
         }
         return result;
 }
@@ -61,10 +62,10 @@ std::string KBaseStringUtils::Replace(const std::string value, const std::string
 std::string KBaseStringUtils::EscapeMostly(const std::string value)
 {
     std::vector<std::pair<std::string,std::string>> sequences = {
-        {"\'", "\\'"},
-        {"\"", "\\"},
-        {"\?", "\\\?"},
         {"\\", "\\\\"},
+        {"\'", "\\'"},
+        {"\"", "\\\""},
+        {"\?", "\\\?"},
         {"\a", "\\a"},
         {"\b", "\\b"},
         {"\f", "\\f"},
