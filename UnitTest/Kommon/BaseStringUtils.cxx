@@ -45,6 +45,18 @@ TEST(KBaseStringUtils, Conversion)
     EXPECT_THROW(KBaseStringUtils::Convert<float>(s3), KException);
 }
 
+TEST(KBaseStringUtils, Replacing)
+{
+    EXPECT_EQ("a", KBaseStringUtils::Replace("a", "b", "c"));
+    EXPECT_EQ("", KBaseStringUtils::Replace("", "b", "c"));
+    EXPECT_EQ("", KBaseStringUtils::Replace("b", "b", ""));
+    EXPECT_EQ("ab", KBaseStringUtils::Replace("a", "a", "ab"));
+    EXPECT_EQ("bb", KBaseStringUtils::Replace("b", "b", "bb"));
+    EXPECT_EQ("bb bbbb", KBaseStringUtils::Replace("b bb", "b", "bb"));
+    EXPECT_EQ(" ab abab ", KBaseStringUtils::Replace(" b bb ", "b", "ab"));
+    EXPECT_EQ("A quick fox jumps", KBaseStringUtils::Replace("A quick placeholder jumps", "placeholder", "fox"));
+}
+
 TEST(KBaseStringUtils, Manipulation)
 {
     const std::string s1 = "1234";
