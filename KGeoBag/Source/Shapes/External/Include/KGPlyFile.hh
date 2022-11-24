@@ -1,29 +1,30 @@
-﻿/**
- * @file KGStlFile.hh
+/**
+ * @file KGPlyFile.hh
  * @author Jan Behrens <jan.behrens@kit.edu>
- * @date 2021-07-02
+ * @date 2022-11-24
  */
 
-#ifndef KGSTLFILE_HH
-#define KGSTLFILE_HH
+#ifndef KGPLYFILE_HH
+#define KGPLYFILE_HH
 
 #include "KGCore.hh"
 #include "KGTriangle.hh"
+#include "KGRectangle.hh"
 
 #include <numeric>
 
 namespace KGeoBag
 {
 
-class KGStlFile : public KGBoundary
+class KGPlyFile : public KGBoundary
 {
 public:
-    KGStlFile();
-    ~KGStlFile() override;
+    KGPlyFile();
+    ~KGPlyFile() override;
 
     static std::string Name()
     {
-        return "stl_file";
+        return "Ply_file";
     }
 
     virtual void Initialize() const;
@@ -32,7 +33,7 @@ public:
         Initialize();
     }
 
-    virtual KGStlFile* Clone() const;
+    virtual KGPlyFile* Clone() const;
 
     void SetFile(const std::string& aFile);
     void SetPath(const std::string& aPath);
@@ -55,27 +56,23 @@ public:
     }
 
     inline size_t GetNumElements() const {
-        return GetNumTriangles();
+        return GetNumTriangles() + GetNumRectangles();
     }
     inline size_t GetNumTriangles() const {
         return fTriangles.size();
     }
-    inline size_t GetNumSolids() const {
-        return fSolids.size();
-    }
-    inline size_t GetNumSolidElements() const {
-        return std::accumulate(fSolids.begin(), fSolids.end(), 0,
-                               [&](size_t c, auto& s){ return c + s.size(); });
+    inline size_t GetNumRectangles() const {
+        return fRectangles.size();
     }
 
     void SelectCell(size_t index);
     void SelectCellRange(size_t firstIndex, size_t lastIndex);
 
     const std::vector<KGTriangle>& GetTriangles() const { return fTriangles; }
-    const std::vector<std::vector<KGTriangle>>& GetSolids() const { return fSolids; }
+    const std::vector<KGRectangle>& GetRectangles() const { return fRectangles; }
 
 protected:
-    void ReadStlFile() const;
+    void ReadPlyFile() const;
     bool IsCellSelected(size_t index) const;
 
 private:
@@ -86,9 +83,9 @@ private:
 
     std::set<std::pair<size_t,size_t>> fSelectedIndices;
     mutable std::vector<KGTriangle> fTriangles;
-    mutable std::vector<std::vector<KGTriangle>> fSolids;
+    mutable std::vector<KGRectangle> fRectangles;
 };
 
 }
 
-#endif //KGSTLFILE_HH
+#endif //KGPlyFILE_HH

@@ -29,8 +29,7 @@ class KGComplexMesher : virtual public KGMesherBase
     template<class MeshType>
     void AddElement(MeshType* e, bool checkNormals = true);
 
-    void RefineAndAddElement(KGMeshRectangle* rectangle, int nElements_A, double power_A, int nElements_B,
-                             double power_B);
+    void RefineAndAddElement(KGMeshRectangle* rectangle, int nElements_A, double power_A, int nElements_B, double power_B);
     void RefineAndAddElement(KGMeshTriangle* triangle, int nElements, double power);
     void RefineAndAddElement(KGMeshWire* wire, int nElements, double power);
 };

@@ -92,6 +92,13 @@ class KGRectangle : public KGArea
         return fP0 + fN2 * fB;
     }
 
+    virtual bool ContainsPoint(const katrin::KThreeVector& aPoint) const;
+    double DistanceTo(const katrin::KThreeVector& aPoint, katrin::KThreeVector& nearestPoint);
+
+  protected:
+    static bool SameSide(const katrin::KThreeVector& point, const katrin::KThreeVector& A,
+                       const katrin::KThreeVector& B, const katrin::KThreeVector& C);
+
   private:
     double fA;
     double fB;

@@ -13,6 +13,7 @@ set( BINDINGS_HEADER_FILES
 
   # External shapes
   Shapes/External/Include/KGStlFileBuilder.hh
+  Shapes/External/Include/KGPlyFileBuilder.hh
 
   # complex shapes
   Shapes/Complex/Include/KGBeamBuilder.hh
@@ -141,6 +142,7 @@ set( BINDINGS_SOURCE_FILES
 
     # External shapes
     Shapes/External/Source/KGStlFileBuilder.cc
+    Shapes/External/Source/KGPlyFileBuilder.cc
 
     # complex shapes
     Shapes/Complex/Source/KGBeamBuilder.cc

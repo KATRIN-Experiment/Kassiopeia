@@ -1,16 +1,16 @@
 /**
- * @file KGStlFileSurfaceMesher.cc
+ * @file KGPlyFileSurfaceMesher.cc
  * @author Jan Behrens <jan.behrens@kit.edu>
- * @date 2021-07-02
+ * @date 2022-11-24
  */
 
-#include "KGStlFileSurfaceMesher.hh"
+#include "KGPlyFileSurfaceMesher.hh"
 
 using namespace KGeoBag;
 
-void KGStlFileSurfaceMesher::VisitWrappedSurface(KGStlFileSurface* stlSurface)
+void KGPlyFileSurfaceMesher::VisitWrappedSurface(KGPlyFileSurface* PlySurface)
 {
-    auto object = stlSurface->GetObject();
+    auto object = PlySurface->GetObject();
 
     auto nElements = object->GetNumElements();
     coremsg(eInfo) << "Adding <" << nElements << "> surface elements to the mesh" << eom;
@@ -24,5 +24,14 @@ void KGStlFileSurfaceMesher::VisitWrappedSurface(KGStlFileSurface* stlSurface)
             AddElement(t, false);
         else
             RefineAndAddElement(t, object->GetNDisc(), 1);
+    }
+
+    for (auto & elem : object->GetRectangles()) {
+        auto r = new KGMeshRectangle(elem);
+
+        if (object->GetNDisc() < 2)
+            AddElement(r, false);
+        else
+            RefineAndAddElement(r, object->GetNDisc(), 1, object->GetNDisc(), 1);
     }
 }

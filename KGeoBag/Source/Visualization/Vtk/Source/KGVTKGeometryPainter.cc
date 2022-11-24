@@ -932,8 +932,32 @@ void KGVTKGeometryPainter::VisitWrappedSurface(KGStlFileSurface* aStlFileSurface
 
     // create rotated points and create mesh
     Mesh tMeshPoints;
-    for (auto & elem : aStlFileSurface->GetObject()->GetElements()) {
+    for (auto & elem : aStlFileSurface->GetObject()->GetTriangles()) {
         Mesh::Group tMeshGroup = { elem.GetP0(), elem.GetP1(), elem.GetP2() };
+        tMeshPoints.fData.push_back(tMeshGroup);
+    }
+
+    //create mesh
+    MeshToVTK(tMeshPoints);
+
+    //clear space
+    fCurrentSurface = nullptr;
+}
+
+void KGVTKGeometryPainter::VisitWrappedSurface(KGPlyFileSurface* aPlyFileSurface)
+{
+    if (fIgnore == true) {
+        return;
+    }
+
+    // create rotated points and create mesh
+    Mesh tMeshPoints;
+    for (auto & elem : aPlyFileSurface->GetObject()->GetTriangles()) {
+        Mesh::Group tMeshGroup = { elem.GetP0(), elem.GetP1(), elem.GetP2() };
+        tMeshPoints.fData.push_back(tMeshGroup);
+    }
+    for (auto & elem : aPlyFileSurface->GetObject()->GetRectangles()) {
+        Mesh::Group tMeshGroup = { elem.GetP0(), elem.GetP1(), elem.GetP2(), elem.GetP3() };  // FIXME: order correct?
         tMeshPoints.fData.push_back(tMeshGroup);
     }
 

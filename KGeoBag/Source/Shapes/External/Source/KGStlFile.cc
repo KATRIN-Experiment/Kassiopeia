@@ -23,7 +23,7 @@ KGStlFile::KGStlFile() :
     fNDisc(0),
     fScaleFactor(1.),
     fSelectedIndices(),
-    fElements()
+    fTriangles()
 {}
 
 KGStlFile::~KGStlFile() = default;
@@ -32,14 +32,12 @@ KGStlFile* KGStlFile::Clone() const
 {
     auto clone = new KGStlFile();
 
-    std::cout << "cloning object: " << this << " -> " << clone << std::endl;
-
     clone->fFile = fFile;
     clone->fPath = fPath;
     clone->fNDisc = fNDisc;
     clone->fScaleFactor = fScaleFactor;
     clone->fSelectedIndices = fSelectedIndices;
-    clone->fElements = fElements;
+    clone->fTriangles = fTriangles;
 
     return clone;
 }
@@ -77,7 +75,7 @@ void KGStlFile::SelectCellRange(size_t firstIndex, size_t lastIndex)
 bool KGStlFile::ContainsPoint(const double* P) const
 {
     KThreeVector point(P);
-    for (auto & elem : fElements) {
+    for (auto & elem : fTriangles) {
         if (elem.ContainsPoint(point))
             return true;
     }
@@ -90,7 +88,7 @@ double KGStlFile::DistanceTo(const double* P, double* P_in, double* P_norm) cons
     KThreeVector nearestPoint, nearestNormal;
     double nearestDistance = std::numeric_limits<double>::max();
 
-    for (auto & elem : fElements) {
+    for (auto & elem : fTriangles) {
         double d = elem.DistanceTo(point, nearestPoint);
         if (d < nearestDistance) {
             nearestDistance = d;
@@ -165,15 +163,15 @@ void KGStlFile::ReadStlFile() const
         stl_reader::StlMesh <double, unsigned int> mesh(tFile.c_str());
 
         const auto num_tris = mesh.num_tris();
-        fElements.clear();
-        fElements.reserve(num_tris);
+        fTriangles.clear();
+        fTriangles.reserve(num_tris);
 
         for(size_t itri = 0; itri < num_tris; ++itri) {
             if (! IsCellSelected(itri))
                 continue;
 
             KGTriangle tri = GetTriangle(mesh, itri, fScaleFactor);
-            fElements.emplace_back(tri);
+            fTriangles.emplace_back(tri);
         }
 
         /// TODO: avoid storing triangles twice if they're in a solid
@@ -195,7 +193,7 @@ void KGStlFile::ReadStlFile() const
                 fSolids.emplace_back(group);
         }
 
-        coremsg(eNormal) << "STL file <" << tFile << "> contains <" << fElements.size()
+        coremsg(eNormal) << "STL file <" << tFile << "> contains <" << fTriangles.size()
                          << "> triangles and <" << fSolids.size() << "> solids" << eom;
     }
     catch (std::exception &e) {

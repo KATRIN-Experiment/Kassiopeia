@@ -7,6 +7,9 @@ set( SHAPES_HEADER_FILES
     External/Include/KGStlFile.hh
     External/Include/KGStlFileSpace.hh
     External/Include/KGStlFileSurface.hh
+    External/Include/KGPlyFile.hh
+    External/Include/KGPlyFileSpace.hh
+    External/Include/KGPlyFileSurface.hh
 
     # basic shapes
     Basic/Include/KGBox.hh
@@ -131,7 +134,9 @@ set( SHAPES_SOURCE_FILES
 
     # external shapes
     External/Source/KGStlFile.cc
-    External/Source/stl_reader.h
+        External/Source/stl_reader.h
+    External/Source/KGPlyFile.cc
+        External/Source/happly.h
 
     # basic shapes
     Basic/Source/KGBox.cc
