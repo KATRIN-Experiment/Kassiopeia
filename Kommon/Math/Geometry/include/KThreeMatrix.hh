@@ -43,6 +43,12 @@ class KThreeMatrix
     KThreeMatrix(const double anArray[9]);
     KThreeMatrix& operator=(const double anArray[9]);
 
+    KThreeMatrix(const std::vector<double>& aVector);
+    KThreeMatrix& operator=(const std::vector<double>& aVector);
+
+    KThreeMatrix(const std::array<double,9>& anArray);
+    KThreeMatrix& operator=(const std::array<double,9>& anArray);
+
     explicit KThreeMatrix(const double& aValue);
     KThreeMatrix& operator=(const double& aValue);
 
@@ -51,7 +57,8 @@ class KThreeMatrix
     void SetComponents(const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY,
                        const double& aYZ, const double& aZX, const double& aZY, const double& aZZ);
     void SetComponents(const double anArray[9]);
-    void SetComponents(const std::vector<double>& anArray);
+    void SetComponents(const std::vector<double>& aVector);
+    void SetComponents(const std::array<double,9>& anArray);
 
     //cast
 
@@ -73,6 +80,7 @@ class KThreeMatrix
     const double& At(int aRow, int aColumn) const;
 
     const double* Components() const;
+    const std::vector<double> AsVector() const;
     const std::array<double,9> AsArray() const;
 
     //properties
@@ -138,6 +146,72 @@ inline KThreeMatrix::KThreeMatrix(const double anArray[9])
     fData[8] = anArray[8];
 }
 inline KThreeMatrix& KThreeMatrix::operator=(const double anArray[9])
+{
+    fData[0] = anArray[0];
+    fData[1] = anArray[1];
+    fData[2] = anArray[2];
+
+    fData[3] = anArray[3];
+    fData[4] = anArray[4];
+    fData[5] = anArray[5];
+
+    fData[6] = anArray[6];
+    fData[7] = anArray[7];
+    fData[8] = anArray[8];
+
+    return *this;
+}
+
+inline KThreeMatrix::KThreeMatrix(const std::vector<double>& aVector)
+{
+    assert(aVector.size() == 9);
+
+    fData[0] = aVector[0];
+    fData[1] = aVector[1];
+    fData[2] = aVector[2];
+
+    fData[3] = aVector[3];
+    fData[4] = aVector[4];
+    fData[5] = aVector[5];
+
+    fData[6] = aVector[6];
+    fData[7] = aVector[7];
+    fData[8] = aVector[8];
+}
+inline KThreeMatrix& KThreeMatrix::operator=(const std::vector<double>& aVector)
+{
+    assert(aVector.size() == 9);
+
+    fData[0] = aVector[0];
+    fData[1] = aVector[1];
+    fData[2] = aVector[2];
+
+    fData[3] = aVector[3];
+    fData[4] = aVector[4];
+    fData[5] = aVector[5];
+
+    fData[6] = aVector[6];
+    fData[7] = aVector[7];
+    fData[8] = aVector[8];
+
+    return *this;
+}
+
+inline KThreeMatrix::KThreeMatrix(const std::array<double,9>& anArray)
+{
+    fData[0] = anArray[0];
+    fData[1] = anArray[1];
+    fData[2] = anArray[2];
+
+    fData[3] = anArray[3];
+    fData[4] = anArray[4];
+    fData[5] = anArray[5];
+
+    fData[6] = anArray[6];
+    fData[7] = anArray[7];
+    fData[8] = anArray[8];
+}
+inline KThreeMatrix& KThreeMatrix::operator=(const std::array<double,9>& anArray)
 {
     fData[0] = anArray[0];
     fData[1] = anArray[1];
@@ -235,7 +309,25 @@ inline void KThreeMatrix::SetComponents(const double anArray[9])
 
     return;
 }
-inline void KThreeMatrix::SetComponents(const std::vector<double>& anArray)
+inline void KThreeMatrix::SetComponents(const std::vector<double>& aVector)
+{
+    assert(anArray.size() == 9);
+
+    fData[0] = aVector[0];
+    fData[1] = aVector[1];
+    fData[2] = aVector[2];
+
+    fData[3] = aVector[3];
+    fData[4] = aVector[4];
+    fData[5] = aVector[5];
+
+    fData[6] = aVector[6];
+    fData[7] = aVector[7];
+    fData[8] = aVector[8];
+
+    return;
+}
+inline void KThreeMatrix::SetComponents(const std::array<double,9>& anArray)
 {
     assert(anArray.size() == 9);
 
@@ -309,6 +401,12 @@ inline const double&  KThreeMatrix::At(int aRow, int aColumn) const
 inline const double* KThreeMatrix::Components() const
 {
     return (const double*) fData;
+}
+inline const std::vector<double> KThreeMatrix::AsVector() const
+{
+    std::vector<double> tData;
+    std::copy(std::begin(fData), std::end(fData), std::begin(tData));
+    return tData;
 }
 inline const std::array<double,9> KThreeMatrix::AsArray() const
 {
