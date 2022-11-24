@@ -13,3 +13,8 @@ kasper_install_config_subdir( Scripts ${CMAKE_CURRENT_SOURCE_DIR}/Scripts/TestNo
 
 kasper_install_data( "${CMAKE_CURRENT_SOURCE_DIR}/DataFiles/Menger_sponge.stl" )
 kasper_install_data( "${CMAKE_CURRENT_SOURCE_DIR}/DataFiles/Utah_teapot.stl" )
+kasper_install_data( "${CMAKE_CURRENT_SOURCE_DIR}/DataFiles/Stanford_bunny.stl" )
+
+kasper_install_data( "${CMAKE_CURRENT_SOURCE_DIR}/DataFiles/Menger_sponge.ply" )
+kasper_install_data( "${CMAKE_CURRENT_SOURCE_DIR}/DataFiles/Utah_teapot.ply" )
+kasper_install_data( "${CMAKE_CURRENT_SOURCE_DIR}/DataFiles/Stanford_bunny.ply" )
