@@ -44,10 +44,14 @@ class KThreeVector
     KThreeVector(const std::vector<double>& aVector);
     KThreeVector& operator=(const std::vector<double>& aVector);
 
+    KThreeVector(const std::array<double,3>& anArray);
+    KThreeVector& operator=(const std::array<double,3>& anArray);
+
     KThreeVector(const double& aX, const double& aY, const double& aZ);
     void SetComponents(const double& aX, const double& aY, const double& aZ);
     void SetComponents(const double aData[3]);
-    void SetComponents(const std::vector<double>& aData);
+    void SetComponents(const std::vector<double>& aVector);
+    void SetComponents(const std::array<double,3>& anArray);
     void SetMagnitude(const double& aMagnitude);
     void SetX(const double& aX);
     void SetY(const double& aY);
@@ -78,6 +82,7 @@ class KThreeVector
     const double& GetZ() const;
 
     const double* Components() const;
+    const std::vector<double> AsVector() const;
     const std::array<double,3> AsArray() const;
 
     //comparison
@@ -161,6 +166,20 @@ inline KThreeVector& KThreeVector::operator=(const std::vector<double>& aVector)
     return *this;
 }
 
+inline KThreeVector::KThreeVector(const std::array<double,3>& anArray)
+{
+    fData[0] = anArray[0];
+    fData[1] = anArray[1];
+    fData[2] = anArray[2];
+}
+inline KThreeVector& KThreeVector::operator=(const std::array<double,3>& anArray)
+{
+    fData[0] = anArray[0];
+    fData[1] = anArray[1];
+    fData[2] = anArray[2];
+    return *this;
+}
+
 inline KThreeVector::KThreeVector(const double& aX, const double& aY, const double& aZ)
 {
     fData[0] = aX;
@@ -179,12 +198,18 @@ inline void KThreeVector::SetComponents(const double aData[3])
     fData[1] = aData[1];
     fData[2] = aData[2];
 }
-inline void KThreeVector::SetComponents(const std::vector<double>& aData)
+inline void KThreeVector::SetComponents(const std::vector<double>& aVector)
 {
     assert(aData.size() == 3);
-    fData[0] = aData[0];
-    fData[1] = aData[1];
-    fData[2] = aData[2];
+    fData[0] = aVector[0];
+    fData[1] = aVector[1];
+    fData[2] = aVector[2];
+}
+inline void KThreeVector::SetComponents(const std::array<double,3>& anArray)
+{
+    fData[0] = anArray[0];
+    fData[1] = anArray[1];
+    fData[2] = anArray[2];
 }
 inline void KThreeVector::SetMagnitude(const double& aMagnitude)
 {
@@ -285,6 +310,12 @@ inline const double& KThreeVector::GetZ() const
 inline const double* KThreeVector::Components() const
 {
     return (const double*) fData;
+}
+inline const std::vector<double> KThreeVector::AsVector() const
+{
+    std::vector<double> tData;
+    std::copy(std::begin(fData), std::end(fData), std::begin(tData));
+    return tData;
 }
 inline const std::array<double,3> KThreeVector::AsArray() const
 {
