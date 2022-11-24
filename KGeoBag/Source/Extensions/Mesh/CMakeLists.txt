@@ -13,6 +13,8 @@ set( MESH_HEADER_FILES
 
     External/Include/KGStlFileSurfaceMesher.hh
     External/Include/KGStlFileSpaceMesher.hh
+    External/Include/KGPlyFileSurfaceMesher.hh
+    # External/Include/KGPlyFileSpaceMesher.hh
 
     Complex/Include/KGComplexMesher.hh
     Complex/Include/KGBoxMesher.hh
@@ -86,6 +88,8 @@ set( MESH_SOURCE_FILES
 
     External/Source/KGStlFileSurfaceMesher.cc
     External/Source/KGStlFileSpaceMesher.cc
+    External/Source/KGPlyFileSurfaceMesher.cc
+    # External/Source/KGPlyFileSpaceMesher.cc
 
     Complex/Source/KGComplexMesher.cc
     Complex/Source/KGBoxMesher.cc

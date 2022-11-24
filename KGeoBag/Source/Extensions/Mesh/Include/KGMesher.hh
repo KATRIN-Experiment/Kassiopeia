@@ -41,6 +41,8 @@
 #include "KGShellPolyLoopSurfaceMesher.hh"
 #include "KGStlFileSurfaceMesher.hh"
 #include "KGStlFileSpaceMesher.hh"
+#include "KGPlyFileSurfaceMesher.hh"
+//#include "KGPlyFileSpaceMesher.hh"
 
 namespace KGeoBag
 {
@@ -62,6 +64,7 @@ class KGMesher :
     virtual public KGRotatedCircleSurfaceMesher,
     virtual public KGRotatedPolyLoopSurfaceMesher,
     virtual public KGStlFileSurfaceMesher,
+    virtual public KGPlyFileSurfaceMesher,
     virtual public KGLinearWireGridMesher,
     virtual public KGQuadraticWireGridMesher,
     virtual public KGCircleWireMesher,
@@ -84,6 +87,7 @@ class KGMesher :
     virtual public KGExtrudedCircleSpaceMesher,
     virtual public KGExtrudedPolyLoopSpaceMesher,
     virtual public KGStlFileSpaceMesher
+    //virtual public KGPlyFileSpaceMesher
 {
   public:
     using KGMesherBase::VisitExtendedSpace;
@@ -103,6 +107,7 @@ class KGMesher :
     using KGRodSurfaceMesher::VisitWrappedSurface;
     using KGRotatedSurfaceMesher::VisitWrappedSurface;
     using KGStlFileSurfaceMesher::VisitWrappedSurface;
+    using KGPlyFileSurfaceMesher::VisitWrappedSurface;
 
     using KGExtrudedArcSegmentSurfaceMesher::VisitExtrudedPathSurface;
     using KGExtrudedCircleSpaceMesher::VisitExtrudedClosedPathSpace;
@@ -129,6 +134,7 @@ class KGMesher :
     using KGShellPolyLineSurfaceMesher::VisitShellPathSurface;
     using KGShellPolyLoopSurfaceMesher::VisitShellPathSurface;
     using KGStlFileSpaceMesher::VisitWrappedSpace;
+    //using KGPlyFileSpaceMesher::VisitWrappedSpace;
 
   public:
     KGMesher();

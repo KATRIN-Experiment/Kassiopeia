@@ -304,8 +304,7 @@ double KGTriangle::DistanceTo(const KThreeVector& aPoint, KThreeVector& nearestP
     return distance;
 }
 
-bool KGTriangle::SameSide(const KThreeVector& point, const KThreeVector& A, const KThreeVector& B,
-                              const KThreeVector& C)
+bool KGTriangle::SameSide(const KThreeVector& point, const KThreeVector& A, const KThreeVector& B, const KThreeVector& C)
 {
     KThreeVector cp1 = (B - A).Cross(point - A);
     KThreeVector cp2 = (B - A).Cross(C - A);
