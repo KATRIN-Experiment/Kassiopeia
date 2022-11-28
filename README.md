@@ -200,6 +200,18 @@ Optional Dependencies:
         explains how to get started with your first simulation:
         http://katrin-experiment.github.io/Kassiopeia/index.html
 
+ Open Source
+-------------
+
+This software is distributed "as-is" under an open source license
+(MIT License, for details see `LICENSE.md` file.)
+
+Kassiopeia includes the following open-source libraries:
+
+* GoogleTest (https://github.com/google/googletest)
+* hapPLY (https://github.com/nmwsharp/happly/)
+* stl_reader (https://github.com/sreiter/stl_reader)
+
 
  Getting help
 --------------
@@ -207,4 +219,3 @@ Optional Dependencies:
 Primary email contacts:
 *    Kasper development list: katrin-kasper@lists.kit.edu
 *    Jan Behrens: jan.behrens@kit.edu
-*    Nicholas Buzinsky: buzinsky@mit.edu
