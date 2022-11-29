@@ -776,6 +776,34 @@
     >
     </mesh_refiner>
 
+    <ply_file_space
+        name="(string)"
+    >
+        <ply_file
+            file="(string)"
+            mesh_count="(int)"
+            path="(string)"
+            scale="(double)"
+            selector="(string)"
+        >
+        </ply_file>
+
+    </ply_file_space>
+
+    <ply_file_surface
+        name="(string)"
+    >
+        <ply_file
+            file="(string)"
+            mesh_count="(int)"
+            path="(string)"
+            scale="(double)"
+            selector="(string)"
+        >
+        </ply_file>
+
+    </ply_file_surface>
+
     <port_housing_space
         name="(string)"
     >
@@ -5432,6 +5460,8 @@
     <ksterm_trapped
         max_turns="(int)"
         name="(string)"
+        use_electric_field="(bool)"
+        use_magnetic_field="(bool)"
     >
     </ksterm_trapped>
 
