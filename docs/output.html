@@ -18,6 +18,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -461,16 +462,16 @@ to be compiled against <em>Kasper</em>.</p>
 <h4>Using ROOT<a class="headerlink" href="#using-root" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Alternatively, the output can be access directly from a <a class="reference external" href="https://root.cern.ch/">ROOT</a> program. In this case, the ouput is accessible through
 the <cite>TTreeReader</cite> interface:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">TFile</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="s">&quot;QuadrupoleTrapSimulation.root&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">TFile</span><span class="w"> </span><span class="n">file</span><span class="p">(</span><span class="s">&quot;QuadrupoleTrapSimulation.root&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">TTreeReader</span><span class="w"> </span><span class="nf">track_data</span><span class="p">(</span><span class="s">&quot;TRACK_DATA&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReader</span><span class="w"> </span><span class="n">track_data</span><span class="p">(</span><span class="s">&quot;TRACK_DATA&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_step_index</span><span class="p">(</span><span class="n">track_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;FIRST_STEP_INDEX&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">last_step_index</span><span class="p">(</span><span class="n">track_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;LAST_STEP_INDEX&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">TTreeReader</span><span class="w"> </span><span class="nf">step_data</span><span class="p">(</span><span class="s">&quot;component_step_cell_DATA&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReader</span><span class="w"> </span><span class="n">step_data</span><span class="p">(</span><span class="s">&quot;component_step_cell_DATA&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">step_moment</span><span class="p">(</span><span class="n">step_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orbital_magnetic_moment&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">TTreeReader</span><span class="w"> </span><span class="nf">step_presence</span><span class="p">(</span><span class="s">&quot;component_step_cell_PRESENCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReader</span><span class="w"> </span><span class="n">step_presence</span><span class="p">(</span><span class="s">&quot;component_step_cell_PRESENCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valid_index</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;INDEX&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valid_length</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;LENGTH&quot;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
