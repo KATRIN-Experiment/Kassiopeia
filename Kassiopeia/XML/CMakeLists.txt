@@ -33,6 +33,8 @@ if( Kassiopeia_USE_VTK )
         Examples/VTK/PhotoMultiplierTubeSimulation.xml
         Examples/VTK/MeshSimulation.xml
         Examples/VTK/NeutronTrapSimulation.xml
+        Examples/VTK/BunnySimulation.xml
+        Examples/VTK/BunnyAnimation.pvsm
     )
 else( Kassiopeia_USE_VTK )
     kasper_install_config_subdir( Examples
@@ -44,6 +46,7 @@ else( Kassiopeia_USE_VTK )
         Examples/PhotoMultiplierTubeSimulation.xml
         Examples/MeshSimulation.xml
         Examples/NeutronTrapSimulation.xml
+        Examples/VTK/BunnySimulation.xml
     )
 endif( Kassiopeia_USE_VTK )
 

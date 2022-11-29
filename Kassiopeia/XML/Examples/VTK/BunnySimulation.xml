@@ -1,0 +1,371 @@
+<!--
+    Example file: Calculate the electric field around the "Stanford bunny" model.
+
+    * Bunny is put on +1000 V and placed inside a grounded cube.
+    * Electric field is calculated with KEMField using Krylov/GMRES and FFTM solver.
+    * An electric field map is calculated with KEMField inside a cubic uniform grid).
+    * Electric field lines are calculated with Kassiopeia starting from the bunny surface.
+
+    The generated output files are:
+    * ${KEMFIELD_CACHE}/BunnyElectrodes.kbd
+    * ${KASPERSYS}/scratch/KEMField/BunnyElectrodes.vtp
+    * ${KASPERSYS}/scratch/KEMField/BunnyFieldmap.vti
+    * ${KASPERSYS}/output/Kassiopeia/BunnySimulationTrack.vtp
+    * ${KASPERSYS}/output/Kassiopeia/BunnySimulationStep.vtp
+    * ${KASPERSYS}/output/Kassiopeia/BunnySimulation.root
+    * ${KASPERSYS}/output/Kassiopeia/BunnyGenerator.vtp
+    * ${KASPERSYS}/output/TheBag/BunnyGeometry.vtp
+
+    The example file `BunnyAnimation.pvsm` can be used with ParaView to open these files
+    and create an animated visualization of the geometry. The file must be opened from the
+    `config/Kassiopeia/Examples` directory, or the file paths need to be specified manually.
+    The animation can then be exported; for format conversion use external tools like FFMpeg.
+
+-->
+
+<geometry>
+
+    <!-- define some constants -->
+
+    <define name="box_length" value="0.2"/>
+    <define name="box_mesh_count" value="{[box_length]*250}"/>
+    <define name="bunny_voltage" value="1000."/>
+    <define name="fieldline_stepsize" value="1e-3"/>
+    <define name="fieldmap_spacing" value="1e-3"/>
+
+    <!-- create a world volume (important) -->
+
+    <cylinder_space name="world_space" z1="{-2*[box_length]}" z2="{2*[box_length]}" r="{2*[box_length]}"/>
+
+    <!-- create the outer box -->
+
+    <tag name="electrode_tag" name="box_tag">
+        <flattened_poly_loop_surface name="box_cap_surface_bottom"
+                z="{-[box_length]/2}"
+                flattened_mesh_count="[box_mesh_count]">
+            <poly_loop>
+                <start_point x="{-[box_length]/2}" y="0.0"/>
+                <next_line x="{[box_length]/2}" y="0.0"
+                        line_mesh_count="[box_mesh_count]"/>
+                <next_line x="{[box_length]/2}" y="[box_length]"
+                        line_mesh_count="[box_mesh_count]"/>
+                <next_line x="{-[box_length]/2}" y="[box_length]"
+                        line_mesh_count="[box_mesh_count]"/>
+                <last_line
+                        line_mesh_count="[box_mesh_count]"/>
+            </poly_loop>
+        </flattened_poly_loop_surface>
+
+        <extruded_poly_loop_surface name="box_surface_jacket"
+                zmin="{-[box_length]/2}" zmax="{[box_length]/2}"
+                extruded_mesh_count="[box_mesh_count]">
+            <poly_loop>
+                <start_point x="{-[box_length]/2}" y="0.0"/>
+                <next_line x="{[box_length]/2}" y="0.0"
+                        line_mesh_count="[box_mesh_count]"/>
+                <next_line x="{[box_length]/2}" y="[box_length]"
+                        line_mesh_count="[box_mesh_count]"/>
+                <next_line x="{-[box_length]/2}" y="[box_length]"
+                        line_mesh_count="[box_mesh_count]"/>
+                <last_line
+                        line_mesh_count="[box_mesh_count]"/>
+            </poly_loop>
+        </extruded_poly_loop_surface>
+
+        <flattened_poly_loop_surface name="box_cap_surface_top"
+                    z="{[box_length]/2}"
+                    flattened_mesh_count="[box_mesh_count]">
+            <poly_loop>
+                <start_point x="{-[box_length]/2}" y="0.0"/>
+                <next_line x="{[box_length]/2}" y="0.0"
+                        line_mesh_count="[box_mesh_count]"/>
+                <next_line x="{[box_length]/2}" y="[box_length]"
+                        line_mesh_count="[box_mesh_count]"/>
+                <next_line x="{-[box_length]/2}" y="[box_length]"
+                        line_mesh_count="[box_mesh_count]"/>
+                <last_line
+                        line_mesh_count="[box_mesh_count]"/>
+            </poly_loop>
+        </flattened_poly_loop_surface>
+    </tag>
+
+    <!-- import the bunny geometry -->
+
+    <tag name="electrode_tag" name="bunny_tag">
+        <ply_file_surface name="bunny">
+            <ply_file file="Stanford_bunny.ply" mesh_count="1"/>
+        </ply_file_surface>
+    </tag>
+
+    <!-- assemble the pieces into the world volume -->
+
+    <space name="world" node="world_space">
+        <space name="box">
+            <surface name="surface_bottom" node="box_cap_surface_bottom"/>
+            <surface name="surface_jacket" node="box_surface_jacket"/>
+            <surface name="surface_top" node="box_cap_surface_top"/>
+        </space>
+
+        <surface name="bunny" node="bunny"/>
+    </space>
+
+    <!-- create a mesh for electrodes -->
+
+    <mesh name="surface_mesh" surfaces="world/@electrode_tag"/>
+
+    <!-- set boundary conditions for electrodes -->
+
+    <electrostatic_dirichlet surfaces="world/@box_tag" value="0."/>
+    <electrostatic_dirichlet surfaces="world/@bunny_tag" value="[bunny_voltage]"/>
+
+</geometry>
+
+<kassiopeia>
+
+    <!-- define a generator at the bunny surface -->
+
+    <ksgen_generator_composite name="surface_generator" string_id="e-">
+        <!-- randomly sample points on the bunny mesh -->
+        <position_mesh_surface_random surfaces="world/@bunny_tag"/>
+        <!-- emit particles towards the outside of the bunny -->
+        <direction_surface_composite surfaces="world/@bunny_tag" outside="true">
+            <theta_fix value="0."/>
+            <phi_fix value="0."/>
+        </direction_surface_composite>
+        <!-- make sure field lines start at some distance from the electrodes -->
+        <position_surface_adjustment_step length="[fieldline_stepsize]"/>
+        <!-- time and energy are not needed here -->
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+        <energy_composite>
+            <energy_fix value="1."/>
+        </energy_composite>
+    </ksgen_generator_composite>
+
+</kassiopeia>
+
+<!-- visualize the generator geometry -->
+
+<vtk_window name="vtk_window" enable_display="[view:false]" enable_write="true">
+    <vtk_geometry_painter
+        name="geometry_painter"
+        file="BunnyGeometry.vtp"
+        surfaces="world/@electrode_tag"
+    />
+    <vtk_generator_painter
+        name="generator_painter"
+        file="BunnyGenerator.vtp"
+        add_generator="surface_generator"
+        num_samples="250"
+    />
+</vtk_window>
+
+<kemfield>
+
+    <!-- define the electric field -->
+
+    <electrostatic_field
+            name="kemfield_e"
+            directory="[KEMFIELD_CACHE]"
+            file="BunnyElectrodes.kbd"
+            system="world"
+            surfaces="world/@electrode_tag"
+            symmetry="none"
+            minimum_element_area="1e-15"
+            maximum_element_aspect_ratio="50"
+    >
+        <!-- visualize the electrode geometry with charge densities -->
+        <viewer
+                file="BunnyElectrodes.vtp"
+                view="[view:false]"
+                save="true"
+                preprocessing="false"
+                postprocessing="true"
+        />
+        <!-- calculate charge densities with the pGMRES method -->
+        <krylov_bem_solver
+                solver_name="gmres"
+                preconditioner="implicit_krylov"
+                tolerance="1e-6"
+                preconditioner_tolerance="0.01"
+                max_iterations="500"
+                max_preconditioner_iterations="30"
+                iterations_between_restarts="250"
+                preconditioner_degree="1"
+                intermediate_save_interval="1"
+        >
+            <fftm_multiplication
+                    strategy="balanced"
+                    top_level_divisions="8"
+                    tree_level_divisions="2"
+                    expansion_degree="7"
+                    bias_degree="1"
+                    neighbor_order="1"
+                    maximum_tree_depth="9"
+                    insertion_ratio="1.3333333"
+                    region_expansion_factor="1.1"
+                    use_region_size_estimation="true"
+                    use_caching="true"
+                    verbosity="3"
+            />
+            <preconditioner_electrostatic_parameters
+                    top_level_divisions="2"
+                    tree_level_divisions="2"
+                    expansion_degree="0"
+                    neighbor_order="1"
+                    maximum_tree_depth="5"
+                    insertion_ratio="1.3333333"
+                    region_expansion_factor="1.1"
+                    use_region_size_estimation="true"
+                    use_caching="true"
+                    verbosity="3"
+            />
+        </krylov_bem_solver>
+        <!-- calculate the electric field with the FFTM method -->
+        <fast_multipole_field_solver
+                top_level_divisions="8"
+                tree_level_divisions="2"
+                expansion_degree="8"
+                neighbor_order="1"
+                maximum_tree_depth="6"
+                region_expansion_factor="2"
+                use_region_size_estimation="true"
+                use_caching="true"
+                verbosity="3"
+                use_opencl="true"
+        />
+    </electrostatic_field>
+
+    <!-- calculate an electric field map -->
+
+    <electric_potentialmap_calculator
+            field="kemfield_e"
+            file="BunnyFieldmap.vti"
+            force_update="[update:false]"
+            compute_field="true"
+            center="0.0 {[box_length]/2} 0.0"
+            length="[box_length] [box_length] [box_length]"
+            spacing="[fieldmap_spacing]"
+    />
+
+</kemfield>
+
+<kassiopeia>
+
+    <!-- define a trajectory for electric field lines -->
+
+    <kstraj_trajectory_electric name="trajectory_electric">
+        <!-- use a high-level integratro with interpolation -->
+        <interpolator_crk name="interpolator_crk"/>
+        <integrator_rkdp853 name="integrator_rkdp853"/>
+        <!-- propagate particles in direction of the electric field -->
+        <term_propagation name="term_propagation" direction="forward"/>
+        <!-- define step lengths -->
+        <control_time name="control_time" time="[fieldline_stepsize]"/>
+        <control_length name="control_length" length="[fieldline_stepsize]"/>
+    </kstraj_trajectory_electric>
+
+    <!-- define terminators -->
+
+    <ksterm_death name="term_death"/>
+    <ksterm_max_steps name="term_max_steps" steps="10000"/>
+    <ksterm_trapped name="term_trapped" max_turns="1" use_electric_field="true"/>
+
+    <!-- define output files -->
+
+    <kswrite_vtk name="write_vtk" base="BunnySimulation"/>
+    <kswrite_root name="write_root" base="BunnySimulation.root"/>
+
+    <!-- define track-level output fields -->
+
+    <ks_component_member name="output_track_initial_particle" field="initial_particle" parent="track"/>
+    <ks_component_member name="output_track_final_particle" field="final_particle" parent="track"/>
+    <ks_component_member name="output_track_position" field="position" parent="output_track_final_particle"/>
+
+    <ks_component_group name="output_track_world">
+        <component_member name="track_id" field="track_id" parent="track"/>
+        <component_member name="creator_name" field="creator_name" parent="track"/>
+        <component_member name="terminator_name" field="terminator_name" parent="track"/>
+        <component_member name="total_steps" field="total_steps" parent="track"/>
+    </ks_component_group>
+
+    <!-- define step-level output fields -->
+
+    <ks_component_member name="output_step_final_particle" field="final_particle" parent="step"/>
+    <ks_component_member name="output_step_position" field="position" parent="output_step_final_particle"/>
+
+    <ks_component_group name="output_step_world">
+        <component_member name="step_id" field="step_id" parent="step"/>
+        <component_member name="continuous_length" field="continuous_length" parent="step"/>
+        <component_member name="position" field="position" parent="output_step_final_particle"/>
+        <component_member name="electric_field" field="electric_field" parent="output_step_final_particle"/>
+        <component_member name="electric_potential" field="electric_potential" parent="output_step_final_particle"/>
+    </ks_component_group>
+
+    <!-- define the simulation geometry -->
+
+    <ksgeo_space name="space_world" spaces="world">
+        <!-- activate output modules -->
+        <set_track_point parent="write_vtk" child="output_track_position"/>
+        <set_track_data parent="write_vtk" child="output_track_world"/>
+        <set_step_point parent="write_vtk" child="output_step_position"/>
+        <set_step_data parent="write_vtk" child="output_step_world"/>
+        <add_track_output parent="write_root" child="output_track_world"/>
+        <add_step_output parent="write_root" child="output_step_world"/>
+
+        <!-- activate terminators -->
+        <add_terminator child="term_max_steps"/>
+        <add_terminator child="term_trapped"/>
+
+        <!-- terminate particles on electrode surfaces -->
+        <geo_surface name="electrode_surfaces" surfaces="world/@electrode_tag">
+            <add_terminator child="term_death"/>
+        </geo_surface>
+    </ksgeo_space>
+
+    <!-- define surface navigator -->
+
+    <ksnav_surface name="nav_surface"/>
+
+    <!-- define space navigator on meshed geometry -->
+
+    <ksnav_meshed_space name="nav_meshed_space" root_space="space_world"
+            max_octree_depth="9" n_allowed_elements="1"
+            absolute_tolerance="1e-6" relative_tolerance="1e-6" spatial_resolution="1e-8"/>
+
+    <!-- start the simulation -->
+
+    <ks_simulation
+            name="bunny_simulation"
+            run="1"
+            seed="[seed:1337]"
+            events="[events:1000]"
+            electric_field="kemfield_e"
+            space="space_world"
+            generator="surface_generator"
+            trajectory="trajectory_electric"
+            space_navigator="nav_meshed_space"
+            surface_navigator="nav_surface"
+            writer="write_vtk"
+            writer="write_root"
+    />
+</kassiopeia>
+
+<!-- visualize the simulation geometry with calculated field lines -->
+
+<vtk_window name="vtk_window" enable_display="[view:true]" enable_write="true">
+    <vtk_geometry_painter
+            name="geometry_painter"
+            file="BunnyGeometry.vtp"
+            surfaces="world/@electrode_tag"
+    />
+    <vtk_track_painter
+            name="track_painter"
+            file="BunnySimulation.root"
+            point_object="output_step_world"
+            point_variable="position"
+            color_object="output_step_world"
+            color_variable="electric_potential"
+    />
+</vtk_window>
