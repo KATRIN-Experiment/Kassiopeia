@@ -19,6 +19,7 @@ class KGBoundary : public katrin::KTagged
   public:
     KGBoundary();
     KGBoundary(const KGBoundary& aBoundary);
+    KGBoundary& operator=(const KGBoundary&);
     ~KGBoundary() override;
 
     static std::string Name()
