@@ -200,7 +200,7 @@ inline void KThreeVector::SetComponents(const double aData[3])
 }
 inline void KThreeVector::SetComponents(const std::vector<double>& aVector)
 {
-    assert(aData.size() == 3);
+    assert(aVector.size() == 3);
     fData[0] = aVector[0];
     fData[1] = aVector[1];
     fData[2] = aVector[2];

@@ -7,6 +7,7 @@ namespace KGeoBag
 {
 KGArea::KGArea() : fInitialized(false) {}
 KGArea::KGArea(const KGArea&) = default;
+KGArea& KGArea::operator=(const KGArea&) = default;
 KGArea::~KGArea() = default;
 
 void KGArea::Accept(KGVisitor* aVisitor)

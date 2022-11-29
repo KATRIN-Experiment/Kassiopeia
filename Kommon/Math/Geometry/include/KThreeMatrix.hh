@@ -311,7 +311,7 @@ inline void KThreeMatrix::SetComponents(const double anArray[9])
 }
 inline void KThreeMatrix::SetComponents(const std::vector<double>& aVector)
 {
-    assert(anArray.size() == 9);
+    assert(aVector.size() == 9);
 
     fData[0] = aVector[0];
     fData[1] = aVector[1];

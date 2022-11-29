@@ -10,6 +10,7 @@
 #include <deque>
 #include <iostream>
 #include <map>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -34,6 +35,7 @@ class KArgumentList
     inline std::string ProgramPathName() const;
     inline const std::deque<std::string>& ParameterList() const;
     inline const std::deque<std::string>& OptionList() const;
+    virtual std::vector<std::string> UnusedOptionList() const;
     inline const std::map<std::string, std::string>& OptionTable() const;
     virtual void Dump(std::ostream& os = std::cout) const;
 
@@ -49,6 +51,7 @@ class KArgumentList
     std::deque<std::string> fParameterList;
     std::deque<std::string> fOptionNameList;
     std::map<std::string, std::string> fOptionTable;
+    mutable std::set<std::string> fUsedOptionSet;
 
   private:
     mutable unsigned fArgvBufferSize;

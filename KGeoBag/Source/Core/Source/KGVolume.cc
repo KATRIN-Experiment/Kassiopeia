@@ -6,6 +6,7 @@ namespace KGeoBag
 {
 KGVolume::KGVolume() : fInitialized(false) {}
 KGVolume::KGVolume(const KGVolume&) = default;
+KGVolume& KGVolume::operator=(const KGVolume&) = default;
 KGVolume::~KGVolume() = default;
 
 const KGVolume::BoundaryContainer& KGVolume::Boundaries() const

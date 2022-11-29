@@ -31,6 +31,7 @@ class KGVolume : public katrin::KTagged
   public:
     KGVolume();
     KGVolume(const KGVolume& aVolume);
+    KGVolume& operator=(const KGVolume&);
     ~KGVolume() override;
 
     static std::string Name()
