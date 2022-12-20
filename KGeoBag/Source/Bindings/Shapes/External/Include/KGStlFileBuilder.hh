@@ -13,6 +13,9 @@
 #include "KGWrappedSpace.hh"
 #include "KGStlFile.hh"
 
+#include "KBaseStringUtils.h"
+#include "KException.h"
+
 using namespace KGeoBag;
 
 namespace katrin
@@ -39,23 +42,26 @@ template<> inline bool KGStlFileBuilder::AddAttribute(KContainer* anAttribute)
         return true;
     }
     if (anAttribute->GetName() == "selector") {
-        // allowed syntax pattern: "a-b;c-d;..."
-        for (auto & sel : KStringUtils::SplitBySingleDelim(anAttribute->AsString(), ";")) {
-            size_t pos = sel.find_first_of("-");
-            size_t first = 0, last = 0;
-            if (pos == std::string::npos) {
-                if (KStringUtils::Convert(sel, first))
+        try {
+            // allowed syntax pattern: "a-b;c-d;..."
+            for (std::string& sel : KBaseStringUtils::SplitTrimAndConvert<std::string>(anAttribute->AsString(), ";")) {
+                size_t pos = sel.find_first_of("-");
+                size_t first = 0, last = 0;
+                if (pos == std::string::npos) {
+                    first = KBaseStringUtils::Convert<size_t>(sel);
                     fObject->SelectCell(first);
+                }
+                else {
+                    first = KBaseStringUtils::Convert<size_t>(sel.substr(0, pos));
+                    last = KBaseStringUtils::Convert<size_t>(sel.substr(pos+1));
+                    fObject->SelectCellRange(first, last);
+                }
             }
-            else {
-                if (! KStringUtils::Convert(sel.substr(0, pos), first))
-                    first = 0;
-                if (! KStringUtils::Convert(sel.substr(pos+1), last))
-                    last = std::numeric_limits<size_t>::max();
-                fObject->SelectCellRange(first, last);
-            }
+            return true;
         }
-        return true;
+        catch (KException &e) { // Exception from KBaseStringUtils
+            return false;
+        }
     }
     return false;
 }

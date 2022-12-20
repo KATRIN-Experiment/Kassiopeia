@@ -4,9 +4,12 @@
 set (KERNEL_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMKernelExpansion.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMScalarMultipoleExpansion.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMScalarMomentExpansion.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMScaleInvariantKernelExpansion.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMResponseKernel_3DLaplaceL2L.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMResponseKernel_3DLaplaceM2M.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMResponseKernel_3DLaplaceM2L.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMResponseKernel_LaplaceM2L.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMMomentTransformer.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMMomentTransformerTypes.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMKernelResponseArray.hh

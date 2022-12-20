@@ -3,6 +3,7 @@
 
 
 #include "KG2DShape.hh"
+
 #include "KTwoVector.hh"
 
 #include <vector>
@@ -37,7 +38,7 @@ class KG2DArea : public KG2DShape
     };
 
     //geometry
-    virtual bool IsInside(const KTwoVector& aPoint) const = 0;
+    virtual bool IsInside(const katrin::KTwoVector& aPoint) const = 0;
     virtual double Area() const = 0;
 };
 

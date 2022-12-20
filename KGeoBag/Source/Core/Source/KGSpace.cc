@@ -4,6 +4,9 @@
 
 using namespace std;
 
+using katrin::KTransformation;
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 

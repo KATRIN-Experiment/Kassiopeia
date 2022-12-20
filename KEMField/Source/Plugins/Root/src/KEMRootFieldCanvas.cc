@@ -1,5 +1,16 @@
 #include "KEMRootFieldCanvas.hh"
 
+#include "TBox.h"
+#include "TCanvas.h"
+#include "TColor.h"
+#include "TEllipse.h"
+#include "TH1F.h"
+#include "TH2F.h"
+#include "TH3F.h"
+#include "TLine.h"
+#include "TMarker.h"
+#include "TStyle.h"
+
 #include <cmath>
 
 namespace KEMField
@@ -177,8 +188,6 @@ void KEMRootFieldCanvas::DrawGeomRZ(const std::string& conicSectfile, const std:
                 }
             }
         }
-
-        fclose(inputwire);
     }
 
     // Read in magnet coils

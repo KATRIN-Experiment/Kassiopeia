@@ -12,6 +12,10 @@ using katrin::KTextFile;
 #include <algorithm>
 #include <cstdlib>
 
+#ifdef Kommon_ENABLE_DEBUG
+#include <cassert>
+#endif
+
 using namespace std;
 
 namespace katrin

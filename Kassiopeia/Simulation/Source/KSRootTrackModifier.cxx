@@ -68,6 +68,7 @@ bool KSRootTrackModifier::ExecutePreTrackModification(KSTrack& aTrack)
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing pre-track modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> in track " << aTrack.GetTrackId() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePreTrackModification(aTrack);
             if (changed)
                 hasChangedState = true;
@@ -84,6 +85,7 @@ bool KSRootTrackModifier::ExecutePostTrackModification(KSTrack& aTrack)
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing post-track modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> in track " << aTrack.GetTrackId() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePostTrackModification(aTrack);
             if (changed)
                 hasChangedState = true;

@@ -4,7 +4,7 @@
 #include "KSParticleFactory.h"
 #include "KTextFile.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 #include "KConst.h"
 #include "KRandom.h"

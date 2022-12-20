@@ -27,6 +27,7 @@ STATICINT sKRobinHoodChargeDensitySolverStructure =
     KRobinHoodChargeDensitySolverBuilder::Attribute<bool>("cache_matrix_elements") +
     KRobinHoodChargeDensitySolverBuilder::Attribute<bool>("use_opencl") +
     KRobinHoodChargeDensitySolverBuilder::Attribute<bool>("use_vtk") +
+    KRobinHoodChargeDensitySolverBuilder::Attribute<bool>("split_mode") +
     KRobinHoodChargeDensitySolverBuilder::Attribute<std::string>("integrator");
 
 STATICINT sKElectrostaticBoundaryField =

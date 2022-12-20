@@ -43,7 +43,15 @@ class KElectricFastMultipoleFieldSolver : public KElectricFieldSolver
         return &fParameters;
     }
 
+    std::string GetParameterInformation();
+
+    KFMElectrostaticTree* GetTree()
+    {
+        return fTree;
+    }
+
     void UseOpenCL(bool choice);
+    void SetSplitMode(bool choice);
 
   private:
     KEBIPolicy fIntegratorPolicy;

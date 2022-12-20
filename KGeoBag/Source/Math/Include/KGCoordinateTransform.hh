@@ -2,7 +2,7 @@
 #define KGCOORDINATETRANSFORM_DEF
 
 #include "KThreeVector.hh"
-//#include <iostream>
+
 namespace KGeoBag
 {
 class KGCoordinateTransform
@@ -17,9 +17,9 @@ class KGCoordinateTransform
     void ConvertToLocalCoords(const double* global, double* local, const bool isVec) const;
     void ConvertToGlobalCoords(const double* local, double* global, const bool isVec) const;
 
-    void ConvertToLocalCoords(const KGeoBag::KThreeVector& global, KGeoBag::KThreeVector& local,
+    void ConvertToLocalCoords(const katrin::KThreeVector& global, katrin::KThreeVector& local,
                               const bool isVec) const;
-    void ConvertToGlobalCoords(const KGeoBag::KThreeVector& local, KGeoBag::KThreeVector& global,
+    void ConvertToGlobalCoords(const katrin::KThreeVector& local, katrin::KThreeVector& global,
                                const bool isVec) const;
 
   protected:

@@ -7,12 +7,14 @@
 
 #include "KElectricQuadrupoleField.hh"
 
+#include <limits>
+
 namespace KEMField
 {
 
 KElectricQuadrupoleField::KElectricQuadrupoleField() :
-    fLocation(0., 0., 0.),
-    fStrength(0.),
+    fLocation(katrin::KThreeVector::sZero),
+    fStrength(std::numeric_limits<double>::quiet_NaN()),
     fLength(0.),
     fRadius(0.),
     fCharacteristic(0.)

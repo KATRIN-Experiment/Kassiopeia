@@ -3,6 +3,8 @@
 
 #include "KGArea.hh"
 
+#include "KThreeVector.hh"
+
 #include <memory>
 #include <set>
 
@@ -46,14 +48,14 @@ class KGVolume : public katrin::KTagged
     virtual void VolumeAccept(KGVisitor* aVisitor);
 
   public:
-    bool Outside(const KGeoBag::KThreeVector& aPoint) const;
-    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
-    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
+    bool Outside(const katrin::KThreeVector& aPoint) const;
+    katrin::KThreeVector Point(const katrin::KThreeVector& aPoint) const;
+    katrin::KThreeVector Normal(const katrin::KThreeVector& aPoint) const;
 
   protected:
-    virtual bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const = 0;
-    virtual KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const = 0;
-    virtual KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual bool VolumeOutside(const katrin::KThreeVector& aPoint) const = 0;
+    virtual katrin::KThreeVector VolumePoint(const katrin::KThreeVector& aPoint) const = 0;
+    virtual katrin::KThreeVector VolumeNormal(const katrin::KThreeVector& aPoint) const = 0;
 
   protected:
     void Check() const;

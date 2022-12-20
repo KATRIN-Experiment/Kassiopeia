@@ -1,5 +1,7 @@
 #include "KGCoordinateTransform.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KGCoordinateTransform::KGCoordinateTransform()

@@ -109,6 +109,7 @@
     <!-- mesh -->
 
     <axial_mesh name="mesh_electrode" surfaces="world/dipole_trap/@electrode_tag"/>
+    <mesh name="mesh_electrode" surfaces="world/dipole_trap/@electrode_tag"/>
 
     <!-- bem -->
 
@@ -211,12 +212,20 @@
             surfaces="world/dipole_trap/@electrode_tag"
             symmetry="axial"
             >
+        <viewer
+                file="ExampleElectricField.vtp"
+                view="false"
+                save="true"
+                preprocessing="true"
+                postprocessing="true"
+        />
         <robin_hood_bem_solver
                 integrator="analytic"
                 tolerance="1.e-10"
                 check_sub_interval="100"
                 display_interval="1"
                 cache_matrix_elements="true"
+                use_opencl="true"
         />
         <integrating_field_solver/>
     </electrostatic_field>
@@ -251,12 +260,20 @@
             surfaces="world/dipole_trap/@electrode_tag"
             symmetry="axial"
             >
+        <viewer
+                file="ExampleElectricField.vtp"
+                view="false"
+                save="true"
+                preprocessing="true"
+                postprocessing="true"
+        />
         <robin_hood_bem_solver
                 integrator="analytic"
                 tolerance="1.e-10"
                 check_sub_interval="100"
                 display_interval="1"
                 cache_matrix_elements="true"
+                use_opencl="true"
         />
         <zonal_harmonic_field_solver
                 number_of_bifurcations="-1"
@@ -274,16 +291,75 @@
         />
     </electrostatic_field>
 
+    <electrostatic_field
+            name="electric_field_fm"
+            file="ExampleElectricField.kbd"
+            system="world/dipole_trap"
+            surfaces="world/dipole_trap/@electrode_tag"
+            symmetry="none"
+            >
+        <viewer
+                file="ExampleElectricField.vtp"
+                view="false"
+                save="true"
+                preprocessing="true"
+                postprocessing="true"
+        />
+        <krylov_bem_solver
+                preconditioner="implicit_krylov"
+                preconditioner_tolerance="0.01"
+                solver_name="gmres"
+                tolerance="1.e-10"
+                use_display="false"
+                use_timer="false"
+        >
+            <fftm_multiplication
+                    bias_degree="1"
+                    top_level_divisions="8"
+                    tree_level_divisions="2"
+                    expansion_degree="7"
+                    maximum_tree_depth="9"
+                    insertion_ratio="1.3333333"
+                    region_expansion_factor="1.1"
+                    strategy="balanced"
+                    use_caching="true"
+                    use_region_size_estimation="true"
+            />
+            <preconditioner_electrostatic_parameters
+                    bias_degree="1"
+                    top_level_divisions="8"
+                    tree_level_divisions="2"
+                    expansion_degree="7"
+                    maximum_tree_depth="9"
+                    insertion_ratio="1.3333333"
+                    region_expansion_factor="1.1"
+                    strategy="balanced"
+                    use_caching="true"
+                    use_region_size_estimation="true"
+            />
+        </krylov_bem_solver>
+        <fast_multipole_field_solver
+                top_level_divisions="8"
+                tree_level_divisions="2"
+                expansion_degree="8"
+                maximum_tree_depth="6"
+                region_expansion_factor="2"
+                use_caching="true"
+                use_opencl="true"
+                use_region_size_estimation="true"
+        />
+    </electrostatic_field>
+
     <electric_potentialmap_calculator
             name="electric_potential_map_calculator"
-            field="electric_field_zh"
+            field="electric_field_fm"
             file="ExampleElectricFieldMap.vti"
-            force_update="false"
+            force_update="true"
             center="0. 0. 0."
-            length="2.5e-1 2.5e-1 1.0"
+            length="2.5e-1 2.5e-1 5.0e-1"
             spacing="1e-2"
-            mirror_x="true"
-            mirror_y="true"
+            mirror_x="false"
+            mirror_y="false"
             mirror_z="false"
     />
 

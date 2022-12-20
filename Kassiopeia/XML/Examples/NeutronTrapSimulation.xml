@@ -1,0 +1,233 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
+<messages>
+
+    <file path="[log_path]" base="NeutronSimulationLog.txt"/>
+
+    <message key="k_file" terminal="normal" log="warning"/>
+    <message key="k_initialization" terminal="normal" log="warning"/>
+
+    <message key="kg_core" terminal="normal" log="warning"/>
+    <message key="kg_shape" terminal="normal" log="warning"/>
+    <message key="kg_mesh" terminal="normal" log="warning"/>
+    <message key="kg_axial_mesh" terminal="normal" log="warning"/>
+
+    <message key="ks_object" terminal="normal" log="normal"/>
+    <message key="ks_operator" terminal="normal" log="normal"/>
+    <message key="ks_field" terminal="normal" log="normal"/>
+    <message key="ks_geometry" terminal="normal" log="normal"/>
+    <message key="ks_generator" terminal="normal" log="normal"/>
+    <message key="ks_trajectory" terminal="normal" log="normal"/>
+    <message key="ks_interaction" terminal="normal" log="normal"/>
+    <message key="ks_navigator" terminal="normal" log="normal"/>
+    <message key="ks_terminator" terminal="normal" log="normal"/>
+    <message key="ks_writer" terminal="normal" log="normal"/>
+    <message key="ks_main" terminal="normal" log="normal"/>
+    <message key="ks_run" terminal="normal" log="normal"/>
+    <message key="ks_event" terminal="normal" log="normal"/>
+    <message key="ks_track" terminal="normal" log="normal"/>
+    <message key="ks_step" terminal="normal" log="normal"/>
+
+</messages>
+
+<geometry>
+
+    <!-- world -->
+
+    <cylinder_space name="world_space" z1="-200.0e-3" z2="200.0e-3" r="200.0e-3"/>
+
+    <!-- cell -->
+
+    <tag name="chamber_tag">
+        <cylinder_space name="chamber_space" z1="-0.06" z2="0.06" r="0.235"/>
+    </tag>
+
+    <!-- assembly -->
+
+    <space name="world" node="world_space">
+        <space name="chamber" node="chamber_space"/>
+    </space>
+
+    <!-- appearance -->
+
+    <appearance name="app_chamber" color="96 96 255 96" arc="72" spaces="world/@chamber_tag"/>
+
+</geometry>
+
+<kemfield>
+
+    <!-- magnetic fields -->
+
+    <constant_magnetic_field
+            name="field_magnetic_constant"
+            field="0. 0. 1.e-6"
+    />
+
+</kemfield>
+
+<kassiopeia>
+
+    <!-- generators -->
+
+    <ksgen_generator_composite name="generator_uniform" pid="2112">
+        <energy_composite>
+            <energy_gauss value_min="10.e-9" value_max="290.e-9"
+    value_mean="[energy:50.e-9]" value_sigma="50.e-9"/>
+        </energy_composite>
+        <position_cylindrical_composite>
+            <!-- <r_cylindrical radius_min="0." radius_max="0.23499"/> -->
+            <r_fix value="0."/>
+            <phi_uniform value_min="0." value_max="360."/>
+            <z_fix value="-0.0599"/>
+        </position_cylindrical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+        <direction_spherical_composite>
+            <theta_spherical angle_min="0." angle_max="90."/>
+            <phi_uniform value_min="0." value_max="360."/>
+        </direction_spherical_composite>
+        <spin_relative_composite>
+            <theta_spherical angle_min="0." angle_max="180."/>
+            <phi_uniform value_min="0." value_max="360."/>
+        </spin_relative_composite>
+    </ksgen_generator_composite>
+
+    <!-- trajectories-->
+
+    <kstraj_trajectory_exact_spin name="trajectory_exact_spin">
+        <!-- <interpolator_crk name="interpolator_crk"/> -->
+        <integrator_rk8 name="integrator_rk8"/>
+        <term_propagation name="term_propagation"/>
+        <term_gravity name="term_gravity" gravity="0. 0. -9.8"/>
+        <control_time name="control_time" time="2.e-4"/>
+    </kstraj_trajectory_exact_spin>
+
+    <!-- space interactions -->
+
+    <!-- space navigators -->
+
+    <ksnav_space name="nav_space" enter_split="true" exit_split="true"/>
+
+    <!-- surface interactions -->
+
+    <ksint_surface_UCN name="int_surface_UCN" eta="1.e-4" alpha="5.e-6" real_optical_potential="1.61e-7" correlation_length="30.e-9"/>
+
+    <!-- surface navigators -->
+
+    <ksnav_surface name="nav_surface" transmission_split="true" reflection_split="true"/>
+
+    <!-- terminators -->
+
+    <ksterm_max_steps name="term_max_steps" steps="100000"/>
+    <ksterm_min_energy name="term_min_energy" energy="1.e-9"/>
+    <ksterm_death name="term_surface_death"/>
+    <ksterm_secondaries name="term_secondaries"/>
+
+    <!-- writers -->
+
+    <kswrite_root name="write_root" path="[output_path]" base="NeutronSimulation.root"/>
+
+    <!-- output -->
+
+    <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
+
+    <ks_component_group name="component_step_world">
+        <component_member name="step_id" field="step_id" parent="step"/>
+        <component_member name="continuous_time" field="continuous_time" parent="step"/>
+        <component_member name="continuous_length" field="continuous_length" parent="step"/>
+        <component_member name="time" field="time" parent="component_step_final_particle"/>
+        <component_member name="position" field="position" parent="component_step_final_particle"/>
+        <component_member name="momentum" field="momentum" parent="component_step_final_particle"/>
+        <component_member name="magnetic_field" field="magnetic_field" parent="component_step_final_particle"/>
+        <component_member name="electric_field" field="electric_field" parent="component_step_final_particle"/>
+        <component_member name="electric_potential" field="electric_potential" parent="component_step_final_particle"/>
+        <component_member name="kinetic_energy" field="kinetic_energy_ev" parent="component_step_final_particle"/>
+        <component_member name="aligned_spin" field="aligned_spin" parent="component_step_final_particle"/>
+        <component_member name="spin_angle" field="spin_angle" parent="component_step_final_particle"/>
+        <component_member name="spin" field="spin" parent="component_step_final_particle"/>
+    </ks_component_group>
+
+    <ks_component_member name="component_track_initial_particle" field="initial_particle" parent="track"/>
+    <ks_component_member name="component_track_final_particle" field="final_particle" parent="track"/>
+
+    <ks_component_member name="z_length" field="continuous_length" parent="step"/>
+    <ks_component_group name="component_track_world">
+        <component_member name="creator_name" field="creator_name" parent="track"/>
+        <component_member name="terminator_name" field="terminator_name" parent="track"/>
+        <component_member name="total_steps" field="total_steps" parent="track"/>
+        <component_member name="continuous_time" field="continuous_time" parent="track"/>
+        <component_member name="continuous_length" field="continuous_length" parent="track"/>
+        <component_member name="initial_time" field="time" parent="component_track_initial_particle"/>
+        <component_member name="initial_position" field="position" parent="component_track_initial_particle"/>
+        <component_member name="initial_momentum" field="momentum" parent="component_track_initial_particle"/>
+        <component_member name="initial_magnetic_field" field="magnetic_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
+        <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
+        <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
+        <component_member name="initial_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_initial_particle"/>
+        <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment"
+                parent="component_track_initial_particle"/>
+        <component_member name="initial_spin" field="spin" parent="component_track_initial_particle"/>
+        <component_member name="initial_spin_angle" field="spin_angle" parent="component_track_initial_particle"/>
+        <component_member name="final_time" field="time" parent="component_track_final_particle"/>
+        <component_member name="final_position" field="position" parent="component_track_final_particle"/>
+        <component_member name="final_momentum" field="momentum" parent="component_track_final_particle"/>
+        <component_member name="final_magnetic_field" field="magnetic_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_field" field="electric_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_potential" field="electric_potential" parent="component_track_final_particle"/>
+        <component_member name="final_kinetic_energy" field="kinetic_energy_ev" parent="component_track_final_particle"/>
+        <component_member name="final_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_final_particle"/>
+        <component_member name="final_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_final_particle"/>
+        <component_member name="final_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_final_particle"/>
+        <component_member name="final_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_final_particle"/>
+        <component_member name="final_spin" field="spin" parent="component_track_final_particle"/>
+        <component_member name="final_spin_angle" field="spin_angle" parent="component_track_final_particle"/>
+    </ks_component_group>
+
+    <kswrite_root_condition_periodic name="condition_periodic"
+        group="component_step_world" parent="time" initial_min="0.9999"
+        initial_max="1.0001" increment="1." reset_min="0.499"
+        reset_max="0.501"/>
+
+    <!-- structure -->
+
+    <ksgeo_space name="space_world" spaces="world">
+        <!-- <command parent="root_terminator" field="add_terminator" child="term_secondaries"/> -->
+        <command parent="root_terminator" field="add_terminator" child="term_max_steps"/>
+        <command parent="root_terminator" field="add_terminator" child="term_min_energy"/>
+        <command parent="write_root" field="add_track_output" child="component_track_world"/>
+        <command parent="write_root" field="add_step_output" child="component_step_world"/>
+        <!-- <command parent="write_root" field="add_step_write_condition" child="condition_periodic"/> -->
+        <geo_space name="space_inner_chamber" spaces="world/chamber">
+            <geo_side name="side_bottom" surfaces="world/chamber/bottom">
+                <command parent="root_terminator" field="add_terminator" child="term_surface_death"/>
+            </geo_side>
+            <geo_side name="side_top" surfaces="world/chamber/top">
+                <command parent="root_surface_interaction" field="set_surface_interaction" child="int_surface_UCN"/>
+            </geo_side>
+            <geo_side name="side_jacket" surfaces="world/chamber/jacket">
+                <command parent="root_surface_interaction" field="set_surface_interaction" child="int_surface_UCN"/>
+            </geo_side>
+        </geo_space>
+    </ksgeo_space>
+
+    <!-- simulation -->
+
+    <ks_simulation
+            name="neutron_simulation"
+            run="1"
+            seed="51385"
+            events="[events:10]"
+            magnetic_field="field_magnetic_constant"
+            space="space_world"
+            generator="generator_uniform"
+            trajectory="trajectory_exact_spin"
+            space_navigator="nav_space"
+            surface_navigator="nav_surface"
+            writer="write_root"
+    />
+
+</kassiopeia>

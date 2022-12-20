@@ -35,14 +35,19 @@ void KSRootTrajectory::Reset()
         fTrajectory->Reset();
 };
 
-void KSRootTrajectory::CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
-                                           KGeoBag::KThreeVector& aCenter, double& aRadius, double& aTimeStep)
+void KSRootTrajectory::CalculateTrajectory(const KSParticle& anInitialParticle,
+                                           KSParticle& aFinalParticle,
+                                           katrin::KThreeVector& aCenter,
+                                           double& aRadius,
+                                           double& aTimeStep)
 {
     if (fTrajectory == nullptr) {
         trajmsg(eError) << "<" << GetName() << "> cannot calculate trajectory with no trajectory set" << eom;
     }
 
     try {
+        trajmsg_debug("<" << GetName() << "> calculating trajectory <" << fTrajectory->GetName() << "> at " << aCenter << eom);
+
         fTrajectory->CalculateTrajectory(anInitialParticle, aFinalParticle, aCenter, aRadius, aTimeStep);
     }
     catch (KSException const& e) {
@@ -57,6 +62,7 @@ void KSRootTrajectory::ExecuteTrajectory(const double& aTimeStep, KSParticle& an
     }
 
     try {
+        trajmsg_debug("<" << GetName() << "> executing trajectory <" << fTrajectory->GetName() << "> at " << anIntermediateParticle.GetPosition() << eom);
         fTrajectory->ExecuteTrajectory(aTimeStep, anIntermediateParticle);
     }
     catch (KSException const& e) {
@@ -70,8 +76,7 @@ void KSRootTrajectory::GetPiecewiseLinearApproximation(const KSParticle& anIniti
                                                        std::vector<KSParticle>* intermediateParticleStates) const
 {
     if (fTrajectory == nullptr) {
-        trajmsg(eError) << "<" << GetName() << "> cannot compute piecewise linear approximation with no trajectory set"
-                        << eom;
+        trajmsg(eError) << "<" << GetName() << "> cannot compute piecewise linear approximation with no trajectory set" << eom;
     }
 
     try {

@@ -3,6 +3,7 @@
 
 set (KFM_UTIL_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFastMultipoleMatrixGenerator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticMatrixGenerator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTypes.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNamedScalarData.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNamedScalarDataCollection.hh

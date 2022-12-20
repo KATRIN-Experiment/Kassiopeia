@@ -2,6 +2,8 @@
 
 #include "KGShapeMessage.hh"
 
+using katrin::KTwoVector;
+
 namespace KGeoBag
 {
 

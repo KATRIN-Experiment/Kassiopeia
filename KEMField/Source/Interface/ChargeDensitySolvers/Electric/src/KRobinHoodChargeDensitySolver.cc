@@ -13,6 +13,7 @@
 #include "KElectrostaticBoundaryIntegrator.hh"
 #include "KIterativeStateWriter.hh"
 #include "KRobinHood.hh"
+#include "KEMCoreMessage.hh"
 
 #ifdef KEMFIELD_USE_VTK
 #include "KVTKIterationPlotter.hh"
@@ -81,10 +82,27 @@ KRobinHoodChargeDensitySolver::~KRobinHoodChargeDensitySolver()
 
 void KRobinHoodChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
+    if (container.empty()) {
+        kem_cout(eError) << "ERROR: RobinHood solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+
     if (FindSolution(fTolerance, container) == false) {
         if (fUseOpenCL) {
 #if defined(KEMFIELD_USE_MPI) && defined(KEMFIELD_USE_OPENCL)
-            KOpenCLInterface::GetInstance()->SetGPU(KMPIInterface::GetInstance()->GetProcess());
+            //assign devices according to the number available and local process rank
+            unsigned int proc_id = KMPIInterface::GetInstance()->GetProcess();
+            int n_dev = KOpenCLInterface::GetInstance()->GetNumberOfDevices();
+            int dev_id = proc_id % n_dev;  //fallback to global process rank if local is unavailable
+           int local_rank = KMPIInterface::GetInstance()->GetLocalRank();
+           if (local_rank != -1) {
+               if (KMPIInterface::GetInstance()->SplitMode()) {
+                   dev_id = (local_rank / 2) % n_dev;
+               }
+               else {
+                   dev_id = (local_rank) % n_dev;
+               }
+           }
+            KOpenCLInterface::GetInstance()->SetGPU(dev_id);
 #endif
 
 #ifdef KEMFIELD_USE_OPENCL
@@ -93,8 +111,7 @@ void KRobinHoodChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
             KOpenCLElectrostaticBoundaryIntegrator integrator{fIntegratorPolicy.CreateOpenCLIntegrator(*oclContainer)};
             KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> A(*oclContainer, integrator);
             KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> b(*oclContainer, integrator);
-            KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(*oclContainer,
-                                                                                              integrator);
+            KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(*oclContainer, integrator);
 
 #ifdef KEMFIELD_USE_MPI
             KRobinHood<KElectrostaticBoundaryIntegrator::ValueType, KRobinHood_MPI_OpenCL> robinHood;
@@ -190,14 +207,22 @@ void KRobinHoodChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 
         robinHood.Solve(*A, x, b);
 
-        delete A;
-
         MPI_SINGLE_PROCESS
         {
             SaveSolution(fTolerance, container);
         }
         return;
     }
+}
+
+void KRobinHoodChargeDensitySolver::SetSplitMode(bool choice)
+{
+#ifdef KEMFIELD_USE_MPI
+    KMPIInterface::GetInstance()->SetSplitMode(choice);
+#else
+    (void)choice;  // fixes unused parameter warning
+#endif
+    return;
 }
 
 

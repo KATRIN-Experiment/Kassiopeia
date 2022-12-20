@@ -47,6 +47,8 @@ set( GENERATORS_HEADER_BASENAMES
 
     KSGenDirectionSphericalComposite.h
     KSGenDirectionSurfaceComposite.h
+    KSGenDirectionSphericalMagneticField.h
+
     KSGenMomentumRectangularComposite.h
 
     KSGenSpinComposite.h
@@ -127,6 +129,7 @@ set( GENERATORS_SOURCE_BASENAMES
 
     KSGenDirectionSphericalComposite.cxx
     KSGenDirectionSurfaceComposite.cxx
+    KSGenDirectionSphericalMagneticField.cxx
 
     KSGenMomentumRectangularComposite.cxx
 
@@ -185,6 +188,8 @@ target_include_directories(KassiopeiaGenerators
     PUBLIC $<BUILD_INTERFACE:${GENERATORS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaGenerators
     PUBLIC
+        KommonGsl
+        KommonRoot
         KassiopeiaOperators
         KassiopeiaReaders
         KGeoBagRandom

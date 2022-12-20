@@ -4,7 +4,7 @@
 
 namespace KGeoBag
 {
-KGMeshWire::KGMeshWire(const KThreeVector& p0, const KThreeVector& p1, const double& diameter) :
+KGMeshWire::KGMeshWire(const katrin::KThreeVector& p0, const katrin::KThreeVector& p1, const double& diameter) :
     fP0(p0),
     fP1(p1),
     fDiameter(diameter)
@@ -19,17 +19,21 @@ double KGMeshWire::Aspect() const
 {
     return ((fP1 - fP0).Magnitude()) / fDiameter;
 }
+katrin::KThreeVector KGMeshWire::Centroid() const
+{
+    return (fP0 + fP1) * .5;
+}
 
-void KGMeshWire::Transform(const KTransformation& transform)
+void KGMeshWire::Transform(const katrin::KTransformation& transform)
 {
     transform.Apply(fP0);
     transform.Apply(fP1);
 }
 
-double KGMeshWire::NearestDistance(const KThreeVector& aPoint) const
+double KGMeshWire::NearestDistance(const katrin::KThreeVector& aPoint) const
 {
-    KThreeVector del = aPoint - fP0;
-    KThreeVector diff = fP1 - fP0;
+    katrin::KThreeVector del = aPoint - fP0;
+    katrin::KThreeVector diff = fP1 - fP0;
     double len = diff.Magnitude();
     double dot = (del * diff) / (len * len);
 
@@ -48,7 +52,7 @@ double KGMeshWire::NearestDistance(const KThreeVector& aPoint) const
         return (aPoint - fP1).Magnitude();
     }
 
-    KThreeVector nearestpoint = fP0 + dot * diff;
+    katrin::KThreeVector nearestpoint = fP0 + dot * diff;
     double dist = (aPoint - nearestpoint).Magnitude();
 
     //minor correction for wire diameter
@@ -62,10 +66,10 @@ double KGMeshWire::NearestDistance(const KThreeVector& aPoint) const
     return dist;
 }
 
-KThreeVector KGMeshWire::NearestPoint(const KThreeVector& aPoint) const
+katrin::KThreeVector KGMeshWire::NearestPoint(const katrin::KThreeVector& aPoint) const
 {
-    KThreeVector del = aPoint - fP0;
-    KThreeVector diff = fP1 - fP0;
+    katrin::KThreeVector del = aPoint - fP0;
+    katrin::KThreeVector diff = fP1 - fP0;
     double len = diff.Magnitude();
     double dot = (del * diff) / (len * len);
     if (dot < 0.) {
@@ -75,30 +79,30 @@ KThreeVector KGMeshWire::NearestPoint(const KThreeVector& aPoint) const
         return fP1;
     }
     //correction for the wire diameter
-    KThreeVector point_on_axis = fP0 + dot * diff;
-    KThreeVector normal = (aPoint - point_on_axis).Unit();
+    katrin::KThreeVector point_on_axis = fP0 + dot * diff;
+    katrin::KThreeVector normal = (aPoint - point_on_axis).Unit();
     return point_on_axis + fDiameter * normal;
 }
 
-KThreeVector KGMeshWire::NearestNormal(const KThreeVector& aPoint) const
+katrin::KThreeVector KGMeshWire::NearestNormal(const katrin::KThreeVector& aPoint) const
 {
-    KThreeVector del = aPoint - fP0;
-    KThreeVector diff = fP1 - fP0;
+    katrin::KThreeVector del = aPoint - fP0;
+    katrin::KThreeVector diff = fP1 - fP0;
     double len = diff.Magnitude();
     double dot = (del * diff) / (len * len);
-    KThreeVector point_on_axis = fP0 + dot * diff;
+    katrin::KThreeVector point_on_axis = fP0 + dot * diff;
     return (aPoint - point_on_axis).Unit();  //normal vector always points away from axis
 }
 
-double KGMeshWire::ClosestApproach(const KThreeVector& aStart, const KThreeVector& anEnd) const
+double KGMeshWire::ClosestApproach(const katrin::KThreeVector& aStart, const katrin::KThreeVector& anEnd) const
 {
     //computes the closest distance between the line segment specified by aStart and anEnd and this
     //t is the parameter associated with the segment under test
     //s is the parameter asscoiated with this line segment
 
-    KThreeVector fDiff = fP1 - fP0;
-    KThreeVector tDiff = anEnd - aStart;
-    KThreeVector w = aStart - fP0;
+    katrin::KThreeVector fDiff = fP1 - fP0;
+    katrin::KThreeVector tDiff = anEnd - aStart;
+    katrin::KThreeVector w = aStart - fP0;
     double a = fDiff * fDiff;
     double b = tDiff * fDiff;
     double c = tDiff * tDiff;
@@ -110,8 +114,8 @@ double KGMeshWire::ClosestApproach(const KThreeVector& aStart, const KThreeVecto
         double t = (a * e - b * d) / (det);
         double s = (b * e - c * d) / (det);
 
-        KThreeVector Ps;
-        KThreeVector Qt;
+        katrin::KThreeVector Ps;
+        katrin::KThreeVector Qt;
 
         if (s <= 1.) {
             if (s >= 0.) {
@@ -145,8 +149,8 @@ double KGMeshWire::ClosestApproach(const KThreeVector& aStart, const KThreeVecto
     }
 }
 
-bool KGMeshWire::NearestIntersection(const KThreeVector& aStart, const KThreeVector& anEnd,
-                                     KThreeVector& anIntersection) const
+bool KGMeshWire::NearestIntersection(const katrin::KThreeVector& aStart, const katrin::KThreeVector& anEnd,
+                                     katrin::KThreeVector& anIntersection) const
 {
     double closest_approach = ClosestApproach(aStart, anEnd);
     if (closest_approach > fDiameter) {
@@ -160,10 +164,10 @@ bool KGMeshWire::NearestIntersection(const KThreeVector& aStart, const KThreeVec
     //is given by all points Q such that :
     //[ (Q - P) x A ]^2 = R^2
     //for the intersection with a line, we have Q = aStart + (anEnd - aStart)*t
-    KThreeVector fDiff = fP1 - fP0;
-    KThreeVector tDiff = anEnd - aStart;
-    KThreeVector g = tDiff.Cross(fDiff.Unit());
-    KThreeVector h = (aStart - fP0).Cross(fDiff.Unit());
+    katrin::KThreeVector fDiff = fP1 - fP0;
+    katrin::KThreeVector tDiff = anEnd - aStart;
+    katrin::KThreeVector g = tDiff.Cross(fDiff.Unit());
+    katrin::KThreeVector h = (aStart - fP0).Cross(fDiff.Unit());
 
     double a = g * g;
     double b = 2.0 * g * h;
@@ -179,10 +183,10 @@ bool KGMeshWire::NearestIntersection(const KThreeVector& aStart, const KThreeVec
     double t2 = (-1.0 * b + std::sqrt(disc)) / (2.0 * a);
 
     bool inter1_possible = false;
-    KThreeVector inter1;
+    katrin::KThreeVector inter1;
 
     bool inter2_possible = false;
-    KThreeVector inter2;
+    katrin::KThreeVector inter2;
 
     if ((t1 <= 1.0) && (0. <= t1)) {
         //solution given by t1 is on line segment so compute the point
@@ -267,7 +271,7 @@ KGPointCloud<KGMESH_DIM> KGMeshWire::GetPointCloud() const
 }
 
 
-void KGMeshWire::GetEdge(KThreeVector& start, KThreeVector& end, unsigned int /*index*/) const
+void KGMeshWire::GetEdge(katrin::KThreeVector& start, katrin::KThreeVector& end, unsigned int /*index*/) const
 {
     start = fP0;
     end = fP1;

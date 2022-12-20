@@ -59,6 +59,7 @@ target_include_directories(KassiopeiaNavigators
     PUBLIC $<BUILD_INTERFACE:${NAVIGATORS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaNavigators
     PUBLIC
+        KommonGsl
         KassiopeiaOperators
         KassiopeiaGeometry
         KEMFileManipulation

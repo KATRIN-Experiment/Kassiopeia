@@ -180,14 +180,14 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         KGVolume::VolumeAccept(aVisitor);
         return;
     }
-    bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const override
+    bool VolumeOutside(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tXYPoint = aPoint.ProjectXY();
+        katrin::KTwoVector tXYPoint = aPoint.ProjectXY();
         double tZPoint = aPoint.Z();
 
-        KTwoVector tJacketPoint = fPath->Point(tXYPoint) - tXYPoint;
+        katrin::KTwoVector tJacketPoint = fPath->Point(tXYPoint) - tXYPoint;
 
-        KTwoVector tCapPoint(0., 0.);
+        katrin::KTwoVector tCapPoint(0., 0.);
         if (fPath->Above(tXYPoint) == true) {
             tCapPoint = tJacketPoint;
         }
@@ -225,14 +225,14 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         }
         return fPath->Above(tXYPoint);
     }
-    KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector VolumePoint(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tXYPoint = aPoint.ProjectXY();
+        katrin::KTwoVector tXYPoint = aPoint.ProjectXY();
         double tZPoint = aPoint.Z();
 
-        KTwoVector tJacketPoint = fPath->Point(tXYPoint) - tXYPoint;
+        katrin::KTwoVector tJacketPoint = fPath->Point(tXYPoint) - tXYPoint;
 
-        KTwoVector tCapPoint(0., 0.);
+        katrin::KTwoVector tCapPoint(0., 0.);
         if (fPath->Above(tXYPoint) == true) {
             tCapPoint = tJacketPoint;
         }
@@ -252,34 +252,34 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         double tTopDistanceSquared = tCapPoint.MagnitudeSquared() + tTopZ * tTopZ;
         double tBottomDistanceSquared = tCapPoint.MagnitudeSquared() + tBottomZ * tBottomZ;
 
-        KTwoVector tXYNearest;
+        katrin::KTwoVector tXYNearest;
         double tZNearest;
         if (tTopDistanceSquared < tJacketDistanceSquared) {
             if (tTopDistanceSquared < tBottomDistanceSquared) {
                 tXYNearest = tXYPoint + tCapPoint;
                 tZNearest = tZPoint + tTopZ;
-                return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
+                return katrin::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
             }
         }
         if (tBottomDistanceSquared < tJacketDistanceSquared) {
             if (tBottomDistanceSquared < tTopDistanceSquared) {
                 tXYNearest = tXYPoint + tCapPoint;
                 tZNearest = tZPoint + tBottomZ;
-                return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
+                return katrin::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
             }
         }
         tXYNearest = tXYPoint + tJacketPoint;
         tZNearest = tZPoint + tJacketZ;
-        return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
+        return katrin::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
     }
-    KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector VolumeNormal(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tXYPoint = aPoint.ProjectXY();
+        katrin::KTwoVector tXYPoint = aPoint.ProjectXY();
         double tZPoint = aPoint.Z();
 
-        KTwoVector tJacketPoint = fPath->Point(tXYPoint) - tXYPoint;
+        katrin::KTwoVector tJacketPoint = fPath->Point(tXYPoint) - tXYPoint;
 
-        KTwoVector tCapPoint(0., 0.);
+        katrin::KTwoVector tCapPoint(0., 0.);
         if (fPath->Above(tXYPoint) == true) {
             tCapPoint = tJacketPoint;
         }
@@ -299,22 +299,22 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         double tTopDistanceSquared = tCapPoint.MagnitudeSquared() + tTopZ * tTopZ;
         double tBottomDistanceSquared = tCapPoint.MagnitudeSquared() + tBottomZ * tBottomZ;
 
-        KTwoVector tXYNormal(0., 0.);
+        katrin::KTwoVector tXYNormal(0., 0.);
         double tZNormal = 0.;
         if (tTopDistanceSquared < tJacketDistanceSquared) {
             if (tTopDistanceSquared < tBottomDistanceSquared) {
                 tZNormal = 1.;
-                return KGeoBag::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
+                return katrin::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
             }
         }
         if (tBottomDistanceSquared < tJacketDistanceSquared) {
             if (tBottomDistanceSquared < tTopDistanceSquared) {
                 tZNormal = 1.;
-                return KGeoBag::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
+                return katrin::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
             }
         }
         tXYNormal = fPath->Normal(tXYPoint);
-        return KGeoBag::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
+        return katrin::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
     }
 
   private:

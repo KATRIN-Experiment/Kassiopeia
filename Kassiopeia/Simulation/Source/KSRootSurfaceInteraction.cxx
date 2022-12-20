@@ -37,6 +37,7 @@ void KSRootSurfaceInteraction::ExecuteInteraction(const KSParticle& anInitialPar
     }
 
     try {
+        intmsg_debug("<" << GetName() << "> executing surface interaction <" << fSurfaceInteraction->GetName() << "> at " << anInitialParticle.GetPosition() << eom);
         fSurfaceInteraction->ExecuteInteraction(anInitialParticle, aFinalParticle, aSecondaries);
     }
     catch (KSException const& e) {

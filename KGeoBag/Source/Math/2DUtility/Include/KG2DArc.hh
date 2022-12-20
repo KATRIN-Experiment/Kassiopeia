@@ -33,14 +33,14 @@ class KG2DArc : public KG2DShape
     {
         ;
     };
-    KG2DArc(const KTwoVector& point1, const KTwoVector& point2, const double& radius,
+    KG2DArc(const katrin::KTwoVector& point1, const katrin::KTwoVector& point2, const double& radius,
             bool isRight = true,  //center on the right of line segment
             bool isCCW = true);   //arc goes ccw if true
 
-    KG2DArc(const KTwoVector& center, const double& radius, const double& start_angle,
+    KG2DArc(const katrin::KTwoVector& center, const double& radius, const double& start_angle,
             const double& end_angle);  //start angle and end angle will be fixed to [0,2*pi]
 
-    KG2DArc(const KTwoVector& center, const KTwoVector& point1,
+    KG2DArc(const katrin::KTwoVector& center, const katrin::KTwoVector& point1,
             const double& angle);  //angle must be in [-2pi, +2pi]
 
     ~KG2DArc() override
@@ -55,7 +55,7 @@ class KG2DArc : public KG2DShape
     ///center of the arc lies to the right of the directed line segment
     ///going from point1 to point2 if isRight is true, otherwise it is placed
     ///on the left
-    void SetPointsRadiusOrientation(const KTwoVector& point1, const KTwoVector& point2, const double& radius,
+    void SetPointsRadiusOrientation(const katrin::KTwoVector& point1, const katrin::KTwoVector& point2, const double& radius,
                                     bool isRight = true, bool isCCW = true);
 
     ///construct arc from a center, radius, and two angles
@@ -63,14 +63,14 @@ class KG2DArc : public KG2DShape
     ///start angle and end angle will be fixed to range [0,2*pi]
     ///if start_angle is less than end_angle the arc will be counterclockwise
     ///if start_angle is greater than end angle the arc will be clockwise
-    void SetCenterRadiusAngles(const KTwoVector& center, const double& radius, const double& start_angle,
+    void SetCenterRadiusAngles(const katrin::KTwoVector& center, const double& radius, const double& start_angle,
                                const double& end_angle);
 
     ///construct from a center, start point and an angle
     ///angle will be clamped between [-2pi, +2pi]
     ///negative angles indicate clockwise directionality
     ///positive angles indicate counterclockwise directionality
-    void SetStartPointCenterAngle(const KTwoVector& center, const KTwoVector& point1, const double& angle);
+    void SetStartPointCenterAngle(const katrin::KTwoVector& center, const katrin::KTwoVector& point1, const double& angle);
 
     //initialization
     void Initialize() override;
@@ -84,11 +84,11 @@ class KG2DArc : public KG2DShape
     {
         return fSubtendedAngle;
     };
-    KTwoVector GetFirstPoint() const
+    katrin::KTwoVector GetFirstPoint() const
     {
         return fP1;
     };
-    KTwoVector GetSecondPoint() const
+    katrin::KTwoVector GetSecondPoint() const
     {
         return fP2;
     };
@@ -100,7 +100,7 @@ class KG2DArc : public KG2DShape
     {
         return fA2;
     };
-    KTwoVector GetCenter() const
+    katrin::KTwoVector GetCenter() const
     {
         return fCenter;
     };
@@ -110,12 +110,12 @@ class KG2DArc : public KG2DShape
     };
 
     //geometry utilities
-    void NearestDistance(const KTwoVector& aPoint, double& aDistance) const override;
-    KTwoVector Point(const KTwoVector& aPoint) const override;
-    KTwoVector Normal(const KTwoVector& aPoint) const override;
+    void NearestDistance(const katrin::KTwoVector& aPoint, double& aDistance) const override;
+    katrin::KTwoVector Point(const katrin::KTwoVector& aPoint) const override;
+    katrin::KTwoVector Normal(const katrin::KTwoVector& aPoint) const override;
 
-    void NearestIntersection(const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult,
-                             KTwoVector& anIntersection) const override;
+    void NearestIntersection(const katrin::KTwoVector& aStart, const katrin::KTwoVector& anEnd, bool& aResult,
+                             katrin::KTwoVector& anIntersection) const override;
 
     ///computes the intersection with another arc
     ///flag indicates the various possibilities
@@ -124,37 +124,37 @@ class KG2DArc : public KG2DShape
     ///flag = 2 indicates there are two intersection
     ///flag = 3 indicates sections of the arcs are coincident
     ///so there are an inifinite number of intersections
-    void NearestIntersection(const KG2DArc* arc, int& flag, std::vector<KTwoVector>* intersections) const;
+    void NearestIntersection(const KG2DArc* arc, int& flag, std::vector<katrin::KTwoVector>* intersections) const;
 
     ///tests if a given point is inside the section of the circle
     ///that is defined by the arc and its chord
-    bool IsInsideCircularSegment(const KTwoVector& aPoint) const;
+    bool IsInsideCircularSegment(const katrin::KTwoVector& aPoint) const;
 
     ///tests if a given point is inside the wedge defined by
     ///the arc and the center of the circle
-    bool IsInsideWedge(const KTwoVector& aPoint) const;
+    bool IsInsideWedge(const katrin::KTwoVector& aPoint) const;
 
     ///tests if a given point lies within the angles defined by the arc
-    bool IsInAngularRange(const KTwoVector& aPoint) const;
+    bool IsInAngularRange(const katrin::KTwoVector& aPoint) const;
 
     ///tests if a given angle is between angle1 and angle2
     ///assumes that angles are between [0,2pi]
     bool IsInAngularRange(const double& angle1, const double& angle2, const double& test) const;
 
     ///tests if a point is on the same side of the chord that the arc is on
-    bool IsSameSideOfChordAsArc(const KTwoVector& aPoint) const;
+    bool IsSameSideOfChordAsArc(const katrin::KTwoVector& aPoint) const;
 
     int DoArcsOverlap(const KG2DArc* aArc) const;
 
   protected:
     bool fIsCCW;
 
-    KTwoVector fP1;            //start point of arc
-    KTwoVector fP2;            //end point of arc
-    KTwoVector fCenter;        //center of circle arc lies on
-    KTwoVector fChordUnit;     //unit vector pointing from fP1 to fP2
-    KTwoVector fHalfwayPoint;  //point halfway between fP1 and fP2
-    KTwoVector fBisector;      //vector which points from circle center to middle of arc
+    katrin::KTwoVector fP1;            //start point of arc
+    katrin::KTwoVector fP2;            //end point of arc
+    katrin::KTwoVector fCenter;        //center of circle arc lies on
+    katrin::KTwoVector fChordUnit;     //unit vector pointing from fP1 to fP2
+    katrin::KTwoVector fHalfwayPoint;  //point halfway between fP1 and fP2
+    katrin::KTwoVector fBisector;      //vector which points from circle center to middle of arc
 
     double fHalfSubtendedAngle;
     double fCosHalfSubtendedAngle;

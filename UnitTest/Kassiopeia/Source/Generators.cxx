@@ -49,6 +49,7 @@
 using namespace KGeoBag;
 using namespace Kassiopeia;
 
+using katrin::KThreeVector;
 
 //////////////////////////////////////////////////////////////////////////////
 // Generators Unit Testing
@@ -187,7 +188,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueUniform)
 TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Kr83)
 {
     ASSERT_EQ(fValues.size(), 0UL);
-    vector<int> tVacancies;
+    std::vector<int> tVacancies;
 
     auto* tGenerator = new KSGenConversion();
     ASSERT_PTR(tGenerator);
@@ -215,7 +216,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Kr83)
 TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn219)
 {
     ASSERT_EQ(fValues.size(), 0UL);
-    vector<int> tVacancies;
+    std::vector<int> tVacancies;
 
     auto* tGenerator = new KSGenConversion();
     ASSERT_PTR(tGenerator);
@@ -243,7 +244,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn219)
 TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn220)
 {
     ASSERT_EQ(fValues.size(), 0UL);
-    vector<int> tVacancies;
+    std::vector<int> tVacancies;
 
     auto* tGenerator = new KSGenConversion();
     ASSERT_PTR(tGenerator);
@@ -276,7 +277,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn220)
 TEST_F(KassiopeiaGeneratorTest, KSGenShakeOff_Rn)
 {
     ASSERT_EQ(fValues.size(), 0UL);
-    vector<int> tVacancies;
+    std::vector<int> tVacancies;
 
     auto* tGenerator = new KSGenShakeOff();
     ASSERT_PTR(tGenerator);

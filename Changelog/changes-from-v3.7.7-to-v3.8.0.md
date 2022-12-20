@@ -1,6 +1,6 @@
 # Kasper Changelog
 
-## Changes from v3.7.7 (2021-01-13) to HEAD (2021-08-27)
+## Changes from v3.7.7 (2021-01-13) to v3.8.0 (2021-08-27)
 ### Changelog
 ### Docker
 ### Documentation

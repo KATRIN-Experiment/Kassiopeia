@@ -88,7 +88,7 @@ void KGPlanarPolyLoop::CopyFrom(const KGPlanarPolyLoop& aCopy)
     return;
 }
 
-void KGPlanarPolyLoop::StartPoint(const KTwoVector& aPoint)
+void KGPlanarPolyLoop::StartPoint(const katrin::KTwoVector& aPoint)
 {
     shapemsg_debug("adding first point to a planar poly line" << eom);
     fInitialized = false;
@@ -103,7 +103,7 @@ void KGPlanarPolyLoop::StartPoint(const KTwoVector& aPoint)
 
     return;
 }
-void KGPlanarPolyLoop::NextLine(const KTwoVector& aVertex, const unsigned int aCount, const double aPower)
+void KGPlanarPolyLoop::NextLine(const katrin::KTwoVector& aVertex, const unsigned int aCount, const double aPower)
 {
     shapemsg_debug("adding next line to a planar poly line" << eom);
     fInitialized = false;
@@ -117,7 +117,7 @@ void KGPlanarPolyLoop::NextLine(const KTwoVector& aVertex, const unsigned int aC
 
     return;
 }
-void KGPlanarPolyLoop::NextArc(const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong,
+void KGPlanarPolyLoop::NextArc(const katrin::KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong,
                                const unsigned int aCount)
 {
     shapemsg_debug("adding next arc to a planar poly line" << eom);
@@ -132,7 +132,7 @@ void KGPlanarPolyLoop::NextArc(const KTwoVector& aVertex, const double& aRadius,
 
     return;
 }
-void KGPlanarPolyLoop::PreviousLine(const KTwoVector& aVertex, const unsigned int aCount, const double aPower)
+void KGPlanarPolyLoop::PreviousLine(const katrin::KTwoVector& aVertex, const unsigned int aCount, const double aPower)
 {
     shapemsg_debug("adding previous line to a planar poly line" << eom);
     fInitialized = false;
@@ -146,7 +146,7 @@ void KGPlanarPolyLoop::PreviousLine(const KTwoVector& aVertex, const unsigned in
 
     return;
 }
-void KGPlanarPolyLoop::PreviousArc(const KTwoVector& aVertex, const double& aRadius, const bool& aLeft,
+void KGPlanarPolyLoop::PreviousArc(const katrin::KTwoVector& aVertex, const double& aRadius, const bool& aLeft,
                                    const bool& aLong, const unsigned int aCount)
 {
     shapemsg_debug("adding previous arc to a planar poly line" << eom);
@@ -190,14 +190,14 @@ const double& KGPlanarPolyLoop::Length() const
     }
     return fLength;
 }
-const KTwoVector& KGPlanarPolyLoop::Centroid() const
+const katrin::KTwoVector& KGPlanarPolyLoop::Centroid() const
 {
     if (fInitialized == false) {
         Initialize();
     }
     return fCentroid;
 }
-const KTwoVector& KGPlanarPolyLoop::Anchor() const
+const katrin::KTwoVector& KGPlanarPolyLoop::Anchor() const
 {
     if (fInitialized == false) {
         Initialize();
@@ -205,7 +205,7 @@ const KTwoVector& KGPlanarPolyLoop::Anchor() const
     return fAnchor;
 }
 
-KTwoVector KGPlanarPolyLoop::At(const double& aLength) const
+katrin::KTwoVector KGPlanarPolyLoop::At(const double& aLength) const
 {
     if (fInitialized == false) {
         Initialize();
@@ -228,16 +228,16 @@ KTwoVector KGPlanarPolyLoop::At(const double& aLength) const
     }
     return fAnchor;
 }
-KTwoVector KGPlanarPolyLoop::Point(const KTwoVector& aQuery) const
+katrin::KTwoVector KGPlanarPolyLoop::Point(const katrin::KTwoVector& aQuery) const
 {
     if (fInitialized == false) {
         Initialize();
     }
 
-    KTwoVector tCurrent;
+    katrin::KTwoVector tCurrent;
     double tCurrentDistanceSquared;
 
-    KTwoVector tNearest;
+    katrin::KTwoVector tNearest;
     double tNearestDistanceSquared;
 
     auto tIt = fElements.begin();
@@ -258,26 +258,26 @@ KTwoVector KGPlanarPolyLoop::Point(const KTwoVector& aQuery) const
 
     return tNearest;
 }
-KTwoVector KGPlanarPolyLoop::Normal(const KTwoVector& aQuery) const
+katrin::KTwoVector KGPlanarPolyLoop::Normal(const katrin::KTwoVector& aQuery) const
 {
     if (fInitialized == false) {
         Initialize();
     }
 
-    KTwoVector tFirstPoint;
-    KTwoVector tFirstNormal;
+    katrin::KTwoVector tFirstPoint;
+    katrin::KTwoVector tFirstNormal;
     double tFirstDistance;
 
-    KTwoVector tSecondPoint;
-    KTwoVector tSecondNormal;
+    katrin::KTwoVector tSecondPoint;
+    katrin::KTwoVector tSecondNormal;
     double tSecondDistance;
 
-    KTwoVector tAveragePoint;
-    KTwoVector tAverageNormal;
+    katrin::KTwoVector tAveragePoint;
+    katrin::KTwoVector tAverageNormal;
     double tAverageDistance;
 
-    KTwoVector tNearestPoint;
-    KTwoVector tNearestNormal;
+    katrin::KTwoVector tNearestPoint;
+    katrin::KTwoVector tNearestNormal;
     double tNearestDistance;
 
     auto tIt = fElements.begin();
@@ -358,14 +358,14 @@ KTwoVector KGPlanarPolyLoop::Normal(const KTwoVector& aQuery) const
         return -1 * tNearestNormal;
     }
 }
-bool KGPlanarPolyLoop::Above(const KTwoVector& aQuery) const
+bool KGPlanarPolyLoop::Above(const katrin::KTwoVector& aQuery) const
 {
     if (fInitialized == false) {
         Initialize();
     }
 
-    KTwoVector tPoint = Point(aQuery);
-    KTwoVector tNormal = Normal(aQuery);
+    katrin::KTwoVector tPoint = Point(aQuery);
+    katrin::KTwoVector tNormal = Normal(aQuery);
 
     if (tNormal.Dot(aQuery - tPoint) > 0.) {
         return true;
@@ -399,8 +399,8 @@ void KGPlanarPolyLoop::Initialize() const
 
 bool KGPlanarPolyLoop::DetermineInteriorSide() const
 {
-    KTwoVector first;
-    KTwoVector second;
+    katrin::KTwoVector first;
+    katrin::KTwoVector second;
     double costheta;
     double theta;
     double total_angle = 0;

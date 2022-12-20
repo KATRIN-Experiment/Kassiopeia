@@ -21,9 +21,12 @@
 #include <vector>
 
 #if defined(KEMFIELD_USE_ROOT)
-#include "KEMRootFieldCanvas.hh"
+#include "TAxis.h"
+#include "TCanvas.h"
 #include "TGraph.h"
 #include "TMultiGraph.h"
+#include "TStyle.h"
+#include "KEMRootFieldCanvas.hh"
 #elif defined(KEMFIELD_USE_VTK)
 #include "KEMVTKFieldCanvas.hh"
 #else
@@ -87,6 +90,7 @@
 #endif /* !DEFAULT_OUTPUT_DIR */
 
 using namespace KEMField;
+using katrin::KThreeVector;
 
 #ifdef KEMFIELD_USE_KGEOBAG
 using namespace KGeoBag;

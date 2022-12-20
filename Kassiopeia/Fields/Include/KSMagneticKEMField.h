@@ -30,17 +30,17 @@ class KSMagneticKEMField : public KSMagneticField
     void SetMagneticField(KEMField::KMagneticField* field);
     KEMField::KMagneticField* GetMagneticField();
 
-    void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                            KGeoBag::KThreeVector& aPotential) override;
+    void CalculatePotential(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                            katrin::KThreeVector& aPotential) override;
 
-    void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                        KGeoBag::KThreeVector& aField) override;
+    void CalculateField(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                        katrin::KThreeVector& aField) override;
 
-    void CalculateGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                           KGeoBag::KThreeMatrix& aGradient) override;
+    void CalculateGradient(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                           katrin::KThreeMatrix& aGradient) override;
 
-    void CalculateFieldAndGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                                   KGeoBag::KThreeVector& aField, KGeoBag::KThreeMatrix& aGradient) override;
+    void CalculateFieldAndGradient(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                   katrin::KThreeVector& aField, katrin::KThreeMatrix& aGradient) override;
 
   private:
     void InitializeComponent() override;

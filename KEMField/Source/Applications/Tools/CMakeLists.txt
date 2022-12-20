@@ -6,6 +6,7 @@ if (KEMField_ENABLE_APP)
 
     set (APPLICATIONS_LIBS
         KEMFieldBindings
+        KGeoBagBindings
     )
 
     if (KEMField_USE_ROOT)
@@ -23,6 +24,10 @@ if (KEMField_ENABLE_APP)
     if (KEMField_USE_VTK)
         list (APPEND APPLICATIONS_LIBS KEMVTKPlugin)
     endif (KEMField_USE_VTK)
+
+    add_executable (KEMField
+      ${CMAKE_CURRENT_SOURCE_DIR}/KEMField.cc)
+    target_link_libraries (KEMField ${APPLICATIONS_LIBS} )
 
     add_executable (KdbConverter
       ${CMAKE_CURRENT_SOURCE_DIR}/KdbConverter.cc)
@@ -49,6 +54,7 @@ if (KEMField_ENABLE_APP)
     target_link_libraries (WriteAsciiToPCD ${APPLICATIONS_LIBS} )
 
     kasper_install_executables (
+        KEMField
         KdbConverter
         TransferEMElement
         HashEMGeometry

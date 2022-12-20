@@ -20,7 +20,7 @@ using value = ptree::value_type;
 #include "KConst.h"
 #include "KFile.h"
 #include "KRotation.hh"
-#include "KStringUtils.h"
+#include "KBaseStringUtils.h"
 
 #include <cmath>
 
@@ -29,6 +29,9 @@ using value = ptree::value_type;
 
 using namespace std;
 using namespace katrin;
+
+using katrin::KThreeVector;
+using katrin::KTwoVector;
 
 namespace KGeoBag
 {
@@ -66,11 +69,11 @@ class KGGeometryPrinter::Private
     }
     inline string Put(const string& aKey, const set<string>& aValue)
     {
-        return Put(aKey, KStringUtils::Join(aValue, " "));
+        return Put(aKey, KBaseStringUtils::Join(aValue, " "));
     }
     inline string Put(const string& aKey, const vector<string>& aValue)
     {
-        return Put(aKey, KStringUtils::Join(aValue, " "));
+        return Put(aKey, KBaseStringUtils::Join(aValue, " "));
     }
 
     template<typename T> inline const T& Get(const string& aKey)
@@ -121,6 +124,7 @@ KGGeometryPrinter::KGGeometryPrinter() :
     fPath(""),
     fWriteJSON(false),
     fWriteXML(false),
+    fWriteDOT(false),
     fUseColors(true),
     fStream(&std::cout),
     fPrivate(new Private()),
@@ -195,7 +199,65 @@ void KGGeometryPrinter::Write()
         tFileStream.close();
     }
 
+    if (fWriteDOT) {
+        string tFileName = tFileBase + ".dot";
+        vismsg(eInfo) << "geometry printer writing to file <" << tFileName << ">" << eom;
+
+        ofstream tFileStream(tFileName);
+        WriteGraphViz(tFileStream);
+        tFileStream.close();
+    }
     return;
+}
+
+void KGGeometryPrinter::WriteGraphViz(std::ostream& aStream, bool with_tags) const
+{
+    vector<std::string> edges;
+    vector<std::string> nodes;
+
+    for (auto &node : fVisitedSpaces) {
+        std::string node_label = node->GetName();
+        if (with_tags) {
+            for (auto &tag : node->GetTags())
+                node_label += " @" + tag;
+        }
+        std::string node_txt = "\"" + node->GetPath() + "\" [label=\"" + node_label + "\"; shape=ellipse;]";
+        if (std::find(nodes.begin(), nodes.end(), node_txt) == nodes.end())
+            nodes.push_back(node_txt);
+
+        if (node->GetParent()) {
+            std::string edge_txt = "\"" + node->GetParent()->GetPath() + "\" -> \"" + node->GetPath() + "\"";
+            if (std::find(edges.begin(), edges.end(), edge_txt) == edges.end())
+                edges.push_back(edge_txt);
+        }
+    }
+
+    for (auto &node : fVisitedSurfaces) {
+        std::string node_label = node->GetName();
+        if (with_tags) {
+            for (auto &tag : node->GetTags())
+                node_label += " @" + tag;
+        }
+        std::string node_txt = "\"" + node->GetPath() + "\" [label=\"" + node_label + "\"; shape=box;]";
+        if (std::find(nodes.begin(), nodes.end(), node_txt) == nodes.end())
+            nodes.push_back(node_txt);
+
+        if (node->GetParent()) {
+            std::string edge_txt = "\"" + node->GetParent()->GetPath() + "\" -> \"" + node->GetPath() + "\"";
+            if (std::find(edges.begin(), edges.end(), edge_txt) == edges.end())
+                edges.push_back(edge_txt);
+        }
+    }
+
+    aStream << "digraph G {" << endl;
+    aStream << endl;
+    for (auto & it : nodes)
+        aStream << "\t" << it << endl;
+    aStream << endl;
+    for (auto & it : edges)
+        aStream << "\t" << it << endl;
+    aStream << endl;
+    aStream << "}" << endl;
 }
 
 void KGGeometryPrinter::SetFile(const string& aFile)
@@ -228,6 +290,11 @@ void KGGeometryPrinter::SetWriteJSON(bool aFlag)
 void KGGeometryPrinter::SetWriteXML(bool aFlag)
 {
     fWriteXML = aFlag;
+    return;
+}
+void KGGeometryPrinter::SetWriteDOT(bool aFlag)
+{
+    fWriteDOT = aFlag;
     return;
 }
 
@@ -332,6 +399,8 @@ void KGGeometryPrinter::VisitSurface(KGSurface* aSurface)
     if (tParent) {
         VisitSpace(const_cast<KGSpace*>(tParent));
     }
+
+    fVisitedSurfaces.push_back(aSurface);
 
     string tRoot = fPrivate->Put(aSurface->GetPath());
     fPrivate->Put(tRoot + "/type", aSurface->Name());
@@ -547,6 +616,8 @@ void KGGeometryPrinter::VisitSpace(KGSpace* aSpace)
     if (tParent && tParent != KGInterface::GetInstance()->Root()) {
         VisitSpace(const_cast<KGSpace*>(tParent));
     }
+
+    fVisitedSpaces.push_back(aSpace);
 
     string tRoot = fPrivate->Put(aSpace->GetPath());
     fPrivate->Put(tRoot + "/type", aSpace->Name());

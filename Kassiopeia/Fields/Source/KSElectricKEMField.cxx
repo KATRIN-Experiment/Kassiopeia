@@ -9,7 +9,8 @@
 #include "KElectricField.hh"
 
 using namespace KEMField;
-using KGeoBag::KThreeVector;
+
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

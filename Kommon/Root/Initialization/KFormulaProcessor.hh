@@ -34,6 +34,8 @@ class KFormulaProcessor : public KProcessor
     static const std::string fGreaterEqual;
     static const std::string fLessEqual;
     static const std::string fModulo;
+    static const std::string fStringCompare;
+    static const std::string fStringICompare;
 
     TFormula* fFormulaParser;
 };

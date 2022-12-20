@@ -19,9 +19,9 @@ class KSGenSpinComposite : public KSComponentTemplate<KSGenSpinComposite, KSGenC
     void Dice(KSParticleQueue* aParticleList) override;
 
   public:
-    void SetXAxis(const KGeoBag::KThreeVector& anXAxis);
-    void SetYAxis(const KGeoBag::KThreeVector& anYAxis);
-    void SetZAxis(const KGeoBag::KThreeVector& anZAxis);
+    void SetXAxis(const katrin::KThreeVector& anXAxis);
+    void SetYAxis(const katrin::KThreeVector& anYAxis);
+    void SetZAxis(const katrin::KThreeVector& anZAxis);
 
     void SetThetaValue(KSGenValue* anThetaValue);
     void ClearThetaValue(KSGenValue* anThetaValue);
@@ -33,9 +33,9 @@ class KSGenSpinComposite : public KSComponentTemplate<KSGenSpinComposite, KSGenC
     KSGenValue* fThetaValue;
     KSGenValue* fPhiValue;
 
-    KGeoBag::KThreeVector fXAxis;
-    KGeoBag::KThreeVector fYAxis;
-    KGeoBag::KThreeVector fZAxis;
+    katrin::KThreeVector fXAxis;
+    katrin::KThreeVector fYAxis;
+    katrin::KThreeVector fZAxis;
 
   protected:
     void InitializeComponent() override;

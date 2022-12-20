@@ -31,12 +31,12 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
     void CopyFrom(const KGPlanarPolyLoop& aCopy);
 
   public:
-    void StartPoint(const KTwoVector& aPoint);
-    void NextLine(const KTwoVector& aVertex, const unsigned int aCount = 2, const double aPower = 1.);
-    void NextArc(const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong,
+    void StartPoint(const katrin::KTwoVector& aPoint);
+    void NextLine(const katrin::KTwoVector& aVertex, const unsigned int aCount = 2, const double aPower = 1.);
+    void NextArc(const katrin::KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong,
                  const unsigned int aCount = 2);
-    void PreviousLine(const KTwoVector& aVertex, const unsigned int aCount = 2, const double aPower = 1.);
-    void PreviousArc(const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong,
+    void PreviousLine(const katrin::KTwoVector& aVertex, const unsigned int aCount = 2, const double aPower = 1.);
+    void PreviousArc(const katrin::KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong,
                      const unsigned int aCount = 2);
     void LastLine(const unsigned int aCount = 2, const double aPower = 1.);
     void LastArc(const double& aRadius, const bool& aLeft, const bool& aLong, const unsigned int aCount = 2);
@@ -44,21 +44,21 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
     const Set& Elements() const;
 
     const double& Length() const override;
-    const KTwoVector& Centroid() const override;
-    const KTwoVector& Anchor() const override;
+    const katrin::KTwoVector& Centroid() const override;
+    const katrin::KTwoVector& Anchor() const override;
 
   public:
-    KTwoVector At(const double& aLength) const override;
-    KTwoVector Point(const KTwoVector& aQuery) const override;
-    KTwoVector Normal(const KTwoVector& aQuery) const override;
-    bool Above(const KTwoVector& aQuery) const override;
+    katrin::KTwoVector At(const double& aLength) const override;
+    katrin::KTwoVector Point(const katrin::KTwoVector& aQuery) const override;
+    katrin::KTwoVector Normal(const katrin::KTwoVector& aQuery) const override;
+    bool Above(const katrin::KTwoVector& aQuery) const override;
 
   private:
     Set fElements;
 
     mutable double fLength;
-    mutable KTwoVector fCentroid;
-    mutable KTwoVector fAnchor;
+    mutable katrin::KTwoVector fCentroid;
+    mutable katrin::KTwoVector fAnchor;
 
     void Initialize() const;
     mutable bool fInitialized;
@@ -76,7 +76,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
         StartPointArguments() : fPoint(0., 0.) {}
         ~StartPointArguments() = default;
 
-        KTwoVector fPoint;
+        katrin::KTwoVector fPoint;
     };
 
     class LineArguments
@@ -85,7 +85,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
         LineArguments() : fVertex(0., 0.), fMeshCount(1), fMeshPower(1.) {}
         ~LineArguments() = default;
 
-        KTwoVector fVertex;
+        katrin::KTwoVector fVertex;
         unsigned int fMeshCount;
         double fMeshPower;
     };
@@ -96,7 +96,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
         ArcArguments() : fVertex(0., 0.), fRadius(0.), fRight(true), fShort(true), fMeshCount(64) {}
         ~ArcArguments() = default;
 
-        KTwoVector fVertex;
+        katrin::KTwoVector fVertex;
         double fRadius;
         bool fRight;
         bool fShort;

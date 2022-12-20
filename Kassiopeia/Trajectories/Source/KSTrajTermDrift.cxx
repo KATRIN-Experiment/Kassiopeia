@@ -1,5 +1,7 @@
 #include "KSTrajTermDrift.h"
 
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -15,10 +17,10 @@ KSTrajTermDrift::~KSTrajTermDrift() = default;
 void KSTrajTermDrift::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle,
                                     KSTrajAdiabaticDerivative& aDerivative) const
 {
-    KGeoBag::KThreeVector tMagneticField = aParticle.GetMagneticField();
-    KGeoBag::KThreeVector tMagneticFieldUnit = tMagneticField.Unit();
-    KGeoBag::KThreeMatrix tMagneticGradient = aParticle.GetMagneticGradient();
-    KGeoBag::KThreeVector tMagneticGradientUnit;
+    KThreeVector tMagneticField = aParticle.GetMagneticField();
+    KThreeVector tMagneticFieldUnit = tMagneticField.Unit();
+    KThreeMatrix tMagneticGradient = aParticle.GetMagneticGradient();
+    KThreeVector tMagneticGradientUnit;
     tMagneticGradientUnit.X() = tMagneticFieldUnit.X() * tMagneticGradient(0, 0) +
                                 tMagneticFieldUnit.Y() * tMagneticGradient(0, 1) +
                                 tMagneticFieldUnit.Z() * tMagneticGradient(0, 2);
@@ -29,7 +31,7 @@ void KSTrajTermDrift::Differentiate(double /*aTime*/, const KSTrajAdiabaticParti
                                 tMagneticFieldUnit.Y() * tMagneticGradient(2, 1) +
                                 tMagneticFieldUnit.Z() * tMagneticGradient(2, 2);
 
-    KGeoBag::KThreeVector tElectricField = aParticle.GetElectricField();
+    KThreeVector tElectricField = aParticle.GetElectricField();
     double tMagneticFieldMag = tMagneticField.Magnitude();
     double tMagneticFieldMag2 = tMagneticField.MagnitudeSquared();
     double tMagneticFieldMag3 = tMagneticFieldMag2 * tMagneticFieldMag;
@@ -41,7 +43,7 @@ void KSTrajTermDrift::Differentiate(double /*aTime*/, const KSTrajAdiabaticParti
     double tMass = aParticle.GetMass();
     double tCharge = aParticle.GetCharge();
 
-    KGeoBag::KThreeVector tDriftVelocity =
+    KThreeVector tDriftVelocity =
         (1. / tMagneticFieldMag2) * tElectricField.Cross(tMagneticField) +
         ((2. * tLongMomentum2 + tTransMomentum2) / (tCharge * tMagneticFieldMag3 * tMass * (1. + tLorentzFactor))) *
             (tMagneticField.Cross(tMagneticGradientUnit));

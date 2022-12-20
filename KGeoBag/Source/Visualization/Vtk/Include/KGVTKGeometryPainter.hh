@@ -162,7 +162,7 @@ class KGVTKGeometryPainter :
     void VisitWrappedSpace(KGRodSpace* aRodSpace) override;
 
   private:
-    void LocalToGlobal(const KGeoBag::KThreeVector& aLocal, KGeoBag::KThreeVector& aGlobal);
+    void LocalToGlobal(const katrin::KThreeVector& aLocal, katrin::KThreeVector& aGlobal);
 
     //**********
     //data types
@@ -183,7 +183,7 @@ class KGVTKGeometryPainter :
     class Points
     {
       public:
-        using Element = KTwoVector;
+        using Element = katrin::KTwoVector;
         using Set = std::deque<Element>;
         using It = Set::iterator;
         using CIt = Set::const_iterator;
@@ -201,7 +201,7 @@ class KGVTKGeometryPainter :
     class ThreePoints
     {
       public:
-        using Element = KGeoBag::KThreeVector;
+        using Element = katrin::KThreeVector;
         using Set = std::deque<Element>;
         using It = Set::iterator;
         using CIt = Set::const_iterator;
@@ -213,8 +213,8 @@ class KGVTKGeometryPainter :
     class Mesh
     {
       public:
-        using Element = KGeoBag::KThreeVector;
-        using Group = std::deque<KThreeVector>;
+        using Element = katrin::KThreeVector;
+        using Group = std::deque<katrin::KThreeVector>;
         using GroupIt = Group::iterator;
         using GroupCIt = Group::const_iterator;
         using Set = std::deque<Group>;
@@ -255,9 +255,9 @@ class KGVTKGeometryPainter :
     //mesh functions
     //**************
 
-    static void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
+    static void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const katrin::KTwoVector& aCentroid,
                                                        const double& aZ, TubeMesh& aMesh,
-                                                       KGeoBag::KThreeVector& anApex);
+                                                       katrin::KThreeVector& anApex);
     void OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints, TubeMesh& aMesh);
     void OpenPointsRotatedToShellMesh(const OpenPoints& aPoints, ShellMesh& aMesh, const double& aAngleStart,
                                       const double& aAngleStop);
@@ -283,10 +283,10 @@ class KGVTKGeometryPainter :
     void MeshToVTK(const Mesh& aMesh);
     void FlatMeshToVTK(const FlatMesh& aMesh);
     void TubeMeshToVTK(const TubeMesh& aMesh);
-    void TubeMeshToVTK(const TubeMesh& aMesh, const KGeoBag::KThreeVector& anApexEnd);
-    void TubeMeshToVTK(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh);
-    void TubeMeshToVTK(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh,
-                       const KGeoBag::KThreeVector& anApexEnd);
+    void TubeMeshToVTK(const TubeMesh& aMesh, const katrin::KThreeVector& anApexEnd);
+    void TubeMeshToVTK(const katrin::KThreeVector& anApexStart, const TubeMesh& aMesh);
+    void TubeMeshToVTK(const katrin::KThreeVector& anApexStart, const TubeMesh& aMesh,
+                       const katrin::KThreeVector& anApexEnd);
     void ShellMeshToVTK(const ShellMesh& aMesh);
     void ClosedShellMeshToVTK(const ShellMesh& aMesh);
     void TorusMeshToVTK(const TorusMesh& aMesh);
@@ -302,10 +302,10 @@ class KGVTKGeometryPainter :
     KGSpace* fCurrentSpace;
     KGSurface* fCurrentSurface;
     KGAppearanceData* fCurrentData;
-    KGeoBag::KThreeVector fCurrentOrigin;
-    KGeoBag::KThreeVector fCurrentXAxis;
-    KGeoBag::KThreeVector fCurrentYAxis;
-    KGeoBag::KThreeVector fCurrentZAxis;
+    katrin::KThreeVector fCurrentOrigin;
+    katrin::KThreeVector fCurrentXAxis;
+    katrin::KThreeVector fCurrentYAxis;
+    katrin::KThreeVector fCurrentZAxis;
     bool fIgnore;
 };
 

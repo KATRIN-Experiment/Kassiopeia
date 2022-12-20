@@ -1,6 +1,6 @@
 # Kasper Changelog
 
-## Changes from v3.7.6 (2020-08-24) to HEAD (2021-01-13)
+## Changes from v3.7.6 (2020-08-24) to v3.7.6 (2021-01-13)
 ### Changelog
 - **2021-01-13:** Update version numbers, add Changelog files [*(view commit)*](https://github.com/KATRIN-Experiment/Kassiopeia/commit//a69d9b2de87ad37991324beb6ed1b8b2cb70a091)
 ### Docker

@@ -7,6 +7,7 @@
 #include "KGMeshElement.hh"
 #include "KGNavigableMeshElement.hh"
 #include "KGNavigableMeshElementContainer.hh"
+
 #include "KThreeVector.hh"
 
 namespace KGeoBag
@@ -38,18 +39,18 @@ class KGMeshElementCollector : public KGVisitor, public KGSurface::Visitor, publ
         fMeshContainer = aContainer;
     }
 
-    void SetSystem(const KGeoBag::KThreeVector& anOrigin, const KGeoBag::KThreeVector& aXAxis,
-                   const KGeoBag::KThreeVector& aYAxis, const KGeoBag::KThreeVector& aZAxis);
-    const KGeoBag::KThreeVector& GetOrigin() const;
-    const KGeoBag::KThreeVector& GetXAxis() const;
-    const KGeoBag::KThreeVector& GetYAxis() const;
-    const KGeoBag::KThreeVector& GetZAxis() const;
+    void SetSystem(const katrin::KThreeVector& anOrigin, const katrin::KThreeVector& aXAxis,
+                   const katrin::KThreeVector& aYAxis, const katrin::KThreeVector& aZAxis);
+    const katrin::KThreeVector& GetOrigin() const;
+    const katrin::KThreeVector& GetXAxis() const;
+    const katrin::KThreeVector& GetYAxis() const;
+    const katrin::KThreeVector& GetZAxis() const;
 
     void VisitSurface(KGSurface* aSurface) override;
     void VisitSpace(KGSpace* aSpace) override;
 
   protected:
-    KGeoBag::KThreeVector LocalToInternal(const KGeoBag::KThreeVector& aVector);
+    katrin::KThreeVector LocalToInternal(const katrin::KThreeVector& aVector);
     void Add(KGMeshData* aData);
 
     void PreCollectionAction(KGMeshData* aData)
@@ -74,15 +75,15 @@ class KGMeshElementCollector : public KGVisitor, public KGSurface::Visitor, publ
 
     KGNavigableMeshElementContainer* fMeshContainer;
 
-    KGeoBag::KThreeVector fOrigin;
-    KGeoBag::KThreeVector fXAxis;
-    KGeoBag::KThreeVector fYAxis;
-    KGeoBag::KThreeVector fZAxis;
+    katrin::KThreeVector fOrigin;
+    katrin::KThreeVector fXAxis;
+    katrin::KThreeVector fYAxis;
+    katrin::KThreeVector fZAxis;
 
-    KGeoBag::KThreeVector fCurrentOrigin;
-    KGeoBag::KThreeVector fCurrentXAxis;
-    KGeoBag::KThreeVector fCurrentYAxis;
-    KGeoBag::KThreeVector fCurrentZAxis;
+    katrin::KThreeVector fCurrentOrigin;
+    katrin::KThreeVector fCurrentXAxis;
+    katrin::KThreeVector fCurrentYAxis;
+    katrin::KThreeVector fCurrentZAxis;
 
     KGSurface* fCurrentSurface;
     KGSpace* fCurrentSpace;

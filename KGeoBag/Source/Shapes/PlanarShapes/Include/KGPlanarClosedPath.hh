@@ -17,7 +17,7 @@ class KGPlanarClosedPath : public KGPlanarPath
     //**********
 
   public:
-    virtual const KTwoVector& Anchor() const = 0;
+    virtual const katrin::KTwoVector& Anchor() const = 0;
 };
 
 }  // namespace KGeoBag

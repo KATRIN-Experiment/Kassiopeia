@@ -1,14 +1,6 @@
 # headers
 set( MATH_HEADER_FILES
-    Include/KTwoVector.hh
-    Include/KTwoMatrix.hh
-    Include/KThreeVector.hh
-    Include/KThreeMatrix.hh
-    Include/KRotation.hh
-    Include/KTransformation.hh
     Include/KGCoordinateTransform.hh
-    Include/KFrame.hh
-    Include/KAxis.hh
     Include/KGDataPoint.hh
     Include/KGInterpolator.hh
     Include/KGTrigonometricInterpolator.hh
@@ -21,15 +13,7 @@ set( MATH_HEADER_FILES
 
 # source
 set( MATH_SOURCE_FILES
-    Source/KTwoVector.cc
-    Source/KThreeVector.cc
-    Source/KTwoMatrix.cc
-    Source/KThreeMatrix.cc
-    Source/KRotation.cc
-    Source/KTransformation.cc
     Source/KGCoordinateTransform.cc
-    Source/KFrame.cc
-    Source/KAxis.cc
     Source/KGInterpolator.cc
     Source/KGTrigonometricInterpolator.cc
     Source/KGLinearSplineInterpolator.cc
@@ -46,7 +30,8 @@ target_include_directories( KGeoBagMath
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBagMath
     PUBLIC
-        Kommon
+        KommonCore
+        KommonMath
 )
 
 # install

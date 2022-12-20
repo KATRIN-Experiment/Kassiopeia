@@ -68,6 +68,7 @@ bool KSRootRunModifier::ExecutePreRunModification(KSRun& aRun)
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing pre-run modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> in run " << aRun.GetRunId() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePreRunModification(aRun);
             if (changed)
                 hasChangedState = true;
@@ -84,6 +85,7 @@ bool KSRootRunModifier::ExecutePostRunModification(KSRun& aRun)
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing post-run modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> in run " << aRun.GetRunId() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePostRunModification(aRun);
             if (changed)
                 hasChangedState = true;

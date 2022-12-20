@@ -22,8 +22,8 @@ class KGRotatedSurfaceIntersector : virtual public KGAnalyticIntersector
     KGRotatedSurfaceIntersector(const KGRotatedSurface& rotatedSurface);
     ~KGRotatedSurfaceIntersector() override = default;
 
-    bool Intersection(KThreeVector& aStart, KGeoBag::KThreeVector& anEnd,
-                      KGeoBag::KThreeVector& aResult) const override;
+    bool Intersection(katrin::KThreeVector& aStart, katrin::KThreeVector& anEnd,
+                      katrin::KThreeVector& aResult) const override;
 
   protected:
     const KGRotatedSurface& fRotatedSurface;

@@ -24,8 +24,8 @@ class KSGeoSide : public KSComponentTemplate<KSGeoSide, KSSide>
     void On() const override;
     void Off() const override;
 
-    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const override;
+    katrin::KThreeVector Point(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector Normal(const katrin::KThreeVector& aPoint) const override;
 
   public:
     void AddContent(KGeoBag::KGSurface* aSurface);

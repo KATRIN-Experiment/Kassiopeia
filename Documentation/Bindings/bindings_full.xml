@@ -1,0 +1,7108 @@
+<NamedRandomGenerator
+    Name="(string)"
+    Seed="(SeedType)"
+>
+</NamedRandomGenerator>
+<Random
+    Seed="(int32_t)"
+>
+</Random>
+<geometry
+    reset="(bool)"
+>
+    <annulus_surface
+        axial_mesh_count="(unsigned int)"
+        name="(string)"
+        r1="(double)"
+        r2="(double)"
+        radial_mesh_count="(unsigned int)"
+        radial_mesh_power="(double)"
+        z="(double)"
+    >
+    </annulus_surface>
+
+    <appearance
+        arc="(unsigned int)"
+        color="(KGRGBAColor)"
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </appearance>
+
+    <axial_mesh
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </axial_mesh>
+
+    <beam_space
+        name="(string)"
+    >
+        <beam
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+        >
+            <end_line
+                x1="(double)"
+                x2="(double)"
+                y1="(double)"
+                y2="(double)"
+                z1="(double)"
+                z2="(double)"
+            >
+            </end_line>
+
+            <start_line
+                x1="(double)"
+                x2="(double)"
+                y1="(double)"
+                y2="(double)"
+                z1="(double)"
+                z2="(double)"
+            >
+            </start_line>
+
+        </beam>
+
+    </beam_space>
+
+    <beam_surface
+        name="(string)"
+    >
+        <beam
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+        >
+        </beam>
+
+    </beam_surface>
+
+    <box_space
+        name="(string)"
+        x_mesh_count="(unsigned int)"
+        x_mesh_power="(double)"
+        xa="(double)"
+        xb="(double)"
+        y_mesh_count="(unsigned int)"
+        y_mesh_power="(double)"
+        ya="(double)"
+        yb="(double)"
+        z_mesh_count="(unsigned int)"
+        z_mesh_power="(double)"
+        za="(double)"
+        zb="(double)"
+    >
+    </box_space>
+
+    <circle_wire_space
+        name="(string)"
+    >
+        <circle_wire
+            diameter="(double)"
+            mesh_count="(unsigned int)"
+            radius="(double)"
+        >
+        </circle_wire>
+
+    </circle_wire_space>
+
+    <circle_wire_surface
+        name="(string)"
+    >
+        <circle_wire
+            diameter="(double)"
+            mesh_count="(unsigned int)"
+            radius="(double)"
+        >
+        </circle_wire>
+
+    </circle_wire_surface>
+
+    <circular_wire_pins_space
+        name="(string)"
+    >
+        <circular_wire_pins
+            diameter="(double)"
+            inner_radius="(double)"
+            mesh_count="(unsigned int)"
+            mesh_power="(double)"
+            n_pins="(unsigned int)"
+            outer_radius="(double)"
+            rotation_angle="(double)"
+        >
+        </circular_wire_pins>
+
+    </circular_wire_pins_space>
+
+    <circular_wire_pins_surface
+        name="(string)"
+    >
+        <circular_wire_pins
+            diameter="(double)"
+            inner_radius="(double)"
+            mesh_count="(unsigned int)"
+            mesh_power="(double)"
+            n_pins="(unsigned int)"
+            outer_radius="(double)"
+            rotation_angle="(double)"
+        >
+        </circular_wire_pins>
+
+    </circular_wire_pins_surface>
+
+    <complex_annulus_surface
+        name="(string)"
+    >
+        <complex_annulus
+            axial_mesh_count="(int)"
+            radial_mesh_count="(int)"
+            radius="(double)"
+        >
+            <ring
+                radius="(double)"
+                x="(double)"
+                y="(double)"
+            >
+            </ring>
+
+        </complex_annulus>
+
+    </complex_annulus_surface>
+
+    <cone_space
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        radial_mesh_count="(unsigned int)"
+        radial_mesh_power="(double)"
+        rb="(double)"
+        za="(double)"
+        zb="(double)"
+    >
+    </cone_space>
+
+    <cone_surface
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        rb="(double)"
+        za="(double)"
+        zb="(double)"
+    >
+    </cone_surface>
+
+    <conic_section_port_housing_space
+        name="(string)"
+    >
+        <conic_section_port_housing
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+            r1="(double)"
+            r2="(double)"
+            z1="(double)"
+            z2="(double)"
+        >
+            <orthogonal_port
+                box_curve_mesh_count="(int)"
+                box_radial_mesh_count="(int)"
+                cylinder_axial_mesh_count="(int)"
+                cylinder_longitudinal_mesh_count="(int)"
+                radius="(double)"
+                x="(double)"
+                y="(double)"
+                z="(double)"
+            >
+            </orthogonal_port>
+
+            <paraxial_port
+                box_curve_mesh_count="(int)"
+                box_radial_mesh_count="(int)"
+                cylinder_axial_mesh_count="(int)"
+                cylinder_longitudinal_mesh_count="(int)"
+                radius="(double)"
+                x="(double)"
+                y="(double)"
+                z="(double)"
+            >
+            </paraxial_port>
+
+        </conic_section_port_housing>
+
+    </conic_section_port_housing_space>
+
+    <conic_section_port_housing_surface
+        name="(string)"
+    >
+        <conic_section_port_housing
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+            r1="(double)"
+            r2="(double)"
+            z1="(double)"
+            z2="(double)"
+        >
+        </conic_section_port_housing>
+
+    </conic_section_port_housing_surface>
+
+    <conical_wire_array_space
+        name="(string)"
+    >
+        <conical_wire_array
+            diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
+            longitudinal_mesh_power="(double)"
+            radius1="(double)"
+            radius2="(double)"
+            theta_start="(double)"
+            wire_count="(unsigned int)"
+            z1="(double)"
+            z2="(double)"
+        >
+        </conical_wire_array>
+
+    </conical_wire_array_space>
+
+    <conical_wire_array_surface
+        name="(string)"
+    >
+        <conical_wire_array
+            diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
+            longitudinal_mesh_power="(double)"
+            radius1="(double)"
+            radius2="(double)"
+            theta_start="(double)"
+            wire_count="(unsigned int)"
+            z1="(double)"
+            z2="(double)"
+        >
+        </conical_wire_array>
+
+    </conical_wire_array_surface>
+
+    <cut_cone_space
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        r1="(double)"
+        r2="(double)"
+        radial_mesh_count="(unsigned int)"
+        radial_mesh_power="(double)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </cut_cone_space>
+
+    <cut_cone_surface
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        r1="(double)"
+        r2="(double)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </cut_cone_surface>
+
+    <cut_cone_tube_space
+        axial_mesh_count="(unsigned int)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        r11="(double)"
+        r12="(double)"
+        r21="(double)"
+        r22="(double)"
+        radial_mesh_count="(unsigned int)"
+        radial_mesh_power="(double)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </cut_cone_tube_space>
+
+    <cut_torus_surface
+        axial_mesh_count="(unsigned int)"
+        name="(string)"
+        r1="(double)"
+        r2="(double)"
+        radius="(double)"
+        right="(bool)"
+        short="(bool)"
+        toroidal_mesh_count="(unsigned int)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </cut_torus_surface>
+
+    <cylinder_space
+        axial_mesh_count="(unsigned int)"
+        length="(double)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        r="(double)"
+        radial_mesh_count="(unsigned int)"
+        radial_mesh_power="(double)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </cylinder_space>
+
+    <cylinder_surface
+        axial_mesh_count="(unsigned int)"
+        length="(double)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        r="(double)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </cylinder_surface>
+
+    <cylinder_tube_space
+        axial_mesh_count="(unsigned int)"
+        length="(double)"
+        longitudinal_mesh_count="(unsigned int)"
+        longitudinal_mesh_power="(double)"
+        name="(string)"
+        r1="(double)"
+        r2="(double)"
+        radial_mesh_count="(unsigned int)"
+        radial_mesh_power="(double)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </cylinder_tube_space>
+
+    <discrete_rotational_mesh
+        angle="(double)"
+        count="(int)"
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </discrete_rotational_mesh>
+
+    <disk_surface
+        axial_mesh_count="(unsigned int)"
+        name="(string)"
+        r="(double)"
+        radial_mesh_count="(unsigned int)"
+        radial_mesh_power="(double)"
+        z="(double)"
+    >
+    </disk_surface>
+
+    <electromagnet
+        current="(double)"
+        direction="(string)"
+        name="(string)"
+        num_turns="(double)"
+        scaling_factor="(double)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </electromagnet>
+
+    <extruded_arc_segment_surface
+        extruded_mesh_count="(unsigned int)"
+        extruded_mesh_power="(double)"
+        name="(string)"
+        zmax="(double)"
+        zmin="(double)"
+    >
+        <arc_segment
+            arc_mesh_count="(unsigned int)"
+            radius="(double)"
+            right="(bool)"
+            short="(bool)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </arc_segment>
+
+    </extruded_arc_segment_surface>
+
+    <extruded_circle_space
+        extruded_mesh_count="(unsigned int)"
+        extruded_mesh_power="(double)"
+        flattened_mesh_count="(unsigned int)"
+        flattened_mesh_power="(double)"
+        name="(string)"
+        zmax="(double)"
+        zmin="(double)"
+    >
+        <circle
+            circle_mesh_count="(unsigned int)"
+            radius="(double)"
+            x="(double)"
+            y="(double)"
+        >
+        </circle>
+
+    </extruded_circle_space>
+
+    <extruded_circle_surface
+        extruded_mesh_count="(unsigned int)"
+        extruded_mesh_power="(double)"
+        name="(string)"
+        zmax="(double)"
+        zmin="(double)"
+    >
+        <circle
+            circle_mesh_count="(unsigned int)"
+            radius="(double)"
+            x="(double)"
+            y="(double)"
+        >
+        </circle>
+
+    </extruded_circle_surface>
+
+    <extruded_line_segment_surface
+        extruded_mesh_count="(unsigned int)"
+        extruded_mesh_power="(double)"
+        name="(string)"
+        zmax="(double)"
+        zmin="(double)"
+    >
+        <line_segment
+            line_mesh_count="(unsigned int)"
+            line_mesh_power="(double)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </line_segment>
+
+    </extruded_line_segment_surface>
+
+    <extruded_poly_line_surface
+        extruded_mesh_count="(unsigned int)"
+        extruded_mesh_power="(double)"
+        name="(string)"
+        zmax="(double)"
+        zmin="(double)"
+    >
+        <poly_line>
+            <next_arc
+                arc_mesh_count="(unsigned int)"
+                radius="(double)"
+                right="(bool)"
+                short="(bool)"
+                x="(double)"
+                y="(double)"
+            >
+            </next_arc>
+
+            <next_line
+                line_mesh_count="(unsigned int)"
+                line_mesh_power="(double)"
+                x="(double)"
+                y="(double)"
+            >
+            </next_line>
+
+            <previous_arc
+                arc_mesh_count="(unsigned int)"
+                radius="(double)"
+                right="(bool)"
+                short="(bool)"
+                x="(double)"
+                y="(double)"
+            >
+            </previous_arc>
+
+            <previous_line
+                line_mesh_count="(unsigned int)"
+                line_mesh_power="(double)"
+                x="(double)"
+                y="(double)"
+            >
+            </previous_line>
+
+            <start_point
+                x="(double)"
+                y="(double)"
+            >
+            </start_point>
+
+        </poly_line>
+
+    </extruded_poly_line_surface>
+
+    <extruded_poly_loop_space
+        extruded_mesh_count="(unsigned int)"
+        extruded_mesh_power="(double)"
+        flattened_mesh_count="(unsigned int)"
+        flattened_mesh_power="(double)"
+        name="(string)"
+        zmax="(double)"
+        zmin="(double)"
+    >
+        <poly_loop>
+            <last_arc
+                arc_mesh_count="(unsigned int)"
+                radius="(double)"
+                right="(bool)"
+                short="(bool)"
+            >
+            </last_arc>
+
+            <last_line
+                line_mesh_count="(unsigned int)"
+                line_mesh_power="(double)"
+            >
+            </last_line>
+
+            <next_arc
+                arc_mesh_count="(unsigned int)"
+                radius="(double)"
+                right="(bool)"
+                short="(bool)"
+                x="(double)"
+                y="(double)"
+            >
+            </next_arc>
+
+            <next_line
+                line_mesh_count="(unsigned int)"
+                line_mesh_power="(double)"
+                x="(double)"
+                y="(double)"
+            >
+            </next_line>
+
+            <previous_arc
+                arc_mesh_count="(unsigned int)"
+                radius="(double)"
+                right="(bool)"
+                short="(bool)"
+                x="(double)"
+                y="(double)"
+            >
+            </previous_arc>
+
+            <previous_line
+                line_mesh_count="(unsigned int)"
+                line_mesh_power="(double)"
+                x="(double)"
+                y="(double)"
+            >
+            </previous_line>
+
+            <start_point
+                x="(double)"
+                y="(double)"
+            >
+            </start_point>
+
+        </poly_loop>
+
+    </extruded_poly_loop_space>
+
+    <extruded_poly_loop_surface
+        extruded_mesh_count="(unsigned int)"
+        extruded_mesh_power="(double)"
+        name="(string)"
+        zmax="(double)"
+        zmin="(double)"
+    >
+        <poly_loop>
+        </poly_loop>
+
+    </extruded_poly_loop_surface>
+
+    <extruded_space
+        name="(string)"
+    >
+        <extruded_object
+            closed_form="(bool)"
+            extruded_mesh_count="(int)"
+            extruded_mesh_power="(double)"
+            longitudinal_mesh_count="(int)"
+            longitudinal_mesh_power="(double)"
+            mesh_merge_distance="(double)"
+            refine_mesh="(bool)"
+            z_max="(double)"
+            z_min="(double)"
+        >
+            <inner_arc
+                positive_orientation="(bool)"
+                radius="(double)"
+                x1="(double)"
+                x2="(double)"
+                y1="(double)"
+                y2="(double)"
+            >
+            </inner_arc>
+
+            <inner_line
+                x1="(double)"
+                x2="(double)"
+                y1="(double)"
+                y2="(double)"
+            >
+            </inner_line>
+
+            <outer_arc
+                positive_orientation="(bool)"
+                radius="(double)"
+                x1="(double)"
+                x2="(double)"
+                y1="(double)"
+                y2="(double)"
+            >
+            </outer_arc>
+
+            <outer_line
+                x1="(double)"
+                x2="(double)"
+                y1="(double)"
+                y2="(double)"
+            >
+            </outer_line>
+
+        </extruded_object>
+
+    </extruded_space>
+
+    <extruded_surface
+        name="(string)"
+    >
+        <extruded_object
+            closed_form="(bool)"
+            extruded_mesh_count="(int)"
+            extruded_mesh_power="(double)"
+            longitudinal_mesh_count="(int)"
+            longitudinal_mesh_power="(double)"
+            mesh_merge_distance="(double)"
+            refine_mesh="(bool)"
+            z_max="(double)"
+            z_min="(double)"
+        >
+        </extruded_object>
+
+    </extruded_surface>
+
+    <flattened_circle_surface
+        flattened_mesh_count="(unsigned int)"
+        flattened_mesh_power="(double)"
+        name="(string)"
+        z="(double)"
+    >
+        <circle
+            circle_mesh_count="(unsigned int)"
+            radius="(double)"
+            x="(double)"
+            y="(double)"
+        >
+        </circle>
+
+    </flattened_circle_surface>
+
+    <flattened_poly_loop_surface
+        flattened_mesh_count="(unsigned int)"
+        flattened_mesh_power="(double)"
+        name="(string)"
+        z="(double)"
+    >
+        <poly_loop>
+        </poly_loop>
+
+    </flattened_poly_loop_surface>
+
+    <linear_wire_grid_space
+        name="(string)"
+    >
+        <linear_wire_grid
+            add_outer_circle="(bool)"
+            diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
+            longitudinal_mesh_power="(double)"
+            pitch="(double)"
+            radius="(double)"
+        >
+        </linear_wire_grid>
+
+    </linear_wire_grid_space>
+
+    <linear_wire_grid_surface
+        name="(string)"
+    >
+        <linear_wire_grid
+            add_outer_circle="(bool)"
+            diameter="(double)"
+            longitudinal_mesh_count="(unsigned int)"
+            longitudinal_mesh_power="(double)"
+            pitch="(double)"
+            radius="(double)"
+        >
+        </linear_wire_grid>
+
+    </linear_wire_grid_surface>
+
+    <mesh
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </mesh>
+
+    <mesh_deformer
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </mesh_deformer>
+
+    <mesh_refiner
+        max_area="(double)"
+        max_aspect_ratio="(double)"
+        max_length="(double)"
+        max_refinement_steps="(unsigned int)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </mesh_refiner>
+
+    <port_housing_space
+        name="(string)"
+    >
+        <port_housing
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+            radius="(double)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+            z1="(double)"
+            z2="(double)"
+        >
+            <circular_port
+                radius="(double)"
+                x="(double)"
+                y="(double)"
+                z="(double)"
+            >
+            </circular_port>
+
+            <rectangular_port
+                length="(double)"
+                width="(double)"
+                x="(double)"
+                y="(double)"
+                z="(double)"
+            >
+            </rectangular_port>
+
+        </port_housing>
+
+    </port_housing_space>
+
+    <port_housing_surface
+        name="(string)"
+    >
+        <port_housing
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+            radius="(double)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+            z1="(double)"
+            z2="(double)"
+        >
+        </port_housing>
+
+    </port_housing_surface>
+
+    <quadratic_wire_grid_space
+        name="(string)"
+    >
+        <quadratic_wire_grid
+            add_outer_circle="(bool)"
+            diameter="(double)"
+            mesh_count_per_pitch="(unsigned int)"
+            pitch="(double)"
+            radius="(double)"
+        >
+        </quadratic_wire_grid>
+
+    </quadratic_wire_grid_space>
+
+    <quadratic_wire_grid_surface
+        name="(string)"
+    >
+        <quadratic_wire_grid
+            add_outer_circle="(bool)"
+            diameter="(double)"
+            mesh_count_per_pitch="(unsigned int)"
+            pitch="(double)"
+            radius="(double)"
+        >
+        </quadratic_wire_grid>
+
+    </quadratic_wire_grid_surface>
+
+    <rod_space
+        name="(string)"
+    >
+        <rod
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+            name="(string)"
+            radius="(double)"
+        >
+            <vertex
+                x="(double)"
+                y="(double)"
+                z="(double)"
+            >
+            </vertex>
+
+        </rod>
+
+    </rod_space>
+
+    <rod_surface
+        name="(string)"
+    >
+        <rod
+            axial_mesh_count="(int)"
+            longitudinal_mesh_count="(int)"
+            name="(string)"
+            radius="(double)"
+        >
+        </rod>
+
+    </rod_surface>
+
+    <rotated_arc_segment_space
+        flattened_mesh_count="(unsigned int)"
+        flattened_mesh_power="(double)"
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <arc_segment
+            arc_mesh_count="(unsigned int)"
+            radius="(double)"
+            right="(bool)"
+            short="(bool)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </arc_segment>
+
+    </rotated_arc_segment_space>
+
+    <rotated_arc_segment_surface
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <arc_segment
+            arc_mesh_count="(unsigned int)"
+            radius="(double)"
+            right="(bool)"
+            short="(bool)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </arc_segment>
+
+    </rotated_arc_segment_surface>
+
+    <rotated_circle_space
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <circle
+            circle_mesh_count="(unsigned int)"
+            radius="(double)"
+            x="(double)"
+            y="(double)"
+        >
+        </circle>
+
+    </rotated_circle_space>
+
+    <rotated_circle_surface
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <circle
+            circle_mesh_count="(unsigned int)"
+            radius="(double)"
+            x="(double)"
+            y="(double)"
+        >
+        </circle>
+
+    </rotated_circle_surface>
+
+    <rotated_line_segment_space
+        flattened_mesh_count="(unsigned int)"
+        flattened_mesh_power="(double)"
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <line_segment
+            line_mesh_count="(unsigned int)"
+            line_mesh_power="(double)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </line_segment>
+
+    </rotated_line_segment_space>
+
+    <rotated_line_segment_surface
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <line_segment
+            line_mesh_count="(unsigned int)"
+            line_mesh_power="(double)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </line_segment>
+
+    </rotated_line_segment_surface>
+
+    <rotated_poly_line_space
+        flattened_mesh_count="(unsigned int)"
+        flattened_mesh_power="(double)"
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <poly_line>
+        </poly_line>
+
+    </rotated_poly_line_space>
+
+    <rotated_poly_line_surface
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <poly_line>
+        </poly_line>
+
+    </rotated_poly_line_surface>
+
+    <rotated_poly_loop_space
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <poly_loop>
+        </poly_loop>
+
+    </rotated_poly_loop_space>
+
+    <rotated_poly_loop_surface
+        name="(string)"
+        rotated_mesh_count="(unsigned int)"
+    >
+        <poly_loop>
+        </poly_loop>
+
+    </rotated_poly_loop_surface>
+
+    <rotated_space
+        name="(string)"
+    >
+        <rotated_object
+            longitudinal_mesh_count="(int)"
+            longitudinal_mesh_count_end="(int)"
+            longitudinal_mesh_count_start="(int)"
+            longitudinal_mesh_power="(double)"
+        >
+            <arc
+                positive_orientation="(bool)"
+                r1="(double)"
+                r2="(double)"
+                radius="(double)"
+                z1="(double)"
+                z2="(double)"
+            >
+            </arc>
+
+            <line
+                r1="(double)"
+                r2="(double)"
+                z1="(double)"
+                z2="(double)"
+            >
+            </line>
+
+        </rotated_object>
+
+    </rotated_space>
+
+    <rotated_surface
+        name="(string)"
+    >
+        <rotated_object
+            longitudinal_mesh_count="(int)"
+            longitudinal_mesh_count_end="(int)"
+            longitudinal_mesh_count_start="(int)"
+            longitudinal_mesh_power="(double)"
+        >
+        </rotated_object>
+
+    </rotated_surface>
+
+    <shell_arc_segment_surface
+        angle_start="(double)"
+        angle_stop="(double)"
+        name="(string)"
+        shell_mesh_count="(unsigned int)"
+        shell_mesh_power="(double)"
+    >
+        <arc_segment
+            arc_mesh_count="(unsigned int)"
+            radius="(double)"
+            right="(bool)"
+            short="(bool)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </arc_segment>
+
+    </shell_arc_segment_surface>
+
+    <shell_circle_surface
+        angle_start="(double)"
+        angle_stop="(double)"
+        name="(string)"
+        shell_mesh_count="(unsigned int)"
+        shell_mesh_power="(double)"
+    >
+        <circle
+            circle_mesh_count="(unsigned int)"
+            radius="(double)"
+            x="(double)"
+            y="(double)"
+        >
+        </circle>
+
+    </shell_circle_surface>
+
+    <shell_line_segment_surface
+        angle_start="(double)"
+        angle_stop="(double)"
+        name="(string)"
+        shell_mesh_count="(unsigned int)"
+        shell_mesh_power="(double)"
+    >
+        <line_segment
+            line_mesh_count="(unsigned int)"
+            line_mesh_power="(double)"
+            x1="(double)"
+            x2="(double)"
+            y1="(double)"
+            y2="(double)"
+        >
+        </line_segment>
+
+    </shell_line_segment_surface>
+
+    <shell_poly_line_surface
+        angle_start="(double)"
+        angle_stop="(double)"
+        name="(string)"
+        shell_mesh_count="(unsigned int)"
+        shell_mesh_power="(double)"
+    >
+        <poly_line>
+        </poly_line>
+
+    </shell_poly_line_surface>
+
+    <shell_poly_loop_surface
+        angle_start="(double)"
+        angle_stop="(double)"
+        name="(string)"
+        shell_mesh_count="(unsigned int)"
+        shell_mesh_power="(double)"
+    >
+        <poly_loop>
+        </poly_loop>
+
+    </shell_poly_loop_surface>
+
+    <space
+        name="(string)"
+        node="(string)"
+        tree="(string)"
+    >
+        <space
+            name="(string)"
+            node="(string)"
+            tree="(string)"
+        >
+            <surface
+                name="(string)"
+                node="(string)"
+            >
+                <transformation
+                    d="(KThreeVector)"
+                    displacement="(KThreeVector)"
+                    r_aa="(KThreeVector)"
+                    r_eu="(KThreeVector)"
+                    rotation_axis_angle="(KThreeVector)"
+                    rotation_euler="(KThreeVector)"
+                >
+                </transformation>
+
+            </surface>
+
+            <transformation
+                d="(KThreeVector)"
+                displacement="(KThreeVector)"
+                r_aa="(KThreeVector)"
+                r_eu="(KThreeVector)"
+                rotation_axis_angle="(KThreeVector)"
+                rotation_euler="(KThreeVector)"
+            >
+            </transformation>
+
+        </space>
+
+    </space>
+
+    <stl_file_space
+        name="(string)"
+    >
+        <stl_file
+            file="(string)"
+            mesh_count="(int)"
+            path="(string)"
+            scale="(double)"
+            selector="(string)"
+        >
+        </stl_file>
+
+    </stl_file_space>
+
+    <stl_file_surface
+        name="(string)"
+    >
+        <stl_file
+            file="(string)"
+            mesh_count="(int)"
+            path="(string)"
+            scale="(double)"
+            selector="(string)"
+        >
+        </stl_file>
+
+    </stl_file_surface>
+
+    <surface
+        name="(string)"
+        node="(string)"
+    >
+    </surface>
+
+    <torus_space
+        axial_mesh_count="(unsigned int)"
+        name="(string)"
+        r="(double)"
+        radius="(double)"
+        toroidal_mesh_count="(unsigned int)"
+        z="(double)"
+    >
+    </torus_space>
+
+    <torus_surface
+        axial_mesh_count="(unsigned int)"
+        name="(string)"
+        r="(double)"
+        radius="(double)"
+        toroidal_mesh_count="(unsigned int)"
+        z="(double)"
+    >
+    </torus_surface>
+
+</geometry>
+<geometry_printer
+    file="(string)"
+    name="(string)"
+    path="(string)"
+    spaces="(string)"
+    surfaces="(string)"
+    write_json="(bool)"
+    write_xml="(bool)"
+>
+</geometry_printer>
+<kassiopeia
+    random_seed="(unsigned int)"
+>
+    <kess_elastic_elsepa
+        name="(string)"
+    >
+    </kess_elastic_elsepa>
+
+    <kess_inelastic_bethefano
+        AugerRelaxation="(bool)"
+        PhotoAbsorption="(bool)"
+        name="(string)"
+    >
+    </kess_inelastic_bethefano>
+
+    <kess_inelastic_penn
+        AugerRelaxation="(bool)"
+        PhotoAbsorption="(bool)"
+        name="(string)"
+    >
+    </kess_inelastic_penn>
+
+    <kess_surface_interaction
+        name="(string)"
+        siliconside="(string)"
+    >
+    </kess_surface_interaction>
+
+    <ks_command_group
+        command="(string)"
+        name="(string)"
+    >
+        <command_group
+            command="(string)"
+            name="(string)"
+        >
+        </command_group>
+
+    </ks_command_group>
+
+    <ks_command_member
+        child="(string)"
+        field="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </ks_command_member>
+
+    <ks_component_delta
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </ks_component_delta>
+
+    <ks_component_group/>
+
+    <ks_component_integral
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </ks_component_integral>
+
+    <ks_component_math
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+        term="(string)"
+    >
+    </ks_component_math>
+
+    <ks_component_maximum
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </ks_component_maximum>
+
+    <ks_component_maximum_at
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+        source="(string)"
+    >
+    </ks_component_maximum_at>
+
+    <ks_component_member
+        field="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </ks_component_member>
+
+    <ks_component_minimum
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </ks_component_minimum>
+
+    <ks_component_minimum_at
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+        source="(string)"
+    >
+    </ks_component_minimum_at>
+
+    <ks_root_electric_field
+        add_electric_field="(string)"
+        name="(string)"
+    >
+    </ks_root_electric_field>
+
+    <ks_root_event_modifier
+        add_modifier="(string)"
+        name="(string)"
+    >
+    </ks_root_event_modifier>
+
+    <ks_root_generator
+        name="(string)"
+        set_generator="(string)"
+    >
+    </ks_root_generator>
+
+    <ks_root_magnetic_field
+        add_magnetic_field="(string)"
+        name="(string)"
+    >
+    </ks_root_magnetic_field>
+
+    <ks_root_run_modifier
+        add_modifier="(string)"
+        name="(string)"
+    >
+    </ks_root_run_modifier>
+
+    <ks_root_space_interaction
+        add_space_interaction="(string)"
+        name="(string)"
+    >
+    </ks_root_space_interaction>
+
+    <ks_root_space_navigator
+        name="(string)"
+        set_space_navigator="(string)"
+    >
+    </ks_root_space_navigator>
+
+    <ks_root_step_modifier
+        add_modifier="(string)"
+        name="(string)"
+    >
+    </ks_root_step_modifier>
+
+    <ks_root_surface_interaction
+        name="(string)"
+        set_surface_interaction="(string)"
+    >
+    </ks_root_surface_interaction>
+
+    <ks_root_surface_navigator
+        name="(string)"
+        set_surface_navigator="(string)"
+    >
+    </ks_root_surface_navigator>
+
+    <ks_root_terminator
+        add_terminator="(string)"
+        name="(string)"
+    >
+    </ks_root_terminator>
+
+    <ks_root_track_modifier
+        add_modifier="(string)"
+        name="(string)"
+    >
+    </ks_root_track_modifier>
+
+    <ks_root_trajectory
+        name="(string)"
+        set_trajectory="(string)"
+    >
+    </ks_root_trajectory>
+
+    <ks_root_writer
+        add_writer="(string)"
+        name="(string)"
+    >
+    </ks_root_writer>
+
+    <ks_simulation
+        add_static_event_modifier="(string)"
+        add_static_run_modifier="(string)"
+        add_static_step_modifier="(string)"
+        add_static_track_modifier="(string)"
+        command="(string)"
+        electric_field="(string)"
+        events="(unsigned int)"
+        generator="(string)"
+        magnetic_field="(string)"
+        name="(string)"
+        run="(unsigned int)"
+        seed="(unsigned int)"
+        space="(string)"
+        space_interaction="(string)"
+        space_navigator="(string)"
+        step_report_iteration="(unsigned int)"
+        surface="(string)"
+        surface_interaction="(string)"
+        surface_navigator="(string)"
+        terminator="(string)"
+        trajectory="(string)"
+        writer="(string)"
+    >
+    </ks_simulation>
+
+    <ksfield_electric_constant
+        field="(KEMStreamableThreeVector)"
+        location="(KEMStreamableThreeVector)"
+        name="(string)"
+        offset_potential="(double)"
+    >
+    </ksfield_electric_constant>
+
+    <ksfield_electric_induced_azi
+        name="(string)"
+        root_field="(string)"
+    >
+    </ksfield_electric_induced_azi>
+
+    <ksfield_electric_potentialmap
+        directory="(string)"
+        file="(string)"
+        interpolation="(string)"
+        name="(string)"
+    >
+    </ksfield_electric_potentialmap>
+
+    <ksfield_electric_potentialmap_calculator
+        center="(KEMStreamableThreeVector)"
+        compute_field="(bool)"
+        directory="(string)"
+        field="(string)"
+        file="(string)"
+        force_update="(bool)"
+        length="(KEMStreamableThreeVector)"
+        mirror_x="(bool)"
+        mirror_y="(bool)"
+        mirror_z="(bool)"
+        name="(string)"
+        spaces="(string)"
+        spacing="(double)"
+    >
+        <field_electric_constant
+            field="(KEMStreamableThreeVector)"
+            location="(KEMStreamableThreeVector)"
+            name="(string)"
+            offset_potential="(double)"
+        >
+        </field_electric_constant>
+
+        <field_electric_quadrupole
+            length="(double)"
+            location="(KEMStreamableThreeVector)"
+            name="(string)"
+            radius="(double)"
+            strength="(double)"
+        >
+        </field_electric_quadrupole>
+
+        <field_electrostatic
+            directory="(string)"
+            file="(string)"
+            hash_masked_bits="(unsigned int)"
+            hash_threshold="(double)"
+            maximum_element_aspect_ratio="(double)"
+            minimum_element_area="(double)"
+            name="(string)"
+            spaces="(string)"
+            surfaces="(string)"
+            symmetry="(string)"
+            system="(string)"
+        >
+            <boundary_element_info/>
+
+            <cached_bem_solver
+                hash="(string)"
+                name="(string)"
+            >
+            </cached_bem_solver>
+
+            <cached_charge_density_solver
+                hash="(string)"
+                name="(string)"
+            >
+            </cached_charge_density_solver>
+
+            <explicit_superposition_cached_bem_solver
+                name="(string)"
+            >
+                <component
+                    hash="(string)"
+                    name="(string)"
+                    scale="(double)"
+                >
+                </component>
+
+            </explicit_superposition_cached_bem_solver>
+
+            <explicit_superposition_cached_charge_density_solver
+                name="(string)"
+            >
+            </explicit_superposition_cached_charge_density_solver>
+
+            <fast_multipole_field_solver
+                expansion_degree="(unsigned int)"
+                insertion_ratio="(double)"
+                maximum_tree_depth="(unsigned int)"
+                neighbor_order="(unsigned int)"
+                region_expansion_factor="(double)"
+                split_mode="(bool)"
+                top_level_divisions="(unsigned int)"
+                tree_level_divisions="(unsigned int)"
+                use_caching="(bool)"
+                use_opencl="(bool)"
+                use_region_size_estimation="(bool)"
+                verbosity="(unsigned int)"
+                world_cube_center_x="(double)"
+                world_cube_center_y="(double)"
+                world_cube_center_z="(double)"
+                world_cube_length="(double)"
+            >
+                <viewer
+                    file="(string)"
+                    save="(bool)"
+                    view="(bool )"
+                >
+                </viewer>
+
+            </fast_multipole_field_solver>
+
+            <gauss_seidel_bem_solver
+                integrator="(string)"
+                use_opencl="(bool)"
+            >
+            </gauss_seidel_bem_solver>
+
+            <gauss_seidel_charge_density_solver
+                integrator="(string)"
+                use_opencl="(bool)"
+            >
+            </gauss_seidel_charge_density_solver>
+
+            <gaussian_elimination_bem_solver
+                integrator="(string)"
+            >
+            </gaussian_elimination_bem_solver>
+
+            <gaussian_elimination_charge_density_solver
+                integrator="(string)"
+            >
+            </gaussian_elimination_charge_density_solver>
+
+            <integrating_field_solver
+                integrator="(string)"
+                use_opencl="(bool)"
+            >
+            </integrating_field_solver>
+
+            <krylov_bem_solver
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                max_preconditioner_iterations="(unsigned int)"
+                preconditioner="(string)"
+                preconditioner_degree="(unsigned int)"
+                preconditioner_tolerance="(double)"
+                show_plot="(bool)"
+                solver_name="(string)"
+                time_check_interval="(unsigned int)"
+                time_limit_in_seconds="(double)"
+                tolerance="(double)"
+                use_display="(bool)"
+                use_timer="(bool)"
+            >
+                <fftm_multiplication
+                    allowed_fraction="(unsigned int)"
+                    allowed_number="(unsigned int)"
+                    bias_degree="(double)"
+                    expansion_degree="(unsigned int)"
+                    insertion_ratio="(double)"
+                    maximum_tree_depth="(unsigned int)"
+                    neighbor_order="(unsigned int)"
+                    region_expansion_factor="(double)"
+                    strategy="(string)"
+                    top_level_divisions="(unsigned int)"
+                    tree_level_divisions="(unsigned int)"
+                    use_caching="(bool)"
+                    use_region_size_estimation="(bool)"
+                    verbosity="(unsigned int)"
+                    world_cube_center_x="(double)"
+                    world_cube_center_y="(double)"
+                    world_cube_center_z="(double)"
+                    world_cube_length="(double)"
+                >
+                </fftm_multiplication>
+
+                <preconditioner_electrostatic_parameters
+                    allowed_fraction="(unsigned int)"
+                    allowed_number="(unsigned int)"
+                    bias_degree="(double)"
+                    expansion_degree="(unsigned int)"
+                    insertion_ratio="(double)"
+                    maximum_tree_depth="(unsigned int)"
+                    neighbor_order="(unsigned int)"
+                    region_expansion_factor="(double)"
+                    strategy="(string)"
+                    top_level_divisions="(unsigned int)"
+                    tree_level_divisions="(unsigned int)"
+                    use_caching="(bool)"
+                    use_region_size_estimation="(bool)"
+                    verbosity="(unsigned int)"
+                    world_cube_center_x="(double)"
+                    world_cube_center_y="(double)"
+                    world_cube_center_z="(double)"
+                    world_cube_length="(double)"
+                >
+                </preconditioner_electrostatic_parameters>
+
+            </krylov_bem_solver>
+
+            <krylov_bem_solver_new
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                show_plot="(bool)"
+                solver_name="(string)"
+                time_check_interval="(unsigned int)"
+                time_limit_in_seconds="(double)"
+                tolerance="(double)"
+                use_display="(bool)"
+                use_timer="(bool)"
+            >
+                <krylov_preconditioner
+                    intermediate_save_interval="(unsigned int)"
+                    iterations_between_restarts="(unsigned int)"
+                    max_iterations="(unsigned int)"
+                    show_plot="(bool)"
+                    solver_name="(string)"
+                    time_check_interval="(unsigned int)"
+                    time_limit_in_seconds="(double)"
+                    tolerance="(double)"
+                    use_display="(bool)"
+                    use_timer="(bool)"
+                >
+                    <krylov_preconditioner
+                        intermediate_save_interval="(unsigned int)"
+                        iterations_between_restarts="(unsigned int)"
+                        max_iterations="(unsigned int)"
+                        show_plot="(bool)"
+                        solver_name="(string)"
+                        time_check_interval="(unsigned int)"
+                        time_limit_in_seconds="(double)"
+                        tolerance="(double)"
+                        use_display="(bool)"
+                        use_timer="(bool)"
+                    >
+                    </krylov_preconditioner>
+
+                </krylov_preconditioner>
+
+            </krylov_bem_solver_new>
+
+            <krylov_bem_solver_old
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                max_preconditioner_iterations="(unsigned int)"
+                preconditioner="(string)"
+                preconditioner_degree="(unsigned int)"
+                preconditioner_tolerance="(double)"
+                show_plot="(bool)"
+                solver_name="(string)"
+                time_check_interval="(unsigned int)"
+                time_limit_in_seconds="(double)"
+                tolerance="(double)"
+                use_display="(bool)"
+                use_timer="(bool)"
+            >
+            </krylov_bem_solver_old>
+
+            <krylov_charge_density_solver
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                show_plot="(bool)"
+                solver_name="(string)"
+                time_check_interval="(unsigned int)"
+                time_limit_in_seconds="(double)"
+                tolerance="(double)"
+                use_display="(bool)"
+                use_timer="(bool)"
+            >
+            </krylov_charge_density_solver>
+
+            <krylov_charge_density_solver_old
+                intermediate_save_interval="(unsigned int)"
+                iterations_between_restarts="(unsigned int)"
+                max_iterations="(unsigned int)"
+                max_preconditioner_iterations="(unsigned int)"
+                preconditioner="(string)"
+                preconditioner_degree="(unsigned int)"
+                preconditioner_tolerance="(double)"
+                show_plot="(bool)"
+                solver_name="(string)"
+                time_check_interval="(unsigned int)"
+                time_limit_in_seconds="(double)"
+                tolerance="(double)"
+                use_display="(bool)"
+                use_timer="(bool)"
+            >
+            </krylov_charge_density_solver_old>
+
+            <robin_hood_bem_solver
+                cache_matrix_elements="(bool)"
+                check_sub_interval="(unsigned int)"
+                display_interval="(unsigned int)"
+                integrator="(string)"
+                plot_interval="(unsigned int)"
+                split_mode="(bool)"
+                tolerance="(double)"
+                use_opencl="(bool)"
+                use_vtk="(bool)"
+                write_interval="(unsigned int)"
+            >
+            </robin_hood_bem_solver>
+
+            <robin_hood_charge_density_solver
+                cache_matrix_elements="(bool)"
+                check_sub_interval="(unsigned int)"
+                display_interval="(unsigned int)"
+                integrator="(string)"
+                plot_interval="(unsigned int)"
+                split_mode="(bool)"
+                tolerance="(double)"
+                use_opencl="(bool)"
+                use_vtk="(bool)"
+                write_interval="(unsigned int)"
+            >
+            </robin_hood_charge_density_solver>
+
+            <timer/>
+
+            <viewer
+                file="(string)"
+                path="(string)"
+                postprocessing="(bool)"
+                preprocessing="(bool)"
+                save="(bool)"
+                view="(bool)"
+            >
+            </viewer>
+
+            <zonal_harmonic_field_solver
+                central_sourcepoint_end="(double)"
+                central_sourcepoint_fractional_distance="(double)"
+                central_sourcepoint_spacing="(double)"
+                central_sourcepoint_start="(double)"
+                coaxiality_tolerance="(double)"
+                convergence_parameter="(double)"
+                convergence_ratio="(double)"
+                integrator="(string)"
+                number_of_bifurcations="(int)"
+                number_of_central_coefficients="(int)"
+                number_of_remote_coefficients="(int)"
+                number_of_remote_sourcepoints="(int)"
+                proximity_to_sourcepoint="(double)"
+                remote_sourcepoint_end="(double)"
+                remote_sourcepoint_start="(double)"
+                use_fractional_central_sourcepoint_spacing="(bool)"
+            >
+            </zonal_harmonic_field_solver>
+
+        </field_electrostatic>
+
+    </ksfield_electric_potentialmap_calculator>
+
+    <ksfield_electric_quadrupole
+        length="(double)"
+        location="(KEMStreamableThreeVector)"
+        name="(string)"
+        radius="(double)"
+        strength="(double)"
+    >
+    </ksfield_electric_quadrupole>
+
+    <ksfield_electric_ramped
+        name="(string)"
+        num_cycles="(int)"
+        ramp_down_delay="(double)"
+        ramp_down_time="(double)"
+        ramp_up_delay="(double)"
+        ramp_up_time="(double)"
+        ramping_type="(string)"
+        root_field="(string)"
+        time_constant="(double)"
+        time_scaling="(double)"
+    >
+    </ksfield_electric_ramped>
+
+    <ksfield_electric_ramped_2fields
+        focus_exponent="(double)"
+        focus_time="(double)"
+        name="(string)"
+        num_cycles="(int)"
+        potential_scaling="(double)"
+        ramp_down_delay="(double)"
+        ramp_down_time="(double)"
+        ramp_up_delay="(double)"
+        ramp_up_time="(double)"
+        ramping_type="(string)"
+        root_field_1="(string)"
+        root_field_2="(string)"
+        small_spectrometer="(bool)"
+        time_constant="(double)"
+        time_scaling="(double)"
+    >
+    </ksfield_electric_ramped_2fields>
+
+    <ksfield_electromagnet
+        directory="(string)"
+        directory_magfield3="(string)"
+        file="(string)"
+        name="(string)"
+        save_magfield3="(bool)"
+        spaces="(string)"
+        surfaces="(string)"
+        system="(string)"
+    >
+        <integrating_field_solver/>
+
+        <zonal_harmonic_field_solver
+            central_sourcepoint_end="(double)"
+            central_sourcepoint_fractional_distance="(double)"
+            central_sourcepoint_spacing="(double)"
+            central_sourcepoint_start="(double)"
+            coaxiality_tolerance="(double)"
+            convergence_parameter="(double)"
+            convergence_ratio="(double)"
+            number_of_bifurcations="(int)"
+            number_of_central_coefficients="(int)"
+            number_of_remote_coefficients="(int)"
+            number_of_remote_sourcepoints="(int)"
+            proximity_to_sourcepoint="(double)"
+            remote_sourcepoint_end="(double)"
+            remote_sourcepoint_start="(double)"
+            use_fractional_central_sourcepoint_spacing="(bool)"
+        >
+        </zonal_harmonic_field_solver>
+
+    </ksfield_electromagnet>
+
+    <ksfield_electrostatic
+        directory="(string)"
+        file="(string)"
+        hash_masked_bits="(unsigned int)"
+        hash_threshold="(double)"
+        maximum_element_aspect_ratio="(double)"
+        minimum_element_area="(double)"
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+        symmetry="(string)"
+        system="(string)"
+    >
+    </ksfield_electrostatic>
+
+    <ksfield_magnetic_constant
+        field="(KEMStreamableThreeVector)"
+        location="(KEMStreamableThreeVector)"
+        name="(string)"
+    >
+    </ksfield_magnetic_constant>
+
+    <ksfield_magnetic_dipole
+        location="(KEMStreamableThreeVector)"
+        moment="(KEMStreamableThreeVector)"
+        name="(string)"
+    >
+    </ksfield_magnetic_dipole>
+
+    <ksfield_magnetic_fieldmap
+        directory="(string)"
+        file="(string)"
+        interpolation="(string)"
+        magnetic_gradient_numerical="(bool)"
+        name="(string)"
+    >
+    </ksfield_magnetic_fieldmap>
+
+    <ksfield_magnetic_fieldmap_calculator
+        center="(KEMStreamableThreeVector)"
+        compute_gradient="(bool)"
+        directory="(string)"
+        field="(string)"
+        file="(string)"
+        force_update="(bool)"
+        length="(KEMStreamableThreeVector)"
+        mirror_x="(bool)"
+        mirror_y="(bool)"
+        mirror_z="(bool)"
+        name="(string)"
+        spaces="(string)"
+        spacing="(double)"
+        time="(double)"
+    >
+        <field_electromagnet/>
+
+        <field_magnetic_constant
+            field="(KEMStreamableThreeVector)"
+            location="(KEMStreamableThreeVector)"
+            name="(string)"
+        >
+        </field_magnetic_constant>
+
+        <field_magnetic_dipole/>
+
+    </ksfield_magnetic_fieldmap_calculator>
+
+    <ksfield_magnetic_ramped
+        name="(string)"
+        num_cycles="(int)"
+        ramp_down_delay="(double)"
+        ramp_down_time="(double)"
+        ramp_up_delay="(double)"
+        ramp_up_time="(double)"
+        ramping_type="(string)"
+        root_field="(string)"
+        time_constant="(double)"
+        time_constant_2="(double)"
+        time_scaling="(double)"
+    >
+    </ksfield_magnetic_ramped>
+
+    <ksfield_magnetic_super_position
+        name="(string)"
+        require="(string)"
+        use_caching="(bool)"
+    >
+        <add_field
+            enhancement="(double)"
+            name="(string)"
+        >
+        </add_field>
+
+    </ksfield_magnetic_super_position>
+
+    <ksgen_direction_spherical_composite
+        name="(string)"
+        phi="(string)"
+        space="(string)"
+        surface="(string)"
+        theta="(string)"
+    >
+        <phi_fix
+            name="(string)"
+            value="(double)"
+        >
+        </phi_fix>
+
+        <phi_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </phi_formula>
+
+        <phi_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </phi_gauss>
+
+        <phi_generalized_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+            value_skew="(double)"
+        >
+        </phi_generalized_gauss>
+
+        <phi_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </phi_histogram>
+
+        <phi_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </phi_list>
+
+        <phi_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </phi_set>
+
+        <phi_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </phi_uniform>
+
+        <theta_cosine
+            angle_max="(double)"
+            angle_min="(double)"
+            mode="(string)"
+            name="(string)"
+        >
+        </theta_cosine>
+
+        <theta_fix
+            name="(string)"
+            value="(double)"
+        >
+        </theta_fix>
+
+        <theta_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </theta_formula>
+
+        <theta_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </theta_gauss>
+
+        <theta_generalized_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+            value_skew="(double)"
+        >
+        </theta_generalized_gauss>
+
+        <theta_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </theta_histogram>
+
+        <theta_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </theta_list>
+
+        <theta_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </theta_set>
+
+        <theta_spherical
+            angle_max="(double)"
+            angle_min="(double)"
+            name="(string)"
+        >
+        </theta_spherical>
+
+        <theta_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </theta_uniform>
+
+    </ksgen_direction_spherical_composite>
+
+    <ksgen_direction_spherical_magnetic_field
+        magnetic_field_name="(string)"
+        name="(string)"
+        phi="(string)"
+        theta="(string)"
+    >
+        <phi_fix
+            name="(string)"
+            value="(double)"
+        >
+        </phi_fix>
+
+        <phi_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </phi_formula>
+
+        <phi_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </phi_gauss>
+
+        <phi_generalized_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+            value_skew="(double)"
+        >
+        </phi_generalized_gauss>
+
+        <phi_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </phi_histogram>
+
+        <phi_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </phi_list>
+
+        <phi_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </phi_set>
+
+        <phi_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </phi_uniform>
+
+        <theta_cosine
+            angle_max="(double)"
+            angle_min="(double)"
+            mode="(string)"
+            name="(string)"
+        >
+        </theta_cosine>
+
+        <theta_fix
+            name="(string)"
+            value="(double)"
+        >
+        </theta_fix>
+
+        <theta_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </theta_formula>
+
+        <theta_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </theta_gauss>
+
+        <theta_generalized_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+            value_skew="(double)"
+        >
+        </theta_generalized_gauss>
+
+        <theta_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </theta_histogram>
+
+        <theta_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </theta_list>
+
+        <theta_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </theta_set>
+
+        <theta_spherical
+            angle_max="(double)"
+            angle_min="(double)"
+            name="(string)"
+        >
+        </theta_spherical>
+
+        <theta_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </theta_uniform>
+
+    </ksgen_direction_spherical_magnetic_field>
+
+    <ksgen_direction_surface_composite
+        name="(string)"
+        outside="(bool)"
+        phi="(string)"
+        surfaces="(string)"
+        theta="(string)"
+    >
+        <phi_fix
+            name="(string)"
+            value="(double)"
+        >
+        </phi_fix>
+
+        <phi_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </phi_formula>
+
+        <phi_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </phi_gauss>
+
+        <phi_generalized_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+            value_skew="(double)"
+        >
+        </phi_generalized_gauss>
+
+        <phi_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </phi_histogram>
+
+        <phi_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </phi_list>
+
+        <phi_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </phi_set>
+
+        <phi_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </phi_uniform>
+
+        <theta_cosine
+            angle_max="(double)"
+            angle_min="(double)"
+            mode="(string)"
+            name="(string)"
+        >
+        </theta_cosine>
+
+        <theta_fix
+            name="(string)"
+            value="(double)"
+        >
+        </theta_fix>
+
+        <theta_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </theta_formula>
+
+        <theta_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </theta_gauss>
+
+        <theta_generalized_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+            value_skew="(double)"
+        >
+        </theta_generalized_gauss>
+
+        <theta_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </theta_histogram>
+
+        <theta_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </theta_list>
+
+        <theta_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </theta_set>
+
+        <theta_spherical
+            angle_max="(double)"
+            angle_min="(double)"
+            name="(string)"
+        >
+        </theta_spherical>
+
+        <theta_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </theta_uniform>
+
+    </ksgen_direction_surface_composite>
+
+    <ksgen_energy_beta_decay
+        daughter_z="(int)"
+        endpoint_ev="(double)"
+        max_energy="(double)"
+        min_energy="(double)"
+        mnu_ev="(double)"
+        name="(string)"
+        nmax="(int)"
+    >
+    </ksgen_energy_beta_decay>
+
+    <ksgen_energy_beta_recoil
+        max_energy="(double)"
+        min_energy="(double)"
+        name="(string)"
+    >
+    </ksgen_energy_beta_recoil>
+
+    <ksgen_energy_composite
+        energy="(string)"
+        name="(string)"
+    >
+        <energy_boltzmann
+            name="(string)"
+            unit_eV="(bool)"
+            value_kT="(double)"
+            value_mass="(double)"
+        >
+        </energy_boltzmann>
+
+        <energy_fix
+            name="(string)"
+            value="(double)"
+        >
+        </energy_fix>
+
+        <energy_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </energy_formula>
+
+        <energy_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </energy_gauss>
+
+        <energy_generalized_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+            value_skew="(double)"
+        >
+        </energy_generalized_gauss>
+
+        <energy_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </energy_histogram>
+
+        <energy_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </energy_list>
+
+        <energy_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </energy_set>
+
+        <energy_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </energy_uniform>
+
+    </ksgen_energy_composite>
+
+    <ksgen_energy_krypton_event
+        do_auger="(bool)"
+        do_conversion="(bool)"
+        force_conversion="(bool)"
+        name="(string)"
+    >
+    </ksgen_energy_krypton_event>
+
+    <ksgen_energy_lead_event
+        do_auger="(bool)"
+        do_conversion="(bool)"
+        force_conversion="(bool)"
+        name="(string)"
+    >
+    </ksgen_energy_lead_event>
+
+    <ksgen_energy_radon_event
+        do_auger="(bool)"
+        do_conversion="(bool)"
+        do_shake_off="(bool)"
+        force_conversion="(bool)"
+        force_shake_off="(bool)"
+        isotope_number="(int)"
+        name="(string)"
+    >
+    </ksgen_energy_radon_event>
+
+    <ksgen_energy_rydberg
+        deposited_energy="(double)"
+        ionization_energy="(double)"
+        name="(string)"
+    >
+    </ksgen_energy_rydberg>
+
+    <ksgen_generator_composite
+        creator="(string)"
+        name="(string)"
+        pid="(double)"
+        special="(string)"
+        string_id="(string)"
+    >
+        <direction_spherical_composite
+            name="(string)"
+            phi="(string)"
+            space="(string)"
+            surface="(string)"
+            theta="(string)"
+        >
+        </direction_spherical_composite>
+
+        <direction_spherical_magnetic_field
+            magnetic_field_name="(string)"
+            name="(string)"
+            phi="(string)"
+            theta="(string)"
+        >
+        </direction_spherical_magnetic_field>
+
+        <direction_surface_composite
+            name="(string)"
+            outside="(bool)"
+            phi="(string)"
+            surfaces="(string)"
+            theta="(string)"
+        >
+        </direction_surface_composite>
+
+        <energy_beta_decay
+            daughter_z="(int)"
+            endpoint_ev="(double)"
+            max_energy="(double)"
+            min_energy="(double)"
+            mnu_ev="(double)"
+            name="(string)"
+            nmax="(int)"
+        >
+        </energy_beta_decay>
+
+        <energy_beta_recoil
+            max_energy="(double)"
+            min_energy="(double)"
+            name="(string)"
+        >
+        </energy_beta_recoil>
+
+        <energy_composite
+            energy="(string)"
+            name="(string)"
+        >
+        </energy_composite>
+
+        <energy_krypton_event
+            do_auger="(bool)"
+            do_conversion="(bool)"
+            force_conversion="(bool)"
+            name="(string)"
+        >
+        </energy_krypton_event>
+
+        <energy_lead_event
+            do_auger="(bool)"
+            do_conversion="(bool)"
+            force_conversion="(bool)"
+            name="(string)"
+        >
+        </energy_lead_event>
+
+        <energy_radon_event
+            do_auger="(bool)"
+            do_conversion="(bool)"
+            do_shake_off="(bool)"
+            force_conversion="(bool)"
+            force_shake_off="(bool)"
+            isotope_number="(int)"
+            name="(string)"
+        >
+        </energy_radon_event>
+
+        <energy_rydberg
+            deposited_energy="(double)"
+            ionization_energy="(double)"
+            name="(string)"
+        >
+        </energy_rydberg>
+
+        <l_composite
+            l_value="(string)"
+            name="(string)"
+        >
+            <l_fix
+                name="(string)"
+                value="(double)"
+            >
+            </l_fix>
+
+            <l_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </l_formula>
+
+            <l_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </l_gauss>
+
+            <l_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </l_list>
+
+            <l_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </l_set>
+
+            <l_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </l_uniform>
+
+        </l_composite>
+
+        <l_statistical
+            name="(string)"
+        >
+        </l_statistical>
+
+        <l_uniform_max_n
+            name="(string)"
+        >
+        </l_uniform_max_n>
+
+        <momentum_rectangular_composite
+            name="(string)"
+            space="(string)"
+            surface="(string)"
+            x="(string)"
+            y="(string)"
+            z="(string)"
+        >
+            <x_fix
+                name="(string)"
+                value="(double)"
+            >
+            </x_fix>
+
+            <x_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </x_formula>
+
+            <x_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </x_gauss>
+
+            <x_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </x_histogram>
+
+            <x_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </x_list>
+
+            <x_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </x_set>
+
+            <x_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </x_uniform>
+
+            <y_fix
+                name="(string)"
+                value="(double)"
+            >
+            </y_fix>
+
+            <y_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </y_formula>
+
+            <y_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </y_gauss>
+
+            <y_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </y_histogram>
+
+            <y_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </y_list>
+
+            <y_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </y_set>
+
+            <y_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </y_uniform>
+
+            <z_fix
+                name="(string)"
+                value="(double)"
+            >
+            </z_fix>
+
+            <z_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_formula>
+
+            <z_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </z_gauss>
+
+            <z_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </z_histogram>
+
+            <z_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </z_list>
+
+            <z_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </z_set>
+
+            <z_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_uniform>
+
+        </momentum_rectangular_composite>
+
+        <n_composite
+            n_value="(string)"
+            name="(string)"
+        >
+            <n_fix
+                name="(string)"
+                value="(double)"
+            >
+            </n_fix>
+
+            <n_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </n_formula>
+
+            <n_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </n_gauss>
+
+            <n_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </n_list>
+
+            <n_pareto
+                cutoff="(double)"
+                name="(string)"
+                offset="(double)"
+                slope="(double)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </n_pareto>
+
+            <n_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </n_set>
+
+            <n_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </n_uniform>
+
+        </n_composite>
+
+        <pid_fix
+            name="(string)"
+            value="(double)"
+        >
+        </pid_fix>
+
+        <pid_formula
+            name="(string)"
+            value_formula="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </pid_formula>
+
+        <pid_gauss
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_sigma="(double)"
+        >
+        </pid_gauss>
+
+        <pid_histogram
+            base="(string)"
+            formula="(string)"
+            histogram="(string)"
+            name="(string)"
+            path="(string)"
+        >
+        </pid_histogram>
+
+        <pid_list
+            add_value="(double)"
+            name="(string)"
+            randomize="(bool)"
+        >
+        </pid_list>
+
+        <pid_pareto
+            cutoff="(double)"
+            name="(string)"
+            offset="(double)"
+            slope="(double)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </pid_pareto>
+
+        <pid_set
+            name="(string)"
+            value_count="(unsigned int)"
+            value_increment="(double)"
+            value_start="(double)"
+            value_stop="(double)"
+        >
+        </pid_set>
+
+        <pid_uniform
+            name="(string)"
+            value_max="(double)"
+            value_min="(double)"
+        >
+        </pid_uniform>
+
+        <position_cylindrical_composite
+            name="(string)"
+            phi="(string)"
+            r="(string)"
+            space="(string)"
+            surface="(string)"
+            z="(string)"
+        >
+            <phi_fix
+                name="(string)"
+                value="(double)"
+            >
+            </phi_fix>
+
+            <phi_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_formula>
+
+            <phi_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </phi_gauss>
+
+            <phi_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </phi_histogram>
+
+            <phi_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </phi_list>
+
+            <phi_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </phi_set>
+
+            <phi_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_uniform>
+
+            <r_cylindrical
+                name="(string)"
+                radius_max="(double)"
+                radius_min="(double)"
+            >
+            </r_cylindrical>
+
+            <r_fix
+                name="(string)"
+                value="(double)"
+            >
+            </r_fix>
+
+            <r_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </r_formula>
+
+            <r_fraction
+                name="(string)"
+            >
+            </r_fraction>
+
+            <r_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </r_gauss>
+
+            <r_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </r_histogram>
+
+            <r_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </r_list>
+
+            <r_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </r_set>
+
+            <r_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </r_uniform>
+
+            <z_fix
+                name="(string)"
+                value="(double)"
+            >
+            </z_fix>
+
+            <z_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_formula>
+
+            <z_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </z_gauss>
+
+            <z_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </z_histogram>
+
+            <z_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </z_list>
+
+            <z_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </z_set>
+
+            <z_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_uniform>
+
+        </position_cylindrical_composite>
+
+        <position_flux_tube
+            flux="(double)"
+            magnetic_field_name="(string)"
+            n_integration_step="(int)"
+            name="(string)"
+            only_surface="(bool)"
+            phi="(string)"
+            space="(string)"
+            surface="(string)"
+            z="(string)"
+        >
+            <phi_fix
+                name="(string)"
+                value="(double)"
+            >
+            </phi_fix>
+
+            <phi_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </phi_gauss>
+
+            <phi_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </phi_set>
+
+            <phi_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_uniform>
+
+            <r_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </r_formula>
+
+            <z_fix
+                name="(string)"
+                value="(double)"
+            >
+            </z_fix>
+
+            <z_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_formula>
+
+            <z_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </z_gauss>
+
+            <z_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </z_set>
+
+            <z_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_uniform>
+
+        </position_flux_tube>
+
+        <position_frustrum_composite
+            name="(string)"
+            phi="(string)"
+            r="(string)"
+            r1="(string)"
+            r2="(string)"
+            space="(string)"
+            surface="(string)"
+            z="(string)"
+            z1="(string)"
+            z2="(string)"
+        >
+            <phi_fix
+                name="(string)"
+                value="(double)"
+            >
+            </phi_fix>
+
+            <phi_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_formula>
+
+            <phi_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </phi_gauss>
+
+            <phi_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </phi_histogram>
+
+            <phi_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </phi_list>
+
+            <phi_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </phi_set>
+
+            <phi_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_uniform>
+
+            <r1_fix
+                name="(string)"
+                value="(double)"
+            >
+            </r1_fix>
+
+            <r2_fix
+                name="(string)"
+                value="(double)"
+            >
+            </r2_fix>
+
+            <r_cylindrical
+                name="(string)"
+                radius_max="(double)"
+                radius_min="(double)"
+            >
+            </r_cylindrical>
+
+            <r_fix
+                name="(string)"
+                value="(double)"
+            >
+            </r_fix>
+
+            <r_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </r_formula>
+
+            <r_fraction
+                name="(string)"
+            >
+            </r_fraction>
+
+            <r_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </r_gauss>
+
+            <r_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </r_histogram>
+
+            <r_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </r_list>
+
+            <r_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </r_set>
+
+            <r_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </r_uniform>
+
+            <z1_fix
+                name="(string)"
+                value="(double)"
+            >
+            </z1_fix>
+
+            <z2_fix
+                name="(string)"
+                value="(double)"
+            >
+            </z2_fix>
+
+            <z_fix
+                name="(string)"
+                value="(double)"
+            >
+            </z_fix>
+
+            <z_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_formula>
+
+            <z_frustrum
+                name="(string)"
+                r1="(double)"
+                r2="(double)"
+                z1="(double)"
+                z2="(double)"
+            >
+            </z_frustrum>
+
+            <z_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </z_gauss>
+
+            <z_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </z_histogram>
+
+            <z_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </z_list>
+
+            <z_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </z_set>
+
+            <z_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </z_uniform>
+
+        </position_frustrum_composite>
+
+        <position_homogeneous_flux_tube
+            flux="(double)"
+            magnetic_field_name="(string)"
+            n_integration_step="(int)"
+            name="(string)"
+            phi_max="(double)"
+            phi_min="(double)"
+            r_max="(double)"
+            z_max="(double)"
+            z_min="(double)"
+        >
+        </position_homogeneous_flux_tube>
+
+        <position_mask
+            max_retries="(unsigned int)"
+            name="(string)"
+            spaces_allowed="(string)"
+            spaces_forbidden="(string)"
+        >
+            <position_cylindrical_composite
+                name="(string)"
+                phi="(string)"
+                r="(string)"
+                space="(string)"
+                surface="(string)"
+                z="(string)"
+            >
+            </position_cylindrical_composite>
+
+            <position_mesh_surface_random
+                name="(string)"
+                surfaces="(string)"
+            >
+            </position_mesh_surface_random>
+
+            <position_rectangular_composite
+                name="(string)"
+                space="(string)"
+                surface="(string)"
+                x="(string)"
+                y="(string)"
+                z="(string)"
+            >
+                <x_fix
+                    name="(string)"
+                    value="(double)"
+                >
+                </x_fix>
+
+                <x_formula
+                    name="(string)"
+                    value_formula="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </x_formula>
+
+                <x_gauss
+                    name="(string)"
+                    value_max="(double)"
+                    value_mean="(double)"
+                    value_min="(double)"
+                    value_sigma="(double)"
+                >
+                </x_gauss>
+
+                <x_histogram
+                    base="(string)"
+                    formula="(string)"
+                    histogram="(string)"
+                    name="(string)"
+                    path="(string)"
+                >
+                </x_histogram>
+
+                <x_list
+                    add_value="(double)"
+                    name="(string)"
+                    randomize="(bool)"
+                >
+                </x_list>
+
+                <x_set
+                    name="(string)"
+                    value_count="(unsigned int)"
+                    value_increment="(double)"
+                    value_start="(double)"
+                    value_stop="(double)"
+                >
+                </x_set>
+
+                <x_uniform
+                    name="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </x_uniform>
+
+                <y_fix
+                    name="(string)"
+                    value="(double)"
+                >
+                </y_fix>
+
+                <y_formula
+                    name="(string)"
+                    value_formula="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </y_formula>
+
+                <y_gauss
+                    name="(string)"
+                    value_max="(double)"
+                    value_mean="(double)"
+                    value_min="(double)"
+                    value_sigma="(double)"
+                >
+                </y_gauss>
+
+                <y_histogram
+                    base="(string)"
+                    formula="(string)"
+                    histogram="(string)"
+                    name="(string)"
+                    path="(string)"
+                >
+                </y_histogram>
+
+                <y_list
+                    add_value="(double)"
+                    name="(string)"
+                    randomize="(bool)"
+                >
+                </y_list>
+
+                <y_set
+                    name="(string)"
+                    value_count="(unsigned int)"
+                    value_increment="(double)"
+                    value_start="(double)"
+                    value_stop="(double)"
+                >
+                </y_set>
+
+                <y_uniform
+                    name="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </y_uniform>
+
+                <z_fix
+                    name="(string)"
+                    value="(double)"
+                >
+                </z_fix>
+
+                <z_formula
+                    name="(string)"
+                    value_formula="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </z_formula>
+
+                <z_gauss
+                    name="(string)"
+                    value_max="(double)"
+                    value_mean="(double)"
+                    value_min="(double)"
+                    value_sigma="(double)"
+                >
+                </z_gauss>
+
+                <z_histogram
+                    base="(string)"
+                    formula="(string)"
+                    histogram="(string)"
+                    name="(string)"
+                    path="(string)"
+                >
+                </z_histogram>
+
+                <z_list
+                    add_value="(double)"
+                    name="(string)"
+                    randomize="(bool)"
+                >
+                </z_list>
+
+                <z_set
+                    name="(string)"
+                    value_count="(unsigned int)"
+                    value_increment="(double)"
+                    value_start="(double)"
+                    value_stop="(double)"
+                >
+                </z_set>
+
+                <z_uniform
+                    name="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </z_uniform>
+
+            </position_rectangular_composite>
+
+            <position_space_random
+                name="(string)"
+                spaces="(string)"
+            >
+            </position_space_random>
+
+            <position_spherical_composite
+                name="(string)"
+                phi="(string)"
+                r="(string)"
+                space="(string)"
+                surface="(string)"
+                theta="(string)"
+            >
+                <phi_fix
+                    name="(string)"
+                    value="(double)"
+                >
+                </phi_fix>
+
+                <phi_formula
+                    name="(string)"
+                    value_formula="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </phi_formula>
+
+                <phi_gauss
+                    name="(string)"
+                    value_max="(double)"
+                    value_mean="(double)"
+                    value_min="(double)"
+                    value_sigma="(double)"
+                >
+                </phi_gauss>
+
+                <phi_histogram
+                    base="(string)"
+                    formula="(string)"
+                    histogram="(string)"
+                    name="(string)"
+                    path="(string)"
+                >
+                </phi_histogram>
+
+                <phi_list
+                    add_value="(double)"
+                    name="(string)"
+                    randomize="(bool)"
+                >
+                </phi_list>
+
+                <phi_set
+                    name="(string)"
+                    value_count="(unsigned int)"
+                    value_increment="(double)"
+                    value_start="(double)"
+                    value_stop="(double)"
+                >
+                </phi_set>
+
+                <phi_uniform
+                    name="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </phi_uniform>
+
+                <r_fix
+                    name="(string)"
+                    value="(double)"
+                >
+                </r_fix>
+
+                <r_formula
+                    name="(string)"
+                    value_formula="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </r_formula>
+
+                <r_gauss
+                    name="(string)"
+                    value_max="(double)"
+                    value_mean="(double)"
+                    value_min="(double)"
+                    value_sigma="(double)"
+                >
+                </r_gauss>
+
+                <r_histogram
+                    base="(string)"
+                    formula="(string)"
+                    histogram="(string)"
+                    name="(string)"
+                    path="(string)"
+                >
+                </r_histogram>
+
+                <r_list
+                    add_value="(double)"
+                    name="(string)"
+                    randomize="(bool)"
+                >
+                </r_list>
+
+                <r_set
+                    name="(string)"
+                    value_count="(unsigned int)"
+                    value_increment="(double)"
+                    value_start="(double)"
+                    value_stop="(double)"
+                >
+                </r_set>
+
+                <r_spherical
+                    name="(string)"
+                    radius_max="(double)"
+                    radius_min="(double)"
+                >
+                </r_spherical>
+
+                <r_uniform
+                    name="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </r_uniform>
+
+                <theta_fix
+                    name="(string)"
+                    value="(double)"
+                >
+                </theta_fix>
+
+                <theta_formula
+                    name="(string)"
+                    value_formula="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </theta_formula>
+
+                <theta_gauss
+                    name="(string)"
+                    value_max="(double)"
+                    value_mean="(double)"
+                    value_min="(double)"
+                    value_sigma="(double)"
+                >
+                </theta_gauss>
+
+                <theta_histogram
+                    base="(string)"
+                    formula="(string)"
+                    histogram="(string)"
+                    name="(string)"
+                    path="(string)"
+                >
+                </theta_histogram>
+
+                <theta_list
+                    add_value="(double)"
+                    name="(string)"
+                    randomize="(bool)"
+                >
+                </theta_list>
+
+                <theta_set
+                    name="(string)"
+                    value_count="(unsigned int)"
+                    value_increment="(double)"
+                    value_start="(double)"
+                    value_stop="(double)"
+                >
+                </theta_set>
+
+                <theta_spherical
+                    angle_max="(double)"
+                    angle_min="(double)"
+                    name="(string)"
+                >
+                </theta_spherical>
+
+                <theta_uniform
+                    name="(string)"
+                    value_max="(double)"
+                    value_min="(double)"
+                >
+                </theta_uniform>
+
+            </position_spherical_composite>
+
+            <position_surface_random/>
+
+        </position_mask>
+
+        <position_mesh_surface_random
+            name="(string)"
+            surfaces="(string)"
+        >
+        </position_mesh_surface_random>
+
+        <position_rectangular_composite
+            name="(string)"
+            space="(string)"
+            surface="(string)"
+            x="(string)"
+            y="(string)"
+            z="(string)"
+        >
+        </position_rectangular_composite>
+
+        <position_space_random
+            name="(string)"
+            spaces="(string)"
+        >
+        </position_space_random>
+
+        <position_spherical_composite
+            name="(string)"
+            phi="(string)"
+            r="(string)"
+            space="(string)"
+            surface="(string)"
+            theta="(string)"
+        >
+        </position_spherical_composite>
+
+        <position_surface_adjustment_step
+            length="(double)"
+            name="(string)"
+        >
+        </position_surface_adjustment_step>
+
+        <position_surface_random
+            name="(string)"
+            surfaces="(string)"
+        >
+        </position_surface_random>
+
+        <spin_composite
+            name="(string)"
+            phi="(string)"
+            space="(string)"
+            surface="(string)"
+            theta="(string)"
+        >
+            <phi_fix
+                name="(string)"
+                value="(double)"
+            >
+            </phi_fix>
+
+            <phi_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_formula>
+
+            <phi_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </phi_gauss>
+
+            <phi_generalized_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+                value_skew="(double)"
+            >
+            </phi_generalized_gauss>
+
+            <phi_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </phi_histogram>
+
+            <phi_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </phi_list>
+
+            <phi_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </phi_set>
+
+            <phi_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_uniform>
+
+            <theta_cosine
+                angle_max="(double)"
+                angle_min="(double)"
+                mode="(string)"
+                name="(string)"
+            >
+            </theta_cosine>
+
+            <theta_fix
+                name="(string)"
+                value="(double)"
+            >
+            </theta_fix>
+
+            <theta_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </theta_formula>
+
+            <theta_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </theta_gauss>
+
+            <theta_generalized_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+                value_skew="(double)"
+            >
+            </theta_generalized_gauss>
+
+            <theta_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </theta_histogram>
+
+            <theta_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </theta_list>
+
+            <theta_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </theta_set>
+
+            <theta_spherical
+                angle_max="(double)"
+                angle_min="(double)"
+                name="(string)"
+            >
+            </theta_spherical>
+
+            <theta_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </theta_uniform>
+
+        </spin_composite>
+
+        <spin_relative_composite
+            name="(string)"
+            phi="(string)"
+            space="(string)"
+            surface="(string)"
+            theta="(string)"
+        >
+            <phi_fix
+                name="(string)"
+                value="(double)"
+            >
+            </phi_fix>
+
+            <phi_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_formula>
+
+            <phi_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </phi_gauss>
+
+            <phi_generalized_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+                value_skew="(double)"
+            >
+            </phi_generalized_gauss>
+
+            <phi_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </phi_histogram>
+
+            <phi_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </phi_list>
+
+            <phi_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </phi_set>
+
+            <phi_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </phi_uniform>
+
+            <theta_cosine
+                angle_max="(double)"
+                angle_min="(double)"
+                mode="(string)"
+                name="(string)"
+            >
+            </theta_cosine>
+
+            <theta_fix
+                name="(string)"
+                value="(double)"
+            >
+            </theta_fix>
+
+            <theta_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </theta_formula>
+
+            <theta_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </theta_gauss>
+
+            <theta_generalized_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+                value_skew="(double)"
+            >
+            </theta_generalized_gauss>
+
+            <theta_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </theta_histogram>
+
+            <theta_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </theta_list>
+
+            <theta_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </theta_set>
+
+            <theta_spherical
+                angle_max="(double)"
+                angle_min="(double)"
+                name="(string)"
+            >
+            </theta_spherical>
+
+            <theta_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </theta_uniform>
+
+        </spin_relative_composite>
+
+        <time_composite
+            name="(string)"
+            time_value="(string)"
+        >
+            <time_fix
+                name="(string)"
+                value="(double)"
+            >
+            </time_fix>
+
+            <time_formula
+                name="(string)"
+                value_formula="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </time_formula>
+
+            <time_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+            >
+            </time_gauss>
+
+            <time_generalized_gauss
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_sigma="(double)"
+                value_skew="(double)"
+            >
+            </time_generalized_gauss>
+
+            <time_histogram
+                base="(string)"
+                formula="(string)"
+                histogram="(string)"
+                name="(string)"
+                path="(string)"
+            >
+            </time_histogram>
+
+            <time_list
+                add_value="(double)"
+                name="(string)"
+                randomize="(bool)"
+            >
+            </time_list>
+
+            <time_set
+                name="(string)"
+                value_count="(unsigned int)"
+                value_increment="(double)"
+                value_start="(double)"
+                value_stop="(double)"
+            >
+            </time_set>
+
+            <time_uniform
+                name="(string)"
+                value_max="(double)"
+                value_min="(double)"
+            >
+            </time_uniform>
+
+        </time_composite>
+
+    </ksgen_generator_composite>
+
+    <ksgen_generator_file
+        base="(string)"
+        name="(string)"
+        path="(string)"
+    >
+    </ksgen_generator_file>
+
+    <ksgen_generator_simulation
+        base="(string)"
+        direction_x="(string)"
+        direction_y="(string)"
+        direction_z="(string)"
+        energy="(string)"
+        generator="(string)"
+        kinetic_energy_field="(string)"
+        momentum_field="(string)"
+        name="(string)"
+        path="(string)"
+        pid_field="(string)"
+        position_field="(string)"
+        position_x="(string)"
+        position_y="(string)"
+        position_z="(string)"
+        terminator="(string)"
+        time="(string)"
+        time_field="(string)"
+        track_group="(string)"
+    >
+    </ksgen_generator_simulation>
+
+    <ksgen_l_composite
+        l_value="(string)"
+        name="(string)"
+    >
+    </ksgen_l_composite>
+
+    <ksgen_l_statistical
+        name="(string)"
+    >
+    </ksgen_l_statistical>
+
+    <ksgen_l_uniform_max_n
+        name="(string)"
+    >
+    </ksgen_l_uniform_max_n>
+
+    <ksgen_momentum_rectangular_composite
+        name="(string)"
+        space="(string)"
+        surface="(string)"
+        x="(string)"
+        y="(string)"
+        z="(string)"
+    >
+    </ksgen_momentum_rectangular_composite>
+
+    <ksgen_n_composite
+        n_value="(string)"
+        name="(string)"
+    >
+    </ksgen_n_composite>
+
+    <ksgen_position_cylindrical_composite
+        name="(string)"
+        phi="(string)"
+        r="(string)"
+        space="(string)"
+        surface="(string)"
+        z="(string)"
+    >
+    </ksgen_position_cylindrical_composite>
+
+    <ksgen_position_flux_tube
+        flux="(double)"
+        magnetic_field_name="(string)"
+        n_integration_step="(int)"
+        name="(string)"
+        only_surface="(bool)"
+        phi="(string)"
+        space="(string)"
+        surface="(string)"
+        z="(string)"
+    >
+    </ksgen_position_flux_tube>
+
+    <ksgen_position_frustrum_composite
+        name="(string)"
+        phi="(string)"
+        r="(string)"
+        r1="(string)"
+        r2="(string)"
+        space="(string)"
+        surface="(string)"
+        z="(string)"
+        z1="(string)"
+        z2="(string)"
+    >
+    </ksgen_position_frustrum_composite>
+
+    <ksgen_position_homogeneous_flux_tube
+        flux="(double)"
+        magnetic_field_name="(string)"
+        n_integration_step="(int)"
+        name="(string)"
+        phi_max="(double)"
+        phi_min="(double)"
+        r_max="(double)"
+        z_max="(double)"
+        z_min="(double)"
+    >
+    </ksgen_position_homogeneous_flux_tube>
+
+    <ksgen_position_mask
+        max_retries="(unsigned int)"
+        name="(string)"
+        spaces_allowed="(string)"
+        spaces_forbidden="(string)"
+    >
+    </ksgen_position_mask>
+
+    <ksgen_position_mesh_surface_random
+        name="(string)"
+        surfaces="(string)"
+    >
+    </ksgen_position_mesh_surface_random>
+
+    <ksgen_position_rectangular_composite
+        name="(string)"
+        space="(string)"
+        surface="(string)"
+        x="(string)"
+        y="(string)"
+        z="(string)"
+    >
+    </ksgen_position_rectangular_composite>
+
+    <ksgen_position_space_random
+        name="(string)"
+        spaces="(string)"
+    >
+    </ksgen_position_space_random>
+
+    <ksgen_position_spherical_composite
+        name="(string)"
+        phi="(string)"
+        r="(string)"
+        space="(string)"
+        surface="(string)"
+        theta="(string)"
+    >
+    </ksgen_position_spherical_composite>
+
+    <ksgen_position_surface_adjustment_step
+        length="(double)"
+        name="(string)"
+    >
+    </ksgen_position_surface_adjustment_step>
+
+    <ksgen_position_surface_random
+        name="(string)"
+        surfaces="(string)"
+    >
+    </ksgen_position_surface_random>
+
+    <ksgen_spin_composite
+        name="(string)"
+        phi="(string)"
+        space="(string)"
+        surface="(string)"
+        theta="(string)"
+    >
+    </ksgen_spin_composite>
+
+    <ksgen_spin_composite_relative
+        name="(string)"
+        phi="(string)"
+        space="(string)"
+        surface="(string)"
+        theta="(string)"
+    >
+    </ksgen_spin_composite_relative>
+
+    <ksgen_time_composite
+        name="(string)"
+        time_value="(string)"
+    >
+    </ksgen_time_composite>
+
+    <ksgen_value_angle_cosine
+        angle_max="(double)"
+        angle_min="(double)"
+        mode="(string)"
+        name="(string)"
+    >
+    </ksgen_value_angle_cosine>
+
+    <ksgen_value_angle_spherical
+        angle_max="(double)"
+        angle_min="(double)"
+        name="(string)"
+    >
+    </ksgen_value_angle_spherical>
+
+    <ksgen_value_boltzmann
+        name="(string)"
+        unit_eV="(bool)"
+        value_kT="(double)"
+        value_mass="(double)"
+    >
+    </ksgen_value_boltzmann>
+
+    <ksgen_value_fix
+        name="(string)"
+        value="(double)"
+    >
+    </ksgen_value_fix>
+
+    <ksgen_value_formula
+        name="(string)"
+        value_formula="(string)"
+        value_max="(double)"
+        value_min="(double)"
+    >
+    </ksgen_value_formula>
+
+    <ksgen_value_gauss
+        name="(string)"
+        value_max="(double)"
+        value_mean="(double)"
+        value_min="(double)"
+        value_sigma="(double)"
+    >
+    </ksgen_value_gauss>
+
+    <ksgen_value_generalized_gauss
+        name="(string)"
+        value_max="(double)"
+        value_mean="(double)"
+        value_min="(double)"
+        value_sigma="(double)"
+        value_skew="(double)"
+    >
+    </ksgen_value_generalized_gauss>
+
+    <ksgen_value_histogram
+        base="(string)"
+        formula="(string)"
+        histogram="(string)"
+        name="(string)"
+        path="(string)"
+    >
+    </ksgen_value_histogram>
+
+    <ksgen_value_list
+        add_value="(double)"
+        name="(string)"
+        randomize="(bool)"
+    >
+    </ksgen_value_list>
+
+    <ksgen_value_pareto
+        cutoff="(double)"
+        name="(string)"
+        offset="(double)"
+        slope="(double)"
+        value_max="(double)"
+        value_min="(double)"
+    >
+    </ksgen_value_pareto>
+
+    <ksgen_value_radius_cylindrical
+        name="(string)"
+        radius_max="(double)"
+        radius_min="(double)"
+    >
+    </ksgen_value_radius_cylindrical>
+
+    <ksgen_value_radius_fraction
+        name="(string)"
+    >
+    </ksgen_value_radius_fraction>
+
+    <ksgen_value_radius_spherical
+        name="(string)"
+        radius_max="(double)"
+        radius_min="(double)"
+    >
+    </ksgen_value_radius_spherical>
+
+    <ksgen_value_set
+        name="(string)"
+        value_count="(unsigned int)"
+        value_increment="(double)"
+        value_start="(double)"
+        value_stop="(double)"
+    >
+    </ksgen_value_set>
+
+    <ksgen_value_uniform
+        name="(string)"
+        value_max="(double)"
+        value_min="(double)"
+    >
+    </ksgen_value_uniform>
+
+    <ksgen_value_z_frustrum
+        name="(string)"
+        r1="(double)"
+        r2="(double)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </ksgen_value_z_frustrum>
+
+    <ksgeo_side
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+        <add_electric_field/>
+
+        <add_magnetic_field/>
+
+        <add_step_modifier/>
+
+        <add_step_output/>
+
+        <add_terminator/>
+
+        <add_track_output/>
+
+        <clear_surface_interaction/>
+
+        <command
+            child="(string)"
+            field="(string)"
+            name="(string)"
+            parent="(string)"
+        >
+        </command>
+
+        <remove_magnetic_field/>
+
+        <remove_step_modifier/>
+
+        <remove_step_output/>
+
+        <remove_terminator/>
+
+        <remove_track_output/>
+
+        <set_surface_interaction/>
+
+    </ksgeo_side>
+
+    <ksgeo_space
+        name="(string)"
+        spaces="(string)"
+    >
+        <add_control/>
+
+        <add_electric_field/>
+
+        <add_magnetic_field/>
+
+        <add_space_interaction/>
+
+        <add_step_modifier/>
+
+        <add_step_output/>
+
+        <add_term/>
+
+        <add_terminator/>
+
+        <add_track_output/>
+
+        <clear_density/>
+
+        <clear_step_data/>
+
+        <clear_step_point/>
+
+        <clear_track_data/>
+
+        <clear_track_point/>
+
+        <clear_trajectory/>
+
+        <command
+            child="(string)"
+            field="(string)"
+            name="(string)"
+            parent="(string)"
+        >
+        </command>
+
+        <geo_side
+            name="(string)"
+            spaces="(string)"
+            surfaces="(string)"
+        >
+        </geo_side>
+
+        <geo_space
+            name="(string)"
+            spaces="(string)"
+        >
+            <geo_surface
+                name="(string)"
+                spaces="(string)"
+                surfaces="(string)"
+            >
+                <add_electric_field/>
+
+                <add_magnetic_field/>
+
+                <add_step_modifier/>
+
+                <add_step_output/>
+
+                <add_terminator/>
+
+                <add_track_output/>
+
+                <clear_surface_interaction/>
+
+                <command
+                    child="(string)"
+                    field="(string)"
+                    name="(string)"
+                    parent="(string)"
+                >
+                </command>
+
+                <remove_magnetic_field/>
+
+                <remove_step_modifier/>
+
+                <remove_step_output/>
+
+                <remove_terminator/>
+
+                <remove_track_output/>
+
+                <set_surface_interaction/>
+
+            </geo_surface>
+
+            <remove_control/>
+
+            <remove_electric_field/>
+
+            <remove_magnetic_field/>
+
+            <remove_space_interaction/>
+
+            <remove_step_modifier/>
+
+            <remove_step_output/>
+
+            <remove_term/>
+
+            <remove_terminator/>
+
+            <remove_track_output/>
+
+            <set_density/>
+
+            <set_step_data/>
+
+            <set_step_point/>
+
+            <set_track_data/>
+
+            <set_track_point/>
+
+            <set_trajectory/>
+
+        </geo_space>
+
+    </ksgeo_space>
+
+    <ksgeo_surface
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </ksgeo_surface>
+
+    <ksint_calculator_constant
+        cross_section="(double)"
+        name="(string)"
+    >
+    </ksint_calculator_constant>
+
+    <ksint_calculator_ion
+        gas="(string)"
+        name="(string)"
+    >
+    </ksint_calculator_ion>
+
+    <ksint_decay
+        calculator="(string)"
+        calculators="(string)"
+        enhancement="(double)"
+        name="(string)"
+    >
+        <decay_death_const_rate
+            life_time="(double)"
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_death_const_rate>
+
+        <decay_ferenc_bbr
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+            temperature="(double)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_ferenc_bbr>
+
+        <decay_ferenc_ionisation
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+            temperature="(double)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_ferenc_ionisation>
+
+        <decay_ferenc_spontaneous
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_ferenc_spontaneous>
+
+        <decay_glukhov_deexcitation
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+            temperature="(double)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_glukhov_deexcitation>
+
+        <decay_glukhov_excitation
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+            temperature="(double)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_glukhov_excitation>
+
+        <decay_glukhov_ionisation
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+            temperature="(double)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_glukhov_ionisation>
+
+        <decay_glukhov_spontaneous
+            max_pid="(long long)"
+            min_pid="(long long)"
+            name="(string)"
+            target_pid="(long long)"
+        >
+            <decay_product_generator
+                creator="(string)"
+                name="(string)"
+                pid="(double)"
+                special="(string)"
+                string_id="(string)"
+            >
+            </decay_product_generator>
+
+        </decay_glukhov_spontaneous>
+
+    </ksint_decay>
+
+    <ksint_decay_calculator_death_const_rate
+        life_time="(double)"
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+    >
+    </ksint_decay_calculator_death_const_rate>
+
+    <ksint_decay_calculator_ferenc_bbr_transition
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+        temperature="(double)"
+    >
+    </ksint_decay_calculator_ferenc_bbr_transition>
+
+    <ksint_decay_calculator_ferenc_ionisation
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+        temperature="(double)"
+    >
+    </ksint_decay_calculator_ferenc_ionisation>
+
+    <ksint_decay_calculator_ferenc_spontaneous
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+    >
+    </ksint_decay_calculator_ferenc_spontaneous>
+
+    <ksint_decay_calculator_glukhov_deexcitation
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+        temperature="(double)"
+    >
+    </ksint_decay_calculator_glukhov_deexcitation>
+
+    <ksint_decay_calculator_glukhov_excitation
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+        temperature="(double)"
+    >
+    </ksint_decay_calculator_glukhov_excitation>
+
+    <ksint_decay_calculator_glukhov_ionisation
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+        temperature="(double)"
+    >
+    </ksint_decay_calculator_glukhov_ionisation>
+
+    <ksint_decay_calculator_glukhov_spontaneous
+        max_pid="(long long)"
+        min_pid="(long long)"
+        name="(string)"
+        target_pid="(long long)"
+    >
+    </ksint_decay_calculator_glukhov_spontaneous>
+
+    <ksint_density_constant
+        density="(double)"
+        name="(string)"
+        pressure="(double)"
+        pressure_mbar="(double)"
+        temperature="(double)"
+    >
+    </ksint_density_constant>
+
+    <ksint_scattering
+        calculator="(string)"
+        calculators="(string)"
+        density="(string)"
+        enhancement="(double)"
+        name="(string)"
+        split="(bool)"
+    >
+        <calculator_argon
+            double_ionisation="(bool)"
+            elastic="(bool)"
+            excitation="(bool)"
+            name="(string)"
+            single_ionisation="(bool)"
+        >
+        </calculator_argon>
+
+        <calculator_constant
+            cross_section="(double)"
+            name="(string)"
+        >
+        </calculator_constant>
+
+        <calculator_hydrogen
+            elastic="(bool)"
+            excitation="(bool)"
+            ionisation="(bool)"
+            molecule="(string)"
+            name="(string)"
+        >
+        </calculator_hydrogen>
+
+        <calculator_ion
+            gas="(string)"
+            name="(string)"
+        >
+        </calculator_ion>
+
+        <calculator_kess
+            auger_relaxation="(string)"
+            elastic="(bool)"
+            inelastic="(string)"
+            name="(string)"
+            photo_absorbtion="(bool)"
+        >
+        </calculator_kess>
+
+        <density_constant
+            density="(double)"
+            name="(string)"
+            pressure="(double)"
+            pressure_mbar="(double)"
+            temperature="(double)"
+        >
+        </density_constant>
+
+    </ksint_scattering>
+
+    <ksint_spin_flip
+        name="(string)"
+    >
+    </ksint_spin_flip>
+
+    <ksint_spin_flip_pulse
+        name="(string)"
+        time="(double)"
+    >
+    </ksint_spin_flip_pulse>
+
+    <ksint_spin_rotate_y_pulse
+        angle="(double)"
+        is_adiabatic="(bool)"
+        name="(string)"
+        time="(double)"
+    >
+    </ksint_spin_rotate_y_pulse>
+
+    <ksint_surface_UCN
+        alpha="(double)"
+        correlation_length="(double)"
+        eta="(double)"
+        name="(string)"
+        real_optical_potential="(double)"
+    >
+    </ksint_surface_UCN>
+
+    <ksint_surface_diffuse
+        name="(string)"
+        probability="(double)"
+        reflection_loss="(double)"
+        reflection_loss_fraction="(double)"
+        transmission_loss="(double)"
+        transmission_loss_fraction="(double)"
+    >
+    </ksint_surface_diffuse>
+
+    <ksint_surface_multiplication
+        energy_loss_fraction="(double)"
+        name="(string)"
+        required_energy_per_particle_ev="(double)"
+        side="(string)"
+    >
+    </ksint_surface_multiplication>
+
+    <ksint_surface_specular
+        name="(string)"
+        probability="(double)"
+        reflection_loss="(double)"
+        reflection_loss_fraction="(double)"
+        transmission_loss="(double)"
+        transmission_loss_fraction="(double)"
+    >
+    </ksint_surface_specular>
+
+    <ksint_surface_spin_flip
+        name="(string)"
+        probability="(double)"
+    >
+    </ksint_surface_spin_flip>
+
+    <ksmod_dynamic_enhancement
+        dynamic="(bool)"
+        name="(string)"
+        reference_energy="(double)"
+        scattering="(string)"
+        static_enhancement="(double)"
+        synchrotron="(string)"
+    >
+    </ksmod_dynamic_enhancement>
+
+    <ksmod_event_report
+        name="(string)"
+    >
+    </ksmod_event_report>
+
+    <ksmod_split_on_turn
+        direction="(string)"
+        name="(string)"
+    >
+    </ksmod_split_on_turn>
+
+    <ksnav_meshed_space
+        absolute_tolerance="(double)"
+        enter_split="(bool)"
+        exit_split="(bool)"
+        fail_check="(bool)"
+        max_octree_depth="(unsigned int)"
+        n_allowed_elements="(unsigned int)"
+        name="(string)"
+        octree_file="(string)"
+        path="(string)"
+        relative_tolerance="(double)"
+        root_space="(string)"
+        spatial_resolution="(double)"
+    >
+    </ksnav_meshed_space>
+
+    <ksnav_space
+        enter_split="(bool)"
+        exit_split="(bool)"
+        fail_check="(bool)"
+        name="(string)"
+        tolerance="(double)"
+    >
+    </ksnav_space>
+
+    <ksnav_surface
+        name="(string)"
+        reflection_split="(bool)"
+        transmission_split="(bool)"
+    >
+    </ksnav_surface>
+
+    <ksterm_death
+        name="(string)"
+    >
+    </ksterm_death>
+
+    <ksterm_magnetron
+        max_phi="(double)"
+        name="(string)"
+    >
+    </ksterm_magnetron>
+
+    <ksterm_max_energy
+        energy="(double)"
+        name="(string)"
+    >
+    </ksterm_max_energy>
+
+    <ksterm_max_length
+        length="(double)"
+        name="(string)"
+    >
+    </ksterm_max_length>
+
+    <ksterm_max_long_energy
+        long_energy="(double)"
+        name="(string)"
+    >
+    </ksterm_max_long_energy>
+
+    <ksterm_max_r
+        name="(string)"
+        r="(double)"
+    >
+    </ksterm_max_r>
+
+    <ksterm_max_step_time
+        name="(string)"
+        time="(double)"
+    >
+    </ksterm_max_step_time>
+
+    <ksterm_max_steps
+        name="(string)"
+        steps="(unsigned int)"
+    >
+    </ksterm_max_steps>
+
+    <ksterm_max_time
+        name="(string)"
+        time="(double)"
+    >
+    </ksterm_max_time>
+
+    <ksterm_max_total_time
+        name="(string)"
+        time="(double)"
+    >
+    </ksterm_max_total_time>
+
+    <ksterm_max_z
+        name="(string)"
+        z="(double)"
+    >
+    </ksterm_max_z>
+
+    <ksterm_min_distance
+        min_distance="(double)"
+        name="(string)"
+        surfaces="(string)"
+    >
+    </ksterm_min_distance>
+
+    <ksterm_min_energy
+        energy="(double)"
+        name="(string)"
+    >
+    </ksterm_min_energy>
+
+    <ksterm_min_long_energy
+        long_energy="(double)"
+        name="(string)"
+    >
+    </ksterm_min_long_energy>
+
+    <ksterm_min_r
+        name="(string)"
+        r="(double)"
+    >
+    </ksterm_min_r>
+
+    <ksterm_min_z
+        name="(string)"
+        z="(double)"
+    >
+    </ksterm_min_z>
+
+    <ksterm_output
+        component="(string)"
+        group="(string)"
+        max_value="(double)"
+        min_value="(double)"
+        name="(string)"
+    >
+    </ksterm_output>
+
+    <ksterm_secondaries
+        name="(string)"
+    >
+    </ksterm_secondaries>
+
+    <ksterm_stepsize
+        max_length="(double)"
+        min_length="(double)"
+        name="(string)"
+    >
+    </ksterm_stepsize>
+
+    <ksterm_trapped
+        max_turns="(int)"
+        name="(string)"
+    >
+    </ksterm_trapped>
+
+    <kstraj_control_B_change
+        fraction="(double)"
+        name="(string)"
+    >
+    </kstraj_control_B_change>
+
+    <kstraj_control_cyclotron
+        fraction="(double)"
+        name="(string)"
+    >
+    </kstraj_control_cyclotron>
+
+    <kstraj_control_energy
+        adjustment="(double)"
+        adjustment_down="(double)"
+        adjustment_up="(double)"
+        initial_step="(double)"
+        lower_limit="(double)"
+        max_length="(double)"
+        min_length="(double)"
+        name="(string)"
+        step_rescale="(double)"
+        upper_limit="(double)"
+    >
+    </kstraj_control_energy>
+
+    <kstraj_control_length
+        length="(double)"
+        name="(string)"
+    >
+    </kstraj_control_length>
+
+    <kstraj_control_m_dot
+        fraction="(double)"
+        name="(string)"
+    >
+    </kstraj_control_m_dot>
+
+    <kstraj_control_magnetic_moment
+        lower_limit="(double)"
+        name="(string)"
+        upper_limit="(double)"
+    >
+    </kstraj_control_magnetic_moment>
+
+    <kstraj_control_momentum_numerical_error
+        absolute_momentum_error="(double)"
+        name="(string)"
+        safety_factor="(double)"
+        solver_order="(double)"
+    >
+    </kstraj_control_momentum_numerical_error>
+
+    <kstraj_control_position_numerical_error
+        absolute_position_error="(double)"
+        name="(string)"
+        safety_factor="(double)"
+        solver_order="(double)"
+    >
+    </kstraj_control_position_numerical_error>
+
+    <kstraj_control_spin_precession
+        fraction="(double)"
+        name="(string)"
+    >
+    </kstraj_control_spin_precession>
+
+    <kstraj_control_time
+        name="(string)"
+        time="(double)"
+    >
+    </kstraj_control_time>
+
+    <kstraj_integrator_rk54
+        name="(string)"
+    >
+    </kstraj_integrator_rk54>
+
+    <kstraj_integrator_rk65
+        name="(string)"
+    >
+    </kstraj_integrator_rk65>
+
+    <kstraj_integrator_rk8
+        name="(string)"
+    >
+    </kstraj_integrator_rk8>
+
+    <kstraj_integrator_rk86
+        name="(string)"
+    >
+    </kstraj_integrator_rk86>
+
+    <kstraj_integrator_rk87
+        name="(string)"
+    >
+    </kstraj_integrator_rk87>
+
+    <kstraj_integrator_rkdp54
+        name="(string)"
+    >
+    </kstraj_integrator_rkdp54>
+
+    <kstraj_integrator_rkdp853
+        name="(string)"
+    >
+    </kstraj_integrator_rkdp853>
+
+    <kstraj_integrator_sym4
+        name="(string)"
+    >
+    </kstraj_integrator_sym4>
+
+    <kstraj_interpolator_crk
+        name="(string)"
+    >
+    </kstraj_interpolator_crk>
+
+    <kstraj_interpolator_fast
+        name="(string)"
+    >
+    </kstraj_interpolator_fast>
+
+    <kstraj_interpolator_hermite
+        name="(string)"
+    >
+    </kstraj_interpolator_hermite>
+
+    <kstraj_term_constant_force_propagation
+        force="(KThreeVector)"
+        name="(string)"
+    >
+    </kstraj_term_constant_force_propagation>
+
+    <kstraj_term_drift
+        name="(string)"
+    >
+    </kstraj_term_drift>
+
+    <kstraj_term_gravity
+        gravity="(KThreeVector)"
+        name="(string)"
+    >
+    </kstraj_term_gravity>
+
+    <kstraj_term_gyration
+        name="(string)"
+    >
+    </kstraj_term_gyration>
+
+    <kstraj_term_propagation
+        direction="(string)"
+        name="(string)"
+    >
+    </kstraj_term_propagation>
+
+    <kstraj_term_synchrotron
+        enhancement="(double)"
+        name="(string)"
+        old_methode="(bool)"
+    >
+    </kstraj_term_synchrotron>
+
+    <kstraj_trajectory_adiabatic
+        attempt_limit="(unsigned int)"
+        cyclotron_fraction="(double)"
+        max_segments="(unsigned int)"
+        name="(string)"
+        piecewise_tolerance="(double)"
+        use_true_position="(bool)"
+    >
+        <control_B_change
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_B_change>
+
+        <control_cyclotron
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_cyclotron>
+
+        <control_energy
+            adjustment="(double)"
+            adjustment_down="(double)"
+            adjustment_up="(double)"
+            initial_step="(double)"
+            lower_limit="(double)"
+            max_length="(double)"
+            min_length="(double)"
+            name="(string)"
+            step_rescale="(double)"
+            upper_limit="(double)"
+        >
+        </control_energy>
+
+        <control_length
+            length="(double)"
+            name="(string)"
+        >
+        </control_length>
+
+        <control_magnetic_moment
+            lower_limit="(double)"
+            name="(string)"
+            upper_limit="(double)"
+        >
+        </control_magnetic_moment>
+
+        <control_momentum_error
+            absolute_momentum_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_momentum_error>
+
+        <control_position_error
+            absolute_position_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_position_error>
+
+        <control_time
+            name="(string)"
+            time="(double)"
+        >
+        </control_time>
+
+        <integrator_rk54
+            name="(string)"
+        >
+        </integrator_rk54>
+
+        <integrator_rk65
+            name="(string)"
+        >
+        </integrator_rk65>
+
+        <integrator_rk8
+            name="(string)"
+        >
+        </integrator_rk8>
+
+        <integrator_rk86
+            name="(string)"
+        >
+        </integrator_rk86>
+
+        <integrator_rk87
+            name="(string)"
+        >
+        </integrator_rk87>
+
+        <integrator_rkdp54
+            name="(string)"
+        >
+        </integrator_rkdp54>
+
+        <integrator_rkdp853
+            name="(string)"
+        >
+        </integrator_rkdp853>
+
+        <interpolator_crk
+            name="(string)"
+        >
+        </interpolator_crk>
+
+        <interpolator_fast
+            name="(string)"
+        >
+        </interpolator_fast>
+
+        <interpolator_hermite
+            name="(string)"
+        >
+        </interpolator_hermite>
+
+        <term_drift
+            name="(string)"
+        >
+        </term_drift>
+
+        <term_gyration
+            name="(string)"
+        >
+        </term_gyration>
+
+        <term_propagation
+            direction="(string)"
+            name="(string)"
+        >
+        </term_propagation>
+
+        <term_synchrotron
+            enhancement="(double)"
+            name="(string)"
+            old_methode="(bool)"
+        >
+        </term_synchrotron>
+
+    </kstraj_trajectory_adiabatic>
+
+    <kstraj_trajectory_adiabatic_spin
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
+        name="(string)"
+        piecewise_tolerance="(double)"
+    >
+        <control_B_change
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_B_change>
+
+        <control_cyclotron
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_cyclotron>
+
+        <control_energy
+            adjustment="(double)"
+            adjustment_down="(double)"
+            adjustment_up="(double)"
+            initial_step="(double)"
+            lower_limit="(double)"
+            max_length="(double)"
+            min_length="(double)"
+            name="(string)"
+            step_rescale="(double)"
+            upper_limit="(double)"
+        >
+        </control_energy>
+
+        <control_length
+            length="(double)"
+            name="(string)"
+        >
+        </control_length>
+
+        <control_m_dot
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_m_dot>
+
+        <control_magnetic_moment
+            lower_limit="(double)"
+            name="(string)"
+            upper_limit="(double)"
+        >
+        </control_magnetic_moment>
+
+        <control_momentum_error
+            absolute_momentum_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_momentum_error>
+
+        <control_position_error
+            absolute_position_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_position_error>
+
+        <control_spin_precession
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_spin_precession>
+
+        <control_time
+            name="(string)"
+            time="(double)"
+        >
+        </control_time>
+
+        <integrator_rk54
+            name="(string)"
+        >
+        </integrator_rk54>
+
+        <integrator_rk65
+            name="(string)"
+        >
+        </integrator_rk65>
+
+        <integrator_rk8
+            name="(string)"
+        >
+        </integrator_rk8>
+
+        <integrator_rk86
+            name="(string)"
+        >
+        </integrator_rk86>
+
+        <integrator_rk87
+            name="(string)"
+        >
+        </integrator_rk87>
+
+        <integrator_rkdp54
+            name="(string)"
+        >
+        </integrator_rkdp54>
+
+        <integrator_rkdp853
+            name="(string)"
+        >
+        </integrator_rkdp853>
+
+        <interpolator_crk
+            name="(string)"
+        >
+        </interpolator_crk>
+
+        <interpolator_fast
+            name="(string)"
+        >
+        </interpolator_fast>
+
+        <interpolator_hermite
+            name="(string)"
+        >
+        </interpolator_hermite>
+
+        <term_gravity
+            gravity="(KThreeVector)"
+            name="(string)"
+        >
+        </term_gravity>
+
+        <term_propagation
+            direction="(string)"
+            name="(string)"
+        >
+        </term_propagation>
+
+        <term_synchrotron
+            enhancement="(double)"
+            name="(string)"
+            old_methode="(bool)"
+        >
+        </term_synchrotron>
+
+    </kstraj_trajectory_adiabatic_spin>
+
+    <kstraj_trajectory_electric
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
+        name="(string)"
+        piecewise_tolerance="(double)"
+    >
+        <control_B_change
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_B_change>
+
+        <control_length
+            length="(double)"
+            name="(string)"
+        >
+        </control_length>
+
+        <control_time
+            name="(string)"
+            time="(double)"
+        >
+        </control_time>
+
+        <integrator_rk54
+            name="(string)"
+        >
+        </integrator_rk54>
+
+        <integrator_rk65
+            name="(string)"
+        >
+        </integrator_rk65>
+
+        <integrator_rk8
+            name="(string)"
+        >
+        </integrator_rk8>
+
+        <integrator_rk86
+            name="(string)"
+        >
+        </integrator_rk86>
+
+        <integrator_rk87
+            name="(string)"
+        >
+        </integrator_rk87>
+
+        <integrator_rkdp54
+            name="(string)"
+        >
+        </integrator_rkdp54>
+
+        <integrator_rkdp853
+            name="(string)"
+        >
+        </integrator_rkdp853>
+
+        <interpolator_crk
+            name="(string)"
+        >
+        </interpolator_crk>
+
+        <interpolator_fast
+            name="(string)"
+        >
+        </interpolator_fast>
+
+        <interpolator_hermite
+            name="(string)"
+        >
+        </interpolator_hermite>
+
+        <term_propagation
+            direction="(string)"
+            name="(string)"
+        >
+        </term_propagation>
+
+    </kstraj_trajectory_electric>
+
+    <kstraj_trajectory_exact
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
+        name="(string)"
+        piecewise_tolerance="(double)"
+    >
+        <control_B_change
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_B_change>
+
+        <control_cyclotron
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_cyclotron>
+
+        <control_energy
+            adjustment="(double)"
+            adjustment_down="(double)"
+            adjustment_up="(double)"
+            initial_step="(double)"
+            lower_limit="(double)"
+            max_length="(double)"
+            min_length="(double)"
+            name="(string)"
+            step_rescale="(double)"
+            upper_limit="(double)"
+        >
+        </control_energy>
+
+        <control_length
+            length="(double)"
+            name="(string)"
+        >
+        </control_length>
+
+        <control_magnetic_moment
+            lower_limit="(double)"
+            name="(string)"
+            upper_limit="(double)"
+        >
+        </control_magnetic_moment>
+
+        <control_momentum_error
+            absolute_momentum_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_momentum_error>
+
+        <control_position_error
+            absolute_position_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_position_error>
+
+        <control_time
+            name="(string)"
+            time="(double)"
+        >
+        </control_time>
+
+        <integrator_rk54
+            name="(string)"
+        >
+        </integrator_rk54>
+
+        <integrator_rk65
+            name="(string)"
+        >
+        </integrator_rk65>
+
+        <integrator_rk8
+            name="(string)"
+        >
+        </integrator_rk8>
+
+        <integrator_rk86
+            name="(string)"
+        >
+        </integrator_rk86>
+
+        <integrator_rk87
+            name="(string)"
+        >
+        </integrator_rk87>
+
+        <integrator_rkdp54
+            name="(string)"
+        >
+        </integrator_rkdp54>
+
+        <integrator_rkdp853
+            name="(string)"
+        >
+        </integrator_rkdp853>
+
+        <interpolator_crk
+            name="(string)"
+        >
+        </interpolator_crk>
+
+        <interpolator_fast
+            name="(string)"
+        >
+        </interpolator_fast>
+
+        <interpolator_hermite
+            name="(string)"
+        >
+        </interpolator_hermite>
+
+        <term_gravity
+            gravity="(KThreeVector)"
+            name="(string)"
+        >
+        </term_gravity>
+
+        <term_propagation
+            direction="(string)"
+            name="(string)"
+        >
+        </term_propagation>
+
+        <term_synchrotron
+            enhancement="(double)"
+            name="(string)"
+            old_methode="(bool)"
+        >
+        </term_synchrotron>
+
+    </kstraj_trajectory_exact>
+
+    <kstraj_trajectory_exact_spin
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
+        name="(string)"
+        piecewise_tolerance="(double)"
+    >
+        <control_B_change
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_B_change>
+
+        <control_cyclotron
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_cyclotron>
+
+        <control_energy
+            adjustment="(double)"
+            adjustment_down="(double)"
+            adjustment_up="(double)"
+            initial_step="(double)"
+            lower_limit="(double)"
+            max_length="(double)"
+            min_length="(double)"
+            name="(string)"
+            step_rescale="(double)"
+            upper_limit="(double)"
+        >
+        </control_energy>
+
+        <control_length
+            length="(double)"
+            name="(string)"
+        >
+        </control_length>
+
+        <control_magnetic_moment
+            lower_limit="(double)"
+            name="(string)"
+            upper_limit="(double)"
+        >
+        </control_magnetic_moment>
+
+        <control_momentum_error
+            absolute_momentum_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_momentum_error>
+
+        <control_position_error
+            absolute_position_error="(double)"
+            name="(string)"
+            safety_factor="(double)"
+            solver_order="(double)"
+        >
+        </control_position_error>
+
+        <control_spin_precession
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_spin_precession>
+
+        <control_time
+            name="(string)"
+            time="(double)"
+        >
+        </control_time>
+
+        <integrator_rk54
+            name="(string)"
+        >
+        </integrator_rk54>
+
+        <integrator_rk65
+            name="(string)"
+        >
+        </integrator_rk65>
+
+        <integrator_rk8
+            name="(string)"
+        >
+        </integrator_rk8>
+
+        <integrator_rk86
+            name="(string)"
+        >
+        </integrator_rk86>
+
+        <integrator_rk87
+            name="(string)"
+        >
+        </integrator_rk87>
+
+        <integrator_rkdp54
+            name="(string)"
+        >
+        </integrator_rkdp54>
+
+        <integrator_rkdp853
+            name="(string)"
+        >
+        </integrator_rkdp853>
+
+        <interpolator_crk
+            name="(string)"
+        >
+        </interpolator_crk>
+
+        <interpolator_fast
+            name="(string)"
+        >
+        </interpolator_fast>
+
+        <interpolator_hermite
+            name="(string)"
+        >
+        </interpolator_hermite>
+
+        <term_gravity
+            gravity="(KThreeVector)"
+            name="(string)"
+        >
+        </term_gravity>
+
+        <term_propagation
+            direction="(string)"
+            name="(string)"
+        >
+        </term_propagation>
+
+        <term_synchrotron
+            enhancement="(double)"
+            name="(string)"
+            old_methode="(bool)"
+        >
+        </term_synchrotron>
+
+    </kstraj_trajectory_exact_spin>
+
+    <kstraj_trajectory_exact_trapped
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
+        name="(string)"
+        piecewise_tolerance="(double)"
+    >
+        <control_length
+            length="(double)"
+            name="(string)"
+        >
+        </control_length>
+
+        <control_time
+            name="(string)"
+            time="(double)"
+        >
+        </control_time>
+
+        <integrator_rk8
+            name="(string)"
+        >
+        </integrator_rk8>
+
+        <integrator_sym4
+            name="(string)"
+        >
+        </integrator_sym4>
+
+        <interpolator_crk/>
+
+        <interpolator_fast/>
+
+        <interpolator_hermite/>
+
+        <term_propagation
+            direction="(string)"
+            name="(string)"
+        >
+        </term_propagation>
+
+        <term_synchrotron
+            enhancement="(double)"
+            name="(string)"
+            old_methode="(bool)"
+        >
+        </term_synchrotron>
+
+    </kstraj_trajectory_exact_trapped>
+
+    <kstraj_trajectory_linear
+        length="(double)"
+        name="(string)"
+    >
+    </kstraj_trajectory_linear>
+
+    <kstraj_trajectory_magnetic
+        attempt_limit="(unsigned int)"
+        max_segments="(unsigned int)"
+        name="(string)"
+        piecewise_tolerance="(double)"
+    >
+        <control_B_change
+            fraction="(double)"
+            name="(string)"
+        >
+        </control_B_change>
+
+        <control_length
+            length="(double)"
+            name="(string)"
+        >
+        </control_length>
+
+        <control_time
+            name="(string)"
+            time="(double)"
+        >
+        </control_time>
+
+        <integrator_rk54
+            name="(string)"
+        >
+        </integrator_rk54>
+
+        <integrator_rk65
+            name="(string)"
+        >
+        </integrator_rk65>
+
+        <integrator_rk8
+            name="(string)"
+        >
+        </integrator_rk8>
+
+        <integrator_rk86
+            name="(string)"
+        >
+        </integrator_rk86>
+
+        <integrator_rk87
+            name="(string)"
+        >
+        </integrator_rk87>
+
+        <integrator_rkdp54
+            name="(string)"
+        >
+        </integrator_rkdp54>
+
+        <integrator_rkdp853
+            name="(string)"
+        >
+        </integrator_rkdp853>
+
+        <interpolator_crk
+            name="(string)"
+        >
+        </interpolator_crk>
+
+        <interpolator_fast
+            name="(string)"
+        >
+        </interpolator_fast>
+
+        <interpolator_hermite
+            name="(string)"
+        >
+        </interpolator_hermite>
+
+        <term_propagation
+            direction="(string)"
+            name="(string)"
+        >
+        </term_propagation>
+
+    </kstraj_trajectory_magnetic>
+
+    <kswrite_ascii
+        base="(string)"
+        name="(string)"
+        path="(string)"
+        precision="(unsigned int)"
+    >
+    </kswrite_ascii>
+
+    <kswrite_root
+        base="(string)"
+        name="(string)"
+        path="(string)"
+    >
+    </kswrite_root>
+
+    <kswrite_root_condition_output
+        group="(string)"
+        max_value="(double)"
+        min_value="(double)"
+        name="(string)"
+        parent="(string)"
+    >
+    </kswrite_root_condition_output>
+
+    <kswrite_root_condition_periodic
+        group="(string)"
+        increment="(double)"
+        initial_max="(double)"
+        initial_min="(double)"
+        name="(string)"
+        parent="(string)"
+        reset_max="(double)"
+        reset_min="(double)"
+    >
+    </kswrite_root_condition_periodic>
+
+    <kswrite_root_condition_step
+        group="(string)"
+        name="(string)"
+        nth_step="(int)"
+        parent="(string)"
+    >
+    </kswrite_root_condition_step>
+
+    <kswrite_root_condition_terminator
+        group="(string)"
+        match_terminator="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </kswrite_root_condition_terminator>
+
+    <kswrite_vtk
+        base="(string)"
+        name="(string)"
+        path="(string)"
+    >
+    </kswrite_vtk>
+
+    <output
+        field="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </output>
+
+    <output_delta
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </output_delta>
+
+    <output_group/>
+
+    <output_integral
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </output_integral>
+
+    <output_math
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+        term="(string)"
+    >
+    </output_math>
+
+    <output_maximum
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </output_maximum>
+
+    <output_maximum_at
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+        source="(string)"
+    >
+    </output_maximum_at>
+
+    <output_minimum
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+    >
+    </output_minimum>
+
+    <output_minimum_at
+        component="(string)"
+        group="(string)"
+        name="(string)"
+        parent="(string)"
+        source="(string)"
+    >
+    </output_minimum_at>
+
+</kassiopeia>
+<kemfield>
+    <constant_electric_field
+        field="(KEMStreamableThreeVector)"
+        location="(KEMStreamableThreeVector)"
+        name="(string)"
+        offset_potential="(double)"
+    >
+    </constant_electric_field>
+
+    <constant_magnetic_field
+        field="(KEMStreamableThreeVector)"
+        location="(KEMStreamableThreeVector)"
+        name="(string)"
+    >
+    </constant_magnetic_field>
+
+    <electric_potentialmap
+        directory="(string)"
+        file="(string)"
+        interpolation="(string)"
+        name="(string)"
+    >
+    </electric_potentialmap>
+
+    <electric_potentialmap_calculator
+        center="(KEMStreamableThreeVector)"
+        compute_field="(bool)"
+        directory="(string)"
+        field="(string)"
+        file="(string)"
+        force_update="(bool)"
+        length="(KEMStreamableThreeVector)"
+        mirror_x="(bool)"
+        mirror_y="(bool)"
+        mirror_z="(bool)"
+        name="(string)"
+        spaces="(string)"
+        spacing="(double)"
+    >
+    </electric_potentialmap_calculator>
+
+    <electric_quadrupole_field
+        length="(double)"
+        location="(KEMStreamableThreeVector)"
+        name="(string)"
+        radius="(double)"
+        strength="(double)"
+    >
+    </electric_quadrupole_field>
+
+    <electromagnet_field
+        directory="(string)"
+        directory_magfield3="(string)"
+        file="(string)"
+        name="(string)"
+        save_magfield3="(bool)"
+        spaces="(string)"
+        surfaces="(string)"
+        system="(string)"
+    >
+    </electromagnet_field>
+
+    <electrostatic_field
+        directory="(string)"
+        file="(string)"
+        hash_masked_bits="(unsigned int)"
+        hash_threshold="(double)"
+        maximum_element_aspect_ratio="(double)"
+        minimum_element_area="(double)"
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+        symmetry="(string)"
+        system="(string)"
+    >
+    </electrostatic_field>
+
+    <induced_azimuthal_electric_field
+        name="(string)"
+        root_field="(string)"
+    >
+    </induced_azimuthal_electric_field>
+
+    <linear_electric_field
+        U1="(double)"
+        U2="(double)"
+        name="(string)"
+        surface="(string)"
+        z1="(double)"
+        z2="(double)"
+    >
+    </linear_electric_field>
+
+    <magnetic_dipole_field
+        location="(KEMStreamableThreeVector)"
+        moment="(KEMStreamableThreeVector)"
+        name="(string)"
+    >
+    </magnetic_dipole_field>
+
+    <magnetic_fieldmap
+        directory="(string)"
+        file="(string)"
+        interpolation="(string)"
+        magnetic_gradient_numerical="(bool)"
+        name="(string)"
+    >
+    </magnetic_fieldmap>
+
+    <magnetic_fieldmap_calculator
+        center="(KEMStreamableThreeVector)"
+        compute_gradient="(bool)"
+        directory="(string)"
+        field="(string)"
+        file="(string)"
+        force_update="(bool)"
+        length="(KEMStreamableThreeVector)"
+        mirror_x="(bool)"
+        mirror_y="(bool)"
+        mirror_z="(bool)"
+        name="(string)"
+        spaces="(string)"
+        spacing="(double)"
+        time="(double)"
+    >
+    </magnetic_fieldmap_calculator>
+
+    <magnetic_superposition_field
+        name="(string)"
+        require="(string)"
+        use_caching="(bool)"
+    >
+    </magnetic_superposition_field>
+
+    <ramped_electric_field
+        name="(string)"
+        num_cycles="(int)"
+        ramp_down_delay="(double)"
+        ramp_down_time="(double)"
+        ramp_up_delay="(double)"
+        ramp_up_time="(double)"
+        ramping_type="(string)"
+        root_field="(string)"
+        time_constant="(double)"
+        time_scaling="(double)"
+    >
+    </ramped_electric_field>
+
+    <ramped_magnetic_field
+        name="(string)"
+        num_cycles="(int)"
+        ramp_down_delay="(double)"
+        ramp_down_time="(double)"
+        ramp_up_delay="(double)"
+        ramp_up_time="(double)"
+        ramping_type="(string)"
+        root_field="(string)"
+        time_constant="(double)"
+        time_constant_2="(double)"
+        time_scaling="(double)"
+    >
+    </ramped_magnetic_field>
+
+    <ramped_transitional_electric_field
+        focus_exponent="(double)"
+        focus_time="(double)"
+        name="(string)"
+        num_cycles="(int)"
+        potential_scaling="(double)"
+        ramp_down_delay="(double)"
+        ramp_down_time="(double)"
+        ramp_up_delay="(double)"
+        ramp_up_time="(double)"
+        ramping_type="(string)"
+        root_field_1="(string)"
+        root_field_2="(string)"
+        small_spectrometer="(bool)"
+        time_constant="(double)"
+        time_scaling="(double)"
+    >
+    </ramped_transitional_electric_field>
+
+</kemfield>
+<messages
+    format="(string)"
+    log="(string)"
+    parser_context="(bool)"
+    precision="(KMessagePrecision)"
+    shutdown_message="(bool)"
+    terminal="(string)"
+>
+    <file/>
+
+    <message
+        format="(string)"
+        key="(string)"
+        log="(string)"
+        parser_context="(bool)"
+        precision="(KMessagePrecision)"
+        shutdown_message="(bool)"
+        terminal="(string)"
+    >
+    </message>
+
+</messages>
+<root_window
+    active="(bool)"
+    canvas_height="(unsigned int)"
+    canvas_width="(unsigned int)"
+    name="(string)"
+    path="(string)"
+    write_enabled="(bool)"
+>
+    <root_geometry_painter
+        epsilon="(double)"
+        file="(string)"
+        name="(string)"
+        path="(string)"
+        plane_normal="(KThreeVector)"
+        plane_point="(KThreeVector)"
+        save_json="(bool)"
+        save_svg="(bool)"
+        show_labels="(bool)"
+        spaces="(string)"
+        surfaces="(string)"
+        swap_axis="(bool)"
+    >
+    </root_geometry_painter>
+
+    <root_magfield_painter
+        axial_symmetry="(bool)"
+        draw="(string)"
+        magnetic_field="(string)"
+        magnetic_gradient_numerical="(bool)"
+        name="(string)"
+        plot="(string)"
+        r_max="(double)"
+        r_steps="(int)"
+        x_axis="(string)"
+        y_axis="(string)"
+        z_axis_logscale="(bool)"
+        z_fix="(double)"
+        z_max="(double)"
+        z_min="(double)"
+        z_steps="(int)"
+    >
+    </root_magfield_painter>
+
+    <root_pad
+        name="(string)"
+        xlow="(double)"
+        xup="(double)"
+        ylow="(double)"
+        yup="(double)"
+    >
+        <root_geometry_painter
+            epsilon="(double)"
+            file="(string)"
+            name="(string)"
+            path="(string)"
+            plane_normal="(KThreeVector)"
+            plane_point="(KThreeVector)"
+            save_json="(bool)"
+            save_svg="(bool)"
+            show_labels="(bool)"
+            spaces="(string)"
+            surfaces="(string)"
+            swap_axis="(bool)"
+        >
+        </root_geometry_painter>
+
+        <root_magfield_painter
+            axial_symmetry="(bool)"
+            draw="(string)"
+            magnetic_field="(string)"
+            magnetic_gradient_numerical="(bool)"
+            name="(string)"
+            plot="(string)"
+            r_max="(double)"
+            r_steps="(int)"
+            x_axis="(string)"
+            y_axis="(string)"
+            z_axis_logscale="(bool)"
+            z_fix="(double)"
+            z_max="(double)"
+            z_min="(double)"
+            z_steps="(int)"
+        >
+        </root_magfield_painter>
+
+        <root_potential_painter
+            calc_pot="(bool)"
+            compare_fields="(bool)"
+            electric_field="(string)"
+            name="(string)"
+            r_max="(double)"
+            r_steps="(int)"
+            reference_field="(string)"
+            x_axis="(string)"
+            y_axis="(string)"
+            z_max="(double)"
+            z_min="(double)"
+            z_steps="(int)"
+        >
+        </root_potential_painter>
+
+        <root_track_painter
+            add_color="(string)"
+            axial_mirror="(bool)"
+            base="(string)"
+            color="(string)"
+            color_mode="(string)"
+            color_palette="(string)"
+            color_variable="(string)"
+            draw_options="(string)"
+            epsilon="(double)"
+            name="(string)"
+            path="(string)"
+            plane_normal="(KThreeVector)"
+            plane_point="(KThreeVector)"
+            plot_mode="(string)"
+            position_name="(string)"
+            step_output_group_name="(string)"
+            swap_axis="(bool)"
+            track_output_group_name="(string)"
+            x_axis="(string)"
+            y_axis="(string)"
+        >
+        </root_track_painter>
+
+        <root_zh_painter
+            electric_field="(string)"
+            file="(string)"
+            geometry_type="(string )"
+            magnetic_field="(string)"
+            name="(string)"
+            path="(string)"
+            r_dist="(double)"
+            r_max="(double)"
+            r_min="(double)"
+            r_steps="(int)"
+            radial_safety_margin="(double )"
+            write="(bool)"
+            x_axis="(string)"
+            y_axis="(string)"
+            z_dist="(double)"
+            z_max="(double)"
+            z_min="(double)"
+            z_steps="(int)"
+        >
+        </root_zh_painter>
+
+    </root_pad>
+
+    <root_potential_painter
+        calc_pot="(bool)"
+        compare_fields="(bool)"
+        electric_field="(string)"
+        name="(string)"
+        r_max="(double)"
+        r_steps="(int)"
+        reference_field="(string)"
+        x_axis="(string)"
+        y_axis="(string)"
+        z_max="(double)"
+        z_min="(double)"
+        z_steps="(int)"
+    >
+    </root_potential_painter>
+
+    <root_track_painter
+        add_color="(string)"
+        axial_mirror="(bool)"
+        base="(string)"
+        color="(string)"
+        color_mode="(string)"
+        color_palette="(string)"
+        color_variable="(string)"
+        draw_options="(string)"
+        epsilon="(double)"
+        name="(string)"
+        path="(string)"
+        plane_normal="(KThreeVector)"
+        plane_point="(KThreeVector)"
+        plot_mode="(string)"
+        position_name="(string)"
+        step_output_group_name="(string)"
+        swap_axis="(bool)"
+        track_output_group_name="(string)"
+        x_axis="(string)"
+        y_axis="(string)"
+    >
+    </root_track_painter>
+
+    <root_zh_painter
+        electric_field="(string)"
+        file="(string)"
+        geometry_type="(string )"
+        magnetic_field="(string)"
+        name="(string)"
+        path="(string)"
+        r_dist="(double)"
+        r_max="(double)"
+        r_min="(double)"
+        r_steps="(int)"
+        radial_safety_margin="(double )"
+        write="(bool)"
+        x_axis="(string)"
+        y_axis="(string)"
+        z_dist="(double)"
+        z_max="(double)"
+        z_min="(double)"
+        z_steps="(int)"
+    >
+    </root_zh_painter>
+
+</root_window>
+<run
+    name="(string)"
+>
+    <app
+        Name="(string)"
+    >
+    </app>
+
+</run>
+<vtk_window
+    depth_peeling="(unsigned int)"
+    enable_axis="(bool)"
+    enable_data="(bool)"
+    enable_display="(bool)"
+    enable_help="(bool)"
+    enable_parallel_projection="(bool)"
+    enable_write="(bool)"
+    eye_angle="(double)"
+    frame_color_blue="(float)"
+    frame_color_green="(float)"
+    frame_color_red="(float)"
+    frame_size_x="(unsigned int)"
+    frame_size_y="(unsigned int)"
+    frame_title="(string)"
+    multi_samples="(unsigned int)"
+    name="(string)"
+    view_angle="(double)"
+>
+    <vtk_axial_mesh_painter
+        arc_count="(unsigned int)"
+        color_mode="(string)"
+        file="(string)"
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </vtk_axial_mesh_painter>
+
+    <vtk_distance_tester
+        name="(string)"
+        sample_count="(unsigned int)"
+        sample_disk_normal="(KThreeVector)"
+        sample_disk_origin="(KThreeVector)"
+        sample_disk_radius="(double)"
+        spaces="(string)"
+        surfaces="(string)"
+        vertex_size="(double)"
+    >
+    </vtk_distance_tester>
+
+    <vtk_generator_painter
+        add_color="(KThreeVector)"
+        add_generator="(string)"
+        color_variable="(string)"
+        electric_field="(string)"
+        file="(string)"
+        magnetic_field="(string)"
+        name="(string)"
+        num_samples="(int)"
+        path="(string)"
+        scale_factor="(double)"
+    >
+    </vtk_generator_painter>
+
+    <vtk_geometry_painter
+        file="(string)"
+        name="(string)"
+        path="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+        write_stl="(bool)"
+    >
+    </vtk_geometry_painter>
+
+    <vtk_mesh_painter
+        arc_count="(unsigned int)"
+        color_mode="(string)"
+        file="(string)"
+        name="(string)"
+        spaces="(string)"
+        surfaces="(string)"
+    >
+    </vtk_mesh_painter>
+
+    <vtk_normal_tester
+        line_size="(double)"
+        name="(string)"
+        normal_color="(KGRGBColor)"
+        normal_length="(double)"
+        point_color="(KGRGBColor)"
+        sample_color="(KGRGBColor)"
+        sample_count="(unsigned int)"
+        sample_disk_normal="(KThreeVector)"
+        sample_disk_origin="(KThreeVector)"
+        sample_disk_radius="(double)"
+        spaces="(string)"
+        surfaces="(string)"
+        vertex_size="(double)"
+    >
+    </vtk_normal_tester>
+
+    <vtk_outside_tester
+        inside_color="(KGRGBColor)"
+        name="(string)"
+        outside_color="(KGRGBColor)"
+        sample_count="(unsigned int)"
+        sample_disk_normal="(KThreeVector)"
+        sample_disk_origin="(KThreeVector)"
+        sample_disk_radius="(double)"
+        spaces="(string)"
+        surfaces="(string)"
+        vertex_size="(double)"
+    >
+    </vtk_outside_tester>
+
+    <vtk_point_tester
+        line_size="(double)"
+        name="(string)"
+        point_color="(KGRGBColor)"
+        sample_color="(KGRGBColor)"
+        sample_count="(unsigned int)"
+        sample_disk_normal="(KThreeVector)"
+        sample_disk_origin="(KThreeVector)"
+        sample_disk_radius="(double)"
+        spaces="(string)"
+        surfaces="(string)"
+        vertex_size="(double)"
+    >
+    </vtk_point_tester>
+
+    <vtk_random_point_tester
+        name="(string)"
+        sample_color="(KGRGBColor)"
+        spaces="(string)"
+        surfaces="(string)"
+        vertex_size="(double)"
+    >
+    </vtk_random_point_tester>
+
+    <vtk_track_painter
+        color_object="(string)"
+        color_variable="(string)"
+        file="(string)"
+        line_width="(int)"
+        name="(string)"
+        outfile="(string)"
+        path="(string)"
+        point_object="(string)"
+        point_variable="(string)"
+    >
+    </vtk_track_painter>
+
+    <vtk_track_terminator_painter
+        add_color="(KThreeVector)"
+        add_terminator="(string)"
+        file="(string)"
+        name="(string)"
+        outfile="(string)"
+        path="(string)"
+        point_object="(string)"
+        point_size="(int)"
+        point_variable="(string)"
+        terminator_object="(string)"
+        terminator_variable="(string)"
+    >
+    </vtk_track_terminator_painter>
+
+</vtk_window>

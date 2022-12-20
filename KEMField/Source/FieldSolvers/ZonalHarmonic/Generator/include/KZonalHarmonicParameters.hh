@@ -33,7 +33,7 @@ class KZonalHarmonicParameters
         return "ZonalHarmonicParameters";
     }
 
-    void SetNBifurcations(unsigned int i)
+    void SetNBifurcations(int i)
     {
         fNBifurcations = i;
     }
@@ -94,7 +94,7 @@ class KZonalHarmonicParameters
         fRemoteZ2 = d;
     }
 
-    unsigned int GetNBifurcations() const
+    int GetNBifurcations() const
     {
         return fNBifurcations;
     }
@@ -156,7 +156,7 @@ class KZonalHarmonicParameters
     }
 
   protected:
-    unsigned int fNBifurcations;
+    int fNBifurcations;
     double fConvergenceRatio;
     double fProximityToSourcePoint;
     double fConvergenceParameter;

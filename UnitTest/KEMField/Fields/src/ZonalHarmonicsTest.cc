@@ -32,8 +32,6 @@ protected:
     {
         KEMFieldTest::SetUp();
 
-        using namespace KGeoBag;
-
         // first, the magnets
 
         KPosition origin(0., 0., 0.);
@@ -145,8 +143,8 @@ TEST_F(KEMFieldZonalHarmonicsTest, Electromagnet)
     }
 
     for (unsigned int j = 0; j < 3; j++) {
-        ASSERT_NEAR(deltaA[j], 0, 1e-8);
-        ASSERT_NEAR(deltaB[j], 0, 1e-8);
+        ASSERT_NEAR(deltaA[j], 0, 1e-6);
+        ASSERT_NEAR(deltaB[j], 0, 1e-6);
         for (unsigned int k = 0; k < 3; k++)
             ASSERT_NEAR(deltaBp(j, k), 0, 1e-4);
     }

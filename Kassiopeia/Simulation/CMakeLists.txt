@@ -87,6 +87,7 @@ target_include_directories(KassiopeiaSimulation
     PUBLIC $<BUILD_INTERFACE:${SIMULATION_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaSimulation
     PUBLIC
+        KommonGsl
         KassiopeiaFields
         KassiopeiaGenerators
         KassiopeiaInteractions

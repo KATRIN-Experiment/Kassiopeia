@@ -12,6 +12,7 @@
 #include <vector>
 
 using namespace KEMField;
+using katrin::KThreeVector;
 
 int main(int /*argc*/, char** /*argv*/)
 {
@@ -178,8 +179,8 @@ int main(int /*argc*/, char** /*argv*/)
     r1->SetBoundaryValue(1.);
 
     KPosition P(0, 0, 0);
-    KGeoBag::KThreeVector field_1;
-    KGeoBag::KThreeVector field_2;
+    KThreeVector field_1;
+    KThreeVector field_2;
 
     double max[4] = {0, 0, 0, 0};
     double min[4] = {1.e10, 1.e10, 1.e10, 1.e10};

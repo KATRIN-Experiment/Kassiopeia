@@ -5,6 +5,9 @@
 
 #include <cmath>
 
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -201,17 +204,17 @@ const double& KSTrajElectricParticle::GetLength() const
     fLength = fData[1];
     return fLength;
 }
-const KGeoBag::KThreeVector& KSTrajElectricParticle::GetPosition() const
+const KThreeVector& KSTrajElectricParticle::GetPosition() const
 {
     fPosition.SetComponents(fData[2], fData[3], fData[4]);
     return fPosition;
 }
-const KGeoBag::KThreeVector& KSTrajElectricParticle::GetMomentum() const
+const KThreeVector& KSTrajElectricParticle::GetMomentum() const
 {
     fMomentum = GetMass() * GetVelocity() * GetLorentzFactor();
     return fMomentum;
 }
-const KGeoBag::KThreeVector& KSTrajElectricParticle::GetVelocity() const
+const KThreeVector& KSTrajElectricParticle::GetVelocity() const
 {
     fVelocity = GetElectricField().Unit();
     return fVelocity;
@@ -227,17 +230,17 @@ const double& KSTrajElectricParticle::GetKineticEnergy() const
     return fKineticEnergy;
 }
 
-const KGeoBag::KThreeVector& KSTrajElectricParticle::GetMagneticField() const
+const KThreeVector& KSTrajElectricParticle::GetMagneticField() const
 {
     (this->*fGetMagneticFieldPtr)();
     return fMagneticField;
 }
-const KGeoBag::KThreeVector& KSTrajElectricParticle::GetElectricField() const
+const KThreeVector& KSTrajElectricParticle::GetElectricField() const
 {
     (this->*fGetElectricFieldPtr)();
     return fElectricField;
 }
-const KGeoBag::KThreeMatrix& KSTrajElectricParticle::GetMagneticGradient() const
+const KThreeMatrix& KSTrajElectricParticle::GetMagneticGradient() const
 {
     (this->*fGetMagneticGradientPtr)();
     return fMagneticGradient;
@@ -248,7 +251,7 @@ const double& KSTrajElectricParticle::GetElectricPotential() const
     return fElectricPotential;
 }
 
-const KGeoBag::KThreeVector& KSTrajElectricParticle::GetGuidingCenter() const
+const KThreeVector& KSTrajElectricParticle::GetGuidingCenter() const
 {
     fGuidingCenter = GetPosition();
     return fGuidingCenter;

@@ -68,6 +68,7 @@ bool KSRootEventModifier::ExecutePreEventModification(KSEvent& anEvent)
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing pre-event modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> in track " << anEvent.GetEventId() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePreEventModification(anEvent);
             if (changed)
                 hasChangedState = true;
@@ -84,6 +85,7 @@ bool KSRootEventModifier::ExecutePostEventModification(KSEvent& anEvent)
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing post-event modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> in track " << anEvent.GetEventId() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePostEventModification(anEvent);
             if (changed)
                 hasChangedState = true;

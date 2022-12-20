@@ -6,10 +6,10 @@ namespace KGeoBag
 {
 void KGCylinderMesher::VisitCylinder(KGCylinder* cylinder)
 {
-    KThreeVector p0;
-    KThreeVector p1;
-    KThreeVector p2;
-    KThreeVector p3;
+    katrin::KThreeVector p0;
+    katrin::KThreeVector p1;
+    katrin::KThreeVector p2;
+    katrin::KThreeVector p3;
 
     double th = 0;
     double th_last = 0;

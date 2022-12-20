@@ -41,7 +41,7 @@ target_include_directories(KassiopeiaMath
     PUBLIC $<BUILD_INTERFACE:${MATH_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaMath
     PUBLIC
-        Kommon
+        KommonCore
 )
 
 # install

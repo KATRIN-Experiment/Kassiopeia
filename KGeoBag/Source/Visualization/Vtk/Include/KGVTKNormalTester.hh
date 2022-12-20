@@ -30,8 +30,8 @@ class KGVTKNormalTester : public katrin::KVTKPainter
     void AddSurface(const KGSurface* aSurface);
     void AddSpace(const KGSpace* aSpace);
 
-    K_SET(KThreeVector, SampleDiskOrigin)
-    K_SET(KThreeVector, SampleDiskNormal)
+    K_SET(katrin::KThreeVector, SampleDiskOrigin)
+    K_SET(katrin::KThreeVector, SampleDiskNormal)
     K_SET(double, SampleDiskRadius)
     K_SET(unsigned int, SampleCount)
     K_SET(KGRGBColor, SampleColor)

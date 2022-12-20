@@ -160,7 +160,7 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
 
   public:
     void CalculateNavigation(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                             const KSParticle& aTrajectoryFinalParticle, const KGeoBag::KThreeVector& aTrajectoryCenter,
+                             const KSParticle& aTrajectoryFinalParticle, const katrin::KThreeVector& aTrajectoryCenter,
                              const double& aTrajectoryRadius, const double& aTrajectoryStep,
                              KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag) override;
     void ExecuteNavigation(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
@@ -368,8 +368,8 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
     mutable KSSpace* fLastSpaceEntity;
     mutable KSSide* fLastSideEntity;
     mutable KSSurface* fLastSurfaceEntity;
-    mutable KGeoBag::KThreeVector fLastIntersection;
-    mutable KGeoBag::KThreeVector fLastDirection;
+    mutable katrin::KThreeVector fLastIntersection;
+    mutable katrin::KThreeVector fLastDirection;
     mutable long fLastSpaceCount;
     mutable long fLastSideCount;
     mutable long fLastSurfaceCount;

@@ -50,18 +50,18 @@ class KGNavigableMeshIntersectionFinder : public KGNodeActor<KGMeshNavigationNod
         fContainer = container;
     };
 
-    void NearestPointOnLineSegment(const KGeoBag::KThreeVector& aPoint, KGeoBag::KThreeVector& aNearest,
+    void NearestPointOnLineSegment(const katrin::KThreeVector& aPoint, katrin::KThreeVector& aNearest,
                                    double& t) const;
-    double LineSegmentDistanceToPoint(const KGeoBag::KThreeVector& aPoint) const;
+    double LineSegmentDistanceToPoint(const katrin::KThreeVector& aPoint) const;
     bool LineSegmentIntersectsCube(const KGCube<KGMESH_DIM>* cube, double& distance) const;
 
-    void SetLineSegment(const KGeoBag::KThreeVector& start, const KGeoBag::KThreeVector& end);
+    void SetLineSegment(const katrin::KThreeVector& start, const katrin::KThreeVector& end);
     bool HasIntersectionWithMesh() const;
     unsigned int GetNIntersections() const
     {
         return fIntersections.size();
     };
-    void GetIntersections(std::vector<KThreeVector>* intersections) const;
+    void GetIntersections(std::vector<katrin::KThreeVector>* intersections) const;
     void GetIntersectedMeshElements(std::vector<const KGNavigableMeshElement*>* intersected_mesh_elements) const;
 
     void ApplyAction(KGMeshNavigationNode* node) override;
@@ -79,9 +79,9 @@ class KGNavigableMeshIntersectionFinder : public KGNodeActor<KGMeshNavigationNod
     KGNavigableMeshElementContainer* fContainer;
 
     //parameters of the line segment
-    KGeoBag::KThreeVector fStartPoint;
-    KGeoBag::KThreeVector fEndPoint;
-    KGeoBag::KThreeVector fDirection;
+    katrin::KThreeVector fStartPoint;
+    katrin::KThreeVector fEndPoint;
+    katrin::KThreeVector fDirection;
     double fLength;
 
     //needed for recursive access to tree
@@ -93,7 +93,7 @@ class KGNavigableMeshIntersectionFinder : public KGNodeActor<KGMeshNavigationNod
 
     //intersection data
     bool fHaveIntersection;
-    std::vector<KThreeVector> fIntersections;
+    std::vector<katrin::KThreeVector> fIntersections;
     std::vector<const KGNavigableMeshElement*> fIntersectedElements;
 
     std::set<const KGNavigableMeshElement*> fCheckedElements;

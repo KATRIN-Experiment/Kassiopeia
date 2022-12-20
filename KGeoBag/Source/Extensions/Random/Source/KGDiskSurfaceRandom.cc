@@ -9,7 +9,7 @@
 
 void KGeoBag::KGDiskSurfaceRandom::VisitDiskSurface(KGeoBag::KGDiskSurface* aDiskSpace)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     // point is always on the disk surface
 

@@ -68,9 +68,9 @@ class KSGenGeneratorSimulation : public KSComponentTemplate<KSGenGeneratorSimula
     ;
     K_SET_GET(std::string, PIDName);
     ;
-    K_SET_GET(KGeoBag::KThreeVector, DefaultPosition);
+    K_SET_GET(katrin::KThreeVector, DefaultPosition);
     ;
-    K_SET_GET(KGeoBag::KThreeVector, DefaultDirection);
+    K_SET_GET(katrin::KThreeVector, DefaultDirection);
     ;
     K_SET_GET(double, DefaultEnergy);
     ;

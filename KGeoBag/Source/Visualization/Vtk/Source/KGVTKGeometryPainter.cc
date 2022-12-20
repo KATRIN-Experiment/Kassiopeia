@@ -22,10 +22,15 @@
 #include "vtkSTLWriter.h"
 #include "vtkTriangleFilter.h"
 #include "vtkXMLPolyDataWriter.h"
+#include "vtkUnsignedCharArray.h"
 
 #include <cmath>
 
 using namespace std;
+
+using katrin::KTwoVector;
+using katrin::KThreeVector;
+using katrin::KTransformation;
 
 namespace KGeoBag
 {

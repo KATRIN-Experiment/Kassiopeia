@@ -19,6 +19,7 @@ set (MATH_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMPinchonJMatrixCalculator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseMatrixStructure.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseMatrix.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseMatrix_MPI.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMCubicVolumeCollection.hh
 )
 

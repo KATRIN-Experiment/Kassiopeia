@@ -27,7 +27,7 @@ class KGDiscreteRotationalMeshElement
 
     virtual KGMeshElement& Element() = 0;
 
-    virtual void Transform(const KTransformation& transform) = 0;
+    virtual void Transform(const katrin::KTransformation& transform) = 0;
 };
 
 typedef std::vector<KGDiscreteRotationalMeshElement*> KGDiscreteRotationalMeshElementVector;
@@ -63,7 +63,7 @@ template<class XMeshElement> class KGDiscreteRotationalMeshElementType : public 
         return fMeshElement.Aspect();
     }
 
-    void Transform(const KTransformation& transform) override
+    void Transform(const katrin::KTransformation& transform) override
     {
         fMeshElement.Transform(transform);
     }

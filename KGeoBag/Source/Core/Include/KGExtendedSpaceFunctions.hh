@@ -157,27 +157,27 @@ const std::vector<KGExtendedSpace<XExtension>*>* KGExtendedSpace<XExtension>::Ge
 //transformable
 //*************
 
-template<class XExtension> void KGExtendedSpace<XExtension>::Transform(const KTransformation* aTransformation)
+template<class XExtension> void KGExtendedSpace<XExtension>::Transform(const katrin::KTransformation* aTransformation)
 {
     fSpace->Transform(aTransformation);
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSpace<XExtension>::GetOrigin() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSpace<XExtension>::GetOrigin() const
 {
     return fSpace->GetOrigin();
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSpace<XExtension>::GetXAxis() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSpace<XExtension>::GetXAxis() const
 {
     return fSpace->GetXAxis();
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSpace<XExtension>::GetYAxis() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSpace<XExtension>::GetYAxis() const
 {
     return fSpace->GetYAxis();
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSpace<XExtension>::GetZAxis() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSpace<XExtension>::GetZAxis() const
 {
     return fSpace->GetZAxis();
 }
@@ -187,18 +187,18 @@ template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSpace<XExtensi
 //*********
 
 template<class XExtension>
-KGeoBag::KThreeVector KGExtendedSpace<XExtension>::Point(const KGeoBag::KThreeVector& aPoint) const
+katrin::KThreeVector KGExtendedSpace<XExtension>::Point(const katrin::KThreeVector& aPoint) const
 {
     return fSpace->Point(aPoint);
 }
 
 template<class XExtension>
-KGeoBag::KThreeVector KGExtendedSpace<XExtension>::Normal(const KGeoBag::KThreeVector& aPoint) const
+katrin::KThreeVector KGExtendedSpace<XExtension>::Normal(const katrin::KThreeVector& aPoint) const
 {
     return fSpace->Normal(aPoint);
 }
 
-template<class XExtension> bool KGExtendedSpace<XExtension>::Outside(const KGeoBag::KThreeVector& aPoint) const
+template<class XExtension> bool KGExtendedSpace<XExtension>::Outside(const katrin::KThreeVector& aPoint) const
 {
     return fSpace->Outside(aPoint);
 }

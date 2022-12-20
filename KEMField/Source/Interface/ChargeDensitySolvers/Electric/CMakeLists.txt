@@ -8,6 +8,7 @@ set( CHARGEDENSITYSOLVER_ELECTRIC_HEADER_BASENAMES
     KExplicitSuperpositionCachedChargeDensitySolver.hh
     KExplicitSuperpositionSolutionComponent.hh
     KGaussianEliminationChargeDensitySolver.hh
+    KGaussSeidelChargeDensitySolver.hh
     KKrylovChargeDensitySolver.hh
     KKrylovChargeDensitySolverOld.hh
     KKrylovPreconditionerGenerator.hh
@@ -28,6 +29,7 @@ set( CHARGEDENSITYSOLVER_ELECTRIC_SOURCE_BASENAMES
     KCachedChargeDensitySolver.cc
     KExplicitSuperpositionCachedChargeDensitySolver.cc
     KGaussianEliminationChargeDensitySolver.cc
+    KGaussSeidelChargeDensitySolver.cc
     KKrylovChargeDensitySolver.cc
     KKrylovChargeDensitySolverOld.cc
     KKrylovPreconditionerGenerator.cc

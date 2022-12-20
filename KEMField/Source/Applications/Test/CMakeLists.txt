@@ -31,12 +31,10 @@ if (KEMField_ENABLE_TEST)
     endif (KEMField_USE_VTK)
 
     if (KEMField_USE_ROOT)
-        find_package(ROOT REQUIRED)
         list (APPEND TESTS_LIBS KEMRootPlugin)
     endif (KEMField_USE_ROOT)
 
     if (KEMField_USE_OPENCL)
-        find_package(OpenCL REQUIRED)
         list (APPEND TESTS_LIBS KEMOpenCLPlugin)
     endif (KEMField_USE_OPENCL)
 

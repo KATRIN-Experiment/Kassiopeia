@@ -7,16 +7,9 @@
 #include "KSObjectsMessage.h"
 #include "KToolbox.h"
 #include "KTwoVector.hh"
-using KGeoBag::KTwoVector;
-
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
-
 #include "KTwoMatrix.hh"
-using KGeoBag::KTwoMatrix;
-
 #include "KThreeMatrix.hh"
-using KGeoBag::KThreeMatrix;
 
 using namespace Kassiopeia;
 namespace katrin

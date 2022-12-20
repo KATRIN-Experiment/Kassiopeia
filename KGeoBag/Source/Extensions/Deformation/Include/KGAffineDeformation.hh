@@ -2,6 +2,7 @@
 #define KGAFFINEDEFORMATION_HH_
 
 #include "KGDeformation.hh"
+
 #include "KThreeMatrix.hh"
 
 namespace KGeoBag
@@ -15,20 +16,20 @@ class KGAffineDeformation : public KGDeformation
 
     ~KGAffineDeformation() override = default;
 
-    void SetLinearMap(const KThreeMatrix& map)
+    void SetLinearMap(const katrin::KThreeMatrix& map)
     {
         fLinearMap = map;
     }
-    void SetTranslation(const KGeoBag::KThreeVector& t)
+    void SetTranslation(const katrin::KThreeVector& t)
     {
         fTranslation = t;
     }
 
-    void Apply(KThreeVector& point) const override;
+    void Apply(katrin::KThreeVector& point) const override;
 
   private:
-    KThreeMatrix fLinearMap;
-    KGeoBag::KThreeVector fTranslation;
+    katrin::KThreeMatrix fLinearMap;
+    katrin::KThreeVector fTranslation;
 };
 }  // namespace KGeoBag
 

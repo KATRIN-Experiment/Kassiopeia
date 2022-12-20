@@ -117,7 +117,8 @@ void KConditionProcessor::ProcessToken(KAttributeDataToken* aToken)
             const string condStr = aToken->GetValue();
             if (condStr.find_first_of("{}[]") != string::npos) {
                 initmsg(eError) << "A condition containing an unevaluated "
-                                << "formula {} or variable [] could not be interpreted." << eom;
+                                << "formula {} or variable [] could not be interpreted:\n"
+                                << condStr << eom;
                 fCondition = false;
             }
             else {

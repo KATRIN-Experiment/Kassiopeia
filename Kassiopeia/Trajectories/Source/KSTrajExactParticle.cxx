@@ -5,6 +5,9 @@
 
 #include <cmath>
 
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -218,17 +221,17 @@ const double& KSTrajExactParticle::GetLength() const
     fLength = fData[1];
     return fLength;
 }
-const KGeoBag::KThreeVector& KSTrajExactParticle::GetPosition() const
+const KThreeVector& KSTrajExactParticle::GetPosition() const
 {
     fPosition.SetComponents(fData[2], fData[3], fData[4]);
     return fPosition;
 }
-const KGeoBag::KThreeVector& KSTrajExactParticle::GetMomentum() const
+const KThreeVector& KSTrajExactParticle::GetMomentum() const
 {
     fMomentum.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentum;
 }
-const KGeoBag::KThreeVector& KSTrajExactParticle::GetVelocity() const
+const KThreeVector& KSTrajExactParticle::GetVelocity() const
 {
     fVelocity = (1. / (GetMass() * GetLorentzFactor())) * GetMomentum();
     return fVelocity;
@@ -245,22 +248,22 @@ const double& KSTrajExactParticle::GetKineticEnergy() const
     return fKineticEnergy;
 }
 
-const KGeoBag::KThreeVector& KSTrajExactParticle::GetMagneticField() const
+const KThreeVector& KSTrajExactParticle::GetMagneticField() const
 {
     (this->*fGetMagneticFieldPtr)();
     return fMagneticField;
 }
-const KGeoBag::KThreeVector& KSTrajExactParticle::GetElectricField() const
+const KThreeVector& KSTrajExactParticle::GetElectricField() const
 {
     (this->*fGetElectricFieldPtr)();
     return fElectricField;
 }
-const KGeoBag::KThreeMatrix& KSTrajExactParticle::GetMagneticGradient() const
+const KThreeMatrix& KSTrajExactParticle::GetMagneticGradient() const
 {
     (this->*fGetMagneticGradientPtr)();
     return fMagneticGradient;
 }
-const KGeoBag::KThreeMatrix& KSTrajExactParticle::GetElectricGradient() const
+const KThreeMatrix& KSTrajExactParticle::GetElectricGradient() const
 {
     (this->*fGetElectricGradientPtr)();
     return fElectricGradient;
@@ -271,7 +274,7 @@ const double& KSTrajExactParticle::GetElectricPotential() const
     return fElectricPotential;
 }
 
-const KGeoBag::KThreeVector& KSTrajExactParticle::GetGuidingCenter() const
+const KThreeVector& KSTrajExactParticle::GetGuidingCenter() const
 {
     fGuidingCenter = GetPosition() + (1. / (GetCharge() * GetMagneticField().MagnitudeSquared())) *
                                          (GetMomentum().Cross(GetMagneticField()));

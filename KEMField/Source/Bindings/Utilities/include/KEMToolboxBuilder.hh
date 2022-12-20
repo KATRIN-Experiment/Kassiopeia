@@ -16,7 +16,12 @@
 namespace katrin
 {
 class KEMRoot
-{};
+{
+public:
+    KEMRoot();
+    ~KEMRoot();
+};
+
 typedef KComplexElement<KEMRoot> KEMToolboxBuilder;
 
 template<> inline bool KEMToolboxBuilder::AddElement(KContainer* aContainer)

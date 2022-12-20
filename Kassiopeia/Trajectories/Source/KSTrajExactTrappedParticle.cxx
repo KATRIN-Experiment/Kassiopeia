@@ -5,6 +5,9 @@
 
 #include <cmath>
 
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -218,17 +221,17 @@ const double& KSTrajExactTrappedParticle::GetLength() const
     fLength = fData[1];
     return fLength;
 }
-const KGeoBag::KThreeVector& KSTrajExactTrappedParticle::GetPosition() const
+const KThreeVector& KSTrajExactTrappedParticle::GetPosition() const
 {
     fPosition.SetComponents(fData[2], fData[3], fData[4]);
     return fPosition;
 }
-const KGeoBag::KThreeVector& KSTrajExactTrappedParticle::GetMomentum() const
+const KThreeVector& KSTrajExactTrappedParticle::GetMomentum() const
 {
     fMomentum.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentum;
 }
-const KGeoBag::KThreeVector& KSTrajExactTrappedParticle::GetVelocity() const
+const KThreeVector& KSTrajExactTrappedParticle::GetVelocity() const
 {
     fVelocity = (1. / (GetMass() * GetLorentzFactor())) * GetMomentum();
     return fVelocity;
@@ -245,22 +248,22 @@ const double& KSTrajExactTrappedParticle::GetKineticEnergy() const
     return fKineticEnergy;
 }
 
-const KGeoBag::KThreeVector& KSTrajExactTrappedParticle::GetMagneticField() const
+const KThreeVector& KSTrajExactTrappedParticle::GetMagneticField() const
 {
     (this->*fGetMagneticFieldPtr)();
     return fMagneticField;
 }
-const KGeoBag::KThreeVector& KSTrajExactTrappedParticle::GetElectricField() const
+const KThreeVector& KSTrajExactTrappedParticle::GetElectricField() const
 {
     (this->*fGetElectricFieldPtr)();
     return fElectricField;
 }
-const KGeoBag::KThreeMatrix& KSTrajExactTrappedParticle::GetMagneticGradient() const
+const KThreeMatrix& KSTrajExactTrappedParticle::GetMagneticGradient() const
 {
     (this->*fGetMagneticGradientPtr)();
     return fMagneticGradient;
 }
-const KGeoBag::KThreeMatrix& KSTrajExactTrappedParticle::GetElectricGradient() const
+const KThreeMatrix& KSTrajExactTrappedParticle::GetElectricGradient() const
 {
     (this->*fGetElectricGradientPtr)();
     return fElectricGradient;
@@ -271,7 +274,7 @@ const double& KSTrajExactTrappedParticle::GetElectricPotential() const
     return fElectricPotential;
 }
 
-const KGeoBag::KThreeVector& KSTrajExactTrappedParticle::GetGuidingCenter() const
+const KThreeVector& KSTrajExactTrappedParticle::GetGuidingCenter() const
 {
     fGuidingCenter = GetPosition() + (1. / (GetCharge() * GetMagneticField().MagnitudeSquared())) *
                                          (GetMomentum().Cross(GetMagneticField()));

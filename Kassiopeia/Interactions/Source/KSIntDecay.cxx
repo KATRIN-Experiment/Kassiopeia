@@ -9,6 +9,8 @@ using katrin::KRandom;
 #include <algorithm>
 using std::numeric_limits;
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -55,7 +57,7 @@ std::vector<double> KSIntDecay::CalculateLifetimes(const KSParticle& aTrajectory
 
 void KSIntDecay::CalculateInteraction(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
                                       const KSParticle& aTrajectoryFinalParticle,
-                                      const KGeoBag::KThreeVector& /*aTrajectoryCenter*/,
+                                      const KThreeVector& /*aTrajectoryCenter*/,
                                       const double& /*aTrajectoryRadius*/, const double& aTrajectoryTimeStep,
                                       KSParticle& anInteractionParticle, double& aTimeStep, bool& aFlag)
 {

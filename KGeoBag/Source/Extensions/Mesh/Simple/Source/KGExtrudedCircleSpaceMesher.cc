@@ -23,7 +23,7 @@ void KGExtrudedCircleSpaceMesher::VisitExtrudedClosedPathSpace(KGExtrudedCircleS
 
     //create start flattened mesh points
     TubeMesh tStartMeshPoints;
-    KThreeVector tStartApex;
+    katrin::KThreeVector tStartApex;
     ClosedPointsFlattenedToTubeMeshAndApex(tCirclePoints,
                                            aExtrudedCircleSpace->Path()->Centroid(),
                                            aExtrudedCircleSpace->ZMin(),
@@ -34,7 +34,7 @@ void KGExtrudedCircleSpaceMesher::VisitExtrudedClosedPathSpace(KGExtrudedCircleS
 
     //create end flattened mesh points
     TubeMesh tEndMeshPoints;
-    KThreeVector tEndApex;
+    katrin::KThreeVector tEndApex;
     ClosedPointsFlattenedToTubeMeshAndApex(tCirclePoints,
                                            aExtrudedCircleSpace->Path()->Centroid(),
                                            aExtrudedCircleSpace->ZMax(),

@@ -8,8 +8,6 @@ using namespace std;
 namespace katrin
 {
 
-using KGeoBag::KThreeVector;
-
 STATICINT sKSVTKGeneratorPainterStructure = KSVTKGeneratorPainterBuilder::Attribute<std::string>("name") +
                                             KSVTKGeneratorPainterBuilder::Attribute<std::string>("path") +
                                             KSVTKGeneratorPainterBuilder::Attribute<std::string>("file") +

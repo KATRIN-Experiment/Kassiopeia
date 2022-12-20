@@ -2,22 +2,6 @@
 #define KGBEM_DEF
 
 #include "KSurfaceContainer.hh"
-
-using KEMField::KBasisTypes;
-using KEMField::KBoundaryType;
-using KEMField::KElectrostaticBasis;
-using KEMField::KMagnetostaticBasis;
-
-using KEMField::KBoundaryTypes;
-using KEMField::KDirichletBoundary;
-using KEMField::KNeumannBoundary;
-
-using KEMField::KDirection;
-using KEMField::KPosition;
-
-using KEMField::KShapeTypes;
-
-
 #include "KGCore.hh"
 
 namespace KGeoBag
@@ -26,15 +10,15 @@ template<class BasisPolicy, class BoundaryPolicy>
 class KGBEMData : public BasisPolicy, public KEMField::KBoundaryType<BasisPolicy, BoundaryPolicy>
 {
   public:
-    KGBEMData() : BasisPolicy(), KBoundaryType<BasisPolicy, BoundaryPolicy>() {}
-    KGBEMData(KGSurface*) : BasisPolicy(), KBoundaryType<BasisPolicy, BoundaryPolicy>() {}
-    KGBEMData(KGSpace*) : BasisPolicy(), KBoundaryType<BasisPolicy, BoundaryPolicy>() {}
+    KGBEMData() : BasisPolicy(), KEMField::KBoundaryType<BasisPolicy, BoundaryPolicy>() {}
+    KGBEMData(KGSurface*) : BasisPolicy(), KEMField::KBoundaryType<BasisPolicy, BoundaryPolicy>() {}
+    KGBEMData(KGSpace*) : BasisPolicy(), KEMField::KBoundaryType<BasisPolicy, BoundaryPolicy>() {}
 
     KGBEMData(KGSurface*, const KGBEMData& aCopy) :
         BasisPolicy(aCopy),
-        KBoundaryType<BasisPolicy, BoundaryPolicy>(aCopy)
+        KEMField::KBoundaryType<BasisPolicy, BoundaryPolicy>(aCopy)
     {}
-    KGBEMData(KGSpace*, const KGBEMData& aCopy) : BasisPolicy(aCopy), KBoundaryType<BasisPolicy, BoundaryPolicy>(aCopy)
+    KGBEMData(KGSpace*, const KGBEMData& aCopy) : BasisPolicy(aCopy), KEMField::KBoundaryType<BasisPolicy, BoundaryPolicy>(aCopy)
     {}
 
     ~KGBEMData() override = default;

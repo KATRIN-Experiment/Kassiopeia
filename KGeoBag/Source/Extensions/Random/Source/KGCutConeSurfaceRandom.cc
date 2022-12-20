@@ -9,7 +9,7 @@
 
 void KGeoBag::KGCutConeSurfaceRandom::VisitCutConeSurface(KGeoBag::KGCutConeSurface* aCutConeSurface)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     double r1 = aCutConeSurface->R1();
     double r2 = aCutConeSurface->R2();

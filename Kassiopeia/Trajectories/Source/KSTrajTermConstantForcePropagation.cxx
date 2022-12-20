@@ -18,7 +18,7 @@ KSTrajTermConstantForcePropagation::~KSTrajTermConstantForcePropagation() = defa
 void KSTrajTermConstantForcePropagation::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle,
                                                        KSTrajExactDerivative& aDerivative) const
 {
-    KGeoBag::KThreeVector tVelocity = aParticle.GetVelocity();
+    katrin::KThreeVector tVelocity = aParticle.GetVelocity();
 
     aDerivative.AddToVelocity(tVelocity);
     aDerivative.AddToForce(fForce);
@@ -26,7 +26,7 @@ void KSTrajTermConstantForcePropagation::Differentiate(double /*aTime*/, const K
     return;
 }
 
-void KSTrajTermConstantForcePropagation::SetForce(const KGeoBag::KThreeVector& aForce)
+void KSTrajTermConstantForcePropagation::SetForce(const katrin::KThreeVector& aForce)
 {
     fForce = aForce;
 }

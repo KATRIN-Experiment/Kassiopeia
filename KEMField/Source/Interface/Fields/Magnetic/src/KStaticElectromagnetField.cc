@@ -86,6 +86,10 @@ KSmartPointer<KElectromagnetContainer> KStaticElectromagnetField::GetContainer()
 
 void KStaticElectromagnetField::InitializeCore()
 {
+    if (fContainer->empty()) {
+        kem_cout(eError) << "ERROR: Electromagnet solver got no current elements (did you forget to define magnets?)" << eom;
+    }
+
     CheckSolverExistance();
 
     KEMFileInterface::GetInstance()->ActiveDirectory(fDirectory);

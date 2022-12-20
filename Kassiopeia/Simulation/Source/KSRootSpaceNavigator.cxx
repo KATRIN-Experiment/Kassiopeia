@@ -38,9 +38,11 @@ KSRootSpaceNavigator::~KSRootSpaceNavigator() = default;
 void KSRootSpaceNavigator::CalculateNavigation(const KSTrajectory& aTrajectory,
                                                const KSParticle& aTrajectoryInitialParticle,
                                                const KSParticle& aTrajectoryFinalParticle,
-                                               const KGeoBag::KThreeVector& aTrajectoryCenter,
-                                               const double& aTrajectoryRadius, const double& aTrajectoryStep,
-                                               KSParticle& aNavigationParticle, double& aNavigationStep,
+                                               const katrin::KThreeVector& aTrajectoryCenter,
+                                               const double& aTrajectoryRadius,
+                                               const double& aTrajectoryStep,
+                                               KSParticle& aNavigationParticle,
+                                               double& aNavigationStep,
                                                bool& aNavigationFlag)
 {
     if (fSpaceNavigator == nullptr) {
@@ -48,6 +50,7 @@ void KSRootSpaceNavigator::CalculateNavigation(const KSTrajectory& aTrajectory,
     }
 
     try {
+        navmsg_debug("<" << GetName() << "> calculating space navigator <" << fSpaceNavigator->GetName() << "> at " << aTrajectoryCenter << eom);
         fSpaceNavigator->CalculateNavigation(aTrajectory,
                                              aTrajectoryInitialParticle,
                                              aTrajectoryFinalParticle,
@@ -63,7 +66,8 @@ void KSRootSpaceNavigator::CalculateNavigation(const KSTrajectory& aTrajectory,
     }
     return;
 }
-void KSRootSpaceNavigator::ExecuteNavigation(const KSParticle& aNavigationParticle, KSParticle& aFinalParticle,
+void KSRootSpaceNavigator::ExecuteNavigation(const KSParticle& aNavigationParticle,
+                                             KSParticle& aFinalParticle,
                                              KSParticleQueue& aSecondaries) const
 {
     if (fSpaceNavigator == nullptr) {
@@ -71,6 +75,7 @@ void KSRootSpaceNavigator::ExecuteNavigation(const KSParticle& aNavigationPartic
     }
 
     try {
+        navmsg_debug("<" << GetName() << "> executing space navigator <" << fSpaceNavigator->GetName() << "> at " << aNavigationParticle.GetPosition() << eom);
         fSpaceNavigator->ExecuteNavigation(aNavigationParticle, aFinalParticle, aSecondaries);
     }
     catch (KSException const& e) {

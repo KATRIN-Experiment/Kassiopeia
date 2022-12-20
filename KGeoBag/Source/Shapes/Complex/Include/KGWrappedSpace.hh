@@ -39,9 +39,9 @@ template<class XObject> class KGWrappedSpace : public KGVolume
   public:
     void VolumeInitialize(BoundaryContainer& aBoundaryContainer) const override;
     void VolumeAccept(KGVisitor* aVisitor) override;
-    bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool VolumeOutside(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector VolumePoint(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector VolumeNormal(const katrin::KThreeVector& aPoint) const override;
 
   protected:
     std::shared_ptr<XObject> fObject;
@@ -93,7 +93,7 @@ template<class XObject> void KGWrappedSpace<XObject>::VolumeAccept(KGVisitor* aV
     return;
 }
 
-template<class XObject> bool KGWrappedSpace<XObject>::VolumeOutside(const KGeoBag::KThreeVector& aQuery) const
+template<class XObject> bool KGWrappedSpace<XObject>::VolumeOutside(const katrin::KThreeVector& aQuery) const
 {
     if (fObject->ContainsPoint((const double*) (aQuery)) == true) {
         return false;
@@ -102,18 +102,18 @@ template<class XObject> bool KGWrappedSpace<XObject>::VolumeOutside(const KGeoBa
 }
 
 template<class XObject>
-KGeoBag::KThreeVector KGWrappedSpace<XObject>::VolumePoint(const KGeoBag::KThreeVector& aQuery) const
+katrin::KThreeVector KGWrappedSpace<XObject>::VolumePoint(const katrin::KThreeVector& aQuery) const
 {
-    KGeoBag::KThreeVector tPoint;
+    katrin::KThreeVector tPoint;
     fObject->DistanceTo((const double*) (aQuery), (double*) (tPoint));
 
     return tPoint;
 }
 
 template<class XObject>
-KGeoBag::KThreeVector KGWrappedSpace<XObject>::VolumeNormal(const KGeoBag::KThreeVector& aQuery) const
+katrin::KThreeVector KGWrappedSpace<XObject>::VolumeNormal(const katrin::KThreeVector& aQuery) const
 {
-    KGeoBag::KThreeVector tNormal;
+    katrin::KThreeVector tNormal;
     fObject->DistanceTo((const double*) (aQuery), nullptr, (double*) (tNormal));
 
     return tNormal;

@@ -39,10 +39,10 @@ class KSTrajTermGravity :
     // virtual void Differentiate(double /*aTime*/, const KSTrajElectricParticle& aValue, KSTrajElectricDerivative& aDerivative ) const;
 
   public:
-    void SetGravity(const KGeoBag::KThreeVector& aGravity);
+    void SetGravity(const katrin::KThreeVector& aGravity);
 
   private:
-    KGeoBag::KThreeVector fGravity;
+    katrin::KThreeVector fGravity;
 };
 
 }  // namespace Kassiopeia

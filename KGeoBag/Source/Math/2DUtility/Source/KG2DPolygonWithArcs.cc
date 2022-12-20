@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+using katrin::KTwoVector;
+
 namespace KGeoBag
 {
 

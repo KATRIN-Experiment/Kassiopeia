@@ -28,6 +28,10 @@ void KGaussianEliminationChargeDensitySolver::SetIntegratorPolicy(const KEBIPoli
 
 void KGaussianEliminationChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
+    if (container.empty()) {
+        kem_cout(eError) << "ERROR: Gaussian solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+    }
+
     if (FindSolution(0., container) == false) {
         KElectrostaticBoundaryIntegrator integrator{fIntegratorPolicy.CreateIntegrator()};
         KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(container, integrator);

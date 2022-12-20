@@ -45,12 +45,10 @@ class KRobinHoodChargeDensitySolver : public KChargeDensitySolver
     {
         fPlotInterval = i;
     }
-
     void CacheMatrixElements(bool choice)
     {
         fCacheMatrixElements = choice;
     }
-
     void UseOpenCL(bool choice)
     {
         if (choice == true) {
@@ -79,6 +77,7 @@ class KRobinHoodChargeDensitySolver : public KChargeDensitySolver
         fUseVTK = false;
         return;
     }
+    void SetSplitMode(bool choice);
 
   private:
     void InitializeCore(KSurfaceContainer& container) override;

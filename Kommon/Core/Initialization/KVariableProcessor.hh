@@ -11,7 +11,7 @@ namespace katrin
 
 class KVariableProcessor : public KProcessor
 {
-  private:
+  public:
     using VariableMap = std::map<std::string, std::string>;
     using VariableEntry = VariableMap::value_type;
     using VariableIt = VariableMap::iterator;
@@ -25,6 +25,10 @@ class KVariableProcessor : public KProcessor
     KVariableProcessor(const VariableMap& anExternalMap);
     KVariableProcessor& operator=(const KVariableProcessor& other) = delete;
     ~KVariableProcessor() override;
+
+    const VariableMap& GetExternalVariables() const { return *fExternalMap; }
+    const VariableMap& GetGlobalVariables() const { return *fGlobalMap; }
+    const VariableMap& GetLocalVariables() const { return *fLocalMap; }
 
     void ProcessToken(KBeginFileToken* aToken) override;
     void ProcessToken(KBeginElementToken* aToken) override;

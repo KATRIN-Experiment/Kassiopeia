@@ -3,6 +3,7 @@
 
 set (KEMFIELD_BINDINGS_HEADERFILES
 #    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolbox.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolboxHelper.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolboxBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMBindingsMessage.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KSmartPointerRelease.hh
@@ -29,6 +30,7 @@ set (KEMFIELD_BINDINGS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KExplicitSuperpositionSolutionComponentBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KFastMultipoleMatrixGeneratorBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KGaussianEliminationChargeDensitySolverBuilder.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KGaussSeidelChargeDensitySolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KRobinHoodChargeDensitySolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KKrylovChargeDensitySolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KKrylovChargeDensitySolverOldBuilder.hh
@@ -71,6 +73,7 @@ set (KEMFIELD_BINDINGS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KExplicitSuperpositionSolutionComponentBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KFastMultipoleMatrixGeneratorBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KGaussianEliminationChargeDensitySolverBuilder.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KGaussSeidelChargeDensitySolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KRobinHoodChargeDensitySolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc
@@ -110,15 +113,17 @@ target_include_directories(KEMFieldBindings PUBLIC $<INSTALL_INTERFACE:include>)
 
 target_link_libraries (KEMFieldBindings
     PUBLIC
-        Kommon
-        KGeoBagBindings
+        KommonCore
         KGeoBagInterface
+        KEMCore
         KEMFieldElectricBoundaryIntegrators
         KEMFieldsElectric
         KEMFieldsMagnetic
         KEMElectricFieldSolvers
         KEMMagneticFieldSolvers
         KEMVTKPart2
+    PRIVATE
+        KGeoBagBindings
 )
 
 kasper_install_headers (${KEMFIELD_BINDINGS_HEADERFILES})

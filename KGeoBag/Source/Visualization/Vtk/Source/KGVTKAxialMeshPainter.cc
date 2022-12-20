@@ -13,6 +13,8 @@
 
 using namespace std;
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 const unsigned int KGVTKAxialMeshPainter::sArea = 0;

@@ -105,7 +105,7 @@ int main(int /*anArgc*/, char** /*anArgv*/)
     tInitialParticle->SetLength(0.00);
     tFinalParticle->SetLength(tLength);
 
-    auto tDirection = KGeoBag::KThreeVector(0., 0., 1.);
+    auto tDirection = KThreeVector(0., 0., 1.);
     int l = 0;
     int tIndex = 0;
     for (int n = 10; n < 1000; n++) {

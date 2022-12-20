@@ -5,8 +5,6 @@ using katrin::KRandom;
 
 #include "KConst.h"
 
-using KGeoBag::KThreeVector;
-
 namespace Kassiopeia
 {
 
@@ -30,8 +28,8 @@ void KSIntCalculatorConstant::ExecuteInteraction(const KSParticle& anInitialPart
                                                  KSParticleQueue& /*aSecondaries*/)
 {
     double tTime = anInitialParticle.GetTime();
-    KThreeVector tPosition = anInitialParticle.GetPosition();
-    KThreeVector tMomentum = anInitialParticle.GetMomentum();
+    katrin::KThreeVector tPosition = anInitialParticle.GetPosition();
+    katrin::KThreeVector tMomentum = anInitialParticle.GetMomentum();
 
     double tTheta = acos(KRandom::GetInstance().Uniform(-1., 1.));
     double tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());

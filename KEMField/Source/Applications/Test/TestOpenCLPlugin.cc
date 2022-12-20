@@ -3,6 +3,7 @@
 #include "KSurface.hh"
 #include "KSurfaceContainer.hh"
 #include "KSurfaceTypes.hh"
+#include "KMPIInterface.hh"
 
 #include <cmath>
 #include <gsl/gsl_rng.h>
@@ -27,8 +28,10 @@
 
 using namespace KEMField;
 
-int main(int /*argc*/, char** /*argv*/)
+int main(int argc, char** argv)
 {
+    KMPIInterface::GetInstance()->Initialize(&argc, &argv);
+
     /*
     // define the rectangle that will be defined 4 ways
 

@@ -3,6 +3,8 @@
 #include "KGDisk.hh"
 #include "KGRotatedSurface.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 template<> void KGWrappedSpace<KGRotatedObject>::VolumeInitialize(BoundaryContainer& aBoundaryContainer) const

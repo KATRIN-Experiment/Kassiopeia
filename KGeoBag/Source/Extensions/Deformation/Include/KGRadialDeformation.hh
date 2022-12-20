@@ -12,7 +12,7 @@ class KGRadialDeformation : public KGDeformation
     KGRadialDeformation() = default;
     ~KGRadialDeformation() override = default;
 
-    void Apply(KThreeVector& point) const override;
+    void Apply(katrin::KThreeVector& point) const override;
 
     virtual double RadialScale(double theta, double z) const = 0;
 };

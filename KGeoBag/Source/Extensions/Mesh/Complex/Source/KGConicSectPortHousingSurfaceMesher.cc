@@ -6,6 +6,8 @@
 
 #include <algorithm>
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 void KGConicSectPortHousingSurfaceMesher::VisitWrappedSurface(

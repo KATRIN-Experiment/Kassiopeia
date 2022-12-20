@@ -3,6 +3,8 @@
 
 #include "KGArea.hh"
 
+#include "KThreeVector.hh"
+
 namespace KGeoBag
 {
 class KGRectangle : public KGArea
@@ -18,19 +20,19 @@ class KGRectangle : public KGArea
     };
 
     KGRectangle() = default;
-    KGRectangle(const double& a, const double& b, const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& n1,
-                const KGeoBag::KThreeVector& n2);
+    KGRectangle(const double& a, const double& b, const katrin::KThreeVector& p0, const katrin::KThreeVector& n1,
+                const katrin::KThreeVector& n2);
 
-    KGRectangle(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& p1, const KGeoBag::KThreeVector& p2,
-                const KGeoBag::KThreeVector& p3);
+    KGRectangle(const katrin::KThreeVector& p0, const katrin::KThreeVector& p1, const katrin::KThreeVector& p2,
+                const katrin::KThreeVector& p3);
 
     ~KGRectangle() override = default;
 
     void AreaInitialize() const override {}
     void AreaAccept(KGVisitor* aVisitor) override;
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const override;
 
     void SetA(double d)
     {
@@ -40,15 +42,15 @@ class KGRectangle : public KGArea
     {
         fB = d;
     }
-    void SetP0(const KGeoBag::KThreeVector& p)
+    void SetP0(const katrin::KThreeVector& p)
     {
         fP0 = p;
     }
-    void SetN1(const KGeoBag::KThreeVector& d)
+    void SetN1(const katrin::KThreeVector& d)
     {
         fN1 = d.Unit();
     }
-    void SetN2(const KGeoBag::KThreeVector& d)
+    void SetN2(const katrin::KThreeVector& d)
     {
         fN2 = d.Unit();
     }
@@ -61,31 +63,31 @@ class KGRectangle : public KGArea
     {
         return fB;
     }
-    const KGeoBag::KThreeVector& GetP0() const
+    const katrin::KThreeVector& GetP0() const
     {
         return fP0;
     }
-    const KGeoBag::KThreeVector& GetN1() const
+    const katrin::KThreeVector& GetN1() const
     {
         return fN1;
     }
-    const KGeoBag::KThreeVector& GetN2() const
+    const katrin::KThreeVector& GetN2() const
     {
         return fN2;
     }
-    const KGeoBag::KThreeVector GetN3() const
+    const katrin::KThreeVector GetN3() const
     {
         return fN1.Cross(fN2);
     }
-    const KGeoBag::KThreeVector GetP1() const
+    const katrin::KThreeVector GetP1() const
     {
         return fP0 + fN1 * fA;
     }
-    const KGeoBag::KThreeVector GetP2() const
+    const katrin::KThreeVector GetP2() const
     {
         return fP0 + fN1 * fA + fN2 * fB;
     }
-    const KGeoBag::KThreeVector GetP3() const
+    const katrin::KThreeVector GetP3() const
     {
         return fP0 + fN2 * fB;
     }
@@ -93,9 +95,9 @@ class KGRectangle : public KGArea
   private:
     double fA;
     double fB;
-    KGeoBag::KThreeVector fP0;
-    KGeoBag::KThreeVector fN1;
-    KGeoBag::KThreeVector fN2;
+    katrin::KThreeVector fP0;
+    katrin::KThreeVector fN1;
+    katrin::KThreeVector fN2;
 };
 }  // namespace KGeoBag
 

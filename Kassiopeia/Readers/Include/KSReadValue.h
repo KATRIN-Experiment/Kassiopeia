@@ -2,10 +2,11 @@
 #define Kassiopeia_KSReadValue_h_
 
 #include "KSReadersMessage.h"
-#include "KThreeVector.hh"
-#include "KTwoVector.hh"
+
 #include "KThreeMatrix.hh"
+#include "KThreeVector.hh"
 #include "KTwoMatrix.hh"
+#include "KTwoVector.hh"
 
 namespace Kassiopeia
 {
@@ -172,10 +173,10 @@ using KSLong = KSReadValue<long>;
 using KSLongLong = KSReadValue<long long>;
 using KSFloat = KSReadValue<float>;
 using KSDouble = KSReadValue<double>;
-using KSThreeVector = KSReadValue<KGeoBag::KThreeVector>;
-using KSTwoVector = KSReadValue<KGeoBag::KTwoVector>;
-using KSThreeMatrix = KSReadValue<KGeoBag::KThreeMatrix>;
-using KSTwoMatrix = KSReadValue<KGeoBag::KTwoMatrix>;
+using KSThreeVector = KSReadValue<katrin::KThreeVector>;
+using KSTwoVector = KSReadValue<katrin::KTwoVector>;
+using KSThreeMatrix = KSReadValue<katrin::KThreeMatrix>;
+using KSTwoMatrix = KSReadValue<katrin::KTwoMatrix>;
 using KSString = KSReadValue<std::string>;
 
 template<> const KSBool KSBool::sZero;

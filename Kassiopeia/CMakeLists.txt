@@ -13,7 +13,7 @@ endif()
 # Kassiopeia version
 set( MODULE_VERSION_MAJOR 3 )
 set( MODULE_VERSION_MINOR 8 )
-set( MODULE_VERSION_PATCH 0 )
+set( MODULE_VERSION_PATCH 2 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
 #project( Kassiopeia VERSION ${MODULE_VERSION} )
@@ -34,21 +34,6 @@ kasper_module_paths( Kassiopeia )
 
 # module debugging
 kasper_module_debug()
-
-# external dependencies: boost
-if( Kassiopeia_USE_BOOST )
-    find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS  filesystem system )
-endif( Kassiopeia_USE_BOOST )
-
-# external dependencies: root
-if( Kassiopeia_USE_ROOT )
-    find_package( ROOT ${ROOT_MINIMUM_VERSION} CONFIG REQUIRED )
-endif( Kassiopeia_USE_ROOT )
-
-# external dependencies: vtk
-if( Kassiopeia_USE_VTK )
-    find_package(VTK CONFIG REQUIRED)
-endif( Kassiopeia_USE_VTK )
 
 # subdirectories
 add_subdirectory( Documentation )

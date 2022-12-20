@@ -68,19 +68,19 @@ class KSTrajAdiabaticSpinParticle : public KSMathArray<10>
   public:
     const double& GetTime() const;
     const double& GetLength() const;
-    const KGeoBag::KThreeVector& GetPosition() const;
-    const KGeoBag::KThreeVector& GetMomentum() const;
-    const KGeoBag::KThreeVector& GetVelocity() const;
+    const katrin::KThreeVector& GetPosition() const;
+    const katrin::KThreeVector& GetMomentum() const;
+    const katrin::KThreeVector& GetVelocity() const;
     const double& GetLorentzFactor() const;
     const double& GetKineticEnergy() const;
 
-    const KGeoBag::KThreeVector& GetMagneticField() const;
-    const KGeoBag::KThreeVector& GetElectricField() const;
+    const katrin::KThreeVector& GetMagneticField() const;
+    const katrin::KThreeVector& GetElectricField() const;
     const double& GetElectricPotential() const;
-    const KGeoBag::KThreeMatrix& GetElectricGradient() const;
-    const KGeoBag::KThreeMatrix& GetMagneticGradient() const;
+    const katrin::KThreeMatrix& GetElectricGradient() const;
+    const katrin::KThreeMatrix& GetMagneticGradient() const;
 
-    const KGeoBag::KThreeVector& GetGuidingCenter() const;
+    const katrin::KThreeVector& GetGuidingCenter() const;
     const double& GetLongMomentum() const;
     const double& GetTransMomentum() const;
     const double& GetLongVelocity() const;
@@ -103,19 +103,19 @@ class KSTrajAdiabaticSpinParticle : public KSMathArray<10>
 
     mutable double fTime;
     mutable double fLength;
-    mutable KGeoBag::KThreeVector fPosition;
-    mutable KGeoBag::KThreeVector fMomentum;
-    mutable KGeoBag::KThreeVector fVelocity;
+    mutable katrin::KThreeVector fPosition;
+    mutable katrin::KThreeVector fMomentum;
+    mutable katrin::KThreeVector fVelocity;
     mutable double fLorentzFactor;
     mutable double fKineticEnergy;
 
-    mutable KGeoBag::KThreeVector fMagneticField;
-    mutable KGeoBag::KThreeVector fElectricField;
-    mutable KGeoBag::KThreeMatrix fMagneticGradient;
-    mutable KGeoBag::KThreeMatrix fElectricGradient;
+    mutable katrin::KThreeVector fMagneticField;
+    mutable katrin::KThreeVector fElectricField;
+    mutable katrin::KThreeMatrix fMagneticGradient;
+    mutable katrin::KThreeMatrix fElectricGradient;
     mutable double fElectricPotential;
 
-    mutable KGeoBag::KThreeVector fGuidingCenter;
+    mutable katrin::KThreeVector fGuidingCenter;
     mutable double fLongMomentum;
     mutable double fTransMomentum;
     mutable double fLongVelocity;

@@ -3,6 +3,8 @@
 
 #include "KGArea.hh"
 
+#include "KThreeVector.hh"
+
 namespace KGeoBag
 {
 class KGDisk : public KGArea
@@ -18,22 +20,22 @@ class KGDisk : public KGArea
     };
 
     KGDisk() = default;
-    KGDisk(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& normal, double radius);
+    KGDisk(const katrin::KThreeVector& p0, const katrin::KThreeVector& normal, double radius);
 
     ~KGDisk() override = default;
 
 
     void AreaInitialize() const override {}
     void AreaAccept(KGVisitor* aVisitor) override;
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const override;
 
-    void SetP0(const KGeoBag::KThreeVector& p)
+    void SetP0(const katrin::KThreeVector& p)
     {
         fP0 = p;
     }
-    void SetNormal(const KGeoBag::KThreeVector& n)
+    void SetNormal(const katrin::KThreeVector& n)
     {
         fNormal = n.Unit();
     }
@@ -42,11 +44,11 @@ class KGDisk : public KGArea
         fRadius = d;
     }
 
-    const KGeoBag::KThreeVector& GetP0() const
+    const katrin::KThreeVector& GetP0() const
     {
         return fP0;
     }
-    const KGeoBag::KThreeVector& GetNormal() const
+    const katrin::KThreeVector& GetNormal() const
     {
         return fNormal;
     }
@@ -56,8 +58,8 @@ class KGDisk : public KGArea
     }
 
   private:
-    KGeoBag::KThreeVector fP0;
-    KGeoBag::KThreeVector fNormal;
+    katrin::KThreeVector fP0;
+    katrin::KThreeVector fNormal;
     double fRadius;
 };
 }  // namespace KGeoBag

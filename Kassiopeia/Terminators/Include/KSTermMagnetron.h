@@ -28,7 +28,7 @@ class KSTermMagnetron : public KSComponentTemplate<KSTermMagnetron, KSTerminator
     double fMaxPhi;
     bool fFirstStep;
     double fPhiFirstStep;
-    KGeoBag::KThreeVector fPositionBefore;
+    katrin::KThreeVector fPositionBefore;
     bool fAtanJump;
     unsigned int fJumpDirection;  //1 = 0->2pi, 2 = 2pi->0
 };

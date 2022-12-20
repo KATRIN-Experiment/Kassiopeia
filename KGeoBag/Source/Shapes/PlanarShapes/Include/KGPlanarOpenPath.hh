@@ -17,8 +17,8 @@ class KGPlanarOpenPath : public KGPlanarPath
     //**********
 
   public:
-    virtual const KTwoVector& Start() const = 0;
-    virtual const KTwoVector& End() const = 0;
+    virtual const katrin::KTwoVector& Start() const = 0;
+    virtual const katrin::KTwoVector& End() const = 0;
 };
 
 }  // namespace KGeoBag

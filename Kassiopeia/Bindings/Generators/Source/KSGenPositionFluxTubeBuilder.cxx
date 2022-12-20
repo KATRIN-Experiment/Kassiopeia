@@ -21,6 +21,8 @@ template<> KSGenPositionFluxTubeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionFluxTubeStructure =
     KSGenPositionFluxTubeBuilder::Attribute<std::string>("name") +
+    KSGenPositionFluxTubeBuilder::Attribute<std::string>("surface") +
+    KSGenPositionFluxTubeBuilder::Attribute<std::string>("space") +
     KSGenPositionFluxTubeBuilder::Attribute<std::string>("phi") +
     KSGenPositionFluxTubeBuilder::Attribute<std::string>("z") +
     KSGenPositionFluxTubeBuilder::Attribute<double>("flux") +

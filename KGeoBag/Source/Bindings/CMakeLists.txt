@@ -102,6 +102,9 @@ set( BINDINGS_HEADER_FILES
   # discrete rotational mesh
   Extensions/DiscreteRotationalMesh/Include/KGDiscreteRotationalMeshBuilder.hh
 
+  # refinement
+  Extensions/Refinement/Include/KGMeshRefinerBuilder.hh
+
   Visualization/Basic/Include/KGGeometryPrinterBuilder.hh
 )
 
@@ -227,6 +230,9 @@ set( BINDINGS_SOURCE_FILES
     # discrete rotational mesh
     Extensions/DiscreteRotationalMesh/Source/KGDiscreteRotationalMeshBuilder.cc
 
+    # refinement
+    Extensions/Refinement/Source/KGMeshRefinerBuilder.cc
+
     Visualization/Basic/Source/KGGeometryPrinterBuilder.cc
 )
 
@@ -264,16 +270,17 @@ target_include_directories(KGeoBagBindings PUBLIC $<INSTALL_INTERFACE:include>)
 
 target_link_libraries( KGeoBagBindings
     PUBLIC
-        Kommon
+        KommonCore
         KGeoBagCore
         KGeoBagShapes
         KGeoBagAppearance
-        KGeoBagDeformation
         KGeoBagMetrics
         KGeoBagRandom
         KGeoBagMesh
         KGeoBagAxialMesh
         KGeoBagDiscreteRotationalMesh
+        KGeoBagMeshDeformation
+        KGeoBagMeshRefinement
         KGeoBagBasicVisualization
 )
 

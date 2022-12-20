@@ -4,6 +4,7 @@
 #include "KGVTKMeshPainter.hh"
 #include "KXMLInitializer.hh"
 #include "KXMLTokenizer.hh"
+#include "KGlobals.hh"
 
 using namespace KGeoBag;
 using namespace katrin;
@@ -18,6 +19,8 @@ int main(int argc, char** argv)
 
     coremsg(eNormal) << "starting initialization..." << eom;
 
+    KGlobals::GetInstance().SetBatchMode(true);  // make sure to NOT show any ROOT/VTK windows
+
     auto& tXML = KXMLInitializer::GetInstance();
     tXML.AddDefaultIncludePath(CONFIG_DEFAULT_DIR);
     tXML.Configure(argc, argv);
@@ -26,6 +29,9 @@ int main(int argc, char** argv)
     tPathList.pop_front();  // strip off config file name
 
     coremsg(eNormal) << "...initialization finished" << eom;
+
+    KGlobals::GetInstance().SetBatchMode(false);  // make sure that the viewer window is shown here
+
     KVTKWindow tWindow;
     tWindow.SetName("KGeoBag Mesh Viewer");
     tWindow.SetFrameColorRed(0.);

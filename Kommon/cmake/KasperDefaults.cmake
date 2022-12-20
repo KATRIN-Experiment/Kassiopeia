@@ -56,6 +56,7 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
     endif()
 
     # define global install paths
+    set_path(KASPER_SOURCE_DIR "${CMAKE_HOME_DIRECTORY}" "Kasper source directory")
     set_path(KASPER_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}" "Kasper install directory")
     set_path(INCLUDE_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_INCLUDEDIR}" "Install directory for headers")
     set_path(LIB_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_LIBDIR}" "Install directory for libraries")
@@ -142,36 +143,50 @@ if( ${PROJECT_NAME} STREQUAL Kasper )
     message(STATUS "Kasper version is v${KASPER_VERSION} (${KASPER_VERSION_NUMERICAL})" )
 
     # git revision (if available)
-    set(KASPER_GIT_REVISION "n/a")
-    if(EXISTS "${CMAKE_SOURCE_DIR}/.git/index")
-        set_property(GLOBAL APPEND
-            PROPERTY CMAKE_CONFIGURE_DEPENDS
-            "${CMAKE_SOURCE_DIR}/.git/index")
-
-        execute_process(
-            COMMAND git rev-parse --abbrev-ref HEAD
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            OUTPUT_VARIABLE KASPER_GIT_BRANCH
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-        execute_process(
-            COMMAND git rev-parse --short HEAD
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            OUTPUT_VARIABLE KASPER_GIT_COMMIT
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-        execute_process(
-            COMMAND git log -1 --format=%cd
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            OUTPUT_VARIABLE KASPER_GIT_TIMESTAMP
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
+    option( KASPER_GIT_INFO_USERDEFINED "Preventing changes to KASPER_GIT_BRANCH and KASPER_GIT_COMMIT, allowing the user to set them manually" OFF )
+    if( KASPER_GIT_INFO_USERDEFINED )
+        set( KASPER_GIT_BRANCH "" CACHE STRING "Name of git branch" )
+        set( KASPER_GIT_COMMIT "" CACHE STRING "First 9 letters of git commit hash" )
+        
         set(KASPER_GIT_REVISION "${KASPER_GIT_BRANCH}+${KASPER_GIT_COMMIT}")
-        message(STATUS "Git revision is ${KASPER_GIT_REVISION} (last commit: ${KASPER_GIT_TIMESTAMP})" )
+    else()
+        set(KASPER_GIT_REVISION "n/a")
+        if(EXISTS "${CMAKE_SOURCE_DIR}/.git/index")
+            set_property(GLOBAL APPEND
+                PROPERTY CMAKE_CONFIGURE_DEPENDS
+                "${CMAKE_SOURCE_DIR}/.git/index")
+
+            execute_process(
+                COMMAND git rev-parse --abbrev-ref HEAD
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                OUTPUT_VARIABLE KASPER_GIT_BRANCH
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+            execute_process(
+                COMMAND git rev-parse --short HEAD
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                OUTPUT_VARIABLE KASPER_GIT_COMMIT
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+            execute_process(
+                COMMAND git log -1 --format=%cd --date=iso-strict
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                OUTPUT_VARIABLE KASPER_GIT_TIMESTAMP
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+            set(KASPER_GIT_REVISION "${KASPER_GIT_BRANCH}+${KASPER_GIT_COMMIT}")
+            message(STATUS "Git revision is ${KASPER_GIT_REVISION} (last commit: ${KASPER_GIT_TIMESTAMP})" )
+        else()
+            set(KASPER_GIT_BRANCH "")
+            set(KASPER_GIT_COMMIT "")
+            set(KASPER_GIT_TIMESTAMP "")
+            set(KASPER_GIT_REVISION "(unknown)")
+            message(STATUS "Git revision is unknown!" )
+        endif()
     endif()
 
-    # build timestamp -- will be refreshed after updating git (see lines above)
-    string( TIMESTAMP KASPER_BUILD_TIMESTAMP UTC )
+    # build timestamp (in ISO format: '%Y-%m-%dT%H:%M:%SZ')
+    string(TIMESTAMP KASPER_BUILD_TIMESTAMP UTC)
 
     # build system (something like 'linux/GNU/8.2.1')
     set(KASPER_BUILD_SYSTEM "${CMAKE_SYSTEM_NAME}/${CMAKE_CXX_COMPILER_ID}/${CMAKE_CXX_COMPILER_VERSION}")
@@ -203,6 +218,7 @@ macro( kasper_module_paths PATH )
     set( ${PROJECT_NAME}_CACHE_INSTALL_DIR "${CACHE_INSTALL_DIR}/${PATH}" )
 
     add_compile_definitions( KASPER_INSTALL_DIR=${KASPER_INSTALL_DIR} )
+    add_compile_definitions( KASPER_SOURCE_DIR=${KASPER_SOURCE_DIR} )
 
     add_compile_definitions( INCLUDE_INSTALL_DIR=${${PROJECT_NAME}_INCLUDE_INSTALL_DIR} )
     install(CODE "file(MAKE_DIRECTORY \"${${PROJECT_NAME}_INCLUDE_INSTALL_DIR}\")" )
@@ -418,21 +434,25 @@ endmacro()
 
 macro(kasper_export_pkgconfig)
 
+    # get the libraries associated with the project
     get_property(${PROJECT_NAME}_LIBRARIES GLOBAL PROPERTY ${PROJECT_NAME}_LIBRARIES)
 
     set(${PROJECT_NAME}_DEPENDS)
     set(${PROJECT_NAME}_CXX_FLAGS)
 
-    # generate list of dependencies for installed libraries
+    # generate list of dependencies for installed libraries for use in the pkgconfig file
     foreach(TARGET_NAME ${${PROJECT_NAME}_LIBRARIES})
         get_target_property(TARGET_LIBS ${TARGET_NAME} INTERFACE_LINK_LIBRARIES)
-        foreach(LIB_NAME ${TARGET_LIBS})
+
+        # scan each dependency of the current target
+        foreach(LIB_NAME ${TARGET_NAME} ${TARGET_LIBS})
             if(TARGET ${LIB_NAME})
                 get_target_property(LIB_TYPE ${LIB_NAME} TYPE)
+                # ignore interface libs that cannot be used by external software
                 if(NOT LIB_TYPE STREQUAL INTERFACE_LIBRARY)
                     get_target_property(LIB_IMPORTED ${LIB_NAME} IMPORTED)
                     if(LIB_IMPORTED)
-                        # get the actual filename on disk
+                        # get the actual filename on disk if it exists
                         get_target_property(LIB_LOCATION ${LIB_NAME} LOCATION)
                         if(LIB_LOCATION)
                             list(APPEND ${PROJECT_NAME}_DEPENDS ${LIB_LOCATION})
@@ -480,6 +500,7 @@ macro(kasper_export_pkgconfig)
     endforeach(TARGET_NAME)
 
     #message("${PROJECT_NAME}_CXX_FLAGS : ${${PROJECT_NAME}_CXX_FLAGS}")
+    #message("${PROJECT_NAME}_LIBRARIES : ${${PROJECT_NAME}_LIBRARIES}")
     #message("${PROJECT_NAME}_DEPENDS   : ${${PROJECT_NAME}_DEPENDS}")
 
     #include(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake)
@@ -488,7 +509,8 @@ macro(kasper_export_pkgconfig)
 
     set( PC_LIBRARIES_STR )
     set( LIBDIRS )
-    set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${${PROJECT_NAME}_DEPENDS} )
+    #set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${${PROJECT_NAME}_DEPENDS} )
+    set( LIBS ${${PROJECT_NAME}_DEPENDS} )
     if(LIBS)
         list( REMOVE_DUPLICATES LIBS )
     endif(LIBS)

@@ -13,7 +13,7 @@ void KGFlattenedCircleSurfaceMesher::VisitFlattenedClosedPathSurface(KGFlattened
     CircleToClosedPoints(aFlattenedCircleSurface->Path().operator->(), tCirclePoints);
 
     //create flattened points
-    KThreeVector tApexPoint;
+    katrin::KThreeVector tApexPoint;
     TubeMesh tMeshPoints;
     ClosedPointsFlattenedToTubeMeshAndApex(tCirclePoints,
                                            aFlattenedCircleSurface->Path()->Centroid(),

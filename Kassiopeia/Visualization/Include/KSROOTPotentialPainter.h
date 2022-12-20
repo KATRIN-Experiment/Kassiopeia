@@ -29,7 +29,7 @@ class KSROOTPotentialPainter : public katrin::KROOTPainter
     std::string GetYAxisLabel() override;
 
   public:
-    bool CheckPosition(const KGeoBag::KThreeVector& aPosition) const;
+    bool CheckPosition(const katrin::KThreeVector& aPosition) const;
 
   private:
     ;

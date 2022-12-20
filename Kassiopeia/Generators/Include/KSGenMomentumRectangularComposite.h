@@ -19,9 +19,9 @@ class KSGenMomentumRectangularComposite : public KSComponentTemplate<KSGenMoment
     void Dice(KSParticleQueue* aParticleList) override;
 
   public:
-    void SetXAxis(const KGeoBag::KThreeVector& anXAxis);
-    void SetYAxis(const KGeoBag::KThreeVector& anYAxis);
-    void SetZAxis(const KGeoBag::KThreeVector& anZAxis);
+    void SetXAxis(const katrin::KThreeVector& anXAxis);
+    void SetYAxis(const katrin::KThreeVector& anYAxis);
+    void SetZAxis(const katrin::KThreeVector& anZAxis);
 
     void SetXValue(KSGenValue* anXValue);
     void ClearXValue(KSGenValue* anXValue);
@@ -36,9 +36,9 @@ class KSGenMomentumRectangularComposite : public KSComponentTemplate<KSGenMoment
     KSGenValue* fYValue;
     KSGenValue* fZValue;
 
-    KGeoBag::KThreeVector fXAxis;
-    KGeoBag::KThreeVector fYAxis;
-    KGeoBag::KThreeVector fZAxis;
+    katrin::KThreeVector fXAxis;
+    katrin::KThreeVector fYAxis;
+    katrin::KThreeVector fZAxis;
 
   protected:
     void InitializeComponent() override;

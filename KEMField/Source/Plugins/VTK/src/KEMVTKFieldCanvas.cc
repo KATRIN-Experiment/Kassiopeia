@@ -1,4 +1,17 @@
 #include "KEMVTKFieldCanvas.hh"
+#include "KEMCoreMessage.hh"
+
+#include "vtkAxis.h"
+#include "vtkChartLegend.h"
+#include "vtkContextScene.h"
+#include "vtkMath.h"
+#include "vtkPNGWriter.h"
+#include "vtkPlotHistogram2D.h"
+#include "vtkRenderWindow.h"
+#include "vtkRenderWindowInteractor.h"
+#include "vtkSmartPointer.h"
+#include "vtkWindowToImageFilter.h"
+#include "vtkXMLImageDataWriter.h"
 
 #include <cmath>
 
@@ -187,4 +200,35 @@ void KEMVTKFieldCanvas::SaveAs(const std::string& savename)
     writer->SetInputConnection(windowToImageFilter->GetOutputPort());
     writer->Write();
 }
+
+//______________________________________________________________________________
+
+void KEMVTKFieldCanvas::Export(const std::string& savename)
+{
+    auto writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
+
+    // writer->SetDataModeToAscii();
+    writer->SetDataModeToBinary();
+    writer->SetCompressorTypeToZLib();
+    writer->SetIdTypeToInt64();
+
+#ifdef VTK6
+    writer->SetHeaderTypeToUInt64();
+    writer->SetInputData(data);
+#else
+    writer->SetInput(polydata);
+#endif
+    writer->SetFileName(savename.c_str());
+    writer->Write();
+}
+
+//______________________________________________________________________________
+
+void KEMVTKFieldCanvas::View()
+{
+    kem_cout() << "KEMVTKFieldCanvas finished; waiting for key press ..." << eom;
+    view->GetInteractor()->Start();
+    view->GetRenderWindow()->Finalize();
+}
+
 }  // namespace KEMField

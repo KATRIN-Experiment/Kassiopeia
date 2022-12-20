@@ -3,6 +3,7 @@
 
 #include "KSNumerical.h"
 #include "KSObject.h"
+
 #include "KThreeMatrix.hh"
 #include "KThreeVector.hh"
 #include "KTwoMatrix.hh"
@@ -48,24 +49,24 @@ template<class XValueType> inline void KSComponentValueMaximum<XValueType>::Rese
     return;
 }
 // initialize non-scalar types with zero because the magnitude will always be positive
-template<> inline void KSComponentValueMaximum<KGeoBag::KTwoVector>::Reset()
+template<> inline void KSComponentValueMaximum<katrin::KTwoVector>::Reset()
 {
-    this->fValue = KSNumerical<KGeoBag::KTwoVector>::Zero();
+    this->fValue = KSNumerical<katrin::KTwoVector>::Zero();
     return;
 }
-template<> inline void KSComponentValueMaximum<KGeoBag::KThreeVector>::Reset()
+template<> inline void KSComponentValueMaximum<katrin::KThreeVector>::Reset()
 {
-    this->fValue = KSNumerical<KGeoBag::KThreeVector>::Zero();
+    this->fValue = KSNumerical<katrin::KThreeVector>::Zero();
     return;
 }
-template<> inline void KSComponentValueMaximum<KGeoBag::KTwoMatrix>::Reset()
+template<> inline void KSComponentValueMaximum<katrin::KTwoMatrix>::Reset()
 {
-    this->fValue = KSNumerical<KGeoBag::KTwoMatrix>::Zero();
+    this->fValue = KSNumerical<katrin::KTwoMatrix>::Zero();
     return;
 }
-template<> inline void KSComponentValueMaximum<KGeoBag::KThreeMatrix>::Reset()
+template<> inline void KSComponentValueMaximum<katrin::KThreeMatrix>::Reset()
 {
-    this->fValue = KSNumerical<KGeoBag::KThreeMatrix>::Zero();
+    this->fValue = KSNumerical<katrin::KThreeMatrix>::Zero();
     return;
 }
 
@@ -77,7 +78,7 @@ template<class XValueType> inline bool KSComponentValueMaximum<XValueType>::Upda
     }
     return false;
 }
-template<> inline bool KSComponentValueMaximum<KGeoBag::KTwoVector>::Update()
+template<> inline bool KSComponentValueMaximum<katrin::KTwoVector>::Update()
 {
     if (this->fValue.Magnitude() < this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -85,7 +86,7 @@ template<> inline bool KSComponentValueMaximum<KGeoBag::KTwoVector>::Update()
     }
     return false;
 }
-template<> inline bool KSComponentValueMaximum<KGeoBag::KThreeVector>::Update()
+template<> inline bool KSComponentValueMaximum<katrin::KThreeVector>::Update()
 {
     if (this->fValue.Magnitude() < this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -95,7 +96,7 @@ template<> inline bool KSComponentValueMaximum<KGeoBag::KThreeVector>::Update()
 }
 // TODO: how to compare Matrices?
 /*
-    inline bool KSComponentValueMaximum< KGeoBag::KTwoMatrix >::Update()
+    inline bool KSComponentValueMaximum< katrin::KTwoMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {
@@ -105,7 +106,7 @@ template<> inline bool KSComponentValueMaximum<KGeoBag::KThreeVector>::Update()
         return false;
     }
     template<  >
-    inline bool KSComponentValueMaximum< KGeoBag::KThreeMatrix >::Update()
+    inline bool KSComponentValueMaximum< katrin::KThreeMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {
@@ -144,7 +145,7 @@ template<class XValueType> inline bool KSComponentValueMinimum<XValueType>::Upda
     }
     return false;
 }
-template<> inline bool KSComponentValueMinimum<KGeoBag::KTwoVector>::Update()
+template<> inline bool KSComponentValueMinimum<katrin::KTwoVector>::Update()
 {
     if (this->fValue.Magnitude() > this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -152,7 +153,7 @@ template<> inline bool KSComponentValueMinimum<KGeoBag::KTwoVector>::Update()
     }
     return false;
 }
-template<> inline bool KSComponentValueMinimum<KGeoBag::KThreeVector>::Update()
+template<> inline bool KSComponentValueMinimum<katrin::KThreeVector>::Update()
 {
     if (this->fValue.Magnitude() > this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -162,7 +163,7 @@ template<> inline bool KSComponentValueMinimum<KGeoBag::KThreeVector>::Update()
 }
 // TODO: how to compare Matrices?
 /*
-    inline bool KSComponentValueMinimum< KGeoBag::KTwoMatrix >::Update()
+    inline bool KSComponentValueMinimum< katrin::KTwoMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {
@@ -172,7 +173,7 @@ template<> inline bool KSComponentValueMinimum<KGeoBag::KThreeVector>::Update()
         return false;
     }
     template<  >
-    inline bool KSComponentValueMinimum< KGeoBag::KThreeMatrix >::Update()
+    inline bool KSComponentValueMinimum< katrin::KThreeMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {

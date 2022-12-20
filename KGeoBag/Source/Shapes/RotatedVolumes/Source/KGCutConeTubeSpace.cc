@@ -1,5 +1,7 @@
 #include "KGCutConeTubeSpace.hh"
 
+using katrin::KTwoVector;
+
 namespace KGeoBag
 {
 

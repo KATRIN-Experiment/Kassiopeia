@@ -2,6 +2,7 @@
 # Author: J. P. Barrett
 
 set (INTERFACE_FIELDSOLVER_HEADERFILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticFastMultipoleMultipleTreeFieldSolver.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticFastMultipoleFieldSolver.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeConstructor.hh
 )

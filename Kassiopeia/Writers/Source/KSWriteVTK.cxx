@@ -10,10 +10,11 @@ using katrin::KPathUtils;
 #endif
 
 using namespace std;
-using KGeoBag::KTwoVector;
-using KGeoBag::KThreeVector;
-using KGeoBag::KTwoMatrix;
-using KGeoBag::KThreeMatrix;
+
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
+using katrin::KTwoMatrix;
+using katrin::KTwoVector;
 
 namespace Kassiopeia
 {

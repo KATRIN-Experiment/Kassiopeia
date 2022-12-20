@@ -45,7 +45,7 @@ KGVTKRandomPointTester::~KGVTKRandomPointTester() = default;
 
 void KGVTKRandomPointTester::Render()
 {
-    KThreeVector tPoint;
+    katrin::KThreeVector tPoint;
 
     vtkIdType vPointId;
 

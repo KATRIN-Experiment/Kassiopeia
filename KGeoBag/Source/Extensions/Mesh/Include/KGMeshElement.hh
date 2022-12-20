@@ -2,7 +2,9 @@
 #define KGeoBag_KGMeshElement_hh_
 
 #include "KGPointCloud.hh"
+
 #include "KTransformation.hh"
+#include "KThreeVector.hh"
 
 #include <string>
 #include <vector>
@@ -25,18 +27,19 @@ class KGMeshElement
 
     virtual double Area() const = 0;
     virtual double Aspect() const = 0;
+    virtual katrin::KThreeVector Centroid() const = 0;
 
-    virtual void Transform(const KTransformation& transform) = 0;
+    virtual void Transform(const katrin::KTransformation& transform) = 0;
 
-    virtual double NearestDistance(const KGeoBag::KThreeVector& /*aPoint*/) const = 0;
-    virtual KGeoBag::KThreeVector NearestPoint(const KGeoBag::KThreeVector& /*aPoint*/) const = 0;
-    virtual KGeoBag::KThreeVector NearestNormal(const KGeoBag::KThreeVector& /*aPoint*/) const = 0;
-    virtual bool NearestIntersection(const KGeoBag::KThreeVector& /*aStart*/, const KGeoBag::KThreeVector& /*anEnd*/,
-                                     KGeoBag::KThreeVector& /*anIntersection*/) const = 0;
+    virtual double NearestDistance(const katrin::KThreeVector& /*aPoint*/) const = 0;
+    virtual katrin::KThreeVector NearestPoint(const katrin::KThreeVector& /*aPoint*/) const = 0;
+    virtual katrin::KThreeVector NearestNormal(const katrin::KThreeVector& /*aPoint*/) const = 0;
+    virtual bool NearestIntersection(const katrin::KThreeVector& /*aStart*/, const katrin::KThreeVector& /*anEnd*/,
+                                     katrin::KThreeVector& /*anIntersection*/) const = 0;
 
     virtual KGPointCloud<KGMESH_DIM> GetPointCloud() const = 0;
     virtual unsigned int GetNumberOfEdges() const = 0;
-    virtual void GetEdge(KThreeVector& start, KGeoBag::KThreeVector& end, unsigned int /*index*/) const = 0;
+    virtual void GetEdge(katrin::KThreeVector& start, katrin::KThreeVector& end, unsigned int /*index*/) const = 0;
 };
 
 typedef std::vector<KGMeshElement*> KGMeshElementVector;

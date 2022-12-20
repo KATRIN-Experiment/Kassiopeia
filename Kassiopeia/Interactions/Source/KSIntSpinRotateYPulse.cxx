@@ -35,7 +35,7 @@ KSIntSpinRotateYPulse::~KSIntSpinRotateYPulse() = default;
 void KSIntSpinRotateYPulse::CalculateInteraction(const KSTrajectory& /*aTrajectory*/,
                                                  const KSParticle& aTrajectoryInitialParticle,
                                                  const KSParticle& aTrajectoryFinalParticle,
-                                                 const KGeoBag::KThreeVector& /*aTrajectoryCenter*/,
+                                                 const katrin::KThreeVector& /*aTrajectoryCenter*/,
                                                  const double& /*aTrajectoryRadius*/,
                                                  const double& /*aTrajectoryTimeStep*/,
                                                  KSParticle& anInteractionParticle, double& aTimeStep, bool& aFlag)

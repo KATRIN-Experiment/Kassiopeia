@@ -5,6 +5,8 @@ set (INTERFACE_BOUNDARY_INTEGRAL_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMBoundaryIntegralMatrix.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticBoundaryIntegrator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBoundaryIntegralMatrix.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseBoundaryIntegralMatrix.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSparseBoundaryIntegralMatrix.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSparseBoundaryIntegralMatrix_BlockCompressedRow.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSparseBoundaryIntegralMatrix_CompressedRow.hh
 )

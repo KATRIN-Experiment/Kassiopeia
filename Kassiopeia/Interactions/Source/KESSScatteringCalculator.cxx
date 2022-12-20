@@ -10,7 +10,6 @@
 
 using namespace std;
 using namespace katrin;
-using namespace KGeoBag;
 
 namespace Kassiopeia
 {

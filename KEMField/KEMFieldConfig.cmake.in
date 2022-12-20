@@ -1,19 +1,8 @@
 include(CMakeFindDependencyMacro)
 
 set(KEMField_USE_VTK @KEMField_USE_VTK@)
-if(KEMField_USE_VTK)
-    find_dependency( VTK NO_MODULE )
-endif(KEMField_USE_VTK)
-
 set(KEMField_USE_ROOT @KEMField_USE_ROOT@)
-if(KEMField_USE_ROOT)
-    find_dependency( ROOT CONFIG )
-endif(KEMField_USE_ROOT)
-
 set(KEMField_USE_GSL @KEMField_USE_GSL@)
-if(KEMField_USE_GSL)
-    find_dependency( GSL )
-endif(KEMField_USE_GSL)
 
 # set(KEMField_USE_FFTW @KEMField_USE_FFTW@)
 # if(KEMField_USE_FFTW)

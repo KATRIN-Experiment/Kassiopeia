@@ -19,7 +19,6 @@ if (${PROJECT_NAME}_ENABLE_FM_TEST)
     endif (${PROJECT_NAME}_USE_VTK)
 
     if (${PROJECT_NAME}_USE_ROOT)
-        find_package(ROOT REQUIRED)
         list (APPEND FAST_MULTIPOLE_TEST_LIBS KEMRootPlugin)
     endif (${PROJECT_NAME}_USE_ROOT)
 
@@ -48,11 +47,11 @@ if (${PROJECT_NAME}_ENABLE_FM_TEST)
         TestMatrixSingularValueDecomposition
         TestMultidimensionalFastFourierTransform
         TestMultipoleCalculators
-        TestMultipoleExpansionSpeed
+#        TestMultipoleExpansionSpeed
         TestNumericalIntegrator
         TestPinchonJMatrixCalculator
         TestQuadratureTableCalculator
-        TestSingleTriangleMultipoleExpansion
+#        TestSingleTriangleMultipoleExpansion
         TestStructuredASCII
         TestStructuredASCIICompressed
         TestVectorMath

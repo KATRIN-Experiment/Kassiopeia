@@ -14,14 +14,14 @@ class KGShapeRandom : public KGVisitor
   public:
     ~KGShapeRandom() override = default;
 
-    KGeoBag::KThreeVector Random(KGSurface* surface);
-    KGeoBag::KThreeVector Random(KGSpace* space);
+    katrin::KThreeVector Random(KGSurface* surface);
+    katrin::KThreeVector Random(KGSpace* space);
 
-    KGeoBag::KThreeVector Random(std::vector<KGSurface*>& surfaces);
-    KGeoBag::KThreeVector Random(std::vector<KGSpace*>& spaces);
+    katrin::KThreeVector Random(std::vector<KGSurface*>& surfaces);
+    katrin::KThreeVector Random(std::vector<KGSpace*>& spaces);
 
   protected:
-    void SetRandomPoint(KThreeVector& random) const
+    void SetRandomPoint(katrin::KThreeVector& random) const
     {
         fRandom = random;
     }
@@ -29,7 +29,7 @@ class KGShapeRandom : public KGVisitor
     static double Uniform(double min = 0, double max = 1.);
 
   private:
-    mutable KGeoBag::KThreeVector fRandom;
+    mutable katrin::KThreeVector fRandom;
 };
 }  // namespace KGeoBag
 

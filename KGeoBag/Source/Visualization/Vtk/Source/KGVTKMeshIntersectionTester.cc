@@ -15,6 +15,8 @@ using katrin::KRandom;
 
 using namespace std;
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KGVTKMeshIntersectionTester::KGVTKMeshIntersectionTester() :

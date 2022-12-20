@@ -59,8 +59,10 @@ KElectricFastMultipoleFieldSolver::~KElectricFastMultipoleFieldSolver()
 
 void KElectricFastMultipoleFieldSolver::InitializeCore(KSurfaceContainer& container)
 {
+    kfmout << GetParameterInformation() << kfmendl;
+
     //the tree constuctor definitions
-    typedef KFMElectrostaticTreeConstructor<KFMElectrostaticFieldMapper_SingleThread> TreeConstructor_SingleThread;
+    using TreeConstructor_SingleThread = KFMElectrostaticTreeConstructor<KFMElectrostaticFieldMapper_SingleThread>;
 #ifdef KEMFIELD_USE_OPENCL
     typedef KFMElectrostaticTreeConstructor<KFMElectrostaticFieldMapper_OpenCL> TreeConstructor_OpenCL;
     KOpenCLData* data = KOpenCLInterface::GetInstance()->GetActiveData();
@@ -179,6 +181,40 @@ KFieldVector KElectricFastMultipoleFieldSolver::ElectricFieldCore(const KPositio
     return fFastMultipoleFieldSolver->ElectricField(P);
 }
 
+std::string KElectricFastMultipoleFieldSolver::GetParameterInformation()
+{
+    std::stringstream output;
+
+    output << "Field Solver Fast Multipole Parameters: \n";
+    output << " top level divisions: " << fParameters.top_level_divisions << "\n";
+    output << " tree level divisions: " << fParameters.divisions << "\n";
+    output << " degree: " << fParameters.degree << "\n";
+    output << " zeromask size: " << fParameters.zeromask << "\n";
+    output << " maximum tree depth: " << fParameters.maximum_tree_depth << "\n";
+    output << " insertion_ratio: " << fParameters.insertion_ratio << "\n";
+    output << " verbosity: " << fParameters.verbosity << "\n";
+
+    if (fParameters.use_region_estimation) {
+        output << " use region estimation: true \n";
+        output << " region expansion factor " << fParameters.region_expansion_factor << "\n";
+    }
+    else {
+        output << " use region estimation: false \n";
+        output << " world center x " << fParameters.world_center_x << "\n";
+        output << " world center y " << fParameters.world_center_y << "\n";
+        output << " world center z " << fParameters.world_center_z << "\n";
+        output << " world length " << fParameters.world_length << "\n";
+    }
+
+    if (fParameters.use_caching) {
+        output << " use caching: true";
+    }
+    else {
+        output << " use caching: false";
+    }
+
+    return output.str();
+}
 
 void KElectricFastMultipoleFieldSolver::UseOpenCL(bool choice)
 {
@@ -191,6 +227,16 @@ void KElectricFastMultipoleFieldSolver::UseOpenCL(bool choice)
             << "cannot use opencl in fast multipole without kemfield being built with opencl, using defaults." << eom;
     }
     fUseOpenCL = false;
+    return;
+}
+
+void KElectricFastMultipoleFieldSolver::SetSplitMode(bool choice)
+{
+#ifdef KEMFIELD_USE_MPI
+    KMPIInterface::GetInstance()->SetSplitMode(choice);
+#else
+    (void)choice;  // fixes unused parameter warning
+#endif
     return;
 }
 

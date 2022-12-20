@@ -2,6 +2,7 @@
 #define Kassiopeia_KSTrajAdiabaticError_h_
 
 #include "KSMathArray.h"
+
 #include "KThreeVector.hh"
 
 namespace Kassiopeia
@@ -35,7 +36,7 @@ class KSTrajAdiabaticError : public KSMathArray<8>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KGeoBag::KThreeVector& GetGuidingCenterPositionError() const;
+    const katrin::KThreeVector& GetGuidingCenterPositionError() const;
     const double& GetLongitudinalMomentumError() const;
     const double& GetTransverseMomentumError() const;
     const double& GetPhaseError() const;
@@ -43,7 +44,7 @@ class KSTrajAdiabaticError : public KSMathArray<8>
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KGeoBag::KThreeVector fGuidingCenterPositionError;
+    mutable katrin::KThreeVector fGuidingCenterPositionError;
     mutable double fLongitudinalMomentumError;
     mutable double fTransverseMomentumError;
     mutable double fPhaseError;

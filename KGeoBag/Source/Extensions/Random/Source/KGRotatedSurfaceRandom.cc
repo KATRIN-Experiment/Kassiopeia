@@ -1,5 +1,7 @@
 #include "KGRotatedSurfaceRandom.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 void KGRotatedSurfaceRandom::VisitWrappedSurface(KGRotatedSurface* rotatedSurface)

@@ -21,6 +21,7 @@ if (KEMField_USE_ROOT)
         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
     target_link_libraries (KEMRootPlugin
         PUBLIC
+            KommonRoot
             KEMVisualization
             KEMMath
             KEMLinearAlgebraCore
@@ -28,6 +29,8 @@ if (KEMField_USE_ROOT)
             ROOT::Tree
             ROOT::Physics
     )
+
+    target_compile_definitions(KEMRootPlugin PUBLIC KEMFIELD_USE_ROOT )
 
     kasper_install_headers (${KEMROOT_HEADERFILES})
     kasper_install_libraries (KEMRootPlugin)

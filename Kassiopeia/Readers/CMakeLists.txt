@@ -70,6 +70,7 @@ target_include_directories(KassiopeiaReaders
     PUBLIC $<BUILD_INTERFACE:${READERS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaReaders
     PUBLIC
+        KommonRoot
         KassiopeiaOperators
         ROOT::Tree
 )

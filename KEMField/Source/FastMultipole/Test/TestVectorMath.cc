@@ -13,9 +13,8 @@
 #include <cstdlib>
 #include <iostream>
 
-
 using namespace KEMField;
-
+using katrin::KThreeVector;
 
 class FieldTestCase
 {

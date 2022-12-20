@@ -67,6 +67,7 @@
 #endif
 
 using namespace KEMField;
+using katrin::KThreeVector;
 
 int main(int argc, char* argv[])
 {

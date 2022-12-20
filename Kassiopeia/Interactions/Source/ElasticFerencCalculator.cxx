@@ -1,7 +1,7 @@
 #include "ElasticFerencCalculator.h"
 
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 #include "KRandom.h"
 using katrin::KRandom;

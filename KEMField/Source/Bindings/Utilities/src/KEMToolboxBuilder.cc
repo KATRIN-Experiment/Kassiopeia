@@ -9,8 +9,33 @@
 #include "KElementProcessor.hh"
 #include "KRoot.h"
 
+#ifdef KEMFIELD_USE_MPI
+#include "KMPIInterface.hh"
+#endif
+#ifdef KEMFIELD_USE_OPENCL
+#include "KOpenCLInterface.hh"
+#endif
+
 namespace katrin
 {
+
+KEMRoot::KEMRoot()
+{
+#ifdef KEMFIELD_USE_MPI
+    // TODO: get cmdline options from KXMLInitializer
+    KEMField::KMPIInterface::GetInstance()->Initialize(nullptr, nullptr, true);
+#endif
+#ifdef KEMFIELD_USE_OPENCL
+    KEMField::KOpenCLInterface::GetInstance()->InitializeOpenCL();
+#endif
+}
+
+KEMRoot::~KEMRoot()
+{
+#ifdef KEMFIELD_USE_MPI
+    KEMField::KMPIInterface::GetInstance()->Finalize();
+#endif
+}
 
 template<> KEMToolboxBuilder::~KComplexElement() = default;
 

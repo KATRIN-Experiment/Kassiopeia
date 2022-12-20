@@ -396,13 +396,13 @@ int main()
 
         // compute field/potential via Gauss Legendre and sum up values !!
 
-        double triPotential = 0.;
-        KFieldVector triField;
+        //double triPotential = 0.;
+        //KFieldVector triField;
 
-        for (auto& i : triCont) {
-            triPotential += intTriQuad.Potential(i.GetShape(), fP);
-            triField += intTriQuad.ElectricField(i.GetShape(), fP);
-        }
+        //for (auto& i : triCont) {
+        //    triPotential += intTriQuad.Potential(i.GetShape(), fP);
+        //    triField += intTriQuad.ElectricField(i.GetShape(), fP);
+        //}
 
         // add field and potential for rectangle
 

@@ -18,11 +18,11 @@
 // see KEMField::KElectrostaticBoundaryIntegratorFactory::Make(std::string)
 // for a complete list of options
 
-std::string integratorType{"numeric"};
+//std::string integratorType{"numeric"};
 //std::string integratorType{"analytic"};
 //std::string integratorType{"rwg"};
 
-std::string oclIntegratorType{"numeric"};
+//std::string oclIntegratorType{"numeric"};
 //std::string oclIntegratorType{"analytic"};
 //std::string oclIntegratorType{"rwg"};
 
@@ -40,8 +40,11 @@ std::string oclIntegratorType{"numeric"};
 
 #ifdef KEMFIELD_USE_ROOT
 #include "KEMRootFieldCanvas.hh"
+#include "TAxis.h"
+#include "TCanvas.h"
 #include "TGraph.h"
 #include "TMultiGraph.h"
+#include "TStyle.h"
 #endif
 
 #ifdef KEMFIELD_USE_VTK
@@ -111,6 +114,8 @@ using namespace KEMField;
 using namespace KGeoBag;
 #endif
 
+using katrin::KThreeVector;
+
 void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer);
 std::vector<std::string> Tokenize(const std::string& separators, std::string input);
 
@@ -176,6 +181,9 @@ int main(int argc, char* argv[])
 #else
                         ")\n"
 #endif
+                        "\t -o, --integrator         (0: numeric integrator,\n"
+                        "\t                           1: numeric integrator,\n"
+                        "\t                           2: RWG integrator)\n"
                         "\t -i, --rh_increment       (increment of RH accuracy check/print/log)\n"
                         "\t -n, --rh_dimension       (dimension of subspace)\n"
                         "\t -p, --plot_matrix        (plot matrix elements on a grid)\n"
@@ -193,8 +201,10 @@ int main(int argc, char* argv[])
     bool plotMatrix = false;
     bool residualGraph = false;
     (void) residualGraph;
+    std::string integratorType = "default";
+    std::string oclIntegratorType = "default";
 
-    bool useGmshFiles = true;
+    bool useGmshFiles = false;
     bool cache = false;
 
     static struct option longOptions[] = {
@@ -210,6 +220,7 @@ int main(int argc, char* argv[])
         {"cache", no_argument, nullptr, 'c'},
         {"scale", required_argument, nullptr, 's'},
         {"method", required_argument, nullptr, 'm'},
+        {"integrator", required_argument, nullptr, 'o'},
         {"rh_increment", required_argument, nullptr, 'i'},
         {"rh_dimension", required_argument, nullptr, 'n'},
         {"plot_matrix", required_argument, nullptr, 'p'},
@@ -217,9 +228,9 @@ int main(int argc, char* argv[])
     };
 
 #ifdef KEMFIELD_USE_KGEOBAG
-    static const char* optString = "hv:a:j:tdg:cs:m:i:n:pr";
+    static const char* optString = "hv:a:j:tdg:cs:m:o:i:n:pr";
 #else
-    static const char* optString = "hv:a:j:tdcs:m:i:n:pr";
+    static const char* optString = "hv:a:j:tdcs:m:o:i:n:pr";
 #endif
 
     while (true) {
@@ -287,6 +298,27 @@ int main(int argc, char* argv[])
                 if (scale > 20)
                     scale = 20;
                 break;
+            case ('o'):
+                switch (atoi(optarg)) {
+                    case 0:
+                    default:
+                        integratorType = "numeric";
+                        oclIntegratorType = "numeric";
+                        break;
+                    case 1:
+                        integratorType = "analytic";
+                        oclIntegratorType = "analytic";
+                        break;
+                    case 2:
+                        integratorType = "rwg";
+                        oclIntegratorType = "rwg";
+                        break;
+                    case 3:
+                        integratorType = "reference";
+                        oclIntegratorType = "reference";
+                        break;
+                }
+                break;
             case ('i'):
                 rh_increment = atoi(optarg);
                 break;
@@ -343,12 +375,18 @@ int main(int argc, char* argv[])
     if (useGmshFiles) {
         std::stringstream s;
         s << DEFAULT_DATA_DIR << "/sphericalCapacitorFiles/SphericalCapacitor_" << scale << "_triangles.dat";
-        ReadInTriangles(s.str(), surfaceContainer);
+        std::string fileName = s.str();
+        ReadInTriangles(fileName, surfaceContainer);
+        if (surfaceContainer.empty()) {
+            std::cout << "Could NOT read triangles from file: " << fileName << std::endl;
+            return 2;
+        }
     }
 #ifdef KEMFIELD_USE_KGEOBAG
     else {
         double potential2 = 0.;
 
+#if 1
         // Construct the shapes
         double p1[2], p2[2];
         double radius = radius1;
@@ -416,8 +454,8 @@ int main(int argc, char* argv[])
         auto* middlehemisphere1 = new KGSurface(mh1);
         middlehemisphere1->SetName("middlehemisphere1");
         middlehemisphere1->MakeExtension<KGMesh>();
-        middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity2 /
-                                                                                          permittivity1);
+        middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
+                                                                                          permittivity2);
 
         auto* mh2 = new KGRotatedSurface(middlehemi2);
         auto* middlehemisphere2 = new KGSurface(mh2);
@@ -431,6 +469,7 @@ int main(int argc, char* argv[])
         outerhemisphere1->SetName("outerhemisphere1");
         outerhemisphere1->MakeExtension<KGMesh>();
         outerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
+
         auto* oh2 = new KGRotatedSurface(outerhemi2);
         auto* outerhemisphere2 = new KGSurface(oh2);
         outerhemisphere2->SetName("outerhemisphere2");
@@ -454,6 +493,62 @@ int main(int argc, char* argv[])
         middlehemisphere2->AcceptNode(&geometryConverter);
         outerhemisphere1->AcceptNode(&geometryConverter);
         outerhemisphere2->AcceptNode(&geometryConverter);
+#else
+        auto* inner1 = new KGRotatedCircleSurface();
+        inner1->Path()->Radius(radius1);
+        inner1->Path()->MeshCount(10 * scale);
+        inner1->RotatedMeshCount(18);
+
+        auto* middle1 = new KGRotatedCircleSurface();
+        middle1->Path()->Radius(radius2);
+        middle1->Path()->MeshCount(20 * scale);
+        middle1->RotatedMeshCount(18);
+
+        auto* outer1 = new KGRotatedCircleSurface();
+        outer1->Path()->Radius(radius3);
+        outer1->Path()->MeshCount(30 * scale);
+        outer1->RotatedMeshCount(18);
+
+        auto* innersphere1 = new KGSurface(inner1);
+        innersphere1->SetName("innersphere1");
+        innersphere1->MakeExtension<KGMesh>();
+        innersphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
+
+        auto* middlesphere1 = new KGSurface(middle1);
+        middlesphere1->SetName("middlesphere1");
+        middlesphere1->MakeExtension<KGMesh>();
+        middlesphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
+                                                                                      permittivity2);
+
+        auto* outersphere1 = new KGSurface(outer1);
+        outersphere1->SetName("outersphere1");
+        outersphere1->MakeExtension<KGMesh>();
+        outersphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
+
+        // Mesh the elements
+        auto* mesher = new KGMesher();
+        innersphere1->AcceptNode(mesher);
+        middlesphere1->AcceptNode(mesher);
+        outersphere1->AcceptNode(mesher);
+
+        KGBEMMeshConverter geometryConverter(surfaceContainer);
+        geometryConverter.SetMinimumArea(1.e-12);
+        innersphere1->AcceptNode(&geometryConverter);
+        middlesphere1->AcceptNode(&geometryConverter);
+        outersphere1->AcceptNode(&geometryConverter);
+#endif
+
+        // make sure that normals are oriented correctly
+        unsigned flipCount = 0;
+        for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
+            KThreeVector centroid = (*it)->GetShape()->Centroid().Unit();
+            KThreeVector normal = (*it)->GetShape()->Normal();
+            double dotProd = normal.Dot(centroid.Unit());
+            if (dotProd < 0)
+                flipCount++;
+        }
+
+        std::cout << "model has " << flipCount << " flipped normals" << std::endl;
     }
 #endif
 
@@ -527,6 +622,7 @@ int main(int argc, char* argv[])
             KGaussianElimination<KElectrostaticBoundaryIntegrator::ValueType> gaussianElimination;
             if (computeTime)
                 StartTimer();
+            KEMField::cout << "Beginning matrix solve with dimension " << surfaceContainer.size() << KEMField::endl;
             gaussianElimination.Solve(*A, x, b);
             if (computeTime)
                 computationTime = Time();
@@ -858,12 +954,14 @@ int main(int argc, char* argv[])
             std::cout << "Solution found in " << computationTime << " seconds." << std::endl;
             std::cout << "" << std::endl;
 
+            std::string fileName = std::string(DEFAULT_OUTPUT_DIR) + std::string("/SphericalCapacitorTimes.txt");
+
             bool newFile = true;
-            if (KEMFileInterface::GetInstance()->FileExists("SphericalCapacitorTimes.txt"))
+            if (KEMFileInterface::GetInstance()->FileExists(fileName))
                 newFile = false;
 
             std::ofstream file;
-            file.open("SphericalCapacitorTimes.txt", std::ios::app);
+            file.open(fileName, std::ios::app);
 
             if (newFile) {
                 file << "Processors\tMethod\t";
@@ -901,8 +999,9 @@ int main(int argc, char* argv[])
 
         Q = potential1 * 4. * KEMConstants::Pi /
             (-1. / (KEMConstants::Eps0 * permittivity2 * radius3) +
-             1. / (KEMConstants::Eps0 * permittivity2 * radius2) - 1. / (KEMConstants::Eps0 * permittivity1 * radius2) +
-             1. / (KEMConstants::Eps0 * permittivity1 * radius1));
+              1. / (KEMConstants::Eps0 * permittivity2 * radius2) -
+              1. / (KEMConstants::Eps0 * permittivity1 * radius2) +
+              1. / (KEMConstants::Eps0 * permittivity1 * radius1));
 
         Q_b1 = -((permittivity1 - 1.) * Q / (permittivity1));
 
@@ -942,6 +1041,8 @@ int main(int argc, char* argv[])
             i++;
         }
 
+        Q_computed = Q_1 + Q_2 + Q_3;
+
         MPI_SINGLE_PROCESS
         {
             double rel_max[4] = {0, 0, 0, 0};
@@ -953,19 +1054,19 @@ int main(int argc, char* argv[])
             double abs_average[4] = {0, 0, 0, 0};
 
             std::cout << "total computed charge: " << Q_computed << std::endl;
-
             std::cout << "Q_1: " << Q_1 << std::endl;
             std::cout << "Q_2: " << Q_2 << std::endl;
             std::cout << "Q_3: " << Q_3 << std::endl;
-
             std::cout << "" << std::endl;
+
             std::cout << "comparisons:" << std::endl;
-            std::cout << std::setprecision(16) << "Q_1 vs (Q+Q_b1): " << (Q_1 - (Q + Q_b1)) / (Q + Q_b1) * 100. << " %"
-                      << std::endl;
-            std::cout << std::setprecision(16) << "Q_2 vs (Q_b2+Q_b3): " << (Q_2 - (Q_b2 + Q_b3)) / (Q_b2 + Q_b3) * 100.
-                      << " %" << std::endl;
-            std::cout << std::setprecision(16) << "Q_3 vs (-Q+Q_b4): " << (Q_3 - (-Q + Q_b4)) / (-Q + Q_b4) * 100.
-                      << " %" << std::endl;
+            std::cout << std::setprecision(16) << "Q_1 vs (Q+Q_b1): "
+                      << (Q_1 - (Q + Q_b1)) / (Q + Q_b1) * 100. << " %" << std::endl;
+            std::cout << std::setprecision(16) << "Q_2 vs (Q_b2+Q_b3): "
+                      << (Q_2 - (Q_b2 + Q_b3)) / (Q_b2 + Q_b3) * 100. << " %" << std::endl;
+            std::cout << std::setprecision(16) << "Q_3 vs (-Q+Q_b4): "
+                      << (Q_3 - (-Q + Q_b4)) / (-Q + Q_b4) * 100. << " %" << std::endl;
+            std::cout << "" << std::endl;
 
             if (draw) {
 #ifdef KEMFIELD_USE_VTK
@@ -1091,6 +1192,25 @@ int main(int argc, char* argv[])
 
                 P[0] = P[1] = 0.;
 
+                std::stringstream ss;
+                ss << DEFAULT_OUTPUT_DIR << "/dielectricPhi_" << fabs(log10(accuracy)) << ".dat";
+                std::ofstream outfile(ss.str());
+
+                outfile << "# Command:";
+                for (int i = 0; i < argc; ++i)
+                    outfile << " " << argv[i];
+                outfile << std::endl;
+
+                outfile << "# "
+                        << "x" << "\t"
+                        << "y" << "\t"
+                        << "z" << "\t"
+                        << "phi_analytic" << "\t"
+                        << "phi_numeric" << "\t"
+                        << "E_analytic" << "\t"
+                        << "E_numeric" << "\t"
+                        << std::endl;
+
                 for (unsigned int i = 0; i < nSamples; i++) {
                     P[2] = 2. * radius3 * ((double) i) / nSamples;
 
@@ -1121,9 +1241,20 @@ int main(int argc, char* argv[])
                     //         <<sqrt(field_numeric[1]*field_numeric[1] +
                     //            field_numeric[2]*field_numeric[2] +
                     //            field_numeric[3]*field_numeric[3])<<std::endl;
-
                     // std::cout<<""<<std::endl;
+
+                    outfile << std::setprecision(7)
+                            << P[0] << "\t"
+                            << P[1] << "\t"
+                            << P[2] << "\t"
+                            << phiA_points.back() << "\t"
+                            << phiN_points.back() << "\t"
+                            << EA_points.back() << "\t"
+                            << EN_points.back() << "\t"
+                            << std::endl;
                 }
+
+                outfile.close();
 
                 auto* C = new TCanvas("C", "Canvas", 5, 5, 900, 450);
                 C->Divide(2);
@@ -1273,7 +1404,7 @@ int main(int argc, char* argv[])
 
 void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer)
 {
-    typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KDirichletTriangle;
+    using KDirichletTriangle = KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>;
     using KNeumannTriangle = KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle>;
 
     std::string inBuf;
@@ -1282,20 +1413,20 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
 
     file.open(fileName.c_str(), std::fstream::in);
 
-    getline(file, inBuf);
-    token = Tokenize(" \t", inBuf);
+    //getline(file, inBuf);
+    //token = Tokenize(" \t", inBuf);
 
     int lineNum = 0;
-
-
     int counter = 0;
 
-    while (!file.eof()) {
+    while (getline(file, inBuf)){
+        token = Tokenize(" \t", inBuf);
+
         lineNum++;
         if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
-                getline(file, inBuf);
-                token = Tokenize(" \t", inBuf);
+                //getline(file, inBuf);
+                //token = Tokenize(" \t", inBuf);
                 continue;
             }
         }
@@ -1348,8 +1479,8 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
                 counter++;
             }
         }
-        getline(file, inBuf);
-        token = Tokenize(" \t", inBuf);
+        //getline(file, inBuf);
+        //token = Tokenize(" \t", inBuf);
     }
     file.close();
 }

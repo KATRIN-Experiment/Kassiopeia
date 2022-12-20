@@ -3,7 +3,10 @@
 namespace KEMField
 {
 
-KMagnetostaticConstantField::KMagnetostaticConstantField() = default;
+KMagnetostaticConstantField::KMagnetostaticConstantField() :
+    fFieldVector(katrin::KThreeVector::sInvalid),
+    fLocation(katrin::KThreeVector::sZero)
+{}
 
 KMagnetostaticConstantField::KMagnetostaticConstantField(const KFieldVector& aField) : fFieldVector(aField) {}
 
@@ -20,7 +23,7 @@ KFieldVector KMagnetostaticConstantField::MagneticFieldCore(const KPosition& /*a
 }
 KGradient KMagnetostaticConstantField::MagneticGradientCore(const KPosition& /*aSamplePoint*/) const
 {
-    return KThreeMatrix::sZero;
+    return katrin::KThreeMatrix::sZero;
 }
 
 void KMagnetostaticConstantField::SetField(const KFieldVector& aFieldVector)

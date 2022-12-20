@@ -54,7 +54,7 @@ class KSEvent : public KSComponentTemplate<KSEvent>
     K_REFS(double, GeneratorEnergy)
     K_REFS(double, GeneratorMinTime)
     K_REFS(double, GeneratorMaxTime)
-    K_REFS(KGeoBag::KThreeVector, GeneratorLocation)
+    K_REFS(katrin::KThreeVector, GeneratorLocation)
     K_REFS(double, GeneratorRadius)
 
     //*****

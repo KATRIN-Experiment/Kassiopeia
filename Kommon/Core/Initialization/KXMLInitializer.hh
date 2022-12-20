@@ -10,6 +10,7 @@
 #include "KSingleton.h"
 #include "KTextFile.h"
 #include "KXMLTokenizer.hh"
+#include "KElementProcessor.hh"
 
 #include <map>
 #include <memory>
@@ -18,6 +19,14 @@
 
 namespace katrin
 {
+
+class KVariableProcessor;
+class KIncludeProcessor;
+class KFormulaProcessor;
+class KLoopProcessor;
+class KConditionProcessor;
+class KPrintProcessor;
+class KTagProcessor;
 
 class KXMLInitializer : public KSingleton<KXMLInitializer>
 {
@@ -47,24 +56,26 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
     {
         return fVerbosityLevel;
     }
-    bool IsBatchMode() const
-    {
-        return fBatchMode;
-    }
 
     const KXMLTokenizer* GetContext() const
     {
         return fTokenizer;
     }
 
-    const std::string GetSerializedConfig() const {
-        return fConfigSerializer ? fConfigSerializer->GetConfig() : "";
+    const KVariableProcessor* GetVariableProcessor() const
+    {
+        return fVariableProcessor;
+    }
+
+    const std::string GetSerializedConfig(KSerializationProcessor::EConfigFormat format) const {
+        return fConfigSerializer ? fConfigSerializer->GetConfig(format) : "";
     }
 
     KXMLTokenizer* Configure(int argc = 0, char** argv = nullptr, bool processConfig = true);
 
     void UpdateVariables(const KArgumentList& args);
-    void DumpConfiguration(std::ostream& strm = std::cout, bool includeArguments = true) const;
+    void DumpConfiguration(std::ostream& strm = std::cout, bool includeArguments = true, KSerializationProcessor::EConfigFormat format = KSerializationProcessor::EConfigFormat::XML) const;
+    static void PrintParserContext(std::ostream& aStream);
 
   protected:
     void ParseCommandLine(int argc, char** argv);
@@ -77,9 +88,17 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
     std::unique_ptr<KSerializationProcessor> fConfigSerializer;
 
     KXMLTokenizer* fTokenizer;
+    KVariableProcessor* fVariableProcessor;
+    KIncludeProcessor* fIncludeProcessor;
+    KFormulaProcessor* fFormulaProcessor;
+    KLoopProcessor* fLoopProcessor;
+    KConditionProcessor* fConditionProcessor;
+    KPrintProcessor* fPrintProcessor;
+    KTagProcessor* fTagProcessor;
+    KElementProcessor* fElementProcessor;
+
     KArgumentList fArguments;
     int fVerbosityLevel;
-    bool fBatchMode;
     std::string fDefaultConfigFile;
     std::vector<std::string> fDefaultIncludePaths;
     bool fAllowConfigFileFallback;

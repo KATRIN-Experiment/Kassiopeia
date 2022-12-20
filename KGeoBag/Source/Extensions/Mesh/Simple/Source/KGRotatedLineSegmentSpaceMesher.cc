@@ -21,7 +21,7 @@ void KGRotatedLineSegmentSpaceMesher::VisitRotatedOpenPathSpace(KGRotatedLineSeg
     tMeshPoints.fData.pop_back();
 
     //surgery
-    KThreeVector tStartApex;
+    katrin::KThreeVector tStartApex;
     if (aRotatedLineSegmentSpace->StartPath()) {
         //create start circle points
         ClosedPoints tStartCirclePoints;
@@ -49,7 +49,7 @@ void KGRotatedLineSegmentSpaceMesher::VisitRotatedOpenPathSpace(KGRotatedLineSeg
         tStartApex.SetComponents(0., 0., aRotatedLineSegmentSpace->Path()->Start().X());
     }
 
-    KThreeVector tEndApex;
+    katrin::KThreeVector tEndApex;
     if (aRotatedLineSegmentSpace->EndPath()) {
         //create end circle points
         ClosedPoints tEndCirclePoints;

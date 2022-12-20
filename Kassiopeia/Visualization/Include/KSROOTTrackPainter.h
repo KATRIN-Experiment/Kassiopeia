@@ -1,17 +1,15 @@
 #ifndef _Kassiopeia_KSROOTTrackPainter_h_
 #define _Kassiopeia_KSROOTTrackPainter_h_
 
-#include "KThreeVector.hh"
-#include "KTwoVector.hh"
-using KGeoBag::KThreeVector;
-using KGeoBag::KTwoVector;
-
 #include "KField.h"
 #include "KROOTPainter.h"
 #include "KROOTWindow.h"
 #include "KSVisualizationMessage.h"
 #include "TColor.h"
 #include "TMultiGraph.h"
+
+#include "KTwoVector.hh"
+#include "KThreeVector.hh"
 
 namespace Kassiopeia
 {
@@ -36,11 +34,11 @@ class KSROOTTrackPainter : public katrin::KROOTPainter
     std::string GetYAxisLabel() override;
 
   private:
-    std::string GetAxisLabel(KThreeVector anAxis);
+    std::string GetAxisLabel(katrin::KThreeVector anAxis);
 
   public:
     void CalculatePlaneCoordinateSystem();
-    void TransformToPlaneSystem(const KThreeVector aPoint, KTwoVector& aPlanePoint);
+    void TransformToPlaneSystem(const katrin::KThreeVector aPoint, katrin::KTwoVector& aPlanePoint);
 
     void AddBaseColor(TColor aColor, double aFraction);
 
@@ -55,7 +53,8 @@ class KSROOTTrackPainter : public katrin::KROOTPainter
     {
         eColorFPDRings,
         eColorDefault,
-        eColorCustom
+        eColorCustom,
+        eColorString
     } ColorPalette;
 
     typedef enum  // NOLINT(modernize-use-using)
@@ -68,47 +67,30 @@ class KSROOTTrackPainter : public katrin::KROOTPainter
     void CreateColors(KSReadFileROOT& aReader);
 
   private:
-    ;
     K_SET(std::string, Path);
-    ;
     K_SET(std::string, Base);
-    ;
-    K_SET(KThreeVector, PlaneNormal);
-    ;
-    K_SET(KThreeVector, PlanePoint);
-    ;
+    K_SET(katrin::KThreeVector, PlaneNormal);
+    K_SET(katrin::KThreeVector, PlanePoint);
     K_SET(bool, SwapAxis);
-    ;
-    K_GET(KThreeVector, PlaneVectorA);
-    ;
-    K_GET(KThreeVector, PlaneVectorB);
-    ;
+    K_GET(katrin::KThreeVector, PlaneVectorA);
+    K_GET(katrin::KThreeVector, PlaneVectorB);
     K_SET(double, Epsilon);
-    ;
     K_SET(std::string, XAxis);
-    ;
     K_SET(std::string, YAxis);
-    ;
     K_SET(std::string, StepOutputGroupName);
-    ;
     K_SET(std::string, PositionName);
-    ;
     K_SET(std::string, TrackOutputGroupName);
-    ;
     K_SET(std::string, ColorVariable);
-    ;
     K_SET(ColorMode, ColorMode);
-    ;
     K_SET(ColorPalette, ColorPalette);
-    ;
     K_SET(std::string, DrawOptions);
-    ;
     K_SET(PlotMode, PlotMode);
-    ;
     K_SET(bool, AxialMirror);
+
     TMultiGraph* fMultigraph;
     std::vector<std::pair<TColor, double>> fBaseColors;
     std::vector<Color_t> fColorVector;
+    std::map<std::string, unsigned> fColorIndex;
 };
 
 inline void KSROOTTrackPainter::AddBaseColor(TColor aColor, double aFraction = -1.0)

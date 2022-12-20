@@ -2,6 +2,7 @@
 #define Kassiopeia_KSTrajAdiabaticSpinError_h_
 
 #include "KSMathArray.h"
+
 #include "KThreeVector.hh"
 
 namespace Kassiopeia
@@ -35,16 +36,16 @@ class KSTrajAdiabaticSpinError : public KSMathArray<10>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KGeoBag::KThreeVector& GetPositionError() const;
-    const KGeoBag::KThreeVector& GetMomentumError() const;
+    const katrin::KThreeVector& GetPositionError() const;
+    const katrin::KThreeVector& GetMomentumError() const;
     const double& GetAlignedSpinError() const;
     const double& GetSpinAngleError() const;
 
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KGeoBag::KThreeVector fPositionError;
-    mutable KGeoBag::KThreeVector fMomentumError;
+    mutable katrin::KThreeVector fPositionError;
+    mutable katrin::KThreeVector fMomentumError;
     mutable double fAlignedSpinError;
     mutable double fSpinAngleError;
 };

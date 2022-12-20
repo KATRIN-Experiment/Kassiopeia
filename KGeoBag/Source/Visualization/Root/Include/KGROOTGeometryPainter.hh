@@ -123,11 +123,11 @@ class KGROOTGeometryPainter :
     //****************
 
     ;
-    K_SET(KThreeVector, PlaneNormal);
-    K_SET(KThreeVector, PlanePoint);
+    K_SET(katrin::KThreeVector, PlaneNormal);
+    K_SET(katrin::KThreeVector, PlanePoint);
     K_SET(bool, SwapAxis);
-    K_GET(KThreeVector, PlaneVectorA);
-    K_GET(KThreeVector, PlaneVectorB);
+    K_GET(katrin::KThreeVector, PlaneVectorA);
+    K_GET(katrin::KThreeVector, PlaneVectorB);
 
     K_SET_GET(std::string, File);
     K_SET_GET(std::string, Path);
@@ -137,7 +137,7 @@ class KGROOTGeometryPainter :
     std::string GetYAxisLabel() override;
 
   private:
-    std::string GetAxisLabel(KThreeVector anAxis) const;
+    std::string GetAxisLabel(katrin::KThreeVector anAxis) const;
 
   public:
     void CalculatePlaneCoordinateSystem();
@@ -189,8 +189,8 @@ class KGROOTGeometryPainter :
     void VisitWrappedSpace(KGRodSpace* aRodSpace) override;
 
   private:
-    void LocalToGlobal(const KGeoBag::KThreeVector& aLocal, KGeoBag::KThreeVector& aGlobal);
-    static double distance(KTwoVector Vector1, KTwoVector Vector2);
+    void LocalToGlobal(const katrin::KThreeVector& aLocal, katrin::KThreeVector& aGlobal);
+    static double distance(katrin::KTwoVector Vector1, katrin::KTwoVector Vector2);
 
     //**********
     //data types
@@ -199,7 +199,7 @@ class KGROOTGeometryPainter :
     class Points
     {
       public:
-        typedef KTwoVector Element;
+        typedef katrin::KTwoVector Element;
         using Set = std::deque<Element>;
         using It = Set::iterator;
         using CIt = Set::const_iterator;
@@ -217,7 +217,7 @@ class KGROOTGeometryPainter :
     class Mesh
     {
       public:
-        using Element = KGeoBag::KThreeVector;
+        using Element = katrin::KThreeVector;
         using Group = std::deque<Element>;
         using GroupIt = Group::iterator;
         using GroupCIt = Group::const_iterator;
@@ -252,7 +252,7 @@ class KGROOTGeometryPainter :
     class Lines
     {
       public:
-        using Element = KGeoBag::KThreeVector;
+        using Element = katrin::KThreeVector;
         using Line = std::pair<Element, Element>;
         using Group = std::deque<Line>;
         using GroupIt = Group::iterator;
@@ -278,7 +278,7 @@ class KGROOTGeometryPainter :
     class IntersectionPoints
     {
       public:
-        using Element = KTwoVector;
+        using Element = katrin::KTwoVector;
         using Group = std::deque<Element>;
         using GroupIt = Group::iterator;
         using GroupCIt = Group::const_iterator;
@@ -321,7 +321,7 @@ class KGROOTGeometryPainter :
     class ConnectionPoints
     {
       public:
-        using Element = std::pair<KTwoVector, OrderedPoints::SetCIt>;
+        using Element = std::pair<katrin::KTwoVector, OrderedPoints::SetCIt>;
         using Group = std::deque<Element>;
         using GroupIt = Group::iterator;
         using GroupCIt = Group::const_iterator;
@@ -362,9 +362,9 @@ class KGROOTGeometryPainter :
     //mesh functions
     //**************
 
-    static void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
+    static void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const katrin::KTwoVector& aCentroid,
                                                        const double& aZ, TubeMesh& aMesh,
-                                                       KGeoBag::KThreeVector& anApex);
+                                                       katrin::KThreeVector& anApex);
     void OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints, TubeMesh& aMesh);
     void ClosedPointsRotatedToTorusMesh(const ClosedPoints& aPoints, TorusMesh& aMesh);
     static void OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoints, const double& aZMin, const double& aZMax,
@@ -406,9 +406,9 @@ class KGROOTGeometryPainter :
     void LinesToIntersections(const CircleLines& aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
     void LinesToIntersections(const ArcLines& aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
     void LinesToIntersections(const ParallelLines& aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
-    void CalculatePlaneIntersection(const KGeoBag::KThreeVector& aStartPoint, const KGeoBag::KThreeVector& anEndPoint,
-                                    KGeoBag::KThreeVector& anIntersectionPoint, bool& anIntersection);
-    void TransformToPlaneSystem(const KGeoBag::KThreeVector& aPoint, KTwoVector& aPlanePoint);
+    void CalculatePlaneIntersection(const katrin::KThreeVector& aStartPoint, const katrin::KThreeVector& anEndPoint,
+                                    katrin::KThreeVector& anIntersectionPoint, bool& anIntersection);
+    void TransformToPlaneSystem(const katrin::KThreeVector& aPoint, katrin::KTwoVector& aPlanePoint);
 
     void IntersectionPointsToOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                            OrderedPoints& anOrderedPoints);
@@ -456,10 +456,10 @@ class KGROOTGeometryPainter :
     KGSurface* fCurrentSurface;
     KGAppearanceData* fCurrentData;
     katrin::KTagSet fCurrentTags;
-    KGeoBag::KThreeVector fCurrentOrigin;
-    KGeoBag::KThreeVector fCurrentXAxis;
-    KGeoBag::KThreeVector fCurrentYAxis;
-    KGeoBag::KThreeVector fCurrentZAxis;
+    katrin::KThreeVector fCurrentOrigin;
+    katrin::KThreeVector fCurrentXAxis;
+    katrin::KThreeVector fCurrentYAxis;
+    katrin::KThreeVector fCurrentZAxis;
     bool fIgnore;
 };
 

@@ -3,6 +3,8 @@
 #include "KGConicSectPortHousingSurface.hh"
 #include "KGDisk.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 template<> void KGWrappedSpace<KGConicSectPortHousing>::VolumeInitialize(BoundaryContainer& aBoundaryContainer) const

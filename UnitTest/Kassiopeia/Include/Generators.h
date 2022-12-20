@@ -6,10 +6,8 @@
 
 #include "gtest/gtest.h"
 #include <vector>
-using std::vector;
 
 using namespace Kassiopeia;
-
 
 /* Use fixture to set up tracks used in several test cases */
 class KassiopeiaGeneratorTest : public TimeoutTest
@@ -29,7 +27,7 @@ class KassiopeiaGeneratorTest : public TimeoutTest
         TimeoutTest::TearDown();
     }
 
-    vector<double> fValues;
+    std::vector<double> fValues;
     unsigned int fNTests;
 };
 

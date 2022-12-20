@@ -38,7 +38,7 @@ template<> inline bool KGSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 template<> inline bool KGSurfaceBuilder::AddElement(KContainer* anElement)
 {
     if (anElement->GetName() == "transformation") {
-        fObject->Transform(anElement->AsPointer<KGeoBag::KTransformation>());
+        fObject->Transform(anElement->AsPointer<KTransformation>());
         return true;
     }
     return false;

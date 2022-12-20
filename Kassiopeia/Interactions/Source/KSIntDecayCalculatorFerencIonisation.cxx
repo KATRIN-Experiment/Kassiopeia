@@ -9,6 +9,8 @@
 #include "KSInteractionsMessage.h"
 using katrin::KRandom;
 
+using katrin::KThreeVector;
+
 #include "KConst.h"
 
 namespace Kassiopeia
@@ -92,7 +94,7 @@ void KSIntDecayCalculatorFerencIonisation::ExecuteInteraction(const KSParticle& 
     if ((anInitialParticle.GetPID() == fTargetPID && fTargetPID != 0) ||
         ((anInitialParticle.GetPID() >= fminPID) && (anInitialParticle.GetPID() <= fmaxPID))) {
         double tTime = aFinalParticle.GetTime();
-        KGeoBag::KThreeVector tPosition = aFinalParticle.GetPosition();
+        KThreeVector tPosition = aFinalParticle.GetPosition();
 
         aFinalParticle.SetLabel(GetName());
         aFinalParticle.SetActive(false);

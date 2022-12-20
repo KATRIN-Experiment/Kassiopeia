@@ -9,7 +9,7 @@
 
 void KGeoBag::KGConeSpaceRandom::VisitConeSpace(KGeoBag::KGConeSpace* aConeSpace)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     // The same like in cut cone with the following conventions:
     // R2 -> RB

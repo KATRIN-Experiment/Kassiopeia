@@ -64,6 +64,7 @@
 
 using namespace KGeoBag;
 using namespace KEMField;
+using katrin::KThreeVector;
 
 int main(int argc, char** argv)
 {

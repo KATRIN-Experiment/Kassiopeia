@@ -3,11 +3,13 @@
 #include "KGComplexMesher.hh"
 #include "KGMeshElement.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 void KGConicalWireArrayMesher::VisitWrappedSurface(KGWrappedSurface<KGConicalWireArray>* conicalWireArraySurface)
 {
-    KTransformation transform;
+    katrin::KTransformation transform;
     transform.SetRotationAxisAngle(conicalWireArraySurface->GetObject()->GetThetaStart(), 0., 0.);
 
     const double wireLength = conicalWireArraySurface->GetObject()->GetLength();

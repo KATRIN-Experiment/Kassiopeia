@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+//#define KEMFIELD_USE_ROOT  /* FIXME */
 
 #ifdef KEMFIELD_USE_ROOT
 #include "TApplication.h"

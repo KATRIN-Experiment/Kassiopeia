@@ -3,6 +3,8 @@
 
 #include "KGArea.hh"
 
+#include "KThreeVector.hh"
+
 namespace KGeoBag
 {
 class KGCylinder : public KGArea
@@ -18,21 +20,21 @@ class KGCylinder : public KGArea
     };
 
     KGCylinder() : fAxialMeshCount(8), fLongitudinalMeshCount(8), fLongitudinalMeshPower(1.) {}
-    KGCylinder(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& p1, double radius);
+    KGCylinder(const katrin::KThreeVector& p0, const katrin::KThreeVector& p1, double radius);
 
     ~KGCylinder() override = default;
 
     void AreaInitialize() const override {}
     void AreaAccept(KGVisitor* aVisitor) override;
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const override;
 
-    void SetP0(const KGeoBag::KThreeVector& p)
+    void SetP0(const katrin::KThreeVector& p)
     {
         fP0 = p;
     }
-    void SetP1(const KGeoBag::KThreeVector& p)
+    void SetP1(const katrin::KThreeVector& p)
     {
         fP1 = p;
     }
@@ -53,11 +55,11 @@ class KGCylinder : public KGArea
         fLongitudinalMeshPower = d;
     }
 
-    const KGeoBag::KThreeVector& GetP0() const
+    const katrin::KThreeVector& GetP0() const
     {
         return fP0;
     }
-    const KGeoBag::KThreeVector& GetP1() const
+    const katrin::KThreeVector& GetP1() const
     {
         return fP1;
     }
@@ -79,8 +81,8 @@ class KGCylinder : public KGArea
     }
 
   private:
-    KGeoBag::KThreeVector fP0;
-    KGeoBag::KThreeVector fP1;
+    katrin::KThreeVector fP0;
+    katrin::KThreeVector fP1;
     double fRadius;
 
     unsigned int fAxialMeshCount;

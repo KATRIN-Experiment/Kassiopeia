@@ -2,12 +2,10 @@
 
 #include "KConst.h"
 
-using KGeoBag::KThreeVector;
-
 namespace Kassiopeia
 {
 
-KSTrajTermGravity::KSTrajTermGravity() : fGravity(KThreeVector(0., 0., 0.)) {}
+KSTrajTermGravity::KSTrajTermGravity() : fGravity(katrin::KThreeVector(0., 0., 0.)) {}
 KSTrajTermGravity::KSTrajTermGravity(const KSTrajTermGravity& aCopy) : KSComponent(aCopy), fGravity(aCopy.fGravity) {}
 KSTrajTermGravity* KSTrajTermGravity::Clone() const
 {
@@ -48,7 +46,7 @@ void KSTrajTermGravity::Differentiate(double /*aTime*/, const KSTrajAdiabaticSpi
 //     aDerivative.AddToForce( fGravity );
 // }
 
-void KSTrajTermGravity::SetGravity(const KThreeVector& aGravity)
+void KSTrajTermGravity::SetGravity(const katrin::KThreeVector& aGravity)
 {
     fGravity = aGravity;
     return;

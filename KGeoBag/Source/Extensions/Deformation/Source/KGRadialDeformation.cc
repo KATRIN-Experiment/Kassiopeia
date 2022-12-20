@@ -4,7 +4,7 @@
 
 namespace KGeoBag
 {
-void KGRadialDeformation::Apply(KThreeVector& point) const
+void KGRadialDeformation::Apply(katrin::KThreeVector& point) const
 {
     // RadialDeformation scales the radial component of a point by a function
     // RadialScale(theta,z).

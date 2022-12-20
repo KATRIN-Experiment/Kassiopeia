@@ -19,7 +19,6 @@
 #include <algorithm>
 #include <limits>
 
-using namespace KGeoBag;
 using namespace katrin;
 using namespace std;
 

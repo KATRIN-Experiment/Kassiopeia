@@ -6,6 +6,8 @@
 
 using namespace std;
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -47,7 +49,7 @@ void KSTermMinDistance::CalculateTermination(const KSParticle& anInitialParticle
 {
     fMinDistancePerStep = std::numeric_limits<double>::max();
 
-    KGeoBag::KThreeVector tNearestPoint(0., 0., 0.);
+    KThreeVector tNearestPoint(0., 0., 0.);
     double tMinDist(0.);
 
     for (auto& surface : fSurfaces) {

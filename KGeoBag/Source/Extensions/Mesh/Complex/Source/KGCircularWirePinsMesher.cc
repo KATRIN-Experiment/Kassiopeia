@@ -30,7 +30,7 @@ void KGCircularWirePinsMesher::VisitWrappedSurface(KGWrappedSurface<KGCircularWi
         double rOuter(rInner);
         const double thetaRadiant = 2. * katrin::KConst::Pi() * theta / 360.;
 
-        KThreeVector startPointPin, endPointPin;
+        katrin::KThreeVector startPointPin, endPointPin;
         startPointPin.SetComponents(rInner * cos((pinIt * pinAngle) + thetaRadiant),
                                     rInner * sin((pinIt * pinAngle) + thetaRadiant),
                                     0.);

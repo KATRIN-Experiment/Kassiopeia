@@ -44,15 +44,9 @@ if (KGeoBag_ENABLE_APP)
     endif( KGeoBag_USE_ROOT )
 
     # target
-    if(APPLE)
-        foreach( NAME ${APPLICATION_NAMES} )
-            add_executable( ${NAME} MACOSX_BUNDLE Source/${NAME}.cc )
-        endforeach()
-    else(APPLE)
-        foreach( NAME ${APPLICATION_NAMES} )
-            add_executable( ${NAME} Source/${NAME}.cc )
-        endforeach()
-    endif(APPLE)
+    foreach( NAME ${APPLICATION_NAMES} )
+        add_executable( ${NAME} Source/${NAME}.cc )
+    endforeach()
 
     # install
     foreach( NAME ${APPLICATION_NAMES} )

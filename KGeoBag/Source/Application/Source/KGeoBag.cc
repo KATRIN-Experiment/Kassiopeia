@@ -9,9 +9,13 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    if (argc < 3) {
-        cout << "usage: ./KGeoBag <config_file_name.xml> -r <NAME=VALUE> <NAME=VALUE> ..." << endl;
-        return -1;
+    if (argc == 1) {
+        std::cout
+            << "usage: ./KGeoBag <config_file_one.xml> [<config_file_two.xml> <...>]"
+            << " [ -v | -q ] [ -b | -batch ]"
+            << " [ -r variable1=value1 variable2=value ... ] [ --variable3=value3 ... ]"
+            << std::endl;
+        exit(-1);
     }
 
     auto& tXML = KXMLInitializer::GetInstance();

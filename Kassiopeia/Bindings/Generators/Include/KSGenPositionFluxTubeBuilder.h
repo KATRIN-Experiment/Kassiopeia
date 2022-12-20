@@ -5,8 +5,10 @@
 #include "KSFieldFinder.h"
 #include "KSGenPositionFluxTube.h"
 #include "KToolbox.h"
+#include "KGCore.hh"
 
 using namespace Kassiopeia;
+using namespace KGeoBag;
 namespace katrin
 {
 
@@ -16,6 +18,22 @@ template<> inline bool KSGenPositionFluxTubeBuilder::AddAttribute(KContainer* aC
 {
     if (aContainer->GetName() == "name") {
         aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
+    }
+    if (aContainer->GetName() == "surface") {
+        KGSurface* tSurface = KGInterface::GetInstance()->RetrieveSurface(aContainer->AsString());
+        fObject->SetOrigin(tSurface->GetOrigin());
+        fObject->SetXAxis(tSurface->GetXAxis());
+        fObject->SetYAxis(tSurface->GetYAxis());
+        fObject->SetZAxis(tSurface->GetZAxis());
+        return true;
+    }
+    if (aContainer->GetName() == "space") {
+        KGSpace* tSpace = KGInterface::GetInstance()->RetrieveSpace(aContainer->AsString());
+        fObject->SetOrigin(tSpace->GetOrigin());
+        fObject->SetXAxis(tSpace->GetXAxis());
+        fObject->SetYAxis(tSpace->GetYAxis());
+        fObject->SetZAxis(tSpace->GetZAxis());
         return true;
     }
     if (aContainer->GetName() == "phi") {

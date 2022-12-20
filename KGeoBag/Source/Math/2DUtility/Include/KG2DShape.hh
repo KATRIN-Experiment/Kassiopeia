@@ -50,11 +50,11 @@ class KG2DShape
     //****************
 
   public:
-    virtual void NearestDistance(const KTwoVector& aPoint, double& aDistance) const = 0;
-    virtual KTwoVector Point(const KTwoVector& aPoint) const = 0;
-    virtual KTwoVector Normal(const KTwoVector& aPoint) const = 0;
-    virtual void NearestIntersection(const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult,
-                                     KTwoVector& anIntersection) const = 0;
+    virtual void NearestDistance(const katrin::KTwoVector& aPoint, double& aDistance) const = 0;
+    virtual katrin::KTwoVector Point(const katrin::KTwoVector& aPoint) const = 0;
+    virtual katrin::KTwoVector Normal(const katrin::KTwoVector& aPoint) const = 0;
+    virtual void NearestIntersection(const katrin::KTwoVector& aStart, const katrin::KTwoVector& anEnd, bool& aResult,
+                                     katrin::KTwoVector& anIntersection) const = 0;
 
 
     //these utilities probably do not belong here
@@ -77,12 +77,12 @@ class KG2DShape
         return val;
     }
 
-    static KTwoVector Rotate_vector_by_angle(const KTwoVector& vec, double angle)
+    static katrin::KTwoVector Rotate_vector_by_angle(const katrin::KTwoVector& vec, double angle)
     {
         //expects angles in radian
         double c = std::cos(angle);
         double s = std::sin(angle);
-        KTwoMatrix mx(c, -1 * s, s, c);
+        katrin::KTwoMatrix mx(c, -1 * s, s, c);
         return mx * vec;
     }
 };

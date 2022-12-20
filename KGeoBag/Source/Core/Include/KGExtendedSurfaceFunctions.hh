@@ -124,27 +124,27 @@ template<class XExtension> const KGExtendedSpace<XExtension>* KGExtendedSurface<
 //transformable
 //*************
 
-template<class XExtension> void KGExtendedSurface<XExtension>::Transform(const KTransformation* aTransformation)
+template<class XExtension> void KGExtendedSurface<XExtension>::Transform(const katrin::KTransformation* aTransformation)
 {
     fSurface->Transform(aTransformation);
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSurface<XExtension>::GetOrigin() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSurface<XExtension>::GetOrigin() const
 {
     return fSurface->GetOrigin();
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSurface<XExtension>::GetXAxis() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSurface<XExtension>::GetXAxis() const
 {
     return fSurface->GetXAxis();
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSurface<XExtension>::GetYAxis() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSurface<XExtension>::GetYAxis() const
 {
     return fSurface->GetYAxis();
 }
 
-template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSurface<XExtension>::GetZAxis() const
+template<class XExtension> const katrin::KThreeVector& KGExtendedSurface<XExtension>::GetZAxis() const
 {
     return fSurface->GetZAxis();
 }
@@ -154,18 +154,18 @@ template<class XExtension> const KGeoBag::KThreeVector& KGExtendedSurface<XExten
 //*********
 
 template<class XExtension>
-KGeoBag::KThreeVector KGExtendedSurface<XExtension>::Point(const KGeoBag::KThreeVector& aPoint) const
+katrin::KThreeVector KGExtendedSurface<XExtension>::Point(const katrin::KThreeVector& aPoint) const
 {
     return fSurface->Point(aPoint);
 }
 
 template<class XExtension>
-KGeoBag::KThreeVector KGExtendedSurface<XExtension>::Normal(const KGeoBag::KThreeVector& aPoint) const
+katrin::KThreeVector KGExtendedSurface<XExtension>::Normal(const katrin::KThreeVector& aPoint) const
 {
     return fSurface->Normal(aPoint);
 }
 
-template<class XExtension> bool KGExtendedSurface<XExtension>::Above(const KGeoBag::KThreeVector& aPoint) const
+template<class XExtension> bool KGExtendedSurface<XExtension>::Above(const katrin::KThreeVector& aPoint) const
 {
     return fSurface->Above(aPoint);
 }

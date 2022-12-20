@@ -57,6 +57,7 @@
 
 using namespace KGeoBag;
 using namespace KEMField;
+using katrin::KThreeVector;
 using namespace std;
 
 #ifdef KEMFIELD_USE_OPENCL

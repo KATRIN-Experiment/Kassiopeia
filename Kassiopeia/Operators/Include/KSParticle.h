@@ -6,6 +6,7 @@
 #include "KSSide.h"
 #include "KSSpace.h"
 #include "KSSurface.h"
+
 #include "KThreeVector.hh"
 #include "KTwoVector.hh"
 
@@ -170,12 +171,12 @@ class KSParticle
 
     //position (units are meters)
 
-    const KGeoBag::KThreeVector& GetPosition() const;
+    const katrin::KThreeVector& GetPosition() const;
     double GetX() const;
     double GetY() const;
     double GetZ() const;
 
-    void SetPosition(const KGeoBag::KThreeVector& position);
+    void SetPosition(const katrin::KThreeVector& position);
     void SetPosition(const double& x, const double& y, const double& z);
     void SetX(const double& x);
     void SetY(const double& y);
@@ -185,12 +186,12 @@ class KSParticle
 
     //momentum (units are kg*m/s)
 
-    const KGeoBag::KThreeVector& GetMomentum() const;
+    const katrin::KThreeVector& GetMomentum() const;
     double GetPX() const;
     double GetPY() const;
     double GetPZ() const;
 
-    void SetMomentum(const KGeoBag::KThreeVector& momentum);
+    void SetMomentum(const katrin::KThreeVector& momentum);
     void SetMomentum(const double& px, const double& py, const double& pz);
     void SetPX(const double& px);
     void SetPY(const double& py);
@@ -200,9 +201,9 @@ class KSParticle
 
     //velocity (units are m/s)
 
-    const KGeoBag::KThreeVector& GetVelocity() const;
+    const katrin::KThreeVector& GetVelocity() const;
 
-    void SetVelocity(const KGeoBag::KThreeVector& velocity);
+    void SetVelocity(const katrin::KThreeVector& velocity);
 
     void RecalculateVelocity() const;
 
@@ -216,18 +217,18 @@ class KSParticle
 
     //spin
 
-    const KGeoBag::KThreeVector& GetSpin() const;
+    const katrin::KThreeVector& GetSpin() const;
     double GetSpinX() const;
     double GetSpinY() const;
     double GetSpinZ() const;
 
-    void SetSpin(const KGeoBag::KThreeVector& spin);
+    void SetSpin(const katrin::KThreeVector& spin);
     void SetSpin(const double& spinx, const double& spiny, const double& spinz);
     void SetSpinX(const double& spinx);
     void SetSpinY(const double& spiny);
     void SetSpinZ(const double& spinz);
 
-    void SetInitialSpin(const KGeoBag::KThreeVector& spin);
+    void SetInitialSpin(const katrin::KThreeVector& spin);
 
     void NormalizeSpin() const;
 
@@ -286,11 +287,11 @@ class KSParticle
     mutable int fSecondQuantumNumber;
     mutable double fTime;
     mutable double fLength;
-    mutable KGeoBag::KThreeVector fPosition;
-    mutable KGeoBag::KThreeVector fMomentum;
-    mutable KGeoBag::KThreeVector fVelocity;
+    mutable katrin::KThreeVector fPosition;
+    mutable katrin::KThreeVector fMomentum;
+    mutable katrin::KThreeVector fVelocity;
     mutable double fSpin0;
-    mutable KGeoBag::KThreeVector fSpin;
+    mutable katrin::KThreeVector fSpin;
     mutable double fLorentzFactor;
     mutable double fSpeed;
     mutable double fKineticEnergy;
@@ -317,25 +318,25 @@ class KSParticle
   public:
     //magnetic field (units are tesla)
 
-    const KGeoBag::KThreeVector& GetMagneticField() const;
+    const katrin::KThreeVector& GetMagneticField() const;
 
-    void SetMagneticField(const KGeoBag::KThreeVector&);
+    void SetMagneticField(const katrin::KThreeVector&);
 
     void RecalculateMagneticField() const;
 
     //electric field (units are volt/meter)
 
-    const KGeoBag::KThreeVector& GetElectricField() const;
+    const katrin::KThreeVector& GetElectricField() const;
 
-    void SetElectricField(const KGeoBag::KThreeVector&);
+    void SetElectricField(const katrin::KThreeVector&);
 
     void RecalculateElectricField() const;
 
     //gradient of magnetic field (units are tesla/meter)
 
-    const KGeoBag::KThreeMatrix& GetMagneticGradient() const;
+    const katrin::KThreeMatrix& GetMagneticGradient() const;
 
-    void SetMagneticGradient(const KGeoBag::KThreeMatrix&);
+    void SetMagneticGradient(const katrin::KThreeMatrix&);
 
     void RecalculateMagneticGradient() const;
 
@@ -348,9 +349,9 @@ class KSParticle
     void RecalculateElectricPotential() const;
 
   protected:
-    mutable KGeoBag::KThreeVector fMagneticField;
-    mutable KGeoBag::KThreeVector fElectricField;
-    mutable KGeoBag::KThreeMatrix fMagneticGradient;
+    mutable katrin::KThreeVector fMagneticField;
+    mutable katrin::KThreeVector fElectricField;
+    mutable katrin::KThreeMatrix fMagneticGradient;
     mutable double fElectricPotential;
 
   protected:
@@ -422,9 +423,9 @@ class KSParticle
 
     //guiding center position
 
-    const KGeoBag::KThreeVector& GetGuidingCenterPosition() const;
+    const katrin::KThreeVector& GetGuidingCenterPosition() const;
 
-    void SetGuidingCenterPosition(const KGeoBag::KThreeVector& aPosition);
+    void SetGuidingCenterPosition(const katrin::KThreeVector& aPosition);
 
     void RecalculateGuidingCenterPosition() const;
 
@@ -436,7 +437,7 @@ class KSParticle
     mutable double fPolarAngleToB;
     mutable double fCyclotronFrequency;
     mutable double fOrbitalMagneticMoment;
-    mutable KGeoBag::KThreeVector fGuidingCenterPosition;
+    mutable katrin::KThreeVector fGuidingCenterPosition;
 
   protected:
     mutable void (KSParticle::*fGetLongMomentumAction)() const;

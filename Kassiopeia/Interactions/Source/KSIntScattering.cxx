@@ -9,7 +9,7 @@ using katrin::KRandom;
 #include <limits>
 using std::numeric_limits;
 
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

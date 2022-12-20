@@ -37,9 +37,9 @@ template<class XObject> class KGWrappedSurface : public KGArea
   public:
     void AreaInitialize() const override;
     void AreaAccept(KGVisitor* aVisitor) override;
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const override;
 
   protected:
     mutable std::shared_ptr<XObject> fObject;
@@ -94,7 +94,7 @@ template<class XObject> void KGWrappedSurface<XObject>::AreaAccept(KGVisitor* aV
     return;
 }
 
-template<class XObject> bool KGWrappedSurface<XObject>::AreaAbove(const KGeoBag::KThreeVector& aQuery) const
+template<class XObject> bool KGWrappedSurface<XObject>::AreaAbove(const katrin::KThreeVector& aQuery) const
 {
     if (fObject->ContainsPoint((const double*) (aQuery)) == true) {
         return false;
@@ -103,18 +103,18 @@ template<class XObject> bool KGWrappedSurface<XObject>::AreaAbove(const KGeoBag:
 }
 
 template<class XObject>
-KGeoBag::KThreeVector KGWrappedSurface<XObject>::AreaPoint(const KGeoBag::KThreeVector& aQuery) const
+katrin::KThreeVector KGWrappedSurface<XObject>::AreaPoint(const katrin::KThreeVector& aQuery) const
 {
-    KGeoBag::KThreeVector tPoint;
+    katrin::KThreeVector tPoint;
     fObject->DistanceTo((const double*) (aQuery), (double*) (tPoint));
 
     return tPoint;
 }
 
 template<class XObject>
-KGeoBag::KThreeVector KGWrappedSurface<XObject>::AreaNormal(const KGeoBag::KThreeVector& aQuery) const
+katrin::KThreeVector KGWrappedSurface<XObject>::AreaNormal(const katrin::KThreeVector& aQuery) const
 {
-    KGeoBag::KThreeVector tNormal;
+    katrin::KThreeVector tNormal;
     fObject->DistanceTo((const double*) (aQuery), nullptr, (double*) (tNormal));
 
     return tNormal;

@@ -10,24 +10,24 @@ namespace KGeoBag
 template<class BasisPolicy, class BoundaryPolicy> class KGBEMAttributor;
 
 template<class BasisPolicy>
-class KGBEMAttributor<BasisPolicy, KDirichletBoundary> :
+class KGBEMAttributor<BasisPolicy, KEMField::KDirichletBoundary> :
     public katrin::KTagged,
-    public KGBEMData<BasisPolicy, KDirichletBoundary>
+    public KGBEMData<BasisPolicy, KEMField::KDirichletBoundary>
 {
   public:
     KGBEMAttributor() : fSurfaces() {}
     ~KGBEMAttributor() override
     {
-        KGExtendedSurface<KGBEM<BasisPolicy, KDirichletBoundary>>* tBEMSurface;
+        KGExtendedSurface<KGBEM<BasisPolicy, KEMField::KDirichletBoundary>>* tBEMSurface;
         for (auto& surface : fSurfaces) {
-            tBEMSurface = surface->template MakeExtension<KGBEM<BasisPolicy, KDirichletBoundary>>();
+            tBEMSurface = surface->template MakeExtension<KGBEM<BasisPolicy, KEMField::KDirichletBoundary>>();
             tBEMSurface->SetName(this->GetName());
             tBEMSurface->SetTags(this->GetTags());
             tBEMSurface->SetBoundaryValue(this->GetBoundaryValue());
         }
-        KGExtendedSpace<KGBEM<BasisPolicy, KDirichletBoundary>>* tBEMSpace;
+        KGExtendedSpace<KGBEM<BasisPolicy, KEMField::KDirichletBoundary>>* tBEMSpace;
         for (auto& space : fSpaces) {
-            tBEMSpace = space->template MakeExtension<KGBEM<BasisPolicy, KDirichletBoundary>>();
+            tBEMSpace = space->template MakeExtension<KGBEM<BasisPolicy, KEMField::KDirichletBoundary>>();
             tBEMSpace->SetName(this->GetName());
             tBEMSpace->SetTags(this->GetTags());
             tBEMSpace->SetBoundaryValue(this->GetBoundaryValue());
@@ -50,24 +50,24 @@ class KGBEMAttributor<BasisPolicy, KDirichletBoundary> :
 };
 
 template<class BasisPolicy>
-class KGBEMAttributor<BasisPolicy, KNeumannBoundary> :
+class KGBEMAttributor<BasisPolicy, KEMField::KNeumannBoundary> :
     public katrin::KTagged,
-    public KGBEMData<BasisPolicy, KNeumannBoundary>
+    public KGBEMData<BasisPolicy, KEMField::KNeumannBoundary>
 {
   public:
     KGBEMAttributor() : fSurfaces() {}
     ~KGBEMAttributor() override
     {
-        KGExtendedSurface<KGBEM<BasisPolicy, KNeumannBoundary>>* tBEMSurface;
+        KGExtendedSurface<KGBEM<BasisPolicy, KEMField::KNeumannBoundary>>* tBEMSurface;
         for (auto& fSurface : fSurfaces) {
-            tBEMSurface = fSurface->template MakeExtension<KGBEM<BasisPolicy, KNeumannBoundary>>();
+            tBEMSurface = fSurface->template MakeExtension<KGBEM<BasisPolicy, KEMField::KNeumannBoundary>>();
             tBEMSurface->SetName(this->GetName());
             tBEMSurface->SetTags(this->GetTags());
             tBEMSurface->SetNormalBoundaryFlux(this->GetNormalBoundaryFlux());
         }
-        KGExtendedSpace<KGBEM<BasisPolicy, KNeumannBoundary>>* tBEMSpace;
+        KGExtendedSpace<KGBEM<BasisPolicy, KEMField::KNeumannBoundary>>* tBEMSpace;
         for (auto& fSpace : fSpaces) {
-            tBEMSpace = fSpace->template MakeExtension<KGBEM<BasisPolicy, KNeumannBoundary>>();
+            tBEMSpace = fSpace->template MakeExtension<KGBEM<BasisPolicy, KEMField::KNeumannBoundary>>();
             tBEMSpace->SetName(this->GetName());
             tBEMSpace->SetTags(this->GetTags());
             tBEMSpace->SetNormalBoundaryFlux(this->GetNormalBoundaryFlux());
@@ -89,10 +89,10 @@ class KGBEMAttributor<BasisPolicy, KNeumannBoundary> :
     std::vector<KGSpace*> fSpaces;
 };
 
-typedef KGBEMAttributor<KElectrostaticBasis, KDirichletBoundary> KGElectrostaticDirichletAttributor;
-using KGElectrostaticNeumannAttributor = KGBEMAttributor<KElectrostaticBasis, KNeumannBoundary>;
-using KGMagnetostaticDirichletAttributor = KGBEMAttributor<KMagnetostaticBasis, KDirichletBoundary>;
-using KGMagnetostaticNeumannAttributor = KGBEMAttributor<KMagnetostaticBasis, KNeumannBoundary>;
+typedef KGBEMAttributor<KEMField::KElectrostaticBasis, KEMField::KDirichletBoundary> KGElectrostaticDirichletAttributor;
+using KGElectrostaticNeumannAttributor = KGBEMAttributor<KEMField::KElectrostaticBasis, KEMField::KNeumannBoundary>;
+using KGMagnetostaticDirichletAttributor = KGBEMAttributor<KEMField::KMagnetostaticBasis, KEMField::KDirichletBoundary>;
+using KGMagnetostaticNeumannAttributor = KGBEMAttributor<KEMField::KMagnetostaticBasis, KEMField::KNeumannBoundary>;
 
 }  // namespace KGeoBag
 

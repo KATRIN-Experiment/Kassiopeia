@@ -8,6 +8,8 @@ using std::numeric_limits;
 
 using namespace KGeoBag;
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 

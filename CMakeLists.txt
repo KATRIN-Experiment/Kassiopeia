@@ -10,16 +10,17 @@ set(KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VER
 #project( Kasper )
 project( Kasper VERSION ${KASPER_VERSION}
                 DESCRIPTION "The KATRIN Analysis and Simulations Package"
-                LANGUAGES CXX )
+                LANGUAGES CXX C )
 
 set( BUILD_SHARED_LIBS ON )
 set( Boost_USE_STATIC_LIBS OFF )
 set( Boost_USE_MULTITHREADED ON )
 set( Boost_USE_STATIC_RUNTIME OFF )
 
-set( CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard whose features are requested to build this target" )
+set( CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested to build this target" )
+mark_as_advanced( FORCE CMAKE_CXX_STANDARD )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
-set( CMAKE_CXX_EXTENSIONS OFF )
+set( CMAKE_CXX_EXTENSIONS ON )
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
 # Additional compiler version checks, see https://en.cppreference.com/w/cpp/compiler_support
@@ -59,6 +60,14 @@ set( CMAKE_BUILD_WITH_INSTALL_RPATH FALSE )
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
 set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE )
+
+# whether to create a position-independent target
+include(CheckPIESupported)
+check_pie_supported(LANGUAGES CXX)
+if( CMAKE_CXX_LINK_PIE_SUPPORTED )
+    set( CMAKE_POSITION_INDEPENDENT_CODE TRUE )
+endif( CMAKE_CXX_LINK_PIE_SUPPORTED )
+
 if( APPLE )
     #set( CMAKE_INSTALL_RPATH "@executable_path/../${CMAKE_INSTALL_LIBDIR};@loader_path" )
     set( CMAKE_MACOSX_RPATH TRUE )
@@ -95,8 +104,10 @@ endif()
 add_compile_options( -Wall -Wextra -Werror )
 
 # Only link in libraries that we actually need (but not for executables since it makes things slow)
-set(_target_type "$<TARGET_PROPERTY:TYPE>")
-add_link_options( $<IF:$<STREQUAL:"${_target_type}","SHARED_LIBRARY">,LINKER:--as-needed,LINKER:--no-as-needed> )
+if( NOT APPLE )
+    set(_target_type "$<TARGET_PROPERTY:TYPE>")
+    add_link_options( $<IF:$<STREQUAL:"${_target_type}","SHARED_LIBRARY">,LINKER:--as-needed,LINKER:--no-as-needed> )
+endif()
 
 # Enable some advanced options depending on build type
 if (CMAKE_BUILD_TYPE MATCHES Rel)
@@ -167,7 +178,6 @@ endif()
 
 mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 
-
 # Global dependency options
 #find_package(Boost QUIET)
 #option( KASPER_USE_BOOST "Build Boost dependent modules" ${Boost_FOUND} )
@@ -185,13 +195,25 @@ if(GSL_FOUND AND NOT DEFINED KASPER_USE_GSL)
 endif()
 option( KASPER_USE_GSL "Build GSL dependent modules" ${GSL_FOUND} )
 
-find_package(VTK QUIET)
-if(VTK_FOUND AND NOT DEFINED KASPER_USE_VTK)
-    message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this.")
+if(NOT DEFINED KASPER_USE_VTK)
+    find_package(VTK QUIET COMPONENTS vtkCommonCore)
+    find_package(X11 QUIET)
+    find_package(GLEW QUIET)
+    find_package(Freetype QUIET)
+    find_package(JsonCpp QUIET)
+    if(VTK_FOUND)
+        message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this.")
+    endif()
+elseif(KASPER_USE_VTK)
+    find_package(VTK REQUIRED COMPONENTS vtkCommonCore)
+    find_package(X11 QUIET)
+    find_package(GLEW QUIET)
+    find_package(Freetype QUIET)
+    find_package(JsonCpp QUIET)
 endif()
 option( KASPER_USE_VTK "Build VTK dependent modules" ${VTK_FOUND} )
 
-option( KASPER_USE_XGBOOST"Build XGBOOST dependent modules" OFF )
+option( KASPER_USE_XGBOOST "Build XGBOOST dependent modules" OFF )
 
 # Make sure that version requirements are fulfilled
 if( KASPER_USE_BOOST )
@@ -205,12 +227,8 @@ if( KASPER_USE_ROOT )
 endif( KASPER_USE_ROOT )
 
 if( KASPER_USE_GSL )
-    find_package( GSL REQUIRED )
+    find_package(GSL REQUIRED)
 endif( KASPER_USE_GSL )
-
-if( KASPER_USE_VTK )
-    find_package(VTK REQUIRED)
-endif( KASPER_USE_VTK )
 
 # Make sure all dependencies are being built
 # Every module must be listed before its dependencies and activate ONLY its
@@ -285,32 +303,13 @@ if( BUILD_KASSIOPEIA )
     endif( NOT KASPER_USE_ROOT )
 endif()
 
-if( KASPER_EXPERIMENTAL )
-    message(WARNING "*** Building with experimental code ***\n"
-    "Experimental code is not fully tested and shouldn't be used unless you know what you're doing. Set KASPER_EXPERIMENTAL=OFF to change this.")
-endif( KASPER_EXPERIMENTAL )
-
-if( KASPER_DEPRECATED )
-    message(WARNING "*** Building with deprecated code ***\n"
-    "Deprecated code is no longer maintained and shouldn't be used. Set KASPER_DEPRECATED=OFF to change this.")
-endif( KASPER_DEPRECATED )
-
 get_filename_component(CMAKE_MAKE_PROGRAM_NAME ${CMAKE_MAKE_PROGRAM} NAME)
-message("\n   Build was configured. Run `${CMAKE_MAKE_PROGRAM_NAME}` to start the build,\n"
-    "   `${CMAKE_MAKE_PROGRAM_NAME} install` to install in ${KASPER_INSTALL_DIR},\n"
-    "   or `${CMAKE_MAKE_PROGRAM_NAME} doc` to generate documentation.\n")
+message(STATUS
+    "Build was configured. Run `${CMAKE_MAKE_PROGRAM_NAME}` to start the build,\n"
+    "   or `${CMAKE_MAKE_PROGRAM_NAME} install` to install to ${KASPER_INSTALL_DIR},\n"
+    "   or `${CMAKE_MAKE_PROGRAM_NAME} doc` to generate the documentation.\n")
 
 # Install common project files
-
-configure_file( KasperVersion.h.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h @ONLY )
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h DESTINATION ${INCLUDE_INSTALL_DIR} )
-
-configure_file( KasperVersion.json.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.json @ONLY )
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.json DESTINATION ${CONFIG_INSTALL_DIR} )
-
-configure_file( KasperVersion.xml.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.xml @ONLY )
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.xml DESTINATION ${CONFIG_INSTALL_DIR} )
-
 configure_file( kasperenv.sh.in ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
 configure_file( create_kasper_user_directory.sh.in ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )
 install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh DESTINATION ${BIN_INSTALL_DIR} )

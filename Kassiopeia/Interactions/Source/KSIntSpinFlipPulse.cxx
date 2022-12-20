@@ -4,6 +4,8 @@
 #include "KSInteractionsMessage.h"
 using katrin::KRandom;
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -27,7 +29,7 @@ KSIntSpinFlipPulse::~KSIntSpinFlipPulse() = default;
 void KSIntSpinFlipPulse::CalculateInteraction(const KSTrajectory& /*aTrajectory*/,
                                               const KSParticle& /*aTrajectoryInitialParticle*/,
                                               const KSParticle& aTrajectoryFinalParticle,
-                                              const KGeoBag::KThreeVector& /*aTrajectoryCenter*/,
+                                              const KThreeVector& /*aTrajectoryCenter*/,
                                               const double& /*aTrajectoryRadius*/,
                                               const double& /*aTrajectoryTimeStep*/, KSParticle& anInteractionParticle,
                                               double& /*aTimeStep*/, bool& aFlag)

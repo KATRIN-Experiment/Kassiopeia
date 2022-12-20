@@ -26,7 +26,7 @@ if (KEMField_ENABLE_APP)
 
 
     set_property(SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/ComputeSphericalCapacitor.cc
-        APPEND PROPERTY COMPILE_DEFINITIONS DEFAULT_DATA_DIR="${KEMField_CONFIG_INSTALL_DIR}"
+        APPEND PROPERTY COMPILE_DEFINITIONS DEFAULT_DATA_DIR="${KEMField_DATA_INSTALL_DIR}"
     )
 
     set_property( SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/ComputeSphericalCapacitor.cc
@@ -45,11 +45,16 @@ if (KEMField_ENABLE_APP)
       ${CMAKE_CURRENT_SOURCE_DIR}/ComputeSphericalCapacitor.cc)
     target_link_libraries (ComputeSphericalCapacitor ${APPLICATIONS_LIBS} )
 
+    add_executable (ComputePlateCapacitor
+      ${CMAKE_CURRENT_SOURCE_DIR}/ComputePlateCapacitor.cc)
+    target_link_libraries (ComputePlateCapacitor ${APPLICATIONS_LIBS} )
+
 
     kasper_install_executables (
         ComputeChargeDensities
         ComputeChargeDensitiesFromElcd33File
         ComputeSphericalCapacitor
+        ComputePlateCapacitor
     )
 
     # ROOT

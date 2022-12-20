@@ -7,12 +7,26 @@
 
 using namespace std;
 
+inline string addIndent(int n)
+{
+    string out;
+    for (int i = 0; i < n; ++i)
+        out += "  ";
+    return out;
+}
+
 namespace katrin
 {
 
 KSerializationProcessor::KSerializationProcessor() :
-    completeconfig(""),
+    fIndentLevel(0),
+    fXmlConfig(""),
+    fYamlConfig(""),
+    fJsonConfig(""),
     fOutputFilename(""),
+    fElementName(""),
+    fIsChildElement(false),
+    fAttributeCount(0),
     fElementState(eElementInactive),
     fAttributeState(eAttributeInactive)
 {}
@@ -20,7 +34,7 @@ KSerializationProcessor::~KSerializationProcessor() = default;
 
 void KSerializationProcessor::ProcessToken(KBeginParsingToken* aToken)
 {
-    completeconfig += "<!-- got a begin parsing token -->\n";
+    fXmlConfig += "<!-- got a begin parsing token -->\n";
 
     initmsg_debug("<!-- got a begin parsing token -->" << eom);
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
@@ -29,9 +43,13 @@ void KSerializationProcessor::ProcessToken(KBeginParsingToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KBeginFileToken* aToken)
 {
-    completeconfig += "<!-- <file path=\"";
-    completeconfig += aToken->GetValue();
-    completeconfig += "\"> -->\n";
+    fXmlConfig += "<!-- <file path=\"";
+    fXmlConfig += aToken->GetValue();
+    fXmlConfig += "\"> -->\n";
+
+    fYamlConfig += "# file path: ";
+    fYamlConfig += aToken->GetValue();
+    fYamlConfig += "\n";
 
     initmsg_debug("<!-- <file path=\"" << aToken->GetValue() << "\"> -->" << ret);
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
@@ -46,8 +64,29 @@ void KSerializationProcessor::ProcessToken(KBeginElementToken* aToken)
             return;
         }
 
-        completeconfig += "    <";
-        completeconfig += aToken->GetValue();
+        fXmlConfig += addIndent(fIndentLevel);
+        fXmlConfig += "<";
+        fXmlConfig += aToken->GetValue();
+
+        if (!fJsonConfig.empty() && fJsonConfig.back() == '}')
+            fJsonConfig += ",\n";
+
+        if (aToken->GetValue() != fElementName || fIsChildElement) {
+            fYamlConfig += addIndent(fIndentLevel);
+            fYamlConfig += "- ";
+            fYamlConfig += aToken->GetValue();
+            fYamlConfig += ":\n";
+
+            fJsonConfig += addIndent(fIndentLevel);
+            fJsonConfig += "{ \"";
+            fJsonConfig += aToken->GetValue();
+            fJsonConfig += "\": [\n";
+        }
+
+        fElementName = aToken->GetValue();
+        fAttributeCount = 0;
+        fIndentLevel++;
+
         KProcessor::ProcessToken(aToken);
         return;
     }
@@ -84,9 +123,40 @@ void KSerializationProcessor::ProcessToken(KBeginAttributeToken* aToken)
         return;
     }
 
-    completeconfig += " ";
-    completeconfig += aToken->GetValue();
-    completeconfig += "=\"";
+    fXmlConfig += " ";
+    fXmlConfig += aToken->GetValue();
+    fXmlConfig += "=\"";
+
+    if (fAttributeName == aToken->GetValue()) {
+        fYamlConfig += addIndent(fIndentLevel-1);
+        fYamlConfig += "- ";
+    }
+    else {
+        fYamlConfig += addIndent(fIndentLevel);
+    }
+
+    if (fAttributeCount == 0) {
+        fYamlConfig += "- ";
+
+        fJsonConfig += addIndent(fIndentLevel);
+        fJsonConfig += "{\n";
+
+        fIndentLevel++;
+    }
+    fYamlConfig += "_";
+    fYamlConfig += aToken->GetValue();
+    fYamlConfig += ": ";
+
+    if (fAttributeCount > 0)
+        fJsonConfig += ",\n";
+    fJsonConfig += addIndent(fIndentLevel);
+    fJsonConfig += "\"_";
+    fJsonConfig += aToken->GetValue();
+    fJsonConfig += "\": \"";
+
+    fAttributeName = aToken->GetValue();
+    fAttributeCount++;
+
     initmsg_debug(" " << aToken->GetValue() << "=\"");
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
     KProcessor::ProcessToken(aToken);
@@ -94,12 +164,17 @@ void KSerializationProcessor::ProcessToken(KBeginAttributeToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KAttributeDataToken* aToken)
 {
-
     if (fElementState == eElementInactive) {
-        completeconfig += aToken->GetValue();
+        fXmlConfig += aToken->GetValue();
+
+        fYamlConfig += aToken->GetValue();
+
+        fJsonConfig += aToken->GetValue();
+
         KProcessor::ProcessToken(aToken);
         return;
     }
+
     if (fElementState == eActiveFileDefine) {
         if (fAttributeState == eActiveFileName) {
             fOutputFilename = aToken->GetValue();
@@ -114,9 +189,13 @@ void KSerializationProcessor::ProcessToken(KAttributeDataToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KEndAttributeToken* aToken)
 {
-
     if (fElementState == eElementInactive) {
-        completeconfig += "\"";
+        fXmlConfig += "\"";
+
+        fYamlConfig += "\n";
+
+        fJsonConfig += "\"";
+
         KProcessor::ProcessToken(aToken);
         return;
     }
@@ -128,15 +207,29 @@ void KSerializationProcessor::ProcessToken(KEndAttributeToken* aToken)
         }
     }
 
+    if (fAttributeState == eAttributeComplete)
+        fAttributeState = eAttributeInactive;
+
     initmsg_debug("\"");
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
     return;
 }
 void KSerializationProcessor::ProcessToken(KMidElementToken* aToken)
 {
-
     if (fElementState == eElementInactive) {
-        completeconfig += ">\n";
+        fXmlConfig += ">\n";
+
+        if (fAttributeCount > 0) {
+            fJsonConfig += "\n";
+            fJsonConfig += addIndent(fIndentLevel-1);
+            fJsonConfig += "}";
+
+            fIndentLevel--;
+        }
+
+        fAttributeName = "";
+        fIsChildElement = true;
+
         KProcessor::ProcessToken(aToken);
         return;
     }
@@ -169,19 +262,27 @@ void KSerializationProcessor::ProcessToken(KElementDataToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KEndElementToken* aToken)
 {
+    fIndentLevel--;
 
     if (fElementState == eElementInactive) {
-        completeconfig += "    </";
-        completeconfig += aToken->GetValue();
-        completeconfig += ">\n\n";
+        fXmlConfig += addIndent(fIndentLevel);
+        fXmlConfig += "</";
+        fXmlConfig += aToken->GetValue();
+        fXmlConfig += ">\n";
+
+        fJsonConfig += "\n";
+        fJsonConfig += addIndent(fIndentLevel);
+        fJsonConfig += "]}";
+
+        fElementName = "";
+        fIsChildElement = false;
+
         KProcessor::ProcessToken(aToken);
         return;
     }
 
-    if (fElementState == eElementComplete) {
+    if (fElementState == eElementComplete)
         fElementState = eElementInactive;
-        return;
-    }
 
     initmsg_debug("    </" << aToken->GetValue() << ">" << ret << ret);
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
@@ -189,7 +290,7 @@ void KSerializationProcessor::ProcessToken(KEndElementToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KEndFileToken* aToken)
 {
-    completeconfig += "<!-- </file> -->\n";
+    fXmlConfig += "<!-- </file> -->\n";
 
     initmsg_debug("<!-- </file> -->" << ret);
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
@@ -198,7 +299,7 @@ void KSerializationProcessor::ProcessToken(KEndFileToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KEndParsingToken* aToken)
 {
-    completeconfig += "<!-- got an end parsing token -->\n";
+    fXmlConfig += "<!-- got an end parsing token -->\n";
 
     initmsg_debug("<!-- got an end parsing token -->" << eom);
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
@@ -207,9 +308,11 @@ void KSerializationProcessor::ProcessToken(KEndParsingToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KCommentToken* aToken)
 {
-    completeconfig += "\n<!--";
-    completeconfig += aToken->GetValue();
-    completeconfig += "-->\n";
+    fXmlConfig += "\n<!--";
+    fXmlConfig += aToken->GetValue();
+    fXmlConfig += "-->\n";
+
+    // FIXME: yaml does not support multi-line comments
 
     initmsg_debug("<!--" << aToken->GetValue() << "-->" << ret);
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);
@@ -218,9 +321,13 @@ void KSerializationProcessor::ProcessToken(KCommentToken* aToken)
 }
 void KSerializationProcessor::ProcessToken(KErrorToken* aToken)
 {
-    completeconfig += "<!-- got an error token <";
-    completeconfig += aToken->GetValue();
-    completeconfig += ">-->\n";
+    fXmlConfig += "<!-- got an error token <";
+    fXmlConfig += aToken->GetValue();
+    fXmlConfig += ">-->\n";
+
+    fYamlConfig += "# error: ";
+    fYamlConfig += aToken->GetValue();
+    fYamlConfig += "\n";
 
     initmsg_debug("<!-- got an error token <" << aToken->GetValue() << "> -->" << eom);
     initmsg_debug("at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);

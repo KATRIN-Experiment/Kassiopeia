@@ -7,6 +7,8 @@
 
 #define RECTANGLE_EPS 1e-6
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KGMeshRectangle::KGMeshRectangle(const double& a, const double& b, const KThreeVector& p0, const KThreeVector& n1,
@@ -51,8 +53,12 @@ double KGMeshRectangle::Aspect() const
         return fB / fA;
     }
 }
+KThreeVector KGMeshRectangle::Centroid() const
+{
+    return fP0 + fA * fN1 * .5 + fB * fN2 * .5;
+}
 
-void KGMeshRectangle::Transform(const KTransformation& transform)
+void KGMeshRectangle::Transform(const katrin::KTransformation& transform)
 {
     transform.Apply(fP0);
     transform.ApplyRotation(fN1);
@@ -136,7 +142,7 @@ bool KGMeshRectangle::NearestIntersection(const KThreeVector& aStart, const KThr
 
     //project the possible interesction onto the rectangle
     KThreeVector del = possible_inter - fP0;
-    KTwoVector projection(del.Dot(fN1), del.Dot(fN2));
+    katrin::KTwoVector projection(del.Dot(fN1), del.Dot(fN2));
 
     if ((projection.X() <= fA) && (projection.X() >= 0) && (projection.Y() <= fB) && (projection.Y() >= 0)) {
         //we have a true intersection

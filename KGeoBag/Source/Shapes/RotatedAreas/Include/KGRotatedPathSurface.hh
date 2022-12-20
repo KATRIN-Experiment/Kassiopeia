@@ -5,6 +5,8 @@
 #include "KGPlanarPath.hh"
 #include "KGShapeMessage.hh"
 
+#include "KThreeVector.hh"
+
 #include <memory>
 
 namespace KGeoBag
@@ -90,9 +92,9 @@ template<class XPathType> class KGRotatedPathSurface : public KGArea
         }
         return;
     }
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tZRPoint = aPoint.ProjectZR();
+        katrin::KTwoVector tZRPoint = aPoint.ProjectZR();
         bool tZRAbove = fPath->Above(tZRPoint);
         if ((tZRAbove == true) && (fSign > 0.)) {
             return true;
@@ -101,19 +103,19 @@ template<class XPathType> class KGRotatedPathSurface : public KGArea
             return false;
         }
     }
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tZRPoint = aPoint.ProjectZR();
-        KTwoVector tZRNearest = fPath->Point(tZRPoint);
+        katrin::KTwoVector tZRPoint = aPoint.ProjectZR();
+        katrin::KTwoVector tZRNearest = fPath->Point(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return KGeoBag::KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
+        return katrin::KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
     }
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tZRPoint = aPoint.ProjectZR();
-        KTwoVector tZRNormal = fPath->Normal(tZRPoint);
+        katrin::KTwoVector tZRPoint = aPoint.ProjectZR();
+        katrin::KTwoVector tZRNormal = fPath->Normal(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return fSign * KGeoBag::KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
+        return fSign * katrin::KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
     }
 
   private:

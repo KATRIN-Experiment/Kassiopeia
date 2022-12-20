@@ -14,9 +14,9 @@
 namespace Kassiopeia
 {
 
-KSElectricField* MakeConstantElectricField(KGeoBag::KThreeVector field);
+KSElectricField* MakeConstantElectricField(katrin::KThreeVector field);
 
-KSMagneticField* MakeConstantMagneticField(KGeoBag::KThreeVector field);
+KSMagneticField* MakeConstantMagneticField(katrin::KThreeVector field);
 
 } /* namespace Kassiopeia */
 

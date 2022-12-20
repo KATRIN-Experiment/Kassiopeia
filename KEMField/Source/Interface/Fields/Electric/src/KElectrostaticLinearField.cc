@@ -7,7 +7,13 @@
 namespace KEMField
 {
 
-KElectrostaticLinearField::KElectrostaticLinearField() : fU1(0), fU2(0), fZ1(0), fZ2(0), fSurface(nullptr) {}
+KElectrostaticLinearField::KElectrostaticLinearField() :
+    fU1(std::numeric_limits<double>::quiet_NaN()),
+    fU2(std::numeric_limits<double>::quiet_NaN()),
+    fZ1(0),
+    fZ2(0),
+    fSurface(nullptr)
+{}
 
 double KElectrostaticLinearField::PotentialCore(const KPosition& aSamplePoint) const
 {

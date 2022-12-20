@@ -4,6 +4,8 @@
 
 #define POW2(x) ((x) * (x))
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 void KGLinearWireGridMesher::VisitWrappedSurface(KGWrappedSurface<KGLinearWireGrid>* linearWireGridSurface)

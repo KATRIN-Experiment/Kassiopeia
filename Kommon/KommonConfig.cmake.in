@@ -1,3 +1,5 @@
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/..")
+
 include(CMakeFindDependencyMacro)
 
 set(KASPER_USE_BOOST @KASPER_USE_BOOST@)
@@ -22,7 +24,11 @@ endif(KASPER_USE_TBB)
 
 set(KASPER_USE_VTK @KASPER_USE_VTK@)
 if(KASPER_USE_VTK)
-    find_dependency( VTK NO_MODULE )
+    find_dependency( VTK CONFIG COMPONENTS @KOMMON_VTK_COMPONENTS@ )
+    find_dependency( X11 QUIET )
+    find_dependency( GLEW QUIET )
+    find_dependency( Freetype QUIET )
+    find_dependency( JsonCpp QUIET )
 endif(KASPER_USE_VTK)
 
 if(NOT TARGET @PROJECT_NAME@::@PROJECT_NAME@)

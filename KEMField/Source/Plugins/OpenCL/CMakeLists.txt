@@ -128,6 +128,7 @@ if (KEMField_USE_OPENCL)
         ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/include/KOpenCLBoundaryIntegralSolutionVector.hh
 
         ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include/KOpenCLElectrostaticBoundaryIntegrator.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include/KOpenCLElectrostaticBoundaryIntegratorConfig.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include/KOpenCLElectrostaticBoundaryIntegratorFactory.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/include/KOpenCLElectrostaticNumericBoundaryIntegrator.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/include/KOpenCLElectrostaticRWGBoundaryIntegrator.hh

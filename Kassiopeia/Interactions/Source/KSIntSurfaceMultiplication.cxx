@@ -11,7 +11,7 @@ using katrin::KRandom;
 #include <iostream>
 #include <limits>
 
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

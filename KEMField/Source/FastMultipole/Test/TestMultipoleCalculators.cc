@@ -30,6 +30,7 @@
 #endif
 
 using namespace KEMField;
+using katrin::KThreeVector;
 
 
 #ifdef KEMFIELD_USE_GSL

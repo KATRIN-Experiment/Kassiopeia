@@ -3,18 +3,18 @@
 //
 
 #include "KXMLInitializer.hh"
+#include "KInitializationMessage.hh"
+#include "KPathResolver.h"
+#include "KGlobals.hh"
+#include "KMessage.h"
 
+#include "KIncludeProcessor.hh"
 #include "KConditionProcessor.hh"
 #include "KElementProcessor.hh"
-#include "KIncludeProcessor.hh"
-#include "KInitializationMessage.hh"
 #include "KLoopProcessor.hh"
-#include "KPathResolver.h"
 #include "KPrintProcessor.hh"
 #include "KTagProcessor.hh"
 #include "KVariableProcessor.hh"
-
-#include <memory>
 
 #ifdef KASPER_USE_ROOT
 #include "KFormulaProcessor.hh"
@@ -22,6 +22,8 @@
 
 #include "KLogger.h"
 KLOGGER("kommon.init");
+
+#include <memory>
 
 extern char** environ;
 
@@ -35,19 +37,19 @@ KXMLInitializer::KXMLInitializer() :
     fTokenizer(nullptr),
     fArguments(),
     fVerbosityLevel(0),
-    fBatchMode(false),
     fDefaultConfigFile(),
     fDefaultIncludePaths(),
     fAllowConfigFileFallback(false),
     fUsingDefaultPaths(false)
-{}
+{
+    KMessageTable::GetInstance().SetParserContextPrinterCallback(PrintParserContext);
+}
 
 KXMLInitializer::~KXMLInitializer() = default;
 
 void KXMLInitializer::ParseCommandLine(int argc, char** argv)
 {
     fVerbosityLevel = 0;  // reset
-    fBatchMode = false;
     KArgumentList commandLineArgs;
 
     if (argc >= 1) {
@@ -79,6 +81,9 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
             }
         }
 
+        // Default: BatchMode false
+        //KGlobals::GetInstance().SetBatchMode(false);
+
         // parse any `-key[=value]` and `--key[=value]` options
         for (lastArg = 1; lastArg < argc; lastArg++) {
             string arg = argv[lastArg];
@@ -105,7 +110,7 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
                     fVerbosityLevel += verbosityAdjust;
                 }
                 else if (key == string("-b") || key == string("-batch")) {
-                    fBatchMode = true;
+                    KGlobals::GetInstance().SetBatchMode(true);
                 }
 
                 // treat as key=value pair
@@ -123,6 +128,8 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
             }
         }
     }
+
+    KGlobals::GetInstance().SetVerbosityLevel(fVerbosityLevel);
 
     // add environment variables (but do not overwrite already defined keys)
     for (char** env = environ; *env != nullptr; env++) {
@@ -229,46 +236,46 @@ void KXMLInitializer::SetupProcessChain(const map<string, string>& variables, co
     if (!variables.empty()) {
         KDEBUG("Passing on " << variables.size() << " variables to processors");
     }
-    auto* tVariableProcessor = new KVariableProcessor(variables);
-    tVariableProcessor->InsertAfter(fTokenizer);
+    fVariableProcessor = new KVariableProcessor(variables);
+    fVariableProcessor->InsertAfter(fTokenizer);
 
-    auto* tIncludeProcessor = new KIncludeProcessor();
+    fIncludeProcessor = new KIncludeProcessor();
     if (!includePath.empty()) {
         KDEBUG("Setting config path: " << includePath);
-        tIncludeProcessor->SetPath(includePath);
+        fIncludeProcessor->SetPath(includePath);
     }
     for (const string& path : fDefaultIncludePaths) {
         if (fUsingDefaultPaths || fAllowConfigFileFallback) {
             KDEBUG("Adding default config path: " << path);
-            tIncludeProcessor->AddDefaultPath(path);
+            fIncludeProcessor->AddDefaultPath(path);
         }
     }
-    tIncludeProcessor->InsertAfter(tVariableProcessor);
+    fIncludeProcessor->InsertAfter(fVariableProcessor);
 
 #ifdef KASPER_USE_ROOT
-    auto* tFormulaProcessor = new KFormulaProcessor();
-    tFormulaProcessor->InsertAfter(tVariableProcessor);
-    tIncludeProcessor->InsertAfter(tFormulaProcessor);
+    fFormulaProcessor = new KFormulaProcessor();
+    fFormulaProcessor->InsertAfter(fVariableProcessor);
+    fIncludeProcessor->InsertAfter(fFormulaProcessor);
 #endif
 
-    auto* tLoopProcessor = new KLoopProcessor();
-    tLoopProcessor->InsertAfter(tIncludeProcessor);
+    fLoopProcessor = new KLoopProcessor();
+    fLoopProcessor->InsertAfter(fIncludeProcessor);
 
-    auto* tConditionProcessor = new KConditionProcessor();
-    tConditionProcessor->InsertAfter(tLoopProcessor);
+    fConditionProcessor = new KConditionProcessor();
+    fConditionProcessor->InsertAfter(fLoopProcessor);
 
-    auto* tPrintProcessor = new KPrintProcessor();
-    tPrintProcessor->InsertAfter(tConditionProcessor);
+    fPrintProcessor = new KPrintProcessor();
+    fPrintProcessor->InsertAfter(fConditionProcessor);
 
     if (!fConfigSerializer)
         fConfigSerializer = std::make_unique<KSerializationProcessor>();
-    fConfigSerializer->InsertAfter(tPrintProcessor);
+    fConfigSerializer->InsertAfter(fPrintProcessor);
 
-    auto* tTagProcessor = new KTagProcessor();
-    tTagProcessor->InsertAfter(fConfigSerializer.get());
+    fTagProcessor = new KTagProcessor();
+    fTagProcessor->InsertAfter(fConfigSerializer.get());
 
-    auto* tElementProcessor = new KElementProcessor();
-    tElementProcessor->InsertAfter(tTagProcessor);
+    fElementProcessor = new KElementProcessor();
+    fElementProcessor->InsertAfter(fTagProcessor);
 }
 
 KXMLTokenizer* KXMLInitializer::Configure(int argc, char** argv, bool processConfig)
@@ -310,19 +317,31 @@ void KXMLInitializer::UpdateVariables(const KArgumentList& args)
     if (fTokenizer == nullptr)
         return;
 
-    auto* tVariableProcessor = new KVariableProcessor(args.OptionTable());
-    tVariableProcessor->InsertAfter(fTokenizer);
+    if (fVariableProcessor)
+        delete fVariableProcessor;
+
+    fVariableProcessor = new KVariableProcessor(args.OptionTable());
+    //fVariableProcessor->InsertAfter(fTokenizer);
 }
 
-void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments) const
+void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments, KSerializationProcessor::EConfigFormat format) const
 {
-    if (includeArguments) {
+    if (includeArguments && (format == KSerializationProcessor::EConfigFormat::XML)) {
         strm << "<Arguments>" << endl;
         fArguments.Dump(strm);
         strm << "</Arguments>" << endl;
     }
     if (fConfigSerializer) {
-        strm << fConfigSerializer->GetConfig();
+        strm << fConfigSerializer->GetConfig(format);
+    }
+}
+
+void KXMLInitializer::PrintParserContext(std::ostream& aStream)
+{
+    const auto* ctx = GetInstance().GetContext();
+    if (ctx && ctx->IsValid()) {
+        aStream << "parsing element <" << ctx->GetElement() << "> in file <"
+                << ctx->GetName() << "> at line <" << ctx->GetLine() << ">, column <" << ctx->GetColumn() << ">\n";
     }
 }
 

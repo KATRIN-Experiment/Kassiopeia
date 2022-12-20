@@ -34,7 +34,7 @@ class KElectrostaticConstantField : public KElectrostaticField
     const double& GetPotentialOffset() const;
 
   protected:
-    KFieldVector fField;
+    KFieldVector fFieldVector;
     KFieldVector fLocation;
     double fPotentialOffset;
 };

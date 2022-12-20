@@ -5,7 +5,6 @@
 #include "KThreeVector.hh"
 #include "KTransformation.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 typedef KComplexElement<KTransformation> KGTransformationBuilder;
@@ -13,7 +12,7 @@ typedef KComplexElement<KTransformation> KGTransformationBuilder;
 template<> inline bool KGTransformationBuilder::AddAttribute(KContainer* aContainer)
 {
     if ((aContainer->GetName() == "displacement") || (aContainer->GetName() == "d")) {
-        KGeoBag::KThreeVector* tVector = nullptr;
+        KThreeVector* tVector = nullptr;
         aContainer->ReleaseTo(tVector);
         fObject->SetDisplacement(tVector->X(), tVector->Y(), tVector->Z());
         delete tVector;

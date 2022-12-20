@@ -10,7 +10,7 @@
 
 void KGeoBag::KGBoxSpaceRandom::VisitBoxSpace(const KGeoBag::KGBoxSpace* aBox)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     double width = (aBox->XB() - aBox->XA());
     double height = (aBox->YB() - aBox->YA());

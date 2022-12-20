@@ -2,7 +2,7 @@ set (TESTDISCRETIZATION_LIBS
     KGeoBagCore
     KGeoBagShapes
     KGeoBagMesh
-    KGeoBagDeformation
+    KGeoBagMeshDeformation
     KGeoBagVisualization
 #    KGeoBagKatrin
 )

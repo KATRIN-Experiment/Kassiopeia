@@ -55,10 +55,10 @@ class KGVTKAxialMeshPainter :
   private:
     void PaintElements();
 
-    KGeoBag::KThreeVector fCurrentOrigin;
-    KGeoBag::KThreeVector fCurrentXAxis;
-    KGeoBag::KThreeVector fCurrentYAxis;
-    KGeoBag::KThreeVector fCurrentZAxis;
+    katrin::KThreeVector fCurrentOrigin;
+    katrin::KThreeVector fCurrentXAxis;
+    katrin::KThreeVector fCurrentYAxis;
+    katrin::KThreeVector fCurrentZAxis;
 
     KGAxialMeshElementVector* fCurrentElements;
 

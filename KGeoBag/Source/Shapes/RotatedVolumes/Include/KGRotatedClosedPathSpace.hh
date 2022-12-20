@@ -81,24 +81,24 @@ template<class XPathType> class KGRotatedClosedPathSpace : public KGVolume
         KGVolume::VolumeAccept(aVisitor);
         return;
     }
-    bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const override
+    bool VolumeOutside(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tZRPoint = aPoint.ProjectZR();
+        katrin::KTwoVector tZRPoint = aPoint.ProjectZR();
         return fPath->Above(tZRPoint);
     }
-    KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector VolumePoint(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tZRPoint = aPoint.ProjectZR();
-        KTwoVector tZRNearest = fPath->Point(tZRPoint);
+        katrin::KTwoVector tZRPoint = aPoint.ProjectZR();
+        katrin::KTwoVector tZRNearest = fPath->Point(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return KGeoBag::KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
+        return katrin::KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
     }
-    KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector VolumeNormal(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tZRPoint = aPoint.ProjectZR();
-        KTwoVector tZRNormal = fPath->Normal(tZRPoint);
+        katrin::KTwoVector tZRPoint = aPoint.ProjectZR();
+        katrin::KTwoVector tZRNormal = fPath->Normal(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return KGeoBag::KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
+        return katrin::KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
     }
 
   private:

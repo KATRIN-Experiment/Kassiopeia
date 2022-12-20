@@ -1,7 +1,7 @@
 if(KGeoBag_USE_VTK)
 
     set (TESTMESHNAVIGATION_LIBS
-        Kommon
+        KommonCore
         KommonVtk
         KGeoBagMath
         KGeoBagCore

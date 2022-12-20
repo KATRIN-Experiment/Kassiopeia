@@ -5,6 +5,9 @@
 
 #include <cmath>
 
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -115,7 +118,7 @@ void KSTrajAdiabaticParticle::PullFrom(const KSParticle& aParticle)
         fGetElectricPotentialRPPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP;
         fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential;
 
-        KGeoBag::KThreeVector tGyrationVector = fGuidingCenter - fPosition;
+        KThreeVector tGyrationVector = fGuidingCenter - fPosition;
         fAlpha = -1. * tGyrationVector.Unit();
         fBeta = -1. * fMagneticField.Cross(tGyrationVector).Unit();
 
@@ -259,14 +262,14 @@ const double& KSTrajAdiabaticParticle::GetLength() const
     fLength = fData[1];
     return fLength;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetPosition() const
+const KThreeVector& KSTrajAdiabaticParticle::GetPosition() const
 {
     double tSigma = GetCharge() / fabs(GetCharge());
     fPosition = GetGuidingCenter() + (fData[6] / (fabs(GetCharge()) * GetMagneticField().Magnitude())) *
                                          (cos(tSigma * fData[7]) * fAlpha + sin(tSigma * fData[7]) * fBeta);
     return fPosition;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetMomentum() const
+const KThreeVector& KSTrajAdiabaticParticle::GetMomentum() const
 {
     double tPhi = GetElectricPotentialRP() - GetElectricPotential();
 
@@ -290,7 +293,7 @@ const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetMomentum() const
 
     return fMomentum;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetVelocity() const
+const KThreeVector& KSTrajAdiabaticParticle::GetVelocity() const
 {
     fVelocity = (1. / (GetMass() * GetLorentzFactor())) * GetMomentum();
     return fVelocity;
@@ -307,27 +310,27 @@ const double& KSTrajAdiabaticParticle::GetKineticEnergy() const
     return fKineticEnergy;
 }
 
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetMagneticField() const
+const KThreeVector& KSTrajAdiabaticParticle::GetMagneticField() const
 {
     (this->*fGetMagneticFieldPtr)();
     return fMagneticField;
 }
-void KSTrajAdiabaticParticle::SetMagneticField(const KGeoBag::KThreeVector& aField) const
+void KSTrajAdiabaticParticle::SetMagneticField(const KThreeVector& aField) const
 {
     fMagneticField = aField;
     fGetMagneticFieldPtr = &KSTrajAdiabaticParticle::DoNothing;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetElectricField() const
+const KThreeVector& KSTrajAdiabaticParticle::GetElectricField() const
 {
     (this->*fGetElectricFieldPtr)();
     return fElectricField;
 }
-const KGeoBag::KThreeMatrix& KSTrajAdiabaticParticle::GetMagneticGradient() const
+const KThreeMatrix& KSTrajAdiabaticParticle::GetMagneticGradient() const
 {
     (this->*fGetMagneticGradientPtr)();
     return fMagneticGradient;
 }
-const std::pair<const KGeoBag::KThreeVector&, const KGeoBag::KThreeMatrix&>
+const std::pair<const KThreeVector&, const KThreeMatrix&>
 KSTrajAdiabaticParticle::GetMagneticFieldAndGradient() const
 {
     (this->*fGetMagneticFieldAndGradientPtr)();
@@ -343,14 +346,14 @@ const double& KSTrajAdiabaticParticle::GetElectricPotentialRP() const
     (this->*fGetElectricPotentialRPPtr)();
     return fElectricPotentialRP;
 }
-const std::pair<const KGeoBag::KThreeVector&, const double&>
+const std::pair<const KThreeVector&, const double&>
 KSTrajAdiabaticParticle::GetElectricFieldAndPotential() const
 {
     (this->*fGetElectricFieldAndPotentialPtr)();
     return std::make_pair(fElectricField, fElectricPotential);
 }
 
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetGuidingCenter() const
+const KThreeVector& KSTrajAdiabaticParticle::GetGuidingCenter() const
 {
     fGuidingCenter.SetComponents(fData[2], fData[3], fData[4]);
     return fGuidingCenter;
@@ -387,22 +390,22 @@ const double& KSTrajAdiabaticParticle::GetOrbitalMagneticMoment() const
     return fOrbitalMagneticMoment;
 }
 
-void KSTrajAdiabaticParticle::SetAlpha(const KGeoBag::KThreeVector& anAlpha)
+void KSTrajAdiabaticParticle::SetAlpha(const KThreeVector& anAlpha)
 {
     fAlpha = anAlpha;
     return;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetAlpha() const
+const KThreeVector& KSTrajAdiabaticParticle::GetAlpha() const
 {
     return fAlpha;
 }
 
-void KSTrajAdiabaticParticle::SetBeta(const KGeoBag::KThreeVector& aBeta)
+void KSTrajAdiabaticParticle::SetBeta(const KThreeVector& aBeta)
 {
     fBeta = aBeta;
     return;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticParticle::GetBeta() const
+const KThreeVector& KSTrajAdiabaticParticle::GetBeta() const
 {
     return fBeta;
 }

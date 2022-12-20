@@ -9,7 +9,7 @@
 
 void KGeoBag::KGBoxSurfaceRandom::VisitBox(KGeoBag::KGBox* aBox)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     double height = (aBox->GetP1().GetY() - aBox->GetP0().GetY());
     double width = (aBox->GetP1().GetX() - aBox->GetP0().GetX());

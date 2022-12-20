@@ -17,7 +17,7 @@ void KSTrajMagneticDerivative::AddToSpeed(const double& aSpeed)
     fData[1] = aSpeed;
     return;
 }
-void KSTrajMagneticDerivative::AddToVelocity(const KGeoBag::KThreeVector& aVelocity)
+void KSTrajMagneticDerivative::AddToVelocity(const katrin::KThreeVector& aVelocity)
 {
     fData[2] = aVelocity.X();
     fData[3] = aVelocity.Y();

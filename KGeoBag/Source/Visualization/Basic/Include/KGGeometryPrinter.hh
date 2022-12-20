@@ -121,7 +121,7 @@ class KGGeometryPrinter :
     std::string Colorize(const std::string& aValue);
     std::string Colorize(const double& aValue);
     std::string Colorize(const KTwoVector& aValue);
-    std::string Colorize(const KGeoBag::KThreeVector& aValue);
+    std::string Colorize(const katrin::KThreeVector& aValue);
 
     template<typename T>
     void Dump(T* aTagged);
@@ -137,6 +137,7 @@ class KGGeometryPrinter :
     void SetUseColors(bool aFlag = true);
     void SetWriteJSON(bool aFlag = true);
     void SetWriteXML(bool aFlag = true);
+    void SetWriteDOT(bool aFlag = true);
 
     void AddSurface(KGSurface* aSurface);
     void AddSpace(KGSpace* aSpace);
@@ -144,17 +145,24 @@ class KGGeometryPrinter :
     void SetWindow(katrin::KWindow*) override{};
     void ClearWindow(katrin::KWindow*) override{};
 
+  protected:
+    void WriteGraphViz(std::ostream& aStream, bool with_tags = false) const;
+
   private:
     std::string fFile;
     std::string fPath;
     bool fWriteJSON;
     bool fWriteXML;
+    bool fWriteDOT;
     bool fUseColors;
 
     std::ostream* fStream;
 
     std::vector<KGSurface*> fSurfaces;
     std::vector<KGSpace*> fSpaces;
+
+    std::vector<KGSurface*> fVisitedSurfaces;
+    std::vector<KGSpace*> fVisitedSpaces;
 
     Private* fPrivate;
 
@@ -185,16 +193,16 @@ class KGGeometryPrinter :
     void VisitWrappedSpace(KGRodSpace* aRodSpace) override;
 
   private:
-    void LocalToGlobal(const KGeoBag::KThreeVector& aLocal, KGeoBag::KThreeVector& aGlobal);
+    void LocalToGlobal(const katrin::KThreeVector& aLocal, katrin::KThreeVector& aGlobal);
 
   private:
     KGSpace* fCurrentSpace;
     KGSurface* fCurrentSurface;
 
-    KGeoBag::KThreeVector fCurrentOrigin;
-    KGeoBag::KThreeVector fCurrentXAxis;
-    KGeoBag::KThreeVector fCurrentYAxis;
-    KGeoBag::KThreeVector fCurrentZAxis;
+    katrin::KThreeVector fCurrentOrigin;
+    katrin::KThreeVector fCurrentXAxis;
+    katrin::KThreeVector fCurrentYAxis;
+    katrin::KThreeVector fCurrentZAxis;
 
     bool fIgnore;
 };

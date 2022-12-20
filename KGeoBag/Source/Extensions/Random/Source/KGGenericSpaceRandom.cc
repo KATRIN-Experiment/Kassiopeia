@@ -9,7 +9,7 @@
 
 void KGeoBag::KGGenericSpaceRandom::VisitVolume(KGVolume* /*aVolume*/)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     // ToDo: Implement generic function
     randommsg(eWarning) << "You are using the generic function to calculate a random point inside a volume. "

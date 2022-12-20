@@ -2,6 +2,7 @@
 # Author: J. P. Barrett
 
 set (INTERFACE_HEADERFILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMTreeSurfaceOrderingPredicate.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSurfaceToPointCloudConverter.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticBasisDataExtractor.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticSurfaceConverter.hh
