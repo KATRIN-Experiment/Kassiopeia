@@ -1,21 +1,6 @@
 # CMakeLists for KEMField/FastMultipole/Math
 # Author: J. P. Barrett
 
-if (KEMField_USE_GSL)
-  find_package(GSL REQUIRED)
-  kasper_external_include_directories (${GSL_INCLUDE_DIRS})
-  add_definitions(-DKEMFIELD_USE_GSL)
-endif ()
-
-option (KEMField_USE_FFTW "Use FFTW" OFF)
-if (KEMField_USE_FFTW)
-  find_package(FFTW 3.3.4 REQUIRED)
-  kasper_external_include_directories (${FFTW_INCLUDE_DIRS})
-  add_cflag(KEMFIELD_USE_FFTW)
-endif ()
-
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (MATH_UTILITIES_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMMath.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMBitReversalPermutation.hh
@@ -33,7 +18,8 @@ set (MATH_UTILITIES_HEADERFILES
 )
 
 if(KEMField_USE_FFTW)
-    set( MATH_UTILITIES_HEADERFILES ${MATH_UTILITIES_HEADERFILES}     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMMultidimensionalFastFourierTransformFFTW.hh )
+    set( MATH_UTILITIES_HEADERFILES ${MATH_UTILITIES_HEADERFILES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMMultidimensionalFastFourierTransformFFTW.hh )
 endif(KEMField_USE_FFTW)
 
 set (MATH_UTILITIES_SOURCEFILES
@@ -49,21 +35,25 @@ set (MATH_UTILITIES_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMSquareRootUtilities.cc
 )
 
-add_library (KFMMathUtilities SHARED ${MATH_UTILITIES_SOURCEFILES} ${MATH_UTILITIES_HEADERFILES})
+add_library (KFMMathUtilities SHARED
+    ${MATH_UTILITIES_SOURCEFILES} ${MATH_UTILITIES_HEADERFILES})
+target_include_directories(KFMMathUtilities
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_link_libraries (KFMMathUtilities
+    PUBLIC
+        KEMCore
+        KFMArray
+)
 
-if(KASPER_USE_GSL)
-    if(KEMField_USE_FFTW)
-        target_link_libraries (KFMMathUtilities KEMCore ${GSL_LIBRARIES} ${FFTW_LIBRARIES})
-    else()
-        target_link_libraries (KFMMathUtilities KEMCore ${GSL_LIBRARIES})
-    endif()
-else()
-    if(KEMField_USE_FFTW)
-        target_link_libraries (KFMMathUtilities KEMCore ${FFTW_LIBRARIES})
-    else()
-        target_link_libraries (KFMMathUtilities KEMCore )
-    endif()
-endif ()
+if(KEMField_USE_FFTW)
+    target_link_libraries(KFMMathUtilities PUBLIC ${FFTW_LIBRARIES})
+    target_compile_definitions(KFMMathUtilities PUBLIC KEMFIELD_USE_FFTW)
+endif(KEMField_USE_FFTW)
+
+if(KEMField_USE_GSL)
+    target_link_libraries(KFMMathUtilities PUBLIC GSL::gsl)
+    target_compile_definitions(KFMMathUtilities PUBLIC KEMFIELD_USE_GSL)
+endif(KEMField_USE_GSL)
 
 kasper_install_headers (${MATH_UTILITIES_HEADERFILES})
 kasper_install_libraries (KFMMathUtilities)

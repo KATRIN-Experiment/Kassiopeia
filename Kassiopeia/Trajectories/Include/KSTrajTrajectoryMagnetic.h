@@ -34,8 +34,8 @@ class KSTrajTrajectoryMagnetic :
     void AddControl(KSTrajMagneticControl* aControl);
     void RemoveControl(KSTrajMagneticControl* aControl);
 
-    void SetReverseDirection(const bool& aFlag);
-    const bool& GetReverseDirection() const;
+    //void SetReverseDirection(const bool& aFlag);
+    //const bool& GetReverseDirection() const;
 
     void SetAttemptLimit(unsigned int n)
     {

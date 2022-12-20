@@ -13,7 +13,8 @@ KSGenValueAngleCosine::KSGenValueAngleCosine() : fAngleMin(0.), fAngleMax(0.) {}
 KSGenValueAngleCosine::KSGenValueAngleCosine(const KSGenValueAngleCosine& aCopy) :
     KSComponent(aCopy),
     fAngleMin(aCopy.fAngleMin),
-    fAngleMax(aCopy.fAngleMax)
+    fAngleMax(aCopy.fAngleMax),
+    fMode(EDistributionMode::Classic)
 {}
 KSGenValueAngleCosine* KSGenValueAngleCosine::Clone() const
 {
@@ -27,12 +28,23 @@ void KSGenValueAngleCosine::DiceValue(std::vector<double>& aDicedValues)
     genmsg_assert(fAngleMin, >= 0);
     genmsg_assert(fAngleMax, <= 90);
     genmsg_assert(fAngleMin, <= 90);
-    double tsinThetaSquaredMin = pow(sin((katrin::KConst::Pi() / 180.) * fAngleMin), 2);
-    double tsinThetaSquaredMax = pow(sin((katrin::KConst::Pi() / 180.) * fAngleMax), 2);
 
-    //Random generation follows Eq. 12 from J. Greenwood, Vacuum, 67 (2002), pp. 217-222
-    double tsinThetaSquared = KRandom::GetInstance().Uniform(tsinThetaSquaredMin, tsinThetaSquaredMax);
-    double tAngle = asin(sqrt(tsinThetaSquared));
+    double tAngle = 0.;
+    if (fMode == EDistributionMode::MolecularFlow) {
+        double tsinThetaSquaredMin = pow(sin((katrin::KConst::Pi() / 180.) * fAngleMin), 2);
+        double tsinThetaSquaredMax = pow(sin((katrin::KConst::Pi() / 180.) * fAngleMax), 2);
+
+        //Random generation follows Eq. 12 from J. Greenwood, Vacuum, 67 (2002), pp. 217-222
+        double tsinThetaSquared = KRandom::GetInstance().Uniform(tsinThetaSquaredMin, tsinThetaSquaredMax);
+        tAngle = asin(sqrt(tsinThetaSquared));
+    }
+    else if (fMode == EDistributionMode::Classic) {
+        double tSinThetaMin = sin( (katrin::KConst::Pi() / 180.) * fAngleMin );
+        double tSinThetaMax = sin( (katrin::KConst::Pi() / 180.) * fAngleMax );
+
+        double tSinTheta = KRandom::GetInstance().Uniform( tSinThetaMin, tSinThetaMax );
+        tAngle = acos( sqrt( 1. - tSinTheta*tSinTheta ) );
+    }
 
     aDicedValues.push_back((180.0 / katrin::KConst::Pi()) * tAngle);
 

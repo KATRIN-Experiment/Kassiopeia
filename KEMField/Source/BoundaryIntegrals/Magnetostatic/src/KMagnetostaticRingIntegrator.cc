@@ -6,7 +6,7 @@
 
 namespace KEMField
 {
-KThreeVector KMagnetostaticRingIntegrator::VectorPotential(const KRing* source, const KPosition& P) const
+KFieldVector KMagnetostaticRingIntegrator::VectorPotential(const KRing* source, const KPosition& P) const
 {
     static KCompleteEllipticIntegral1stKind K_elliptic;
     static KEllipticEMinusKOverkSquared EK_elliptic;
@@ -31,10 +31,10 @@ KThreeVector KMagnetostaticRingIntegrator::VectorPotential(const KRing* source, 
         sine = P[1] / r;
     }
 
-    return KThreeVector(-sine * A_theta, cosine * A_theta, 0.);
+    return KFieldVector(-sine * A_theta, cosine * A_theta, 0.);
 }
 
-KThreeVector KMagnetostaticRingIntegrator::MagneticField(const KRing* source, const KPosition& P) const
+KFieldVector KMagnetostaticRingIntegrator::MagneticField(const KRing* source, const KPosition& P) const
 {
     static KCompleteEllipticIntegral1stKind K_elliptic;
     static KCompleteEllipticIntegral2ndKind E_elliptic;
@@ -70,21 +70,21 @@ KThreeVector KMagnetostaticRingIntegrator::MagneticField(const KRing* source, co
         sine = P[1] / r;
     }
 
-    return KThreeVector(cosine * B_r, sine * B_r, B_z);
+    return KFieldVector(cosine * B_r, sine * B_r, B_z);
 }
 
-KThreeVector KMagnetostaticRingIntegrator::VectorPotential(const KSymmetryGroup<KRing>* source,
+KFieldVector KMagnetostaticRingIntegrator::VectorPotential(const KSymmetryGroup<KRing>* source,
                                                            const KPosition& P) const
 {
-    KThreeVector A;
+    KFieldVector A;
     for (KSymmetryGroup<KRing>::ShapeCIt it = source->begin(); it != source->end(); ++it)
         A += VectorPotential(*it, P);
     return A;
 }
 
-KThreeVector KMagnetostaticRingIntegrator::MagneticField(const KSymmetryGroup<KRing>* source, const KPosition& P) const
+KFieldVector KMagnetostaticRingIntegrator::MagneticField(const KSymmetryGroup<KRing>* source, const KPosition& P) const
 {
-    KThreeVector magneticField(0., 0., 0.);
+    KFieldVector magneticField(0., 0., 0.);
     for (KSymmetryGroup<KRing>::ShapeCIt it = source->begin(); it != source->end(); ++it)
         magneticField += MagneticField(*it, P);
     return magneticField;

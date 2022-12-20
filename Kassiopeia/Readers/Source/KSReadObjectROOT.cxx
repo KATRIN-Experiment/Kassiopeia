@@ -68,7 +68,7 @@ KSReadObjectROOT::KSReadObjectROOT(TTree* aStructureTree, TTree* aPresenceTree, 
             fData->SetBranchAddress(tLabel.c_str(), Add<KSLong>(tLabel).Pointer());
             continue;
         }
-        if (tType == string("long long")) {
+        if (tType == string("long long") || tType == string("long_long")) {
             fData->SetBranchAddress(tLabel.c_str(), Add<KSLongLong>(tLabel).Pointer());
             continue;
         }
@@ -94,10 +94,32 @@ KSReadObjectROOT::KSReadObjectROOT(TTree* aStructureTree, TTree* aPresenceTree, 
             continue;
         }
         if (tType == string("three_vector")) {
-            auto& tTwoVector = Add<KSThreeVector>(tLabel);
-            fData->SetBranchAddress((tLabel + string("_x")).c_str(), &(tTwoVector.Value().X()));
-            fData->SetBranchAddress((tLabel + string("_y")).c_str(), &(tTwoVector.Value().Y()));
-            fData->SetBranchAddress((tLabel + string("_z")).c_str(), &(tTwoVector.Value().Z()));
+            auto& tThreeVector = Add<KSThreeVector>(tLabel);
+            fData->SetBranchAddress((tLabel + string("_x")).c_str(), &(tThreeVector.Value().X()));
+            fData->SetBranchAddress((tLabel + string("_y")).c_str(), &(tThreeVector.Value().Y()));
+            fData->SetBranchAddress((tLabel + string("_z")).c_str(), &(tThreeVector.Value().Z()));
+            continue;
+        }
+
+        if (tType == string("two_matrix")) {
+            auto& tTwoMatrix = Add<KSTwoMatrix>(tLabel);
+            fData->SetBranchAddress((tLabel + string("_xx")).c_str(), &(tTwoMatrix.Value().At(0,0)));
+            fData->SetBranchAddress((tLabel + string("_xy")).c_str(), &(tTwoMatrix.Value().At(0,1)));
+            fData->SetBranchAddress((tLabel + string("_yx")).c_str(), &(tTwoMatrix.Value().At(1,0)));
+            fData->SetBranchAddress((tLabel + string("_yy")).c_str(), &(tTwoMatrix.Value().At(1,1)));
+            continue;
+        }
+        if (tType == string("three_matrix")) {
+            auto& tThreeMatrix = Add<KSThreeMatrix>(tLabel);
+            fData->SetBranchAddress((tLabel + string("_xx")).c_str(), &(tThreeMatrix.Value().At(0,0)));
+            fData->SetBranchAddress((tLabel + string("_xy")).c_str(), &(tThreeMatrix.Value().At(0,1)));
+            fData->SetBranchAddress((tLabel + string("_xz")).c_str(), &(tThreeMatrix.Value().At(0,2)));
+            fData->SetBranchAddress((tLabel + string("_yx")).c_str(), &(tThreeMatrix.Value().At(1,0)));
+            fData->SetBranchAddress((tLabel + string("_yy")).c_str(), &(tThreeMatrix.Value().At(1,1)));
+            fData->SetBranchAddress((tLabel + string("_yz")).c_str(), &(tThreeMatrix.Value().At(1,2)));
+            fData->SetBranchAddress((tLabel + string("_zx")).c_str(), &(tThreeMatrix.Value().At(2,0)));
+            fData->SetBranchAddress((tLabel + string("_zy")).c_str(), &(tThreeMatrix.Value().At(2,1)));
+            fData->SetBranchAddress((tLabel + string("_zz")).c_str(), &(tThreeMatrix.Value().At(2,2)));
             continue;
         }
 

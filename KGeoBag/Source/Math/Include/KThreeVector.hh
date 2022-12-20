@@ -9,7 +9,7 @@
 #include <cmath>
 #include <istream>
 #include <ostream>
-#include <vector>
+#include <array>
 
 namespace KGeoBag
 {
@@ -78,7 +78,7 @@ class KThreeVector
     const double& GetZ() const;
 
     const double* Components() const;
-    const std::vector<double> ComponentVector() const;
+    const std::array<double,3> AsArray() const;
 
     //comparison
 
@@ -286,9 +286,10 @@ inline const double* KThreeVector::Components() const
 {
     return (const double*) fData;
 }
-inline const std::vector<double> KThreeVector::ComponentVector() const
+inline const std::array<double,3> KThreeVector::AsArray() const
 {
-    std::vector<double> tData = {fData[0], fData[1], fData[2]};
+    std::array<double,3> tData;
+    std::copy(std::begin(fData), std::end(fData), std::begin(tData));
     return tData;
 }
 

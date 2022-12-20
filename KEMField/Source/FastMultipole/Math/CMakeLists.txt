@@ -1,8 +1,6 @@
 # CMakeLists for KEMField/FastMultipole/Math
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (MATH_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMRealSphericalHarmonicExpansionRotator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMComplexSphericalHarmonicExpansionRotator.hh
@@ -33,8 +31,17 @@ set (MATH_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMDenseBlockSparseMatrixStructure.cc
 )
 
-add_library (KFMMath SHARED ${MATH_SOURCEFILES} ${MATH_HEADERFILES})
-    target_link_libraries (KFMMath KFMCore KFMMathUtilities)
+add_library (KFMMath SHARED
+    ${MATH_SOURCEFILES} ${MATH_HEADERFILES})
+target_include_directories(KFMMath
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_link_libraries (KFMMath
+    PUBLIC
+        KEMMath
+        KEMLinearAlgebraCore
+        KFMCore
+        KFMMathUtilities
+)
 
 kasper_install_headers (${MATH_HEADERFILES})
 kasper_install_libraries (KFMMath)

@@ -41,6 +41,8 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
     fArcPolyApprox = 128;
 
     for (KSurfaceContainer::iterator it = aSurfaceContainer.begin(); it != aSurfaceContainer.end(); it++) {
+        if (! *it)
+            continue;
         SetSurfacePrimitive(*it);
         ActOnSurfaceType((*it)->GetID(), *this);
     }

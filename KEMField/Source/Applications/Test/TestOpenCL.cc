@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <vector>
 
-#define CL_HPP_NO_STD_VECTOR  // Use cl::vector instead of STL version
+//#define CL_HPP_NO_STD_VECTOR  // Use cl::vector instead of STL version
 #define CL_HPP_ENABLE_EXCEPTIONS
 
 #if defined __APPLE__

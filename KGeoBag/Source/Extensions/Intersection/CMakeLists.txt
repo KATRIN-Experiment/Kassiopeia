@@ -12,19 +12,16 @@ set( INTERSECTION_SOURCE_FILES
     Source/KGRotatedSurfaceIntersector.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
 add_library( KGeoBagIntersection SHARED
-	${INTERSECTION_SOURCE_FILES} ${INTERSECTION_HEADER_FILES}
+    ${INTERSECTION_SOURCE_FILES} ${INTERSECTION_HEADER_FILES}
+)
+target_include_directories( KGeoBagIntersection
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>
 )
 target_link_libraries( KGeoBagIntersection
-	KGeoBagCore
-	KGeoBagShapes
-	${Kommon_LIBRARIES}
+    PUBLIC
+        KGeoBagShapes
 )
 
 # install

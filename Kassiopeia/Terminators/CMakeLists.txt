@@ -23,11 +23,11 @@ set( TERMINATORS_HEADER_BASENAMES
     KSTermStepsize.h
     KSTermMagnetron.h
 )
-set( TERMINATORS_HEADER_PATH 
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
+set( TERMINATORS_HEADER_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${TERMINATORS_HEADER_BASENAMES} )
-	list( APPEND TERMINATORS_HEADER_FILENAMES ${TERMINATORS_HEADER_PATH}/${BASENAME} )
+    list( APPEND TERMINATORS_HEADER_FILENAMES ${TERMINATORS_HEADER_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # source files
@@ -54,36 +54,35 @@ set( TERMINATORS_SOURCE_BASENAMES
     KSTermStepsize.cxx
     KSTermMagnetron.cxx
 )
-set( TERMINATORS_SOURCE_PATH 
-	${CMAKE_CURRENT_SOURCE_DIR}/Source
+set( TERMINATORS_SOURCE_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${TERMINATORS_SOURCE_BASENAMES} )
-	list( APPEND TERMINATORS_SOURCE_FILENAMES ${TERMINATORS_SOURCE_PATH}/${BASENAME} )
+    list( APPEND TERMINATORS_SOURCE_FILENAMES ${TERMINATORS_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # data files
 set( TERMINATORS_DATA_BASENAMES
 )
-set( TERMINATORS_DATA_PATH 
-	${CMAKE_CURRENT_SOURCE_DIR}/Data
+set( TERMINATORS_DATA_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${TERMINATORS_DATA_BASENAMES} )
-	list( APPEND TERMINATORS_DATA_FILENAMES ${TERMINATORS_DATA_PATH}/${BASENAME} )
+    list( APPEND TERMINATORS_DATA_FILENAMES ${TERMINATORS_DATA_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${TERMINATORS_HEADER_PATH} )
-add_library( KassiopeiaTerminators SHARED ${TERMINATORS_SOURCE_FILENAMES} ${TERMINATORS_HEADER_FILENAMES} )
-set_target_properties( KassiopeiaTerminators PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+add_library( KassiopeiaTerminators SHARED
+    ${TERMINATORS_SOURCE_FILENAMES} ${TERMINATORS_HEADER_FILENAMES} )
+target_include_directories(KassiopeiaTerminators
+    PUBLIC $<BUILD_INTERFACE:${TERMINATORS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaTerminators
-    ${Kommon_LIBRARIES}
-    ${KGeoBag_LIBRARIES}
-    KassiopeiaUtility
-    KassiopeiaObjects
-    KassiopeiaOperators
+    PUBLIC
+        KassiopeiaOperators
+        KassiopeiaGeometry
 )
 
 # install
 kasper_install_headers( ${TERMINATORS_HEADER_FILENAMES} )
-kasper_install_data( ${TERMINATORS_DATA_FILENAMES} )
 kasper_install_libraries( KassiopeiaTerminators )
+kasper_install_data( ${TERMINATORS_DATA_FILENAMES} )

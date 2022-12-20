@@ -11,6 +11,12 @@ namespace KGeoBag
 class KTwoMatrix
 {
   public:
+    static const KTwoMatrix sInvalid;
+    static const KTwoMatrix sZero;
+
+    static const KTwoMatrix sIdentity;
+
+  public:
     KTwoMatrix();
     KTwoMatrix(const double& anXX, const double& anXY, const double& aYX, const double& aYY);
     virtual ~KTwoMatrix() = default;
@@ -36,6 +42,15 @@ class KTwoMatrix
 
     double& operator()(int aRow, int aColumn);
     const double& operator()(int aRow, int aColumn) const;
+
+    double& At(int anIndex);
+    const double& At(int anIndex) const;
+
+    double& At(int aRow, int aColumn);
+    const double& At(int aRow, int aColumn) const;
+
+    const double* Components() const;
+    const std::array<double,4> AsArray() const;
 
     //properties
 
@@ -115,20 +130,56 @@ inline KTwoMatrix::operator double*()
 
 inline double& KTwoMatrix::operator[](int anIndex)
 {
+    assert(anIndex >= 0 && anIndex < 4);
     return fData[anIndex];
 }
 inline const double& KTwoMatrix::operator[](int anIndex) const
 {
+    assert(anIndex >= 0 && anIndex < 4);
     return fData[anIndex];
 }
 
 inline double& KTwoMatrix::operator()(int aRow, int aColumn)
 {
+    assert(aRow >= 0 && aRow < 2 && aColumn >= 0 && aColumn < 2);
     return fData[2 * aRow + aColumn];
 }
 inline const double& KTwoMatrix::operator()(int aRow, int aColumn) const
 {
+    assert(aRow >= 0 && aRow < 2 && aColumn >= 0 && aColumn < 2);
     return fData[2 * aRow + aColumn];
+}
+
+inline double&  KTwoMatrix::At(int anIndex)
+{
+    assert(anIndex >= 0 && anIndex < 4);
+    return fData[anIndex];
+}
+inline const double&  KTwoMatrix::At(int anIndex) const
+{
+    assert(anIndex >= 0 && anIndex < 4);
+    return fData[anIndex];
+}
+inline double&  KTwoMatrix::At(int aRow, int aColumn)
+{
+    assert(aRow >= 0 && aRow < 2 && aColumn >= 0 && aColumn < 2);
+    return fData[2 * aRow + aColumn];
+}
+inline const double&  KTwoMatrix::At(int aRow, int aColumn) const
+{
+    assert(aRow >= 0 && aRow < 2 && aColumn >= 0 && aColumn < 2);
+    return fData[2 * aRow + aColumn];
+}
+
+inline const double* KTwoMatrix::Components() const
+{
+    return (const double*) fData;
+}
+inline const std::array<double,4> KTwoMatrix::AsArray() const
+{
+    std::array<double,4> tData;
+    std::copy(std::begin(fData), std::end(fData), std::begin(tData));
+    return tData;
 }
 
 inline KTwoMatrix KTwoMatrix::Inverse() const

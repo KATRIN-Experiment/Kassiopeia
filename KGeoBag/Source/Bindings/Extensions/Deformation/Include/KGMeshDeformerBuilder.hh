@@ -3,6 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KGMeshDeformer.hh"
+#include "KGBindingsMessage.hh"
 
 namespace katrin
 {
@@ -20,7 +21,7 @@ template<> inline bool KGMeshDeformerBuilder::AddAttribute(KContainer* aContaine
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -36,7 +37,7 @@ template<> inline bool KGMeshDeformerBuilder::AddAttribute(KContainer* aContaine
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

@@ -46,10 +46,10 @@ set( INTERACTIONS_HEADER_BASENAMES
     KSIntDecayCalculatorFerencBBRTransition.h
 )
 set( INTERACTIONS_HEADER_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${INTERACTIONS_HEADER_BASENAMES} )
-	list( APPEND INTERACTIONS_HEADER_FILENAMES ${INTERACTIONS_HEADER_PATH}/${BASENAME} )
+    list( APPEND INTERACTIONS_HEADER_FILENAMES ${INTERACTIONS_HEADER_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # source files
@@ -99,10 +99,10 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KSIntDecayCalculatorFerencBBRTransition.cxx
 )
 set( INTERACTIONS_SOURCE_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Source
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${INTERACTIONS_SOURCE_BASENAMES} )
-	list( APPEND INTERACTIONS_SOURCE_FILENAMES ${INTERACTIONS_SOURCE_PATH}/${BASENAME} )
+    list( APPEND INTERACTIONS_SOURCE_FILENAMES ${INTERACTIONS_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # data files
@@ -180,22 +180,20 @@ set( INTERACTIONS_DATA_BASENAMES
     PhotoAbsorbtion.txt
 )
 set( INTERACTIONS_DATA_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Data
+    ${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${INTERACTIONS_DATA_BASENAMES} )
-	list( APPEND INTERACTIONS_DATA_FILENAMES ${INTERACTIONS_DATA_PATH}/${BASENAME} )
+    list( APPEND INTERACTIONS_DATA_FILENAMES ${INTERACTIONS_DATA_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${INTERACTIONS_HEADER_PATH} )
-add_library( KassiopeiaInteractions SHARED ${INTERACTIONS_SOURCE_FILENAMES} ${INTERACTIONS_HEADER_FILENAMES} )
-set_target_properties( KassiopeiaInteractions PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+add_library( KassiopeiaInteractions SHARED
+    ${INTERACTIONS_SOURCE_FILENAMES} ${INTERACTIONS_HEADER_FILENAMES} )
+target_include_directories(KassiopeiaInteractions
+    PUBLIC $<BUILD_INTERFACE:${INTERACTIONS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaInteractions
-    ${Kommon_LIBRARIES}
-    ${KGeoBag_LIBRARIES}
-    KassiopeiaUtility
-    KassiopeiaObjects
-    KassiopeiaOperators
+    PUBLIC
+        KassiopeiaOperators
 )
 
 # install

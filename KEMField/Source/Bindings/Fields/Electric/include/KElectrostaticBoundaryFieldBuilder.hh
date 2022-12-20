@@ -12,6 +12,7 @@
 #include "KEMBindingsMessage.hh"
 #include "KGElectrostaticBoundaryField.hh"
 #include "KSmartPointerRelease.hh"
+#include "KIntegratingElectrostaticFieldSolver.hh"
 
 namespace katrin
 {
@@ -142,20 +143,17 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddElement(KContainer
 
 template<> inline bool KElectrostaticBoundaryFieldBuilder::End()
 {
-    if (!fObject->GetChargeDensitySolver() && !fObject->GetFieldSolver()) {
-        BINDINGMSG(eError) << " No charge density solver and no field solver"
-                              " set in field "
+    if (!fObject->GetChargeDensitySolver()) {
+        BINDINGMSG(eError) << " No charge density solver set in field "
                            << GetName() << "!" << eom;
-    }
-    else if (!fObject->GetChargeDensitySolver()) {
-        BINDINGMSG(eError) << " No charge density solver"
-                              " set in field "
-                           << GetName() << "!" << eom;
+        return false;
     }
     else if (!fObject->GetFieldSolver()) {
-        BINDINGMSG(eError) << " No field solver"
-                              " set in field "
-                           << GetName() << "!" << eom;
+        BINDINGMSG(eWarning) << " No electric field solver set in field "
+                           << GetName() << " - falling back to integrating solver!" << eom;
+        auto solver = new KEMField::KIntegratingElectrostaticFieldSolver();
+        fObject->SetFieldSolver(solver);
+        return true;
     }
     else
         return true;

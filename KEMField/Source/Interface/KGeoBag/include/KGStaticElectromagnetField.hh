@@ -1,5 +1,5 @@
 /*
- * KGElectrostaticBoundaryField.hh
+ * KGStaticElectromagnetField.hh
  *
  *  Created on: 25 Mar 2016
  *      Author: wolfgang
@@ -32,6 +32,9 @@ class KGStaticElectromagnetField : public KStaticElectromagnetField
     void SetDirectoryMagfield3(const std::string& aDirectory);
 
     KSmartPointer<KGeoBag::KGElectromagnetConverter> GetConverter();
+
+    const std::vector<KGeoBag::KGSurface*>& GetSurfaces() const { return fSurfaces; }
+    const std::vector<KGeoBag::KGSpace*>& GetSpaces() const { return fSpaces; }
 
   private:
     void InitializeCore() override;

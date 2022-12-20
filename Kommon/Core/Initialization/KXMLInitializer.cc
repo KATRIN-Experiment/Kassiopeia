@@ -16,7 +16,7 @@
 
 #include <memory>
 
-#ifdef Kommon_USE_ROOT
+#ifdef KASPER_USE_ROOT
 #include "KFormulaProcessor.hh"
 #endif
 
@@ -34,7 +34,8 @@ KXMLInitializer::KXMLInitializer() :
     fConfigSerializer(),
     fTokenizer(nullptr),
     fArguments(),
-    fVerbosityLevel(eNormal),
+    fVerbosityLevel(0),
+    fBatchMode(false),
     fDefaultConfigFile(),
     fDefaultIncludePaths(),
     fAllowConfigFileFallback(false),
@@ -45,7 +46,8 @@ KXMLInitializer::~KXMLInitializer() = default;
 
 void KXMLInitializer::ParseCommandLine(int argc, char** argv)
 {
-    fVerbosityLevel = eNormal;  // reset
+    fVerbosityLevel = 0;  // reset
+    fBatchMode = false;
     KArgumentList commandLineArgs;
 
     if (argc >= 1) {
@@ -89,18 +91,21 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
             if (key.length() > 0 && key[0] == '-') {
                 // parse verbosity options like '-vvqv -q -vv'
                 if (key.length() >= 2 && (key[1] == 'v' || key[1] == 'q')) {
-                    int verbosity = 0;
+                    int verbosityAdjust = 0;
                     for (size_t i = 1; i < key.length(); i++) {
                         if (key[i] == 'v')
-                            verbosity++;
+                            verbosityAdjust++;
                         else if (key[i] == 'q')
-                            verbosity--;
+                            verbosityAdjust--;
                         else {
-                            verbosity = 0;
+                            verbosityAdjust = 0;
                             break;
                         }
                     }
-                    fVerbosityLevel += verbosity;
+                    fVerbosityLevel += verbosityAdjust;
+                }
+                else if (key == string("-b") || key == string("-batch")) {
+                    fBatchMode = true;
                 }
 
                 // treat as key=value pair
@@ -240,7 +245,7 @@ void KXMLInitializer::SetupProcessChain(const map<string, string>& variables, co
     }
     tIncludeProcessor->InsertAfter(tVariableProcessor);
 
-#ifdef Kommon_USE_ROOT
+#ifdef KASPER_USE_ROOT
     auto* tFormulaProcessor = new KFormulaProcessor();
     tFormulaProcessor->InsertAfter(tVariableProcessor);
     tIncludeProcessor->InsertAfter(tFormulaProcessor);
@@ -273,8 +278,10 @@ KXMLTokenizer* KXMLInitializer::Configure(int argc, char** argv, bool processCon
     ParseCommandLine(argc, argv);
     initmsg(eNormal) << "Command line: " << fArguments.CommandLine() << eom;
 
-    KDEBUG("Verbosity level is now: " << fVerbosityLevel);
-    KMessageTable::GetInstance().SetTerminalVerbosity(static_cast<KMessageSeverity>(fVerbosityLevel));
+    if (fVerbosityLevel != 0)
+        KINFO("Verbosity level " << (fVerbosityLevel < 0 ? "decreased" : "increased") << "  by " << fVerbosityLevel);
+    KLoggerTable::GetInstance().SetVerbosityLevel(fVerbosityLevel);
+    KMessageTable::GetInstance().SetVerbosityLevel(fVerbosityLevel);
     KMessageTable::GetInstance().SetShowShutdownMessage();
 
     pair<string, KTextFile> tConfig;

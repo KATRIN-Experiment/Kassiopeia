@@ -139,11 +139,11 @@
 
 </geometry>
 
-<kassiopeia>
+<kemfield>
 
     <!-- magnetic fields -->
 
-    <ksfield_electromagnet
+    <electromagnet_field
             name="field_electromagnet"
             directory="[KEMFIELD_CACHE]"
             file="QuadrupoleTrapMagnets.kbd"
@@ -163,11 +163,11 @@
                 remote_sourcepoint_start="-1.e-1"
                 remote_sourcepoint_end="1.e-1"
         />
-    </ksfield_electromagnet>
+    </electromagnet_field>
 
     <!-- electric fields -->
 
-    <ksfield_electrostatic
+    <electrostatic_field
             name="field_electrostatic"
             directory="[KEMFIELD_CACHE]"
             file="QuadrupoleTrapElectrodes.kbd"
@@ -195,7 +195,11 @@
                 remote_sourcepoint_start="-1.e-1"
                 remote_sourcepoint_end="1.e-1"
         />
-    </ksfield_electrostatic>
+    </electrostatic_field>
+
+</kemfield>
+
+<kassiopeia>
 
     <!-- generators -->
 
@@ -272,7 +276,7 @@
 
     <!-- space navigators -->
 
-    <ksnav_space name="nav_space" enter_split="false" exit_split="false"/>
+    <ksnav_space name="nav_space" enter_split="true" exit_split="true"/>
 
     <!-- surface interactions -->
 

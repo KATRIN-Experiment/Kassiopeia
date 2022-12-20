@@ -1,4 +1,4 @@
-#include "../../../Surfaces/include/KSurface.hh"
+#include "KSurface.hh"
 
 #include "KDataComparator.hh"
 

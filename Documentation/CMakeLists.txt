@@ -1,6 +1,6 @@
 if(BUILD_DOC)
-	add_subdirectory(DeveloperGuide)
-	add_subdirectory(ComponentDocumentation)
+    add_subdirectory(DeveloperGuide)
+    add_subdirectory(ComponentDocumentation)
 endif(BUILD_DOC)
 
 # Doxygen looks into all activated module dirs
@@ -8,7 +8,7 @@ get_property(MODULE_DIRS GLOBAL PROPERTY MODULE_DIRS)
 list(JOIN MODULE_DIRS " \\\n						 " KASPER_SOURCE_DIRS)
 
 if( VTK_MAJOR_VERSION GREATER 5 )
-	set( KASPER_PREDEFS VTK6 )
+    set( KASPER_PREDEFS VTK6 )
 endif()
 
 kasper_add_doc_reference(kasper.doxygen)

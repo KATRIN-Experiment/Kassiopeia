@@ -1,11 +1,13 @@
 # CMakeLists for KEMField/FieldSolvers/Core
 # Author: T.J. Corona
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (FIELDSOLVERSCORE_HEADERFILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/KIntegratingFieldSolverTemplate.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KIntegratingFieldSolverTemplate.hh
 )
 
-kasper_install_headers (${FIELDSOLVERSCORE_HEADERFILES})
+add_library(KEMFieldSolverCore INTERFACE)
+target_include_directories(KEMFieldSolverCore
+    INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 
+kasper_install_headers (${FIELDSOLVERSCORE_HEADERFILES})
+kasper_install_libraries (KEMFieldSolverCore)

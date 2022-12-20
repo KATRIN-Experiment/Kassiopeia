@@ -70,14 +70,20 @@ KBoundaryIntegralMatrix<Integrator, enableCaching>::KBoundaryIntegralMatrix(cons
         basisDim2 *= basisDim2;
 
         unsigned int num_elements = c.size() * c.size();
+        unsigned int array_length = num_elements * basisDim2;
+        unsigned int mem_size = array_length * (sizeof(ValueType) + sizeof(bool));
 
         if (num_elements > 16384)  // this would use about 2 GiB of RAM
         {
-            kem_cout(eWarning) << "Resizing matrix cache to " << num_elements << " elements" << eom;
+            kem_cout(eWarning) << "Resizing matrix cache to " << num_elements << " elements will use ca. " << mem_size/(1024*1024) << " MiB of memory" << eom;
         }
 
-        fValueIsCached.resize(num_elements * basisDim2, false);
-        fCachedValue.resize(num_elements * basisDim2);
+        fValueIsCached.resize(array_length, false);
+        fCachedValue.resize(array_length);
+
+        if (fValueIsCached.size() < array_length || fCachedValue.size() < array_length) {
+            kem_cout(eError) << "Failed to resize matrix cache to " << num_elements << eom;
+        }
     }
 }
 

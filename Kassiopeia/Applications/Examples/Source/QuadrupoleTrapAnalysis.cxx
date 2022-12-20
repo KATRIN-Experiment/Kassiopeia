@@ -27,6 +27,7 @@ int main()
     //    KSDouble& tLength = tWorld.Get< KSDouble >( "time" );
 
     KSReadObjectROOT& tCell = tStepReader.GetObject("component_step_cell");
+    auto& tPosition = tCell.Get<KSThreeVector>("guiding_center_position");
     auto& tMoment = tCell.Get<KSDouble>("orbital_magnetic_moment");
     KSDouble tMinMoment;
     KSDouble tMaxMoment;
@@ -39,9 +40,17 @@ int main()
                  tTrackReader++) {
                 tMinMoment = numeric_limits<double>::max();
                 tMaxMoment = numeric_limits<double>::min();
+                cout << tTrackReader.GetLastStepIndex()-tTrackReader.GetFirstStepIndex() << endl;
+                size_t tSteps = 0;
                 for (tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex();
                      tStepReader++) {
                     if (tCell.Valid()) {
+                        if (tSteps == 0) {
+                            cout << "first valid: " << tStepReader.GetStepIndex() << endl;
+                            cout << "first position: " << tPosition.Value() << endl;
+                            cout << "first value: " << tMoment.Value() << endl;
+                        }
+                        tSteps++;
                         if (tMoment.Value() > tMaxMoment.Value()) {
                             tMaxMoment = tMoment;
                         }
@@ -52,10 +61,20 @@ int main()
                     }
                 }
 
-                tDeviation =
-                    2.0 * ((tMaxMoment.Value() - tMinMoment.Value()) / (tMaxMoment.Value() + tMinMoment.Value()));
+                cout << "last valid: " << tStepReader.GetStepIndex() << endl;
+                cout << "last position: " << tPosition.Value() << endl;
+                cout << "last value: " << tMoment.Value() << endl;
 
-                cout << "extrema for track <" << tDeviation << ">" << endl;
+                cout << tSteps << " steps" << endl;
+                cout << "from " << tTrackReader.GetFirstStepIndex() << " to " << tTrackReader.GetLastStepIndex() << endl;
+
+                cout << "max: " << tMaxMoment.Value() << ", min: " << tMinMoment.Value() << endl;
+
+                tDeviation = 2.0 * ((tMaxMoment.Value() - tMinMoment.Value()) / (tMaxMoment.Value() + tMinMoment.Value()));
+
+                cout << "extrema for track #" << tTrackReader.GetTrackIndex() << ": <" << tDeviation << ">" << endl;
+                cout << endl;
+                //break;
             }
         }
     }

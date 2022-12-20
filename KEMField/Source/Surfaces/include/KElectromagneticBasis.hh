@@ -1,7 +1,7 @@
 #ifndef KELECTROMAGNETICBASIS_DEF
 #define KELECTROMAGNETICBASIS_DEF
 
-#include "../../../Surfaces/include/KBasis.hh"
+#include "KBasis.hh"
 
 #include <complex>
 #include <string>

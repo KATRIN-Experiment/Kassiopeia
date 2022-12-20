@@ -623,7 +623,6 @@ void KElectrostaticPotentialmapCalculator::Execute()
 
             bool tHasValue = false;
             KFieldVector tField;
-
             if (fMirrorX || fMirrorY || fMirrorZ) {
                 double tMirrorPoint[3];
                 tMirrorPoint[0] = tPoint[0];
@@ -643,6 +642,13 @@ void KElectrostaticPotentialmapCalculator::Execute()
                     {
                         tField.SetComponents(fFieldData->GetTuple3(j));
                         tHasValue = true;
+
+                        if (tMirrorPoint[0] != tPoint[0])
+                            tField[0] *= -1;
+                        if (tMirrorPoint[1] != tPoint[1])
+                            tField[1] *= -1;
+                        if (tMirrorPoint[2] != tPoint[2])
+                            tField[2] *= -1;
                     }
                 }
             }

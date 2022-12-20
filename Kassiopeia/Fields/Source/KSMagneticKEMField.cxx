@@ -36,7 +36,7 @@ void KSMagneticKEMField::SetMagneticField(KEMField::KMagneticField* field)
     fField = field;
 }
 
-const KEMField::KMagneticField* KSMagneticKEMField::GetMagneticField()
+KEMField::KMagneticField* KSMagneticKEMField::GetMagneticField()
 {
     return fField;
 }

@@ -5,7 +5,7 @@
  *      Author: wolfgang
  */
 
-#include "../../../../../KEMField/Source/2.0/Plugins/VTKPart2/include/KVTKViewerAsBoundaryFieldVisitor.hh"
+#include "KVTKViewerAsBoundaryFieldVisitor.hh"
 #include "KContainer.hh"
 #include "KEMFieldTest.hh"
 #include "KElectrostaticBoundaryField.hh"

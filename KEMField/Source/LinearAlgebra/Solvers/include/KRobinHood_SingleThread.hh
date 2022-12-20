@@ -2,6 +2,8 @@
 #define KROBINHOOD_SINGLETHREAD_DEF
 
 #include "KSimpleVector.hh"
+#include "KSquareMatrix.hh"
+#include "KEMCoreMessage.hh"
 
 namespace KEMField
 {

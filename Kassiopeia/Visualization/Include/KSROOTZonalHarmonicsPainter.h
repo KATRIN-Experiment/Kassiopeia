@@ -29,38 +29,23 @@ class KSROOTZonalHarmonicsPainter : public katrin::KROOTPainter
     std::string GetYAxisLabel() override;
 
   private:
-    ;
     K_SET(std::string, XAxis);
-    ;
     K_SET(std::string, YAxis);
-    ;
     K_SET(double, Zmin);
-    ;
     K_SET(double, Zmax);
-    ;
     K_SET(double, Rmin);
-    ;
     K_SET(double, Rmax);
-    ;
     K_SET(double, Zdist);
-    ;
     K_SET(double, Rdist);
-    ;
     K_SET(unsigned, ZMaxSteps);
-    ;
     K_SET(unsigned, RMaxSteps);
-    ;
     K_SET(std::string, ElectricFieldName);
-    ;
     K_SET(std::string, MagneticFieldName);
-    ;
     K_SET(std::string, File);
-    ;
     K_SET(std::string, Path);
-    ;
     K_SET(bool, DrawSourcePoints);
-    ;
-    K_SET(bool, DrawSourcePointArea);
+    K_SET(bool, DrawExpansionArea);
+    K_SET(bool, DrawConvergenceArea);
     //;K_SET( std::string, GeometryType );
     //;K_SET( double, RadialSafetyMargin );
 

@@ -12,10 +12,37 @@
 #include "KMathKahanSum.h"
 
 #include <algorithm>
+#include <functional>
 #include <cmath>
 #include <map>
 #include <utility>
 #include <vector>
+
+#ifdef KASPER_USE_GSL
+#include <gsl/gsl_integration.h>
+#include "KGslErrorHandler.h"
+
+namespace {
+
+//inspired by fitrium - thx!
+using FType = const std::function<double(double)>;
+/**
+ * Create a gsl_function from c++ template function
+ *
+ * @param integrand The c++ style function object
+ * @returns A gsl_function usable by the GSL integration functions
+ */
+inline gsl_function GSLFunction(FType& integrand)
+{
+	gsl_function gsl_func;
+	gsl_func.function = [](double x, void* param) { return (*static_cast<FType*>(param))(x); };
+	gsl_func.params = (void*)&integrand;
+	return gsl_func;
+
+}
+}
+#endif /* KASPER_USE_GSL */
+
 
 namespace katrin
 {
@@ -29,7 +56,8 @@ enum class KEMathIntegrationMethod
     Simpson,
     K3,
     K4,
-    Romberg
+    Romberg,
+	QAGS
 };
 
 // forward declarations
@@ -156,6 +184,10 @@ class KMathIntegrator : private XSamplingPolicy
     template<class XIntegrandType> XFloatT QTrap(XIntegrandType&& integrand);
     template<class XIntegrandType> XFloatT QSimp(XIntegrandType&& integrand);
     template<class XIntegrandType> XFloatT QRomb(XIntegrandType&& integrand, const uint32_t K = 5);
+#ifdef KASPER_USE_GSL
+    template<class XIntegrandType> XFloatT QAGIU(XIntegrandType&& integrand);
+    template<class XIntegrandType> XFloatT QAGS(XIntegrandType&& integrand);
+#endif
 
     XFloatT fXStart;
     XFloatT fXEnd;
@@ -316,6 +348,13 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandTy
     if (fJMax < fJMin)
         fJMax = fJMin;
 
+    if ((std::isinf(fXEnd) and fXEnd>0))
+#ifdef KASPER_USE_GSL
+    	return QAGIU(std::forward<XIntegrandType>(integrand));
+#else
+    	throw KMathIntegratorException() << "Cannot integrate up to infinity without GSL libraries.";
+#endif
+
     switch (fMethod) {
         case KEMathIntegrationMethod::Trapezoidal:
             return QTrap(std::forward<XIntegrandType>(integrand));
@@ -327,6 +366,12 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandTy
             return QRomb(std::forward<XIntegrandType>(integrand), 4);
         case KEMathIntegrationMethod::Romberg:
             return QRomb(std::forward<XIntegrandType>(integrand), 5);
+        case KEMathIntegrationMethod::QAGS:
+#ifdef KASPER_USE_GSL
+        	return QAGS(std::forward<XIntegrandType>(integrand));
+#else
+            throw KMathIntegratorException() << "Cannot use QAGS/GSL in build without GSL libraries.";
+#endif
         default:
             throw KMathIntegratorException() << "Invalid integration method specified.";
     }
@@ -460,6 +505,87 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QRomb(XIntegrandType&&
         return QSimp(integrand);
     }
 }
+
+#ifdef KASPER_USE_GSL
+template<class XFloatT, class XSamplingPolicy>
+template<class XIntegrandType>
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGS(XIntegrandType&& integrand)
+{
+    /*Use gsl implementation for integral int_a^b. Implementation is experimental. */
+	const uint ws_size = 100;
+    gsl_integration_workspace* workspace = gsl_integration_workspace_alloc(ws_size);
+    FType proxy = integrand;
+    gsl_function F=GSLFunction(proxy);
+
+    XFloatT AbsError;
+
+    try {
+    	gsl_integration_qags(&F,fXStart,fXEnd,0,fPrecision,ws_size,workspace,&fCurrentResult,&AbsError);
+    }
+    catch (KGslException &e) {
+        if (fThrowExceptions)
+        	 throw KMathIntegratorException() << "Error encountered in routine QAGS: " << e.what();
+    }
+
+//    KGslErrorHandler::GetInstance().Reset();
+
+    fIteration+=ilog2_ceil(workspace->size);	//crude approximation, since QAGS log2(workspace->size) is non integer
+    gsl_integration_workspace_free(workspace);
+
+    if (fabs(AbsError/fCurrentResult)<fPrecision)
+        return fCurrentResult;
+
+    if (std::isnormal(fCurrentResult)) {
+		if (fFallbackOnLowPrec) {
+			Reset();
+			return QRomb(std::forward<XIntegrandType>(integrand), 5);
+		}
+		else
+			return fCurrentResult;
+    }
+	else {
+		if (fThrowExceptions)
+			throw KMathIntegratorException() << "Non finite result in routine QAGS.";
+
+		Reset();
+		return QRomb(std::forward<XIntegrandType>(integrand), 5);
+	}
+}
+
+template<class XFloatT, class XSamplingPolicy>
+template<class XIntegrandType>
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGIU(XIntegrandType&& integrand)
+{
+    /*Use gsl implementation for integral int_xmin^infty. Use case is the krypton spectrum. Implementation is experimental. */
+	const uint ws_size = 100;
+    gsl_integration_workspace* workspace = gsl_integration_workspace_alloc(ws_size);
+    FType proxy = integrand;
+    gsl_function F=GSLFunction(proxy);
+
+    double Precision = fPrecision<1E-5 ? 1E-5 : fPrecision;
+    // QAGIU is only used far above the last krypton line with very small rate. Too large precision does not work here.
+
+    XFloatT AbsError;
+
+    try {
+    	gsl_integration_qagiu(&F,fXStart,0,Precision,ws_size,workspace,&fCurrentResult,&AbsError);
+    }
+    catch (KGslException &e) {
+        if (fThrowExceptions)
+        	 throw KMathIntegratorException() << "Error encountered in routine QAGIU: " << e.what();
+    }
+
+//    KGslErrorHandler::GetInstance().Reset();
+
+    fIteration+=ilog2_ceil(workspace->size);	//crude approximation, since QAGIU log2(workspace->size) is non integer
+    gsl_integration_workspace_free(workspace);
+
+    if (std::isnormal(fCurrentResult))
+    	return fCurrentResult;
+    else
+        throw KMathIntegratorException() << "Non finite result in routine QAGIU.";
+}
+#endif /* KASPER_USE_GSL */
 
 template<class XFloatT, class XSamplingPolicy>
 inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::K1DPolyInterpolator::RawInterpolate(int32_t jl, XFloatT x)

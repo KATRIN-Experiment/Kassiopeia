@@ -85,16 +85,16 @@ using KBoundaryTypes = NoDuplicates<KBoundaryTypes_>::Result;
 using KShapeTypes = NoDuplicates<KShapeTypes_>::Result;
 }  // namespace KEMField
 
-#include "../../../Surfaces/include/KBoundary.hh"
-#include "../../../Surfaces/include/KConicSection.hh"
-#include "../../../Surfaces/include/KElectromagneticBasis.hh"
-#include "../../../Surfaces/include/KElectrostaticBasis.hh"
-#include "../../../Surfaces/include/KLineSegment.hh"
-#include "../../../Surfaces/include/KMagnetostaticBasis.hh"
-#include "../../../Surfaces/include/KRectangle.hh"
-#include "../../../Surfaces/include/KRing.hh"
-#include "../../../Surfaces/include/KSurfaceVisitors.hh"
-#include "../../../Surfaces/include/KSymmetryGroup.hh"
-#include "../../../Surfaces/include/KTriangle.hh"
+#include "KBoundary.hh"
+#include "KConicSection.hh"
+#include "KElectromagneticBasis.hh"
+#include "KElectrostaticBasis.hh"
+#include "KLineSegment.hh"
+#include "KMagnetostaticBasis.hh"
+#include "KRectangle.hh"
+#include "KRing.hh"
+#include "KSurfaceVisitors.hh"
+#include "KSymmetryGroup.hh"
+#include "KTriangle.hh"
 
 #endif /* KSURFACETYPES_DEF */

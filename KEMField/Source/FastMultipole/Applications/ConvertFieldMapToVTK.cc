@@ -11,7 +11,6 @@
 #include <string>
 #include <vector>
 
-#ifdef KEMFIELD_USE_VTK
 #include <vtkActor.h>
 #include <vtkAppendPolyData.h>
 #include <vtkCellArray.h>
@@ -42,7 +41,6 @@
 #include <vtkVersion.h>
 #include <vtkXMLImageDataWriter.h>
 #include <vtkXMLPolyDataWriter.h>
-#endif /* KEMFIELD_USE_VTK */
 
 
 using namespace KEMField;

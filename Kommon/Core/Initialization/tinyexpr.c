@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Zlib
 /*
  * TINYEXPR - Tiny recursive descent parser and evaluation engine in C
  *
@@ -39,6 +40,7 @@ For log = natural log uncomment the next line. */
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <limits.h>
 
 #ifndef NAN
@@ -242,11 +244,11 @@ void next_token(state *s) {
             s->type = TOK_NUMBER;
         } else {
             /* Look for a variable or builtin function call. */
-            if (s->next[0] >= 'a' && s->next[0] <= 'z') {
+            if (isalpha(s->next[0])) {
                 const char *start;
                 start = s->next;
-                while ((s->next[0] >= 'a' && s->next[0] <= 'z') || (s->next[0] >= '0' && s->next[0] <= '9') || (s->next[0] == '_')) s->next++;
-
+                while (isalpha(s->next[0]) || isdigit(s->next[0]) || (s->next[0] == '_')) s->next++;
+                
                 const te_variable *var = find_lookup(s, start, s->next - start);
                 if (!var) var = find_builtin(start, s->next - start);
 

@@ -28,7 +28,7 @@ class KSMagneticKEMField : public KSMagneticField
     ~KSMagneticKEMField() override;
 
     void SetMagneticField(KEMField::KMagneticField* field);
-    const KEMField::KMagneticField* GetMagneticField();
+    KEMField::KMagneticField* GetMagneticField();
 
     void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
                             KGeoBag::KThreeVector& aPotential) override;

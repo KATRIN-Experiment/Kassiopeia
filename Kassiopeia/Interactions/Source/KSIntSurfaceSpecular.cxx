@@ -58,7 +58,7 @@ void KSIntSurfaceSpecular::ExecuteReflection(const KSParticle& anInitialParticle
 
     //prevent kinetic energy from going negative
     if (tKineticEnergy < 0.0) {
-        intmsg(eError) << "surface diffuse interaction named <" << GetName()
+        intmsg(eError) << "surface specular interaction named <" << GetName()
                        << "> tried to give a particle a negative kinetic energy." << eom;
         return;
     }
@@ -99,7 +99,7 @@ void KSIntSurfaceSpecular::ExecuteTransmission(const KSParticle& anInitialPartic
 
     //prevent kinetic energy from going negative
     if (tKineticEnergy < 0.0) {
-        intmsg(eError) << "surface diffuse interaction named <" << GetName()
+        intmsg(eError) << "surface specular interaction named <" << GetName()
                        << "> tried to give a particle a negative kinetic energy." << eom;
         return;
     }

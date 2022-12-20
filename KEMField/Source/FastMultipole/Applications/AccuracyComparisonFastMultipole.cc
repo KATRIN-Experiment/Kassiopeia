@@ -57,6 +57,7 @@
 
 using namespace KGeoBag;
 using namespace KEMField;
+using namespace std;
 
 #ifdef KEMFIELD_USE_OPENCL
 KFMElectrostaticFastMultipoleFieldSolver_OpenCL* fast_solver;
@@ -378,6 +379,8 @@ class SelectBoundaryElements : public KSelectiveVisitor<KShapeVisitor, KTYPELIST
     {
         fSource = c;
     }
+
+    using KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>::Visit;
 
     void Visit(KTriangle& /*t*/) override
     {

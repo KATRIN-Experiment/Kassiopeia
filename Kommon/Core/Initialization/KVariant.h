@@ -272,7 +272,7 @@ template<> struct KVariantDecoder<KVariant>
 
 int compare(const KVariant& id1, const KVariant& id2);
 
-KVariant::KVariant() : fType(Type_Void) {}
+KVariant::KVariant() : fType(Type_Void), fPrimitive() {}
 
 KVariant::KVariant(bool Value) : fType(Type_Bool)
 {

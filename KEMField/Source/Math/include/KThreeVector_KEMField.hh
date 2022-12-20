@@ -11,6 +11,8 @@
 namespace KEMField
 {
 
+using KThreeVector = KGeoBag::KThreeVector;
+
 template<typename Stream> Stream& operator>>(Stream& s, KGeoBag::KThreeVector& aThreeVector)
 {
     s.PreStreamInAction(aThreeVector);

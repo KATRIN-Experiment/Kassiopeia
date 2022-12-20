@@ -1,7 +1,7 @@
 #ifndef KSYMMETRYGROUP_DEF
 #define KSYMMETRYGROUP_DEF
 
-#include "../../../Surfaces/include/KShape.hh"
+#include "KShape.hh"
 #include "KEMConstants.hh"
 #include "KEMTransformation.hh"
 

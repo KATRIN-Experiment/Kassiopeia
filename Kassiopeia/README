@@ -1,36 +1,20 @@
-Kassiopeia 3.2 - a tracking simulation package from the KATRIN collaboration
+Kassiopeia - a tracking simulation package from the KATRIN collaboration
 
 Licensing and Warranty:
-	The KATRIN collaboration and the developers of Kassiopeia make no assurance
-	whatsoever as to the merchantability or fitness of the Kassiopeia package
-	for any particular purpose.  The code is provided on an as-is basis only.
+	See https://katrin-experiment.github.io/Kassiopeia/license.html
 
 Authors:
-	< use list from paper >	
+	See https://katrin-experiment.github.io/Kassiopeia/authors.html
 
 User's Guide:
-	An introductory user's guide in PDF form is available at:
-	< doesn't exist yet! >
-	The User's Guide is meant to show new users how to set up and run their
-	first few simulations, and broadly explains how Kassiopeia works. 
+	Documentation can be found in the user's guide available at:
+	https://katrin-experiment.github.io/Kassiopeia/
 
-Developer's Guide:
-	A developer's guide in PDF form is available at:
-	< doesn't exist yet >
-	The Developer's Guide is a detailed explanation of how Kassiopeia is
-	is structured, and is aimed at programmers wishing to add their own modules
-	to extend the Kassiopeia framework.
-	
-
-Wiki:
-	A wiki page for Kassiopeia is maintained at:
-	< wiki link here >
-	
 Bugs:
 	In the surely unlikely event that you find a bug, it may be submitted to the
 	Kassiopeia bug tracker at:
-	< bug tracker link here >
+	https://github.com/KATRIN-Experiment/Kassiopeia/issues
 
 Reference:
-	To cite Kassiopeia, please see the paper at:
-	< hahahaha >
+	To cite the use of and/or data produced with the assistance of Kassiopeia or its associated libraries (KGeoBag, KEMField, or Kommon), please refer to the paper:
+	D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensible C++ Particle Tracking Package” (doi:10.1088/1367-2630/aa6950)

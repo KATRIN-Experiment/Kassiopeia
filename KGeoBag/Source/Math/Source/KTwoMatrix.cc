@@ -1,7 +1,15 @@
 #include "KTwoMatrix.hh"
 
+#include <limits>
+const double NaN = std::numeric_limits<double>::quiet_NaN();
+
 namespace KGeoBag
 {
+
+const KTwoMatrix KTwoMatrix::sInvalid = KTwoMatrix(NaN, NaN, NaN, NaN);
+const KTwoMatrix KTwoMatrix::sZero = KTwoMatrix(0., 0., 0., 0.);
+
+const KTwoMatrix KTwoMatrix::sIdentity = KTwoMatrix(1., 0., 0., 1.);
 
 KTwoMatrix::KTwoMatrix()
 {

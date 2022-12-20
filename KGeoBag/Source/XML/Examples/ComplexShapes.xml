@@ -73,7 +73,7 @@
     </rod_surface>
 
     <extruded_surface name="example_extruded_surface">
-      <extruded_object z_min="-1." z_max="1." longitudinal_mesh_count="40" longitudinal_mesh_power="2." closed_form="1">
+      <extruded_object z_min="-1." z_max="1." extruded_mesh_count="5" longitudinal_mesh_count="40" longitudinal_mesh_power="2." closed_form="1">
 	<inner_line x1="-.5" y1="-.5" x2="-.5" y2=".5"/>
 	<inner_arc x1="-.5" y1=".5" x2=".5" y2=".5" radius="1." positive_orientation="0"/>
 	<inner_arc x1=".5" y1=".5" x2=".5" y2="-.5" radius="1." positive_orientation="1"/>

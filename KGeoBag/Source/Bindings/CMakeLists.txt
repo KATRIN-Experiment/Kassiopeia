@@ -1,13 +1,19 @@
 # headers
 set( BINDINGS_HEADER_FILES
+
+  Include/KGBindingsMessage.hh
+
   # math
   Math/Include/KGTransformationBuilder.hh
-  
+
   # core
   Core/Include/KGSurfaceBuilder.hh
   Core/Include/KGSpaceBuilder.hh
   Core/Include/KGInterfaceBuilder.hh
-  
+
+  # External shapes
+  Shapes/External/Include/KGStlFileBuilder.hh
+
   # complex shapes
   Shapes/Complex/Include/KGBeamBuilder.hh
   Shapes/Complex/Include/KGConicalWireArrayBuilder.hh
@@ -28,11 +34,11 @@ set( BINDINGS_HEADER_FILES
   Shapes/PlanarShapes/Include/KGPlanarPolyLineBuilder.hh
   Shapes/PlanarShapes/Include/KGPlanarCircleBuilder.hh
   Shapes/PlanarShapes/Include/KGPlanarPolyLoopBuilder.hh
-  
+
   # flattened closed path surfaces
   Shapes/FlattenedAreas/Include/KGFlattenedCircleSurfaceBuilder.hh
   Shapes/FlattenedAreas/Include/KGFlattenedPolyLoopSurfaceBuilder.hh
-  
+
   # rotated path surfaces
   Shapes/RotatedAreas/Include/KGRotatedLineSegmentSurfaceBuilder.hh
   Shapes/RotatedAreas/Include/KGDiskSurfaceBuilder.hh
@@ -46,21 +52,21 @@ set( BINDINGS_HEADER_FILES
   Shapes/RotatedAreas/Include/KGRotatedCircleSurfaceBuilder.hh
   Shapes/RotatedAreas/Include/KGTorusSurfaceBuilder.hh
   Shapes/RotatedAreas/Include/KGRotatedPolyLoopSurfaceBuilder.hh
-  
+
   # shell path surfaces
   Shapes/ShellAreas/Include/KGShellLineSegmentSurfaceBuilder.hh
   Shapes/ShellAreas/Include/KGShellArcSegmentSurfaceBuilder.hh
   Shapes/ShellAreas/Include/KGShellPolyLineSurfaceBuilder.hh
   Shapes/ShellAreas/Include/KGShellPolyLoopSurfaceBuilder.hh
   Shapes/ShellAreas/Include/KGShellCircleSurfaceBuilder.hh
-  
+
   # extruded path surfaces
   Shapes/ExtrudedAreas/Include/KGExtrudedLineSegmentSurfaceBuilder.hh
   Shapes/ExtrudedAreas/Include/KGExtrudedArcSegmentSurfaceBuilder.hh
   Shapes/ExtrudedAreas/Include/KGExtrudedPolyLineSurfaceBuilder.hh
   Shapes/ExtrudedAreas/Include/KGExtrudedCircleSurfaceBuilder.hh
   Shapes/ExtrudedAreas/Include/KGExtrudedPolyLoopSurfaceBuilder.hh
-  
+
   # rotated open path spaces
   Shapes/RotatedVolumes/Include/KGRotatedLineSegmentSpaceBuilder.hh
   Shapes/RotatedVolumes/Include/KGCylinderSpaceBuilder.hh
@@ -68,19 +74,19 @@ set( BINDINGS_HEADER_FILES
   Shapes/RotatedVolumes/Include/KGCutConeSpaceBuilder.hh
   Shapes/RotatedVolumes/Include/KGRotatedArcSegmentSpaceBuilder.hh
   Shapes/RotatedVolumes/Include/KGRotatedPolyLineSpaceBuilder.hh
-  
-  # rotated closed path spaces  
+
+  # rotated closed path spaces
   Shapes/RotatedVolumes/Include/KGRotatedCircleSpaceBuilder.hh
   Shapes/RotatedVolumes/Include/KGTorusSpaceBuilder.hh
   Shapes/RotatedVolumes/Include/KGRotatedPolyLoopSpaceBuilder.hh
   Shapes/RotatedVolumes/Include/KGCylinderTubeSpaceBuilder.hh
   Shapes/RotatedVolumes/Include/KGCutConeTubeSpaceBuilder.hh
-  
+
   # extruded closed path spaces
   Shapes/ExtrudedVolumes/Include/KGExtrudedCircleSpaceBuilder.hh
   Shapes/ExtrudedVolumes/Include/KGExtrudedPolyLoopSpaceBuilder.hh
   Shapes/ExtrudedVolumes/Include/KGBoxSpaceBuilder.hh
-  
+
   # appearance
   Extensions/Appearance/Include/KGAppearanceBuilder.hh
 
@@ -89,7 +95,7 @@ set( BINDINGS_HEADER_FILES
 
   # mesh
   Extensions/Mesh/Include/KGMeshBuilder.hh
-  
+
   # axial mesh
   Extensions/AxialMesh/Include/KGAxialMeshBuilder.hh
 
@@ -100,34 +106,39 @@ set( BINDINGS_HEADER_FILES
 )
 
 if( KGeoBag_USE_VTK )
-  	list(APPEND BINDINGS_HEADER_FILES
-    	Visualization/Vtk/Include/KGVTKGeometryPainterBuilder.hh
-    	Visualization/Vtk/Include/KGVTKMeshPainterBuilder.hh
-    	Visualization/Vtk/Include/KGVTKAxialMeshPainterBuilder.hh
-    	Visualization/Vtk/Include/KGVTKPointTesterBuilder.hh
-    	Visualization/Vtk/Include/KGVTKNormalTesterBuilder.hh
-    	Visualization/Vtk/Include/KGVTKDistanceTesterBuilder.hh
-    	Visualization/Vtk/Include/KGVTKOutsideTesterBuilder.hh
-    	Visualization/Vtk/Include/KGVTKRandomPointTesterBuilder.hh
-	)
+      list(APPEND BINDINGS_HEADER_FILES
+        Visualization/Vtk/Include/KGVTKGeometryPainterBuilder.hh
+        Visualization/Vtk/Include/KGVTKMeshPainterBuilder.hh
+        Visualization/Vtk/Include/KGVTKAxialMeshPainterBuilder.hh
+        Visualization/Vtk/Include/KGVTKPointTesterBuilder.hh
+        Visualization/Vtk/Include/KGVTKNormalTesterBuilder.hh
+        Visualization/Vtk/Include/KGVTKDistanceTesterBuilder.hh
+        Visualization/Vtk/Include/KGVTKOutsideTesterBuilder.hh
+        Visualization/Vtk/Include/KGVTKRandomPointTesterBuilder.hh
+    )
 endif( KGeoBag_USE_VTK )
 
 if( KGeoBag_USE_ROOT )
-	list( APPEND BINDINGS_HEADER_FILES
-		Visualization/Root/Include/KGROOTGeometryPainterBuilder.hh
-	)
+    list( APPEND BINDINGS_HEADER_FILES
+        Visualization/Root/Include/KGROOTGeometryPainterBuilder.hh
+    )
 endif( KGeoBag_USE_ROOT )
 
 # sources
 set( BINDINGS_SOURCE_FILES
+    Source/KGBindingsMessage.cc
+
     # math
     Math/Source/KGTransformationBuilder.cc
-  
+
     # core
     Core/Source/KGSurfaceBuilder.cc
     Core/Source/KGSpaceBuilder.cc
     Core/Source/KGInterfaceBuilder.cc
-  
+
+    # External shapes
+    Shapes/External/Source/KGStlFileBuilder.cc
+
     # complex shapes
     Shapes/Complex/Source/KGBeamBuilder.cc
     Shapes/Complex/Source/KGConicalWireArrayBuilder.cc
@@ -149,10 +160,10 @@ set( BINDINGS_SOURCE_FILES
     Shapes/PlanarShapes/Source/KGPlanarCircleBuilder.cc
     Shapes/PlanarShapes/Source/KGPlanarPolyLoopBuilder.cc
 
-    # flattened closed path surfaces  
+    # flattened closed path surfaces
     Shapes/FlattenedAreas/Source/KGFlattenedCircleSurfaceBuilder.cc
     Shapes/FlattenedAreas/Source/KGFlattenedPolyLoopSurfaceBuilder.cc
-  
+
     # rotated path surfaces
     Shapes/RotatedAreas/Source/KGRotatedLineSegmentSurfaceBuilder.cc
     Shapes/RotatedAreas/Source/KGDiskSurfaceBuilder.cc
@@ -166,41 +177,41 @@ set( BINDINGS_SOURCE_FILES
     Shapes/RotatedAreas/Source/KGRotatedCircleSurfaceBuilder.cc
     Shapes/RotatedAreas/Source/KGTorusSurfaceBuilder.cc
     Shapes/RotatedAreas/Source/KGRotatedPolyLoopSurfaceBuilder.cc
-  
+
     # shell path surfaces
     Shapes/ShellAreas/Source/KGShellLineSegmentSurfaceBuilder.cc
     Shapes/ShellAreas/Source/KGShellArcSegmentSurfaceBuilder.cc
     Shapes/ShellAreas/Source/KGShellPolyLineSurfaceBuilder.cc
     Shapes/ShellAreas/Source/KGShellPolyLoopSurfaceBuilder.cc
     Shapes/ShellAreas/Source/KGShellCircleSurfaceBuilder.cc
-  
+
     # extruded path surfaces
     Shapes/ExtrudedAreas/Source/KGExtrudedLineSegmentSurfaceBuilder.cc
     Shapes/ExtrudedAreas/Source/KGExtrudedArcSegmentSurfaceBuilder.cc
     Shapes/ExtrudedAreas/Source/KGExtrudedPolyLineSurfaceBuilder.cc
     Shapes/ExtrudedAreas/Source/KGExtrudedCircleSurfaceBuilder.cc
     Shapes/ExtrudedAreas/Source/KGExtrudedPolyLoopSurfaceBuilder.cc
-  
+
     # rotated open path spaces
-    Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc  
+    Shapes/RotatedVolumes/Source/KGRotatedLineSegmentSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGCylinderSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGConeSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGCutConeSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGRotatedArcSegmentSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGRotatedPolyLineSpaceBuilder.cc
-  
+
     # rotated closed path spaces
     Shapes/RotatedVolumes/Source/KGRotatedCircleSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGTorusSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGRotatedPolyLoopSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGCylinderTubeSpaceBuilder.cc
     Shapes/RotatedVolumes/Source/KGCutConeTubeSpaceBuilder.cc
-  
+
     # extruded closed path spaces
     Shapes/ExtrudedVolumes/Source/KGExtrudedCircleSpaceBuilder.cc
     Shapes/ExtrudedVolumes/Source/KGExtrudedPolyLoopSpaceBuilder.cc
     Shapes/ExtrudedVolumes/Source/KGBoxSpaceBuilder.cc
-  
+
     # appearance
     Extensions/Appearance/Source/KGAppearanceBuilder.cc
 
@@ -209,7 +220,7 @@ set( BINDINGS_SOURCE_FILES
 
     # mesh
     Extensions/Mesh/Source/KGMeshBuilder.cc
-    
+
     # axial mesh
     Extensions/AxialMesh/Source/KGAxialMeshBuilder.cc
 
@@ -220,88 +231,67 @@ set( BINDINGS_SOURCE_FILES
 )
 
 if( KGeoBag_USE_VTK )
-	list( APPEND BINDINGS_SOURCE_FILES
-	    Visualization/Vtk/Source/KGVTKGeometryPainterBuilder.cc
-	    Visualization/Vtk/Source/KGVTKMeshPainterBuilder.cc
-	    Visualization/Vtk/Source/KGVTKAxialMeshPainterBuilder.cc
-	    Visualization/Vtk/Source/KGVTKPointTesterBuilder.cc
-	    Visualization/Vtk/Source/KGVTKNormalTesterBuilder.cc
-	    Visualization/Vtk/Source/KGVTKDistanceTesterBuilder.cc
-	    Visualization/Vtk/Source/KGVTKOutsideTesterBuilder.cc
-	    Visualization/Vtk/Source/KGVTKRandomPointTesterBuilder.cc
-	)
+    list( APPEND BINDINGS_SOURCE_FILES
+        Visualization/Vtk/Source/KGVTKGeometryPainterBuilder.cc
+        Visualization/Vtk/Source/KGVTKMeshPainterBuilder.cc
+        Visualization/Vtk/Source/KGVTKAxialMeshPainterBuilder.cc
+        Visualization/Vtk/Source/KGVTKPointTesterBuilder.cc
+        Visualization/Vtk/Source/KGVTKNormalTesterBuilder.cc
+        Visualization/Vtk/Source/KGVTKDistanceTesterBuilder.cc
+        Visualization/Vtk/Source/KGVTKOutsideTesterBuilder.cc
+        Visualization/Vtk/Source/KGVTKRandomPointTesterBuilder.cc
+    )
 endif( KGeoBag_USE_VTK )
 
 if( KGeoBag_USE_ROOT )
-	list( APPEND BINDINGS_SOURCE_FILES
-		Visualization/Root/Source/KGROOTGeometryPainterBuilder.cc
-	)
-endif( KGeoBag_USE_ROOT )
-
-# internal
-kasper_internal_include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Core/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Complex/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/PlanarShapes/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/FlattenedAreas/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/RotatedAreas/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/RotatedVolumes/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/ExtrudedAreas/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/ExtrudedVolumes/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/ShellAreas/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/Appearance/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/Deformation/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/Mesh/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/AxialMesh/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/DiscreteRotationalMesh/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Visualization/Basic/Include
-)
-
-if( KGeoBag_USE_VTK )
-	kasper_internal_include_directories(
-		${CMAKE_CURRENT_SOURCE_DIR}/Visualization/Vtk/Include
-	)
-endif( KGeoBag_USE_VTK )
-
-if( KGeoBag_USE_ROOT )
-	kasper_internal_include_directories(
-		${CMAKE_CURRENT_SOURCE_DIR}/Visualization/Root/Include
-	)
+    list( APPEND BINDINGS_SOURCE_FILES
+        Visualization/Root/Source/KGROOTGeometryPainterBuilder.cc
+    )
 endif( KGeoBag_USE_ROOT )
 
 # target
 add_library( KGeoBagBindings SHARED
-	${BINDINGS_SOURCE_FILES} ${BINDINGS_HEADER_FILES}
+    ${BINDINGS_SOURCE_FILES} ${BINDINGS_HEADER_FILES}
 )
-set( BINDINGS_LIBRARIES
-	${Kommon_LIBRARIES}
-    KGeoBagCore
-    KGeoBagShapes
-    KGeoBagAppearance
-    KGeoBagDeformation
-    KGeoBagMesh
-    KGeoBagAxialMesh
-    KGeoBagDiscreteRotationalMesh
-    KGeoBagBasicVisualization
+add_library( KGeoBagBindingsHeaders INTERFACE )
+
+foreach(HEADER ${BINDINGS_HEADER_FILES})
+    get_filename_component(DIRNAME ${CMAKE_CURRENT_SOURCE_DIR}/${HEADER} DIRECTORY)
+    target_include_directories(KGeoBagBindings PUBLIC $<BUILD_INTERFACE:${DIRNAME}>)
+    target_include_directories(KGeoBagBindingsHeaders INTERFACE $<BUILD_INTERFACE:${DIRNAME}>)
+endforeach(HEADER)
+target_include_directories(KGeoBagBindings PUBLIC $<INSTALL_INTERFACE:include>)
+
+target_link_libraries( KGeoBagBindings
+    PUBLIC
+        Kommon
+        KGeoBagCore
+        KGeoBagShapes
+        KGeoBagAppearance
+        KGeoBagDeformation
+        KGeoBagMetrics
+        KGeoBagRandom
+        KGeoBagMesh
+        KGeoBagAxialMesh
+        KGeoBagDiscreteRotationalMesh
+        KGeoBagBasicVisualization
 )
 
 if( KGeoBag_USE_VTK )
-	list( APPEND BINDINGS_LIBRARIES
-		KGeoBagVtkVisualization
-	)
+    target_link_libraries( KGeoBagBindings
+        PUBLIC
+            KommonVtk
+            KGeoBagVtkVisualization
+    )
 endif( KGeoBag_USE_VTK )
 
 if( KGeoBag_USE_ROOT )
-	list( APPEND BINDINGS_LIBRARIES
-		KGeoBagROOTVisualization
-	)
+    target_link_libraries( KGeoBagBindings
+        PUBLIC
+            KGeoBagROOTVisualization
+    )
 endif( KGeoBag_USE_ROOT )
-
-target_link_libraries( KGeoBagBindings
-	${BINDINGS_LIBRARIES}
-)
 
 # install
 kasper_install_headers( ${BINDINGS_HEADER_FILES} )
-kasper_install_libraries( KGeoBagBindings )
+kasper_install_libraries( KGeoBagBindings KGeoBagBindingsHeaders )

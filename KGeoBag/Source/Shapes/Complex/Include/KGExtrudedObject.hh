@@ -18,8 +18,12 @@ class KGExtrudedObject : public KGBoundary
         fZMax(0.),
         fNDisc(0),
         fDiscretizationPower(2.),
+        fExtrudedMeshCount(0),
+        fExtrudedMeshPower(2.),
         fNInnerSegments(0),
         fNOuterSegments(0),
+        fRefineMesh(false),
+        fMeshMergeDistance(1.E-4),
         fClosedLoops(false),
         fBackwards(false)
     {}
@@ -28,8 +32,12 @@ class KGExtrudedObject : public KGBoundary
         fZMax(zMax),
         fNDisc(nDisc),
         fDiscretizationPower(2.),
+        fExtrudedMeshCount(nDisc),
+        fExtrudedMeshPower(2.),
         fNInnerSegments(0),
         fNOuterSegments(0),
+        fRefineMesh(false),
+        fMeshMergeDistance(1.E-4),
         fClosedLoops(closedLoops),
         fBackwards(false)
     {}
@@ -68,6 +76,22 @@ class KGExtrudedObject : public KGBoundary
     {
         fNDisc = ndisc;
     }
+    void SetExtrudedMeshPower(double d)
+    {
+        fExtrudedMeshPower = d;
+    }
+    void SetExtrudedMeshCount(int ndisc)
+    {
+        fExtrudedMeshCount = ndisc;
+    }
+    void SetRefineMesh(bool enable = true)
+    {
+        fRefineMesh = enable;
+    }
+    void SetMeshMergeDistance(double dist)
+    {
+        fMeshMergeDistance = dist;
+    }
     void Open()
     {
         fClosedLoops = false;
@@ -105,6 +129,22 @@ class KGExtrudedObject : public KGBoundary
     double GetDiscretizationPower() const
     {
         return fDiscretizationPower;
+    }
+    int GetExtrudedMeshCount() const
+    {
+        return fExtrudedMeshCount;
+    }
+    double GetExtrudedMeshPower() const
+    {
+        return fExtrudedMeshPower;
+    }
+    bool RefineMesh() const
+    {
+        return fRefineMesh;
+    }
+    double MeshMergeDistance() const
+    {
+        return fMeshMergeDistance;
     }
     bool ClosedLoops() const
     {
@@ -327,15 +367,23 @@ class KGExtrudedObject : public KGBoundary
     double fZMin;
     // Downstream z position of the surface
     double fZMax;
-    // Number of discretizations in the z-direction
+    // Number of discretizations in the xy-direction
     int fNDisc;
-    // Power of discretization in the z-direction
+    // Power of discretization in the xy-direction
     double fDiscretizationPower;
+    // Number of discretizations in the z-direction
+    int fExtrudedMeshCount;
+    // Power of discretization in the z-direction
+    double fExtrudedMeshPower;
 
     // # of segments that comprise the 2-D image
     int fNInnerSegments;
     // # of segments that comprise the 2-D image
     int fNOuterSegments;
+
+    // parameters to enable auto-refinement of the mesh
+    bool fRefineMesh;
+    double fMeshMergeDistance;
 
     // parameter to determine whether the inner and outer segments are closed
     // forms

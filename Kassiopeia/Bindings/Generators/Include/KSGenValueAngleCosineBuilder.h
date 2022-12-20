@@ -4,6 +4,8 @@
 #include "KComplexElement.hh"
 #include "KSGenValueAngleCosine.h"
 
+#include "KStringUtils.h"
+
 using namespace Kassiopeia;
 namespace katrin
 {
@@ -14,6 +16,14 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
 {
     if (aContainer->GetName() == "name") {
         aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
+    }
+    if (aContainer->GetName() == "mode") {
+        const std::string& tok = aContainer->AsReference<std::string>();
+        if (KStringUtils::IContains(tok, "mol"))
+            fObject->SetMode(KSGenValueAngleCosine::EDistributionMode::MolecularFlow);
+        else
+            fObject->SetMode(KSGenValueAngleCosine::EDistributionMode::Classic);
         return true;
     }
     if (aContainer->GetName() == "angle_min") {

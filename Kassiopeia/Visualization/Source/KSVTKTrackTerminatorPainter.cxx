@@ -61,7 +61,7 @@ void KSVTKTrackTerminatorPainter::Render()
     const KSThreeVector& tPointVariable = tPointObject.Get<KSThreeVector>(fPointVariable);
 
     KSReadObjectROOT& tTerminatorObject = tTrack.GetObject(fTerminatorObject);
-    const KSString& tTerminatorVariable = tPointObject.Get<KSString>(fTerminatorVariable);
+    const KSString& tTerminatorVariable = tTerminatorObject.Get<KSString>(fTerminatorVariable);
 
     // TODO: Use it or delete it. bool tActive;
     vtkIdType tId;

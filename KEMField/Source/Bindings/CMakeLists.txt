@@ -1,20 +1,7 @@
 # CMakeLists for KEMField/Source/Bindings
 # W. Gosda
 
-#${PROJECT_NAME}_USE_KOMMON is defined in Core/CMakeLists.txt
-
-# Bindings need to be linked against Kommon, KMessage and KGeoBag
-add_cflag (KEMFIELD_USE_KOMMON_BINDINGS)
-
-  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include)
-  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include)
-  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include)
-  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/include)
-  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include)
-  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/include)
-  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/KGeoBag/include)
-
-  set (KEMFIELD_BINDINGS_HEADERFILES
+set (KEMFIELD_BINDINGS_HEADERFILES
 #    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolbox.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolboxBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMBindingsMessage.hh
@@ -56,9 +43,9 @@ add_cflag (KEMFIELD_USE_KOMMON_BINDINGS)
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticPotentialmapBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticFieldmapBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticConstantFieldBuilder.hh
-    )
+)
 
-  set (KEMFIELD_BINDINGS_SOURCEFILES
+set (KEMFIELD_BINDINGS_SOURCEFILES
 #    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/src/KEMToolbox.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/src/KEMToolboxBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/src/KEMBindingsMessage.cc
@@ -97,30 +84,42 @@ add_cflag (KEMFIELD_USE_KOMMON_BINDINGS)
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticConstantFieldBuilder.cc
-    )
-
-    if (${PROJECT_NAME}_USE_VTK)
-        list (APPEND KEMFIELD_BINDINGS_HEADERFILES
-            ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/include/KFMVTKElectrostaticTreeViewerBuilder.hh
-        )
-        list (APPEND KEMFIELD_BINDINGS_SOURCEFILES
-            ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/src/KFMVTKElectrostaticTreeViewerBuilder.cc
-        )
-    endif (${PROJECT_NAME}_USE_VTK)
-
-  add_library (KEMFieldBindings SHARED ${KEMFIELD_BINDINGS_SOURCEFILES} ${KEMFIELD_BINDINGS_HEADERFILES})
-  target_link_libraries (KEMFieldBindings
-      ${Kommon_LIBRARIES}
-      ${KGeoBag_LIBRARIES}
-      KEMFieldElectricBoundaryIntegrators
-      KEMFieldsElectric
-      KEMFieldsMagnetic
-      KEMElectricFieldSolvers
-      KEMMagneticFieldSolvers
-      KEMMath
-      KEMVTKPart2
-      KGeoBagInterface
 )
 
-  kasper_install_headers (${KEMFIELD_BINDINGS_HEADERFILES})
-  kasper_install_libraries (KEMFieldBindings)
+if (KEMField_USE_VTK)
+    list (APPEND KEMFIELD_BINDINGS_HEADERFILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/include/KFMVTKElectrostaticTreeViewerBuilder.hh
+    )
+    list (APPEND KEMFIELD_BINDINGS_SOURCEFILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/src/KFMVTKElectrostaticTreeViewerBuilder.cc
+    )
+endif (KEMField_USE_VTK)
+
+add_library (KEMFieldBindings SHARED
+    ${KEMFIELD_BINDINGS_SOURCEFILES} ${KEMFIELD_BINDINGS_HEADERFILES}
+)
+add_library (KEMFieldBindingsHeaders INTERFACE)
+
+# get header paths from collected header files
+foreach(HEADER ${KEMFIELD_BINDINGS_HEADERFILES})
+    get_filename_component(DIRNAME ${HEADER} DIRECTORY)
+    target_include_directories(KEMFieldBindings PUBLIC $<BUILD_INTERFACE:${DIRNAME}>)
+    target_include_directories(KEMFieldBindingsHeaders INTERFACE $<BUILD_INTERFACE:${DIRNAME}>)
+endforeach(HEADER)
+target_include_directories(KEMFieldBindings PUBLIC $<INSTALL_INTERFACE:include>)
+
+target_link_libraries (KEMFieldBindings
+    PUBLIC
+        Kommon
+        KGeoBagBindings
+        KGeoBagInterface
+        KEMFieldElectricBoundaryIntegrators
+        KEMFieldsElectric
+        KEMFieldsMagnetic
+        KEMElectricFieldSolvers
+        KEMMagneticFieldSolvers
+        KEMVTKPart2
+)
+
+kasper_install_headers (${KEMFIELD_BINDINGS_HEADERFILES})
+kasper_install_libraries (KEMFieldBindings KEMFieldBindingsHeaders)

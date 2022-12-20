@@ -1,9 +1,15 @@
 #!/bin/sh
 
-CMAKE_VERSION="v3.13.0"
+# A simple script to pull files from the CMake repository.
+
+CMAKE_VERSION="v3.14.0"
 GITHUB_URL="https://raw.githubusercontent.com/Kitware/CMake"
 
-for name in *.cmake; do
-    cp -af "${name}" "${name}.update.bak"
-    wget -q "${GITHUB_URL}/${CMAKE_VERSION}/Modules/${name}" -O "${name}.update" && mv "${name}.update" "${name}" && echo "Updated ${name}"
+for name in $(find ! -name '*.bak' -a ! -name '*.in' -type f) ; do
+    cp -af "${name}" "${name}.bak"
+    wget -q "${GITHUB_URL}/${CMAKE_VERSION}/Modules/${name}" -O "${name}.update" && \
+        mv "${name}.update" "${name}" && \
+        echo "Updated ${name}" && \
+        git add ${name}
+   rm -f "${name}.update"
 done

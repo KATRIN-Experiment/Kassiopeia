@@ -13,7 +13,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#ifdef Kommon_USE_ROOT
+#ifdef KASPER_USE_ROOT
 #include "KFormulaProcessor.hh"
 #endif
 
@@ -86,7 +86,7 @@ int main(int argc, char** argv)
     tVariableProcessor.InsertAfter(&tTokenizer);
     tIncludeProcessor.InsertAfter(&tVariableProcessor);
 
-#ifdef Kommon_USE_ROOT
+#ifdef KASPER_USE_ROOT
     KFormulaProcessor tFormulaProcessor;
     tFormulaProcessor.InsertAfter(&tVariableProcessor);
     tIncludeProcessor.InsertAfter(&tFormulaProcessor);

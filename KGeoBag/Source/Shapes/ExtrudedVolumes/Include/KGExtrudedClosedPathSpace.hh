@@ -152,7 +152,10 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         aBoundaryContainer.push_back(tTop);
 
         auto tJacket = std::make_shared<KGExtrudedPathSurface<XPathType>>(fPath);
+        tJacket->ZMax(fZMax);
+        tJacket->ZMin(fZMin);
         tJacket->ExtrudedMeshCount(fExtrudedMeshCount);
+        tJacket->ExtrudedMeshPower(fExtrudedMeshPower);
         tJacket->SetName("jacket");
         aBoundaryContainer.push_back(tJacket);
 

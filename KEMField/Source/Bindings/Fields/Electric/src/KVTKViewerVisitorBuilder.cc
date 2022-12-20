@@ -18,8 +18,11 @@ namespace katrin
 template<> KVTKViewerVisitorBuilder::~KComplexElement() = default;
 
 STATICINT sKVTKViewerVisitorStructure =
-    KVTKViewerVisitorBuilder::Attribute<std::string>("file") + KVTKViewerVisitorBuilder::Attribute<bool>("view") +
-    KVTKViewerVisitorBuilder::Attribute<bool>("save") + KVTKViewerVisitorBuilder::Attribute<bool>("preprocessing") +
+    KVTKViewerVisitorBuilder::Attribute<std::string>("file") +
+    KVTKViewerVisitorBuilder::Attribute<std::string>("path") +
+    KVTKViewerVisitorBuilder::Attribute<bool>("view") +
+    KVTKViewerVisitorBuilder::Attribute<bool>("save") +
+    KVTKViewerVisitorBuilder::Attribute<bool>("preprocessing") +
     KVTKViewerVisitorBuilder::Attribute<bool>("postprocessing");
 
 STATICINT sKElectrostaticBoundaryField =

@@ -1,51 +1,35 @@
-set( APPLICATIONS_FIELDS_BASENAMES
-    SimpleElectricFieldCalculator
-    SimpleElectricFieldCalculatorAlongZaxis
-    SimpleElectricFieldCalculatorOverXYplane
-    SimpleElectricFieldCalculatorFromFile
-    SimpleElectricFieldCalculatorSpeedTest
+option (Kassiopeia_ENABLE_APP "Build Kassiopeia applications" ON)
+if (Kassiopeia_ENABLE_APP)
 
-    SimpleMagneticFieldCalculator
-    SimpleMagneticFieldCalculatorAlongZaxis
-    SimpleMagneticFieldCalculatorOverXYplane
-    SimpleMagneticFieldCalculatorFromFile
-    SimpleMagneticFieldCalculatorSpeedTest
-)
+    set( APPLICATIONS_FIELDS_BASENAMES
+        SimpleElectricFieldCalculator
+        SimpleElectricFieldCalculatorAlongZaxis
+        SimpleElectricFieldCalculatorAlongFieldline
+        SimpleElectricFieldCalculatorOverXYplane
+        SimpleElectricFieldCalculatorFromFile
+        SimpleElectricFieldCalculatorSpeedTest
 
-set( APPLICATIONS_FIELDS_LIBRARIES
-    ${Kommon_LIBRARIES}
-    ${Kommon_Vtk_LIBRARIES}
-    ${KGeoBag_LIBRARIES}
-    ${KEMField_LIBRARIES}
-    KassiopeiaUtility
-    KassiopeiaMath
-    KassiopeiaObjects
-    KassiopeiaOperators
-    KassiopeiaFields
-    KassiopeiaTrajectories
-    KassiopeiaInteractions
-    KassiopeiaNavigators
-    KassiopeiaTerminators
-    KassiopeiaReaders
-    KassiopeiaWriters
-    KassiopeiaSimulation
-    KassiopeiaBindings
-)
+        SimpleMagneticFieldCalculator
+        SimpleMagneticFieldCalculatorAlongZaxis
+        SimpleMagneticFieldCalculatorAlongFieldline
+        SimpleMagneticFieldCalculatorOverXYplane
+        SimpleMagneticFieldCalculatorFromFile
+        SimpleMagneticFieldCalculatorSpeedTest
 
-if( KASPER_USE_BOOST )
-    list( APPEND APPLICATIONS_FIELDS_LIBRARIES
-        ${Boost_LIBRARIES}
+        SimpleMagneticGradientCalculator
     )
-endif()
 
-set( APPLICATIONS_FIELDS_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Source
-)
+    set( APPLICATIONS_FIELDS_PATH
+        ${CMAKE_CURRENT_SOURCE_DIR}/Source
+    )
 
-kasper_internal_include_directories()
-foreach( BASENAME ${APPLICATIONS_FIELDS_BASENAMES} )
-	add_executable( ${BASENAME} ${APPLICATIONS_FIELDS_PATH}/${BASENAME}.cxx )
-	target_link_libraries( ${BASENAME} ${APPLICATIONS_FIELDS_LIBRARIES} ${EXTERNAL_LIBRARIES} )
-endforeach( BASENAME )
+    if( NOT BUILD_KSC )
+        foreach( BASENAME ${APPLICATIONS_FIELDS_BASENAMES} )
+            add_executable( ${BASENAME} ${APPLICATIONS_FIELDS_PATH}/${BASENAME}.cxx )
+            target_link_libraries( ${BASENAME} PUBLIC KassiopeiaBindings )
+        endforeach( BASENAME )
 
-kasper_install_executables( ${APPLICATIONS_FIELDS_BASENAMES} )
+        kasper_install_executables( ${APPLICATIONS_FIELDS_BASENAMES} )
+    endif( NOT BUILD_KSC )
+
+endif(Kassiopeia_ENABLE_APP)
