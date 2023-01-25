@@ -57,7 +57,8 @@ enum class KEMathIntegrationMethod
     K3,
     K4,
     Romberg,
-	QAGS
+	QAGS,
+    UserDefined
 };
 
 // forward declarations
@@ -372,6 +373,8 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandTy
 #else
             throw KMathIntegratorException() << "Cannot use QAGS/GSL in build without GSL libraries.";
 #endif
+        case KEMathIntegrationMethod::UserDefined:
+            throw KMathIntegratorException() << "User defined integration method not implemented!";
         default:
             throw KMathIntegratorException() << "Invalid integration method specified.";
     }

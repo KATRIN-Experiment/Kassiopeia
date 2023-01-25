@@ -1,10 +1,10 @@
 /*
- * CubeCapacitanceTest.cc
+ * CapacitanceTest.cc
  *
  *  Created on: 22 Oct 2020
  *      Author: jbehrens
  *
- *  Based on TestCubeCapacitance.cc
+ *  Based on TestCapacitance.cc
  */
 
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
@@ -132,7 +132,7 @@ protected:
     KGeoBag::KGBEMMeshConverter* geometryConverter;
 };
 
-TEST_F(KEMFieldCubeTest, CubeCapacitance_GaussAnalytic)
+TEST_F(KEMFieldCubeTest, Capacitance_GaussAnalytic)
 {
     // method 0 = gauss; integrator type 0 = analytic
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeAnalytic();
@@ -145,7 +145,7 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_GaussAnalytic)
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldCubeTest, CubeCapacitance_GaussRWG)
+TEST_F(KEMFieldCubeTest, Capacitance_GaussRWG)
 {
     // method 0 = gauss; integrator type 1 = RWG
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeRWG();
@@ -158,7 +158,7 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_GaussRWG)
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldCubeTest, CubeCapacitance_GaussNumeric)
+TEST_F(KEMFieldCubeTest, Capacitance_GaussNumeric)
 {
     // method 0 = gauss; integrator type 2 = numeric
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeNumeric();
@@ -171,7 +171,7 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_GaussNumeric)
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldCubeTest, DiskCapacitance_RobinHoodRWG)
+TEST_F(KEMFieldCubeTest, Capacitance_RobinHoodRWG)
 {
     // method 1 = robin hood; integrator type 1 = RWG
     double accuracy = 1.e-4;
@@ -189,7 +189,7 @@ TEST_F(KEMFieldCubeTest, DiskCapacitance_RobinHoodRWG)
     robinHood.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldCubeTest, CubeCapacitance_RobinHoodNumeric)
+TEST_F(KEMFieldCubeTest, Capacitance_RobinHoodNumeric)
 {
     // method 1 = robin hood; integrator type 2 = numeric
     double accuracy = 1.e-4;
@@ -208,7 +208,7 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_RobinHoodNumeric)
 }
 
 #ifdef KEMFIELD_USE_OPENCL
-TEST_F(KEMFieldCubeTest, CubeCapacitance_RobinHoodRWG_OpenCL)
+TEST_F(KEMFieldCubeTest, Capacitance_RobinHoodRWG_OpenCL)
 {
     // method 1 = robin hood; integrator type 1 = RWG
     double accuracy = 1.e-4;
@@ -234,7 +234,7 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_RobinHoodRWG_OpenCL)
 
 /** FIXME - library dependencies are broken in build **/
 #if 0
-TEST_F(KEMFieldCubeTest, CubeCapacitance_KrylovNumeric_BiCGSTAB)
+TEST_F(KEMFieldCubeTest, Capacitance_KrylovNumeric_BiCGSTAB)
 {
     // method = krylov; integrator type 2 = numeric
     double accuracy = 1.e-8;
@@ -250,7 +250,7 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_KrylovNumeric_BiCGSTAB)
     biCGStabSolver.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldCubeTest, CubeCapacitance_KrylovNumeric_GMRes)
+TEST_F(KEMFieldCubeTest, Capacitance_KrylovNumeric_GMRes)
 {
     // method = krylov; integrator type 2 = numeric
     double accuracy = 1.e-8;
@@ -268,7 +268,7 @@ TEST_F(KEMFieldCubeTest, CubeCapacitance_KrylovNumeric_GMRes)
 #endif
 
 #ifdef KEMFIELD_USE_PETSC
-TEST_F(KEMFieldCubeTest, CubeCapacitance_PETSc)
+TEST_F(KEMFieldCubeTest, Capacitance_PETSc)
 {
     // method 2 = PETSc
     KElectrostaticBoundaryIntegrator integrator{KEBIFactory::MakeNumeric()};

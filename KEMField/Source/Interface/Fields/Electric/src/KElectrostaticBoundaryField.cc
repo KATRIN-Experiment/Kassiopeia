@@ -92,6 +92,11 @@ void KElectrostaticBoundaryField::InitializeCore()
     VisitorPostprocessing();
 }
 
+void KElectrostaticBoundaryField::DeinitializeCore()
+{
+    fFieldSolver->Deinitialize();
+}
+
 void KElectrostaticBoundaryField::AddVisitor(const std::shared_ptr<Visitor>& visitor)
 {
     fVisitors.push_back(visitor);

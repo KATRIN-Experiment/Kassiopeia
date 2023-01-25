@@ -10,6 +10,8 @@ namespace KEMField
   template <class Basis>
   void KZonalHarmonicComputer<Basis>::Initialize()
   {
+    fCentralExecCount = fRemoteExecCount = fDirectExecCount = 0;
+
     for (auto it=fContainer.GetSubContainers().begin();it!=fContainer.GetSubContainers().end();++it)
     {
       fSubsetFieldSolvers.push_back(new KZonalHarmonicFieldSolver<Basis>(*(*it),fIntegrator));

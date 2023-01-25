@@ -16,7 +16,7 @@
 #endif
 
 #ifndef KEMFIELD_USE_DOUBLE_PRECISION
-#pragma warning "KEMField OpenCL will not use double precision! This can limit the accuracy of results."
+#pragma error "KEMField can't be used with OpenCL on a device that cannot provide double precision. Single precision is not good enough for charge calculations and will result in limited accuracy. You might be able to manually enable double precision with your device, see also: https://github.com/intel/compute-runtime/blob/master/opencl/doc/FAQ.md#feature-double-precision-emulation-fp64 ."
 #endif
 
 #ifndef DEFAULT_KERNEL_DIR

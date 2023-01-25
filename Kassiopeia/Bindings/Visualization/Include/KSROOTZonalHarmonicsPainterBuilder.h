@@ -34,27 +34,27 @@ template<> inline bool KSROOTZonalHarmonicsPainterBuilder::AddAttribute(KContain
         return true;
     }
     if (aContainer->GetName() == "r_min") {
-        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetRmin);
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetRMin);
         return true;
     }
     if (aContainer->GetName() == "r_max") {
-        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetRmax);
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetRMax);
         return true;
     }
     if (aContainer->GetName() == "z_min") {
-        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetZmin);
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetZMin);
         return true;
     }
     if (aContainer->GetName() == "z_max") {
-        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetZmax);
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetZMax);
         return true;
     }
     if (aContainer->GetName() == "z_dist") {
-        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetZdist);
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetZDist);
         return true;
     }
     if (aContainer->GetName() == "r_dist") {
-        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetRdist);
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetRDist);
         return true;
     }
     if (aContainer->GetName() == "r_steps") {
@@ -77,6 +77,23 @@ template<> inline bool KSROOTZonalHarmonicsPainterBuilder::AddAttribute(KContain
         aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetWriteMode);
         return true;
     }
+    if (aContainer->GetName() == "draw_source_points") {
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetDrawSourcePoints);
+        return true;
+    }
+    if (aContainer->GetName() == "draw_convergence_area") {
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetDrawCentralBoundary);
+        return true;
+    }
+    if (aContainer->GetName() == "draw_central_boundary") {
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetDrawCentralBoundary);
+        return true;
+    }
+    if (aContainer->GetName() == "draw_remote_boundary") {
+        aContainer->CopyTo(fObject, &KSROOTZonalHarmonicsPainter::SetDrawRemoteBoundary);
+        return true;
+    }
+
 #if 0
         if( aContainer->GetName() == "geometry_type" )
         {

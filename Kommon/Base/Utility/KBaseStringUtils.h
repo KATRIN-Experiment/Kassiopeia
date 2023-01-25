@@ -15,6 +15,8 @@
 #include <cctype>
 #include <algorithm>
 #include <functional>
+#include <cstring>
+#include <clocale>
 
 #include <cxxabi.h>  // needed to convert typename to string
 
@@ -44,6 +46,9 @@ class KBaseStringUtils
 public:
     // New functions
     template<typename XDataType> static XDataType Convert(std::string str);
+    // enable_if is used in lack of C++20 "concepts" to ensure hexadecimals are only converted to integer types
+    template<typename XDataType, typename std::enable_if_t<!std::is_integral<XDataType>::value, bool> = 0> static XDataType ConvertFromHexadecimal(std::string str);
+    template<typename XDataType, typename std::enable_if_t<std::is_integral<XDataType>::value, bool> = 0> static XDataType ConvertFromHexadecimal(std::string str);
     template<class OutputT> static std::vector<OutputT> SplitTrimAndConvert(std::string valueCopy, std::string delimiters);
 
     static std::string Replace(const std::string value, const std::string from, const std::string to);
@@ -78,9 +83,67 @@ public:
     static std::string Join(const std::map<KeyT, ValueT>& map, const SeparatorT& separator, int precision = -1);
 };
 
-template<typename XDataType> XDataType KBaseStringUtils::Convert(std::string str)
+template<typename XDataType, typename std::enable_if_t<!std::is_integral<XDataType>::value, bool>> inline XDataType KBaseStringUtils::ConvertFromHexadecimal(std::string str)
+{
+    throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <" << TypeName<XDataType>() << ">: "
+                       << "This type can't be interpreted.";
+}
+
+template<typename XDataType, typename std::enable_if_t<std::is_integral<XDataType>::value, bool>> inline XDataType KBaseStringUtils::ConvertFromHexadecimal(std::string str)
+{
+    char* end;
+    errno = 0;
+    XDataType res;
+    bool validConversion;
+
+    // Ensure the classic C locale is set
+    // Different localization is known to change the behavior of the string conversion functions,
+    // as shown by Quuxplusone in https://wandbox.org/permlink/ux49MGMbRz4a1wYz for
+    // https://stackoverflow.com/questions/45657518/what-effect-does-locale-have-on-strtol .
+    char* oldloc = std::setlocale(LC_ALL, nullptr);
+    if (oldloc == nullptr) {
+        throw KException() << "Error getting current locale.";
+    }
+
+    if (std::setlocale(LC_ALL, "C") == nullptr) {
+        throw KException() << "Error setting C locale.";
+    }
+
+    if (std::is_unsigned<XDataType>::value) {
+        unsigned long long tmp = strtoull(str.c_str(), &end, 0);
+        res = (XDataType) tmp;
+        validConversion = (unsigned long long) res == tmp;
+    }
+    else {
+        long long tmp = strtoll(str.c_str(), &end, 0);
+        res = (XDataType) tmp;
+        validConversion = (long long) res == tmp;
+    }
+
+    std::setlocale(LC_ALL, oldloc);
+
+    if (errno != 0) {
+        throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <" << TypeName<XDataType>() << ">: "
+                           << "Could not interpret as hexadecimal value, conversion returned with errno <" << errno << ">.";
+    }
+
+    if (*end != '\0') {
+        throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <" << TypeName<XDataType>() << ">: "
+                           << "Could not interpret as hexadecimal value, uninterpreted part remaining: <" << EscapeMostly(end) << ">.";
+    }
+
+    if (!validConversion) {
+        throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <" << TypeName<XDataType>() << ">: "
+                           << "Could not interpret as hexadecimal value, value out of bounds for the given type.";
+    }
+
+    return res;
+}
+
+template<typename XDataType> inline XDataType KBaseStringUtils::Convert(std::string str)
 {
     std::istringstream Converter(str);
+    Converter.imbue(std::locale::classic());
     XDataType Data;
     Converter >> Data;
     std::string rest;
@@ -95,6 +158,10 @@ template<typename XDataType> XDataType KBaseStringUtils::Convert(std::string str
     }
     if (Converter.fail() || !(std::all_of(rest.begin(),rest.end(),::isspace)))
     {
+        if (std::is_integral<XDataType>::value && strncmp(str.c_str(), "0x", 2) == 0) {
+            return ConvertFromHexadecimal<XDataType>(str);
+        }
+
         throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <" << TypeName<XDataType>() << ">: "
                            << "Uninterpreted part remaining: '" << EscapeMostly(rest) << "'. "
                            << "This error message was added in November 2021. Before, the remaining part was silently ignored.";
@@ -109,15 +176,30 @@ template<typename XDataType> XDataType KBaseStringUtils::Convert(std::string str
 
 template<> inline bool KBaseStringUtils::Convert<bool>(std::string str)
 {
-    if (str == std::string("0") || str == std::string("") || str == std::string("null") ||
+    if (Equals(str, "") || IEquals(str, "no") || IEquals(str, "false") || Equals(str, "0")) {
+        return false;
+    }
+    if (IEquals(str, "yes") || IEquals(str, "true") || Equals(str, "1")) {
+        return true;
+    }
+
+    if (str == std::string("null") ||
         str == std::string("Null") || str == std::string("NULL") || str == std::string("nan") ||
         str == std::string("NaN") || str == std::string("NAN") || str == std::string("none") ||
         str == std::string("None") || str == std::string("None") || str == std::string("false") ||
         str == std::string("False") || str == std::string("FALSE") || str == std::string("no") ||
         str == std::string("No") || str == std::string("NO")) {
-        return false;
+        throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <bool>.\n"
+                           << "Valid literals are: <>, <no>, <false> and <0> for <false> and "
+                           << "<yes>, <true> and <1> for <true>.\n"
+                           << "This error message was added in December 2022. Before, this value "
+                           << "was interpreted as <false>.";
     }
-    return true;
+    throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <bool>.\n"
+                       << "Valid literals are: <>, <no>, <false> and <0> for <false> and "
+                       << "<yes>, <true> and <1> for <true>.\n"
+                       << "This error message was added in December 2022. Before, this value "
+                       << "was interpreted as <true>.";
 }
 
 template<> inline int8_t KBaseStringUtils::Convert<int8_t>(std::string str)

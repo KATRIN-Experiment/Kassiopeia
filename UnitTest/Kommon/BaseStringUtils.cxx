@@ -35,15 +35,31 @@ TEST(KBaseStringUtils, Conversion)
     const std::string s1 = "1234";
     const std::string s2 = "1234.5678";
     const std::string s3 = "abcd";
+    const std::string s4 = "0xfe";
+    const std::string s5 = "0x090000001";
+    const std::string s6 = "0xabcdefg";
 
     EXPECT_EQ(KBaseStringUtils::Convert<int>(s1), 1234);
     EXPECT_THROW(KBaseStringUtils::Convert<int>(s2), KException);
     EXPECT_THROW(KBaseStringUtils::Convert<int>(s3), KException);
+    EXPECT_EQ(KBaseStringUtils::Convert<int>(s4), 0xfe);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s5), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s6), KException);
 
     EXPECT_NEAR(KBaseStringUtils::Convert<float>(s1), 1234., 1e-4);
     EXPECT_NEAR(KBaseStringUtils::Convert<float>(s2), 1234.5678, 1e-4);
     EXPECT_THROW(KBaseStringUtils::Convert<float>(s3), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<float>(s4), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<float>(s5), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<float>(s6), KException);
+
+    EXPECT_EQ(KBaseStringUtils::Convert<unsigned int>(s4), (unsigned) 0xfe);
+    EXPECT_EQ(KBaseStringUtils::Convert<unsigned int>(s5), (unsigned) 0x090000001);
+
+    EXPECT_EQ(KBaseStringUtils::Convert<long int>(s5), 0x090000001);
+    EXPECT_THROW(KBaseStringUtils::Convert<long int>(s6), KException);
 }
+
 
 TEST(KBaseStringUtils, Replacing)
 {

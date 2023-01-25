@@ -3,14 +3,10 @@
 
 #include "KVariant.h"
 
-#include <cerrno>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
 #include <limits>
-#include <sstream>
 #include <string>
 
+#include "KBaseStringUtils.h"
 
 using namespace std;
 using namespace katrin;
@@ -31,17 +27,7 @@ bool KVariant::AsBool() const
         return fPrimitive.fDoubleValue != 0;
     }
     else if (fType == Type_String) {
-#if 1
-        //... TODO: implement YAML-compatible type rules ...//
-        if (*fPrimitive.fStringValue == "true") {
-            return true;
-        }
-        else if (*fPrimitive.fStringValue == "false") {
-            return false;
-        }
-#else
-        return !fPrimitive.fStringValue->empty();
-#endif
+        return KBaseStringUtils::Convert<bool>(*fPrimitive.fStringValue);
     }
     else if (fType == Type_Unknown) {
         return fPrimitive.fUnknownValue != nullptr;
@@ -65,20 +51,7 @@ long long KVariant::AsLong() const
         return (long long) fPrimitive.fDoubleValue;
     }
     else if (fType == Type_String) {
-        long Value;
-        const char* Start = fPrimitive.fStringValue->c_str();
-        char* End;
-        errno = 0;
-        if (strncmp(Start, "0x", 2) == 0) {
-            Value = strtol(Start, &End, 0);
-        }
-        else {
-            Value = strtol(Start, &End, 10);
-        }
-        if (((Value == 0) && (errno != 0)) || (*End != '\0')) {
-            throw KException() << "bad string to convert to int: \"" << *fPrimitive.fStringValue << "\"";
-        }
-        return Value;
+        return KBaseStringUtils::Convert<long>(*fPrimitive.fStringValue);
     }
 
     throw KException() << "bad type to convert to int: \"" << AsString() << "\"";
@@ -100,15 +73,7 @@ double KVariant::AsDouble() const
         return fPrimitive.fDoubleValue;
     }
     else if (fType == Type_String) {
-        double Value;
-        const char* Start = fPrimitive.fStringValue->c_str();
-        char* End;
-        errno = 0;
-        Value = strtod(Start, &End);
-        if (((Value == 0) && (errno != 0)) || (*End != '\0')) {
-            throw KException() << "bad string to convert to double: \"" << *fPrimitive.fStringValue << "\"";
-        }
-        return Value;
+        return KBaseStringUtils::Convert<double>(*fPrimitive.fStringValue);
     }
 
     throw KException() << "bad type to convert to int: \"" << AsString() << "\"";

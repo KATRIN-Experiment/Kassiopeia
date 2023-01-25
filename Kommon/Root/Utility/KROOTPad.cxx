@@ -15,10 +15,10 @@ KROOTPad::KROOTPad() :
     fFrame(nullptr),
     fPad(nullptr),
     fWindow(nullptr),
-    fxlow(0.),
-    fylow(0.),
-    fxup(1.0),
-    fyup(1.0)
+    fXLow(0.),
+    fYLow(0.),
+    fXUp(1.),
+    fYUp(1.)
 {}
 
 KROOTPad::~KROOTPad()
@@ -38,7 +38,7 @@ void KROOTPad::Render()
     gStyle->SetTitleAlign(23);
     gStyle->SetTitleSize(0.08, "t");
 
-    fPad = new TPad(GetName().c_str(), GetName().c_str(), fxlow, fylow, fxup, fyup);
+    fPad = new TPad(GetName().c_str(), GetName().c_str(), fXLow, fYLow, fXUp, fYUp);
 
     double tXMin(std::numeric_limits<double>::max());
     double tXMax(-1.0 * std::numeric_limits<double>::max());
@@ -62,6 +62,15 @@ void KROOTPad::Render()
             double tLocalYMax = (*tIt)->GetYMax();
             if (tLocalYMax > tYMax)
                 tYMax = tLocalYMax;
+        }
+
+        if (fXMin < fXMax) {
+            tXMin = fXMin;
+            tXMax = fXMax;
+        }
+        if (fYMin < fYMax) {
+            tYMin = fYMin;
+            tYMax = fYMax;
         }
 
         utilmsg_debug("XMin: " << tXMin << eom);
@@ -197,18 +206,14 @@ void KROOTPad::ClearWindow(KWindow* aWindow)
                     << ">" << eom;
 }
 
-}  // namespace katrin
+TPad* KROOTPad::GetPad()
+{
+    return fPad;
+}
 
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////                                                   /////
-/////  BBBB   U   U  IIIII  L      DDDD   EEEEE  RRRR   /////
-/////  B   B  U   U    I    L      D   D  E      R   R  /////
-/////  BBBB   U   U    I    L      D   D  EE     RRRR   /////
-/////  B   B  U   U    I    L      D   D  E      R   R  /////
-/////  BBBB    UUU   IIIII  LLLLL  DDDD   EEEEE  R   R  /////
-/////                                                   /////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
+KROOTWindow* KROOTPad::GetWindow()
+{
+    return fWindow;
+}
+
+}  // namespace katrin

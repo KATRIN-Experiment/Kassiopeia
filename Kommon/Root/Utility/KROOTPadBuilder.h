@@ -19,19 +19,35 @@ template<> inline bool KROOTPadBuilder::AddAttribute(KContainer* aContainer)
         return true;
     }
     if (aContainer->GetName() == "xlow") {
-        aContainer->CopyTo(fObject, &KROOTPad::Setxlow);
+        aContainer->CopyTo(fObject, &KROOTPad::SetXLow);
         return true;
     }
     if (aContainer->GetName() == "ylow") {
-        aContainer->CopyTo(fObject, &KROOTPad::Setylow);
+        aContainer->CopyTo(fObject, &KROOTPad::SetYLow);
         return true;
     }
     if (aContainer->GetName() == "xup") {
-        aContainer->CopyTo(fObject, &KROOTPad::Setxup);
+        aContainer->CopyTo(fObject, &KROOTPad::SetXUp);
         return true;
     }
     if (aContainer->GetName() == "yup") {
-        aContainer->CopyTo(fObject, &KROOTPad::Setyup);
+        aContainer->CopyTo(fObject, &KROOTPad::SetYUp);
+        return true;
+    }
+    if (aContainer->GetName() == "xmin") {
+        aContainer->CopyTo(fObject, &KROOTPad::SetXMin);
+        return true;
+    }
+    if (aContainer->GetName() == "ymin") {
+        aContainer->CopyTo(fObject, &KROOTPad::SetYMin);
+        return true;
+    }
+    if (aContainer->GetName() == "xmax") {
+        aContainer->CopyTo(fObject, &KROOTPad::SetXMax);
+        return true;
+    }
+    if (aContainer->GetName() == "ymax") {
+        aContainer->CopyTo(fObject, &KROOTPad::SetYMax);
         return true;
     }
     return false;

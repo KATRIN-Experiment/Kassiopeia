@@ -66,9 +66,8 @@ template<class Basis> class KZonalHarmonicContainer
         return fRemoteSourcePoints;
     }
 
-    std::set<std::pair<double, double>> CentralSourcePoints();
-    std::set<std::pair<double, double>> RemoteSourcePoints();
-
+    std::set<std::pair<double, double>> CentralSourcePoints() const;
+    std::set<std::pair<double, double>> RemoteSourcePoints() const;
 
     ZonalHarmonicContainerVector& GetSubContainers()
     {
@@ -294,15 +293,17 @@ template<class Basis> void KZonalHarmonicContainer<Basis>::ComputeCoefficients(i
         ConstructSubContainers();
     }
 
-    if ((level == -1 && fSubContainers.size() == 0) || level != -1) {
+    if ((level == -1 && (fSubContainers.size() == 0 || fParameters->GetUseFixedRange())) || level != -1) {
         KZonalHarmonicCoefficientGenerator<Basis> coefficientGenerator(fElementContainer);
+
+        fCoordinateSystem = *(coefficientGenerator.GetCoordinateSystem());
 
         // user-defined source-point extrema are only valid in the top-level coordinate system
         double z1 = 0.;
         double z2 = 0.;
         if (level == -1) {
-            z1 = fParameters->GetCentralZ1();
-            z2 = fParameters->GetCentralZ2();
+            z1 = fParameters->GetCentralZ1() - fCoordinateSystem.GetOrigin().Z();
+            z2 = fParameters->GetCentralZ2() - fCoordinateSystem.GetOrigin().Z();
         }
 
         if (fParameters->GetCentralFractionalSpacing()) {
@@ -315,29 +316,29 @@ template<class Basis> void KZonalHarmonicContainer<Basis>::ComputeCoefficients(i
                 z2);
         }
         else {
-            coefficientGenerator.GenerateCentralSourcePointsByFixedDistance(fCentralSourcePoints,
-                                                                            fParameters->GetNCentralCoefficients(),
-                                                                            fParameters->GetCentralDeltaZ(),
-                                                                            z1,
-                                                                            z2);
+            coefficientGenerator.GenerateCentralSourcePointsByFixedDistance(
+                fCentralSourcePoints,
+                fParameters->GetNCentralCoefficients(),
+                fParameters->GetCentralDeltaZ(),
+                z1,
+                z2);
         }
 
         z1 = z2 = 0.;
         if (level == -1) {
-            z1 = fParameters->GetRemoteZ1();
-            z2 = fParameters->GetRemoteZ2();
+            z1 = fParameters->GetRemoteZ1() - fCoordinateSystem.GetOrigin().Z();
+            z2 = fParameters->GetRemoteZ2() - fCoordinateSystem.GetOrigin().Z();
         }
 
-        coefficientGenerator.GenerateRemoteSourcePoints(fRemoteSourcePoints,
-                                                        fParameters->GetNRemoteCoefficients(),
-                                                        fParameters->GetNRemoteSourcePoints(),
-                                                        z1,
-                                                        z2);
-
-        fCoordinateSystem = *(coefficientGenerator.GetCoordinateSystem());
+        coefficientGenerator.GenerateRemoteSourcePoints(
+            fRemoteSourcePoints,
+            fParameters->GetNRemoteCoefficients(),
+            fParameters->GetNRemoteSourcePoints(),
+            z1,
+            z2);
     }
 
-    if (!fSubContainers.empty()) {
+    if (!fSubContainers.empty() && !fParameters->GetUseFixedRange()) {
         kem_cout(eNormal) << "Computing source points for " << fSubContainers.size() << " subcontainers at level "
                           << level + 1 << eom;
 
@@ -346,7 +347,7 @@ template<class Basis> void KZonalHarmonicContainer<Basis>::ComputeCoefficients(i
     }
 }
 
-template<class Basis> std::set<std::pair<double, double>> KZonalHarmonicContainer<Basis>::CentralSourcePoints()
+template<class Basis> std::set<std::pair<double, double>> KZonalHarmonicContainer<Basis>::CentralSourcePoints() const
 {
     std::set<std::pair<double, double>> SPs;
 
@@ -364,7 +365,7 @@ template<class Basis> std::set<std::pair<double, double>> KZonalHarmonicContaine
     return SPs;
 }
 
-template<class Basis> std::set<std::pair<double, double>> KZonalHarmonicContainer<Basis>::RemoteSourcePoints()
+template<class Basis> std::set<std::pair<double, double>> KZonalHarmonicContainer<Basis>::RemoteSourcePoints() const
 {
     std::set<std::pair<double, double>> SPs;
 

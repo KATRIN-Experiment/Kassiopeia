@@ -23,7 +23,9 @@ class KIntegratingMagnetostaticFieldSolver : public KMagneticFieldSolver
   public:
     KIntegratingMagnetostaticFieldSolver();
 
+  private:
     void InitializeCore(KElectromagnetContainer& container) override;
+    void DeinitializeCore() override {}
 
     KFieldVector MagneticPotentialCore(const KPosition& P) const override;
     KFieldVector MagneticFieldCore(const KPosition& P) const override;

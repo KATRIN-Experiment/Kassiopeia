@@ -13,6 +13,7 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenValueUniform.h
     KSGenValueGauss.h
     KSGenValueGeneralizedGauss.h
+    KSGenValueFermi.h
     KSGenValueRadiusCylindrical.h
     KSGenValueRadiusSpherical.h
     KSGenValueRadiusFraction.h
@@ -94,6 +95,7 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenValueList.cxx
     KSGenValueUniform.cxx
     KSGenValueGauss.cxx
+    KSGenValueFermi.cxx
     KSGenValueGeneralizedGauss.cxx
     KSGenValueRadiusCylindrical.cxx
     KSGenValueRadiusSpherical.cxx

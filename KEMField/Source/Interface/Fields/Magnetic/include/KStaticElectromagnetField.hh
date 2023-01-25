@@ -36,6 +36,7 @@ class KStaticElectromagnetField : public KMagnetostaticField
 
   protected:
     void InitializeCore() override;
+    void DeinitializeCore() override;
     void CheckSolverExistance() const;
 
     KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;

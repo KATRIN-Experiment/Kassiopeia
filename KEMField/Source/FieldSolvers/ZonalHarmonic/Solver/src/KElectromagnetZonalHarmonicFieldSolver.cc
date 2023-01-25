@@ -45,12 +45,14 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(con
 
         if (UseCentralExpansion(localP)) {
             if (CentralExpansionVectorPotential(localP, A)) {
+                fCentralExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(A);
             }
         }
 
         if (UseRemoteExpansion(localP)) {
             if (RemoteExpansionVectorPotential(localP, A)) {
+                fRemoteExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(A);
             }
         }
@@ -59,12 +61,14 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(con
 
         if (UseRemoteExpansion(localP)) {
             if (RemoteExpansionVectorPotential(localP, A)) {
+                fRemoteExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(A);
             }
         }
 
         if (UseCentralExpansion(localP)) {
             if (CentralExpansionVectorPotential(localP, A)) {
+                fCentralExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(A);
             }
         }
@@ -75,6 +79,9 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(con
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), A, accumulator);
     }
 
+    fDirectExecCount++;
+    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom;
     return fIntegratingFieldSolver.VectorPotential(P);
 }
 
@@ -84,16 +91,17 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const
     KFieldVector B;
 
     if (fCentralFirst) {
-        if (UseCentralExpansion(localP)) {
 
+        if (UseCentralExpansion(localP)) {
             if (CentralExpansionMagneticField(localP, B)) {
+                fCentralExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(B);
             }
         }
 
-
         if (UseRemoteExpansion(localP)) {
             if (RemoteExpansionMagneticField(localP, B)) {
+                fRemoteExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(B);
             }
         }
@@ -101,14 +109,15 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const
     else {
 
         if (UseRemoteExpansion(localP)) {
-
             if (RemoteExpansionMagneticField(localP, B)) {
+                fRemoteExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(B);
             }
         }
 
         if (UseCentralExpansion(localP)) {
             if (CentralExpansionMagneticField(localP, B)) {
+                fCentralExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(B);
             }
         }
@@ -119,6 +128,9 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), B, accumulator);
     }
 
+    fDirectExecCount++;
+    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom;
     return fIntegratingFieldSolver.MagneticField(P);
 }
 
@@ -131,12 +143,14 @@ KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(
 
         if (UseCentralExpansion(localP)) {
             if (CentralGradientExpansion(localP, g)) {
+                fCentralExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(g);
             }
         }
 
         if (UseRemoteExpansion(localP)) {
             if (RemoteGradientExpansion(localP, g)) {
+                fRemoteExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(g);
             }
         }
@@ -145,12 +159,14 @@ KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(
 
         if (UseRemoteExpansion(localP)) {
             if (RemoteGradientExpansion(localP, g)) {
+                fRemoteExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(g);
             }
         }
 
         if (UseCentralExpansion(localP)) {
             if (CentralGradientExpansion(localP, g)) {
+                fCentralExecCount++;
                 return fContainer.GetCoordinateSystem().ToGlobal(g);
             }
         }
@@ -161,9 +177,10 @@ KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), g, accumulator);
     }
 
-    g = fIntegratingFieldSolver.MagneticFieldGradient(P);
-
-    return g;
+    fDirectExecCount++;
+    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom;
+    return fIntegratingFieldSolver.MagneticFieldGradient(P);
 }
 
 std::pair<KFieldVector, KGradient>
@@ -179,6 +196,7 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
 
         if (UseCentralExpansion(localP)) {
             if (CentralMagneticFieldAndGradientExpansion(localP, g, B)) {
+                fCentralExecCount++;
                 return std::make_pair(fContainer.GetCoordinateSystem().ToGlobal(B),
                                       fContainer.GetCoordinateSystem().ToGlobal(g));
             }
@@ -186,6 +204,7 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
 
         if (UseRemoteExpansion(localP)) {
             if (RemoteMagneticFieldAndGradientExpansion(localP, g, B)) {
+                fRemoteExecCount++;
                 return std::make_pair(fContainer.GetCoordinateSystem().ToGlobal(B),
                                       fContainer.GetCoordinateSystem().ToGlobal(g));
             }
@@ -195,6 +214,7 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
 
         if (UseRemoteExpansion(localP)) {
             if (RemoteMagneticFieldAndGradientExpansion(localP, g, B)) {
+                fRemoteExecCount++;
                 return std::make_pair(fContainer.GetCoordinateSystem().ToGlobal(B),
                                       fContainer.GetCoordinateSystem().ToGlobal(g));
             }
@@ -202,6 +222,7 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
 
         if (UseCentralExpansion(localP)) {
             if (CentralMagneticFieldAndGradientExpansion(localP, g, B)) {
+                fCentralExecCount++;
                 return std::make_pair(fContainer.GetCoordinateSystem().ToGlobal(B),
                                       fContainer.GetCoordinateSystem().ToGlobal(g));
             }
@@ -217,6 +238,9 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
                                accumulator);
     }
 
+    fDirectExecCount += 2;
+    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom;
     B = fIntegratingFieldSolver.MagneticField(P);
     g = fIntegratingFieldSolver.MagneticFieldGradient(P);
 

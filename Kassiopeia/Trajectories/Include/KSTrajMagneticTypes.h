@@ -13,7 +13,7 @@
 namespace Kassiopeia
 {
 
-typedef KSMathSystem<KSTrajMagneticParticle, KSTrajMagneticDerivative, KSTrajMagneticError> KSTrajMagneticSystem;
+using KSTrajMagneticSystem = KSMathSystem<KSTrajMagneticParticle, KSTrajMagneticDerivative, KSTrajMagneticError>;
 using KSTrajMagneticControl = KSMathControl<KSTrajMagneticSystem>;
 using KSTrajMagneticDifferentiator = KSMathDifferentiator<KSTrajMagneticSystem>;
 using KSTrajMagneticIntegrator = KSMathIntegrator<KSTrajMagneticSystem>;

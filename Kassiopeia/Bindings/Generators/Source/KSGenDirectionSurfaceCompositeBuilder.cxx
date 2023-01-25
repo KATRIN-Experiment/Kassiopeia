@@ -5,6 +5,7 @@
 #include "KSGenValueFixBuilder.h"
 #include "KSGenValueGaussBuilder.h"
 #include "KSGenValueGeneralizedGaussBuilder.h"
+#include "KSGenValueFermiBuilder.h"
 #include "KSGenValueListBuilder.h"
 #include "KSGenValueSetBuilder.h"
 #include "KSGenValueUniformBuilder.h"
@@ -35,6 +36,7 @@ STATICINT sKSGenDirectionSurfaceCompositeStructure =
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueUniform>("theta_uniform") +
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueGauss>("theta_gauss") +
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("theta_generalized_gauss") +
+    KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueFermi>("theta_fermi") +
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueAngleCosine>("theta_cosine") +
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueAngleSpherical>("theta_spherical") +
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueFix>("phi_fix") +
@@ -42,7 +44,8 @@ STATICINT sKSGenDirectionSurfaceCompositeStructure =
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueList>("phi_list") +
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueUniform>("phi_uniform") +
     KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueGauss>("phi_gauss") +
-    KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("phi_generalized_gauss");
+    KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("phi_generalized_gauss") +
+    KSGenDirectionSurfaceCompositeBuilder::ComplexElement<KSGenValueFermi>("phi_fermi");
 
 STATICINT sKSGenDirectionSurfaceComposite =
     KSRootBuilder::ComplexElement<KSGenDirectionSurfaceComposite>("ksgen_direction_surface_composite");

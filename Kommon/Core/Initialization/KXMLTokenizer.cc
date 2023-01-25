@@ -86,9 +86,12 @@ void KXMLTokenizer::ProcessFile(KTextFile* aFile)
             auto tMilliSeconds = tElapsedTime.count();
             KDEBUG("Finished: " << fFile->GetName() << " (took " << tMilliSeconds << " ms)");
 
-            if (tMilliSeconds > 10000)
-                initmsg(eWarning) << "It took " << ceil(tMilliSeconds / 100.) / 10. << " s to process the file <"
-                                  << fFile->GetName() << ">" << eom;
+            if (tMilliSeconds > 10000) {
+                initmsg(eNormal) << "It took " << ceil(tMilliSeconds / 100.) / 10. << " s";  // round to 1 digit
+                if (tMilliSeconds > 60*10000)
+                    initmsg(eNormal) << " (" << ceil(tMilliSeconds / 600.) / 100. << " min)";  // round to 2 digits
+                initmsg(eNormal) << " to process the file <" << fFile->GetName() << ">" << eom;
+            }
         }
 
         if (fState == fFinalState) {

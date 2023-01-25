@@ -221,12 +221,14 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
         double tZMin = cylinderTube->Z1() > cylinderTube->Z2() ? cylinderTube->Z2() : cylinderTube->Z1();
         double tZMax = cylinderTube->Z1() > cylinderTube->Z2() ? cylinderTube->Z1() : cylinderTube->Z2();
         double tCurrent = fCurrentElectromagnetSpace->GetCurrent();
+        unsigned int tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
 
         if (fabs(tCurrent) < 1e-12)
             kem_cout(eInfo) << "adding coil with no current defined: " << fCurrentElectromagnetSpace->GetName() << eom;
 
         auto* coil = new KEMField::KCoil();
         coil->SetValues(tRMin, tRMax, tZMin, tZMax, tCurrent, tNDisc);
+        coil->SetNumberOfTurns(tNumTurns);
 
         coil->GetCoordinateSystem().SetValues(GlobalToInternalPosition(fCurrentOrigin),
                                               GlobalToInternalVector(fCurrentXAxis),
@@ -242,7 +244,6 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
             auto p1 = coil->GetCoordinateSystem().ToGlobal(KEMField::KPosition(0, 0, tZMax));
 
             double tLineCurrent = fCurrentElectromagnetSpace->GetLineCurrent();
-            double tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
             std::string tName = fCurrentElectromagnetSpace->GetName();
 
             (*tStream) << ' ' << coil->GetCurrentDensity() << '\t' << p0.X() << '\t' << p0.Y() << '\t' << p0.Z() << '\t'

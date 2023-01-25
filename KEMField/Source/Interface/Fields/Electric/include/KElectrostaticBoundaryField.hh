@@ -65,6 +65,7 @@ class KElectrostaticBoundaryField : public KElectrostaticField
     void CheckSolverExistance();
 
     void InitializeCore() override;
+    void DeinitializeCore() override;
 
     double PotentialCore(const KPosition& P) const override;
     KFieldVector ElectricFieldCore(const KPosition& P) const override;

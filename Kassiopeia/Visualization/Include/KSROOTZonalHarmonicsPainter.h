@@ -4,8 +4,7 @@
 #include "KField.h"
 #include "KROOTPainter.h"
 #include "KROOTWindow.h"
-#include "TGraph.h"
-#include "TPolyMarker.h"
+#include <list>
 
 namespace Kassiopeia
 {
@@ -31,37 +30,34 @@ class KSROOTZonalHarmonicsPainter : public katrin::KROOTPainter
   private:
     K_SET(std::string, XAxis);
     K_SET(std::string, YAxis);
-    K_SET(double, Zmin);
-    K_SET(double, Zmax);
-    K_SET(double, Rmin);
-    K_SET(double, Rmax);
-    K_SET(double, Zdist);
-    K_SET(double, Rdist);
+    K_SET(double, ZMin);
+    K_SET(double, ZMax);
+    K_SET(double, RMin);
+    K_SET(double, RMax);
+    K_SET(double, ZDist);
+    K_SET(double, RDist);
     K_SET(unsigned, ZMaxSteps);
     K_SET(unsigned, RMaxSteps);
     K_SET(std::string, ElectricFieldName);
     K_SET(std::string, MagneticFieldName);
     K_SET(std::string, File);
     K_SET(std::string, Path);
-    K_SET(bool, DrawSourcePoints);
-    K_SET(bool, DrawExpansionArea);
     K_SET(bool, DrawConvergenceArea);
+    K_SET(bool, DrawSourcePoints);
+    K_SET(bool, DrawCentralBoundary);
+    K_SET(bool, DrawRemoteBoundary);
     //;K_SET( std::string, GeometryType );
     //;K_SET( double, RadialSafetyMargin );
 
-    //std::vector<std::pair<double,double> > fZRPoints;
+    std::list<std::pair<double,double> > fElCentralConvergenceBounds;
+    std::list<std::pair<double,double> > fElRemoteConvergenceBounds;
+    std::list<std::pair<double,double> > fElCentralSourcePoints;
+    std::list<std::pair<double,double> > fElRemoteSourcePoints;
 
-    // TODO: use TPolyLine
-    TGraph* fElZHConvergenceGraph;
-    TGraph* fElZHCentralGraph;
-    TGraph* fElZHRemoteGraph;
-
-    TGraph* fMagZHConvergenceGraph;
-    TGraph* fMagZHCentralGraph;
-    TGraph* fMagZHRemoteGraph;
-
-    TPolyMarker* fElZHPoints;
-    TPolyMarker* fMagZHPoints;
+    std::list<std::pair<double,double> > fMagCentralConvergenceBounds;
+    std::list<std::pair<double,double> > fMagRemoteConvergenceBounds;
+    std::list<std::pair<double,double> > fMagCentralSourcePoints;
+    std::list<std::pair<double,double> > fMagRemoteSourcePoints;
 };
 
 }  // namespace Kassiopeia

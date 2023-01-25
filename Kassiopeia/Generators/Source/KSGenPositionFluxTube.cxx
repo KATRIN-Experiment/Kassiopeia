@@ -82,6 +82,7 @@ void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
 
             tRValue = 0.0;
             tFlux = 0.0;
+            tArea = 0.0;
             tLastArea = 0.0;
 
             KThreeVector tPosition, tField;

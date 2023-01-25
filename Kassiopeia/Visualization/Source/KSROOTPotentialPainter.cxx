@@ -191,7 +191,7 @@ void KSROOTPotentialPainter::Render()
 void KSROOTPotentialPainter::Display()
 {
     if (fDisplayEnabled == true) {
-        fWindow->GetPad()->SetRightMargin(0.15);
+        fWindow->GetCanvas()->SetRightMargin(0.15);
         if (fCalcPot == 1)
             fMap->SetZTitle("Potential (V)");
         else

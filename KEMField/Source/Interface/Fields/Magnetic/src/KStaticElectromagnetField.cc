@@ -98,6 +98,11 @@ void KStaticElectromagnetField::InitializeCore()
     fFieldSolver->Initialize(*fContainer);
 }
 
+void KStaticElectromagnetField::DeinitializeCore()
+{
+    fFieldSolver->Deinitialize();
+}
+
 void KStaticElectromagnetField::CheckSolverExistance() const
 {
     if (!fFieldSolver)

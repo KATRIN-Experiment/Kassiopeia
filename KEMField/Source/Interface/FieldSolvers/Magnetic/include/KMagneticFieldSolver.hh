@@ -29,6 +29,14 @@ class KMagneticFieldSolver
         }
     }
 
+    void Deinitialize()
+    {
+        if (fInitialized) {
+            DeinitializeCore();
+            fInitialized = false;
+        }
+    }
+
     KFieldVector MagneticPotential(const KPosition& P) const
     {
         return MagneticPotentialCore(P);
@@ -51,6 +59,7 @@ class KMagneticFieldSolver
 
   private:
     virtual void InitializeCore(KElectromagnetContainer& container) = 0;
+    virtual void DeinitializeCore() = 0;
 
     virtual KFieldVector MagneticPotentialCore(const KPosition& P) const = 0;
     virtual KFieldVector MagneticFieldCore(const KPosition& P) const = 0;

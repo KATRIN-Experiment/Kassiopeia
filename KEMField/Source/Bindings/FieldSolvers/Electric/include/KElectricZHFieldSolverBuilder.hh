@@ -82,6 +82,11 @@ template<> inline bool KElectricZHFieldSolverBuilder::AddAttribute(KContainer* a
         aContainer->CopyTo(fObject->GetParameters(), &KEMField::KZonalHarmonicParameters::SetRemoteZ2);
         return true;
     }
+    if (aContainer->GetName() == "use_fixed_sourcepoint_range") {
+        aContainer->CopyTo(fObject->GetParameters(), &KEMField::KZonalHarmonicParameters::SetUseFixedRange);
+        return true;
+    }
+
     return false;
 }
 

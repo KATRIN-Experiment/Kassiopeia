@@ -39,6 +39,7 @@ class KIntegratingElectrostaticFieldSolver : public KElectricFieldSolver
 
   private:
     void InitializeCore(KSurfaceContainer& container) override;
+    void DeinitializeCore() override {}
 
     double PotentialCore(const KPosition& P) const override;
     KFieldVector ElectricFieldCore(const KPosition& P) const override;
