@@ -69,6 +69,16 @@ class KIterativeKrylovStateReader : public KIterativeSolver<ValueType>::Visitor
                 ParallelTraitState<ValueType> trait_state;
                 unsigned int n_states = 0;
 
+                if (fLabels.size() > 0) {
+                    kem_cout_debug("<shape> hash is <" << fLabels.at(0) << ">" << eom);
+                }
+                if (fLabels.size() > 1) {
+                    kem_cout_debug("<shape+boundary> hash is <" << fLabels.at(1) << ">" << eom);
+                }
+                if (fLabels.size() > 2) {
+                    kem_cout_debug("<parameter> hash is <" << fLabels.at(2) << ">" << eom);
+                }
+
                 std::vector<std::string> stateLabels = fLabels;
                 stateLabels.push_back(trait->NameLabel());
 

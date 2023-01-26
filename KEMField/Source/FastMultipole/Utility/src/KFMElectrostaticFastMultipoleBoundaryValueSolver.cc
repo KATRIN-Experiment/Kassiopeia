@@ -561,8 +561,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContai
     if (fUseCheckpoints) {
         //do not need to delete this visitor, as it is deleted by the solver
         auto* checkpoint_reader =
-            new KIterativeKrylovStateReader<FastMultipoleEBI::ValueType,
-                                            KGeneralizedMinimalResidual,
+            new KIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual,
                                             KGeneralizedMinimalResidualState>(fm_integrator->GetLabels());
         checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
         gmres.AddVisitor(checkpoint_reader);
@@ -577,8 +576,8 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContai
         if (fUseCheckpoints) {
             //do not need to delete this visitor, as it is deleted by the solver
             auto* checkpoint =
-                new KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual>(
-                    fm_integrator->GetLabels());
+                new KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual>
+                    (fm_integrator->GetLabels());
             checkpoint->Interval(fCheckpointFrequency);
             gmres.AddVisitor(checkpoint);
         }
