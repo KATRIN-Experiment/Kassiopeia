@@ -213,7 +213,7 @@ Optional Dependencies:
 -------------
 
 This software is distributed "as-is" under an open source license
-(MIT License, for details see `LICENSE.md` file.)
+(for details see `LICENSE.md` file).
 
 Kassiopeia includes the following open-source libraries:
 
@@ -231,4 +231,5 @@ You can [contribute changes](https://github.com/KATRIN-Experiment/Kassiopeia/com
 
 Primary email contacts:
 *    Kasper development list: katrin-kasper@lists.kit.edu
-*    Jan Behrens: jan.behrens@kit.edu
+*    Richard Salomon: richardsalomon@wwu.de
+*    Benedikt Bieringer: benedikt.b@wwu.de
