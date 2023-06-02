@@ -64,8 +64,8 @@ The general XML syntax is:
 
 .. code-block:: xml
 
-    <element atrribute1="value1" atrribute2="value2">
-        <child_element atrribute="value"/>
+    <element attribute1="value1" attribute2="value2">
+        <child_element attribute="value"/>
     </element>
 
 where ``<element>`` defines an `element` that corresponds to an object of *Kassiopeia* or one of the other modules. Each
