@@ -16,7 +16,7 @@ class KPathUtils
     static const std::string Directory(const std::string& aPath);
     static const std::string FileName(const std::string& aPath);
     static const std::string FileExtension(const std::string& aPath);
-    static uintmax_t Size(const std::string& aPath);
+    static size_t Size(const std::string& aPath);
 
     static bool Exists(const std::string& aPath);
     static bool IsDirectory(const std::string& aPath);

@@ -27,7 +27,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(COMPILER_VERSION ${CMAKE_CXX_COMPILER_VERSION})
     
 else()
-    message(FATAL_ERROR "Unknown or unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
+    message(WARNING "Unknown or unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
 endif()
 
 macro(kasper_require_clang_version VERSION)

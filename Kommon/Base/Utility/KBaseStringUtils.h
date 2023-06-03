@@ -15,6 +15,7 @@
 #include <cctype>
 #include <algorithm>
 #include <functional>
+#include <cstdint>
 
 #include <cxxabi.h>  // needed to convert typename to string
 
