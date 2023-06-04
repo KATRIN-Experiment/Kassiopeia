@@ -93,7 +93,7 @@ inline KTwoMatrix& KTwoMatrix::operator=(const KTwoMatrix& aMatrix)
     return *this;
 }
 
-inline KTwoMatrix::KTwoMatrix(const double anArray[9])
+inline KTwoMatrix::KTwoMatrix(const double anArray[4])
 {
     fData[0] = anArray[0];
     fData[1] = anArray[1];
@@ -101,7 +101,7 @@ inline KTwoMatrix::KTwoMatrix(const double anArray[9])
     fData[2] = anArray[2];
     fData[3] = anArray[3];
 }
-inline KTwoMatrix& KTwoMatrix::operator=(const double anArray[9])
+inline KTwoMatrix& KTwoMatrix::operator=(const double anArray[4])
 {
     fData[0] = anArray[0];
     fData[1] = anArray[1];
