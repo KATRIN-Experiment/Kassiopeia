@@ -63,7 +63,7 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
         }
 
         // parse command line arguments - but only up to the -r flag
-        commandLineArgs = move(KArgumentList(lastArg, argv));
+        commandLineArgs = std::move(KArgumentList(lastArg, argv));
         KDEBUG("Commandline: " << commandLineArgs.CommandLine());
 
         // parse `key=value` pairs after the -r flag
