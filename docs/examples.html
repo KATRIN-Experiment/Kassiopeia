@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Examples and Tests &mdash; Kassiopeia 3.8 documentation</title>
+  <title>Examples and Tests &mdash; Kassiopeia 4.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -31,12 +31,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #343131" >
-            <a href="index.html" class="icon icon-home"> Kassiopeia
-            <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kassiopeia
+              <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -95,8 +99,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Examples and Tests</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples and Tests</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -135,17 +139,17 @@
 <code class="docutils literal notranslate"><span class="pre">kasperenv.sh</span></code>, <em>Kassiopeia</em> can be run directly from the command prompt. The script sets the environment variables
 accordingly so that the variable <code class="docutils literal notranslate"><span class="pre">KASPERSYS</span></code> points to the installation directory, and <em>Kassiopeia</em> can be found
 in the standard executable path. To run a <em>Kassiopeia</em> simulation, the usage is simply:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia &lt;path-to-xml-config-file&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span>&lt;path-to-xml-config-file&gt;
 </pre></div>
 </div>
 <p><em>Kassiopeia</em> also includes advanced variable replacement functionality, which makes it easy to modify one or many
 <a href="#id1"><span class="problematic" id="id2">*</span></a>simulation parameters on-the-fly. This can be done with the following usage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia &lt;path-to-xml-config-file&gt; -r &lt;variable1&gt;<span class="o">=</span>&lt;value1&gt; &lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span>&lt;path-to-xml-config-file&gt;<span class="w"> </span>-r<span class="w"> </span>&lt;variable1&gt;<span class="o">=</span>&lt;value1&gt;<span class="w"> </span>&lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
 </pre></div>
 </div>
 <p>In this case, all elements after the <code class="docutils literal notranslate"><span class="pre">-r</span></code> flag are considered variable definitions. Alternatively, the following
 syntax can be used. Here all variable names are prefixed with <code class="docutils literal notranslate"><span class="pre">--</span></code>, and options can be freely mixed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia &lt;path-to-xml-config-file&gt; --&lt;variable1&gt;<span class="o">=</span>&lt;value1&gt; --&lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span>&lt;path-to-xml-config-file&gt;<span class="w"> </span>--&lt;variable1&gt;<span class="o">=</span>&lt;value1&gt;<span class="w"> </span>--&lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
 </pre></div>
 </div>
 <section id="verbosity-levels">
@@ -153,7 +157,7 @@ syntax can be used. Here all variable names are prefixed with <code class="docut
 <p>As a quick means to change the output verbosity (i.e. the amount of messages shown on the terminal while the program
 is running), the <code class="docutils literal notranslate"><span class="pre">-v</span></code> and <code class="docutils literal notranslate"><span class="pre">-q</span></code> flags can be used. Each option raises/lowers the verbosity level, so that the
 following example would raise the level by one unit. Try it with one of the example XML files below!</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia &lt;path-to-xml-config-file&gt; -v -q -v
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span>&lt;path-to-xml-config-file&gt;<span class="w"> </span>-v<span class="w"> </span>-q<span class="w"> </span>-v
 </pre></div>
 </div>
 </section>
@@ -185,7 +189,7 @@ configurations. Please take some time to investigate these example files.</p>
 dipole magnets positioned some distance apart along the same axis to form a magnetic bottle. To make the simulation
 slightly less trivial and more suitable to show <em>Kassiopeia</em> features, a ring electrode has been added near the center
 of the magnetic bottle emulating a MAC-E filter spectrometer. To run this simulation type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span><span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
 </pre></div>
 </div>
 <p>On the first run of this simulation, <em>Kassiopeia</em> will call <em>KEMField</em> to solve the static electric and magnetic fields
@@ -228,7 +232,7 @@ momentum vector and the magnetic field. The following image demonstrates the VTK
 <p>The second example to demonstrate the capabilities of <em>Kassiopeia</em> is that of a quadrupole (Penning) trap. This sort of
 trap is similar to those which are used to measure the electron $g$-factor to extreme precision. To run this example,
 locate the XML file in the config directory, and at the command prompt enter:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/QuadrupoleTrapSimulation.xml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span><span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/QuadrupoleTrapSimulation.xml
 </pre></div>
 </div>
 <p>This example also demonstrates the incorporation of discrete interactions, such as scattering off residual gas. If <a class="reference external" href="http://www.vtk.org/">VTK</a>
@@ -240,7 +244,7 @@ electrode surfaces. The electron tracks can be seen as short lines at the center
 <h4>Simulation Analysis<a class="headerlink" href="#simulation-analysis" title="Permalink to this heading"><span>#</span></a></h4>
 <p>Furthermore, a very simple analysis program example <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapAnalysis</span></code> can be run on the resulting <code class="docutils literal notranslate"><span class="pre">.root</span></code>
 file. To do this, execute the following after the output file was created:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>QuadrupoleTrapAnalysis <span class="nv">$KASPERSYS</span>/output/Kassiopeia/QuadrupoleTrapSimulation.root
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>QuadrupoleTrapAnalysis<span class="w"> </span><span class="nv">$KASPERSYS</span>/output/Kassiopeia/QuadrupoleTrapSimulation.root
 </pre></div>
 </div>
 <p>The output of which should be something to the effect of:</p>
@@ -264,7 +268,7 @@ of particle tracking in a photomultiplier tube is also included. This convifurat
 device (e.g. a GPU) it is recommended that the field solving sub-module <em>KEMField</em> is augmented with OpenCL in order to
 take advantage of hardware acceleration. This is done by setting the <code class="docutils literal notranslate"><span class="pre">KEMField_USE_OpenCL</span></code> flag in the build stage.</p>
 <p>To run this simulation, type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/PhotoMultiplierTubeSimulation.xml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span><span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/PhotoMultiplierTubeSimulation.xml
 </pre></div>
 </div>
 <section id="visualization-with-paraview">
@@ -359,7 +363,7 @@ octree-based navigator.</p></td>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2016-2022, The Kassiopeia developers..</p>
+    <p>&#169; Copyright 2016-2023, The Kassiopeia developers..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

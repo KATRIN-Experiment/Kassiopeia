@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visualization Techniques &mdash; Kassiopeia 3.8 documentation</title>
+  <title>Visualization Techniques &mdash; Kassiopeia 4.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -31,12 +31,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #343131" >
-            <a href="index.html" class="icon icon-home"> Kassiopeia
-            <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kassiopeia
+              <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -96,8 +100,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Visualization Techniques</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Visualization Techniques</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/visualization.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -147,7 +151,7 @@ may be produced before or after performing the simulation, and a visualization w
 the visualization window blocks the application until it is closed, so it is not advised to use this feature in a
 scripted environment. The commandline option <code class="docutils literal notranslate"><span class="pre">-b</span></code> (or <code class="docutils literal notranslate"><span class="pre">-batch</span></code>) will prevent any visualization windows to appear
 regardless of the setting in the configuration file, e.g.:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia -b DipoleTrapSimulation.xml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Kassiopeia<span class="w"> </span>-b<span class="w"> </span>DipoleTrapSimulation.xml
 </pre></div>
 </div>
 <section id="geometry-visualization">
@@ -155,16 +159,16 @@ regardless of the setting in the configuration file, e.g.:</p>
 <p>The <em>KGeoBag</em> module provides painter classes for the geometry which are covered below in the <em>Kassiopeia</em> section.
 In addition, the mesh geometry can be viewed as well:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;vtk_window</span>
-        <span class="na">name=</span><span class="s">&quot;vtk_window&quot;</span>
-        <span class="na">enable_display=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">enable_write=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">frame_title=</span><span class="s">&quot;KGeoBag Visualization&quot;</span>
-    <span class="nt">&gt;</span>
-    <span class="nt">&lt;vtk_axial_mesh_painter</span>
-        <span class="na">name=</span><span class="s">&quot;vtk_axial_mesh_painter&quot;</span>
-        <span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/@electrode_tag&quot;</span>
-        <span class="na">color_mode=</span><span class="s">&quot;area&quot;</span>
-    <span class="nt">/&gt;</span>
+<span class="w">        </span><span class="na">name=</span><span class="s">&quot;vtk_window&quot;</span>
+<span class="w">        </span><span class="na">enable_display=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">enable_write=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">frame_title=</span><span class="s">&quot;KGeoBag Visualization&quot;</span>
+<span class="w">    </span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;vtk_axial_mesh_painter</span>
+<span class="w">        </span><span class="na">name=</span><span class="s">&quot;vtk_axial_mesh_painter&quot;</span>
+<span class="w">        </span><span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/@electrode_tag&quot;</span>
+<span class="w">        </span><span class="na">color_mode=</span><span class="s">&quot;area&quot;</span>
+<span class="w">    </span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/vtk_window&gt;</span>
 </pre></div>
 </div>
@@ -216,41 +220,41 @@ the simulation geometry.</p>
 (<code class="docutils literal notranslate"><span class="pre">vtk_track_painter</span></code>) and the track terminator positions (<code class="docutils literal notranslate"><span class="pre">vtk_track_terminator_painter</span></code>). Note that in order
 to use visualizations of simulation data, a <a class="reference external" href="https://root.cern.ch/">ROOT</a> output file has to exist.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;vtk_window</span>
-        <span class="na">name=</span><span class="s">&quot;vtk_window&quot;</span>
-        <span class="na">enable_display=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">enable_write=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">frame_title=</span><span class="s">&quot;Kassiopeia Visualization&quot;</span>
-    <span class="nt">&gt;</span>
-    <span class="nt">&lt;vtk_geometry_painter</span>
-        <span class="na">name=</span><span class="s">&quot;geometry_painter&quot;</span>
-        <span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
-        <span class="na">file=</span><span class="s">&quot;DipoleTrapGeometry.vtp&quot;</span>
-        <span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/#&quot;</span>
-    <span class="nt">/&gt;</span>
-    <span class="nt">&lt;vtk_track_painter</span>
-            <span class="na">name=</span><span class="s">&quot;track_painter&quot;</span>
-            <span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
-            <span class="na">file=</span><span class="s">&quot;DipoleTrapSimulation.root&quot;</span>
-            <span class="na">point_object=</span><span class="s">&quot;component_step_world&quot;</span>
-            <span class="na">point_variable=</span><span class="s">&quot;position&quot;</span>
-            <span class="na">color_object=</span><span class="s">&quot;component_step_world&quot;</span>
-            <span class="na">color_variable=</span><span class="s">&quot;polar_angle_to_b&quot;</span>
-    <span class="nt">/&gt;</span>
-    <span class="nt">&lt;vtk_track_terminator_painter</span>
-            <span class="na">name=</span><span class="s">&quot;terminator_painter&quot;</span>
-            <span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
-            <span class="na">file=</span><span class="s">&quot;DipoleTrapSimulation.root&quot;</span>
-            <span class="na">point_object=</span><span class="s">&quot;component_track_world&quot;</span>
-            <span class="na">point_variable=</span><span class="s">&quot;final_position&quot;</span>
-            <span class="na">terminator_object=</span><span class="s">&quot;component_track_world&quot;</span>
-            <span class="na">terminator_variable=</span><span class="s">&quot;terminator_name&quot;</span>
-            <span class="na">add_terminator=</span><span class="s">&quot;term_upstream_target&quot;</span>
-            <span class="na">add_color=</span><span class="s">&quot;0 255 0&quot;</span>
-            <span class="na">add_terminator=</span><span class="s">&quot;term_downstream_target&quot;</span>
-            <span class="na">add_color=</span><span class="s">&quot;0 255 0&quot;</span>
-            <span class="na">add_terminator=</span><span class="s">&quot;term_max_steps&quot;</span>
-            <span class="na">add_color=</span><span class="s">&quot;255 0 0&quot;</span>
-    <span class="nt">/&gt;</span>
+<span class="w">        </span><span class="na">name=</span><span class="s">&quot;vtk_window&quot;</span>
+<span class="w">        </span><span class="na">enable_display=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">enable_write=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">frame_title=</span><span class="s">&quot;Kassiopeia Visualization&quot;</span>
+<span class="w">    </span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;vtk_geometry_painter</span>
+<span class="w">        </span><span class="na">name=</span><span class="s">&quot;geometry_painter&quot;</span>
+<span class="w">        </span><span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
+<span class="w">        </span><span class="na">file=</span><span class="s">&quot;DipoleTrapGeometry.vtp&quot;</span>
+<span class="w">        </span><span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/#&quot;</span>
+<span class="w">    </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;vtk_track_painter</span>
+<span class="w">            </span><span class="na">name=</span><span class="s">&quot;track_painter&quot;</span>
+<span class="w">            </span><span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
+<span class="w">            </span><span class="na">file=</span><span class="s">&quot;DipoleTrapSimulation.root&quot;</span>
+<span class="w">            </span><span class="na">point_object=</span><span class="s">&quot;component_step_world&quot;</span>
+<span class="w">            </span><span class="na">point_variable=</span><span class="s">&quot;position&quot;</span>
+<span class="w">            </span><span class="na">color_object=</span><span class="s">&quot;component_step_world&quot;</span>
+<span class="w">            </span><span class="na">color_variable=</span><span class="s">&quot;polar_angle_to_b&quot;</span>
+<span class="w">    </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;vtk_track_terminator_painter</span>
+<span class="w">            </span><span class="na">name=</span><span class="s">&quot;terminator_painter&quot;</span>
+<span class="w">            </span><span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
+<span class="w">            </span><span class="na">file=</span><span class="s">&quot;DipoleTrapSimulation.root&quot;</span>
+<span class="w">            </span><span class="na">point_object=</span><span class="s">&quot;component_track_world&quot;</span>
+<span class="w">            </span><span class="na">point_variable=</span><span class="s">&quot;final_position&quot;</span>
+<span class="w">            </span><span class="na">terminator_object=</span><span class="s">&quot;component_track_world&quot;</span>
+<span class="w">            </span><span class="na">terminator_variable=</span><span class="s">&quot;terminator_name&quot;</span>
+<span class="w">            </span><span class="na">add_terminator=</span><span class="s">&quot;term_upstream_target&quot;</span>
+<span class="w">            </span><span class="na">add_color=</span><span class="s">&quot;0 255 0&quot;</span>
+<span class="w">            </span><span class="na">add_terminator=</span><span class="s">&quot;term_downstream_target&quot;</span>
+<span class="w">            </span><span class="na">add_color=</span><span class="s">&quot;0 255 0&quot;</span>
+<span class="w">            </span><span class="na">add_terminator=</span><span class="s">&quot;term_max_steps&quot;</span>
+<span class="w">            </span><span class="na">add_color=</span><span class="s">&quot;255 0 0&quot;</span>
+<span class="w">    </span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/vtk_window&gt;</span>
 </pre></div>
 </div>
@@ -264,31 +268,31 @@ also exists a <code class="docutils literal notranslate"><span class="pre">&lt;v
 <p>A similar 2D visualization can be achieved using the <a class="reference external" href="https://root.cern.ch/">ROOT</a> visualization elements. The example below will present a view
 of the 3D geometry projected onto the Z-X plane.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root_window</span>
-    <span class="na">name=</span><span class="s">&quot;Kassiopeia Visualization&quot;</span>
+<span class="w">    </span><span class="na">name=</span><span class="s">&quot;Kassiopeia Visualization&quot;</span>
 <span class="nt">&gt;</span>
-    <span class="nt">&lt;root_pad</span> <span class="na">name=</span><span class="s">&quot;toppad&quot;</span> <span class="na">xlow=</span><span class="s">&quot;0.02&quot;</span> <span class="na">ylow=</span><span class="s">&quot;0.98&quot;</span> <span class="na">xup=</span><span class="s">&quot;0.98&quot;</span> <span class="na">yup=</span><span class="s">&quot;0.98&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;root_geometry_painter</span>
-            <span class="na">name=</span><span class="s">&quot;root_geometry_painter&quot;</span>
-            <span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/#&quot;</span>
-            <span class="na">plane_normal=</span><span class="s">&quot;0 1 0&quot;</span>
-            <span class="na">plane_point=</span><span class="s">&quot;0 0 0&quot;</span>
-            <span class="na">swap_axis=</span><span class="s">&quot;false&quot;</span>
-        <span class="nt">/&gt;</span>
-        <span class="nt">&lt;root_track_painter</span>
-            <span class="na">name=</span><span class="s">&quot;root_track_painter&quot;</span>
-            <span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
-            <span class="na">base=</span><span class="s">&quot;DipoleTrapSimulation.root&quot;</span>
-            <span class="na">plane_normal=</span><span class="s">&quot;0 1 0&quot;</span>
-            <span class="na">plane_point=</span><span class="s">&quot;0 0 0&quot;</span>
-            <span class="na">swap_axis=</span><span class="s">&quot;false&quot;</span>
-            <span class="na">x_axis=</span><span class="s">&quot;z&quot;</span>
-            <span class="na">y_axis=</span><span class="s">&quot;x&quot;</span>
-            <span class="na">step_output_group_name=</span><span class="s">&quot;component_step_world&quot;</span>
-            <span class="na">position_name=</span><span class="s">&quot;position&quot;</span>
-            <span class="na">color_mode=</span><span class="s">&quot;track&quot;</span>
-            <span class="na">color_variable=</span><span class="s">&quot;track_id&quot;</span>
-        <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/root_pad&gt;</span>
+<span class="w">    </span><span class="nt">&lt;root_pad</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;toppad&quot;</span><span class="w"> </span><span class="na">xlow=</span><span class="s">&quot;0.02&quot;</span><span class="w"> </span><span class="na">ylow=</span><span class="s">&quot;0.98&quot;</span><span class="w"> </span><span class="na">xup=</span><span class="s">&quot;0.98&quot;</span><span class="w"> </span><span class="na">yup=</span><span class="s">&quot;0.98&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;root_geometry_painter</span>
+<span class="w">            </span><span class="na">name=</span><span class="s">&quot;root_geometry_painter&quot;</span>
+<span class="w">            </span><span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/#&quot;</span>
+<span class="w">            </span><span class="na">plane_normal=</span><span class="s">&quot;0 1 0&quot;</span>
+<span class="w">            </span><span class="na">plane_point=</span><span class="s">&quot;0 0 0&quot;</span>
+<span class="w">            </span><span class="na">swap_axis=</span><span class="s">&quot;false&quot;</span>
+<span class="w">        </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;root_track_painter</span>
+<span class="w">            </span><span class="na">name=</span><span class="s">&quot;root_track_painter&quot;</span>
+<span class="w">            </span><span class="na">path=</span><span class="s">&quot;[output_path]&quot;</span>
+<span class="w">            </span><span class="na">base=</span><span class="s">&quot;DipoleTrapSimulation.root&quot;</span>
+<span class="w">            </span><span class="na">plane_normal=</span><span class="s">&quot;0 1 0&quot;</span>
+<span class="w">            </span><span class="na">plane_point=</span><span class="s">&quot;0 0 0&quot;</span>
+<span class="w">            </span><span class="na">swap_axis=</span><span class="s">&quot;false&quot;</span>
+<span class="w">            </span><span class="na">x_axis=</span><span class="s">&quot;z&quot;</span>
+<span class="w">            </span><span class="na">y_axis=</span><span class="s">&quot;x&quot;</span>
+<span class="w">            </span><span class="na">step_output_group_name=</span><span class="s">&quot;component_step_world&quot;</span>
+<span class="w">            </span><span class="na">position_name=</span><span class="s">&quot;position&quot;</span>
+<span class="w">            </span><span class="na">color_mode=</span><span class="s">&quot;track&quot;</span>
+<span class="w">            </span><span class="na">color_variable=</span><span class="s">&quot;track_id&quot;</span>
+<span class="w">        </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/root_pad&gt;</span>
 <span class="nt">&lt;/root_window&gt;</span>
 </pre></div>
 </div>
@@ -313,28 +317,28 @@ of such geometries.</p>
 <p>The viewer is instantiated with the XML element <code class="docutils literal notranslate"><span class="pre">&lt;viewer&gt;</span></code> under the <code class="docutils literal notranslate"><span class="pre">&lt;ksfield_electrostatic&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;electrostatic_field&gt;</span></code>
 tag. For example, expanding the <code class="docutils literal notranslate"><span class="pre">DipoleTrapSimulation.xml</span></code> file:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;kemfield&gt;</span>
-    <span class="nt">&lt;electrostatic_field</span>
-            <span class="na">name=</span><span class="s">&quot;field_electrostatic&quot;</span>
-            <span class="na">file=</span><span class="s">&quot;DipoleTrapElectrodes.kbd&quot;</span>
-            <span class="na">system=</span><span class="s">&quot;world/dipole_trap&quot;</span>
-            <span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/@electrode_tag&quot;</span>
-            <span class="na">symmetry=</span><span class="s">&quot;axial&quot;</span>
-        <span class="nt">&gt;</span>
-        <span class="nt">&lt;robin_hood_bem_solver</span>
-             <span class="na">integrator=</span><span class="s">&quot;analytic&quot;</span>
-             <span class="na">tolerance=</span><span class="s">&quot;1.e-10&quot;</span>
-             <span class="na">check_sub_interval=</span><span class="s">&quot;100&quot;</span>
-             <span class="na">display_interval=</span><span class="s">&quot;1&quot;</span>
-             <span class="na">cache_matrix_elements=</span><span class="s">&quot;true&quot;</span>
-        <span class="nt">/&gt;</span>
-        <span class="nt">&lt;viewer</span>
-             <span class="na">file=</span><span class="s">&quot;DipoleTrapElectrodes.vtp&quot;</span>
-             <span class="na">save=</span><span class="s">&quot;true&quot;</span>
-             <span class="na">view=</span><span class="s">&quot;true&quot;</span>
-             <span class="na">preprocessing=</span><span class="s">&quot;false&quot;</span>
-             <span class="na">postprocessing=</span><span class="s">&quot;true&quot;</span>
-        <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/electrostatic_field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;electrostatic_field</span>
+<span class="w">            </span><span class="na">name=</span><span class="s">&quot;field_electrostatic&quot;</span>
+<span class="w">            </span><span class="na">file=</span><span class="s">&quot;DipoleTrapElectrodes.kbd&quot;</span>
+<span class="w">            </span><span class="na">system=</span><span class="s">&quot;world/dipole_trap&quot;</span>
+<span class="w">            </span><span class="na">surfaces=</span><span class="s">&quot;world/dipole_trap/@electrode_tag&quot;</span>
+<span class="w">            </span><span class="na">symmetry=</span><span class="s">&quot;axial&quot;</span>
+<span class="w">        </span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;robin_hood_bem_solver</span>
+<span class="w">             </span><span class="na">integrator=</span><span class="s">&quot;analytic&quot;</span>
+<span class="w">             </span><span class="na">tolerance=</span><span class="s">&quot;1.e-10&quot;</span>
+<span class="w">             </span><span class="na">check_sub_interval=</span><span class="s">&quot;100&quot;</span>
+<span class="w">             </span><span class="na">display_interval=</span><span class="s">&quot;1&quot;</span>
+<span class="w">             </span><span class="na">cache_matrix_elements=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;viewer</span>
+<span class="w">             </span><span class="na">file=</span><span class="s">&quot;DipoleTrapElectrodes.vtp&quot;</span>
+<span class="w">             </span><span class="na">save=</span><span class="s">&quot;true&quot;</span>
+<span class="w">             </span><span class="na">view=</span><span class="s">&quot;true&quot;</span>
+<span class="w">             </span><span class="na">preprocessing=</span><span class="s">&quot;false&quot;</span>
+<span class="w">             </span><span class="na">postprocessing=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/electrostatic_field&gt;</span>
 <span class="nt">&lt;/kemfield&gt;</span>
 </pre></div>
 </div>
@@ -349,35 +353,35 @@ can also be used to provide input for the <a class="reference external" href="ht
 Field maps can be calculated in 2D or 3D mode, and both variants can readily be used in ParaView.</p>
 <p>The example below will generate a 2D map of the magnetic and electric field:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;kemfield&gt;</span>
-    <span class="nt">&lt;magnetic_fieldmap_calculator</span>
-        <span class="na">name=</span><span class="s">&quot;b_fieldmap_calculator&quot;</span>
-        <span class="na">field=</span><span class="s">&quot;field_electromagnet&quot;</span>
-        <span class="na">file=</span><span class="s">&quot;DipoleTrapMagnetic.vti&quot;</span>
-        <span class="na">directory=</span><span class="s">&quot;[output_path]&quot;</span>
-        <span class="na">force_update=</span><span class="s">&quot;false&quot;</span>
-        <span class="na">compute_gradient=</span><span class="s">&quot;false&quot;</span>
-        <span class="na">center=</span><span class="s">&quot;0 0 0&quot;</span>
-        <span class="na">length=</span><span class="s">&quot;5e-1 0 1.0&quot;</span>
-        <span class="na">spacing=</span><span class="s">&quot;0.01 0.01 0.01&quot;</span>
-        <span class="na">mirror_x=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">mirror_y=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">mirror_z=</span><span class="s">&quot;false&quot;</span>
-    <span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;magnetic_fieldmap_calculator</span>
+<span class="w">        </span><span class="na">name=</span><span class="s">&quot;b_fieldmap_calculator&quot;</span>
+<span class="w">        </span><span class="na">field=</span><span class="s">&quot;field_electromagnet&quot;</span>
+<span class="w">        </span><span class="na">file=</span><span class="s">&quot;DipoleTrapMagnetic.vti&quot;</span>
+<span class="w">        </span><span class="na">directory=</span><span class="s">&quot;[output_path]&quot;</span>
+<span class="w">        </span><span class="na">force_update=</span><span class="s">&quot;false&quot;</span>
+<span class="w">        </span><span class="na">compute_gradient=</span><span class="s">&quot;false&quot;</span>
+<span class="w">        </span><span class="na">center=</span><span class="s">&quot;0 0 0&quot;</span>
+<span class="w">        </span><span class="na">length=</span><span class="s">&quot;5e-1 0 1.0&quot;</span>
+<span class="w">        </span><span class="na">spacing=</span><span class="s">&quot;0.01 0.01 0.01&quot;</span>
+<span class="w">        </span><span class="na">mirror_x=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">mirror_y=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">mirror_z=</span><span class="s">&quot;false&quot;</span>
+<span class="w">    </span><span class="nt">/&gt;</span>
 
-    <span class="nt">&lt;electric_potentialmap_calculator</span>
-        <span class="na">name=</span><span class="s">&quot;e_fieldmap_calculator&quot;</span>
-        <span class="na">field=</span><span class="s">&quot;field_electrostatic&quot;</span>
-        <span class="na">file=</span><span class="s">&quot;DipoleTrapElectric-XZ.vti&quot;</span>
-        <span class="na">directory=</span><span class="s">&quot;[output_path]&quot;</span>
-        <span class="na">force_update=</span><span class="s">&quot;false&quot;</span>
-        <span class="na">compute_field=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">center=</span><span class="s">&quot;0 0 0&quot;</span>
-        <span class="na">length=</span><span class="s">&quot;5e-1 0.0 1.0&quot;</span>
-        <span class="na">spacing=</span><span class="s">&quot;0.01 0.01 0.01&quot;</span>
-        <span class="na">mirror_x=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">mirror_y=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">mirror_z=</span><span class="s">&quot;false&quot;</span>
-    <span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;electric_potentialmap_calculator</span>
+<span class="w">        </span><span class="na">name=</span><span class="s">&quot;e_fieldmap_calculator&quot;</span>
+<span class="w">        </span><span class="na">field=</span><span class="s">&quot;field_electrostatic&quot;</span>
+<span class="w">        </span><span class="na">file=</span><span class="s">&quot;DipoleTrapElectric-XZ.vti&quot;</span>
+<span class="w">        </span><span class="na">directory=</span><span class="s">&quot;[output_path]&quot;</span>
+<span class="w">        </span><span class="na">force_update=</span><span class="s">&quot;false&quot;</span>
+<span class="w">        </span><span class="na">compute_field=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">center=</span><span class="s">&quot;0 0 0&quot;</span>
+<span class="w">        </span><span class="na">length=</span><span class="s">&quot;5e-1 0.0 1.0&quot;</span>
+<span class="w">        </span><span class="na">spacing=</span><span class="s">&quot;0.01 0.01 0.01&quot;</span>
+<span class="w">        </span><span class="na">mirror_x=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">mirror_y=</span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="na">mirror_z=</span><span class="s">&quot;false&quot;</span>
+<span class="w">    </span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/kemfield&gt;</span>
 </pre></div>
 </div>
@@ -403,7 +407,7 @@ correctly.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2016-2022, The Kassiopeia developers..</p>
+    <p>&#169; Copyright 2016-2023, The Kassiopeia developers..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

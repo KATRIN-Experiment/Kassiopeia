@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bindings Documentation &mdash; Kassiopeia 3.8 documentation</title>
+  <title>Bindings Documentation &mdash; Kassiopeia 4.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -31,12 +31,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #343131" >
-            <a href="index.html" class="icon icon-home"> Kassiopeia
-            <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kassiopeia
+              <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -91,8 +95,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Bindings Documentation</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Bindings Documentation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/bindings.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -110,21 +114,21 @@ the available XML elements, their attributes and their relation to C++ classes.<
 <nav class="contents local" id="on-this-page">
 <p class="topic-title">On this page</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id793">Overview</a></p></li>
-<li><p><a class="reference internal" href="#bindings-graph" id="id794">Bindings graph</a></p></li>
-<li><p><a class="reference internal" href="#list-of-bindings" id="id795">List of bindings</a></p>
+<li><p><a class="reference internal" href="#overview" id="id799">Overview</a></p></li>
+<li><p><a class="reference internal" href="#bindings-graph" id="id800">Bindings graph</a></p></li>
+<li><p><a class="reference internal" href="#list-of-bindings" id="id801">List of bindings</a></p>
 <ul>
-<li><p><a class="reference internal" href="#kroot" id="id796">KRoot</a></p></li>
+<li><p><a class="reference internal" href="#kroot" id="id802">KRoot</a></p></li>
 </ul>
 </li>
 </ul>
 </nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id793" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"><span>#</span></a></h2>
+<h2><a class="toc-backref" href="#id799" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The files below show the allowed <em>elements</em> and <em>attributes</em> that can be used
 in Kasper XML files; according to the syntax:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;element</span> <span class="na">attribute_1=</span><span class="s">&quot;value_1&quot;</span> <span class="na">attribute_2=</span><span class="s">&quot;value_2&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;child_element</span> <span class="na">attribute_3=</span><span class="s">&quot;value_3&quot;</span> <span class="nt">/&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;element</span><span class="w"> </span><span class="na">attribute_1=</span><span class="s">&quot;value_1&quot;</span><span class="w"> </span><span class="na">attribute_2=</span><span class="s">&quot;value_2&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;child_element</span><span class="w"> </span><span class="na">attribute_3=</span><span class="s">&quot;value_3&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/element&gt;</span>
 </pre></div>
 </div>
@@ -136,19 +140,19 @@ that this information is not represented here in the documentation.</p>
 <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Documentation/Bindings/">Documentation/Bindings</a>.</p>
 </section>
 <section id="bindings-graph">
-<h2><a class="toc-backref" href="#id794" role="doc-backlink">Bindings graph</a><a class="headerlink" href="#bindings-graph" title="Permalink to this heading"><span>#</span></a></h2>
+<h2><a class="toc-backref" href="#id800" role="doc-backlink">Bindings graph</a><a class="headerlink" href="#bindings-graph" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The graphs shows the relation between the available XML elements.</p>
 <a class="reference internal image-reference" href="_images/bindings_full.svg"><img alt="XML bindings graph" src="_images/bindings_full.svg" width="1000px" /></a>
 </section>
 <section id="list-of-bindings">
-<h2><a class="toc-backref" href="#id795" role="doc-backlink">List of bindings</a><a class="headerlink" href="#list-of-bindings" title="Permalink to this heading"><span>#</span></a></h2>
+<h2><a class="toc-backref" href="#id801" role="doc-backlink">List of bindings</a><a class="headerlink" href="#list-of-bindings" title="Permalink to this heading"><span>#</span></a></h2>
 <p>The tables below show the child elements and attributes along with their type for each XML element.
 Note that the column pairs <em>child element / child type</em> and <em>attribute / attribute type</em> are linked: each listed type
 corresponds to the item on the left. The list of attributes is independent to the list of child elements. For many
 elements the child elements and attributes cannot be freely combined (e.g. some are mutually exclusive), but this is
 not reflected here.</p>
 <section id="kroot">
-<span id="id1"></span><h3><a class="toc-backref" href="#id796" role="doc-backlink">KRoot</a><a class="headerlink" href="#kroot" title="Permalink to this heading"><span>#</span></a></h3>
+<span id="id1"></span><h3><a class="toc-backref" href="#id802" role="doc-backlink">KRoot</a><a class="headerlink" href="#kroot" title="Permalink to this heading"><span>#</span></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -4238,12 +4242,12 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="195"><p><code class="docutils literal notranslate"><span class="pre">kassiopeia</span></code></p></td>
-<td rowspan="195"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx">KSRootBuilder.cxx</a></p></td>
+<tr class="row-even"><td rowspan="196"><p><code class="docutils literal notranslate"><span class="pre">kassiopeia</span></code></p></td>
+<td rowspan="196"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx">KSRootBuilder.cxx</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">kess_elastic_elsepa</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kesselasticelsepa"><span class="std std-ref">KESSElasticElsepa</span></a></p></td>
-<td rowspan="195"><p><code class="docutils literal notranslate"><span class="pre">random_seed</span></code></p></td>
-<td rowspan="195"><p><em>unsigned int</em></p></td>
+<td rowspan="196"><p><code class="docutils literal notranslate"><span class="pre">random_seed</span></code></p></td>
+<td rowspan="196"><p><em>unsigned int</em></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kess_inelastic_bethefano</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kessinelasticbethefano"><span class="std std-ref">KESSInelasticBetheFano</span></a></p></td>
@@ -4482,349 +4486,352 @@ not reflected here.</p>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_boltzmann</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueboltzmann"><span class="std std-ref">KSGenValueBoltzmann</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_fix</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_fermi</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefermi"><span class="std std-ref">KSGenValueFermi</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_fix</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_formula</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_formula</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_gauss</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_gauss</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegauss"><span class="std std-ref">KSGenValueGauss</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_generalized_gauss</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_generalized_gauss</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegeneralizedgauss"><span class="std std-ref">KSGenValueGeneralizedGauss</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_histogram</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_histogram</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluehistogram"><span class="std std-ref">KSGenValueHistogram</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_list</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_list</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluelist"><span class="std std-ref">KSGenValueList</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_pareto</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_pareto</span></code></p></td>
 <td><p><span class="xref std std-ref">KSGenValuePareto</span></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_radius_cylindrical</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_radius_cylindrical</span></code></p></td>
 <td><p><span class="xref std std-ref">KSGenValueRadiusCylindrical</span></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_radius_fraction</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_radius_fraction</span></code></p></td>
 <td><p><span class="xref std std-ref">KSGenValueRadiusFraction</span></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_radius_spherical</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_radius_spherical</span></code></p></td>
 <td><p><span class="xref std std-ref">KSGenValueRadiusSpherical</span></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_set</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_set</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueset"><span class="std std-ref">KSGenValueSet</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_uniform</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_uniform</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueuniform"><span class="std std-ref">KSGenValueUniform</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_z_frustrum</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgen_value_z_frustrum</span></code></p></td>
 <td><p><span class="xref std std-ref">KSGenValueZFrustrum</span></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgeo_side</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgeo_side</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgeoside"><span class="std std-ref">KSGeoSide</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgeo_space</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgeo_space</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgeospace"><span class="std std-ref">KSGeoSpace</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksgeo_surface</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksgeo_surface</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgeosurface"><span class="std std-ref">KSGeoSurface</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_calculator_constant</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_calculator_constant</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintcalculatorconstant"><span class="std std-ref">KSIntCalculatorConstant</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_calculator_ion</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_calculator_ion</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintcalculatorion"><span class="std std-ref">KSIntCalculatorIon</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecay"><span class="std std-ref">KSIntDecay</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_death_const_rate</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_death_const_rate</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatordeathconstrate"><span class="std std-ref">KSIntDecayCalculatorDeathConstRate</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_ferenc_bbr_transition</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_ferenc_bbr_transition</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatorferencbbrtransition"><span class="std std-ref">KSIntDecayCalculatorFerencBBRTransition</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_ferenc_ionisation</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_ferenc_ionisation</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatorferencionisation"><span class="std std-ref">KSIntDecayCalculatorFerencIonisation</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_ferenc_spontaneous</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_ferenc_spontaneous</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatorferencspontaneous"><span class="std std-ref">KSIntDecayCalculatorFerencSpontaneous</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_deexcitation</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_deexcitation</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatorglukhovdeexcitation"><span class="std std-ref">KSIntDecayCalculatorGlukhovDeExcitation</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_excitation</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_excitation</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatorglukhovexcitation"><span class="std std-ref">KSIntDecayCalculatorGlukhovExcitation</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_ionisation</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_ionisation</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatorglukhovionisation"><span class="std std-ref">KSIntDecayCalculatorGlukhovIonisation</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_spontaneous</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_decay_calculator_glukhov_spontaneous</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdecaycalculatorglukhovspontaneous"><span class="std std-ref">KSIntDecayCalculatorGlukhovSpontaneous</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_density_constant</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_density_constant</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintdensityconstant"><span class="std std-ref">KSIntDensityConstant</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_scattering</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_scattering</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintscattering"><span class="std std-ref">KSIntScattering</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_spin_flip</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_spin_flip</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintspinflip"><span class="std std-ref">KSIntSpinFlip</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_spin_flip_pulse</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_spin_flip_pulse</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintspinflippulse"><span class="std std-ref">KSIntSpinFlipPulse</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_spin_rotate_y_pulse</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_spin_rotate_y_pulse</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintspinrotateypulse"><span class="std std-ref">KSIntSpinRotateYPulse</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_UCN</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_UCN</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintsurfaceucn"><span class="std std-ref">KSIntSurfaceUCN</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_diffuse</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_diffuse</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintsurfacediffuse"><span class="std std-ref">KSIntSurfaceDiffuse</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_multiplication</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_multiplication</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintsurfacemultiplication"><span class="std std-ref">KSIntSurfaceMultiplication</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_specular</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_specular</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintsurfacespecular"><span class="std std-ref">KSIntSurfaceSpecular</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_spin_flip</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksint_surface_spin_flip</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksintsurfacespinflip"><span class="std std-ref">KSIntSurfaceSpinFlip</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksmod_dynamic_enhancement</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksmod_dynamic_enhancement</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksmoddynamicenhancement"><span class="std std-ref">KSModDynamicEnhancement</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksmod_event_report</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksmod_event_report</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksmodeventreport"><span class="std std-ref">KSModEventReport</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksmod_split_on_turn</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksmod_split_on_turn</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksmodsplitonturn"><span class="std std-ref">KSModSplitOnTurn</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksnav_meshed_space</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksnav_meshed_space</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksnavmeshedspace"><span class="std std-ref">KSNavMeshedSpace</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksnav_space</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksnav_space</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksnavspace"><span class="std std-ref">KSNavSpace</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksnav_surface</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksnav_surface</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksnavsurface"><span class="std std-ref">KSNavSurface</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_death</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_death</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermdeath"><span class="std std-ref">KSTermDeath</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_magnetron</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_magnetron</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmagnetron"><span class="std std-ref">KSTermMagnetron</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_energy</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_energy</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxenergy"><span class="std std-ref">KSTermMaxEnergy</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_length</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_length</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxlength"><span class="std std-ref">KSTermMaxLength</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_long_energy</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_long_energy</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxlongenergy"><span class="std std-ref">KSTermMaxLongEnergy</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_r</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_r</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxr"><span class="std std-ref">KSTermMaxR</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_step_time</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_step_time</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxsteptime"><span class="std std-ref">KSTermMaxStepTime</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_steps</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_steps</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxsteps"><span class="std std-ref">KSTermMaxSteps</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_time</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_time</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxtime"><span class="std std-ref">KSTermMaxTime</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_total_time</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_total_time</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxtotaltime"><span class="std std-ref">KSTermMaxTotalTime</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_z</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_max_z</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmaxz"><span class="std std-ref">KSTermMaxZ</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_distance</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_distance</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermmindistance"><span class="std std-ref">KSTermMinDistance</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_energy</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_energy</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermminenergy"><span class="std std-ref">KSTermMinEnergy</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_long_energy</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_long_energy</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermminlongenergy"><span class="std std-ref">KSTermMinLongEnergy</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_r</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_r</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermminr"><span class="std std-ref">KSTermMinR</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_z</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_min_z</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermminz"><span class="std std-ref">KSTermMinZ</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_output</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_output</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermoutputdata"><span class="std std-ref">KSTermOutputData</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_secondaries</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_secondaries</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermsecondaries"><span class="std std-ref">KSTermSecondaries</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_stepsize</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_stepsize</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermstepsize"><span class="std std-ref">KSTermStepsize</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_trapped</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_trapped</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermtrapped"><span class="std std-ref">KSTermTrapped</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_zh_radius</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ksterm_zh_radius</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstermzhradius"><span class="std std-ref">KSTermZHRadius</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_B_change</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_B_change</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolbchange"><span class="std std-ref">KSTrajControlBChange</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_cyclotron</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_cyclotron</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolcyclotron"><span class="std std-ref">KSTrajControlCyclotron</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_energy</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_energy</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolenergy"><span class="std std-ref">KSTrajControlEnergy</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_length</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_length</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrollength"><span class="std std-ref">KSTrajControlLength</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_m_dot</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_m_dot</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolmdot"><span class="std std-ref">KSTrajControlMDot</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_magnetic_moment</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_magnetic_moment</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolmagneticmoment"><span class="std std-ref">KSTrajControlMagneticMoment</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_momentum_numerical_error</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_momentum_numerical_error</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolmomentumnumericalerror"><span class="std std-ref">KSTrajControlMomentumNumericalError</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_position_numerical_error</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_position_numerical_error</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolpositionnumericalerror"><span class="std std-ref">KSTrajControlPositionNumericalError</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_spin_precession</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_spin_precession</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontrolspinprecession"><span class="std std-ref">KSTrajControlSpinPrecession</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_time</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_control_time</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajcontroltime"><span class="std std-ref">KSTrajControlTime</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk54</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk54</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorrk54"><span class="std std-ref">KSTrajIntegratorRK54</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk65</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk65</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorrk65"><span class="std std-ref">KSTrajIntegratorRK65</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk8</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk8</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorrk8"><span class="std std-ref">KSTrajIntegratorRK8</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk86</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk86</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorrk86"><span class="std std-ref">KSTrajIntegratorRK86</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk87</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rk87</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorrk87"><span class="std std-ref">KSTrajIntegratorRK87</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rkdp54</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rkdp54</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorrkdp54"><span class="std std-ref">KSTrajIntegratorRKDP54</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rkdp853</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_rkdp853</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorrkdp853"><span class="std std-ref">KSTrajIntegratorRKDP853</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_sym4</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_integrator_sym4</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajintegratorsym4"><span class="std std-ref">KSTrajIntegratorSym4</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_interpolator_crk</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_interpolator_crk</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajinterpolatorcontinuousrungekutta"><span class="std std-ref">KSTrajInterpolatorContinuousRungeKutta</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_interpolator_fast</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_interpolator_fast</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajinterpolatorfast"><span class="std std-ref">KSTrajInterpolatorFast</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_interpolator_hermite</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_interpolator_hermite</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajinterpolatorhermite"><span class="std std-ref">KSTrajInterpolatorHermite</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_constant_force_propagation</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_constant_force_propagation</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtermconstantforcepropagation"><span class="std std-ref">KSTrajTermConstantForcePropagation</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_drift</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_drift</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtermdrift"><span class="std std-ref">KSTrajTermDrift</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_gravity</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_gravity</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtermgravity"><span class="std std-ref">KSTrajTermGravity</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_gyration</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_gyration</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtermgyration"><span class="std std-ref">KSTrajTermGyration</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_propagation</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_propagation</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtermpropagation"><span class="std std-ref">KSTrajTermPropagation</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_synchrotron</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_term_synchrotron</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtermsynchrotron"><span class="std std-ref">KSTrajTermSynchrotron</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_adiabatic</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_adiabatic</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectoryadiabatic"><span class="std std-ref">KSTrajTrajectoryAdiabatic</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_adiabatic_spin</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_adiabatic_spin</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectoryadiabaticspin"><span class="std std-ref">KSTrajTrajectoryAdiabaticSpin</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_electric</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_electric</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectoryelectric"><span class="std std-ref">KSTrajTrajectoryElectric</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_exact</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_exact</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectoryexact"><span class="std std-ref">KSTrajTrajectoryExact</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_exact_spin</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_exact_spin</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectoryexactspin"><span class="std std-ref">KSTrajTrajectoryExactSpin</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_exact_trapped</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_exact_trapped</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectoryexacttrapped"><span class="std std-ref">KSTrajTrajectoryExactTrapped</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_linear</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_linear</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectorylinear"><span class="std std-ref">KSTrajTrajectoryLinear</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_magnetic</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kstraj_trajectory_magnetic</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kstrajtrajectorymagnetic"><span class="std std-ref">KSTrajTrajectoryMagnetic</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_ascii</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_ascii</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kswriteascii"><span class="std std-ref">KSWriteASCII</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kswriteroot"><span class="std std-ref">KSWriteROOT</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_output</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_output</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kswriterootconditionoutputdata"><span class="std std-ref">KSWriteROOTConditionOutputData</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_periodic</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_periodic</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kswriterootconditionperiodicdata"><span class="std std-ref">KSWriteROOTConditionPeriodicData</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_step</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_step</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kswriterootconditionstepdata"><span class="std std-ref">KSWriteROOTConditionStepData</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_terminator</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_root_condition_terminator</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kswriterootconditionterminatordata"><span class="std std-ref">KSWriteROOTConditionTerminatorData</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_vtk</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kswrite_vtk</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kswritevtk"><span class="std std-ref">KSWriteVTK</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentmemberdata"><span class="std std-ref">KSComponentMemberData</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_delta</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_delta</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentdeltadata"><span class="std std-ref">KSComponentDeltaData</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_group</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_group</span></code></p></td>
 <td><p><span class="xref std std-ref">KSComponentGroup</span></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_integral</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_integral</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentintegraldata"><span class="std std-ref">KSComponentIntegralData</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_math</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_math</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentmathdata"><span class="std std-ref">KSComponentMathData</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_maximum</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_maximum</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentmaximumdata"><span class="std std-ref">KSComponentMaximumData</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_maximum_at</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_maximum_at</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentmaximumatdata"><span class="std std-ref">KSComponentMaximumAtData</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_minimum</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_minimum</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentminimumdata"><span class="std std-ref">KSComponentMinimumData</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_minimum_at</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_minimum_at</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kscomponentminimumatdata"><span class="std std-ref">KSComponentMinimumAtData</span></a></p></td>
 </tr>
 </tbody>
@@ -6573,10 +6580,10 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="16"><p><code class="docutils literal notranslate"><span class="pre">zonal_harmonic_field_solver</span></code></p></td>
-<td rowspan="16"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Electric/src/KElectricZHFieldSolverBuilder.cc">KElectricZHFieldSolverBuilder.cc</a></p></td>
-<td rowspan="16"><p>—</p></td>
-<td rowspan="16"><p>—</p></td>
+<tr class="row-even"><td rowspan="17"><p><code class="docutils literal notranslate"><span class="pre">zonal_harmonic_field_solver</span></code></p></td>
+<td rowspan="17"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Electric/src/KElectricZHFieldSolverBuilder.cc">KElectricZHFieldSolverBuilder.cc</a></p></td>
+<td rowspan="17"><p>—</p></td>
+<td rowspan="17"><p>—</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">central_sourcepoint_end</span></code></p></td>
 <td><p><em>double</em></p></td>
 </tr>
@@ -6622,7 +6629,10 @@ not reflected here.</p>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">remote_sourcepoint_start</span></code></p></td>
 <td><p><em>double</em></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_fractional_central_sourcepoint_spacing</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_fixed_sourcepoint_range</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_fractional_central_sourcepoint_spacing</span></code></p></td>
 <td><p><em>bool</em></p></td>
 </tr>
 </tbody>
@@ -6767,12 +6777,14 @@ not reflected here.</p>
 <td><p><em>string</em></p></td>
 </tr>
 <tr class="row-odd"><td rowspan="7"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx">KSFieldKEMFieldObjectsBuilder.cxx</a></p></td>
-<td rowspan="7"><p><code class="docutils literal notranslate"><span class="pre">zonal_harmonic_field_solver</span></code></p></td>
-<td rowspan="7"><p><a class="reference internal" href="bindings_full.html#kzonalharmonicmagnetostaticfieldsolver"><span class="std std-ref">KZonalHarmonicMagnetostaticFieldSolver</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">magfield_coil_field_solver</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#kmagfieldcoilsfieldsolver"><span class="std std-ref">KMagfieldCoilsFieldSolver</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">directory_magfield3</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">file</span></code></p></td>
+<tr class="row-even"><td rowspan="6"><p><code class="docutils literal notranslate"><span class="pre">zonal_harmonic_field_solver</span></code></p></td>
+<td rowspan="6"><p><a class="reference internal" href="bindings_full.html#kzonalharmonicmagnetostaticfieldsolver"><span class="std std-ref">KZonalHarmonicMagnetostaticFieldSolver</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">file</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
@@ -6799,8 +6811,8 @@ not reflected here.</p>
 </tr>
 </tbody>
 </table>
-<section id="kzonalharmonicmagnetostaticfieldsolver">
-<span id="id228"></span><h6>KZonalHarmonicMagnetostaticFieldSolver<a class="headerlink" href="#kzonalharmonicmagnetostaticfieldsolver" title="Permalink to this heading"><span>#</span></a></h6>
+<section id="kmagfieldcoilsfieldsolver">
+<span id="id228"></span><h6>KMagfieldCoilsFieldSolver<a class="headerlink" href="#kmagfieldcoilsfieldsolver" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -6812,10 +6824,54 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="15"><p><code class="docutils literal notranslate"><span class="pre">zonal_harmonic_field_solver</span></code></p></td>
-<td rowspan="15"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Magnetic/src/KZonalHarmonicMagnetostaticFieldSolverBuilder.cc">KZonalHarmonicMagnetostaticFieldSolverBuilder.cc</a></p></td>
-<td rowspan="15"><p>—</p></td>
-<td rowspan="15"><p>—</p></td>
+<tr class="row-even"><td rowspan="8"><p><code class="docutils literal notranslate"><span class="pre">magfield_coil_field_solver</span></code></p></td>
+<td rowspan="8"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Magnetic/src/KMagfieldCoilsFieldSolverBuilder.cc">KMagfieldCoilsFieldSolverBuilder.cc</a></p></td>
+<td rowspan="8"><p>—</p></td>
+<td rowspan="8"><p>—</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">directory</span></code></p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">eps_tol</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">file</span></code></p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">force_elliptic</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_elliptic</span></code></p></td>
+<td><p><em>unsigned</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n_max</span></code></p></td>
+<td><p><em>unsigned</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">replace_file</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="kzonalharmonicmagnetostaticfieldsolver">
+<span id="id229"></span><h6>KZonalHarmonicMagnetostaticFieldSolver<a class="headerlink" href="#kzonalharmonicmagnetostaticfieldsolver" title="Permalink to this heading"><span>#</span></a></h6>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>element name</p></th>
+<th class="head"><p>source files</p></th>
+<th class="head"><p>child elements</p></th>
+<th class="head"><p>child types</p></th>
+<th class="head"><p>attributes</p></th>
+<th class="head"><p>attribute types</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="16"><p><code class="docutils literal notranslate"><span class="pre">zonal_harmonic_field_solver</span></code></p></td>
+<td rowspan="16"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Magnetic/src/KZonalHarmonicMagnetostaticFieldSolverBuilder.cc">KZonalHarmonicMagnetostaticFieldSolverBuilder.cc</a></p></td>
+<td rowspan="16"><p>—</p></td>
+<td rowspan="16"><p>—</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">central_sourcepoint_end</span></code></p></td>
 <td><p><em>double</em></p></td>
 </tr>
@@ -6858,7 +6914,10 @@ not reflected here.</p>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">remote_sourcepoint_start</span></code></p></td>
 <td><p><em>double</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_fractional_central_sourcepoint_spacing</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_fixed_sourcepoint_range</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_fractional_central_sourcepoint_spacing</span></code></p></td>
 <td><p><em>bool</em></p></td>
 </tr>
 </tbody>
@@ -6866,7 +6925,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="kmagnetostaticconstantfield">
-<span id="id229"></span><h5>KMagnetostaticConstantField<a class="headerlink" href="#kmagnetostaticconstantfield" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id230"></span><h5>KMagnetostaticConstantField<a class="headerlink" href="#kmagnetostaticconstantfield" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -6897,7 +6956,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kmagneticdipolefield">
-<span id="id231"></span><h5>KMagneticDipoleField<a class="headerlink" href="#kmagneticdipolefield" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id232"></span><h5>KMagneticDipoleField<a class="headerlink" href="#kmagneticdipolefield" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -6927,7 +6986,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kmagnetostaticfieldmap">
-<span id="id233"></span><h5>KMagnetostaticFieldmap<a class="headerlink" href="#kmagnetostaticfieldmap" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id234"></span><h5>KMagnetostaticFieldmap<a class="headerlink" href="#kmagnetostaticfieldmap" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -6963,7 +7022,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kmagnetostaticfieldmapcalculator">
-<span id="id236"></span><h5>KMagnetostaticFieldmapCalculator<a class="headerlink" href="#kmagnetostaticfieldmapcalculator" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id237"></span><h5>KMagnetostaticFieldmapCalculator<a class="headerlink" href="#kmagnetostaticfieldmapcalculator" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7044,7 +7103,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="krampedmagneticfield">
-<span id="id241"></span><h5>KRampedMagneticField<a class="headerlink" href="#krampedmagneticfield" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id242"></span><h5>KRampedMagneticField<a class="headerlink" href="#krampedmagneticfield" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7098,7 +7157,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kmagneticsuperpositionfield">
-<span id="id243"></span><h5>KMagneticSuperpositionField<a class="headerlink" href="#kmagneticsuperpositionfield" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id244"></span><h5>KMagneticSuperpositionField<a class="headerlink" href="#kmagneticsuperpositionfield" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7127,7 +7186,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="kmagneticsuperpositionfieldentry">
-<span id="id245"></span><h6>KMagneticSuperpositionFieldEntry<a class="headerlink" href="#kmagneticsuperpositionfieldentry" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id246"></span><h6>KMagneticSuperpositionFieldEntry<a class="headerlink" href="#kmagneticsuperpositionfieldentry" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7154,7 +7213,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="ksgendirectionsphericalcomposite">
-<span id="id247"></span><h5>KSGenDirectionSphericalComposite<a class="headerlink" href="#ksgendirectionsphericalcomposite" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id248"></span><h5>KSGenDirectionSphericalComposite<a class="headerlink" href="#ksgendirectionsphericalcomposite" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7166,45 +7225,51 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="18"><p><code class="docutils literal notranslate"><span class="pre">ksgen_direction_spherical_composite</span></code></p></td>
+<tr class="row-even"><td rowspan="20"><p><code class="docutils literal notranslate"><span class="pre">ksgen_direction_spherical_composite</span></code></p></td>
 <td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx">KSGenDirectionSphericalCompositeBuilder.cxx</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">phi_fix</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">phi_fermi</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefermi"><span class="std std-ref">KSGenValueFermi</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td rowspan="17"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx">KSGenGeneratorCompositeBuilder.cxx</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">phi_formula</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
+<tr class="row-odd"><td rowspan="19"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx">KSGenGeneratorCompositeBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">phi_fix</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">phi</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_gauss</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegauss"><span class="std std-ref">KSGenValueGauss</span></a></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_formula</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">space</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_generalized_gauss</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegeneralizedgauss"><span class="std std-ref">KSGenValueGeneralizedGauss</span></a></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_gauss</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegauss"><span class="std std-ref">KSGenValueGauss</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">surface</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_histogram</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluehistogram"><span class="std std-ref">KSGenValueHistogram</span></a></p></td>
-<td rowspan="14"><p><code class="docutils literal notranslate"><span class="pre">theta</span></code></p></td>
-<td rowspan="14"><p><em>string</em></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_generalized_gauss</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegeneralizedgauss"><span class="std std-ref">KSGenValueGeneralizedGauss</span></a></p></td>
+<td rowspan="16"><p><code class="docutils literal notranslate"><span class="pre">theta</span></code></p></td>
+<td rowspan="16"><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_list</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_histogram</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluehistogram"><span class="std std-ref">KSGenValueHistogram</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_list</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluelist"><span class="std std-ref">KSGenValueList</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_set</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_set</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueset"><span class="std std-ref">KSGenValueSet</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_uniform</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_uniform</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueuniform"><span class="std std-ref">KSGenValueUniform</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_cosine</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_cosine</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueanglecosine"><span class="std std-ref">KSGenValueAngleCosine</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_fermi</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefermi"><span class="std std-ref">KSGenValueFermi</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_fix</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
@@ -7235,8 +7300,50 @@ not reflected here.</p>
 </tr>
 </tbody>
 </table>
+<section id="ksgenvaluefermi">
+<span id="id249"></span><h6>KSGenValueFermi<a class="headerlink" href="#ksgenvaluefermi" title="Permalink to this heading"><span>#</span></a></h6>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>element name</p></th>
+<th class="head"><p>source files</p></th>
+<th class="head"><p>child elements</p></th>
+<th class="head"><p>child types</p></th>
+<th class="head"><p>attributes</p></th>
+<th class="head"><p>attribute types</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p><code class="docutils literal notranslate"><span class="pre">phi_fermi</span></code></p></td>
+<td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx">KSGenDirectionSphericalCompositeBuilder.cxx</a></p></td>
+<td rowspan="6"><p>—</p></td>
+<td rowspan="6"><p>—</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx">KSGenDirectionSurfaceCompositeBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">value_max</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx">KSGenEnergyCompositeBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">value_mean</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx">KSGenTimeCompositeBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">value_min</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueFermiBuilder.cxx">KSGenValueFermiBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">value_tau</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">value_temp</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="ksgenvaluefix">
-<span id="id248"></span><h6>KSGenValueFix<a class="headerlink" href="#ksgenvaluefix" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id251"></span><h6>KSGenValueFix<a class="headerlink" href="#ksgenvaluefix" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7293,7 +7400,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvalueformula">
-<span id="id251"></span><h6>KSGenValueFormula<a class="headerlink" href="#ksgenvalueformula" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id257"></span><h6>KSGenValueFormula<a class="headerlink" href="#ksgenvalueformula" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7354,7 +7461,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvaluegauss">
-<span id="id268"></span><h6>KSGenValueGauss<a class="headerlink" href="#ksgenvaluegauss" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id274"></span><h6>KSGenValueGauss<a class="headerlink" href="#ksgenvaluegauss" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7417,7 +7524,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvaluegeneralizedgauss">
-<span id="id285"></span><h6>KSGenValueGeneralizedGauss<a class="headerlink" href="#ksgenvaluegeneralizedgauss" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id291"></span><h6>KSGenValueGeneralizedGauss<a class="headerlink" href="#ksgenvaluegeneralizedgauss" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7464,7 +7571,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvaluehistogram">
-<span id="id293"></span><h6>KSGenValueHistogram<a class="headerlink" href="#ksgenvaluehistogram" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id299"></span><h6>KSGenValueHistogram<a class="headerlink" href="#ksgenvaluehistogram" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7521,7 +7628,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvaluelist">
-<span id="id307"></span><h6>KSGenValueList<a class="headerlink" href="#ksgenvaluelist" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id313"></span><h6>KSGenValueList<a class="headerlink" href="#ksgenvaluelist" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7578,7 +7685,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvalueset">
-<span id="id323"></span><h6>KSGenValueSet<a class="headerlink" href="#ksgenvalueset" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id329"></span><h6>KSGenValueSet<a class="headerlink" href="#ksgenvalueset" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7641,7 +7748,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvalueuniform">
-<span id="id340"></span><h6>KSGenValueUniform<a class="headerlink" href="#ksgenvalueuniform" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id346"></span><h6>KSGenValueUniform<a class="headerlink" href="#ksgenvalueuniform" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7700,7 +7807,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvalueanglecosine">
-<span id="id357"></span><h6>KSGenValueAngleCosine<a class="headerlink" href="#ksgenvalueanglecosine" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id363"></span><h6>KSGenValueAngleCosine<a class="headerlink" href="#ksgenvalueanglecosine" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7739,7 +7846,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenvalueanglespherical">
-<span id="id363"></span><h6>KSGenValueAngleSpherical<a class="headerlink" href="#ksgenvalueanglespherical" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id369"></span><h6>KSGenValueAngleSpherical<a class="headerlink" href="#ksgenvalueanglespherical" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7779,7 +7886,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="ksgendirectionsphericalmagneticfield">
-<span id="id370"></span><h5>KSGenDirectionSphericalMagneticField<a class="headerlink" href="#ksgendirectionsphericalmagneticfield" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id376"></span><h5>KSGenDirectionSphericalMagneticField<a class="headerlink" href="#ksgendirectionsphericalmagneticfield" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7860,7 +7967,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgendirectionsurfacecomposite">
-<span id="id373"></span><h5>KSGenDirectionSurfaceComposite<a class="headerlink" href="#ksgendirectionsurfacecomposite" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id379"></span><h5>KSGenDirectionSurfaceComposite<a class="headerlink" href="#ksgendirectionsurfacecomposite" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7872,45 +7979,51 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="18"><p><code class="docutils literal notranslate"><span class="pre">ksgen_direction_surface_composite</span></code></p></td>
+<tr class="row-even"><td rowspan="20"><p><code class="docutils literal notranslate"><span class="pre">ksgen_direction_surface_composite</span></code></p></td>
 <td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx">KSGenDirectionSurfaceCompositeBuilder.cxx</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">phi_fix</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">phi_fermi</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefermi"><span class="std std-ref">KSGenValueFermi</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td rowspan="17"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx">KSGenGeneratorCompositeBuilder.cxx</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">phi_formula</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
+<tr class="row-odd"><td rowspan="19"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx">KSGenGeneratorCompositeBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">phi_fix</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">outside</span></code></p></td>
 <td><p><em>bool</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_gauss</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegauss"><span class="std std-ref">KSGenValueGauss</span></a></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_formula</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">phi</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_generalized_gauss</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegeneralizedgauss"><span class="std std-ref">KSGenValueGeneralizedGauss</span></a></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_gauss</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegauss"><span class="std std-ref">KSGenValueGauss</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">surfaces</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_histogram</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluehistogram"><span class="std std-ref">KSGenValueHistogram</span></a></p></td>
-<td rowspan="14"><p><code class="docutils literal notranslate"><span class="pre">theta</span></code></p></td>
-<td rowspan="14"><p><em>string</em></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_generalized_gauss</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegeneralizedgauss"><span class="std std-ref">KSGenValueGeneralizedGauss</span></a></p></td>
+<td rowspan="16"><p><code class="docutils literal notranslate"><span class="pre">theta</span></code></p></td>
+<td rowspan="16"><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_list</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_histogram</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluehistogram"><span class="std std-ref">KSGenValueHistogram</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_list</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluelist"><span class="std std-ref">KSGenValueList</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_set</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_set</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueset"><span class="std std-ref">KSGenValueSet</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phi_uniform</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_uniform</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueuniform"><span class="std std-ref">KSGenValueUniform</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_cosine</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_cosine</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueanglecosine"><span class="std std-ref">KSGenValueAngleCosine</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_fermi</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefermi"><span class="std std-ref">KSGenValueFermi</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_fix</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
@@ -7943,7 +8056,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenenergybetadecay">
-<span id="id376"></span><h5>KSGenEnergyBetaDecay<a class="headerlink" href="#ksgenenergybetadecay" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id382"></span><h5>KSGenEnergyBetaDecay<a class="headerlink" href="#ksgenenergybetadecay" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -7985,7 +8098,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenenergybetarecoil">
-<span id="id378"></span><h5>KSGenEnergyBetaRecoil<a class="headerlink" href="#ksgenenergybetarecoil" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id384"></span><h5>KSGenEnergyBetaRecoil<a class="headerlink" href="#ksgenenergybetarecoil" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8015,7 +8128,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenenergycomposite">
-<span id="id380"></span><h5>KSGenEnergyComposite<a class="headerlink" href="#ksgenenergycomposite" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id386"></span><h5>KSGenEnergyComposite<a class="headerlink" href="#ksgenenergycomposite" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8027,44 +8140,47 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="9"><p><code class="docutils literal notranslate"><span class="pre">ksgen_energy_composite</span></code></p></td>
+<tr class="row-even"><td rowspan="10"><p><code class="docutils literal notranslate"><span class="pre">ksgen_energy_composite</span></code></p></td>
 <td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenEnergyCompositeBuilder.cxx">KSGenEnergyCompositeBuilder.cxx</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">energy_boltzmann</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueboltzmann"><span class="std std-ref">KSGenValueBoltzmann</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">energy</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td rowspan="8"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx">KSGenGeneratorCompositeBuilder.cxx</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">energy_fix</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
-<td rowspan="8"><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
-<td rowspan="8"><p><em>string</em></p></td>
+<tr class="row-odd"><td rowspan="9"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx">KSGenGeneratorCompositeBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">energy_fermi</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefermi"><span class="std std-ref">KSGenValueFermi</span></a></p></td>
+<td rowspan="9"><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td rowspan="9"><p><em>string</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_formula</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_fix</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_formula</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_gauss</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_gauss</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegauss"><span class="std std-ref">KSGenValueGauss</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_generalized_gauss</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_generalized_gauss</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegeneralizedgauss"><span class="std std-ref">KSGenValueGeneralizedGauss</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_histogram</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_histogram</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluehistogram"><span class="std std-ref">KSGenValueHistogram</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_list</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_list</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluelist"><span class="std std-ref">KSGenValueList</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_set</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_set</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueset"><span class="std std-ref">KSGenValueSet</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_uniform</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_uniform</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueuniform"><span class="std std-ref">KSGenValueUniform</span></a></p></td>
 </tr>
 </tbody>
 </table>
 <section id="ksgenvalueboltzmann">
-<span id="id383"></span><h6>KSGenValueBoltzmann<a class="headerlink" href="#ksgenvalueboltzmann" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id389"></span><h6>KSGenValueBoltzmann<a class="headerlink" href="#ksgenvalueboltzmann" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8098,7 +8214,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="ksgenenergykryptonevent">
-<span id="id385"></span><h5>KSGenEnergyKryptonEvent<a class="headerlink" href="#ksgenenergykryptonevent" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id391"></span><h5>KSGenEnergyKryptonEvent<a class="headerlink" href="#ksgenenergykryptonevent" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8131,7 +8247,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenenergyleadevent">
-<span id="id387"></span><h5>KSGenEnergyLeadEvent<a class="headerlink" href="#ksgenenergyleadevent" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id393"></span><h5>KSGenEnergyLeadEvent<a class="headerlink" href="#ksgenenergyleadevent" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8164,7 +8280,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenenergyradonevent">
-<span id="id389"></span><h5>KSGenEnergyRadonEvent<a class="headerlink" href="#ksgenenergyradonevent" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id395"></span><h5>KSGenEnergyRadonEvent<a class="headerlink" href="#ksgenenergyradonevent" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8206,7 +8322,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenenergyrydberg">
-<span id="id391"></span><h5>KSGenEnergyRydberg<a class="headerlink" href="#ksgenenergyrydberg" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id397"></span><h5>KSGenEnergyRydberg<a class="headerlink" href="#ksgenenergyrydberg" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8236,7 +8352,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgengeneratorcomposite">
-<span id="id393"></span><h5>KSGenGeneratorComposite<a class="headerlink" href="#ksgengeneratorcomposite" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id399"></span><h5>KSGenGeneratorComposite<a class="headerlink" href="#ksgengeneratorcomposite" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8382,7 +8498,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="ksgenlcomposite">
-<span id="id395"></span><h6>KSGenLComposite<a class="headerlink" href="#ksgenlcomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id401"></span><h6>KSGenLComposite<a class="headerlink" href="#ksgenlcomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8423,7 +8539,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenlstatistical">
-<span id="id398"></span><h6>KSGenLStatistical<a class="headerlink" href="#ksgenlstatistical" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id404"></span><h6>KSGenLStatistical<a class="headerlink" href="#ksgenlstatistical" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8448,7 +8564,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenluniformmaxn">
-<span id="id400"></span><h6>KSGenLUniformMaxN<a class="headerlink" href="#ksgenluniformmaxn" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id406"></span><h6>KSGenLUniformMaxN<a class="headerlink" href="#ksgenluniformmaxn" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8473,7 +8589,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenmomentumrectangularcomposite">
-<span id="id402"></span><h6>KSGenMomentumRectangularComposite<a class="headerlink" href="#ksgenmomentumrectangularcomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id408"></span><h6>KSGenMomentumRectangularComposite<a class="headerlink" href="#ksgenmomentumrectangularcomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8567,7 +8683,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenncomposite">
-<span id="id405"></span><h6>KSGenNComposite<a class="headerlink" href="#ksgenncomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id411"></span><h6>KSGenNComposite<a class="headerlink" href="#ksgenncomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8648,7 +8764,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenpositioncylindricalcomposite">
-<span id="id410"></span><h6>KSGenPositionCylindricalComposite<a class="headerlink" href="#ksgenpositioncylindricalcomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id416"></span><h6>KSGenPositionCylindricalComposite<a class="headerlink" href="#ksgenpositioncylindricalcomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8801,7 +8917,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenpositionfluxtube">
-<span id="id417"></span><h6>KSGenPositionFluxTube<a class="headerlink" href="#ksgenpositionfluxtube" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id423"></span><h6>KSGenPositionFluxTube<a class="headerlink" href="#ksgenpositionfluxtube" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -8867,7 +8983,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenpositionfrustrumcomposite">
-<span id="id419"></span><h6>KSGenPositionFrustrumComposite<a class="headerlink" href="#ksgenpositionfrustrumcomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id425"></span><h6>KSGenPositionFrustrumComposite<a class="headerlink" href="#ksgenpositionfrustrumcomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9023,7 +9139,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenpositionhomogeneousfluxtube">
-<span id="id423"></span><h6>KSGenPositionHomogeneousFluxTube<a class="headerlink" href="#ksgenpositionhomogeneousfluxtube" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id429"></span><h6>KSGenPositionHomogeneousFluxTube<a class="headerlink" href="#ksgenpositionhomogeneousfluxtube" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9070,7 +9186,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenpositionmask">
-<span id="id424"></span><h6>KSGenPositionMask<a class="headerlink" href="#ksgenpositionmask" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id430"></span><h6>KSGenPositionMask<a class="headerlink" href="#ksgenpositionmask" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9391,7 +9507,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenpositionsurfaceadjustmentstep">
-<span id="id439"></span><h6>KSGenPositionSurfaceAdjustmentStep<a class="headerlink" href="#ksgenpositionsurfaceadjustmentstep" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id445"></span><h6>KSGenPositionSurfaceAdjustmentStep<a class="headerlink" href="#ksgenpositionsurfaceadjustmentstep" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9418,7 +9534,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenpositionsurfacerandom">
-<span id="id441"></span><h6>KSGenPositionSurfaceRandom<a class="headerlink" href="#ksgenpositionsurfacerandom" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id447"></span><h6>KSGenPositionSurfaceRandom<a class="headerlink" href="#ksgenpositionsurfacerandom" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9445,7 +9561,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenspincomposite">
-<span id="id443"></span><h6>KSGenSpinComposite<a class="headerlink" href="#ksgenspincomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id449"></span><h6>KSGenSpinComposite<a class="headerlink" href="#ksgenspincomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9528,7 +9644,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgenspinrelativecomposite">
-<span id="id446"></span><h6>KSGenSpinRelativeComposite<a class="headerlink" href="#ksgenspinrelativecomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id452"></span><h6>KSGenSpinRelativeComposite<a class="headerlink" href="#ksgenspinrelativecomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9611,7 +9727,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgentimecomposite">
-<span id="id449"></span><h6>KSGenTimeComposite<a class="headerlink" href="#ksgentimecomposite" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id455"></span><h6>KSGenTimeComposite<a class="headerlink" href="#ksgentimecomposite" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9623,35 +9739,38 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="8"><p><code class="docutils literal notranslate"><span class="pre">time_composite</span></code></p></td>
+<tr class="row-even"><td rowspan="9"><p><code class="docutils literal notranslate"><span class="pre">time_composite</span></code></p></td>
 <td><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenGeneratorCompositeBuilder.cxx">KSGenGeneratorCompositeBuilder.cxx</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">time_fix</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">time_fermi</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefermi"><span class="std std-ref">KSGenValueFermi</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td rowspan="7"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx">KSGenTimeCompositeBuilder.cxx</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">time_formula</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
-<td rowspan="7"><p><code class="docutils literal notranslate"><span class="pre">time_value</span></code></p></td>
-<td rowspan="7"><p><em>string</em></p></td>
+<tr class="row-odd"><td rowspan="8"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenTimeCompositeBuilder.cxx">KSGenTimeCompositeBuilder.cxx</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">time_fix</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvaluefix"><span class="std std-ref">KSGenValueFix</span></a></p></td>
+<td rowspan="8"><p><code class="docutils literal notranslate"><span class="pre">time_value</span></code></p></td>
+<td rowspan="8"><p><em>string</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_gauss</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_formula</span></code></p></td>
+<td><p><a class="reference internal" href="bindings_full.html#ksgenvalueformula"><span class="std std-ref">KSGenValueFormula</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">time_gauss</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegauss"><span class="std std-ref">KSGenValueGauss</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">time_generalized_gauss</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_generalized_gauss</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluegeneralizedgauss"><span class="std std-ref">KSGenValueGeneralizedGauss</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_histogram</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">time_histogram</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluehistogram"><span class="std std-ref">KSGenValueHistogram</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">time_list</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_list</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvaluelist"><span class="std std-ref">KSGenValueList</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_set</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">time_set</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueset"><span class="std std-ref">KSGenValueSet</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">time_uniform</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_uniform</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksgenvalueuniform"><span class="std std-ref">KSGenValueUniform</span></a></p></td>
 </tr>
 </tbody>
@@ -9659,7 +9778,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="ksgengeneratortextfile">
-<span id="id452"></span><h5>KSGenGeneratorTextFile<a class="headerlink" href="#ksgengeneratortextfile" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id458"></span><h5>KSGenGeneratorTextFile<a class="headerlink" href="#ksgengeneratortextfile" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9688,7 +9807,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgengeneratorsimulation">
-<span id="id453"></span><h5>KSGenGeneratorSimulation<a class="headerlink" href="#ksgengeneratorsimulation" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id459"></span><h5>KSGenGeneratorSimulation<a class="headerlink" href="#ksgengeneratorsimulation" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9765,7 +9884,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgeoside">
-<span id="id454"></span><h5>KSGeoSide<a class="headerlink" href="#ksgeoside" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id460"></span><h5>KSGeoSide<a class="headerlink" href="#ksgeoside" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -9971,7 +10090,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksgeospace">
-<span id="id494"></span><h5>KSGeoSpace<a class="headerlink" href="#ksgeospace" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id500"></span><h5>KSGeoSpace<a class="headerlink" href="#ksgeospace" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10157,7 +10276,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="ksgeosurface">
-<span id="id505"></span><h6>KSGeoSurface<a class="headerlink" href="#ksgeosurface" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id511"></span><h6>KSGeoSurface<a class="headerlink" href="#ksgeosurface" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10299,7 +10418,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="ksintcalculatorconstant">
-<span id="id520"></span><h5>KSIntCalculatorConstant<a class="headerlink" href="#ksintcalculatorconstant" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id526"></span><h5>KSIntCalculatorConstant<a class="headerlink" href="#ksintcalculatorconstant" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10326,7 +10445,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintcalculatorion">
-<span id="id521"></span><h5>KSIntCalculatorIon<a class="headerlink" href="#ksintcalculatorion" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id527"></span><h5>KSIntCalculatorIon<a class="headerlink" href="#ksintcalculatorion" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10353,7 +10472,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecay">
-<span id="id523"></span><h5>KSIntDecay<a class="headerlink" href="#ksintdecay" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id529"></span><h5>KSIntDecay<a class="headerlink" href="#ksintdecay" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10402,7 +10521,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="ksintdecaycalculatordeathconstrate">
-<span id="id524"></span><h6>KSIntDecayCalculatorDeathConstRate<a class="headerlink" href="#ksintdecaycalculatordeathconstrate" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id530"></span><h6>KSIntDecayCalculatorDeathConstRate<a class="headerlink" href="#ksintdecaycalculatordeathconstrate" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10438,7 +10557,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecaycalculatorferencbbrtransition">
-<span id="id527"></span><h6>KSIntDecayCalculatorFerencBBRTransition<a class="headerlink" href="#ksintdecaycalculatorferencbbrtransition" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id533"></span><h6>KSIntDecayCalculatorFerencBBRTransition<a class="headerlink" href="#ksintdecaycalculatorferencbbrtransition" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10474,7 +10593,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecaycalculatorferencionisation">
-<span id="id530"></span><h6>KSIntDecayCalculatorFerencIonisation<a class="headerlink" href="#ksintdecaycalculatorferencionisation" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id536"></span><h6>KSIntDecayCalculatorFerencIonisation<a class="headerlink" href="#ksintdecaycalculatorferencionisation" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10510,7 +10629,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecaycalculatorferencspontaneous">
-<span id="id533"></span><h6>KSIntDecayCalculatorFerencSpontaneous<a class="headerlink" href="#ksintdecaycalculatorferencspontaneous" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id539"></span><h6>KSIntDecayCalculatorFerencSpontaneous<a class="headerlink" href="#ksintdecaycalculatorferencspontaneous" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10543,7 +10662,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecaycalculatorglukhovdeexcitation">
-<span id="id536"></span><h6>KSIntDecayCalculatorGlukhovDeExcitation<a class="headerlink" href="#ksintdecaycalculatorglukhovdeexcitation" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id542"></span><h6>KSIntDecayCalculatorGlukhovDeExcitation<a class="headerlink" href="#ksintdecaycalculatorglukhovdeexcitation" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10579,7 +10698,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecaycalculatorglukhovexcitation">
-<span id="id539"></span><h6>KSIntDecayCalculatorGlukhovExcitation<a class="headerlink" href="#ksintdecaycalculatorglukhovexcitation" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id545"></span><h6>KSIntDecayCalculatorGlukhovExcitation<a class="headerlink" href="#ksintdecaycalculatorglukhovexcitation" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10615,7 +10734,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecaycalculatorglukhovionisation">
-<span id="id542"></span><h6>KSIntDecayCalculatorGlukhovIonisation<a class="headerlink" href="#ksintdecaycalculatorglukhovionisation" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id548"></span><h6>KSIntDecayCalculatorGlukhovIonisation<a class="headerlink" href="#ksintdecaycalculatorglukhovionisation" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10651,7 +10770,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintdecaycalculatorglukhovspontaneous">
-<span id="id545"></span><h6>KSIntDecayCalculatorGlukhovSpontaneous<a class="headerlink" href="#ksintdecaycalculatorglukhovspontaneous" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id551"></span><h6>KSIntDecayCalculatorGlukhovSpontaneous<a class="headerlink" href="#ksintdecaycalculatorglukhovspontaneous" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10685,7 +10804,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="ksintdensityconstant">
-<span id="id548"></span><h5>KSIntDensityConstant<a class="headerlink" href="#ksintdensityconstant" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id554"></span><h5>KSIntDensityConstant<a class="headerlink" href="#ksintdensityconstant" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10721,7 +10840,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintscattering">
-<span id="id550"></span><h5>KSIntScattering<a class="headerlink" href="#ksintscattering" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id556"></span><h5>KSIntScattering<a class="headerlink" href="#ksintscattering" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10768,7 +10887,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="ksintcalculatorargonset">
-<span id="id552"></span><h6>KSIntCalculatorArgonSet<a class="headerlink" href="#ksintcalculatorargonset" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id558"></span><h6>KSIntCalculatorArgonSet<a class="headerlink" href="#ksintcalculatorargonset" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10803,7 +10922,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintcalculatorhydrogenset">
-<span id="id554"></span><h6>KSIntCalculatorHydrogenSet<a class="headerlink" href="#ksintcalculatorhydrogenset" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id560"></span><h6>KSIntCalculatorHydrogenSet<a class="headerlink" href="#ksintcalculatorhydrogenset" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10838,7 +10957,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintcalculatorkessset">
-<span id="id556"></span><h6>KSIntCalculatorKESSSet<a class="headerlink" href="#ksintcalculatorkessset" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id562"></span><h6>KSIntCalculatorKESSSet<a class="headerlink" href="#ksintcalculatorkessset" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10874,7 +10993,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="ksintspinflip">
-<span id="id558"></span><h5>KSIntSpinFlip<a class="headerlink" href="#ksintspinflip" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id564"></span><h5>KSIntSpinFlip<a class="headerlink" href="#ksintspinflip" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10897,7 +11016,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintspinflippulse">
-<span id="id559"></span><h5>KSIntSpinFlipPulse<a class="headerlink" href="#ksintspinflippulse" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id565"></span><h5>KSIntSpinFlipPulse<a class="headerlink" href="#ksintspinflippulse" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10923,7 +11042,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintspinrotateypulse">
-<span id="id560"></span><h5>KSIntSpinRotateYPulse<a class="headerlink" href="#ksintspinrotateypulse" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id566"></span><h5>KSIntSpinRotateYPulse<a class="headerlink" href="#ksintspinrotateypulse" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10955,7 +11074,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintsurfaceucn">
-<span id="id561"></span><h5>KSIntSurfaceUCN<a class="headerlink" href="#ksintsurfaceucn" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id567"></span><h5>KSIntSurfaceUCN<a class="headerlink" href="#ksintsurfaceucn" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -10990,7 +11109,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintsurfacediffuse">
-<span id="id562"></span><h5>KSIntSurfaceDiffuse<a class="headerlink" href="#ksintsurfacediffuse" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id568"></span><h5>KSIntSurfaceDiffuse<a class="headerlink" href="#ksintsurfacediffuse" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11028,7 +11147,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintsurfacemultiplication">
-<span id="id563"></span><h5>KSIntSurfaceMultiplication<a class="headerlink" href="#ksintsurfacemultiplication" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id569"></span><h5>KSIntSurfaceMultiplication<a class="headerlink" href="#ksintsurfacemultiplication" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11060,7 +11179,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintsurfacespecular">
-<span id="id564"></span><h5>KSIntSurfaceSpecular<a class="headerlink" href="#ksintsurfacespecular" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id570"></span><h5>KSIntSurfaceSpecular<a class="headerlink" href="#ksintsurfacespecular" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11098,7 +11217,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksintsurfacespinflip">
-<span id="id565"></span><h5>KSIntSurfaceSpinFlip<a class="headerlink" href="#ksintsurfacespinflip" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id571"></span><h5>KSIntSurfaceSpinFlip<a class="headerlink" href="#ksintsurfacespinflip" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11124,7 +11243,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksmoddynamicenhancement">
-<span id="id566"></span><h5>KSModDynamicEnhancement<a class="headerlink" href="#ksmoddynamicenhancement" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id572"></span><h5>KSModDynamicEnhancement<a class="headerlink" href="#ksmoddynamicenhancement" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11162,7 +11281,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksmodeventreport">
-<span id="id567"></span><h5>KSModEventReport<a class="headerlink" href="#ksmodeventreport" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id573"></span><h5>KSModEventReport<a class="headerlink" href="#ksmodeventreport" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11185,7 +11304,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksmodsplitonturn">
-<span id="id568"></span><h5>KSModSplitOnTurn<a class="headerlink" href="#ksmodsplitonturn" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id574"></span><h5>KSModSplitOnTurn<a class="headerlink" href="#ksmodsplitonturn" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11211,7 +11330,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksnavmeshedspace">
-<span id="id569"></span><h5>KSNavMeshedSpace<a class="headerlink" href="#ksnavmeshedspace" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id575"></span><h5>KSNavMeshedSpace<a class="headerlink" href="#ksnavmeshedspace" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11267,7 +11386,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksnavspace">
-<span id="id570"></span><h5>KSNavSpace<a class="headerlink" href="#ksnavspace" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id576"></span><h5>KSNavSpace<a class="headerlink" href="#ksnavspace" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11302,7 +11421,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksnavsurface">
-<span id="id571"></span><h5>KSNavSurface<a class="headerlink" href="#ksnavsurface" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id577"></span><h5>KSNavSurface<a class="headerlink" href="#ksnavsurface" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11331,7 +11450,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermdeath">
-<span id="id572"></span><h5>KSTermDeath<a class="headerlink" href="#kstermdeath" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id578"></span><h5>KSTermDeath<a class="headerlink" href="#kstermdeath" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11354,7 +11473,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmagnetron">
-<span id="id573"></span><h5>KSTermMagnetron<a class="headerlink" href="#kstermmagnetron" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id579"></span><h5>KSTermMagnetron<a class="headerlink" href="#kstermmagnetron" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11380,7 +11499,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxenergy">
-<span id="id574"></span><h5>KSTermMaxEnergy<a class="headerlink" href="#kstermmaxenergy" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id580"></span><h5>KSTermMaxEnergy<a class="headerlink" href="#kstermmaxenergy" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11406,7 +11525,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxlength">
-<span id="id575"></span><h5>KSTermMaxLength<a class="headerlink" href="#kstermmaxlength" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id581"></span><h5>KSTermMaxLength<a class="headerlink" href="#kstermmaxlength" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11432,7 +11551,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxlongenergy">
-<span id="id576"></span><h5>KSTermMaxLongEnergy<a class="headerlink" href="#kstermmaxlongenergy" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id582"></span><h5>KSTermMaxLongEnergy<a class="headerlink" href="#kstermmaxlongenergy" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11458,7 +11577,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxr">
-<span id="id577"></span><h5>KSTermMaxR<a class="headerlink" href="#kstermmaxr" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id583"></span><h5>KSTermMaxR<a class="headerlink" href="#kstermmaxr" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11484,7 +11603,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxsteptime">
-<span id="id578"></span><h5>KSTermMaxStepTime<a class="headerlink" href="#kstermmaxsteptime" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id584"></span><h5>KSTermMaxStepTime<a class="headerlink" href="#kstermmaxsteptime" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11510,7 +11629,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxsteps">
-<span id="id579"></span><h5>KSTermMaxSteps<a class="headerlink" href="#kstermmaxsteps" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id585"></span><h5>KSTermMaxSteps<a class="headerlink" href="#kstermmaxsteps" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11536,7 +11655,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxtime">
-<span id="id580"></span><h5>KSTermMaxTime<a class="headerlink" href="#kstermmaxtime" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id586"></span><h5>KSTermMaxTime<a class="headerlink" href="#kstermmaxtime" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11562,7 +11681,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxtotaltime">
-<span id="id581"></span><h5>KSTermMaxTotalTime<a class="headerlink" href="#kstermmaxtotaltime" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id587"></span><h5>KSTermMaxTotalTime<a class="headerlink" href="#kstermmaxtotaltime" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11588,7 +11707,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmaxz">
-<span id="id582"></span><h5>KSTermMaxZ<a class="headerlink" href="#kstermmaxz" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id588"></span><h5>KSTermMaxZ<a class="headerlink" href="#kstermmaxz" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11614,7 +11733,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermmindistance">
-<span id="id583"></span><h5>KSTermMinDistance<a class="headerlink" href="#kstermmindistance" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id589"></span><h5>KSTermMinDistance<a class="headerlink" href="#kstermmindistance" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11643,7 +11762,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermminenergy">
-<span id="id584"></span><h5>KSTermMinEnergy<a class="headerlink" href="#kstermminenergy" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id590"></span><h5>KSTermMinEnergy<a class="headerlink" href="#kstermminenergy" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11669,7 +11788,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermminlongenergy">
-<span id="id585"></span><h5>KSTermMinLongEnergy<a class="headerlink" href="#kstermminlongenergy" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id591"></span><h5>KSTermMinLongEnergy<a class="headerlink" href="#kstermminlongenergy" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11695,7 +11814,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermminr">
-<span id="id586"></span><h5>KSTermMinR<a class="headerlink" href="#kstermminr" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id592"></span><h5>KSTermMinR<a class="headerlink" href="#kstermminr" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11721,7 +11840,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermminz">
-<span id="id587"></span><h5>KSTermMinZ<a class="headerlink" href="#kstermminz" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id593"></span><h5>KSTermMinZ<a class="headerlink" href="#kstermminz" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11747,7 +11866,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermoutputdata">
-<span id="id588"></span><h5>KSTermOutputData<a class="headerlink" href="#kstermoutputdata" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id594"></span><h5>KSTermOutputData<a class="headerlink" href="#kstermoutputdata" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11782,7 +11901,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermsecondaries">
-<span id="id589"></span><h5>KSTermSecondaries<a class="headerlink" href="#kstermsecondaries" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id595"></span><h5>KSTermSecondaries<a class="headerlink" href="#kstermsecondaries" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11805,7 +11924,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermstepsize">
-<span id="id590"></span><h5>KSTermStepsize<a class="headerlink" href="#kstermstepsize" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id596"></span><h5>KSTermStepsize<a class="headerlink" href="#kstermstepsize" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11834,7 +11953,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermtrapped">
-<span id="id591"></span><h5>KSTermTrapped<a class="headerlink" href="#kstermtrapped" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id597"></span><h5>KSTermTrapped<a class="headerlink" href="#kstermtrapped" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11866,7 +11985,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstermzhradius">
-<span id="id592"></span><h5>KSTermZHRadius<a class="headerlink" href="#kstermzhradius" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id598"></span><h5>KSTermZHRadius<a class="headerlink" href="#kstermzhradius" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11901,7 +12020,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolbchange">
-<span id="id593"></span><h5>KSTrajControlBChange<a class="headerlink" href="#kstrajcontrolbchange" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id599"></span><h5>KSTrajControlBChange<a class="headerlink" href="#kstrajcontrolbchange" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11938,7 +12057,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolcyclotron">
-<span id="id594"></span><h5>KSTrajControlCyclotron<a class="headerlink" href="#kstrajcontrolcyclotron" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id600"></span><h5>KSTrajControlCyclotron<a class="headerlink" href="#kstrajcontrolcyclotron" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -11971,7 +12090,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolenergy">
-<span id="id599"></span><h5>KSTrajControlEnergy<a class="headerlink" href="#kstrajcontrolenergy" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id605"></span><h5>KSTrajControlEnergy<a class="headerlink" href="#kstrajcontrolenergy" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12025,7 +12144,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrollength">
-<span id="id604"></span><h5>KSTrajControlLength<a class="headerlink" href="#kstrajcontrollength" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id610"></span><h5>KSTrajControlLength<a class="headerlink" href="#kstrajcontrollength" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12064,7 +12183,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolmdot">
-<span id="id611"></span><h5>KSTrajControlMDot<a class="headerlink" href="#kstrajcontrolmdot" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id617"></span><h5>KSTrajControlMDot<a class="headerlink" href="#kstrajcontrolmdot" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12091,7 +12210,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolmagneticmoment">
-<span id="id613"></span><h5>KSTrajControlMagneticMoment<a class="headerlink" href="#kstrajcontrolmagneticmoment" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id619"></span><h5>KSTrajControlMagneticMoment<a class="headerlink" href="#kstrajcontrolmagneticmoment" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12126,7 +12245,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolmomentumnumericalerror">
-<span id="id618"></span><h5>KSTrajControlMomentumNumericalError<a class="headerlink" href="#kstrajcontrolmomentumnumericalerror" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id624"></span><h5>KSTrajControlMomentumNumericalError<a class="headerlink" href="#kstrajcontrolmomentumnumericalerror" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12163,7 +12282,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolpositionnumericalerror">
-<span id="id623"></span><h5>KSTrajControlPositionNumericalError<a class="headerlink" href="#kstrajcontrolpositionnumericalerror" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id629"></span><h5>KSTrajControlPositionNumericalError<a class="headerlink" href="#kstrajcontrolpositionnumericalerror" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12200,7 +12319,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontrolspinprecession">
-<span id="id628"></span><h5>KSTrajControlSpinPrecession<a class="headerlink" href="#kstrajcontrolspinprecession" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id634"></span><h5>KSTrajControlSpinPrecession<a class="headerlink" href="#kstrajcontrolspinprecession" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12229,7 +12348,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajcontroltime">
-<span id="id631"></span><h5>KSTrajControlTime<a class="headerlink" href="#kstrajcontroltime" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id637"></span><h5>KSTrajControlTime<a class="headerlink" href="#kstrajcontroltime" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12268,7 +12387,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorrk54">
-<span id="id639"></span><h5>KSTrajIntegratorRK54<a class="headerlink" href="#kstrajintegratorrk54" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id645"></span><h5>KSTrajIntegratorRK54<a class="headerlink" href="#kstrajintegratorrk54" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12303,7 +12422,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorrk65">
-<span id="id646"></span><h5>KSTrajIntegratorRK65<a class="headerlink" href="#kstrajintegratorrk65" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id652"></span><h5>KSTrajIntegratorRK65<a class="headerlink" href="#kstrajintegratorrk65" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12338,7 +12457,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorrk8">
-<span id="id653"></span><h5>KSTrajIntegratorRK8<a class="headerlink" href="#kstrajintegratorrk8" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id659"></span><h5>KSTrajIntegratorRK8<a class="headerlink" href="#kstrajintegratorrk8" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12375,7 +12494,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorrk86">
-<span id="id661"></span><h5>KSTrajIntegratorRK86<a class="headerlink" href="#kstrajintegratorrk86" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id667"></span><h5>KSTrajIntegratorRK86<a class="headerlink" href="#kstrajintegratorrk86" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12410,7 +12529,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorrk87">
-<span id="id668"></span><h5>KSTrajIntegratorRK87<a class="headerlink" href="#kstrajintegratorrk87" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id674"></span><h5>KSTrajIntegratorRK87<a class="headerlink" href="#kstrajintegratorrk87" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12445,7 +12564,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorrkdp54">
-<span id="id675"></span><h5>KSTrajIntegratorRKDP54<a class="headerlink" href="#kstrajintegratorrkdp54" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id681"></span><h5>KSTrajIntegratorRKDP54<a class="headerlink" href="#kstrajintegratorrkdp54" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12480,7 +12599,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorrkdp853">
-<span id="id682"></span><h5>KSTrajIntegratorRKDP853<a class="headerlink" href="#kstrajintegratorrkdp853" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id688"></span><h5>KSTrajIntegratorRKDP853<a class="headerlink" href="#kstrajintegratorrkdp853" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12515,7 +12634,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajintegratorsym4">
-<span id="id689"></span><h5>KSTrajIntegratorSym4<a class="headerlink" href="#kstrajintegratorsym4" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id695"></span><h5>KSTrajIntegratorSym4<a class="headerlink" href="#kstrajintegratorsym4" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12540,7 +12659,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajinterpolatorcontinuousrungekutta">
-<span id="id691"></span><h5>KSTrajInterpolatorContinuousRungeKutta<a class="headerlink" href="#kstrajinterpolatorcontinuousrungekutta" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id697"></span><h5>KSTrajInterpolatorContinuousRungeKutta<a class="headerlink" href="#kstrajinterpolatorcontinuousrungekutta" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12575,7 +12694,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajinterpolatorfast">
-<span id="id698"></span><h5>KSTrajInterpolatorFast<a class="headerlink" href="#kstrajinterpolatorfast" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id704"></span><h5>KSTrajInterpolatorFast<a class="headerlink" href="#kstrajinterpolatorfast" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12610,7 +12729,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajinterpolatorhermite">
-<span id="id705"></span><h5>KSTrajInterpolatorHermite<a class="headerlink" href="#kstrajinterpolatorhermite" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id711"></span><h5>KSTrajInterpolatorHermite<a class="headerlink" href="#kstrajinterpolatorhermite" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12645,7 +12764,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtermconstantforcepropagation">
-<span id="id712"></span><h5>KSTrajTermConstantForcePropagation<a class="headerlink" href="#kstrajtermconstantforcepropagation" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id718"></span><h5>KSTrajTermConstantForcePropagation<a class="headerlink" href="#kstrajtermconstantforcepropagation" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12671,7 +12790,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtermdrift">
-<span id="id713"></span><h5>KSTrajTermDrift<a class="headerlink" href="#kstrajtermdrift" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id719"></span><h5>KSTrajTermDrift<a class="headerlink" href="#kstrajtermdrift" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12696,7 +12815,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtermgravity">
-<span id="id715"></span><h5>KSTrajTermGravity<a class="headerlink" href="#kstrajtermgravity" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id721"></span><h5>KSTrajTermGravity<a class="headerlink" href="#kstrajtermgravity" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12727,7 +12846,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtermgyration">
-<span id="id719"></span><h5>KSTrajTermGyration<a class="headerlink" href="#kstrajtermgyration" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id725"></span><h5>KSTrajTermGyration<a class="headerlink" href="#kstrajtermgyration" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12752,7 +12871,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtermpropagation">
-<span id="id721"></span><h5>KSTrajTermPropagation<a class="headerlink" href="#kstrajtermpropagation" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id727"></span><h5>KSTrajTermPropagation<a class="headerlink" href="#kstrajtermpropagation" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12791,7 +12910,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtermsynchrotron">
-<span id="id729"></span><h5>KSTrajTermSynchrotron<a class="headerlink" href="#kstrajtermsynchrotron" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id735"></span><h5>KSTrajTermSynchrotron<a class="headerlink" href="#kstrajtermsynchrotron" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12828,7 +12947,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectoryadiabatic">
-<span id="id735"></span><h5>KSTrajTrajectoryAdiabatic<a class="headerlink" href="#kstrajtrajectoryadiabatic" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id741"></span><h5>KSTrajTrajectoryAdiabatic<a class="headerlink" href="#kstrajtrajectoryadiabatic" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -12924,7 +13043,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectoryadiabaticspin">
-<span id="id737"></span><h5>KSTrajTrajectoryAdiabaticSpin<a class="headerlink" href="#kstrajtrajectoryadiabaticspin" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id743"></span><h5>KSTrajTrajectoryAdiabaticSpin<a class="headerlink" href="#kstrajtrajectoryadiabaticspin" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13019,7 +13138,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectoryelectric">
-<span id="id739"></span><h5>KSTrajTrajectoryElectric<a class="headerlink" href="#kstrajtrajectoryelectric" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id745"></span><h5>KSTrajTrajectoryElectric<a class="headerlink" href="#kstrajtrajectoryelectric" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13087,7 +13206,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectoryexact">
-<span id="id741"></span><h5>KSTrajTrajectoryExact<a class="headerlink" href="#kstrajtrajectoryexact" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id747"></span><h5>KSTrajTrajectoryExact<a class="headerlink" href="#kstrajtrajectoryexact" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13176,7 +13295,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectoryexactspin">
-<span id="id743"></span><h5>KSTrajTrajectoryExactSpin<a class="headerlink" href="#kstrajtrajectoryexactspin" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id749"></span><h5>KSTrajTrajectoryExactSpin<a class="headerlink" href="#kstrajtrajectoryexactspin" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13268,7 +13387,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectoryexacttrapped">
-<span id="id745"></span><h5>KSTrajTrajectoryExactTrapped<a class="headerlink" href="#kstrajtrajectoryexacttrapped" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id751"></span><h5>KSTrajTrajectoryExactTrapped<a class="headerlink" href="#kstrajtrajectoryexacttrapped" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13342,7 +13461,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectorylinear">
-<span id="id750"></span><h5>KSTrajTrajectoryLinear<a class="headerlink" href="#kstrajtrajectorylinear" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id756"></span><h5>KSTrajTrajectoryLinear<a class="headerlink" href="#kstrajtrajectorylinear" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13368,7 +13487,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kstrajtrajectorymagnetic">
-<span id="id751"></span><h5>KSTrajTrajectoryMagnetic<a class="headerlink" href="#kstrajtrajectorymagnetic" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id757"></span><h5>KSTrajTrajectoryMagnetic<a class="headerlink" href="#kstrajtrajectorymagnetic" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13436,7 +13555,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kswriteascii">
-<span id="id753"></span><h5>KSWriteASCII<a class="headerlink" href="#kswriteascii" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id759"></span><h5>KSWriteASCII<a class="headerlink" href="#kswriteascii" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13468,7 +13587,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kswriteroot">
-<span id="id754"></span><h5>KSWriteROOT<a class="headerlink" href="#kswriteroot" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id760"></span><h5>KSWriteROOT<a class="headerlink" href="#kswriteroot" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13497,7 +13616,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kswriterootconditionoutputdata">
-<span id="id755"></span><h5>KSWriteROOTConditionOutputData<a class="headerlink" href="#kswriterootconditionoutputdata" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id761"></span><h5>KSWriteROOTConditionOutputData<a class="headerlink" href="#kswriterootconditionoutputdata" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13532,7 +13651,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kswriterootconditionperiodicdata">
-<span id="id756"></span><h5>KSWriteROOTConditionPeriodicData<a class="headerlink" href="#kswriterootconditionperiodicdata" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id762"></span><h5>KSWriteROOTConditionPeriodicData<a class="headerlink" href="#kswriterootconditionperiodicdata" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13576,7 +13695,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kswriterootconditionstepdata">
-<span id="id757"></span><h5>KSWriteROOTConditionStepData<a class="headerlink" href="#kswriterootconditionstepdata" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id763"></span><h5>KSWriteROOTConditionStepData<a class="headerlink" href="#kswriterootconditionstepdata" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13608,7 +13727,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kswriterootconditionterminatordata">
-<span id="id758"></span><h5>KSWriteROOTConditionTerminatorData<a class="headerlink" href="#kswriterootconditionterminatordata" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id764"></span><h5>KSWriteROOTConditionTerminatorData<a class="headerlink" href="#kswriterootconditionterminatordata" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13640,7 +13759,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kswritevtk">
-<span id="id759"></span><h5>KSWriteVTK<a class="headerlink" href="#kswritevtk" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id765"></span><h5>KSWriteVTK<a class="headerlink" href="#kswritevtk" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13670,7 +13789,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="kemroot">
-<span id="id760"></span><h4>KEMRoot<a class="headerlink" href="#kemroot" title="Permalink to this heading"><span>#</span></a></h4>
+<span id="id766"></span><h4>KEMRoot<a class="headerlink" href="#kemroot" title="Permalink to this heading"><span>#</span></a></h4>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13737,7 +13856,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="kelectrostaticlinearfield">
-<span id="id761"></span><h5>KElectrostaticLinearField<a class="headerlink" href="#kelectrostaticlinearfield" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id767"></span><h5>KElectrostaticLinearField<a class="headerlink" href="#kelectrostaticlinearfield" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13776,7 +13895,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="kmessagetable">
-<span id="id762"></span><h4>KMessageTable<a class="headerlink" href="#kmessagetable" title="Permalink to this heading"><span>#</span></a></h4>
+<span id="id768"></span><h4>KMessageTable<a class="headerlink" href="#kmessagetable" title="Permalink to this heading"><span>#</span></a></h4>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13822,7 +13941,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="kmessagedata">
-<span id="id764"></span><h5>KMessageData<a class="headerlink" href="#kmessagedata" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id770"></span><h5>KMessageData<a class="headerlink" href="#kmessagedata" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13864,7 +13983,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="krootwindow">
-<span id="id766"></span><h4>KROOTWindow<a class="headerlink" href="#krootwindow" title="Permalink to this heading"><span>#</span></a></h4>
+<span id="id772"></span><h4>KROOTWindow<a class="headerlink" href="#krootwindow" title="Permalink to this heading"><span>#</span></a></h4>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13876,8 +13995,8 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="6"><p><code class="docutils literal notranslate"><span class="pre">root_window</span></code></p></td>
-<td rowspan="6"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Root/Utility/KROOTWindowBuilder.cxx">KROOTWindowBuilder.cxx</a></p></td>
+<tr class="row-even"><td rowspan="10"><p><code class="docutils literal notranslate"><span class="pre">root_window</span></code></p></td>
+<td rowspan="10"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Root/Utility/KROOTWindowBuilder.cxx">KROOTWindowBuilder.cxx</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">root_geometry_painter</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kgrootgeometrypainter"><span class="std std-ref">KGROOTGeometryPainter</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">active</span></code></p></td>
@@ -13903,15 +14022,27 @@ not reflected here.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">root_zh_painter</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksrootzonalharmonicspainter"><span class="std std-ref">KSROOTZonalHarmonicsPainter</span></a></p></td>
+<tr class="row-odd"><td rowspan="5"><p><code class="docutils literal notranslate"><span class="pre">root_zh_painter</span></code></p></td>
+<td rowspan="5"><p><a class="reference internal" href="bindings_full.html#ksrootzonalharmonicspainter"><span class="std std-ref">KSROOTZonalHarmonicsPainter</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">write_enabled</span></code></p></td>
 <td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">xmax</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">xmin</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ymax</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ymin</span></code></p></td>
+<td><p><em>double</em></p></td>
 </tr>
 </tbody>
 </table>
 <section id="kgrootgeometrypainter">
-<span id="id767"></span><h5>KGROOTGeometryPainter<a class="headerlink" href="#kgrootgeometrypainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id773"></span><h5>KGROOTGeometryPainter<a class="headerlink" href="#kgrootgeometrypainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -13967,7 +14098,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksrootmagfieldpainter">
-<span id="id768"></span><h5>KSROOTMagFieldPainter<a class="headerlink" href="#ksrootmagfieldpainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id774"></span><h5>KSROOTMagFieldPainter<a class="headerlink" href="#ksrootmagfieldpainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14032,7 +14163,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="krootpad">
-<span id="id769"></span><h5>KROOTPad<a class="headerlink" href="#krootpad" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id775"></span><h5>KROOTPad<a class="headerlink" href="#krootpad" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14044,8 +14175,8 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="5"><p><code class="docutils literal notranslate"><span class="pre">root_pad</span></code></p></td>
-<td rowspan="5"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Root/Utility/KROOTWindowBuilder.cxx">KROOTWindowBuilder.cxx</a></p></td>
+<tr class="row-even"><td rowspan="9"><p><code class="docutils literal notranslate"><span class="pre">root_pad</span></code></p></td>
+<td rowspan="9"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kommon/Root/Utility/KROOTWindowBuilder.cxx">KROOTWindowBuilder.cxx</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">root_geometry_painter</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#kgrootgeometrypainter"><span class="std std-ref">KGROOTGeometryPainter</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
@@ -14058,23 +14189,35 @@ not reflected here.</p>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">root_potential_painter</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksrootpotentialpainter"><span class="std std-ref">KSROOTPotentialPainter</span></a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">xup</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">xmax</span></code></p></td>
 <td><p><em>double</em></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">root_track_painter</span></code></p></td>
 <td><p><a class="reference internal" href="bindings_full.html#ksroottrackpainter"><span class="std std-ref">KSROOTTrackPainter</span></a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">ylow</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">xmin</span></code></p></td>
 <td><p><em>double</em></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">root_zh_painter</span></code></p></td>
-<td><p><a class="reference internal" href="bindings_full.html#ksrootzonalharmonicspainter"><span class="std std-ref">KSROOTZonalHarmonicsPainter</span></a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">yup</span></code></p></td>
+<tr class="row-even"><td rowspan="5"><p><code class="docutils literal notranslate"><span class="pre">root_zh_painter</span></code></p></td>
+<td rowspan="5"><p><a class="reference internal" href="bindings_full.html#ksrootzonalharmonicspainter"><span class="std std-ref">KSROOTZonalHarmonicsPainter</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">xup</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ylow</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ymax</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ymin</span></code></p></td>
+<td><p><em>double</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">yup</span></code></p></td>
 <td><p><em>double</em></p></td>
 </tr>
 </tbody>
 </table>
 <section id="ksrootpotentialpainter">
-<span id="id771"></span><h6>KSROOTPotentialPainter<a class="headerlink" href="#ksrootpotentialpainter" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id777"></span><h6>KSROOTPotentialPainter<a class="headerlink" href="#ksrootpotentialpainter" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14130,7 +14273,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksroottrackpainter">
-<span id="id772"></span><h6>KSROOTTrackPainter<a class="headerlink" href="#ksroottrackpainter" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id778"></span><h6>KSROOTTrackPainter<a class="headerlink" href="#ksroottrackpainter" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14210,7 +14353,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksrootzonalharmonicspainter">
-<span id="id773"></span><h6>KSROOTZonalHarmonicsPainter<a class="headerlink" href="#ksrootzonalharmonicspainter" title="Permalink to this heading"><span>#</span></a></h6>
+<span id="id779"></span><h6>KSROOTZonalHarmonicsPainter<a class="headerlink" href="#ksrootzonalharmonicspainter" title="Permalink to this heading"><span>#</span></a></h6>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14222,18 +14365,30 @@ not reflected here.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="18"><p><code class="docutils literal notranslate"><span class="pre">root_zh_painter</span></code></p></td>
-<td rowspan="18"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Visualization/Source/KSROOTZonalHarmonicsPainterBuilder.cxx">KSROOTZonalHarmonicsPainterBuilder.cxx</a></p></td>
-<td rowspan="18"><p>—</p></td>
-<td rowspan="18"><p>—</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">electric_field</span></code></p></td>
+<tr class="row-even"><td rowspan="22"><p><code class="docutils literal notranslate"><span class="pre">root_zh_painter</span></code></p></td>
+<td rowspan="22"><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Visualization/Source/KSROOTZonalHarmonicsPainterBuilder.cxx">KSROOTZonalHarmonicsPainterBuilder.cxx</a></p></td>
+<td rowspan="22"><p>—</p></td>
+<td rowspan="22"><p>—</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">draw_central_boundary</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">draw_convergence_area</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">draw_remote_boundary</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">draw_source_points</span></code></p></td>
+<td><p><em>bool</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">electric_field</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">file</span></code></p></td>
 <td><p><em>string</em></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">geometry_type</span></code></p></td>
-<td><p><a href="#id774"><span class="problematic" id="id775">*</span></a>string *</p></td>
+<td><p><a href="#id780"><span class="problematic" id="id781">*</span></a>string *</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">magnetic_field</span></code></p></td>
 <td><p><em>string</em></p></td>
@@ -14257,7 +14412,7 @@ not reflected here.</p>
 <td><p><em>int</em></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">radial_safety_margin</span></code></p></td>
-<td><p><a href="#id776"><span class="problematic" id="id777">*</span></a>double *</p></td>
+<td><p><a href="#id782"><span class="problematic" id="id783">*</span></a>double *</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">write</span></code></p></td>
 <td><p><em>bool</em></p></td>
@@ -14286,7 +14441,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="kapplicationrunner">
-<span id="id778"></span><h4>KApplicationRunner<a class="headerlink" href="#kapplicationrunner" title="Permalink to this heading"><span>#</span></a></h4>
+<span id="id784"></span><h4>KApplicationRunner<a class="headerlink" href="#kapplicationrunner" title="Permalink to this heading"><span>#</span></a></h4>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14308,7 +14463,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="knamedreference">
-<span id="id779"></span><h5>KNamedReference<a class="headerlink" href="#knamedreference" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id785"></span><h5>KNamedReference<a class="headerlink" href="#knamedreference" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14332,7 +14487,7 @@ not reflected here.</p>
 </section>
 </section>
 <section id="kvtkwindow">
-<span id="id781"></span><h4>KVTKWindow<a class="headerlink" href="#kvtkwindow" title="Permalink to this heading"><span>#</span></a></h4>
+<span id="id787"></span><h4>KVTKWindow<a class="headerlink" href="#kvtkwindow" title="Permalink to this heading"><span>#</span></a></h4>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14422,7 +14577,7 @@ not reflected here.</p>
 </tbody>
 </table>
 <section id="kgvtkaxialmeshpainter">
-<span id="id782"></span><h5>KGVTKAxialMeshPainter<a class="headerlink" href="#kgvtkaxialmeshpainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id788"></span><h5>KGVTKAxialMeshPainter<a class="headerlink" href="#kgvtkaxialmeshpainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14460,7 +14615,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kgvtkdistancetester">
-<span id="id783"></span><h5>KGVTKDistanceTester<a class="headerlink" href="#kgvtkdistancetester" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id789"></span><h5>KGVTKDistanceTester<a class="headerlink" href="#kgvtkdistancetester" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14504,7 +14659,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksvtkgeneratorpainter">
-<span id="id784"></span><h5>KSVTKGeneratorPainter<a class="headerlink" href="#ksvtkgeneratorpainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id790"></span><h5>KSVTKGeneratorPainter<a class="headerlink" href="#ksvtkgeneratorpainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14554,7 +14709,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kgvtkgeometrypainter">
-<span id="id785"></span><h5>KGVTKGeometryPainter<a class="headerlink" href="#kgvtkgeometrypainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id791"></span><h5>KGVTKGeometryPainter<a class="headerlink" href="#kgvtkgeometrypainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14592,7 +14747,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kgvtkmeshpainter">
-<span id="id786"></span><h5>KGVTKMeshPainter<a class="headerlink" href="#kgvtkmeshpainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id792"></span><h5>KGVTKMeshPainter<a class="headerlink" href="#kgvtkmeshpainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14630,7 +14785,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kgvtknormaltester">
-<span id="id787"></span><h5>KGVTKNormalTester<a class="headerlink" href="#kgvtknormaltester" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id793"></span><h5>KGVTKNormalTester<a class="headerlink" href="#kgvtknormaltester" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14689,7 +14844,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kgvtkoutsidetester">
-<span id="id788"></span><h5>KGVTKOutsideTester<a class="headerlink" href="#kgvtkoutsidetester" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id794"></span><h5>KGVTKOutsideTester<a class="headerlink" href="#kgvtkoutsidetester" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14739,7 +14894,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kgvtkpointtester">
-<span id="id789"></span><h5>KGVTKPointTester<a class="headerlink" href="#kgvtkpointtester" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id795"></span><h5>KGVTKPointTester<a class="headerlink" href="#kgvtkpointtester" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14792,7 +14947,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="kgvtkrandompointtester">
-<span id="id790"></span><h5>KGVTKRandomPointTester<a class="headerlink" href="#kgvtkrandompointtester" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id796"></span><h5>KGVTKRandomPointTester<a class="headerlink" href="#kgvtkrandompointtester" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14827,7 +14982,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksvtktrackpainter">
-<span id="id791"></span><h5>KSVTKTrackPainter<a class="headerlink" href="#ksvtktrackpainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id797"></span><h5>KSVTKTrackPainter<a class="headerlink" href="#ksvtktrackpainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14874,7 +15029,7 @@ not reflected here.</p>
 </table>
 </section>
 <section id="ksvtktrackterminatorpainter">
-<span id="id792"></span><h5>KSVTKTrackTerminatorPainter<a class="headerlink" href="#ksvtktrackterminatorpainter" title="Permalink to this heading"><span>#</span></a></h5>
+<span id="id798"></span><h5>KSVTKTrackTerminatorPainter<a class="headerlink" href="#ksvtktrackterminatorpainter" title="Permalink to this heading"><span>#</span></a></h5>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>element name</p></th>
@@ -14942,7 +15097,7 @@ not reflected here.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2016-2022, The Kassiopeia developers..</p>
+    <p>&#169; Copyright 2016-2023, The Kassiopeia developers..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

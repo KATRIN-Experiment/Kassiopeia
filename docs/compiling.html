@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting starting with Kassiopiea &mdash; Kassiopeia 3.8 documentation</title>
+  <title>Getting starting with Kassiopiea &mdash; Kassiopeia 4.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -31,12 +31,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #343131" >
-            <a href="index.html" class="icon icon-home"> Kassiopeia
-            <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kassiopeia
+              <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -102,8 +106,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Getting starting with Kassiopiea</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting starting with Kassiopiea</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/compiling.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -157,12 +161,12 @@
 <div><p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip">https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip</a></p>
 </div></blockquote>
 <p>or, alternatively, use git to clone the repository with the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/KATRIN-Experiment/Kassiopeia.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/KATRIN-Experiment/Kassiopeia.git
 </pre></div>
 </div>
 <p>The use of git is generally the preferred method as this will allow you to easily obtain updates and bug fixes without
 needing to download a fresh copy of the source. This can be done simply by executing the command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git pull
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>pull
 </pre></div>
 </div>
 <p>from within the source directory. For a quick-start guide to git, please refere to the GitHub documentation:</p>
@@ -195,11 +199,11 @@ that is provided for the recent <em>Kassiopeia</em> releases. The images can be 
 <p><a class="reference external" href="https://github.com/orgs/KATRIN-Experiment/packages">https://github.com/orgs/KATRIN-Experiment/packages</a></p>
 </div></blockquote>
 <p>If you have <a class="reference external" href="https://www.docker.com/">Docker</a> installed on your system, you can simply pull the image:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo docker pull katrinexperiment/kassiopeia
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>katrinexperiment/kassiopeia
 </pre></div>
 </div>
 <p>and open a shell inside the container from where you can run <em>Kassiopeia</em> or other commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo docker run --rm -it katrinexperiment/kassiopeia /bin/bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>katrinexperiment/kassiopeia<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 <p>Please note that by default, changes inside the container are not saved and will be lost once the container is closed.
@@ -225,19 +229,19 @@ possible to compile <em>Kassiopeia</em> without a recent version of <a class="re
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Minimum requirements</a><a class="headerlink" href="#minimum-requirements" title="Permalink to this heading"><span>#</span></a></h3>
 <p>On a Debian/Ubuntu Linux system the minimum software packages required by the Kassiopiea
 build system can be installed through the use of the package manager through the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get update -y <span class="o">&amp;&amp;</span> apt-get install -y <span class="se">\</span>
-    build-essential cmake cmake-curses-gui <span class="se">\</span>
-    libboost-all-dev libfftw3-dev libgsl0-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev <span class="se">\</span>
-    libpcl-dev libsqlite3-dev libssl-dev libtbb-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>update<span class="w"> </span>-y<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>cmake-curses-gui<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libboost-all-dev<span class="w"> </span>libfftw3-dev<span class="w"> </span>libgsl0-dev<span class="w"> </span>libhdf5-dev<span class="w"> </span>liblog4cxx-dev<span class="w"> </span>libomp-dev<span class="w"> </span>libopenmpi-dev<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libpcl-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>libssl-dev<span class="w"> </span>libtbb-dev<span class="w"> </span>libvtk6-dev<span class="w"> </span>libxml2-dev<span class="w"> </span>ocl-icd-opencl-dev<span class="w"> </span>zlib1g-dev
 </pre></div>
 </div>
 <p>On a RedHat/Fedora Linux system, the packages can be installed through the command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf install -y <span class="se">\</span>
-    @development-tools cmake cmake-gui <span class="se">\</span>
-    root-core root-io-xmlparser root-minuit2 root-spectrum <span class="se">\</span>
-    vtk vtk-qt vtk-java <span class="se">\</span>
-    boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel libxml2-devel log4cxx-devel <span class="se">\</span>
-    ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel tbb-devel vtk-devel zlib-devel
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>@development-tools<span class="w"> </span>cmake<span class="w"> </span>cmake-gui<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>root-core<span class="w"> </span>root-io-xmlparser<span class="w"> </span>root-minuit2<span class="w"> </span>root-spectrum<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>vtk<span class="w"> </span>vtk-qt<span class="w"> </span>vtk-java<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>boost-devel<span class="w"> </span>fftw-devel<span class="w"> </span>gsl-devel<span class="w"> </span>hdf5-devel<span class="w"> </span>libomp-devel<span class="w"> </span>libxml2-devel<span class="w"> </span>log4cxx-devel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ocl-icd-devel<span class="w"> </span>openmpi-devel<span class="w"> </span>openssl-devel<span class="w"> </span>pcl-devel<span class="w"> </span>sqlite-devel<span class="w"> </span>tbb-devel<span class="w"> </span>vtk-devel<span class="w"> </span>zlib-devel
 </pre></div>
 </div>
 </section>
@@ -283,11 +287,11 @@ means of saving simulation output data. Therefore, if you plan on saving the res
 to the instructions on the CERN website. <em>Kassiopeia</em> requires <a class="reference external" href="https://root.cern.ch/">ROOT</a> to be built with XML support,
 and <a class="reference external" href="https://root.cern.ch/">ROOT</a> itself requires the X11, Xft, Xpm, and Xext development libraries.</p>
 <p>You may install the development packages needed by ROOT on Debian/Ubuntu Linux by running the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install -y libqt4-dev libx11-dev libxext-dev libxft-dev libxpm-dev
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libqt4-dev<span class="w"> </span>libx11-dev<span class="w"> </span>libxext-dev<span class="w"> </span>libxft-dev<span class="w"> </span>libxpm-dev
 </pre></div>
 </div>
 <p>On RedHat/Fedora Linux, <a class="reference external" href="https://root.cern.ch/">ROOT</a> can be installed through the package manager:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf install -y root-core root-io-xmlparser root-minuit2 root-spectrum
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>root-core<span class="w"> </span>root-io-xmlparser<span class="w"> </span>root-minuit2<span class="w"> </span>root-spectrum
 </pre></div>
 </div>
 <p>Instead of building the <a class="reference external" href="https://root.cern.ch/">ROOT</a> libraries yourself, you can also download the binary release for your corresponding
@@ -299,7 +303,7 @@ command line.</p>
 <code class="docutils literal notranslate"><span class="pre">thisroot.sh</span></code> (distributed with the ROOT source code) is executed upon login. On Linux this an be done by adding the
 following (with the appropriate change to the file path) to your login script (<code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file or similar):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Set up the ROOT environmental variables</span>
-<span class="nb">source</span> &lt;path-to-ROOT-install&gt;/bin/thisroot.sh
+<span class="nb">source</span><span class="w"> </span>&lt;path-to-ROOT-install&gt;/bin/thisroot.sh
 </pre></div>
 </div>
 <p>Once you have <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a> and <a class="reference external" href="https://root.cern.ch/">ROOT</a> installed, if you do not require any additional features, you can then proceed with
@@ -316,22 +320,22 @@ features is a relatively simple process. For the sake of simplicity, this guide 
 code is located in the user’s home directory in <code class="docutils literal notranslate"><span class="pre">~/kassiopeia</span></code>.</p>
 <p>To start, first <code class="docutils literal notranslate"><span class="pre">cd</span></code> into Kassiopeia’s source directory and create a <code class="docutils literal notranslate"><span class="pre">build</span></code> folder to hold the temporary files that
 will be created during compilation by executing the commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/kassiopeia
-mkdir ./build
-<span class="nb">cd</span> ./build
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/kassiopeia
+mkdir<span class="w"> </span>./build
+<span class="nb">cd</span><span class="w"> </span>./build
 </pre></div>
 </div>
 <p>Before running CMake, consider if you have a preference for which compiler is used. You may select the compiler by
 setting the environmental variables <code class="docutils literal notranslate"><span class="pre">CXX</span></code> and <code class="docutils literal notranslate"><span class="pre">CC</span></code>. For example, for Clang you should set them to:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>clang++  <span class="nv">CC</span><span class="o">=</span>clang
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>clang++<span class="w">  </span><span class="nv">CC</span><span class="o">=</span>clang
 </pre></div>
 </div>
 <p>while for the GCC toolchain use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>g++ <span class="nv">CC</span><span class="o">=</span>gcc
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>g++<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>gcc
 </pre></div>
 </div>
 <p>Once you are within the build directory, you may bring up the cmake configuration GUI by typing:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ccmake ..
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ccmake<span class="w"> </span>..
 </pre></div>
 </div>
 <p>You will be presented with screen which looks like this:</p>
@@ -346,7 +350,7 @@ Press the <code class="docutils literal notranslate"><span class="pre">enter</sp
 software can be specified by setting the value of the option <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>. Once the configuration variables
 are set (or if you accept the defaults), hit <code class="docutils literal notranslate"><span class="pre">c</span></code> to configure again, then <code class="docutils literal notranslate"><span class="pre">g</span></code> to generate the build files and exit.</p>
 <p>Once the build files are generated, you can compile and install <em>Kassiopeia</em> by simply executing:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make <span class="o">&amp;&amp;</span> make install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
 <p>or using the corresponding command for the build tool of your choice (e.g. <code class="docutils literal notranslate"><span class="pre">ninja</span></code>).</p>
@@ -359,7 +363,7 @@ set up some environment variables that allow you ton run <code class="docutils l
 is provided that provides a similar functionality to the <code class="docutils literal notranslate"><span class="pre">thisroot.sh</span></code> script explained above. To set up <em>Kassiopeia</em>
 with the script, copy the following lines to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> (or similar), then logout and login again:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Set up the Kassiopeia environmental variables</span>
-<span class="nb">source</span> ~/kassiopeia/install/bin/kasperenv.sh
+<span class="nb">source</span><span class="w"> </span>~/kassiopeia/install/bin/kasperenv.sh
 </pre></div>
 </div>
 <p>The script will define a few environment variables that can be used outside of <em>Kassiopeia</em>:</p>
@@ -408,7 +412,7 @@ simulations, while the <code class="docutils literal notranslate"><span class="p
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Executing Kassiopeia</a><a class="headerlink" href="#executing-kassiopeia" title="Permalink to this heading"><span>#</span></a></h3>
 <p>Once you have finished installing <em>Kassiopeia</em> and setting up the appropriate environmental variables you can attempt to
 run it (without arguments) by executing:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/kassiopeia/install/bin/
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/kassiopeia/install/bin/
 ./Kassiopeia
 </pre></div>
 </div>
@@ -696,7 +700,7 @@ architectures where compiled code is shared between different machines. Be aware
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2016-2022, The Kassiopeia developers..</p>
+    <p>&#169; Copyright 2016-2023, The Kassiopeia developers..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
