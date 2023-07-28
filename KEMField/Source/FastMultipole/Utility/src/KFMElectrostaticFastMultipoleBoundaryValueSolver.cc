@@ -22,6 +22,7 @@
 #include "KSimpleIterativeKrylovSolver.hh"
 #include "KSortedSurfaceContainer.hh"
 #include "KTimeTerminator.hh"
+#include "KIterationTracker.hh"
 
 using namespace KEMField::KFMElectrostaticTypes;
 
@@ -584,6 +585,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContai
 
         if (fUseDisplay) {
             gmres.AddVisitor(new KIterationDisplay<double>(std::string("GMRES: ")));
+            gmres.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {
@@ -676,6 +678,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_Jacobi(KSurfac
 
         if (fUseDisplay) {
             pgmres.AddVisitor(new KIterationDisplay<double>(std::string("GMRES: ")));
+            pgmres.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {
@@ -780,6 +783,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_ImplicitKrylov
 
         if (fUseDisplay) {
             pgmres.AddVisitor(new KIterationDisplay<double>("GMRES: "));
+            pgmres.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {
@@ -883,6 +887,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImp
 
         if (fUseDisplay) {
             pgmres.AddVisitor(new KIterationDisplay<double>("GMRES: "));
+            pgmres.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {
@@ -974,6 +979,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB(KSurfaceCon
 
         if (fUseDisplay) {
             bicgstab.AddVisitor(new KIterationDisplay<double>(std::string("BICGSTAB: ")));
+            bicgstab.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {
@@ -1069,6 +1075,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_Jacobi(KSur
 
         if (fUseDisplay) {
             pbicgstab.AddVisitor(new KIterationDisplay<double>(std::string("BICGSTAB")));
+            pbicgstab.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {
@@ -1176,6 +1183,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKry
 
         if (fUseDisplay) {
             pbicgstab.AddVisitor(new KIterationDisplay<double>("BICGSTAB: "));
+            pbicgstab.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {
@@ -1281,6 +1289,7 @@ void KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_Independent
 
         if (fUseDisplay) {
             pbicgstab.AddVisitor(new KIterationDisplay<double>("BICGSTAB: "));
+            pbicgstab.AddVisitor(new KIterationTracker<double>());
         }
 #ifdef KEMFIELD_USE_VTK
         if (fUsePlot) {

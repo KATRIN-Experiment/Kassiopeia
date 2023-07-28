@@ -80,8 +80,8 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(con
     }
 
     fDirectExecCount++;
-    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
-                    << P.Z() << " " << P.Perp() << ">" << eom;
+    kem_cout_debug("Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return fIntegratingFieldSolver.VectorPotential(P);
 }
 
@@ -129,8 +129,8 @@ KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const
     }
 
     fDirectExecCount++;
-    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
-                    << P.Z() << " " << P.Perp() << ">" << eom;
+    kem_cout_debug("Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return fIntegratingFieldSolver.MagneticField(P);
 }
 
@@ -178,8 +178,8 @@ KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(
     }
 
     fDirectExecCount++;
-    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
-                    << P.Z() << " " << P.Perp() << ">" << eom;
+    kem_cout_debug("Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return fIntegratingFieldSolver.MagneticFieldGradient(P);
 }
 
@@ -239,8 +239,8 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
     }
 
     fDirectExecCount += 2;
-    kem_cout(eInfo) << "Magnetic ZH solver falling back to direct integration at point <"
-                    << P.Z() << " " << P.Perp() << ">" << eom;
+    kem_cout_debug("Magnetic ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     B = fIntegratingFieldSolver.MagneticField(P);
     g = fIntegratingFieldSolver.MagneticFieldGradient(P);
 

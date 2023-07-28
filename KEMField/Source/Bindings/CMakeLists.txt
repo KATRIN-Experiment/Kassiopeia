@@ -42,6 +42,7 @@ set (KEMFIELD_BINDINGS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/include/KElectricFastMultipoleFieldSolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/include/KIntegratingMagnetostaticFieldSolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/include/KZonalHarmonicMagnetostaticFieldSolverBuilder.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/include/KMagfieldCoilsFieldSolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticPotentialmapBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticFieldmapBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticConstantFieldBuilder.hh
@@ -84,6 +85,7 @@ set (KEMFIELD_BINDINGS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/src/KElectricFastMultipoleFieldSolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/src/KIntegratingMagnetostaticFieldSolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/src/KZonalHarmonicMagnetostaticFieldSolverBuilder.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/src/KMagfieldCoilsFieldSolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticFieldmapBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticConstantFieldBuilder.cc

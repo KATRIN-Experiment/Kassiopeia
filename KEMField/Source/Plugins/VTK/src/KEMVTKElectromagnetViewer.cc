@@ -42,7 +42,7 @@ void KEMVTKElectromagnetViewer::Visit(KCoil& aCoil)
 
 void KEMVTKElectromagnetViewer::GenerateGeometryFile(const std::string& fileName)
 {
-    KEMField::cout << "Generating file " << std::move(fileName) << KEMField::endl;
+    KEMField::cout << "Generating file " << fileName << KEMField::endl;
 }
 
 void KEMVTKElectromagnetViewer::ViewGeometry()

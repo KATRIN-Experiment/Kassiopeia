@@ -25,11 +25,12 @@ This latex source file can then be turned into a .pdf document using pdflatex.
 The sphinx documetation requires doxygen, python and sphinx.
 The python document generator (sphinx) can be installed using:
 
-# pip install sphinx
+# pip install "sphinx<7"
 
-the Kassiopeia user-guide also requires sphinxjp.themes.basicstrap (for theme and style)
+the Kassiopeia user-guide also requires sphinxjp.themes.basicstrap and sphinx_rtd_theme (for theme and style)
 and Doxylink (in order to allow the Doxygen generated API reference to be visible in the user guide).
 These can be installed using:
 
+# pip install sphinx-rtd-theme
 # pip install sphinxjp.themes.basicstrap
-# pip install sphinx-contrib.doxylink
+# pip install sphinxcontrib-doxylink

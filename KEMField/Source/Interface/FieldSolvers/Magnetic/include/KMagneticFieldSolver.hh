@@ -14,6 +14,7 @@
 
 namespace KEMField
 {
+class KMagneticField;
 
 class KMagneticFieldSolver
 {
@@ -57,6 +58,9 @@ class KMagneticFieldSolver
         return MagneticFieldAndGradientCore(P);
     }
 
+    void SetFieldObject(const KMagneticField* o) { fFieldObject = o; }
+    const KMagneticField* GetFieldObject() { return fFieldObject; }
+
   private:
     virtual void InitializeCore(KElectromagnetContainer& container) = 0;
     virtual void DeinitializeCore() = 0;
@@ -71,6 +75,7 @@ class KMagneticFieldSolver
     }
 
     bool fInitialized;
+    const KMagneticField* fFieldObject;
 };
 
 

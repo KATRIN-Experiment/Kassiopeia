@@ -124,8 +124,6 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
 
     double fLineSegmentRadiusMin;
 
-    int fQualityMeasure;
-
     // polygon cross-section for line segments (otherwise, they have no surface)
     unsigned int fLineSegmentPolyApprox;
     unsigned int fArcPolyApprox;

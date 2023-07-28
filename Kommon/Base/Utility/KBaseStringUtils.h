@@ -17,6 +17,8 @@
 #include <functional>
 #include <cstring>
 #include <clocale>
+#include <limits>
+#include <cstdint>
 
 #include <cxxabi.h>  // needed to convert typename to string
 
@@ -147,8 +149,14 @@ template<typename XDataType> inline XDataType KBaseStringUtils::Convert(std::str
     XDataType Data;
     Converter >> Data;
     std::string rest;
-    if (Converter.fail() || (Data != Data))  // also check for NaN
+    if (Converter.fail())
     {
+        if (std::numeric_limits<XDataType>::has_quiet_NaN) {
+            if (str == std::string("nan") || str == std::string("NaN") || str == std::string("NAN")) {
+                return std::numeric_limits<XDataType>::quiet_NaN();
+            }
+        }
+
         // Throwing exception as there is no possible way for a scientifically reasonable recovery when conversion fails
         throw KException() << "Error processing <" << EscapeMostly(str) << "> with type <" << TypeName<XDataType>() << ">.";
 

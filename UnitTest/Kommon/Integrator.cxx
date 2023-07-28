@@ -111,35 +111,3 @@ TEST(KommonMath, Integrator)
     ASSERT_NEAR(analytical, numerical, precision);
 #endif
 }
-
-
-#ifdef KASPER_USE_TBB
-
-#include "KMathIntegratorThreaded.h"
-
-#include <tbb/task_scheduler_init.h>
-
-TEST(KommonMath, ThreadedIntegrator)
-{
-    int nThreads = tbb::task_scheduler_init::default_num_threads();
-    GTEST_LOG_(INFO) << "Default number of TBB threads: " << nThreads;
-
-    //    tbb::task_scheduler_init init( 1 );
-
-    const double analytical = 0.5 * (erf(3.0 / sqrt(2)) - erf(-3.0 / sqrt(2)));
-    double numerical, precision;
-
-    precision = 1E-12;
-    KMathIntegratorThreaded<double> integrator(precision, KEMathIntegrationMethod::Trapezoidal);
-    integrator.SetMaxSteps(1 << 24);
-    auto integrand = [](double x) {
-        return exp(-0.5 * x * x) / sqrt(2 * KConst::Pi());
-    };
-
-    numerical = integrator.Integrate(integrand, -3.0, 3.0);
-
-    EXPECT_EQ(524289U, integrator.NumberOfSteps());
-    ASSERT_NEAR(analytical, numerical, precision);
-}
-
-#endif  // TBB

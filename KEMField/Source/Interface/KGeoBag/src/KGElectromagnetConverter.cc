@@ -170,11 +170,11 @@ void KGElectromagnetConverter::VisitWrappedSpace(KGRodSpace* rod)
 
         for (unsigned int i = 0; i < rod->GetObject()->GetNCoordinates() - 1; i++) {
             KEMField::KPosition p0(rod->GetObject()->GetCoordinate(i, 0),
-                         rod->GetObject()->GetCoordinate(i, 1),
-                         rod->GetObject()->GetCoordinate(i, 2));
+                                   rod->GetObject()->GetCoordinate(i, 1),
+                                   rod->GetObject()->GetCoordinate(i, 2));
             KEMField::KPosition p1(rod->GetObject()->GetCoordinate(i + 1, 0),
-                         rod->GetObject()->GetCoordinate(i + 1, 1),
-                         rod->GetObject()->GetCoordinate(i + 1, 2));
+                                   rod->GetObject()->GetCoordinate(i + 1, 1),
+                                   rod->GetObject()->GetCoordinate(i + 1, 2));
 
             auto* lineCurrent = new KEMField::KLineCurrent();
             lineCurrent->SetValues(p0, p1, tCurrent);
@@ -239,17 +239,21 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
         if (fMagfield3File && fMagfield3File->IsOpen()) {
             auto* tStream = fMagfield3File->File();
 
-            // do not use coil->GetP0|P1() because it is defined as (r,0,z)
+            // do not use coil->GetP0|P1() because it is defined as (r,0,z); z-axis is flipped here!
             auto p0 = coil->GetCoordinateSystem().ToGlobal(KEMField::KPosition(0, 0, tZMin));
             auto p1 = coil->GetCoordinateSystem().ToGlobal(KEMField::KPosition(0, 0, tZMax));
 
             double tLineCurrent = fCurrentElectromagnetSpace->GetLineCurrent();
             std::string tName = fCurrentElectromagnetSpace->GetName();
 
-            (*tStream) << ' ' << coil->GetCurrentDensity() << '\t' << p0.X() << '\t' << p0.Y() << '\t' << p0.Z() << '\t'
-                       << p1.X() << '\t' << p1.Y() << '\t' << p1.Z() << '\t' << coil->GetR0() << '\t' << coil->GetR1()
-                       << '\t' << coil->GetIntegrationScale() << '\t' << tLineCurrent << '\t' << tNumTurns << "\t# "
-                       << tName << std::endl;
+            (*tStream) << std::scientific << std::setprecision(12)
+                       << coil->GetCurrentDensity() << '\t'
+                       << p0.X() << '\t' << p0.Y() << '\t' << -1*p0.Z() << '\t'
+                       << p1.X() << '\t' << p1.Y() << '\t' << -1*p1.Z() << '\t'
+                       << coil->GetR0() << '\t' << coil->GetR1()
+                       << '\t' << coil->GetIntegrationScale() << '\t'
+                       << tLineCurrent << '\t' << tNumTurns << '\t'
+                       << "# " << tName << std::endl;
         }
     }
 }

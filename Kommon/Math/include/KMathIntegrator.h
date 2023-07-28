@@ -17,6 +17,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <cstdint>
 
 #ifdef KASPER_USE_GSL
 #include <gsl/gsl_integration.h>

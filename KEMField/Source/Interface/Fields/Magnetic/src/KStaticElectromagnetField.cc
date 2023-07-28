@@ -95,6 +95,7 @@ void KStaticElectromagnetField::InitializeCore()
     KEMFileInterface::GetInstance()->ActiveDirectory(fDirectory);
     KEMFileInterface::GetInstance()->ActiveFile(KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + fFile);
 
+    fFieldSolver->SetFieldObject(this);
     fFieldSolver->Initialize(*fContainer);
 }
 

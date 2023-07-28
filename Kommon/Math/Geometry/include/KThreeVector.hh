@@ -81,6 +81,7 @@ class KThreeVector
     const double& Z() const;
     const double& GetZ() const;
 
+    double* Components();
     const double* Components() const;
     const std::vector<double> AsVector() const;
     const std::array<double,3> AsArray() const;
@@ -306,6 +307,10 @@ inline const double& KThreeVector::Z() const
 inline const double& KThreeVector::GetZ() const
 {
     return fData[2];
+}
+inline double* KThreeVector::Components()
+{
+    return (double*) fData;
 }
 inline const double* KThreeVector::Components() const
 {

@@ -1047,13 +1047,19 @@
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="kgstaticelectromagnetfield">`ksfield_electromagnet`</a>|[*KStaticElectromagnetFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Magnetic/src/KStaticElectromagnetFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`integrating_field_solver`](#kintegratingmagnetostaticfieldsolver)<br>[`zonal_harmonic_field_solver`](#kzonalharmonicmagnetostaticfieldsolver)|*`KIntegratingMagnetostaticFieldSolver`*<br>*`KZonalHarmonicMagnetostaticFieldSolver`*|`directory`<br>`directory_magfield3`<br>`file`<br>`name`<br>`save_magfield3`<br>`spaces`<br>`surfaces`<br>`system`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
+|<a name="kgstaticelectromagnetfield">`ksfield_electromagnet`</a>|[*KStaticElectromagnetFieldBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/Fields/Magnetic/src/KStaticElectromagnetFieldBuilder.cc)<br>[*KSFieldKEMFieldObjectsBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx)|[`integrating_field_solver`](#kintegratingmagnetostaticfieldsolver)<br>[`magfield_coil_field_solver`](#kmagfieldcoilsfieldsolver)<br>[`zonal_harmonic_field_solver`](#kzonalharmonicmagnetostaticfieldsolver)|*`KIntegratingMagnetostaticFieldSolver`*<br>*`KMagfieldCoilsFieldSolver`*<br>*`KZonalHarmonicMagnetostaticFieldSolver`*|`directory`<br>`directory_magfield3`<br>`file`<br>`name`<br>`save_magfield3`<br>`spaces`<br>`surfaces`<br>`system`|*`string`*<br>*`string`*<br>*`string`*<br>*`string`*<br>*`bool`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KIntegratingMagnetostaticFieldSolver
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="kintegratingmagnetostaticfieldsolver">`integrating_field_solver`</a>|[*KIntegratingMagnetostaticFieldSolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Magnetic/src/KIntegratingMagnetostaticFieldSolverBuilder.cc)|—    |—    |—    |—    |
+
+#### KMagfieldCoilsFieldSolver
+
+|element name|source files|child elements|child types|attributes|attribute types|
+|-----|-----|-----|-----|-----|-----|
+|<a name="kmagfieldcoilsfieldsolver">`magfield_coil_field_solver`</a>|[*KMagfieldCoilsFieldSolverBuilder.cc*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/KEMField/Source/Bindings/FieldSolvers/Magnetic/src/KMagfieldCoilsFieldSolverBuilder.cc)|—    |—    |`directory`<br>`eps_tol`<br>`file`<br>`force_elliptic`<br>`n_elliptic`<br>`n_max`<br>`name`<br>`replace_file`|*`string`*<br>*`double`*<br>*`string`*<br>*`bool`*<br>*`unsigned`*<br>*`unsigned`*<br>*`string`*<br>*`bool`*|
 
 #### KZonalHarmonicMagnetostaticFieldSolver
 

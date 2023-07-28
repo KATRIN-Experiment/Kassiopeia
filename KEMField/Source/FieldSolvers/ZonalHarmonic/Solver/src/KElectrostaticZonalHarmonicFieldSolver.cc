@@ -58,8 +58,8 @@ double KZonalHarmonicFieldSolver<KElectrostaticBasis>::Potential(const KPosition
     }
 
     fDirectExecCount++;
-    kem_cout(eInfo) << "Electric ZH solver falling back to direct integration at point <"
-                    << P.Z() << " " << P.Perp() << ">" << eom;
+    kem_cout_debug("Electric ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return fIntegratingFieldSolver.Potential(P);
 }
 
@@ -88,8 +88,8 @@ KFieldVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const
     }
 
     fDirectExecCount++;
-    kem_cout(eInfo) << "Electric ZH solver falling back to direct integration at point <"
-                    << P.Z() << " " << P.Perp() << ">" << eom;
+    kem_cout_debug("Electric ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return fIntegratingFieldSolver.ElectricField(P);
 }
 
@@ -120,8 +120,8 @@ KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricFieldAndPotential(const 
     }
 
     fDirectExecCount++;
-    kem_cout(eInfo) << "Electric ZH solver falling back to direct integration at point <"
-                    << P.Z() << " " << P.Perp() << ">" << eom;
+    kem_cout_debug("Electric ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return std::make_pair(fIntegratingFieldSolver.ElectricField(P), fIntegratingFieldSolver.Potential(P));
 }
 

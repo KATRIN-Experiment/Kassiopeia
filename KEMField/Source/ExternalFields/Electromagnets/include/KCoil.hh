@@ -75,6 +75,10 @@ class KCoil : public KElectromagnet
     {
         return fCurrent / fabs(fP1[0] - fP0[0]) / fabs(fP1[2] - fP0[2]);
     }
+    double GetCurrentPerTurn() const
+    {
+        return fCurrent / fNumberOfTurns;
+    }
     double GetR0() const
     {
         return fP0[0];

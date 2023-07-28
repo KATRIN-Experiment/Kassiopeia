@@ -58,7 +58,7 @@ template<> struct TransferElementInTypelist<KNullType>
     TransferElementInTypelist(const std::string& elementName, std::string& /*unused*/, std::string& /*unused*/,
                               std::string& /*unused*/, std::string& /*unused*/, std::vector<std::string>& /*unused*/)
     {
-        KEMField::cout << "Unknown type <" << std::move(elementName) << ">" << KEMField::endl;
+        KEMField::cout << "Unknown type <" << elementName << ">" << KEMField::endl;
     }
 };
 

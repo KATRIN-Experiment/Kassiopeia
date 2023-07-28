@@ -1938,6 +1938,18 @@
     >
         <integrating_field_solver/>
 
+        <magfield_coil_field_solver
+            directory="(string)"
+            eps_tol="(double)"
+            file="(string)"
+            force_elliptic="(bool)"
+            n_elliptic="(unsigned)"
+            n_max="(unsigned)"
+            name="(string)"
+            replace_file="(bool)"
+        >
+        </magfield_coil_field_solver>
+
         <zonal_harmonic_field_solver
             central_sourcepoint_end="(double)"
             central_sourcepoint_fractional_distance="(double)"

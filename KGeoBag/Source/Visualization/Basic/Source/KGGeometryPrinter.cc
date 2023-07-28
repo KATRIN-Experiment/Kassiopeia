@@ -483,7 +483,7 @@ void KGGeometryPrinter::VisitConeSurface(KGConeSurface* aSurface)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear surface
     fCurrentSurface = nullptr;
@@ -516,7 +516,7 @@ void KGGeometryPrinter::VisitCutConeSurface(KGCutConeSurface* aSurface)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear surface
     fCurrentSurface = nullptr;
@@ -545,7 +545,7 @@ void KGGeometryPrinter::VisitCylinderSurface(KGCylinderSurface* aSurface)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear surface
     fCurrentSurface = nullptr;
@@ -599,7 +599,7 @@ void KGGeometryPrinter::VisitWrappedSurface(KGRodSurface* aSurface)
 
     if (Pi.size() == 2) {
         KThreeVector N = Pi[1] - Pi[0];
-        fPrivate->Put(tRoot + "/global/normal", N);
+        fPrivate->Put(tRoot + "/global/normal", N / N.Magnitude());
     }
 
     //clear space
@@ -675,7 +675,7 @@ void KGGeometryPrinter::VisitConeSpace(KGConeSpace* aSpace)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear surface
     fCurrentSpace = nullptr;
@@ -706,7 +706,7 @@ void KGGeometryPrinter::VisitCutConeSpace(KGCutConeSpace* aSpace)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear space
     fCurrentSpace = nullptr;
@@ -743,7 +743,7 @@ void KGGeometryPrinter::VisitCutConeTubeSpace(KGCutConeTubeSpace* aSpace)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear space
     fCurrentSpace = nullptr;
@@ -772,7 +772,7 @@ void KGGeometryPrinter::VisitCylinderSpace(KGCylinderSpace* aSpace)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear space
     fCurrentSpace = nullptr;
@@ -804,7 +804,7 @@ void KGGeometryPrinter::VisitCylinderTubeSpace(KGCylinderTubeSpace* aSpace)
 
     fPrivate->Put(tRoot + "/global_coords/point1", P1);
     fPrivate->Put(tRoot + "/global_coords/point2", P2);
-    fPrivate->Put(tRoot + "/global_coords/normal", N);
+    fPrivate->Put(tRoot + "/global_coords/normal", N / N.Magnitude());
 
     //clear space
     fCurrentSpace = nullptr;
@@ -836,7 +836,7 @@ void KGGeometryPrinter::VisitWrappedSpace(KGRodSpace* aSpace)
 
     if (Pi.size() == 2) {
         KThreeVector N = Pi[1] - Pi[0];
-        fPrivate->Put(tRoot + "/global/normal", N);
+        fPrivate->Put(tRoot + "/global/normal", N / N.Magnitude());
     }
 
     //clear space
