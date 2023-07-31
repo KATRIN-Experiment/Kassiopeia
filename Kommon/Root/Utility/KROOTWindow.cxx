@@ -30,7 +30,11 @@ KROOTWindow::KROOTWindow() :
     fCanvasHeight(600),
     fActive(true),
     fWriteEnabled(false),
-    fPath("")
+    fPath(""),
+    fXMin(0.),
+    fXMax(0.),
+    fYMin(0.),
+    fYMax(0.)
 {}
 
 KROOTWindow::~KROOTWindow()
@@ -87,6 +91,15 @@ void KROOTWindow::Render()
             double tLocalYMax = (*tIt)->GetYMax();
             if (tLocalYMax > tYMax)
                 tYMax = tLocalYMax;
+        }
+
+        if (fXMin < fXMax) {
+            tXMin = fXMin;
+            tXMax = fXMax;
+        }
+        if (fYMin < fYMax) {
+            tYMin = fYMin;
+            tYMax = fYMax;
         }
 
         utilmsg_debug("XMin: " << tXMin << eom);
@@ -278,9 +291,15 @@ void KROOTWindow::RemoveWindow(KWindow* aWindow)
     return;
 }
 
-TPad* KROOTWindow::GetPad()
+TCanvas* KROOTWindow::GetCanvas()
 {
     return fCanvas;
 }
+
+TApplication* KROOTWindow::GetApplication()
+{
+    return fApplication;
+}
+
 
 }  // namespace katrin

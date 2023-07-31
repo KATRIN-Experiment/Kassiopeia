@@ -17,9 +17,22 @@
          than one will break down all mesh triangles into smaller elements.
      -->
 
-    <stl_file_surface name="cube_surface">
+    <stl_file_surface name="bunny">
+        <stl_file file="Stanford_bunny.stl" mesh_count="2"/>
+    </stl_file_surface>
+
+
+    <!-- There is also an PLY file interface available. Note that PLY file format
+         supports rectangles, but no solid objects (spaces in KGeoBag.)
+    -->
+
+    <stl_file_surface name="cube_surface_stl">
         <stl_file file="Menger_sponge.stl" scale="0.5" mesh_count="1"/>
     </stl_file_surface>
+
+    <ply_file_surface name="cube_surface_ply">
+        <ply_file file="Menger_sponge.ply" scale="0.5" mesh_count="1"/>
+    </ply_file_surface>
 
     <mesh name="surface_mesh" surfaces="#"/>
 

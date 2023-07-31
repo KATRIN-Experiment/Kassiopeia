@@ -119,6 +119,16 @@ template<typename ValueType> void KIterativeStateWriter<ValueType>::Visit(KItera
         saveName << activeNameRoot << "_" << fSaveNameRoot << "_" << solver.Iteration()
                  << KEMFileInterface::GetInstance()->GetFileSuffix();
 
+        if (fThresholdLabels.size() > 0) {
+            kem_cout_debug("<shape> hash is <" << fThresholdLabels.at(0) << ">" << eom);
+        }
+        if (fThresholdLabels.size() > 1) {
+            kem_cout_debug("<shape+boundary> hash is <" << fThresholdLabels.at(1) << ">" << eom);
+        }
+        if (fThresholdLabels.size() > 2) {
+            kem_cout_debug("<parameter> hash is <" << fThresholdLabels.at(2) << ">" << eom);
+        }
+
         KEMFileInterface::GetInstance()->Write(saveName.str(),
                                                residualThreshold,
                                                KResidualThreshold::Name(),
@@ -133,6 +143,9 @@ template<typename ValueType> void KIterativeStateWriter<ValueType>::Visit(KItera
         s << "iteration_" << solver.Iteration();
         vectorLabels.push_back(s.str());
         vectorLabels.push_back(KResidualVector<ValueType>::Name());
+
+        kem_cout_debug("<shape+boundary+solution> hash is <" << residualThreshold.fGeometryHash << ">" << eom);
+
         KEMFileInterface::GetInstance()->Write(saveName.str(),
                                                fResidualVector,
                                                KResidualVector<ValueType>::Name(),

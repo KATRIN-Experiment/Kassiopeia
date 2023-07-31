@@ -50,9 +50,7 @@ KElectricZHFieldSolver::KElectricZHFieldSolver() :
 
 KElectricZHFieldSolver::~KElectricZHFieldSolver()
 {
-
     delete fZHContainer;
-
     delete fZonalHarmonicFieldSolver;
 }
 
@@ -111,6 +109,18 @@ void KElectricZHFieldSolver::InitializeCore(KSurfaceContainer& container)
     return;
 }
 
+void KElectricZHFieldSolver::DeinitializeCore()
+{
+    const auto& C = fZonalHarmonicFieldSolver->GetCentralExecutionCount();
+    const auto& R = fZonalHarmonicFieldSolver->GetRemoteExecutionCount();
+    const auto& D = fZonalHarmonicFieldSolver->GetDirectExecutionCount();
+    const auto& T = fZonalHarmonicFieldSolver->GetTotalExecutionCount();
+    kem_cout(eNormal) << "Electric ZH solver execution counts:" << ret
+                      << "central: " << C << " (" << std::floor(100.*C/T) << "%)" << ret
+                      << "remote:  " << R << " (" << std::floor(100.*R/T) << "%)" << ret
+                      << "direct:  " << D << " (" << std::floor(100.*D/T) << "%)" << eom;
+}
+
 double KElectricZHFieldSolver::PotentialCore(const KPosition& P) const
 {
     return fZonalHarmonicFieldSolver->Potential(P);
@@ -136,15 +146,9 @@ bool KElectricZHFieldSolver::UseRemoteExpansion(const KPosition& P)
     return fZonalHarmonicFieldSolver->RemoteExpansion(P);
 }
 
-std::set<std::pair<double, double>> KElectricZHFieldSolver::CentralSourcePoints()
+const KZonalHarmonicContainer<KElectrostaticBasis>* KElectricZHFieldSolver::GetContainer() const
 {
-    return fZHContainer->CentralSourcePoints();
+    return fZHContainer;
 }
-
-std::set<std::pair<double, double>> KElectricZHFieldSolver::RemoteSourcePoints()
-{
-    return fZHContainer->RemoteSourcePoints();
-}
-
 
 } /* namespace KEMField */

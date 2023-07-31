@@ -17,6 +17,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <cstdint>
 
 #ifdef KASPER_USE_GSL
 #include <gsl/gsl_integration.h>
@@ -57,7 +58,8 @@ enum class KEMathIntegrationMethod
     K3,
     K4,
     Romberg,
-	QAGS
+	QAGS,
+    UserDefined
 };
 
 // forward declarations
@@ -372,6 +374,8 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandTy
 #else
             throw KMathIntegratorException() << "Cannot use QAGS/GSL in build without GSL libraries.";
 #endif
+        case KEMathIntegrationMethod::UserDefined:
+            throw KMathIntegratorException() << "User defined integration method not implemented!";
         default:
             throw KMathIntegratorException() << "Invalid integration method specified.";
     }
@@ -580,7 +584,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGIU(XIntegrandType&&
     fIteration+=ilog2_ceil(workspace->size);	//crude approximation, since QAGIU log2(workspace->size) is non integer
     gsl_integration_workspace_free(workspace);
 
-    if (std::isnormal(fCurrentResult))
+    if (std::isnormal(fCurrentResult) or fCurrentResult==0.0)
     	return fCurrentResult;
     else
         throw KMathIntegratorException() << "Non finite result in routine QAGIU.";

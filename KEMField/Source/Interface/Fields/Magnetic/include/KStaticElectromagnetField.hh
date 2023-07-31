@@ -10,7 +10,8 @@
 
 #include "KMagneticFieldSolver.hh"
 #include "KMagnetostaticField.hh"
-#include "KSmartPointer.hh"
+
+#include <memory>
 
 namespace KEMField
 {
@@ -27,14 +28,15 @@ class KStaticElectromagnetField : public KMagnetostaticField
     void SetFile(const std::string& aFile);
     std::string GetFile() const;
 
-    void SetFieldSolver(const KSmartPointer<KMagneticFieldSolver>& solver);
-    KSmartPointer<KMagneticFieldSolver> GetFieldSolver();
+    void SetFieldSolver(const std::shared_ptr<KMagneticFieldSolver>& solver);
+    std::shared_ptr<KMagneticFieldSolver> GetFieldSolver();
 
-    void SetContainer(const KSmartPointer<KElectromagnetContainer>& aContainer);
-    KSmartPointer<KElectromagnetContainer> GetContainer() const;
+    void SetContainer(const std::shared_ptr<KElectromagnetContainer>& aContainer);
+    std::shared_ptr<KElectromagnetContainer> GetContainer() const;
 
   protected:
     void InitializeCore() override;
+    void DeinitializeCore() override;
     void CheckSolverExistance() const;
 
     KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
@@ -43,8 +45,8 @@ class KStaticElectromagnetField : public KMagnetostaticField
     std::pair<KFieldVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const override;
 
   private:
-    KSmartPointer<KElectromagnetContainer> fContainer;
-    KSmartPointer<KMagneticFieldSolver> fFieldSolver;
+    std::shared_ptr<KElectromagnetContainer> fContainer;
+    std::shared_ptr<KMagneticFieldSolver> fFieldSolver;
 
     std::string fFile;
     std::string fDirectory;

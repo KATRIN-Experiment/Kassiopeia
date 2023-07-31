@@ -15,13 +15,49 @@
 #include <sstream>
 #include <string>
 
+#include "KLogger.h"
+KLOGGER(logger, "ArgumentList");
+
 
 using namespace std;
 using namespace katrin;
 
 
+static const bool gIsSpaceAllowedAfterEqual = true;              // if false, "--foo= bar" becomes {"--foo": ""} and ["bar"]
+static const bool gIsSpaceBeforeEqualAnError = true;             // if true,  "--foo =bar"  will generate an error (next)
+static const bool gIsErrorToBeThrown = false;                    // if false, errors will be logging only (and proceed; next)
+static const bool gIsStartingWithEqualAlwaysAParameter = false;  // if true,  "--foo =bar" becomes {"--foo":""} & ["=bar"]
+
+/*****
+# Note
+- If gIsSpaceAllowedAferEqual is true,
+    - "--foo= bar" becomes {"--foo": "bar"}, 
+    - however, even in this canse, if the next argv is an option, the next one becomes a separate option, 
+      e.g., "--foo= --bar= buz" becomes {"--foo": "", "--bar": "buz"}.
+    - Note that, "--foo=--bar=buz" (no space after equal) is still {"--foo": "--bar=buz"}
+
+- If gIsSpaceBeforeEqualAnError is false, or gIsErrorToBeThrown is false (BE CAREFUL FOR THIS SETTING!!)
+    - "--foo =bar" will be parsed:
+      - if gIsStartingWithEqualAlwaysAParameter is true, it becomes {"--foo": ""} and ["=bar"].
+      - otherwise, it becomes {"--foo": "bar"}
+        - Also note more complex cases in this configuration:
+          - "--foo =bar" -->  { "--foo": "bar" }
+          - "--foo =--bar=buz"  -->  { "--foo": "--bar=buz" }
+          - "--foo =--bar =buz"  -->  { "--foo": "--bar" } & [ "=buz" ]
+        - if gIsSpacedAllowedAfterEqual is also true:
+          - "--foo = --bar" -->  { "--foo": "", "--bar": "" }
+          - "--foo = --bar = buz"  -->  { "--foo": "", "--bar": "buz" }
+        - otherwise
+          - "--foo = --bar" -->  { "--foo": "", "--bar": "" }
+          - "--foo = --bar = buz"  -->  { "--foo": "", "--bar": "" } & ["buz"]
+*****/
+
+
+
+
 KArgumentList::KArgumentList(int argc, char** argv)
 {
+        
     if (argc > 0) {
         fProgramPathName = argv[0];
         fCommandLine = argv[0];
@@ -33,14 +69,22 @@ KArgumentList::KArgumentList(int argc, char** argv)
             fProgramName = fProgramPathName;
         }
     }
-    for (int i = 1; i < argc; i++) {
-        string Argument = argv[i];
-        fCommandLine += " " + Argument;
+
+    auto IsOption = [](const string& Argument)->bool {
         if ((Argument[0] != '-') || (Argument == "-") || (Argument == "--")) {
-            fParameterList.push_back(Argument);
+            return false;
         }
         else if ((Argument.size() > 1) && (isdigit(Argument[1]))) {
             // negative number parameter //
+            return false;
+        }
+        return true;
+    };
+    
+    for (int i = 1; i < argc; i++) {
+        string Argument = argv[i];
+        fCommandLine += " " + Argument;
+        if (! IsOption(Argument)) {
             fParameterList.push_back(Argument);
         }
         else {
@@ -48,25 +92,68 @@ KArgumentList::KArgumentList(int argc, char** argv)
             string Name = Argument.substr(0, NameLength);
             string Value = "";
 
-            if (NameLength != string::npos) {
+            if (NameLength != string::npos) {      //// --foo=*
+                // --foo=bar  -->  { "--foo": "bar" }
+                // --foo=--bar=buz  -->  { "--foo": "--bar=buz" }
+                // also: --foo=--bar =buz  -->  { "--foo": "--bar" } & [ "=buz" ]
                 Value = Argument.substr(NameLength + 1, Argument.size());
             }
 
-            if (Value.empty() && (i + 1 < argc)) {
-                if (NameLength != string::npos) {
-                    // already contains the assign operator//
-                    i++;
-                    Value = argv[i];
-                }
-                else if (argv[i + 1][0] == '=') {
-                    i++;
-                    if (argv[i][1] != '\0') {
-                        Value = (argv[i] + 1);
+            if (Value.empty() && (i+1 < argc)) {
+                if (NameLength != string::npos) {   //// --foo= *
+                    if (! gIsSpaceAllowedAfterEqual) {
+                        ;     // --foo= bar --> { "--foo": "" } & [ "bar" ]
                     }
-                    else if (i + 1 < argc) {
+                    else if (IsOption(argv[i+1])) {
+                        ;     // --foo= --bar=buz  -->  { "--foo": "", "--bar": "buz" }
+                    }
+                    else {    // --foo= bar -->  { "--foo": "bar" }
                         i++;
                         Value = argv[i];
                     }
+                }
+                else if (argv[i+1][0] == '=') {     //// --foo =*
+                    if (gIsSpaceBeforeEqualAnError) {
+                        KERROR(logger, "arguments starting with '=' are not allowed");
+                        if (gIsErrorToBeThrown) {
+                            throw KException() << "arguments starting with '=' are not allowed";
+                        }
+                    }
+                    i++;
+                    if (gIsStartingWithEqualAlwaysAParameter) {
+                        // --foo =bar --> {"--foo": ""} & ["=bar"]
+                        fParameterList.push_back(argv[i]);
+                    }
+                    else if (argv[i][1] != '\0') {     //// "--foo =..."
+                        // --foo =bar -->  { "--foo": "bar" }
+                        // --foo =--bar=buz  -->  { "--foo": "--bar=buz" }
+                        // also: --foo =--bar =buz  -->  { "--foo": "--bar" } & [ "=buz" ]
+                        Value = (argv[i] + 1);
+                    }
+                    else {      //// --foo = ...
+                        if (i+1 >= argc) {
+                            // --foo =$ -->  { "--foo": "" }
+                            ;
+                        }
+                        else if (! gIsSpaceAllowedAfterEqual) {
+                            // --foo = bar --> { "--foo": "" } & [ "bar" ]
+                            ;
+                        }
+                        else if (IsOption(argv[i+1])) {
+                            // --foo = --bar -->  { "--foo": "", "--bar": "" }
+                            // --foo = --bar = buz  -->  { "--foo": "", "--bar": "buz" }
+                            ;
+                        }
+                        else {
+                            // --foo = bar  --> { "--foo": "bar" }
+                            i++;
+                            Value = argv[i];
+                        }
+                    }
+                }
+                else {
+                    // --foo  -->  { "--foo": "" }
+                    ;
                 }
             }
 
@@ -101,6 +188,8 @@ KVariant KArgumentList::GetParameter(unsigned int Index) const
 
 KVariant KArgumentList::GetOption(const std::string& Name) const
 {
+    fUsedOptionSet.insert(Name);
+    
     auto Option = fOptionTable.find(Name);
     if (Option == fOptionTable.end()) {
         return KVariant();
@@ -158,6 +247,19 @@ void KArgumentList::PullBack(int& argc, char**& argv) const
     argc = (int) fParameterList.size() + 1;
     argv = fArgvBuffer;
 }
+
+std::vector<std::string> KArgumentList::UnusedOptionList() const
+{
+    std::vector<std::string> List;
+    for (const auto& Option: fOptionNameList) {
+        if (fUsedOptionSet.count(Option) == 0) {
+            List.push_back(Option);
+        }
+    }
+
+    return List;
+}
+
 
 KArgumentSchema::KElement::KElement(std::string Name)
 {

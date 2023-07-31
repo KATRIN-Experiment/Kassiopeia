@@ -32,12 +32,9 @@ template<size_t NDIM = 3> class KGPoint
 
     KGPoint(const double* p)
     {
-        std::copy(p, p + NDIM, fData.begin());
-    }
-
-    KGPoint(const KGPoint<NDIM>& p)
-    {
-        fData = p.fData;
+        for (unsigned int i=0; i<NDIM; i++) {
+            fData[i] = p[i];
+        }
     }
 
     virtual ~KGPoint() = default;
@@ -55,17 +52,6 @@ template<size_t NDIM = 3> class KGPoint
     operator const double*() const
     {
         return fData.data();
-    }
-
-    //        // access - commented out, since these are ambiguous with the above type cast
-    //        double& operator[] (size_t index) { return fData[index]; }
-    //        const double& operator[] (size_t index) const { return fData[index]; }
-
-    // assignment
-    KGPoint<NDIM>& operator=(const KGPoint<NDIM>& p)
-    {
-        fData = p.fData;
-        return *this;
     }
 
     double MagnitudeSquared() const

@@ -38,21 +38,28 @@ double KZonalHarmonicFieldSolver<KElectrostaticBasis>::Potential(const KPosition
 {
     double phi = 0;
 
-    if (UseCentralExpansion(P))
-        if (CentralExpansionPotential(P, phi))
+    if (UseCentralExpansion(P)) {
+        if (CentralExpansionPotential(P, phi)) {
+            fCentralExecCount++;
             return phi;
+        }
+    }
 
-    if (UseRemoteExpansion(P))
-        if (RemoteExpansionPotential(P, phi))
+    if (UseRemoteExpansion(P)) {
+        if (RemoteExpansionPotential(P, phi)) {
+            fRemoteExecCount++;
             return phi;
+        }
+    }
 
     if (!fSubsetFieldSolvers.empty()) {
         PotentialAccumulator accumulator(P);
-
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), phi, accumulator);
     }
 
-    kem_cout_debug("ZH solver falling back to direct integration at point <" << P.Z() << " " << P.Perp() << ">"   << eom);
+    fDirectExecCount++;
+    kem_cout_debug("Electric ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return fIntegratingFieldSolver.Potential(P);
 }
 
@@ -60,21 +67,29 @@ KFieldVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const
 {
     KFieldVector E;
 
-    if (UseCentralExpansion(P))
-        if (CentralExpansionField(P, E))
+    if (UseCentralExpansion(P)) {
+        if (CentralExpansionField(P, E)) {
+            fCentralExecCount++;
             return E;
+        }
+    }
 
-    if (UseRemoteExpansion(P))
-        if (RemoteExpansionField(P, E))
+    if (UseRemoteExpansion(P)) {
+        if (RemoteExpansionField(P, E)) {
+            fRemoteExecCount++;
             return E;
+        }
+    }
 
     if (!fSubsetFieldSolvers.empty()) {
         ElectricFieldAccumulator accumulator(P);
-
-        return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), E, accumulator);
+        return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(),
+                               E, accumulator);
     }
 
-    kem_cout_debug("ZH solver falling back to direct integration at point <" << P.Z() << " " << P.Perp() << ">"   << eom);
+    fDirectExecCount++;
+    kem_cout_debug("Electric ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return fIntegratingFieldSolver.ElectricField(P);
 }
 
@@ -84,24 +99,29 @@ KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricFieldAndPotential(const 
     KFieldVector E;
     double phi = 0;
 
-    if (UseCentralExpansion(P))
-        if (CentralExpansionFieldAndPotential(P, E, phi))
+    if (UseCentralExpansion(P)) {
+        if (CentralExpansionFieldAndPotential(P, E, phi)) {
+            fCentralExecCount++;
             return std::make_pair(E, phi);
+        }
+    }
 
-    if (UseRemoteExpansion(P))
-        if (RemoteExpansionFieldAndPotential(P, E, phi))
+    if (UseRemoteExpansion(P)) {
+        if (RemoteExpansionFieldAndPotential(P, E, phi)) {
+            fRemoteExecCount++;
             return std::make_pair(E, phi);
+        }
+    }
 
     if (!fSubsetFieldSolvers.empty()) {
         ElectricFieldAndPotentialAccumulator accumulator(P);
-
-        return std::accumulate(fSubsetFieldSolvers.begin(),
-                               fSubsetFieldSolvers.end(),
-                               std::make_pair(E, phi),
-                               accumulator);
+        return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(),
+                               std::make_pair(E, phi), accumulator);
     }
 
-    kem_cout_debug("ZH solver falling back to direct integration at point <" << P.Z() << " " << P.Perp() << ">"   << eom);
+    fDirectExecCount++;
+    kem_cout_debug("Electric ZH solver falling back to direct integration at point <"
+                    << P.Z() << " " << P.Perp() << ">" << eom);
     return std::make_pair(fIntegratingFieldSolver.ElectricField(P), fIntegratingFieldSolver.Potential(P));
 }
 

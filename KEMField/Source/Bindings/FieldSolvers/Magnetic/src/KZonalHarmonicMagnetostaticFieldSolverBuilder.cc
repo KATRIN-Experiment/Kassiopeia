@@ -31,7 +31,8 @@ STATICINT sKZonalHarmonicMagnetostaticFieldSolverStructure =
     KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<int>("number_of_remote_coefficients") +
     KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<int>("number_of_remote_sourcepoints") +
     KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<double>("remote_sourcepoint_start") +
-    KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<double>("remote_sourcepoint_end");
+    KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<double>("remote_sourcepoint_end") +
+    KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<bool>("use_fixed_sourcepoint_range");
 
 STATICINT sKStaticElectromagnetFieldStructure =
     KStaticElectromagnetFieldBuilder::ComplexElement<KZonalHarmonicMagnetostaticFieldSolver>(

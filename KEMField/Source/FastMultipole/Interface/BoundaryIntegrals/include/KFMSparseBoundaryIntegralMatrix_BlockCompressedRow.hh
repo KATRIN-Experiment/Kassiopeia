@@ -35,7 +35,7 @@ class KFMSparseBoundaryIntegralMatrix_BlockCompressedRow : public KBoundaryInteg
     using Vector = KVector<ValueType>;
 
     KFMSparseBoundaryIntegralMatrix_BlockCompressedRow(const KSurfaceContainer& c,
-                                                       KSmartPointer<FastMultipoleIntegrator> integrator) :
+                                                       std::shared_ptr<FastMultipoleIntegrator> integrator) :
         KBoundaryIntegralMatrix<FastMultipoleIntegrator>(c, *integrator),
         fFastMultipoleIntegrator(integrator),
         fTrait(nullptr),
@@ -52,7 +52,8 @@ class KFMSparseBoundaryIntegralMatrix_BlockCompressedRow : public KBoundaryInteg
     KFMSparseBoundaryIntegralMatrix_BlockCompressedRow(const KSurfaceContainer& c,
                                                        FastMultipoleIntegrator& integrator) :
         KBoundaryIntegralMatrix<FastMultipoleIntegrator>(c, integrator),
-        fFastMultipoleIntegrator(&integrator, true),
+        //fFastMultipoleIntegrator(&integrator, true),
+        fFastMultipoleIntegrator(&integrator),
         fTrait(nullptr),
         fDimension(c.size()),
         fUniqueID(integrator.GetUniqueIDString()),
@@ -128,7 +129,7 @@ class KFMSparseBoundaryIntegralMatrix_BlockCompressedRow : public KBoundaryInteg
 
   protected:
     //data
-    const KSmartPointer<FastMultipoleIntegrator> fFastMultipoleIntegrator;
+    const std::shared_ptr<FastMultipoleIntegrator> fFastMultipoleIntegrator;
     ParallelTrait* fTrait;
 
     unsigned int fDimension;

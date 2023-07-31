@@ -38,11 +38,11 @@ class KElectricZHFieldSolver : public KElectricFieldSolver
         return fParameters.get();
     }
 
-    std::set<std::pair<double, double>> CentralSourcePoints();
-    std::set<std::pair<double, double>> RemoteSourcePoints();
+    const KZonalHarmonicContainer<KElectrostaticBasis>* GetContainer() const;
 
   private:
     void InitializeCore(KSurfaceContainer& container) override;
+    void DeinitializeCore() override;
 
     double PotentialCore(const KPosition& P) const override;
     KFieldVector ElectricFieldCore(const KPosition& P) const override;

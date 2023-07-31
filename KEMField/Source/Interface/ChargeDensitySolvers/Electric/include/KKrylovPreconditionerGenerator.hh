@@ -12,7 +12,6 @@
 #include "KBoundaryMatrixGenerator.hh"
 #include "KElectrostaticBasis.hh"
 #include "KKrylovSolverConfiguration.hh"
-#include "KSmartPointer.hh"
 
 
 namespace KEMField
@@ -27,11 +26,11 @@ class KKrylovPreconditionerGenerator : public KBoundaryMatrixGenerator<KElectros
     KKrylovPreconditionerGenerator();
     ~KKrylovPreconditionerGenerator() override;
 
-    KSmartPointer<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const override;
+    std::shared_ptr<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const override;
 
-    void SetMatrixGenerator(const KSmartPointer<MatrixGenerator>& matrixGen);
-    KSmartPointer<const MatrixGenerator> GetMatrixGenerator() const;
-    void SetPreconditionerGenerator(const KSmartPointer<MatrixGenerator>& preconGen);
+    void SetMatrixGenerator(const std::shared_ptr<MatrixGenerator>& matrixGen);
+    std::shared_ptr<const MatrixGenerator> GetMatrixGenerator() const;
+    void SetPreconditionerGenerator(const std::shared_ptr<MatrixGenerator>& preconGen);
 
     void SetIterationsBetweenRestart(unsigned int iterationsBetweenRestart)
     {
@@ -89,8 +88,8 @@ class KKrylovPreconditionerGenerator : public KBoundaryMatrixGenerator<KElectros
     }
 
   private:
-    KSmartPointer<MatrixGenerator> fMatrixGenerator;
-    KSmartPointer<MatrixGenerator> fPreconditionerGenerator;
+    std::shared_ptr<MatrixGenerator> fMatrixGenerator;
+    std::shared_ptr<MatrixGenerator> fPreconditionerGenerator;
 
     KKrylovSolverConfiguration fKrylovConfig;
 };

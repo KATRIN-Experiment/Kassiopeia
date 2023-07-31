@@ -223,9 +223,9 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
     unsigned int DetermineSolverType();
 
     //generate Matrix
-    KSmartPointer<KFMElectrostaticTypes::FastMultipoleMatrix>
+    std::shared_ptr<KFMElectrostaticTypes::FastMultipoleMatrix>
     CreateMatrix(const KSurfaceContainer& surfaceContainer,
-                 const KSmartPointer<KFMElectrostaticTypes::FastMultipoleEBI>&) const;
+                 const std::shared_ptr<KFMElectrostaticTypes::FastMultipoleEBI>&) const;
 
 //profiling
 #ifdef KEMFIELD_USE_REALTIME_CLOCK

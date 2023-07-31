@@ -5,6 +5,15 @@ along with calculations of electric and magnetic fields.
 
 Find a full user guide under http://katrin-experiment.github.io/Kassiopeia/index.html
 
+[![Release](https://img.shields.io/github/v/release/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/releases)
+[![Code Size](https://img.shields.io/github/languages/code-size/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia)
+[![Image Size](https://img.shields.io/docker/image-size/katrinexperiment/kassiopeia)](https://hub.docker.com/r/katrinexperiment/kassiopeia)
+[![Issues](https://img.shields.io/github/issues/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/pulls)
+[![Last Commit](https://img.shields.io/github/last-commit/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/commits)
+[![Contributors](https://img.shields.io/github/contributors/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/graphs/contributors)
+[![Gitter](https://badges.gitter.im/kassiopeia-simulation/community.svg)](https://gitter.im/kassiopeia-simulation/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 
  Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 ==============================================================================
@@ -204,7 +213,7 @@ Optional Dependencies:
 -------------
 
 This software is distributed "as-is" under an open source license
-(MIT License, for details see `LICENSE.md` file.)
+(for details see `LICENSE.md` file).
 
 Kassiopeia includes the following open-source libraries:
 
@@ -216,6 +225,11 @@ Kassiopeia includes the following open-source libraries:
  Getting help
 --------------
 
+Join the Kassiopeia community on Gitter: https://gitter.im/kassiopeia-simulation/community
+
+You can [contribute changes](https://github.com/KATRIN-Experiment/Kassiopeia/compare), [report issues](https://github.com/KATRIN-Experiment/Kassiopeia/issues/new) and [join discussions](https://github.com/KATRIN-Experiment/Kassiopeia/discussions) on Github.
+
 Primary email contacts:
 *    Kasper development list: katrin-kasper@lists.kit.edu
-*    Jan Behrens: jan.behrens@kit.edu
+*    Richard Salomon: richardsalomon@wwu.de
+*    Benedikt Bieringer: benedikt.b@wwu.de

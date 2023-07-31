@@ -82,12 +82,14 @@ void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
 
             tRValue = 0.0;
             tFlux = 0.0;
+            tArea = 0.0;
             tLastArea = 0.0;
 
             KThreeVector tPosition, tField;
             //calculate position at r=0 to get approximation for radius
             tPosition = fOrigin + tZValue * fZAxis;
             CalculateField(tPosition, 0.0, tField);
+            genmsg_debug("field at position " << tPosition << " is " << tField << eom);
             double tRApproximation = sqrt(fFlux / (katrin::KConst::Pi() * tField.Magnitude()));
             genmsg_debug("r approximation is <" << tRApproximation << ">" << eom);
 
@@ -108,18 +110,24 @@ void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
                     return;
                 }
 
-                genmsg_debug("position " << tPosition << ret);
-                genmsg_debug("field " << tField << ret);
-                genmsg_debug("area <" << tArea << ">" << ret);
-                genmsg_debug("flux <" << tFlux << ">" << ret);
-                genmsg_debug("target flux <" << fFlux << ">" << eom);
-
                 if (tFlux >= fFlux)
                     break;
+
+                // genmsg_debug("position " << tPosition << ret);
+                // genmsg_debug("field " << tField << ret);
+                // genmsg_debug("area <" << tArea << ">" << ret);
+                // genmsg_debug("flux <" << tFlux << ">" << ret);
+                // genmsg_debug("target flux <" << fFlux << ">" << eom);
 
                 tRValue += tStepSize;
                 tLastArea = tArea;
             }
+
+            genmsg_debug("position " << tPosition << ret);
+            genmsg_debug("field " << tField << ret);
+            genmsg_debug("area <" << tArea << ">" << ret);
+            genmsg_debug("flux <" << tFlux << ">" << ret);
+            genmsg_debug("target flux <" << fFlux << ">" << eom);
 
             //correct the last step, to get a tFlux = fFlux
             tRValue = sqrt(tRValue * tRValue - (tFlux - fFlux) / (tField.Magnitude() * katrin::KConst::Pi()));

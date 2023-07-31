@@ -29,6 +29,13 @@ class KElectricFieldSolver
             fInitialized = true;
         }
     }
+    void Deinitialize()
+    {
+        if (fInitialized) {
+            DeinitializeCore();
+            fInitialized = false;
+        }
+    }
 
     double Potential(const KPosition& P) const
     {
@@ -47,6 +54,8 @@ class KElectricFieldSolver
 
   private:
     virtual void InitializeCore(KSurfaceContainer& container) = 0;
+    virtual void DeinitializeCore() = 0;
+
     virtual double PotentialCore(const KPosition& P) const = 0;
     virtual KFieldVector ElectricFieldCore(const KPosition& P) const = 0;
 

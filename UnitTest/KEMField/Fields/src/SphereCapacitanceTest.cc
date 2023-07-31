@@ -1,10 +1,10 @@
 /*
- * SphereCapacitanceTest.cc
+ * CapacitanceTest.cc
  *
  *  Created on: 22 Oct 2020
  *      Author: jbehrens
  *
- *  Based on TestSphereCapacitance.cc
+ *  Based on TestCapacitance.cc
  */
 
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
@@ -57,6 +57,8 @@ protected:
 
         using namespace KGeoBag;
 
+        surfaceContainer = new KSurfaceContainer();
+
         int scale = 24;
 
         // Construct the shape
@@ -92,17 +94,17 @@ protected:
         hemisphere2->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.);
 
         // Mesh the elements
-        KGMesher* mesher = new KGMesher();
+        mesher = new KGMesher();
         hemisphere1->AcceptNode(mesher);
         hemisphere2->AcceptNode(mesher);
 
-        KGBEMMeshConverter geometryConverter(surfaceContainer);
-        geometryConverter.SetMinimumArea(1.e-12);
-        hemisphere1->AcceptNode(&geometryConverter);
-        hemisphere2->AcceptNode(&geometryConverter);
+        geometryConverter = new KGBEMMeshConverter(*surfaceContainer);
+        geometryConverter->SetMinimumArea(1.e-12);
+        hemisphere1->AcceptNode(geometryConverter);
+        hemisphere2->AcceptNode(geometryConverter);
 
         MPI_SINGLE_PROCESS
-        std::cout << "Discretized sphere has " << surfaceContainer.size() << " elements" << std::endl;
+        std::cout << "Discretized sphere has " << surfaceContainer->size() << " elements" << std::endl;
     }
 
     void TearDown() override
@@ -110,7 +112,7 @@ protected:
         double tol = 5e-2;  // depends on discretization scale
         double Q = 0.;
 
-        for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
+        for (KSurfaceContainer::iterator it = surfaceContainer->begin(); it != surfaceContainer->end(); it++) {
             Q += (dynamic_cast<KTriangle*>(*it)->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
         }
 
@@ -130,59 +132,60 @@ protected:
         KEMFieldTest::TearDown();
     }
 
-    KSurfaceContainer surfaceContainer;
-
+    KSurfaceContainer* surfaceContainer;
+    KGeoBag::KGMesher* mesher;
+    KGeoBag::KGBEMMeshConverter* geometryConverter;
 };
 
-TEST_F(KEMFieldSphereTest, SphereCapacitance_GaussAnalytic)
+TEST_F(KEMFieldSphereTest, Capacitance_GaussAnalytic)
 {
     // method 0 = gauss; integrator type 0 = analytic
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeAnalytic();
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer, integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer, integrator);
+    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(*surfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(*surfaceContainer, integrator);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(*surfaceContainer, integrator);
 
     KGaussianElimination<KElectrostaticBoundaryIntegrator::ValueType> gaussianElimination;
 
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, SphereCapacitance_GaussRWG)
+TEST_F(KEMFieldSphereTest, Capacitance_GaussRWG)
 {
     // method 0 = gauss; integrator type 1 = RWG
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeRWG();
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer, integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer, integrator);
+    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(*surfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(*surfaceContainer, integrator);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(*surfaceContainer, integrator);
 
     KGaussianElimination<KElectrostaticBoundaryIntegrator::ValueType> gaussianElimination;
 
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, SphereCapacitance_GaussNumeric)
+TEST_F(KEMFieldSphereTest, Capacitance_GaussNumeric)
 {
     // method 0 = gauss; integrator type 2 = numeric
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeNumeric();
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer, integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer, integrator);
+    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(*surfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(*surfaceContainer, integrator);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(*surfaceContainer, integrator);
 
     KGaussianElimination<KElectrostaticBoundaryIntegrator::ValueType> gaussianElimination;
 
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, DiskCapacitance_RobinHoodRWG)
+TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodRWG)
 {
     // method 1 = robin hood; integrator type 1 = RWG
     double accuracy = 1.e-4;
     int increment = 100;
 
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeRWG();
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer, integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer, integrator);
+    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(*surfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(*surfaceContainer, integrator);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(*surfaceContainer, integrator);
 
     KRobinHood<KElectrostaticBoundaryIntegrator::ValueType> robinHood;
 
@@ -191,16 +194,16 @@ TEST_F(KEMFieldSphereTest, DiskCapacitance_RobinHoodRWG)
     robinHood.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, SphereCapacitance_RobinHoodNumeric)
+TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodNumeric)
 {
     // method 1 = robin hood; integrator type 2 = numeric
     double accuracy = 1.e-4;
     int increment = 100;
 
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeNumeric();
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer, integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer, integrator);
+    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(*surfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(*surfaceContainer, integrator);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(*surfaceContainer, integrator);
 
     KRobinHood<KElectrostaticBoundaryIntegrator::ValueType> robinHood;
 
@@ -211,17 +214,17 @@ TEST_F(KEMFieldSphereTest, SphereCapacitance_RobinHoodNumeric)
 
 #ifdef KEMFIELD_USE_OPENCL
 /* FIXME: this test is broken - investigate! */
-TEST_F(KEMFieldSphereTest, SphereCapacitance_RobinHoodRWG_OpenCL)
+TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodRWG_OpenCL)
 {
     // method 1 = robin hood; integrator type 1 = RWG
     double accuracy = 1.e-4;
     int increment = 100;
 
-    KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
-    KOpenCLElectrostaticBoundaryIntegrator integrator = KoclEBIFactory::MakeRWG(oclSurfaceContainer);
-    KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> A(oclSurfaceContainer, integrator);
-    KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> b(oclSurfaceContainer, integrator);
-    KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(oclSurfaceContainer, integrator);
+    KOpenCLSurfaceContainer* oclSurfaceContainer = new KOpenCLSurfaceContainer(*surfaceContainer);
+    KOpenCLElectrostaticBoundaryIntegrator integrator = KoclEBIFactory::MakeRWG(*oclSurfaceContainer);
+    KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> A(*oclSurfaceContainer, integrator);
+    KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> b(*oclSurfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(*oclSurfaceContainer, integrator);
 
 #ifdef KEMFIELD_USE_MPI
     KRobinHood<KElectrostaticBoundaryIntegrator::ValueType, KRobinHood_MPI_OpenCL> robinHood;
@@ -236,13 +239,13 @@ TEST_F(KEMFieldSphereTest, SphereCapacitance_RobinHoodRWG_OpenCL)
 #endif
 
 #ifdef KEMFIELD_USE_PETSC
-TEST_F(KEMFieldSphereTest, SphereCapacitance_PETSc)
+TEST_F(KEMFieldSphereTest, Capacitance_PETSc)
 {
     // method 2 = PETSc
     KElectrostaticBoundaryIntegrator integrator{KEBIFactory::MakeNumeric()};
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer, integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer, integrator);
+    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(*surfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(*surfaceContainer, integrator);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(*surfaceContainer, integrator);
 
     KPETScSolver<KElectrostaticBoundaryIntegrator::ValueType> petscSolver;
 

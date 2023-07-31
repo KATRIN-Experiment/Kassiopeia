@@ -22,6 +22,7 @@ set( TERMINATORS_HEADER_BASENAMES
     KSTermMinDistance.h
     KSTermStepsize.h
     KSTermMagnetron.h
+    KSTermZHRadius.h
 )
 set( TERMINATORS_HEADER_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/Include
@@ -53,6 +54,7 @@ set( TERMINATORS_SOURCE_BASENAMES
     KSTermMinDistance.cxx
     KSTermStepsize.cxx
     KSTermMagnetron.cxx
+    KSTermZHRadius.cxx
 )
 set( TERMINATORS_SOURCE_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/Source
@@ -80,6 +82,7 @@ target_link_libraries( KassiopeiaTerminators
     PUBLIC
         KassiopeiaOperators
         KassiopeiaGeometry
+        KassiopeiaFields
 )
 
 # install

@@ -2,7 +2,7 @@ option (KGeoBag_ENABLE_APP "Build KGeoBag applications" ON)
 if (KGeoBag_ENABLE_APP)
 
     # names
-    set( APPLICATION_NAMES
+    set( APPLICATIONS_NAMES
         KGeoBag
         RandomExtensionTester
         MetricsExtensionTester
@@ -11,14 +11,14 @@ if (KGeoBag_ENABLE_APP)
     )
 
     # libraries
-    set( APPLICATION_LIBRARIES
+    set( APPLICATIONS_LIBRARIES
         KGeoBagBindings
         KGeoBagCore
         KGeoBagRandom
     )
 
     if( KGeoBag_USE_VTK )
-        list( APPEND APPLICATION_NAMES
+        list( APPEND APPLICATIONS_NAMES
             GeometryViewer
             MeshViewer
             AxialMeshViewer
@@ -29,29 +29,26 @@ if (KGeoBag_ENABLE_APP)
             RandomPointTester
             MeshIntersectionTester
         )
-        list( APPEND APPLICATION_LIBRARIES
+        list( APPEND APPLICATIONS_LIBRARIES
             KGeoBagVtkVisualization
         )
     endif( KGeoBag_USE_VTK )
 
     if( KGeoBag_USE_ROOT )
-        list( APPEND APPLICATION_NAMES
+        list( APPEND APPLICATIONS_NAMES
             GeometryViewerROOT
         )
-        list( APPEND APPLICATION_LIBRARIES
+        list( APPEND APPLICATIONS_LIBRARIES
             KGeoBagROOTVisualization
         )
     endif( KGeoBag_USE_ROOT )
 
-    # target
-    foreach( NAME ${APPLICATION_NAMES} )
-        add_executable( ${NAME} Source/${NAME}.cc )
-    endforeach()
-
-    # install
-    foreach( NAME ${APPLICATION_NAMES} )
-        target_link_libraries( ${NAME} ${APPLICATION_LIBRARIES} )
-        kasper_install_executables( ${NAME} )
-    endforeach()
+    if( NOT BUILD_KSC )
+        foreach( NAME ${APPLICATIONS_NAMES} )
+            add_executable( ${NAME} Source/${NAME}.cc )
+            target_link_libraries( ${NAME} ${APPLICATIONS_LIBRARIES} )
+            kasper_install_executables( ${NAME} )
+        endforeach()
+    endif( NOT BUILD_KSC )
 
 endif(KGeoBag_ENABLE_APP)

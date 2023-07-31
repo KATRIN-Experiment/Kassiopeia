@@ -3,9 +3,10 @@
 
 #include "KIterativeKrylovRestartCondition.hh"
 #include "KIterativeSolver.hh"
-#include "KSmartPointer.hh"
 #include "KSquareMatrix.hh"
 #include "KVector.hh"
+
+#include <memory>
 
 namespace KEMField
 {
@@ -29,7 +30,7 @@ template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSol
     KIterativeKrylovSolver() : fMaxIterations(UINT_MAX)
     {
         //create a default restart condition
-        fRestartCondition = new KIterativeKrylovRestartCondition();
+        fRestartCondition = std::make_shared<KIterativeKrylovRestartCondition>();
     }
     ~KIterativeKrylovSolver() override = default;
 
@@ -41,7 +42,7 @@ template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSol
         SolveCore(x, b);
     }
 
-    void SetMatrix(KSmartPointer<const Matrix> A)
+    void SetMatrix(std::shared_ptr<const Matrix> A)
     {
         fMatrix = A;
     }
@@ -50,13 +51,13 @@ template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSol
     {
         fMaxIterations = i;
     }
-    void SetRestartCondition(const KSmartPointer<KIterativeKrylovRestartCondition>& restart)
+    void SetRestartCondition(const std::shared_ptr<KIterativeKrylovRestartCondition>& restart)
     {
         fRestartCondition = restart;
     }
 
   protected:
-    KSmartPointer<const Matrix> GetMatrix() const
+    std::shared_ptr<const Matrix> GetMatrix() const
     {
         return fMatrix;
     }
@@ -65,7 +66,7 @@ template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSol
     {
         return fMaxIterations;
     }
-    KSmartPointer<KIterativeKrylovRestartCondition> GetRestartCondition()
+    std::shared_ptr<KIterativeKrylovRestartCondition> GetRestartCondition()
     {
         return fRestartCondition;
     }
@@ -74,8 +75,8 @@ template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSol
     virtual void SolveCore(Vector& x, const Vector& b) = 0;
 
     unsigned int fMaxIterations;
-    KSmartPointer<KIterativeKrylovRestartCondition> fRestartCondition;
-    KSmartPointer<const Matrix> fMatrix;
+    std::shared_ptr<KIterativeKrylovRestartCondition> fRestartCondition;
+    std::shared_ptr<const Matrix> fMatrix;
 };
 
 

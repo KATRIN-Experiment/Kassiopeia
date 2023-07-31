@@ -6,6 +6,8 @@
 #include "KSquareMatrix.hh"
 #include "KSurface.hh"
 #include "KSurfaceContainer.hh"
+#include "KEMSimpleException.hh"
+
 
 #define KEM_USE_CACHING true
 
@@ -29,6 +31,10 @@ class KBoundaryIntegralMatrix : public KSquareMatrix<typename Integrator::Basis:
     const ValueType& operator()(unsigned int i, unsigned int j) const override
     {
         if (enableCaching) {
+            if (fValueIsCached.size() <= i * fDimension + j) {
+                throw KEMSimpleException("Internal error - Invalid cache size: No position " + std::to_string(i * fDimension + j));
+            }
+
             if (fValueIsCached[i * fDimension + j])
                 return fCachedValue[i * fDimension + j];
         }
@@ -69,6 +75,11 @@ KBoundaryIntegralMatrix<Integrator, enableCaching>::KBoundaryIntegralMatrix(cons
         unsigned int basisDim2 = Integrator::Basis::Dimension;
         basisDim2 *= basisDim2;
 
+        if (sqrt(__UINT32_MAX__) < c.size()) {
+            kem_cout(eError) << "Cannot create caches. Number of matrix elements exceeds numeric limits.\nMax size: "
+                             << __UINT32_MAX__ << "\nAttempted size: " << (unsigned long long) c.size() * c.size()
+                             << "\nPlease reduce the size of your problem or disable caching." << eom;
+        }
         unsigned int num_elements = c.size() * c.size();
         unsigned int array_length = num_elements * basisDim2;
         unsigned int mem_size = array_length * (sizeof(ValueType) + sizeof(bool));

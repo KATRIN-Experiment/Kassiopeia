@@ -49,7 +49,7 @@ void KGStaticElectromagnetField::SetDirectoryMagfield3(const string& aDirectory)
     fDirectoryMagfield3 = aDirectory;
 }
 
-KSmartPointer<KGeoBag::KGElectromagnetConverter> KGStaticElectromagnetField::GetConverter()
+std::shared_ptr<KGeoBag::KGElectromagnetConverter> KGStaticElectromagnetField::GetConverter()
 {
     return fConverter;
 }
@@ -84,9 +84,9 @@ KGradient KGStaticElectromagnetField::MagneticGradientCore(const KPosition& aSam
 
 void KGStaticElectromagnetField::ConfigureSurfaceContainer()
 {
-    auto* container = new KElectromagnetContainer();
+    auto container = std::make_shared<KElectromagnetContainer>();
 
-    fConverter = new KGElectromagnetConverter();
+    fConverter = std::make_shared<KGElectromagnetConverter>();
     fConverter->SetElectromagnetContainer(container);
 
     if (fSaveMagfield3) {

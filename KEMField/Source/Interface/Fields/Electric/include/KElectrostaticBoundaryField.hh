@@ -24,15 +24,15 @@ class KElectrostaticBoundaryField : public KElectrostaticField
 
     KElectrostaticBoundaryField();
     ~KElectrostaticBoundaryField() override;
-    void SetChargeDensitySolver(const KSmartPointer<KChargeDensitySolver>& solver);
-    KSmartPointer<KChargeDensitySolver> GetChargeDensitySolver();
-    void SetFieldSolver(const KSmartPointer<KElectricFieldSolver>& solver);
-    KSmartPointer<KElectricFieldSolver> GetFieldSolver();
-    void SetContainer(const KSmartPointer<KSurfaceContainer>& container);
-    KSmartPointer<KSurfaceContainer> GetContainer() const;
+    void SetChargeDensitySolver(const std::shared_ptr<KChargeDensitySolver>& solver);
+    std::shared_ptr<KChargeDensitySolver> GetChargeDensitySolver();
+    void SetFieldSolver(const std::shared_ptr<KElectricFieldSolver>& solver);
+    std::shared_ptr<KElectricFieldSolver> GetFieldSolver();
+    void SetContainer(const std::shared_ptr<KSurfaceContainer>& container);
+    std::shared_ptr<KSurfaceContainer> GetContainer() const;
 
-    void AddVisitor(const KSmartPointer<Visitor>& visitor);
-    std::vector<KSmartPointer<Visitor>> GetVisitors();
+    void AddVisitor(const std::shared_ptr<Visitor>& visitor);
+    std::vector<std::shared_ptr<Visitor>> GetVisitors();
 
     void SetDirectory(const std::string& aDirectory);
     void SetFile(const std::string& aFile);
@@ -65,6 +65,7 @@ class KElectrostaticBoundaryField : public KElectrostaticField
     void CheckSolverExistance();
 
     void InitializeCore() override;
+    void DeinitializeCore() override;
 
     double PotentialCore(const KPosition& P) const override;
     KFieldVector ElectricFieldCore(const KPosition& P) const override;
@@ -75,10 +76,10 @@ class KElectrostaticBoundaryField : public KElectrostaticField
     void VisitorInBetweenProcessing();
     void VisitorPostprocessing();
 
-    KSmartPointer<KChargeDensitySolver> fChargeDensitySolver;
-    KSmartPointer<KElectricFieldSolver> fFieldSolver;
-    KSmartPointer<KSurfaceContainer> fContainer;
-    std::vector<KSmartPointer<Visitor>> fVisitors;
+    std::shared_ptr<KChargeDensitySolver> fChargeDensitySolver;
+    std::shared_ptr<KElectricFieldSolver> fFieldSolver;
+    std::shared_ptr<KSurfaceContainer> fContainer;
+    std::vector<std::shared_ptr<Visitor>> fVisitors;
 
     std::string fFile;
     std::string fDirectory;

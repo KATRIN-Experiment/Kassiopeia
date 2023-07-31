@@ -6,6 +6,7 @@ set( FIELDSOLVER_MAGNETIC_HEADER_BASENAMES
     KMagneticFieldSolver.hh
     KIntegratingMagnetostaticFieldSolver.hh
     KZonalHarmonicMagnetostaticFieldSolver.hh
+    KMagfieldCoilsFieldSolver.hh
 )
 
 set( FIELDSOLVER_MAGNETIC_HEADER_PATH
@@ -20,6 +21,7 @@ endforeach( BASENAME )
 set( FIELDSOLVER_MAGNETIC_SOURCE_BASENAMES
     KIntegratingMagnetostaticFieldSolver.cc
     KZonalHarmonicMagnetostaticFieldSolver.cc
+    KMagfieldCoilsFieldSolver.cc
 )
 
 set( FIELDSOLVER_MAGNETIC_SOURCE_PATH
@@ -40,6 +42,7 @@ target_link_libraries( KEMMagneticFieldSolvers
         KEMFileManipulation
     PUBLIC
         KEMElectromagnets
+        KEMMagfieldCoils
         KEMZHSolver
 )
 #set_target_properties( KEMMagneticFieldSolvers PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )

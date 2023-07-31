@@ -25,7 +25,10 @@ template<class Basis> class KZonalHarmonicComputer
         fIntegrator(integrator),
         fmCentralSPIndex(-1),
         fmRemoteSPIndex(-1),
-        fCentralFirst(true)
+        fCentralFirst(true),
+        fCentralExecCount(0),
+        fRemoteExecCount(0),
+        fDirectExecCount(0)
     {}
 
     virtual ~KZonalHarmonicComputer() = default;
@@ -33,6 +36,11 @@ template<class Basis> class KZonalHarmonicComputer
   public:
     bool UseCentralExpansion(const KPosition& P) const;
     bool UseRemoteExpansion(const KPosition& P) const;
+
+    unsigned int GetCentralExecutionCount() const;
+    unsigned int GetRemoteExecutionCount() const;
+    unsigned int GetDirectExecutionCount() const;
+    unsigned int GetTotalExecutionCount() const;
 
   protected:
     Container& fContainer;
@@ -42,7 +50,38 @@ template<class Basis> class KZonalHarmonicComputer
     mutable int fmCentralSPIndex;
     mutable int fmRemoteSPIndex;
     mutable bool fCentralFirst;
+
+    mutable unsigned int fCentralExecCount, fRemoteExecCount, fDirectExecCount;
 };
+
+template<class Basis> unsigned int KZonalHarmonicComputer<Basis>::GetCentralExecutionCount() const
+{
+    unsigned int count = fCentralExecCount;
+    for (auto & solver : fSubsetFieldSolvers)
+        count += solver->GetCentralExecutionCount();
+    return count;
+}
+template<class Basis> unsigned int KZonalHarmonicComputer<Basis>::GetRemoteExecutionCount() const
+{
+    unsigned int count = fRemoteExecCount;
+    for (auto & solver : fSubsetFieldSolvers)
+        count += solver->GetRemoteExecutionCount();
+    return count;
+}
+template<class Basis> unsigned int KZonalHarmonicComputer<Basis>::GetDirectExecutionCount() const
+{
+    unsigned int count = fDirectExecCount;
+    for (auto & solver : fSubsetFieldSolvers)
+        count += solver->GetDirectExecutionCount();
+    return count;
+}
+template<class Basis> unsigned int KZonalHarmonicComputer<Basis>::GetTotalExecutionCount() const
+{
+    unsigned int count = fCentralExecCount+fRemoteExecCount+fDirectExecCount;;
+    for (auto & solver : fSubsetFieldSolvers)
+        count += solver->GetTotalExecutionCount();
+    return count;
+}
 
 template<class Basis> bool KZonalHarmonicComputer<Basis>::UseCentralExpansion(const KPosition& P) const
 {

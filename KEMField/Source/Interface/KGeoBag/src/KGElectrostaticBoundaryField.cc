@@ -74,7 +74,7 @@ void KGElectrostaticBoundaryField::SetSymmetry(const Symmetry& aSymmetry)
     fSymmetry = aSymmetry;
 }
 
-KSmartPointer<KGBEMConverter> KGElectrostaticBoundaryField::GetConverter()
+std::shared_ptr<KGBEMConverter> KGElectrostaticBoundaryField::GetConverter()
 {
     return fConverter;
 }
@@ -88,20 +88,20 @@ void KGElectrostaticBoundaryField::InitializeCore()
 
 void KGElectrostaticBoundaryField::ConfigureSurfaceContainer()
 {
-    auto* container = new KSurfaceContainer();
+    auto container = std::make_shared<KSurfaceContainer>();
     fConverter = nullptr;
 
     switch (fSymmetry) {
         case NoSymmetry:
-            fConverter = new KGBEMMeshConverter();
+            fConverter = std::make_shared<KGBEMMeshConverter>();
             break;
 
         case AxialSymmetry:
-            fConverter = new KGBEMAxialMeshConverter();
+            fConverter = std::make_shared<KGBEMAxialMeshConverter>();
             break;
 
         case DiscreteAxialSymmetry:
-            fConverter = new KGBEMDiscreteRotationalMeshConverter();
+            fConverter = std::make_shared<KGBEMDiscreteRotationalMeshConverter>();
             break;
 
         default:

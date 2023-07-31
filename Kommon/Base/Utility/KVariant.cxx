@@ -3,14 +3,16 @@
 
 #include "KVariant.h"
 
-#include <cerrno>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
 #include <limits>
-#include <sstream>
 #include <string>
 
+
+//#define USE_KBASE_STRING_UTILS 1
+#ifdef USE_KBASE_STRING_UTILS
+#include "KBaseStringUtils.h"
+#else
+#include <cstring>
+#endif
 
 using namespace std;
 using namespace katrin;
@@ -31,16 +33,16 @@ bool KVariant::AsBool() const
         return fPrimitive.fDoubleValue != 0;
     }
     else if (fType == Type_String) {
-#if 1
-        //... TODO: implement YAML-compatible type rules ...//
+#ifdef USE_KBASE_STRING_UTILS
+        return KBaseStringUtils::Convert<bool>(*fPrimitive.fStringValue);
+#else
+        //... TODO: implement YAML-compatible type rules??? Maybe not??? ...//
         if (*fPrimitive.fStringValue == "true") {
             return true;
         }
         else if (*fPrimitive.fStringValue == "false") {
             return false;
         }
-#else
-        return !fPrimitive.fStringValue->empty();
 #endif
     }
     else if (fType == Type_Unknown) {
@@ -65,6 +67,9 @@ long long KVariant::AsLong() const
         return (long long) fPrimitive.fDoubleValue;
     }
     else if (fType == Type_String) {
+#ifdef USE_KBASE_STRING_UTILS
+        return KBaseStringUtils::Convert<long>(*fPrimitive.fStringValue);
+#else
         long Value;
         const char* Start = fPrimitive.fStringValue->c_str();
         char* End;
@@ -79,6 +84,7 @@ long long KVariant::AsLong() const
             throw KException() << "bad string to convert to int: \"" << *fPrimitive.fStringValue << "\"";
         }
         return Value;
+#endif
     }
 
     throw KException() << "bad type to convert to int: \"" << AsString() << "\"";
@@ -100,6 +106,9 @@ double KVariant::AsDouble() const
         return fPrimitive.fDoubleValue;
     }
     else if (fType == Type_String) {
+#ifdef USE_KBASE_STRING_UTILS
+        return KBaseStringUtils::Convert<double>(*fPrimitive.fStringValue);
+#else
         double Value;
         const char* Start = fPrimitive.fStringValue->c_str();
         char* End;
@@ -109,6 +118,7 @@ double KVariant::AsDouble() const
             throw KException() << "bad string to convert to double: \"" << *fPrimitive.fStringValue << "\"";
         }
         return Value;
+#endif
     }
 
     throw KException() << "bad type to convert to int: \"" << AsString() << "\"";

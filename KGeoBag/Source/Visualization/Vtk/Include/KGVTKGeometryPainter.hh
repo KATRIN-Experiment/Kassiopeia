@@ -31,6 +31,7 @@
 #include "KGShellPolyLineSurface.hh"
 #include "KGShellPolyLoopSurface.hh"
 #include "KGStlFileSurface.hh"
+#include "KGPlyFileSurface.hh"
 #include "KVTKPainter.h"
 #include "KVTKWindow.h"
 #include "vtkActor.h"
@@ -72,6 +73,7 @@ class KGVTKGeometryPainter :
     public KGConicalWireArraySurface::Visitor,
     public KGRodSurface::Visitor,
     public KGStlFileSurface::Visitor,
+    public KGPlyFileSurface::Visitor,
     public KGSpace::Visitor,
     public KGRotatedLineSegmentSpace::Visitor,
     public KGRotatedArcSegmentSpace::Visitor,
@@ -145,6 +147,7 @@ class KGVTKGeometryPainter :
     void VisitWrappedSurface(KGConicalWireArraySurface* aConicalWireArraySurface) override;
     void VisitWrappedSurface(KGRodSurface* aRodSurface) override;
     void VisitWrappedSurface(KGStlFileSurface* aStlFileSurface) override;
+    void VisitWrappedSurface(KGPlyFileSurface* aPlyFileSurface) override;
 
     //**************
     //space visitors

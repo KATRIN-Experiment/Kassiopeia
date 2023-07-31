@@ -10,7 +10,11 @@
 #include "KSVisualizationMessage.h"
 #include "KToolbox.h"
 #include "KZonalHarmonicMagnetostaticFieldSolver.hh"
+
 #include "TMultiGraph.h"
+#include "TGraph.h"
+#include "TEllipse.h"
+#include "TMarker.h"
 
 #include <fstream>
 #include <iostream>
@@ -26,36 +30,51 @@ namespace Kassiopeia
 KSROOTZonalHarmonicsPainter::KSROOTZonalHarmonicsPainter() :
     fXAxis("z"),
     fYAxis("r"),
-    fZmin(0.0),
-    fZmax(0.0),
-    fRmin(0.0),
-    fRmax(5.0),
-    fZdist(0.01),
-    fRdist(0.001),
-    fZMaxSteps(1000),
-    fRMaxSteps(1000),
+    fZMin(0.0),
+    fZMax(0.0),
+    fRMin(0.0),
+    fRMax(5.0),
+    fZDist(0.1),
+    fRDist(0.01),
+    fZMaxSteps(5000),
+    fRMaxSteps(5000),
     fElectricFieldName(""),
     fMagneticFieldName(""),
     fFile(""),
     fPath(""),
-    fDrawSourcePoints(true),
-    fDrawExpansionArea(false),
-    fDrawConvergenceArea(true)
+    fDrawConvergenceArea(true),
+    fDrawSourcePoints(false),
+    fDrawCentralBoundary(false),
+    fDrawRemoteBoundary(false)
 {}
 KSROOTZonalHarmonicsPainter::~KSROOTZonalHarmonicsPainter() = default;
 
 void KSROOTZonalHarmonicsPainter::Render()
 {
-    bool autoAdjustZ = (fZmin >= fZmax);
-    if (autoAdjustZ) {
-        fZmin = std::numeric_limits<double>::max();
-        fZmax = std::numeric_limits<double>::min();
+    if (fZMin >= fZMax) {
+        fZMin = GetWindow()->GetXMin();
+        fZMax = GetWindow()->GetXMax();
+    }
+    if (fRMin >= fRMax) {
+        fRMin = GetWindow()->GetYMin() > 0. ? GetWindow()->GetYMin() : 0.;
+        fRMax = GetWindow()->GetYMax();
     }
 
-    fElZHPoints = new TPolyMarker();
-    fMagZHPoints = new TPolyMarker();
+    bool autoAdjustZ = (fZMin >= fZMax);
+    if (autoAdjustZ) {
+        fZMin = std::numeric_limits<double>::max();
+        fZMax = std::numeric_limits<double>::min();
+    }
 
-    //fZRPoints.clear();
+    fElCentralConvergenceBounds.clear();
+    fElRemoteConvergenceBounds.clear();
+    fElCentralSourcePoints.clear();
+    fElRemoteSourcePoints.clear();
+
+    fMagCentralConvergenceBounds.clear();
+    fMagRemoteConvergenceBounds.clear();
+    fMagCentralSourcePoints.clear();
+    fMagRemoteSourcePoints.clear();
 
     KElectricZHFieldSolver* tElZHSolver = nullptr;
     if (!fElectricFieldName.empty()) {
@@ -75,7 +94,7 @@ void KSROOTZonalHarmonicsPainter::Render()
 
         //vismsg(eNormal) << "retrieve converter from electric field" << eom;
         auto tElConverter = tElField->GetConverter();
-        if (tElConverter.Null())
+        if (! tElConverter)
             vismsg(eError) << "Electric Field has no Converter! " << eom;
 
         //vismsg(eNormal) << "retrieve ZH solver from electric field" << eom;
@@ -83,17 +102,23 @@ void KSROOTZonalHarmonicsPainter::Render()
         if (tElZHSolver == nullptr)
             vismsg(eError) << "Electric Field has no ZHSolver!" << eom;
 
-        if (autoAdjustZ) {
-            auto z1 = tElZHSolver->GetParameters()->GetCentralZ1();
-            auto z2 = tElZHSolver->GetParameters()->GetCentralZ2();
-            if (z1 < fZmin)
-                fZmin = z1;
-            if (z2 > fZmax)
-                fZmax = z2;
+        for (const auto& sp : tElZHSolver->GetContainer()->CentralSourcePoints()) {
+            if (autoAdjustZ) {
+                if (sp.first < fZMin)
+                    fZMin = sp.first;
+                if (sp.first > fZMax)
+                    fZMax = sp.first;
+            }
+            fElCentralSourcePoints.push_back({sp.first, sp.second});
         }
-
-        for (auto& sp : tElZHSolver->CentralSourcePoints()) {
-            fElZHPoints->SetNextPoint(sp.first, 0);
+        for (const auto& sp : tElZHSolver->GetContainer()->RemoteSourcePoints()) {
+            if (autoAdjustZ) {
+                if (sp.first < fZMin)
+                    fZMin = sp.first;
+                if (sp.first > fZMax)
+                    fZMax = sp.first;
+            }
+            fElRemoteSourcePoints.push_back({sp.first, sp.second});
         }
     }
 
@@ -113,61 +138,51 @@ void KSROOTZonalHarmonicsPainter::Render()
         vismsg(eNormal) << "Initialize magnetic field (again)" << eom;
         tMagField->Initialize();
 
-        //vismsg(eNormal) << "retrieve converter from magnetic field" << eom;
-        //auto tMagConverter = tMagField->GetConverter();
-        //if ( tMagConverter.Null() )
-        //    vismsg(eError) << "Magnetic Field has no Converter! " << eom;
-
         //vismsg(eNormal) << "retrieve ZH solver from magnetic field" << eom;
         tMagZHSolver = dynamic_cast<KZonalHarmonicMagnetostaticFieldSolver*>(&(*tMagField->GetFieldSolver()));
         if (tMagZHSolver == nullptr)
             vismsg(eError) << "Magnetic Field has no ZHSolver!" << eom;
 
-        if (autoAdjustZ) {
-            auto z1 = tMagZHSolver->GetParameters()->GetCentralZ1();
-            auto z2 = tMagZHSolver->GetParameters()->GetCentralZ2();
-            if (z1 < fZmin)
-                fZmin = z1;
-            if (z2 > fZmax)
-                fZmax = z2;
+        for (const auto& sp : tMagZHSolver->GetContainer()->CentralSourcePoints()) {
+            if (autoAdjustZ) {
+                if (sp.first < fZMin)
+                    fZMin = sp.first;
+                if (sp.first > fZMax)
+                    fZMax = sp.first;
+            }
+            fMagCentralSourcePoints.push_back({sp.first, sp.second});
         }
-
-        for (auto& sp : tMagZHSolver->CentralSourcePoints()) {
-            fMagZHPoints->SetNextPoint(sp.first, 0);
+        for (const auto& sp : tMagZHSolver->GetContainer()->RemoteSourcePoints()) {
+            if (autoAdjustZ) {
+                if (sp.first < fZMin)
+                    fZMin = sp.first;
+                if (sp.first > fZMax)
+                    fZMax = sp.first;
+            }
+            fMagRemoteSourcePoints.push_back({sp.first, sp.second});
         }
     }
 
-    double tDeltaZ = fZdist;
-    if (ceil(fabs(fZmax - fZmin) / tDeltaZ) > fZMaxSteps) {
-        tDeltaZ = fabs(fZmax - fZmin) / fZMaxSteps;
+    double tDeltaZ = fZDist;
+    if (ceil(fabs(fZMax - fZMin) / tDeltaZ) > fZMaxSteps) {
+        tDeltaZ = fabs(fZMax - fZMin) / fZMaxSteps;
     }
-    double tDeltaR = fRdist;
-    if (ceil(fabs(fRmax - fRmin) / tDeltaR) > fRMaxSteps) {
-        tDeltaR = fabs(fRmax - fRmin) / fRMaxSteps;
+    double tDeltaR = fRDist;
+    if (ceil(fabs(fRMax - fRMin) / tDeltaR) > fRMaxSteps) {
+        tDeltaR = fabs(fRMax - fRMin) / fRMaxSteps;
     }
 
-    KThreeVector tPosition;
-
-    unsigned tNPoints = floor((fZmax - fZmin) / fZdist);
-
-    fElZHConvergenceGraph = new TGraph(2*tNPoints);
-    fElZHCentralGraph = new TGraph(2*tNPoints);
-    fElZHRemoteGraph = new TGraph(2*tNPoints);
-
-    fMagZHConvergenceGraph = new TGraph(2*tNPoints);
-    fMagZHCentralGraph = new TGraph(2*tNPoints);
-    fMagZHRemoteGraph = new TGraph(2*tNPoints);
-
-    vismsg(eNormal) << "ZH painter: start calculating convergence boundary from " << fZmin << " to " << fZmax << " m ("
+    unsigned tNPoints = floor((fZMax - fZMin) / fZDist);
+    vismsg(eNormal) << "ZH painter: start calculating convergence boundary from " << fZMin << " to " << fZMax << " m ("
                     << tNPoints << " steps) ..." << eom;
 
     for (unsigned tPointIndex = 0; tPointIndex < tNPoints; tPointIndex++) {
-        unsigned tNegPointIndex = 2*tNPoints - tPointIndex - 1;
-        double tZ = fZmin + tPointIndex * fZdist;
+        //unsigned tNegPointIndex = 2*tNPoints - tPointIndex - 1;
+        double tZ = fZMin + tPointIndex * tDeltaZ;
 
         if (tElZHSolver != nullptr) {
             double tR = 0;
-            for (auto& sp : tElZHSolver->CentralSourcePoints()) {
+            for (const auto& sp : tElZHSolver->GetContainer()->CentralSourcePoints()) {
                 double rho = sp.second;
                 double dz = fabs(tZ - sp.first);
                 if (dz > rho)
@@ -178,40 +193,30 @@ void KSROOTZonalHarmonicsPainter::Render()
                     tR = h;
             }
 
-            //vismsg(eDebug) << "  electric field sourcepoint radius at z=" << tZ << " is r=" << tR << " m" << eom;
-            fElZHConvergenceGraph->SetPoint(tPointIndex, tZ, tR);
-            fElZHConvergenceGraph->SetPoint(tNegPointIndex, tZ, -tR);
+            vismsg_debug("  electric field central radius at z=" << tZ << " is r=" << tR << " m" << eom);
+            fElCentralConvergenceBounds.push_back({tZ, tR});
+            fElCentralConvergenceBounds.push_front({tZ, -tR});
 
-            fElZHCentralGraph->SetPoint(tPointIndex, tZ, 0);
-            fElZHCentralGraph->SetPoint(tNegPointIndex, tZ, 0);
-            fElZHRemoteGraph->SetPoint(tPointIndex, tZ, 0);
-            fElZHRemoteGraph->SetPoint(tNegPointIndex, tZ, 0);
+            tR = fRMax;
+            for (const auto& sp : tElZHSolver->GetContainer()->RemoteSourcePoints()) {
+                double rho = sp.second;
+                double dz = fabs(tZ - sp.first);
+                // if (dz < rho)
+                //     continue;
 
-            // scan central convergence region
-            for (double tRho = fRmin; tRho <= tR; tRho += fRdist) {
-                if (!tElZHSolver->UseCentralExpansion(KThreeVector(0, tRho, tZ))) {
-                    vismsg(eDebug) << "  electric field central convergence limit at z=" << tZ << " is r=" << tRho
-                                   << " m" << eom;
-                    break;
-                }
-                fElZHCentralGraph->SetPoint(tPointIndex, tZ, tRho);
-                fElZHCentralGraph->SetPoint(tNegPointIndex, tZ, -tRho);
+                double h = sqrt(rho * rho - dz * dz);
+                if (h < tR)
+                    tR = h;
             }
-            // scan remote convergence region
-            for (double tRho = fRmax; tRho >= tR; tRho -= fRdist) {
-                if (!tElZHSolver->UseRemoteExpansion(KThreeVector(0, tRho, tZ))) {
-                    vismsg(eDebug) << "  electric field remote convergence limit at z=" << tZ << " is r=" << tRho
-                                   << " m" << eom;
-                    break;
-                }
-                fElZHRemoteGraph->SetPoint(tPointIndex, tZ, tRho);
-                fElZHRemoteGraph->SetPoint(tNegPointIndex, tZ, -tRho);
-            }
+
+            vismsg_debug("  electric field remote radius at z=" << tZ << " is r" << (tR >= fRMax ? ">" : "=") << tR << " m" << eom);
+            fElRemoteConvergenceBounds.push_back({tZ, tR});
+            fElRemoteConvergenceBounds.push_front({tZ, -tR});
         }
 
         if (tMagZHSolver != nullptr) {
             double tR = 0;
-            for (auto& sp : tMagZHSolver->CentralSourcePoints()) {
+            for (const auto& sp : tMagZHSolver->GetContainer()->CentralSourcePoints()) {
                 double rho = sp.second;
                 double dz = fabs(tZ - sp.first);
                 if (dz > rho)
@@ -222,60 +227,26 @@ void KSROOTZonalHarmonicsPainter::Render()
                     tR = h;
             }
 
-            //vismsg(eDebug) << "  magnetic field sourcepoint radius at z=" << tZ << " is r=" << tR << " m" << eom;
-            fMagZHConvergenceGraph->SetPoint(tPointIndex, tZ, tR);
-            fMagZHConvergenceGraph->SetPoint(tNegPointIndex, tZ, -tR);
+            vismsg_debug("  magnetic field central radius at z=" << tZ << " is r" << (tR >= fRMax ? ">" : "=") << tR << " m" << eom);
+            fMagCentralConvergenceBounds.push_back({tZ, tR});
+            fMagCentralConvergenceBounds.push_front({tZ, -tR});
 
-            fMagZHCentralGraph->SetPoint(tPointIndex, tZ, 0);
-            fMagZHCentralGraph->SetPoint(tNegPointIndex, tZ, 0);
-            fMagZHRemoteGraph->SetPoint(tPointIndex, tZ, 0);
-            fMagZHRemoteGraph->SetPoint(tNegPointIndex, tZ, 0);
+            tR = fRMax;
+            for (const auto& sp : tMagZHSolver->GetContainer()->RemoteSourcePoints()) {
+                double rho = sp.second;
+                double dz = fabs(tZ - sp.first);
+                //if (dz < rho)
+                //    continue;
 
-            // scan central convergence region
-            for (double tRho = fRmin; tRho <= tR; tRho += fRdist) {
-                if (!tMagZHSolver->UseCentralExpansion(KThreeVector(0, tRho, tZ))) {
-                    vismsg(eDebug) << "  magnetic field central convergence limit at z=" << tZ << " is r=" << tRho
-                                   << " m" << eom;
-                    break;
-                }
-                fMagZHCentralGraph->SetPoint(tPointIndex, tZ, tRho);
-                fMagZHCentralGraph->SetPoint(tNegPointIndex, tZ, -tRho);
+                double h = sqrt(rho * rho - dz * dz);
+                if (h < tR)
+                    tR = h;
             }
-            // scan central remote region
-            for (double tRho = fRmax; tRho >= tR; tRho -= fRdist) {
-                if (!tMagZHSolver->UseRemoteExpansion(KThreeVector(0, tRho, tZ))) {
-                    vismsg(eDebug) << "  magnetic field remote convergence limit at z=" << tZ << " is r=" << tRho
-                                   << " m" << eom;
-                    break;
-                }
-                fMagZHRemoteGraph->SetPoint(tPointIndex, tZ, tRho);
-                fMagZHRemoteGraph->SetPoint(tNegPointIndex, tZ, -tRho);
-            }
+
+            vismsg_debug("  magnetic field remote radius at z=" << tZ << " is r" << (tR >= fRMax ? ">" : "=") << tR << " m" << eom);
+            fMagRemoteConvergenceBounds.push_back({tZ, tR});
+            fMagRemoteConvergenceBounds.push_front({tZ, -tR});
         }
-    }
-
-    if (tElZHSolver != nullptr) {
-        fElZHConvergenceGraph->SetLineColor(kRed);
-
-        fElZHCentralGraph->SetLineColor(kRed);
-        fElZHCentralGraph->SetLineStyle(kDotted);
-        fElZHRemoteGraph->SetLineColor(kRed);
-        fElZHRemoteGraph->SetLineStyle(kDashed);
-
-        fElZHPoints->SetMarkerColor(kBlack);
-        fElZHPoints->SetMarkerStyle(kFullDotSmall);
-    }
-
-    if (tMagZHSolver != nullptr) {
-        fMagZHConvergenceGraph->SetLineColor(kBlue);
-
-        fMagZHCentralGraph->SetLineColor(kBlue);
-        fMagZHCentralGraph->SetLineStyle(kDotted);
-        fMagZHRemoteGraph->SetLineColor(kBlue);
-        fMagZHRemoteGraph->SetLineStyle(kDashed);
-
-        fMagZHPoints->SetMarkerColor(kBlack);
-        fMagZHPoints->SetMarkerStyle(kFullDotSmall);
     }
 
     return;
@@ -283,41 +254,120 @@ void KSROOTZonalHarmonicsPainter::Render()
 
 void KSROOTZonalHarmonicsPainter::Display()
 {
-    if (fDisplayEnabled == true) {
-        // draw order may be important, who knows what ROOT does anyway ...
+    if (! fDisplayEnabled)
+        return;
 
-        auto tGraphs = new TMultiGraph();
+    // the draw order is important!
+    // correct order: canvas background -> remote radii -> central radii -> convergence area -> source points
 
-        // TODO: make this an option
-        if (fDrawExpansionArea) {
-            if (fElZHCentralGraph->GetN() > 0)
-                tGraphs->Add(fElZHCentralGraph);
-            if (fMagZHCentralGraph->GetN() > 0)
-                tGraphs->Add(fMagZHCentralGraph);
+    auto * tCanvas = GetWindow()->GetCanvas();;
 
-            // FIXME: this is confusing
-            if (fElZHRemoteGraph->GetN() > 0)
-               tGraphs->Add(fElZHRemoteGraph);
-            if (fMagZHRemoteGraph->GetN() > 0)
-               tGraphs->Add(fMagZHRemoteGraph);
+    // draw background for remote source point radii
+    if (fDrawRemoteBoundary) {
+        tCanvas->SetFillStyle(kSolid);
+        tCanvas->SetFillColorAlpha(kMagenta-3, 1.0);
+    }
+
+    // draw remote source point radii (inverse drawing on background)
+    if (fDrawRemoteBoundary) {
+        auto *tEllipse = new TEllipse();
+        tEllipse->SetLineWidth(1);
+        tEllipse->SetLineColorAlpha(kBlack, 0.05);
+        tEllipse->SetFillStyle(kSolid);
+        tEllipse->SetFillColorAlpha(kWhite, 0.1);
+
+        for (auto & point : fElRemoteSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tEllipse->DrawEllipse(point.first, 0., point.second, 0., 0., 360., 0.);
         }
 
-        // TODO: make this an option
-        if (fDrawConvergenceArea) {
-            if (fElZHConvergenceGraph->GetN() > 0)
-                tGraphs->Add(fElZHConvergenceGraph);
-            if (fMagZHConvergenceGraph->GetN() > 0)
-                tGraphs->Add(fMagZHConvergenceGraph);
+        for (auto & point : fMagRemoteSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tEllipse->DrawEllipse(point.first, 0., point.second, 0., 0., 360., 0.);
+        }
+    }
+
+    // draw central source point radii
+    if (fDrawCentralBoundary) {
+        auto *tEllipse = new TEllipse();
+        tEllipse->SetLineWidth(1);
+        tEllipse->SetLineColorAlpha(kBlack, 0.005);
+        tEllipse->SetFillStyle(kSolid);
+        tEllipse->SetFillColorAlpha(kGreen-3, 0.01);
+
+        for (auto & point : fElCentralSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tEllipse->DrawEllipse(point.first, 0., point.second, 0., 0., 360., 0.);
         }
 
-        tGraphs->Draw("L");
+        for (auto & point : fMagCentralSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tEllipse->DrawEllipse(point.first, 0., point.second, 0., 0., 360., 0.);
+        }
+    }
 
-        // TODO: make this an option
-        if (fDrawSourcePoints) {
-            if (fElZHPoints->GetN() > 0)
-                fElZHPoints->Draw();
-            if (fMagZHPoints->GetN() > 0)
-                fMagZHPoints->Draw();
+    if (fDrawConvergenceArea) {
+        if (! fElCentralConvergenceBounds.empty()) {
+            auto * tGraph = new TGraph();
+            tGraph->SetLineWidth(3);
+            tGraph->SetLineColor(kRed+1);
+
+            for (auto & point : fElCentralConvergenceBounds) {
+                tGraph->AddPoint(point.first, point.second);
+            }
+            tGraph->Draw("L");
+        }
+
+        if (! fMagCentralConvergenceBounds.empty()) {
+            auto * tGraph = new TGraph();
+            tGraph->SetLineWidth(3);
+            tGraph->SetLineColor(kBlue+1);
+
+            for (auto & point : fMagCentralConvergenceBounds) {
+                tGraph->AddPoint(point.first, point.second);
+            }
+            tGraph->Draw("L");
+        }
+
+        if (! fMagRemoteConvergenceBounds.empty()) {
+            auto * tGraph = new TGraph();
+            tGraph->SetLineWidth(2);
+            tGraph->SetLineColor(kBlue+1);
+            tGraph->SetLineStyle(kDashed);
+
+            for (auto & point : fMagRemoteConvergenceBounds) {
+                tGraph->AddPoint(point.first, point.second);
+            }
+            tGraph->Draw("L");
+        }
+    }
+
+    if (fDrawSourcePoints) {
+        auto *tMarker = new TMarker();
+        tMarker->SetMarkerColor(kBlack);
+        tMarker->SetMarkerSize(.7);
+        tMarker->SetMarkerStyle(kFullCircle);
+
+        for (auto & point : fElCentralSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tMarker->DrawMarker(point.first, 0.);
+        }
+
+        for (auto & point : fMagCentralSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tMarker->DrawMarker(point.first, 0.);
+        }
+
+        tMarker->SetMarkerStyle(kOpenSquare);
+
+        for (auto & point : fElRemoteSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tMarker->DrawMarker(point.first, 0.);
+        }
+
+        for (auto & point : fMagRemoteSourcePoints) {
+            if ((point.first >= fZMin) && (point.first <= fZMax))
+                tMarker->DrawMarker(point.first, 0.);
         }
     }
 
@@ -424,24 +474,20 @@ void KSROOTZonalHarmonicsPainter::Write()
 
 double KSROOTZonalHarmonicsPainter::GetXMin()
 {
-    double tMin(std::numeric_limits<double>::max());
-    return tMin;
+    return fZMin;
 }
 double KSROOTZonalHarmonicsPainter::GetXMax()
 {
-    double tMax(-1.0 * std::numeric_limits<double>::max());
-    return tMax;
+    return fZMax;
 }
 
 double KSROOTZonalHarmonicsPainter::GetYMin()
 {
-    double tMin(std::numeric_limits<double>::max());
-    return tMin;
+    return fRMin;
 }
 double KSROOTZonalHarmonicsPainter::GetYMax()
 {
-    double tMax(-1.0 * std::numeric_limits<double>::max());
-    return tMax;
+    return fRMax;
 }
 
 std::string KSROOTZonalHarmonicsPainter::GetXAxisLabel()

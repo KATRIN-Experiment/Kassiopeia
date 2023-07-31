@@ -28,6 +28,7 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenValueBoltzmannBuilder.h
     Generators/Include/KSGenValueGaussBuilder.h
     Generators/Include/KSGenValueGeneralizedGaussBuilder.h
+    Generators/Include/KSGenValueFermiBuilder.h
     Generators/Include/KSGenValueRadiusCylindricalBuilder.h
     Generators/Include/KSGenValueRadiusSphericalBuilder.h
     Generators/Include/KSGenValueRadiusFractionBuilder.h
@@ -165,6 +166,7 @@ set( BINDINGS_HEADER_FILES
     Terminators/Include/KSTermMinDistanceBuilder.h
     Terminators/Include/KSTermStepsizeBuilder.h
     Terminators/Include/KSTermMagnetronBuilder.h
+    Terminators/Include/KSTermZHRadiusBuilder.h
 
     # writers
     Writers/Include/KSWriteASCIIBuilder.h
@@ -253,6 +255,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenValueBoltzmannBuilder.cxx
     Generators/Source/KSGenValueGaussBuilder.cxx
     Generators/Source/KSGenValueGeneralizedGaussBuilder.cxx
+    Generators/Source/KSGenValueFermiBuilder.cxx
     Generators/Source/KSGenValueRadiusCylindricalBuilder.cxx
     Generators/Source/KSGenValueRadiusSphericalBuilder.cxx
     Generators/Source/KSGenValueRadiusFractionBuilder.cxx
@@ -390,6 +393,7 @@ set( BINDINGS_SOURCE_FILES
     Terminators/Source/KSTermMinDistanceBuilder.cxx
     Terminators/Source/KSTermStepsizeBuilder.cxx
     Terminators/Source/KSTermMagnetronBuilder.cxx
+    Terminators/Source/KSTermZHRadiusBuilder.cxx
 
     # writers
     Writers/Source/KSWriteASCIIBuilder.cxx

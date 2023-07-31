@@ -8,11 +8,15 @@
 #include "KSTrajInterpolatorFast.h"
 #include "KSTrajTermPropagation.h"
 #include "KSTrajControlTime.h"
-#include "KTextFile.h"
 #include "KThreeVector.hh"
 #include "KXMLInitializer.hh"
 #include "KXMLTokenizer.hh"
 
+#ifdef KEMFIELD_USE_PETSC
+#include "KPETScInterface.hh"
+#elif KEMFIELD_USE_MPI
+#include "KMPIInterface.hh"
+#endif
 
 using namespace Kassiopeia;
 using namespace katrin;
@@ -31,6 +35,12 @@ int main(int argc, char** argv)
         // output_file can be "-" (-> write to terminal)
         exit(-1);
     }
+
+#ifdef KEMFIELD_USE_PETSC
+    KEMField::KPETScInterface::GetInstance()->Initialize(&argc, &argv);
+#elif KEMFIELD_USE_MPI
+    KEMField::KMPIInterface::GetInstance()->Initialize(&argc, &argv);
+#endif
 
     mainmsg(eNormal) << "starting initialization..." << eom;
 

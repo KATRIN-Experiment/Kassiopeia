@@ -776,6 +776,34 @@
     >
     </mesh_refiner>
 
+    <ply_file_space
+        name="(string)"
+    >
+        <ply_file
+            file="(string)"
+            mesh_count="(int)"
+            path="(string)"
+            scale="(double)"
+            selector="(string)"
+        >
+        </ply_file>
+
+    </ply_file_space>
+
+    <ply_file_surface
+        name="(string)"
+    >
+        <ply_file
+            file="(string)"
+            mesh_count="(int)"
+            path="(string)"
+            scale="(double)"
+            selector="(string)"
+        >
+        </ply_file>
+
+    </ply_file_surface>
+
     <port_housing_space
         name="(string)"
     >
@@ -1847,6 +1875,7 @@
                 proximity_to_sourcepoint="(double)"
                 remote_sourcepoint_end="(double)"
                 remote_sourcepoint_start="(double)"
+                use_fixed_sourcepoint_range="(bool)"
                 use_fractional_central_sourcepoint_spacing="(bool)"
             >
             </zonal_harmonic_field_solver>
@@ -1909,6 +1938,18 @@
     >
         <integrating_field_solver/>
 
+        <magfield_coil_field_solver
+            directory="(string)"
+            eps_tol="(double)"
+            file="(string)"
+            force_elliptic="(bool)"
+            n_elliptic="(unsigned)"
+            n_max="(unsigned)"
+            name="(string)"
+            replace_file="(bool)"
+        >
+        </magfield_coil_field_solver>
+
         <zonal_harmonic_field_solver
             central_sourcepoint_end="(double)"
             central_sourcepoint_fractional_distance="(double)"
@@ -1924,6 +1965,7 @@
             proximity_to_sourcepoint="(double)"
             remote_sourcepoint_end="(double)"
             remote_sourcepoint_start="(double)"
+            use_fixed_sourcepoint_range="(bool)"
             use_fractional_central_sourcepoint_spacing="(bool)"
         >
         </zonal_harmonic_field_solver>
@@ -2032,6 +2074,16 @@
         surface="(string)"
         theta="(string)"
     >
+        <phi_fermi
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_tau="(double)"
+            value_temp="(double)"
+        >
+        </phi_fermi>
+
         <phi_fix
             name="(string)"
             value="(double)"
@@ -2104,6 +2156,16 @@
             name="(string)"
         >
         </theta_cosine>
+
+        <theta_fermi
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_tau="(double)"
+            value_temp="(double)"
+        >
+        </theta_fermi>
 
         <theta_fix
             name="(string)"
@@ -2339,6 +2401,16 @@
         surfaces="(string)"
         theta="(string)"
     >
+        <phi_fermi
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_tau="(double)"
+            value_temp="(double)"
+        >
+        </phi_fermi>
+
         <phi_fix
             name="(string)"
             value="(double)"
@@ -2411,6 +2483,16 @@
             name="(string)"
         >
         </theta_cosine>
+
+        <theta_fermi
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_tau="(double)"
+            value_temp="(double)"
+        >
+        </theta_fermi>
 
         <theta_fix
             name="(string)"
@@ -2515,6 +2597,16 @@
             value_mass="(double)"
         >
         </energy_boltzmann>
+
+        <energy_fermi
+            name="(string)"
+            value_max="(double)"
+            value_mean="(double)"
+            value_min="(double)"
+            value_tau="(double)"
+            value_temp="(double)"
+        >
+        </energy_fermi>
 
         <energy_fix
             name="(string)"
@@ -4339,6 +4431,16 @@
             name="(string)"
             time_value="(string)"
         >
+            <time_fermi
+                name="(string)"
+                value_max="(double)"
+                value_mean="(double)"
+                value_min="(double)"
+                value_tau="(double)"
+                value_temp="(double)"
+            >
+            </time_fermi>
+
             <time_fix
                 name="(string)"
                 value="(double)"
@@ -4618,6 +4720,16 @@
         value_mass="(double)"
     >
     </ksgen_value_boltzmann>
+
+    <ksgen_value_fermi
+        name="(string)"
+        value_max="(double)"
+        value_mean="(double)"
+        value_min="(double)"
+        value_tau="(double)"
+        value_temp="(double)"
+    >
+    </ksgen_value_fermi>
 
     <ksgen_value_fix
         name="(string)"
@@ -5432,8 +5544,19 @@
     <ksterm_trapped
         max_turns="(int)"
         name="(string)"
+        use_electric_field="(bool)"
+        use_magnetic_field="(bool)"
     >
     </ksterm_trapped>
+
+    <ksterm_zh_radius
+        central_expansion="(bool)"
+        electric_field="(string)"
+        magnetic_field="(string)"
+        name="(string)"
+        remote_expansion="(bool)"
+    >
+    </ksterm_zh_radius>
 
     <kstraj_control_B_change
         fraction="(double)"
@@ -6733,6 +6856,10 @@
     name="(string)"
     path="(string)"
     write_enabled="(bool)"
+    xmax="(double)"
+    xmin="(double)"
+    ymax="(double)"
+    ymin="(double)"
 >
     <root_geometry_painter
         epsilon="(double)"
@@ -6772,8 +6899,12 @@
     <root_pad
         name="(string)"
         xlow="(double)"
+        xmax="(double)"
+        xmin="(double)"
         xup="(double)"
         ylow="(double)"
+        ymax="(double)"
+        ymin="(double)"
         yup="(double)"
     >
         <root_geometry_painter
@@ -6852,6 +6983,10 @@
         </root_track_painter>
 
         <root_zh_painter
+            draw_central_boundary="(bool)"
+            draw_convergence_area="(bool)"
+            draw_remote_boundary="(bool)"
+            draw_source_points="(bool)"
             electric_field="(string)"
             file="(string)"
             geometry_type="(string )"
@@ -6916,6 +7051,10 @@
     </root_track_painter>
 
     <root_zh_painter
+        draw_central_boundary="(bool)"
+        draw_convergence_area="(bool)"
+        draw_remote_boundary="(bool)"
+        draw_source_points="(bool)"
         electric_field="(string)"
         file="(string)"
         geometry_type="(string )"

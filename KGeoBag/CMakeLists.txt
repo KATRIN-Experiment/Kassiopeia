@@ -46,7 +46,7 @@ add_subdirectory( Source/Extensions/Deformation )
 add_subdirectory( Source/Extensions/Refinement )
 add_subdirectory( Source/Visualization )
 add_subdirectory( Source/Bindings )
-add_subdirectory( Source/Application )
+add_subdirectory( Source/Applications )
 add_subdirectory( Source/Test/MeshNavigation )
 add_subdirectory( Source/XML )
 

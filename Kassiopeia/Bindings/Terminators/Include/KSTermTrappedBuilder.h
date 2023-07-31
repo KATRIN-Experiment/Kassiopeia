@@ -16,6 +16,14 @@ template<> inline bool KSTermTrappedBuilder::AddAttribute(KContainer* aContainer
         aContainer->CopyTo(fObject, &KNamed::SetName);
         return true;
     }
+    if (aContainer->GetName() == "use_electric_field") {
+        aContainer->CopyTo(fObject, &KSTermTrapped::SetUseElectricField);
+        return true;
+    }
+    if (aContainer->GetName() == "use_magnetic_field") {
+        aContainer->CopyTo(fObject, &KSTermTrapped::SetUseMagneticField);
+        return true;
+    }
     if (aContainer->GetName() == "max_turns") {
         aContainer->CopyTo(fObject, &KSTermTrapped::SetMaxTurns);
         return true;

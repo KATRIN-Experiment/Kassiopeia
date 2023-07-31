@@ -54,13 +54,16 @@ public:
         fScaleFactor = s;
     }
 
-    size_t GetNumElements() const {
-        return fElements.size();
+    inline size_t GetNumElements() const {
+        return GetNumTriangles();
     }
-    size_t GetNumSolids() const {
+    inline size_t GetNumTriangles() const {
+        return fTriangles.size();
+    }
+    inline size_t GetNumSolids() const {
         return fSolids.size();
     }
-    size_t GetNumSolidElements() const {
+    inline size_t GetNumSolidElements() const {
         return std::accumulate(fSolids.begin(), fSolids.end(), 0,
                                [&](size_t c, auto& s){ return c + s.size(); });
     }
@@ -68,8 +71,8 @@ public:
     void SelectCell(size_t index);
     void SelectCellRange(size_t firstIndex, size_t lastIndex);
 
-    std::vector<KGTriangle> GetElements() const { return fElements; }
-    std::vector<std::vector<KGTriangle>> GetSolids() const { return fSolids; }
+    const std::vector<KGTriangle>& GetTriangles() const { return fTriangles; }
+    const std::vector<std::vector<KGTriangle>>& GetSolids() const { return fSolids; }
 
 protected:
     void ReadStlFile() const;
@@ -82,7 +85,7 @@ private:
     double fScaleFactor;
 
     std::set<std::pair<size_t,size_t>> fSelectedIndices;
-    mutable std::vector<KGTriangle> fElements;
+    mutable std::vector<KGTriangle> fTriangles;
     mutable std::vector<std::vector<KGTriangle>> fSolids;
 };
 

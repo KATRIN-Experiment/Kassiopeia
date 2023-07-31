@@ -14,7 +14,6 @@
 #include "KEMStringUtils.hh"
 #include "KKrylovChargeDensitySolver.hh"
 #include "KKrylovSolverConfigurationReader.hh"
-#include "KSmartPointerRelease.hh"
 
 
 namespace katrin

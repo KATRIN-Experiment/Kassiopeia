@@ -71,7 +71,7 @@ vector<KGSurface*> KGInterface::RetrieveSurfaces(const string& aSpecifier)
     coremsg_debug("retrieving surfaces for <" << aSpecifier << ">..." << eom);
 
     vector<KGSurface*> tAccumulator;
-    RetrieveSurfacesBySpecifier(tAccumulator, fRoot, std::move(aSpecifier));
+    RetrieveSurfacesBySpecifier(tAccumulator, fRoot, aSpecifier);
 
     coremsg_debug("...done" << eom);
 
@@ -114,7 +114,7 @@ vector<KGSpace*> KGInterface::RetrieveSpaces(const string& aSpecifier)
     coremsg_debug("retrieving spaces for <" << aSpecifier << ">..." << eom);
 
     vector<KGSpace*> tAccumulator;
-    RetrieveSpacesBySpecifier(tAccumulator, fRoot, std::move(aSpecifier));
+    RetrieveSpacesBySpecifier(tAccumulator, fRoot, aSpecifier);
 
     coremsg_debug("...done" << eom);
 

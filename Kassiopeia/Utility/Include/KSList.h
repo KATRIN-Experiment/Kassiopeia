@@ -19,6 +19,7 @@ template<class XType> class KSList
 
     int AddElement(XType* anElement);
     int FindElement(XType* anElement);
+    int FindElementByType(XType* anElement);
     int RemoveElement(XType* anElement);
     XType* ElementAt(int& anIndex) const;
 
@@ -141,6 +142,17 @@ template<class XType> int KSList<XType>::FindElement(XType* anElement)
     int tIndex = -1;
     for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
         if (fElements[fCurrentElement] == anElement) {
+            tIndex = fCurrentElement;
+            break;
+        }
+    }
+    return tIndex;
+}
+template<class XType> int KSList<XType>::FindElementByType(XType*)
+{
+    int tIndex = -1;
+    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
+        if (dynamic_cast<XType*>(fElements[fCurrentElement]) != nullptr) {
             tIndex = fCurrentElement;
             break;
         }

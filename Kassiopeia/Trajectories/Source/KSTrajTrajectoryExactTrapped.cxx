@@ -53,7 +53,8 @@ void KSTrajTrajectoryExactTrapped::SetIntegrator(KSTrajExactTrappedIntegrator* a
         fIntegrator->ClearState();
         return;
     }
-    trajmsg(eError) << "cannot set integrator in <" << this->GetName() << "> with <" << anIntegrator << ">" << eom;
+    trajmsg(eError) << "cannot set integrator <" << dynamic_cast<katrin::KNamed*>(anIntegrator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryExactTrapped::ClearIntegrator(KSTrajExactTrappedIntegrator* anIntegrator)
@@ -62,7 +63,8 @@ void KSTrajTrajectoryExactTrapped::ClearIntegrator(KSTrajExactTrappedIntegrator*
         fIntegrator = nullptr;
         return;
     }
-    trajmsg(eError) << "cannot clear integrator in <" << this->GetName() << "> with <" << anIntegrator << ">" << eom;
+    trajmsg(eError) << "cannot clear integrator <" << dynamic_cast<katrin::KNamed*>(anIntegrator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 
@@ -72,7 +74,8 @@ void KSTrajTrajectoryExactTrapped::SetInterpolator(KSTrajExactTrappedInterpolato
         fInterpolator = anInterpolator;
         return;
     }
-    trajmsg(eError) << "cannot set interpolator in <" << this->GetName() << "> with <" << anInterpolator << ">" << eom;
+    trajmsg(eError) << "cannot set interpolator <" << dynamic_cast<katrin::KNamed*>(anInterpolator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryExactTrapped::ClearInterpolator(KSTrajExactTrappedInterpolator* anInterpolator)
@@ -81,17 +84,22 @@ void KSTrajTrajectoryExactTrapped::ClearInterpolator(KSTrajExactTrappedInterpola
         fInterpolator = nullptr;
         return;
     }
-    trajmsg(eError) << "cannot clear interpolator in <" << this->GetName() << "> with <" << anInterpolator << ">"
-                    << eom;
+    trajmsg(eError) << "cannot clear interpolator <" << dynamic_cast<katrin::KNamed*>(anInterpolator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 
 void KSTrajTrajectoryExactTrapped::AddTerm(KSTrajExactTrappedDifferentiator* aTerm)
 {
+    if (fTerms.FindElementByType(aTerm) != -1) {
+        trajmsg(eWarning) << "adding term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                          << "> to already existing term of same type in <" << this->GetName() << ">" << eom;
+    }
     if (fTerms.AddElement(aTerm) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot add term <" << aTerm << "> to <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot add term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                    << "> to <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryExactTrapped::RemoveTerm(KSTrajExactTrappedDifferentiator* aTerm)
@@ -99,16 +107,22 @@ void KSTrajTrajectoryExactTrapped::RemoveTerm(KSTrajExactTrappedDifferentiator* 
     if (fTerms.RemoveElement(aTerm) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot remove term <" << aTerm << "> from <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot remove term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                    << "> from <" << this->GetName() << ">" << eom;
     return;
 }
 
 void KSTrajTrajectoryExactTrapped::AddControl(KSTrajExactTrappedControl* aControl)
 {
+    if (fControls.FindElementByType(aControl) != -1) {
+        trajmsg(eWarning) << "adding control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                          << "> to already existing control of same type in <" << this->GetName() << ">" << eom;
+    }
     if (fControls.AddElement(aControl) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot add control <" << aControl << "> to <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot add control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                    << "> to <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryExactTrapped::RemoveControl(KSTrajExactTrappedControl* aControl)
@@ -116,7 +130,8 @@ void KSTrajTrajectoryExactTrapped::RemoveControl(KSTrajExactTrappedControl* aCon
     if (fControls.RemoveElement(aControl) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot remove control <" << aControl << "> from <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot remove control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                    << "> from <" << this->GetName() << ">" << eom;
     return;
 }
 

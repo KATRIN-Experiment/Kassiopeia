@@ -54,4 +54,9 @@ void KROOTPainter::SetWriteMode(bool aMode)
     return;
 }
 
+KROOTWindow* KROOTPainter::GetWindow()
+{
+    return fWindow;
+}
+
 }  // namespace katrin

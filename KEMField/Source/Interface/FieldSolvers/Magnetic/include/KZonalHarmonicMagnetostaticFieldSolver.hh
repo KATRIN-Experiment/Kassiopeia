@@ -27,10 +27,10 @@ class KZonalHarmonicMagnetostaticFieldSolver : public KMagneticFieldSolver
     bool UseCentralExpansion(const KPosition& P);
     bool UseRemoteExpansion(const KPosition& P);
 
-    std::set<std::pair<double, double>> CentralSourcePoints();
-    std::set<std::pair<double, double>> RemoteSourcePoints();
+    const KZonalHarmonicContainer<KMagnetostaticBasis>* GetContainer() const;
 
     void InitializeCore(KElectromagnetContainer& container) override;
+    void DeinitializeCore() override;
 
     KFieldVector MagneticPotentialCore(const KPosition& P) const override;
     KFieldVector MagneticFieldCore(const KPosition& P) const override;

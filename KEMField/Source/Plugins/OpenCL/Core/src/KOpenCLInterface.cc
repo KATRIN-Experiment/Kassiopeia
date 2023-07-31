@@ -16,7 +16,7 @@
 #endif
 
 #ifndef KEMFIELD_USE_DOUBLE_PRECISION
-#pragma warning "KEMField OpenCL will not use double precision! This can limit the accuracy of results."
+#pragma error "KEMField can't be used with OpenCL on a device that cannot provide double precision. Single precision is not good enough for charge calculations and will result in limited accuracy. You might be able to manually enable double precision with your device, see also: https://github.com/intel/compute-runtime/blob/master/opencl/doc/FAQ.md#feature-double-precision-emulation-fp64 ."
 #endif
 
 #ifndef DEFAULT_KERNEL_DIR
@@ -25,18 +25,26 @@
 
 namespace KEMField
 {
-KOpenCLInterface* KOpenCLInterface::fOpenCLInterface = 0;
+KOpenCLInterface* KOpenCLInterface::fOpenCLInterface = nullptr;
 
-KOpenCLInterface::KOpenCLInterface() : fActiveData(NULL)
+KOpenCLInterface::KOpenCLInterface() :
+    fKernelPath(DEFAULT_KERNEL_DIR),
+    fPlatforms(),
+    fDevices(),
+    fCLDeviceID(0),
+    fContext(nullptr),
+    fQueues(),
+    fActiveData(nullptr)
 {
-    InitializeOpenCL();
+    Initialize();
 }
 
 KOpenCLInterface::~KOpenCLInterface()
 {
-    for (std::vector<cl::CommandQueue*>::iterator it = fQueues.begin(); it != fQueues.end(); ++it)
+    for (std::vector<cl::CommandQueue*>::iterator it = fQueues.begin(); it != fQueues.end(); ++it) {
         if (*it)
             delete *it;
+    }
 }
 
 /**
@@ -44,7 +52,7 @@ KOpenCLInterface::~KOpenCLInterface()
    */
 KOpenCLInterface* KOpenCLInterface::GetInstance()
 {
-    if (fOpenCLInterface == 0)
+    if (fOpenCLInterface == nullptr)
         fOpenCLInterface = new KOpenCLInterface();
     return fOpenCLInterface;
 }
@@ -52,7 +60,7 @@ KOpenCLInterface* KOpenCLInterface::GetInstance()
 /**
    * Queries the host for available OpenCL platforms, and constructs a Context.
    */
-void KOpenCLInterface::InitializeOpenCL()
+void KOpenCLInterface::Initialize()
 {
     // Disable CUDA caching, since it doesn't check if included .cl files have
     // changed
@@ -100,6 +108,11 @@ void KOpenCLInterface::InitializeOpenCL()
         fContext = new cl::Context(CL_DEVICE_TYPE_ACCELERATOR, cps);
     }
 
+    if (! fContext) {
+        kem_cout(eError) << "Failed to create OpenCL context for device type " << deviceType << "." << eom;
+        return;
+    }
+
     CL_VECTOR_TYPE<cl::Device> availableDevices = fContext->getInfo<CL_CONTEXT_DEVICES>();
 
     fDevices.clear();
@@ -117,7 +130,7 @@ void KOpenCLInterface::InitializeOpenCL()
 #ifdef KEMFIELD_USE_MPI
     //assign devices according to the number available and local process rank
     unsigned int proc_id = KMPIInterface::GetInstance()->GetProcess();
-    int n_dev = KOpenCLInterface::GetInstance()->GetNumberOfDevices();
+    int n_dev = GetNumberOfDevices();
     int dev_id = proc_id % n_dev;  //fallback to global process rank if local is unavailable
     int local_rank = KMPIInterface::GetInstance()->GetLocalRank();
     if (local_rank != -1) {

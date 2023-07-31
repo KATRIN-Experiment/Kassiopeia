@@ -2,8 +2,8 @@ set( CMAKE_MINIMUM_VERSION "3.14.0" )
 cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # project version
-set(KASPER_VERSION_MAJOR 3)
-set(KASPER_VERSION_MINOR 8)
+set(KASPER_VERSION_MAJOR 4)
+set(KASPER_VERSION_MINOR 0)
 set(KASPER_VERSION_PATCH 0)
 set(KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VERSION_PATCH}")
 
@@ -17,11 +17,15 @@ set( Boost_USE_STATIC_LIBS OFF )
 set( Boost_USE_MULTITHREADED ON )
 set( Boost_USE_STATIC_RUNTIME OFF )
 
-set( CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested to build this target" )
+set( CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard whose features are requested to build this target" )
 mark_as_advanced( FORCE CMAKE_CXX_STANDARD )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS ON )
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+
+if(NOT CMAKE_CXX_STANDARD MATCHES "14|17|20")
+    message(FATAL_ERROR "Unsupported C++ standard: ${CMAKE_CXX_STANDARD}")
+endif()
 
 # Additional compiler version checks, see https://en.cppreference.com/w/cpp/compiler_support
 if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )

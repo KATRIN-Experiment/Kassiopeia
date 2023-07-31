@@ -4,6 +4,7 @@
 #include "KSGenValueFixBuilder.h"
 #include "KSGenValueGaussBuilder.h"
 #include "KSGenValueGeneralizedGaussBuilder.h"
+#include "KSGenValueFermiBuilder.h"
 #include "KSGenValueListBuilder.h"
 #include "KSGenValueSetBuilder.h"
 #include "KSGenValueUniformBuilder.h"
@@ -31,7 +32,8 @@ STATICINT sKSGenEnergyCompositeStructure =
     KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueUniform>("energy_uniform") +
     KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueBoltzmann>("energy_boltzmann") +
     KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueGauss>("energy_gauss") +
-    KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("energy_generalized_gauss");
+    KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("energy_generalized_gauss") +
+    KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueFermi>("energy_fermi");
 
 STATICINT sKSGenEnergyComposite = KSRootBuilder::ComplexElement<KSGenEnergyComposite>("ksgen_energy_composite");
 
