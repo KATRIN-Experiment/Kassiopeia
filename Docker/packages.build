@@ -7,7 +7,9 @@ gsl-devel
 boost-devel
 zlib-devel
 libxml2-devel
+liburing-devel
 tbb-devel
 vtk-devel
 ocl-icd-devel
 root-core
+root-genvector

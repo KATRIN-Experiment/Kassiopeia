@@ -5,3 +5,4 @@ vtk-java
 boost-filesystem
 ocl-icd
 root-core
+root-genvector
