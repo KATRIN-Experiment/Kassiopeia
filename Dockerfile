@@ -1,5 +1,5 @@
 # --- runtime-base ---
-FROM fedora:31 as runtime-base
+FROM fedora:38 as runtime-base
 
 LABEL description="Runtime base container"
 LABEL maintainer="jan.behrens@kit.edu"

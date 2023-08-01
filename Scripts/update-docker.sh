@@ -20,10 +20,10 @@ sudo docker run -it katrinexperiment/kassiopeia UnitTestKasper || exit $?
 
 ######
 
-echo "-- pushing to DockerHub ..."
-sudo docker tag $IMAGE:latest katrinexperiment/kassiopeia:$VERSION
-sudo docker push katrinexperiment/kassiopeia:$VERSION
-sudo docker push katrinexperiment/kassiopeia:latest
+#echo "-- pushing to DockerHub ..."
+#sudo docker tag $IMAGE:latest katrinexperiment/kassiopeia:$VERSION
+#sudo docker push katrinexperiment/kassiopeia:$VERSION
+#sudo docker push katrinexperiment/kassiopeia:latest
 
 echo "-- pushing to GitHub ..."
 sudo docker tag $IMAGE:latest docker.pkg.github.com/katrin-experiment/kassiopeia/kassiopeia:$VERSION
