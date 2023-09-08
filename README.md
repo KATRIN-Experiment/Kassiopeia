@@ -31,7 +31,6 @@ Dependencies:
 *   G++ (https://gcc.gnu.org) version 6.1 or higher (if compiling with GCC)
 *   Clang++ (https://clang.llvm.org) version 3.4 or higher (if compiling with clang)
 *   Boost (https://www.boost.org) version 1.65 or higher
-*   GSL (https://www.gnu.org/software/gsl)
 *   ROOT (https://www.cern.ch/root) version 6.16 or higher
     +   --enable-minuit2 (if you want to use KaFit)
     +   --enable-fftw3 (if you want to use KEMField)
@@ -39,18 +38,11 @@ Dependencies:
 Optional Dependencies:
 *   FFTW (https://fftw.org) version 3.3.4 or higher
 *   HDF5 (https://support.hdfgroup.org/HDF5/)
-*   LibXml2 (https://www.xmlsoft.org)
 *   Log4CXX (https://logging.apache.org/log4cxx)
 *   MPI (https://www.open-mpi.org or mpich.org)
 *   OpenCL (https://www.khronos.org/opencl), installation details depend on your system
-*   OpenMP (https://www.openmp.org)
-*   OpenSSL (https://openssl.org) version 1.0.0 or higher
-*   PCL (https://www.pointclouds.org) version 1.2 or higher
 *   PETSc (https://mcs.anl.gov/petsc)
-*   SQLite3 (https://sqlite.org), for IDLE local storage
-*   TBB (https://software.intel.com/en-us/tbb)
 *   VTK (https://www.vtk.org) version 6.1 or higher
-*   zlib (https://www.zlib.net)
 *   pdflatex (for making the documentation; minimum version not known)
 *   doxygen (for making the documentation; minimum version not known)
 
