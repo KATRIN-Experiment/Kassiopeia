@@ -155,26 +155,26 @@ Optional Dependencies:
 ------------------
 
 1. A Docker container with Kasper is available at
-    https://hub.docker.com/r/katrinexperiment/kassiopeia
+    https://github.com/orgs/KATRIN-Experiment/packages
 
 2. This Docker container can be used with Docker (with superuser privileges).
     1. Pull the container to your system with
         ```
-        > sudo docker pull katrinexperiment/kassiopeia
+        > sudo docker pull ghcr.io/katrin-experiment/kassiopeia/kassiopeia
         ```
     2. Open a shell inside the container with
         ```
-        > sudo docker run --rm -it katrinexperiment/kassiopeia /bin/bash
+        > sudo docker run --rm -it ghcr.io/katrin-experiment/kassiopeia/kassiopeia /bin/bash
         ```
 
 3. The Docker container can also be used with Singularity (as a regular user).
     1. Pull the container to your system with
         ```
-        > singularity pull docker://katrinexperiment/kassiopeia
+        > singularity pull docker://ghcr.io/katrin-experiment/kassiopeia/kassiopeia
         ```
     2. Open a shell inside the container with
         ```
-        > singularity shell docker://katrinexperiment/kassiopeia
+        > singularity shell docker://ghcr.io/katrin-experiment/kassiopeia/kassiopeia
         ```
         or (if a local copy is available already)
         ```
@@ -184,10 +184,6 @@ Optional Dependencies:
 4. Build the container locally with
     ```
     > sudo docker build -t katrinexperiment/kassiopeia .
-    ```
-    an (optionally) upload the local container to DockerHub with
-    ```
-    > sudo docker push katrinexperiment/kassiopeia
     ```
 
 
