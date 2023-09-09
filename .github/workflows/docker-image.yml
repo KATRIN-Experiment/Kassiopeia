@@ -1,0 +1,38 @@
+name: Build & Test Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  main_image_build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        echo Build target "build"
+        docker build --target build \
+          --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
+          --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          -t kasper_build .
+        
+        echo Build target "minimal"
+        docker build --target minimal \
+          --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
+          --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          -t kasper_minimal .
+        
+        echo UnitTestKasper in "minimal"
+        docker run --rm -t kasper_minimal UnitTestKasper
+        
+        echo Build target "full"
+        docker build --target full \
+          --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
+          --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          -t kasper_full .
+        
+        echo UnitTestKasper in "full"
+        docker run --rm -t kasper_full UnitTestKasper
