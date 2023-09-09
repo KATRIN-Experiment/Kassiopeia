@@ -19,12 +19,14 @@ jobs:
         docker build --target build \
           --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
           --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          --build-arg KASSIOPEIA_CPUS=$(nproc)  \
           -t kasper_build .
         
         echo Build target "minimal"
         docker build --target minimal \
           --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
           --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          --build-arg KASSIOPEIA_CPUS=$(nproc)  \
           -t kasper_minimal .
         
         echo UnitTestKasper in "minimal"
@@ -34,6 +36,7 @@ jobs:
         docker build --target full \
           --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
           --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          --build-arg KASSIOPEIA_CPUS=$(nproc)  \
           -t kasper_full .
         
         echo UnitTestKasper in "full"

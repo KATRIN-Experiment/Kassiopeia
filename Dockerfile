@@ -7,6 +7,8 @@ ARG KASSIOPEIA_GROUP="kassiopeia"
 ARG KASSIOPEIA_GIT_BRANCH=""
 ARG KASSIOPEIA_GIT_COMMIT=""
 
+ARG KASSIOPEIA_CPUS=""
+
 # --- runtime-base ---
 # NOTE: Fedora 36 is used because of this issue: https://gitlab.freedesktop.org/mesa/mesa/-/issues/9442
 #       If our IT can circumvent this with a JupyterHub VM emulation change, we may ignore this issue in the future.
@@ -69,6 +71,8 @@ ARG KASSIOPEIA_GROUP
 
 ARG KASSIOPEIA_GIT_BRANCH
 ARG KASSIOPEIA_GIT_COMMIT
+
+ARG KASSIOPEIA_CPUS
 
 LABEL description="Build container"
 
