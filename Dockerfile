@@ -190,9 +190,7 @@ COPY --chown=root:root Docker/startvnc /
 
 USER $KASSIOPEIA_USER
 
-COPY --chown=$KASSIOPEIA_USER:$KASSIOPEIA_GROUP Docker/beans3.svg /kassiopeia/
-
-# Configure VNC desktop & Visual BEANS in jupyter launcher
+# Configure VNC desktop
 RUN jupyter lab --generate-config \
     && echo "c.ServerProxy.servers = {\
     'vnc': {\
@@ -203,17 +201,6 @@ RUN jupyter lab --generate-config \
         'launcher_entry' :  {\
             'enabled': True,\
             'title': 'VNC (Desktop)'\
-        }\
-    },\
-    'visualbeans': {\
-        'command': ['visualbeans.py', '--no-browser', '--port', '{port}'],\
-        'timeout' : 10,\
-        'absolute_url': False,\
-        'new_browser_tab': False,\
-        'launcher_entry' :  {\
-            'enabled': True,\
-            'title': 'Visual BEANS',\
-            'icon_path': '/kassiopeia/beans3.svg'\
         }\
     }\
 }" >> $JUPYTER_CONFIG_DIR/jupyter_lab_config.py
