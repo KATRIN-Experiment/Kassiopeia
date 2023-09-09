@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# startvnc:
+#  Adapted from SwissDataScienceCenter
+#    https://github.com/SwissDataScienceCenter/renku-vnc/tree/c458e1cefc017be657f7068605ad72c7ce91d78d/xvnc4
+#  License: Apache License 2.0
+#    https://github.com/SwissDataScienceCenter/renku-vnc/blob/5304c95e77b1ef3a71f224bc43582c7dd52b5dc8/LICENSE
+
+main() {
+    set -euC
+    local -ri wsport=${1:-6080}
+    local -i  display=20
+
+    local -ri vncport=$((5900+display))
+
+    rm -f /tmp/novnc.log /tmp/xvnc4.log
+    rm -f /tmp/.X${display}-lock # Lift lock, secure as startvnc is only called once
+    
+    (Xvnc :${display} \
+            -geometry 1024x768 \
+            -depth 24 \
+            -c r \
+            -rfbport ${vncport} \
+            -SecurityTypes None \
+            -xinerama \
+            -localhost \
+            > /tmp/xvnc4.log 2>&1 &) &
+    sleep 1
+
+    (novnc_proxy --vnc localhost:${vncport} --listen ${wsport} > /tmp/novnc.log 2>&1 &) &
+    sleep 1
+
+    # Fluxbox menu
+    fluxbox update-menus
+    sed -i '/execname is NULL/d' ~/.fluxbox/menu # delete unnecessary entries
+
+    (DISPLAY=:${display} /usr/bin/startfluxbox &) &
+}
+
+main "${@}"
