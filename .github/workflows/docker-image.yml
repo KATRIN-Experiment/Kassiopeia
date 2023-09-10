@@ -8,7 +8,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   main_image_build_and_test:
@@ -57,8 +56,10 @@ jobs:
     - name: Push images
       if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
       run: |
-        docker image tag kasper_minimal ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/minimal:main
-        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/minimal:main
+        IMAGE_NAME=${${{ github.repository }},,}
+
+        docker image tag kasper_minimal ${{ env.REGISTRY }}/${IMAGE_NAME}/minimal:main
+        docker push ${{ env.REGISTRY }}/${IMAGE_NAME}/minimal:main
     
-        docker image tag kasper_full ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/full:main
-        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/full:main
+        docker image tag kasper_full ${{ env.REGISTRY }}/${IMAGE_NAME}/full:main
+        docker push ${{ env.REGISTRY }}/${IMAGE_NAME}/full:main
