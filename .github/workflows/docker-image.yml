@@ -11,33 +11,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Build target "build"
       run: |
-        cd $GITHUB_WORKSPACE
-        
-        echo Build target "build"
         docker build --target build \
           --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
           --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
           --build-arg KASSIOPEIA_CPUS=$(nproc)  \
           -t kasper_build .
         
-        echo Build target "minimal"
+    - name: Build target "minimal"
+      run: |
         docker build --target minimal \
           --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
           --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
           --build-arg KASSIOPEIA_CPUS=$(nproc)  \
           -t kasper_minimal .
-        
-        echo UnitTestKasper in "minimal"
-        docker run --rm -t kasper_minimal UnitTestKasper
-        
+    
+    - name: UnitTestKasper in "minimal"
+      run: docker run --rm -t kasper_minimal UnitTestKasper
+    
+    - name: Build target "full"
+      run: |
         echo Build target "full"
         docker build --target full \
           --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
           --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
           --build-arg KASSIOPEIA_CPUS=$(nproc)  \
           -t kasper_full .
-        
-        echo UnitTestKasper in "full"
-        docker run --rm -t kasper_full UnitTestKasper
+    
+    - name: UnitTestKasper in "full"
+      run: docker run --rm -t kasper_full UnitTestKasper
