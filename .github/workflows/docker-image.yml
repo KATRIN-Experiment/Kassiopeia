@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   main_image_build_and_test:
     runs-on: ubuntu-latest
@@ -41,3 +45,20 @@ jobs:
     
     - name: UnitTestKasper in "full"
       run: docker run --rm -t kasper_full UnitTestKasper
+
+    - name: Log in to the Container registry
+      if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+      uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push images
+      if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+      run: |
+        podman image tag kasper_minimal ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/minimal:main
+        podman push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/minimal:main
+    
+        podman image tag kasper_full ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/full:main
+        podman push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/full:main
