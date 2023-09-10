@@ -56,10 +56,11 @@ jobs:
     - name: Push images
       if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
       run: |
-        IMAGE_NAME=${${{ github.repository }},,}
+        REPOSITORY=${{ github.repository }}
+        REPOSITORY_LOWERCASE=${REPOSITORY,,}
 
-        docker image tag kasper_minimal ${{ env.REGISTRY }}/${IMAGE_NAME}/minimal:main
-        docker push ${{ env.REGISTRY }}/${IMAGE_NAME}/minimal:main
+        docker image tag kasper_minimal ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/minimal:main
+        docker push ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/minimal:main
     
-        docker image tag kasper_full ${{ env.REGISTRY }}/${IMAGE_NAME}/full:main
-        docker push ${{ env.REGISTRY }}/${IMAGE_NAME}/full:main
+        docker image tag kasper_full ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/full:main
+        docker push ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/full:main
