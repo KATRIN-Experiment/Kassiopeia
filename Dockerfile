@@ -174,7 +174,7 @@ RUN echo /kassiopeia/install/lib64 > /etc/ld.so.conf.d/local-x86_64.conf \
  && echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /home/$KASSIOPEIA_USER/.zshrc
 
 # Always show Kasper information when opening a terminal
-RUN echo "source /kassiopeia/install/bin/kassiopeiaenv.sh" >> /etc/profile
+RUN echo "source /kassiopeia/install/bin/kasperenv.sh" >> /etc/profile
 
 # JupyterLab VNC desktop environment:
 #  Adapted from renku-vnc by SwissDataScienceCenter
