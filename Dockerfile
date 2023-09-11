@@ -211,6 +211,10 @@ RUN jupyter lab --generate-config \
 # Fix DISPLAY so applications can also use it outside the desktop environment
 ENV DISPLAY=:20
 
+# Hide Jupyter news announcement
+# https://jupyterlab.readthedocs.io/en/stable/user/announcements.html
+RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
+
 # Update /kassiopeia permissions to everyone (needed e.g. in some JupyterHub environments)
 USER root
 RUN chmod --recursive a=u /kassiopeia
