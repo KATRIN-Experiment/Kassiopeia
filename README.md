@@ -18,13 +18,13 @@ along with calculations of electric and magnetic fields.
 **Full user guide:** http://katrin-experiment.github.io/Kassiopeia/index.html
 
 **Quick start:** [**Try it out online**](https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD)
-in an interactive Binder session. Open the graphical VNC display and a terminal and run
+in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab and run
 
 ```
 Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
 ```
 
-to run your first simulation!
+to run your first simulation! *Note: A VTK error indicates that the "VNC (Desktop)" tab is not open yet.*
 
 **Cite [our paper](https://iopscience.iop.org/article/10.1088/1367-2630/aa6950):**
 

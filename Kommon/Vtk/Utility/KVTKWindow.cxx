@@ -131,6 +131,10 @@ void KVTKWindow::Render()
         tInteractorStyle->SetAutoAdjustCameraClippingRange(1);
         tInteractorStyle->HandleObserversOff();
 
+        // Run command that produces a somewhat helpful message when no display is available
+        fRenderWindow->GetScreenSize();
+
+
         fRenderInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
         fRenderInteractor->SetInteractorStyle(tInteractorStyle);
         fRenderInteractor->SetRenderWindow(fRenderWindow);
