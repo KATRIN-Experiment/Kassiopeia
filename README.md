@@ -1,23 +1,45 @@
-# Kassiopeia
-
-This Simulation package allows to run highly customizable particle tracking simulations
-along with calculations of electric and magnetic fields.
-
-Find a full user guide under http://katrin-experiment.github.io/Kassiopeia/index.html
-
 [![Release](https://img.shields.io/github/v/release/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/releases)
 [![Code Size](https://img.shields.io/github/languages/code-size/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia)
-[![Image Size](https://img.shields.io/docker/image-size/katrinexperiment/kassiopeia)](https://hub.docker.com/r/katrinexperiment/kassiopeia)
 [![Issues](https://img.shields.io/github/issues/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/pulls)
 [![Last Commit](https://img.shields.io/github/last-commit/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/commits)
 [![Contributors](https://img.shields.io/github/contributors/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/graphs/contributors)
 [![Gitter](https://badges.gitter.im/kassiopeia-simulation/community.svg)](https://gitter.im/kassiopeia-simulation/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD)
 
 
  Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 ==============================================================================
 
+
+This simulation package by [the KATRIN collaboration](https://katrin.kit.edu) allows to run highly customizable particle tracking simulations
+along with calculations of electric and magnetic fields.
+
+**Full user guide:** http://katrin-experiment.github.io/Kassiopeia/index.html
+
+**Quick start:** [**Try it out online**](https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD)
+in an interactive Binder session. Open the graphical VNC display and a terminal and run
+
+```
+Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
+```
+
+to run your first simulation!
+
+**Cite [our paper](https://iopscience.iop.org/article/10.1088/1367-2630/aa6950):**
+
+```
+D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensible C++ Particle Tracking Package” (doi:10.1088/1367-2630/aa6950)
+```
+
+ Docker images
+--------------
+
+**All images:** https://github.com/orgs/KATRIN-Experiment/packages
+
+The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
+
+**More information:** [Docker README](Docker/README.md)
 
  System requirements:
 ----------------------
@@ -150,42 +172,6 @@ Optional Dependencies:
     This script adds the `bin/` directory to your `$PATH` so you can call
     any Kasper executables directly from the commandline. Furthermore this
     sets the `$KASPERSYS` environment variable to the install directory.
-
-
- Docker container
-------------------
-
-1. A Docker container with Kasper is available at
-    https://github.com/orgs/KATRIN-Experiment/packages
-
-2. This Docker container can be used with Docker (with superuser privileges).
-    1. Pull the container to your system with
-        ```
-        > sudo docker pull ghcr.io/katrin-experiment/kassiopeia/kassiopeia
-        ```
-    2. Open a shell inside the container with
-        ```
-        > sudo docker run --rm -it ghcr.io/katrin-experiment/kassiopeia/kassiopeia /bin/bash
-        ```
-
-3. The Docker container can also be used with Singularity (as a regular user).
-    1. Pull the container to your system with
-        ```
-        > singularity pull docker://ghcr.io/katrin-experiment/kassiopeia/kassiopeia
-        ```
-    2. Open a shell inside the container with
-        ```
-        > singularity shell docker://ghcr.io/katrin-experiment/kassiopeia/kassiopeia
-        ```
-        or (if a local copy is available already)
-        ```
-        > singularity shell kassiopeia-latest.sif
-        ```
-
-4. Build the container locally with
-    ```
-    > sudo docker build -t katrinexperiment/kassiopeia .
-    ```
 
 
  Documentation
