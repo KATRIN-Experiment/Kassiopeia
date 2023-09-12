@@ -192,6 +192,10 @@ RUN sed -i -e "s,'websockify',window.location.pathname.slice(1),g" /usr/share/no
     && ln -fs /usr/share/novnc/vnc_lite.html /usr/share/novnc/index.html
 COPY --chown=root:root Docker/startvnc /
 
+# Hide Jupyter news announcement
+# https://jupyterlab.readthedocs.io/en/stable/user/announcements.html
+RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
+
 USER $KASSIOPEIA_USER
 
 # Configure VNC desktop
@@ -210,10 +214,6 @@ RUN jupyter lab --generate-config \
 }" >> $JUPYTER_CONFIG_DIR/jupyter_lab_config.py
 # Fix DISPLAY so applications can also use it outside the desktop environment
 ENV DISPLAY=:20
-
-# Hide Jupyter news announcement
-# https://jupyterlab.readthedocs.io/en/stable/user/announcements.html
-RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
 
 # Update /kassiopeia permissions to everyone (needed e.g. in some JupyterHub environments)
 USER root
