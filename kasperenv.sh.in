@@ -4,7 +4,7 @@
 # append this line to your ~/.bashrc or ~/.zshrc file (or similar):
 #    source <kasper install path>/bin/kasperenv.sh
 
-printf "\033[32;1mThis is KASPER v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]\n"
+printf "\033[32;1mThis is KASSIOPEIA v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]\n"
 
 if [ -n "${KASPERSYS}" ]
     then

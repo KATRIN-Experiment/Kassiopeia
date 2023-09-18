@@ -17,11 +17,6 @@ if(KASPER_USE_GSL)
     find_dependency( GSL )
 endif(KASPER_USE_GSL)
 
-set(KASPER_USE_TBB @KASPER_USE_TBB@)
-if(KASPER_USE_TBB)
-    find_dependency( TBB )
-endif(KASPER_USE_TBB)
-
 set(KASPER_USE_VTK @KASPER_USE_VTK@)
 if(KASPER_USE_VTK)
     find_dependency( VTK CONFIG COMPONENTS @KOMMON_VTK_COMPONENTS@ )
