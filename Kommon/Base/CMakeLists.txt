@@ -41,8 +41,8 @@ set(KOMMON_BASE_HEADER_FILES
     Utility/KAlgorithm.h
     Utility/KException.h
     Utility/KCast.h
-    Utility/KConst.h
     Utility/KConst_2006.h
+    Utility/KConst_2021.h
     Utility/KConsoleMuter.h
     Utility/KHash.h
     Utility/OstreamJoiner.h
@@ -193,8 +193,10 @@ elseif(KConst_REFERENCE_EPOCH LESS 2021)
     "of some calculations. To restore *default* behavior, set KConst_REFERENCE_EPOCH=2021.")
 endif()
 
-# Needed for physical constants defined in Utility/KConst.h
-target_compile_definitions(KommonBase PUBLIC KConst_REFERENCE_EPOCH=${KConst_REFERENCE_EPOCH})
+# Bake KConst_REFERENCE_EPOCH into KConst.h
+configure_file( Utility/KConst.h.in ${CMAKE_CURRENT_BINARY_DIR}/Utility/KConst.h @ONLY )
+list( APPEND KOMMON_BASE_HEADER_FILES ${CMAKE_CURRENT_BINARY_DIR}/Utility/KConst.h )
+target_include_directories( KommonBase PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/Utility> )
 
 kasper_install_libraries( KommonBase )
 kasper_install_headers( ${KOMMON_BASE_HEADER_FILES} )
