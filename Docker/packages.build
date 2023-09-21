@@ -3,11 +3,13 @@ cmake
 make
 gcc
 gcc-c++
+ninja-build
+
 gsl-devel
 boost-devel
-zlib-devel
-libxml2-devel
-tbb-devel
+hdf5-devel
+liburing-devel
 vtk-devel
 ocl-icd-devel
-root-core
+log4cxx-devel
+openmpi-devel

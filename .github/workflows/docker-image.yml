@@ -1,0 +1,66 @@
+name: Build & Test Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  main_image_build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build target "build"
+      run: |
+        docker build --target build \
+          --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
+          --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          --build-arg KASSIOPEIA_CPUS=$(nproc)  \
+          -t kasper_build .
+        
+    - name: Build target "minimal"
+      run: |
+        docker build --target minimal \
+          --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
+          --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          --build-arg KASSIOPEIA_CPUS=$(nproc)  \
+          -t kasper_minimal .
+    
+    - name: UnitTestKasper in "minimal"
+      run: docker run --rm -t kasper_minimal UnitTestKasper
+    
+    - name: Build target "full"
+      run: |
+        echo Build target "full"
+        docker build --target full \
+          --build-arg KASSIOPEIA_GIT_BRANCH=$GITHUB_REF_NAME \
+          --build-arg KASSIOPEIA_GIT_COMMIT=$GITHUB_SHA  \
+          --build-arg KASSIOPEIA_CPUS=$(nproc)  \
+          -t kasper_full .
+    
+    - name: UnitTestKasper in "full"
+      run: docker run --rm -t kasper_full UnitTestKasper
+
+    - name: Log in to the Container registry
+      if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+      uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push images
+      if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+      run: |
+        REPOSITORY=${{ github.repository }}
+        REPOSITORY_LOWERCASE=${REPOSITORY,,}
+
+        docker image tag kasper_minimal ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/minimal:main
+        docker push ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/minimal:main
+    
+        docker image tag kasper_full ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/full:main
+        docker push ${{ env.REGISTRY }}/${REPOSITORY_LOWERCASE}/full:main
