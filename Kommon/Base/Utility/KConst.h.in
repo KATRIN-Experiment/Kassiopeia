@@ -5,6 +5,6 @@
 #include "KConst_2021.h"
 
 #else
-#error "Unsupported value for KConst_REFERENCE_EPOCH."
+#error "Unsupported value for KConst_REFERENCE_EPOCH: '@KConst_REFERENCE_EPOCH@'"
 
 #endif
