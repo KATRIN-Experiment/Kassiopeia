@@ -91,8 +91,8 @@ void KSTrajTrajectoryMagnetic::ClearInterpolator(KSTrajMagneticInterpolator* anI
 void KSTrajTrajectoryMagnetic::AddTerm(KSTrajMagneticDifferentiator* aTerm)
 {
     if (fTerms.FindElementByType(aTerm) != -1) {
-        trajmsg(eWarning) << "adding term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
-                          << "> to already existing term of same type in <" << this->GetName() << ">" << eom;
+        trajmsg(eInfo) << "adding additional term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                          << "> to <" << this->GetName() << ">" << eom;
     }
     if (fTerms.AddElement(aTerm) != -1) {
         return;
@@ -114,8 +114,8 @@ void KSTrajTrajectoryMagnetic::RemoveTerm(KSTrajMagneticDifferentiator* aTerm)
 void KSTrajTrajectoryMagnetic::AddControl(KSTrajMagneticControl* aControl)
 {
     if (fControls.FindElementByType(aControl) != -1) {
-        trajmsg(eWarning) << "adding control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
-                          << "> to already existing control of same type in <" << this->GetName() << ">" << eom;
+        trajmsg(eInfo) << "adding additional control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                          << "> to <" << this->GetName() << ">" << eom;
     }
     if (fControls.AddElement(aControl) != -1) {
         return;
