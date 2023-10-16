@@ -10,11 +10,8 @@ ARG KASSIOPEIA_GIT_COMMIT=""
 ARG KASSIOPEIA_CPUS=""
 
 # --- runtime-base ---
-# NOTE: Fedora 36 is used because of this issue: https://gitlab.freedesktop.org/mesa/mesa/-/issues/9442
-#       If our IT can circumvent this with a JupyterHub VM emulation change, we may ignore this issue in the future.
-# NOTE: For Fedora 37 & 38, uncomment marked lines below
 # NOTE: For Fedora 39, remove marked lines below
-FROM fedora:36 as runtime-base
+FROM fedora:38 as runtime-base
 ARG KASSIOPEIA_UID
 ARG KASSIOPEIA_USER
 ARG KASSIOPEIA_GID
@@ -22,12 +19,12 @@ ARG KASSIOPEIA_GROUP
 
 LABEL description="Runtime base container"
 
-# # TODO REMOVE FOR FEDORA 39
-# RUN dnf update -y \
-#  && dnf install -y --setopt=install_weak_deps=False dnf-plugins-core \
-#  && dnf clean all
-# RUN dnf copr enable thofmann/log4xx-1.x -y
-# # END TODO
+# TODO REMOVE FOR FEDORA 39
+RUN dnf update -y \
+ && dnf install -y --setopt=install_weak_deps=False dnf-plugins-core \
+ && dnf clean all
+RUN dnf copr enable thofmann/log4xx-1.x -y
+# END TODO
 
 COPY Docker/packages.runtime packages
 RUN dnf update -y \
