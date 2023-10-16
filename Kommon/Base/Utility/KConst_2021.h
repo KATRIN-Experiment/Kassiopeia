@@ -7,11 +7,6 @@
  * @author S. Hickford <stephanie.hickford@kit.edu>
  */
 
-#if KConst_REFERENCE_EPOCH == 2006
-#include "KConst_2006.h"
-
-#elif KConst_REFERENCE_EPOCH == 2021
-
 #ifndef KCONST_H_
 #define KCONST_H_
 
@@ -457,7 +452,3 @@ constexpr double Ue3sq()
 } /* namespace katrin */
 
 #endif  //KCONST_H
-
-#else
-#error "Unsupported value for KConst_REFERENCE_EPOCH."
-#endif
