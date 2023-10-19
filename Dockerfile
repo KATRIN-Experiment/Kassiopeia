@@ -189,6 +189,10 @@ RUN sed -i -e "s,'websockify',window.location.pathname.slice(1),g" /usr/share/no
     && ln -fs /usr/share/novnc/vnc_lite.html /usr/share/novnc/index.html
 COPY --chown=root:root Docker/startvnc /
 
+# MyBinder mounts /etc/jupyter, making configuration from there e.g. containing terminals inaccessible
+# Moving /etc/jupyter to a safer place as a workaround
+RUN mkdir -p /usr/etc && mv /etc/jupyter /usr/etc
+
 # Hide Jupyter news announcement
 # https://jupyterlab.readthedocs.io/en/stable/user/announcements.html
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
