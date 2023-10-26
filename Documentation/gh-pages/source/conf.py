@@ -46,11 +46,11 @@ extensions = [
 
 extlinks = {
     'gh-issue':     ('https://github.com/KATRIN-Experiment/Kassiopeia/issues/%s',
-                     'Issue '),
+                     'Issue %s'),
     'gh-pull':      ('https://github.com/KATRIN-Experiment/Kassiopeia/pull/%s',
-                     'Pull request '),
+                     'Pull request %s'),
     'gh-code':      ('https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/%s',
-                     'GitHub: '),
+                     'GitHub: %s'),
 }
 
 # Add any paths that contain templates here, relative to this directory.
