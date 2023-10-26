@@ -360,7 +360,7 @@ of the software. This optional dependencies are configurable through the cmake G
 optional settings require additional libraries or special hardware in order to operate.
 
 The use of some external libraries, (e.g. ROOT_ and VTK_) is collectively toggled for all sub-modules at once. The
-*Kassiopeia* simulation software can link against these libraries using the *Kasper* flags outlined in the table below:
+*Kassiopeia* simulation software can link against these libraries using the *KASPER* flags outlined in the table below:
 
 +---------------------------------------------------------------------------------------------------------+
 | Collective options                                                                                      |
@@ -371,7 +371,7 @@ The use of some external libraries, (e.g. ROOT_ and VTK_) is collectively toggle
 +--------------------+---------------------------------------+--------------------------------------------+
 | KASPER_USE_BOOST   | Boost_ developer libraries            | Build Boost dependent extensions.          |
 +--------------------+---------------------------------------+--------------------------------------------+
-| KASPER_USE_GSL     | The GNU scientific library (GSL_)     | Build GSL dependent extensions             |
+| KASPER_USE_GSL     | The GNU scientific library (GSL_)     | Build GSL dependent extensions.             |
 +--------------------+---------------------------------------+--------------------------------------------+
 | KASPER_USE_ROOT    | The CERN ROOT_ libraries              | Build ROOT dependent extensions.           |
 +--------------------+---------------------------------------+--------------------------------------------+

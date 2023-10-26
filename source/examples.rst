@@ -173,7 +173,7 @@ of particle tracking in a photomultiplier tube is also included. This convifurat
 Since the dimensions of the linear system that needs to be solved in order to compute the electric field is rather large
 (~150K mesh elements), the initialization of the electric field may take some time. If the user has the appropriate
 device (e.g. a GPU) it is recommended that the field solving sub-module *KEMField* is augmented with OpenCL in order to
-take advantage of hardware acceleration. This is done by setting the ``KEMField_USE_OpenCL`` flag in the build stage.
+take advantage of hardware acceleration. This is done by setting the ``KEMField_USE_OPENCL`` flag in the build stage.
 
 To run this simulation, type:
 
