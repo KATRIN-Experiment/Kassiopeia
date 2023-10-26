@@ -10,7 +10,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
+import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -121,3 +121,13 @@ html_css_files = [
 
 html_logo = '_images/KassiopeiaLogo_1_cropped_bb.png'
 html_permalinks_icon = "<span>#</span>"
+
+# "Edit on GitHub" link
+if "GITHUB_REPOSITORY_OWNER" in os.environ:
+    html_context = {
+        "display_github": True,
+        "github_user": os.environ["GITHUB_REPOSITORY_OWNER"],
+        "github_repo": os.environ["GITHUB_REPOSITORY"].split("/")[1],
+        "github_version": os.environ["GITHUB_REF_NAME"],
+        "conf_py_path": "/Documentation/gh-pages/source/",
+    }
