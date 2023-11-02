@@ -3,12 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Kassiopeia: Simulation of electric and magnetic fields and particle tracking
+Welcome to Kassiopeia's documentation!
 **************************************
-
-.. image:: _images/KassiopeiaLogo_1_bb.png
-    :width: 250pt
-
 
 [![Release](https://img.shields.io/github/v/release/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia/releases)
 [![Code Size](https://img.shields.io/github/languages/code-size/KATRIN-Experiment/Kassiopeia)](https://github.com/KATRIN-Experiment/Kassiopeia)
@@ -20,32 +16,40 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD)
 
 
+.. image:: _images/KassiopeiaLogo_1_bb.png
+    :width: 250pt
 
 
-This simulation package by [the KATRIN collaboration](https://katrin.kit.edu) allows to run highly customizable particle tracking simulations
+
+
+
+
+This simulation package by `the KATRIN collaboration`_ allows to run highly customizable particle tracking simulations
 along with calculations of electric and magnetic fields.
 
-**Quick start:** [**Try it out online**](https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD)
+**Quick start:** **`Try it out online`_**
 in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab and run
 
-```
-Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
-```
+.. code-block:: bash
+    Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
+
 
 to run your first simulation! *Note: A VTK error indicates that the "VNC (Desktop)" tab is not open yet.*
 
-**Cite [our paper](https://iopscience.iop.org/article/10.1088/1367-2630/aa6950):**
+**Cite `our paper`_:**
 
-```
-D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensible C++ Particle Tracking Package” (doi:10.1088/1367-2630/aa6950)
-```
+.. code-block:: bash
 
- Docker images
+    D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensible C++ Particle Tracking Package” (doi:10.1088/1367-2630/aa6950)
+
+
+**Docker images**
 --------------
 
 **All images:** https://github.com/orgs/KATRIN-Experiment/packages
 
 The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
+
 Contents
 ========
 
@@ -70,3 +74,6 @@ Indices and tables
 ==================
 
 * :ref:`search`
+.. _`the KATRIN collaboration`: https://katrin.kit.edu
+.. _`Try it out online`: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
+.._`our paper`: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
