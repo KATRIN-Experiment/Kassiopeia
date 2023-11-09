@@ -97,4 +97,4 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
     XML Bindings <bindings.rst>
     License <license.rst>
     Authors <authors.rst>
-
+    :hidden:
