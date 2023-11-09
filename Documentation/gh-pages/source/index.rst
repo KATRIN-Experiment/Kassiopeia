@@ -56,6 +56,7 @@ in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab 
 .. _Try it out online: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
 
 .. code-block:: bash
+    
     Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
 
 
