@@ -85,7 +85,7 @@ Contents
 ========
 
 .. toctree::
-    :maxdepth: 0
+    :maxdepth: 4
 
     Introduction <introduction.rst>
     References, Citation and Contact <external_documentation.rst>
