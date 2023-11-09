@@ -82,7 +82,6 @@ to run your first simulation! *Note: A VTK error indicates that the "VNC (Deskto
 The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
 
 .. toctree::
-
    :hidden:
 
     Introduction <introduction.rst>
