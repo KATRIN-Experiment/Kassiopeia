@@ -36,7 +36,7 @@ Welcome to Kassiopeia's documentation!
 
 
 
-.. image:: _images/KassiopeiaLogo_1_bb.png
+.. .. image:: _images/KassiopeiaLogo_1_bb.png
     :width: 250pt
 
 
