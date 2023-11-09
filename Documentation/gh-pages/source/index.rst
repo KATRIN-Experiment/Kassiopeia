@@ -81,27 +81,3 @@ to run your first simulation! *Note: A VTK error indicates that the "VNC (Deskto
 
 The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
 
-Contents
-========
-
-.. toctree::
-    :maxdepth: 4
-
-    Introduction <introduction.rst>
-    References, Citation and Contact <external_documentation.rst>
-    Getting Started <compiling.rst>
-    Examples and Tests <examples.rst>
-    Configuring Your Own Simulation <configuration.rst>
-    Basic KGeoBag Shapes <kgeobag_basic.rst>
-    Complex KGeoBag Shapes <kgeobag_complex.rst>
-    Understanding Simulation Output <output.rst>
-    Additional Simulation Tools <tools.rst>
-    Visualization Techniques <visualization.rst>
-    XML Bindings <bindings.rst>
-    License <license.rst>
-    Authors <authors.rst>
-
-Indices and tables
-==================
-
-* :ref:`search`
