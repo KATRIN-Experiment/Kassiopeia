@@ -15,6 +15,45 @@ Welcome to Kassiopeia's documentation!
 [![Gitter](https://badges.gitter.im/kassiopeia-simulation/community.svg)](https://gitter.im/kassiopeia-simulation/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD)
 
+|Release github|
+
+.. |Release github| image:: https://img.shields.io/github/v/release/KATRIN-Experiment/Kassiopeia
+   :target: https://github.com/KATRIN-Experiment/Kassiopeia/releases
+
+|Code Size|
+
+.. |Code Size| image:: https://img.shields.io/github/languages/code-size/KATRIN-Experiment/Kassiopeia
+   :target: https://github.com/KATRIN-Experiment/Kassiopeia
+
+|Issues github|
+
+.. |Issues github| image:: https://img.shields.io/github/issues/KATRIN-Experiment/Kassiopeia
+   :target: https://github.com/KATRIN-Experiment/Kassiopeia/issues
+
+|Pull Requests github|
+
+.. |Pull Requests github| image:: https://img.shields.io/github/issues-pr/KATRIN-Experiment/Kassiopeia
+   :target: https://github.com/KATRIN-Experiment/Kassiopeia/pulls
+
+|Last Commit github|
+
+.. |Last Commit github| image:: https://img.shields.io/github/last-commit/KATRIN-Experiment/Kassiopeia
+   :target: https://github.com/KATRIN-Experiment/Kassiopeia/commits
+
+|Contributors github|
+
+.. |Contributors github| image:: https://img.shields.io/github/contributors/KATRIN-Experiment/Kassiopeia
+   :target: https://github.com/KATRIN-Experiment/Kassiopeia/graphs/contributors
+
+|Gitter github|
+
+.. |Gitter github| image:: https://badges.gitter.im/kassiopeia-simulation/community.svg
+   :target: https://gitter.im/kassiopeia-simulation/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+
+|Binder github|
+
+.. |Binder github| image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
 
 .. image:: _images/KassiopeiaLogo_1_bb.png
     :width: 250pt
@@ -27,7 +66,7 @@ Welcome to Kassiopeia's documentation!
 This simulation package by `the KATRIN collaboration`_ allows to run highly customizable particle tracking simulations
 along with calculations of electric and magnetic fields.
 
-**Quick start:** **`Try it out online`_**
+**Quick start:** :strong:`Try it out online`_
 in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab and run
 
 .. code-block:: bash
@@ -36,7 +75,7 @@ in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab 
 
 to run your first simulation! *Note: A VTK error indicates that the "VNC (Desktop)" tab is not open yet.*
 
-**Cite `our paper`_:**
+:strong:`Cite`:strong:`our paper`_:strong:`:`
 
 .. code-block:: bash
 
