@@ -3,9 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Kassiopeia's documentation!
-**************************************
-
 
 |Release github| |Code Size| |Issues github| |Pull Requests github| |Last Commit github| |Contributors github| |Gitter github| |Binder github|
 
@@ -32,6 +29,10 @@ Welcome to Kassiopeia's documentation!
 
 .. |Binder github| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
+
+
+Welcome to Kassiopeia's documentation!
+**************************************
 
 
 
