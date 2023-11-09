@@ -84,8 +84,6 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
 .. toctree::
 
    :hidden:
-   
-   :maxdepth: 4
 
     Introduction <introduction.rst>
     References, Citation and Contact <external_documentation.rst>
