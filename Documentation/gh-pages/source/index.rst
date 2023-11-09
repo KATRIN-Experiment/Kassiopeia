@@ -46,6 +46,7 @@ Welcome to Kassiopeia's documentation!
 
 This simulation package by `the KATRIN collaboration`_ allows to run highly customizable particle tracking simulations
 along with calculations of electric and magnetic fields.
+
 .. _`the KATRIN collaboration`: https://katrin.kit.edu
 
 **Quick start:** |Try it out online|_
@@ -56,13 +57,13 @@ in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab 
 .. _Try it out online: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
 
 .. code-block:: bash
-    
+
     Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
 
 
 to run your first simulation! *Note: A VTK error indicates that the "VNC (Desktop)" tab is not open yet.*
 
-**Cite** |our paper|_\\**:**
+**Cite** |our paper|_\ **:**
 
 .. |our paper| replace:: **our paper**
 .. _our paper: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
