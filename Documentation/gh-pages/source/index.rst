@@ -4,7 +4,8 @@
    contain the root `toctree` directive.
 
 
-|Release github| |Code Size| |Issues github| |Pull Requests github| |Last Commit github| |Contributors github| |Gitter github| |Binder github|
+|Release github| |Code Size| |Issues github| |Pull Requests github| 
+|Last Commit github| |Contributors github| |Gitter github| |Binder github|
 
 .. |Release github| image:: https://img.shields.io/github/v/release/KATRIN-Experiment/Kassiopeia
    :target: https://github.com/KATRIN-Experiment/Kassiopeia/releases
