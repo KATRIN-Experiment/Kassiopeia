@@ -49,6 +49,8 @@ along with calculations of electric and magnetic fields.
 .. _`the KATRIN collaboration`: https://katrin.kit.edu
 
 **Source Code:** https://github.com/KATRIN-Experiment/Kassiopeia
+
+
 **Quick start:** |Try it out online|_
 in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab and run
 
