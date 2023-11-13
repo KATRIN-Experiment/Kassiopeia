@@ -50,12 +50,15 @@ along with calculations of electric and magnetic fields.
 
 .. _`the KATRIN collaboration`: https://katrin.kit.edu
 
-**Quick start:** |Try it out online|_
+**Quick start:** |Source Code| \| |Try it out online|_
 in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab and run
 
 
 .. |Try it out online| replace:: **Try it out online**
 .. _Try it out online: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
+.. |Source Code| replace:: **Source Code**
+.. _Source Code: https://github.com/KATRIN-Experiment/Kassiopeia
+
 
 .. code-block:: bash
 
