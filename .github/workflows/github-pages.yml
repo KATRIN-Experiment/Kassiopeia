@@ -12,6 +12,7 @@ jobs:
 
     - name: Install dependencies
       run: pip install sphinx_rtd_theme
+      run: pip install sphinx_design
 
     - name: Build target "build"
       run: cd Documentation/gh-pages && make github
