@@ -84,7 +84,7 @@ to run your first simulation! *Note: A VTK error indicates that the "VNC (Deskto
 The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
 
 
-|More information|
+|More information|_
 
 .. |More information| replace:: **More information**
 .. _More information: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
@@ -92,7 +92,7 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
 
 :::{dropdown} **Contents**
 
-.. toctree::
+ .. toctree::
    :maxdepth: 4
 
     Introduction <introduction.rst>
