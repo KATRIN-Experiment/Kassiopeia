@@ -42,6 +42,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.graphviz',
     'sphinx_rtd_theme',
+    'sphinx_design'
 ]
 
 extlinks = {
