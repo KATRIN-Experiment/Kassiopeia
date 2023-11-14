@@ -90,8 +90,7 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
 .. _More information: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
 
 
-:::{dropdown} **Contents**
-
+:::{dropdown} **Documentation Contents**
  .. toctree::
    :maxdepth: 4
 
@@ -108,5 +107,4 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
     XML Bindings <bindings.rst>
     License <license.rst>
     Authors <authors.rst>
-
 :::  
