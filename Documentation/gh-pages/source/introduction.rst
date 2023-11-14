@@ -17,7 +17,7 @@ The Kasper framework
 ====================
 
 The *Kassiopeia* software relies upon three separate, but concurrently distributed libraries. These are *Kommon*,
-*KGeoBag*, and *KEMField* and are part of the **Kasper** framework.
+*KGeoBag* and *KEMField*.
 
 * *Kommon* contains a collection of commonly used and very basic utilities which are used by the other three
   packages. It also contains a unique system for parsing and constructing objects from an XML file.
