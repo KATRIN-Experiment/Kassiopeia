@@ -35,7 +35,24 @@
 Welcome to Kassiopeia's documentation!
 **************************************
 
+.. dropdown:: **Documentation Contents**
+ .. toctree::
+    :maxdepth: 4
 
+    Introduction <introduction.rst>
+    References, Citation and Contact <external_documentation.rst>
+    Getting Started <compiling.rst>
+    Examples and Tests <examples.rst>
+    Configuring Your Own Simulation <configuration.rst>
+    Basic KGeoBag Shapes <kgeobag_basic.rst>
+    Complex KGeoBag Shapes <kgeobag_complex.rst>
+    Understanding Simulation Output <output.rst>
+    Additional Simulation Tools <tools.rst>
+    Visualization Techniques <visualization.rst>
+    XML Bindings <bindings.rst>
+    License <license.rst>
+    Authors <authors.rst>
+ 
 
 
 
@@ -90,21 +107,4 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
 .. _More information: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
 
 
-:::{dropdown} **Documentation Contents**
- .. toctree::
-    :maxdepth: 4
 
-    Introduction <introduction.rst>
-    References, Citation and Contact <external_documentation.rst>
-    Getting Started <compiling.rst>
-    Examples and Tests <examples.rst>
-    Configuring Your Own Simulation <configuration.rst>
-    Basic KGeoBag Shapes <kgeobag_basic.rst>
-    Complex KGeoBag Shapes <kgeobag_complex.rst>
-    Understanding Simulation Output <output.rst>
-    Additional Simulation Tools <tools.rst>
-    Visualization Techniques <visualization.rst>
-    XML Bindings <bindings.rst>
-    License <license.rst>
-    Authors <authors.rst>
-:::  
