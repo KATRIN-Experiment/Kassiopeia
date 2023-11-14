@@ -108,6 +108,3 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
     License <license.rst>
     Authors <authors.rst>
 :::  
-
-
-:::{dropdown} **Documentation Contents**
