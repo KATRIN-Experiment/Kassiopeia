@@ -110,7 +110,7 @@ build system can be installed through the use of the package manager through the
     apt-get update -y && apt-get install -y \
         build-essential cmake cmake-curses-gui \
         libboost-all-dev libfftw3-dev libgsl0-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
-        libpcl-dev libsqlite3-dev libssl-dev libtbb-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
+        libpcl-dev libsqlite3-dev libssl-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
 
 On a RedHat/Fedora Linux system, the packages can be installed through the command:
 
@@ -121,7 +121,7 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
         root-core root-io-xmlparser root-minuit2 root-spectrum \
         vtk vtk-qt vtk-java \
         boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel libxml2-devel log4cxx-devel \
-        ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel tbb-devel vtk-devel zlib-devel
+        ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel vtk-devel zlib-devel
 
 Required dependencies
 ---------------------

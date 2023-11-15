@@ -82,7 +82,7 @@ Optional Dependencies:
         build-essential cmake cmake-curses-gui \
         libqt4-dev libx11-dev libxext-dev libxft-dev  libxpm-dev \
         libboost-all-dev libfftw3-dev libgsl0-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
-        libpcl-dev libsqlite3-dev libssl-dev libtbb-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
+        libpcl-dev libsqlite3-dev libssl-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
     ```
 
 ### Fedora Linux 31
@@ -95,7 +95,7 @@ Optional Dependencies:
         root-core root-io-xmlparser root-minuit2 root-spectrum \
         vtk vtk-qt vtk-java \
         boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel libxml2-devel log4cxx-devel \
-        ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel tbb-devel vtk-devel zlib-devel
+        ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel vtk-devel zlib-devel
     ```
 
  Installation
