@@ -1,5 +1,5 @@
 
-Discussion & Getting Help
+Meeting and Getting Help
 *************************
 
 Join the Kassiopeia community on Gitter: https://gitter.im/kassiopeia-simulation/community
