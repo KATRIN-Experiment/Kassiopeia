@@ -7,7 +7,6 @@
 [![Gitter](https://badges.gitter.im/kassiopeia-simulation/community.svg)](https://gitter.im/kassiopeia-simulation/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD)
 
-
  Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 ==============================================================================
 
@@ -204,7 +203,17 @@ Join the Kassiopeia community on Gitter: https://gitter.im/kassiopeia-simulation
 
 You can [contribute changes](https://github.com/KATRIN-Experiment/Kassiopeia/compare), [report issues](https://github.com/KATRIN-Experiment/Kassiopeia/issues/new) and [join discussions](https://github.com/KATRIN-Experiment/Kassiopeia/discussions) on Github.
 
+### Regular Meeting
+
+We also organize a regular meeting via Zoom. 
+
+Kassiopeia **users as well as developers** can join, ask questions, raise issues and discuss development topics. 
+It does not matter whether you are already an expert or a complete beginner. **Everyone is welcome!** 
+
+The meeting is announced via email. 
+Please register for the [mailing list](https://www.lists.kit.edu/sympa/subscribe/kassiopeia-user) if you are interested. 
+
 Primary email contacts:
 *    Kasper development list: katrin-kasper@lists.kit.edu
-*    Richard Salomon: richardsalomon@wwu.de
-*    Benedikt Bieringer: benedikt.b@wwu.de
+*    Richard Salomon: richardsalomon@uni-muenster.de
+*    Benedikt Bieringer: benedikt.b@uni-muenster.de
