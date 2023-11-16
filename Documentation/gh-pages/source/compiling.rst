@@ -133,9 +133,6 @@ Required dependencies
 - Boost_ version |BoostVersion| or higher
 - ROOT_ version |ROOTVersion| or higher
 
- - \--enable-minuit2 (if you want to use KaFit)
- - \--enable-fftw3 (if you want to use KEMField)
-
 Optional dependencies
 ---------------------
 
