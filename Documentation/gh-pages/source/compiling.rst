@@ -89,15 +89,15 @@ Required software dependencies
 minimum. That being said, there are a few packages which are required in order to build the software.
 
 The first and most obvious is a C/C++ compiler which is new enough to support the C++14 standard. The two recommended
-compilers are GCC and Clang. The minimum required versions are gcc 5.0 and clang 3.4.
+compilers are GCC and Clang. The minimum required versions are gcc |gccVersion| and clang |clangVersion|.
 
-Secondly, in order to build *Kassiopeia*, CMake version 3.13 or greater is needed, along with a suitable build tool such
+Secondly, in order to build *Kassiopeia*, CMake version |CMakeVersion| or greater is needed, along with a suitable build tool such
 as GNU make or Ninja. The *Kassiopeia* build system is based on the flexible CMake system which can be configured by
 the command line. However, it is extremely useful to install the command line curses-based CMake GUI interface (ccmake)
 in order to easily configure optional dependencies.
 
 Thirdly, *Kassiopeia* requires the Boost_ framework to be available for extended compilation features. It is not
-possible to compile *Kassiopeia* without a recent version of Boost_! The minimum required version is 1.61.
+possible to compile *Kassiopeia* without a recent version of Boost_! The minimum required version is |BoostVersion|.
 
 Minimum requirements
 --------------------
@@ -126,17 +126,17 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
 Required dependencies
 ---------------------
 
-- CMake_ version 3.13 or higher
-- g++ version 6.1 or higher (if compiling with GCC_)
-- clang++ version 3.4 or higher (if compiling with Clang_)
+- CMake_ version |CMakeVersion| or higher
+- g++ version |gccVersion| or higher (if compiling with GCC_)
+- clang++ version |clangVersion| or higher (if compiling with Clang_)
 - GSL_
-- ROOT_ version 6.16 or higher
+- Boost_ version |BoostVersion| or higher
+- ROOT_ version |ROOTVersion| or higher
 
 Optional dependencies
 ---------------------
 
-- Boost_ version 1.61 or higher
-- FFTW_ version 3.3.4 or higher
+- FFTW_ version |FFTWVersion| or higher
 - HDF5_
 - LibXml2_
 - Log4CXX_
@@ -145,9 +145,10 @@ Optional dependencies
 - PCL_
 - PETSc_
 - TBB_
-- VTK_
+- VTK_ version |VTKVersion| or higher
 - ZLIB_
 - DoxyGen_ for building the documentation
+- pdflatex for building the documentation
 
 External libraries
 ------------------
@@ -549,3 +550,10 @@ architectures where compiled code is shared between different machines. Be aware
 .. _Docker: https://www.docker.com/
 .. _GoogleTest: https://github.com/google/googletest/
 .. _gperftools: https://github.com/gperftools/gperftools/
+.. |gccVersion| replace:: 6.1
+.. |clangVersion| replace:: 3.4
+.. |CMakeVersion| replace:: 3.14
+.. |BoostVersion| replace:: 1.65
+.. |ROOTVersion| replace:: 6.16
+.. |FFTWVersion| replace:: 3.3.4
+.. |VTKVersion| replace:: 7.0
