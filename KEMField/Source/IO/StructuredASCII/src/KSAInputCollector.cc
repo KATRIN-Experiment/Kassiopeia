@@ -23,14 +23,8 @@ void KSAInputCollector::ForwardInput(KSAInputNode* root)
         file_status = true;
     };
 
-
-    int count = 0;
     while (!fNodeStack.empty() && file_status) {
-
-        //std::cout<<"calling the reader at line count: "<<count<<std::endl;
-
         file_status = fReader->GetLine(fLine);
-
 
         fNodeStack.top()->AddLine(fLine);
 
@@ -56,8 +50,6 @@ void KSAInputCollector::ForwardInput(KSAInputNode* root)
         }
 
         //std::cout<<"line = "<<fLine<<std::endl;
-
-        count++;
     };
 }
 

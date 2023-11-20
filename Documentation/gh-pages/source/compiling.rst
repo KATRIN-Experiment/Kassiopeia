@@ -102,15 +102,23 @@ possible to compile *Kassiopeia* without a recent version of Boost_! The minimum
 Minimum requirements
 --------------------
 
-On a Debian/Ubuntu Linux system the minimum software packages required by the Kassiopiea
+
+..  Keep the following in sync with .github/workflows/test.yml !
+**Debian/Ubuntu**
+
+On a Debian/Ubuntu Linux system the minimum software packages required by the Kassiopeia
 build system can be installed through the use of the package manager through the following command:
 
 .. code-block:: bash
 
     apt-get update -y && apt-get install -y \
         build-essential cmake cmake-curses-gui \
-        libboost-all-dev libfftw3-dev libgsl0-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
-        libpcl-dev libsqlite3-dev libssl-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
+        libboost-all-dev libfftw3-dev libgsl-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
+        libsqlite3-dev libssl-dev libvtk7-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
+
+Tested on Ubuntu Linux 20.04 LTS & 22.04 LTS.
+
+**RedHat/Fedora**
 
 On a RedHat/Fedora Linux system, the packages can be installed through the command:
 
@@ -118,10 +126,12 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
 
     dnf install -y \
         @development-tools cmake cmake-gui \
-        root-core root-io-xmlparser root-minuit2 root-spectrum \
-        vtk vtk-qt vtk-java \
-        boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel libxml2-devel log4cxx-devel \
-        ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel vtk-devel zlib-devel
+        root-core root-io-xmlparser root-minuit2 root-spectrum root-genvector  \
+        vtk vtk-qt \
+        boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel liburing-devel libxml2-devel log4cxx-devel \
+        ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
+
+Tested on Fedora Linux 37.
 
 Required dependencies
 ---------------------
