@@ -167,7 +167,7 @@ void MagfieldCoils::CoilRead()
       coil[i]= new double[14];
    }
 // Reading the coil parameters:   
-   double cu, Cx, Cy, Cz, alpha, beta, tu, L, Rmin,Rmax, v[3];
+   double cu, Cx, Cy, Cz, alpha, beta, tu, L, Rmin, Rmax;
    for(int i=0; i<Ncoil; i++)
    {
        input >> cu >> Cx >> Cy >> Cz >> alpha >> beta >> tu >> L >> Rmin >> Rmax ;
@@ -658,7 +658,7 @@ void MagfieldCoils::Magfield2EllipticCoil(int i, double z, double r, double& Bz,
 // the first, second and third complete elliptic integrals.
   double L, Zmin, Zmax, Rmin, Rmax, sigma;
   double R, Z, delr2, sumr2, delz2, eta, d, K, EK, PIK, S;
-  double sign, st, delRr, Rlow[2], Rhigh[2];
+  double sign, delRr, Rlow[2], Rhigh[2];
   const double mu0=4.*M_PI*1.e-7;
   double x[2][1001], w[2][1001];  // nodes and weights
 // Coil parameters:
@@ -870,7 +870,7 @@ void MagfieldCoils::Magsource2RemoteCoil(int i, double z0, double rorem)
 {
   const double mu0=4.*M_PI*1.e-7;
   double x[1001], w[1001];  // nodes and weights
-  double L, sigma, Zmin, Zmax, Rmin, Rmax, st;
+  double L, sigma, Zmin, Zmax, Rmin, Rmax;
 // Coil parameters:
   L=coil[i][7]; // coil length
   Zmin=-L/2.;  Zmax=L/2.; // coil endpoints relative to coil center
@@ -1043,7 +1043,10 @@ void MagfieldCoils::RemoteSourcepointGroup(int g)
      {
         int i=Cin[g][c];    double L=coil[i][7]; 
         double zA=Z[g][c]-L/2.;  double zB=Z[g][c]+L/2.;  // coil edges
-	if(zA<zmin)  zmin=zA;  if(zB>zmax)  zmax=zB;  
+        if (zA < zmin)
+            zmin = zA;
+        if (zB > zmax)
+            zmax = zB;
      }
      z0rem=z0remG[g]=(zmin+zmax)/2.; // group center in group Z-coordinate system
 // Remote convergence radius of group --> roremG[g] :
@@ -1076,7 +1079,7 @@ void MagfieldCoils::MagsourceMagchargeCoils()
 //     i: coil index, n source constant index.
 {
 // Output to file dirname+objectname+magsource_remote.txt :
-  double Rmin, Rmax, L, rorem, sigma;
+  double Rmin, Rmax, sigma;
   string filename=dirname+objectname+"magsource_remote.txt";
   ofstream output;
   output.precision(16);
@@ -1089,7 +1092,6 @@ void MagfieldCoils::MagsourceMagchargeCoils()
   for(int i=0; i<Ncoil; i++)
   {
 // Coil i parameters:
-     L=coil[i][7]; // current, turns, length
      Rmin=coil[i][8];  Rmax=coil[i][9]; // inner and outer radius
      sigma=coil[i][10];    // current density
      output <<  scientific << setw(7) << i <<endl; // coil index
@@ -1187,7 +1189,7 @@ void MagfieldCoils::Magsource2CentralCoil(int i, double z0, double Rocen)
 {
   const double mu0=4.*M_PI*1.e-7;
   double x[1001], w[1001];  // nodes and weights
-  double L, sigma, Zmin, Zmax, Rmin, Rmax, st;
+  double L, sigma, Zmin, Zmax, Rmin, Rmax;
 // Coil parameters:
   L=coil[i][7]; 
   Zmin=-L/2.;  Zmax=L/2.;  // coil endpoints relative to coil center
@@ -1259,7 +1261,6 @@ void MagfieldCoils::MagsourceCentralCoils()
 //   (defined relative to the coil center; positive z0 in coil direction u),
 //     rocen: central convergence radius for a fixed source point and coil.
 {
-  double z0, Rmin, Rmax, L, rorem, cu, tu;
 // Output to file dirname+objectname+magsource_central.txt :
   string filename=dirname+objectname+"magsource_central.txt";
   ofstream output;
@@ -1428,7 +1429,7 @@ void MagfieldCoils::CentralSourcepointsGroup(int g)
 // Central source points: 
 {
     vector<double> Z0cen;
-    double z0, rocen;
+    double z0;
     double roremC=roremG[g];  
     double z0min=z0remG[g]-2.*roremC;
     double z0max=z0remG[g]+2.*roremC;
@@ -1524,7 +1525,7 @@ bool MagfieldCoils::Magfield2Remote(bool bcoil, int ig, double z, double r, doub
   }
 // We start here the series expansion:
   Bz=Br=0.;
-  int nlast;
+  int nlast = 0;
   double brem;
   if(bcoil==true || even==true)  // even calculation
   {
@@ -1699,7 +1700,7 @@ bool MagfieldCoils::Hfield(int i, double z, double r, double& Hz, double& Hr, do
 // We start here the series expansion.
 // Only the odd-n terms are needed in the series.
   double Hzplus,Hrplus,Hzplusold,Hrplusold,Heps,Hdelta;
-  int nlast;
+  int nlast=0;
   for(int n=1; n<=nmax-1; n+=2)
   {
      nlast=n;
@@ -1805,10 +1806,10 @@ bool MagfieldCoils::Magfield2Central(bool bcoil, int ig, int j, double z, double
      Bz=BcenG[ig][j][0]+BcenG[ig][j][1]*rc*u;
      Br=-sr*BcenG[ig][j][1]/2.*rc;
   }
+  int nlast=0;
   if(rc<1.e-10) goto label;
 //
 // We start here the central series expansion:
-  int nlast;
   double bcen;
   for(int n=2; n<=nmax-1; n++)
   {
@@ -2339,8 +2340,9 @@ double MagfieldCoils::RJ_Carlson(double x,double y,double z,double p)
 //  (see: Press et al., Numerical Recipes, Sec. 6.11).
   const double ERRTOL=0.0015,TINY=1.e-20,BIG=1.e12,C1=3./14.,C2=1./3.,
                C3=3./22.,C4=3./26.,C5=0.75*C3,C6=1.5*C4,C7=0.5*C2,C8=2.*C3;
-  double a,alamb,alpha,ans,ave,b,beta,delp,delx,dely,delz,ea,eb,ec,ed,ee,
-         fac,pt,rcx,rho,sum,sqrtx,sqrty,sqrtz,tau,xt,yt,zt;
+  double alamb,alpha,ans,ave,beta,delp,delx,dely,delz,ea,eb,ec,ed,ee,
+         fac,pt,rho,sum,sqrtx,sqrty,sqrtz,tau,xt,yt,zt;
+  double rcx = 0.; double b = 0.; double a = 0.;
   if(FMIN3(x,y,z)<0. || FMIN(FMIN(x+y,x+z),FMIN(y+z,fabs(p)))<TINY ||
       FMAX(FMAX(x,y),FMAX(z,fabs(p)))>BIG)
   {
