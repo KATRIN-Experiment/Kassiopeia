@@ -8,9 +8,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  REGISTRY: ghcr.io
-
 # Keep the following in sync with Documentation/gh-pages/source/compiling.rst !
 jobs:
   ubuntu_20_04:
