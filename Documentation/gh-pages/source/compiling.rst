@@ -564,6 +564,6 @@ architectures where compiled code is shared between different machines. Be aware
 .. |clangVersion| replace:: 3.4
 .. |CMakeVersion| replace:: 3.14
 .. |BoostVersion| replace:: 1.65
-.. |ROOTVersion| replace:: 6.16
+.. |ROOTVersion| replace:: 6.24
 .. |FFTWVersion| replace:: 3.3.4
 .. |VTKVersion| replace:: 7.0
