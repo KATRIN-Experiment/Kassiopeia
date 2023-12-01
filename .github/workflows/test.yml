@@ -1,0 +1,90 @@
+name: Test Kassiopeia
+
+# as described on https://katrin-experiment.github.io/Kassiopeia/compiling.html
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Keep the following in sync with Documentation/gh-pages/source/compiling.rst !
+jobs:
+  ubuntu_20_04:
+    strategy:
+      matrix:
+        use_clang: [true, false]
+    runs-on: ubuntu-latest
+    container: ubuntu:20.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        # Set up variables to avoid interactive timezone selection
+        # Source: https://serverfault.com/a/992421
+        export DEBIAN_FRONTEND=noninteractive
+        export TZ=Etc/UTC
+        
+        apt-get update -y && apt-get install -y \
+            build-essential cmake cmake-curses-gui \
+            libboost-all-dev libfftw3-dev libgsl-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
+            libsqlite3-dev libssl-dev libvtk7-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
+    - name: Install root
+      run: |
+        apt install -y wget
+        wget https://root.cern/download/root_v6.24.08.Linux-ubuntu20-x86_64-gcc9.4.tar.gz
+        tar -xf root_v6.24.08.Linux-ubuntu20-x86_64-gcc9.4.tar.gz
+    - name: Build code
+      run: |
+        source root/bin/thisroot.sh
+        if ${{ matrix.use_clang }}; then
+            echo "Using Clang."
+            apt install -y clang
+            export CC=/usr/bin/clang
+            export CXX=/usr/bin/clang++
+        fi
+        ./setup.sh
+      shell: bash
+
+    - name: Launch environment and run tests
+      run: |
+        source root/bin/thisroot.sh && source install/bin/kasperenv.sh && UnitTestKasper
+      shell: bash
+
+  fedora_37:
+    strategy:
+      matrix:
+        use_clang: [false] # FIXME add "true" after solving https://github.com/KATRIN-Experiment/Kassiopeia/issues/87 
+    runs-on: ubuntu-latest
+    container: fedora:37
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run workaround for log4cxx bug (no longer needed with Fedora 39)
+      run: |
+        dnf update -y
+        dnf install -y --setopt=install_weak_deps=False dnf-plugins-core
+        dnf clean all
+        dnf copr enable thofmann/log4xx-1.x -y
+    - name: Install dependencies
+      run: |
+        dnf install -y \
+            @development-tools cmake cmake-gui \
+            root-core root-io-xmlparser root-minuit2 root-spectrum root-genvector \
+            vtk vtk-qt \
+            boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel liburing-devel libxml2-devel log4cxx-devel \
+            ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
+    - name: Build code
+      run: |
+        if ${{ matrix.use_clang }}; then
+            echo "Using Clang."
+            dnf install -y clang
+            export CC=/usr/bin/clang
+            export CXX=/usr/bin/clang++
+        fi
+        ./setup.sh
+      shell: bash
+
+    - name: Launch environment and run tests
+      run: |
+        source install/bin/kasperenv.sh && UnitTestKasper
+      shell: bash
