@@ -1,4 +1,4 @@
-Getting starting with Kassiopiea
+Getting started with Kassiopiea
 **********************************
 
 .. contents:: On this page
