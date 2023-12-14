@@ -51,6 +51,7 @@ Welcome to Kassiopeia's documentation!
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
+    Discussion and Getting Help <discussion.rst>
     License <license.rst>
     Authors <authors.rst>
  
