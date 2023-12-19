@@ -32,11 +32,6 @@ if( KASPER_USE_BOOST )
 endif( KASPER_USE_BOOST )
 
 add_subdirectory( Core )
-if( KASPER_USE_TBB )
-    # NOTE: This is not a separate library, but part of KommonCore. It *must* come after `Core`!
-    add_subdirectory( TBB )
-endif( KASPER_USE_TBB )
-
 add_subdirectory( Binning )
 add_subdirectory( Math )
 

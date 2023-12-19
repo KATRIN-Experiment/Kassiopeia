@@ -10,11 +10,8 @@ ARG KASSIOPEIA_GIT_COMMIT=""
 ARG KASSIOPEIA_CPUS=""
 
 # --- runtime-base ---
-# NOTE: Fedora 36 is used because of this issue: https://gitlab.freedesktop.org/mesa/mesa/-/issues/9442
-#       If our IT can circumvent this with a JupyterHub VM emulation change, we may ignore this issue in the future.
-# NOTE: For Fedora 37 & 38, uncomment marked lines below
 # NOTE: For Fedora 39, remove marked lines below
-FROM fedora:36 as runtime-base
+FROM fedora:38 as runtime-base
 ARG KASSIOPEIA_UID
 ARG KASSIOPEIA_USER
 ARG KASSIOPEIA_GID
@@ -22,12 +19,12 @@ ARG KASSIOPEIA_GROUP
 
 LABEL description="Runtime base container"
 
-# # TODO REMOVE FOR FEDORA 39
-# RUN dnf update -y \
-#  && dnf install -y --setopt=install_weak_deps=False dnf-plugins-core \
-#  && dnf clean all
-# RUN dnf copr enable thofmann/log4xx-1.x -y
-# # END TODO
+# TODO REMOVE FOR FEDORA 39
+RUN dnf update -y \
+ && dnf install -y --setopt=install_weak_deps=False dnf-plugins-core \
+ && dnf clean all
+RUN dnf copr enable thofmann/log4xx-1.x -y
+# END TODO
 
 COPY Docker/packages.runtime packages
 RUN dnf update -y \
@@ -191,6 +188,10 @@ RUN sed -i -e "s,'websockify',window.location.pathname.slice(1),g" /usr/share/no
     && sed -i -e 's,<div id="sendCtrlAltDelButton">Send CtrlAltDel</div>,<div id="sendCtrlAltDelButton" hidden>Send CtrlAltDel</div><div onClick="window.location.reload(true);" style="position: fixed;top: 0px;right: 0px;border: 1px outset;padding: 5px 5px 4px 5px;cursor: pointer;">Reload</div>,g' /usr/share/novnc/vnc_lite.html \
     && ln -fs /usr/share/novnc/vnc_lite.html /usr/share/novnc/index.html
 COPY --chown=root:root Docker/startvnc /
+
+# MyBinder mounts /etc/jupyter, making configuration from there e.g. containing terminals inaccessible
+# Moving /etc/jupyter to a safer place as a workaround
+RUN mkdir -p /usr/etc && mv /etc/jupyter /usr/etc
 
 # Hide Jupyter news announcement
 # https://jupyterlab.readthedocs.io/en/stable/user/announcements.html

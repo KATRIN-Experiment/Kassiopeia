@@ -32,6 +32,19 @@ It is also possible to build the images yourself. That is described here: [Build
 Running a Docker container
 ----------------------------
 
+*Beware: Files created inside containers may be lost after stopping the container. Ensure that you store important data to a permanent location!*
+
+### Run on HPC infrastructure (Apptainer/Singularity)
+
+Some HPC-Clusters prefer the use of Apptainer or Singularity over Docker. Apptainer is a fork of Singularity, both can be used similarly. They support Docker images, which can be used following these steps:
+ * Load Apptainer/Singularity module if applicable. Example from the NEMO cluster: `module load tools/singularity/3.11`
+ * Create Container file by executing `singularity build kassiopeia.sif docker://ghcr.io/katrin-experiment/kassiopeia/full:main`.
+ * Run Container by executing `singularity run kassiopeia.sif bash`
+
+For automatic jobs, commands may be packaged into a shell script and run like `singularity run kassiopeia.sif script.sh`.
+
+### Run locally (docker/podman)
+
 To run Kassiopeia applications from the Docker image, you can now start a 
 container by running e.g.:
 
@@ -80,7 +93,7 @@ run any Kassiopeia commands. Inside the container, Kassiopeia is installed to
 `/kassiopeia/install`. The script `kasperenv.sh` is executed at the beginning,
 so all Kassiopeia executables are immediately available at the command line.
 
-### File structure of the container
+#### File structure of the container
 
 ```
 /home/parrot           # The default user's home directory inside the container.
@@ -106,7 +119,7 @@ so all Kassiopeia executables are immediately available at the command line.
   
 ```
 
-### Listing and removing existing containers
+#### Listing and removing existing containers
 
 To see a list of all running and stopped containers, run:
 
@@ -128,7 +141,7 @@ docker rm containername
 
 This also cleans up any data that is only stored inside the container.
 
-### Running applications directly
+#### Running applications directly
 
 As an alternative to starting a shell in an interactive container, you
 can also run any Kassiopeia executable directly from the Docker command:
