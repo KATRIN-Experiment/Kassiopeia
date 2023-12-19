@@ -40,8 +40,8 @@ Welcome to Kassiopeia's documentation!
  .. toctree::
     :maxdepth: 4
 
-    Introduction <introduction.rst>
-    References, Citation and Contact <external_documentation.rst>
+    Contact, Meeting and References <contact.rst>
+    Introduction <introduction.rst> 
     Getting Started <compiling.rst>
     Examples and Tests <examples.rst>
     Configuring Your Own Simulation <configuration.rst>
@@ -51,7 +51,6 @@ Welcome to Kassiopeia's documentation!
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
-    Meeting and Getting Help <discussion.rst>
     License <license.rst>
     Authors <authors.rst>
  
@@ -95,6 +94,9 @@ to run your first simulation! *Note: A VTK error indicates that the "VNC (Deskto
     D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensible C++ Particle Tracking Package” (doi:10.1088/1367-2630/aa6950)
 
 
+In addition to this user guide, *Kassiopeia* and its associated libraries have been documented extensively in several
+PhD theses. Many of these can be found under the list of KATRIN publications_.
+
 **Docker images**
 --------------
 
@@ -107,6 +109,6 @@ The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kub
 
 .. |More information| replace:: **More information**
 .. _More information: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
-
+.. _publications: https://www.katrin.kit.edu/375.php
 
 
