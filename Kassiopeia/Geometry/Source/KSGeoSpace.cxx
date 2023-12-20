@@ -231,6 +231,8 @@ void KSGeoSpace::DeinitializeComponent()
     for (tGeoSideIt = fSides.begin(); tGeoSideIt != fSides.end(); tGeoSideIt++) {
         (*tGeoSideIt)->Deinitialize();
     }
+    
+    KGeoBag::KGInterface::DeleteInstance();
 
     return;
 }
