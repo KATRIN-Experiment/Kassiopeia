@@ -1,0 +1,1 @@
+.. include:: Kassiopeia/LICENSE.md
