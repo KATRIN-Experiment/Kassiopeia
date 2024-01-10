@@ -14,7 +14,7 @@ import os
 
 import sys
 
-os.path.insert(0, os.path.abspath('Gon-na/Kassiopeia'))
+sys.path.insert(0, os.path.abspath('Gon-na/Kassiopeia'))
 
 # sys.path.insert(0, os.path.abspath('.'))
 
