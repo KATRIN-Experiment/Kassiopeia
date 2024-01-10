@@ -51,9 +51,10 @@ Welcome to Kassiopeia's documentation!
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
-    License <license.rst>
+    KEMField <KEMField_manual_link.rst>
+    License <linktolicense.rst>
     Authors <authors.rst>
- 
+
 
 
 
