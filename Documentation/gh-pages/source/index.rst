@@ -54,6 +54,7 @@ Welcome to Kassiopeia's documentation!
     License <license.rst>
     testLicense <Kassiopeia/LICENSE.md>
     testLicense2 <LICENSE.md>
+    License2 <license.rst>
     Authors <authors.rst>
  
 
