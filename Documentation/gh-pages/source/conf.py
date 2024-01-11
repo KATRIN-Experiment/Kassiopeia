@@ -14,15 +14,15 @@ import os
 
 import sys
 
-sys.path.insert(0, os.path.abspath('/Gon-na/Kassiopeia/Kassiopeia'))
+sys.path.insert(0, os.path.abspath('/Gon-na/Kassiopeia/Kassiopeia/LICENSEtest.rst'))
 
-sys.path.insert(0, os.path.abspath('/Gon-na/Kassiopeia'))
+sys.path.insert(0, os.path.abspath('/Gon-na/Kassiopeia/LICENSEtest.rst'))
 
-sys.path.insert(0, os.path.abspath('/Kassiopeia'))
+sys.path.insert(0, os.path.abspath('/Kassiopeia/LICENSEtest.rst'))
 
-sys.path.insert(0, os.path.abspath('/Kassiopeia/Kassiopeia'))
+sys.path.insert(0, os.path.abspath('/Kassiopeia/Kassiopeia/LICENSEtest.rst'))
 
-sys.path.insert(0, os.path.abspath('/home/runner/work/Kassiopeia/Kassiopeia'))
+sys.path.insert(0, os.path.abspath('/home/runner/work/Kassiopeia/Kassiopeia/LICENSEtest.rst'))
 
 
 
