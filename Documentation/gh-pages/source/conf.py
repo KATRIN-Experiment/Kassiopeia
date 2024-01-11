@@ -16,6 +16,8 @@ import sys
 
 sys.path.insert(0, os.path.abspath('Gon-na/Kassiopeia'))
 
+sys.path.insert(0, os.path.abspath('/home/runner/work/Kassiopeia'))
+
 # sys.path.insert(0, os.path.abspath('.'))
 
 
