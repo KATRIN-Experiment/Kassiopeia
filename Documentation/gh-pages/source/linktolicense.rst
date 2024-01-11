@@ -6,7 +6,7 @@
 
 .. include:: ../Gon-na/Kassiopeia/Kassiopeia/blob/main/LICENSEtest.rst
 
-.. include:: ../LICENSEtest.rst
+.. include:: ../Kassiopeia/LICENSEtest.rst
 
 BREAKER 0
 
