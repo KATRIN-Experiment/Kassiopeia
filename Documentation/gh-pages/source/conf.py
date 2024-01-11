@@ -16,6 +16,8 @@ import sys
 
 sys.path.insert(0, os.path.abspath('/Gon-na/Kassiopeia/Kassiopeia'))
 
+sys.path.insert(0, os.path.abspath('/Gon-na/Kassiopeia'))
+
 sys.path.insert(0, os.path.abspath('/Kassiopeia'))
 
 sys.path.insert(0, os.path.abspath('/Kassiopeia/Kassiopeia'))

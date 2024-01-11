@@ -1,11 +1,11 @@
 License TEST
 ********
 
-.. include:: ../Kassiopeia/LICENSEtest.rst
+.. include:: ../Gon-na/Kassiopeia/LICENSEtest.rst
 
-.. include:: ../Kassiopeia/blob/main/LICENSEtest.rst
+.. include:: ../Gon-na/Kassiopeia/blob/main/LICENSEtest.rst
 
-.. include:: ../Kassiopeia/Kassiopeia/blob/main/LICENSEtest.rst
+.. include:: ../Gon-na/Kassiopeia/Kassiopeia/blob/main/LICENSEtest.rst
 
 BREAKER 0
 
