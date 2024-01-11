@@ -1,11 +1,11 @@
 License TEST
 ********
 
-.. include:: Kassiopeia/Kassiopeia/LICENSEtest.rst
+.. include:: /Kassiopeia/Kassiopeia/LICENSEtest.rst
 
-.. include:: Kassiopeia/blob/main/LICENSE.rst
+.. include:: /Kassiopeia/blob/main/LICENSE.rst
 
-.. include:: Kassiopeia/Kassiopeia/blob/main/LICENSE.rst
+.. include:: /Kassiopeia/Kassiopeia/blob/main/LICENSE.rst
 
 BREAKER 0
 
@@ -13,7 +13,7 @@ BREAKER 0
 
 BREAKER 1
 
-.. include:: home/runner/work/Kassiopeia/Kassiopeia/LICENSEtest.rst
+.. include:: /home/runner/work/Kassiopeia/Kassiopeia/LICENSEtest.rst
 
 
 BREAKER 2
