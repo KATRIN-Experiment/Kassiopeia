@@ -1,5 +1,4 @@
-License TEST
-********
+
 
 .. include:: ../Gon-na/Kassiopeia/LICENSEtest.rst
 
