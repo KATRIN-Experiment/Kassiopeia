@@ -1,4 +1,4 @@
-License
+License TEST
 ********
 
 .. include:: Gon-na/Kassiopeia/LICENSEtest.txt

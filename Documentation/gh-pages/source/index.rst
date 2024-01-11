@@ -52,7 +52,7 @@ Welcome to Kassiopeia's documentation!
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
     License <license.rst>
-    testLicense <linktolicense.rst>
+    LicenseTEST <linktolicense.rst>
     Authors <authors.rst>
 
  
