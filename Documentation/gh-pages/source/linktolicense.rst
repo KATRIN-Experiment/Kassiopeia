@@ -1,7 +1,7 @@
 License TEST
 ********
 
-.. include:: ../Kassiopeia/Kassiopeia/LICENSEtest.rst
+.. include:: ../Kassiopeia/LICENSEtest.rst
 
 .. include:: ../Kassiopeia/blob/main/LICENSE.rst
 
