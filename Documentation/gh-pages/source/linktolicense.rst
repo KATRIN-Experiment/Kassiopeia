@@ -7,6 +7,8 @@ License TEST
 
 .. include:: ../Gon-na/Kassiopeia/Kassiopeia/blob/main/LICENSEtest.rst
 
+.. include:: ../LICENSEtest.rst
+
 BREAKER 0
 
 .. include:: licensetest.rst
