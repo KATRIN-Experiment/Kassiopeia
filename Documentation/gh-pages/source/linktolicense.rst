@@ -3,9 +3,9 @@ License TEST
 
 .. include:: ../Kassiopeia/LICENSEtest.rst
 
-.. include:: ../Kassiopeia/blob/main/LICENSE.rst
+.. include:: ../Kassiopeia/blob/main/LICENSEtest.rst
 
-.. include:: ../Kassiopeia/Kassiopeia/blob/main/LICENSE.rst
+.. include:: ../Kassiopeia/Kassiopeia/blob/main/LICENSEtest.rst
 
 BREAKER 0
 
