@@ -53,6 +53,7 @@ Welcome to Kassiopeia's documentation!
     XML Bindings <bindings.rst>
     License <license.rst>
     LicenseTEST <linktolicense.rst>
+    LicenseTEST2 <../../LICENSEtest.rst>
     Authors <authors.rst>
 
  
