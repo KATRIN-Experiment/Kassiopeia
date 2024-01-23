@@ -4,6 +4,8 @@
 # header files
 set (FIELDS_MAGNETIC_HEADER_BASENAMES
     KMagneticField.hh
+    KMagnetostaticImportField.hh
+    KMagnetostaticExpoField.hh
     KStaticElectromagnetField.hh
     KMagnetostaticField.hh
     KMagnetostaticConstantField.hh
@@ -24,6 +26,8 @@ endforeach( BASENAME )
 set( FIELDS_MAGNETIC_SOURCE_BASENAMES
     KStaticElectromagnetField.cc
     KMagneticDipoleField.cc
+    KMagnetostaticImportField.cc
+    KMagnetostaticExpoField.cc
     KMagnetostaticConstantField.cc
     KMagneticSuperpositionField.cc
     KRampedMagneticField.cc

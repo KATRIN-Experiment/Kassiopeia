@@ -629,6 +629,24 @@ void KSRoot::ExecuteTrack()
     trackmsg(eNormal) << "processing track " << fTrack->GetTrackId() << " <" << fTrack->GetCreatorName() << "> ..."
                       << eom;
 
+    trackmsg(eNormal) << "\n\n Initial Position: x: "<< fTrack->InitialParticle().GetX()
+              << " y: " << fTrack->InitialParticle().GetY()
+              << " z: " << fTrack->InitialParticle().GetZ()
+              << " E: " << fTrack->InitialParticle().GetKineticEnergy_eV()
+              << " phi: " << fTrack->InitialParticle().GetElectricPotential() << "\n"
+              << " azi_x: "<< fTrack->InitialParticle().GetAzimuthalAngleToX()
+              << " pol_b: " << fTrack->InitialParticle().GetPolarAngleToB()
+              << " pol_z: " << fTrack->InitialParticle().GetPolarAngleToZ() << "\n"
+              << " px: "<< fTrack->InitialParticle().GetPX()
+              << " py: " << fTrack->InitialParticle().GetPY()
+              << " pz: " << fTrack->InitialParticle().GetPZ() << "\n"
+              << " Ex: "<< fTrack->InitialParticle().GetElectricField()[0]
+              << " Ey: " << fTrack->InitialParticle().GetElectricField()[1]
+              << " Ez: " << fTrack->InitialParticle().GetElectricField()[2] << "\n"
+              << " Bx: "<< fTrack->InitialParticle().GetMagneticField()[0]
+              << " By: " << fTrack->InitialParticle().GetMagneticField()[1]
+              << " Bz: " << fTrack->InitialParticle().GetMagneticField()[2] << eom;
+
     // start navigation
     if (fRestartNavigation == true) {
         fRootSpaceNavigator->StartNavigation(fTrack->InitialParticle(), fRootSpace);

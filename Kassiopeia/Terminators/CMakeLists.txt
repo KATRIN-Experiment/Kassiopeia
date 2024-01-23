@@ -7,6 +7,9 @@ set( TERMINATORS_HEADER_BASENAMES
     KSTermMaxZ.h
     KSTermMinR.h
     KSTermMaxR.h
+        KSTermXRange.h
+        KSTermYRange.h
+        KSTermZRange.h
     KSTermMinEnergy.h
     KSTermMaxEnergy.h
     KSTermMinLongEnergy.h
@@ -40,6 +43,9 @@ set( TERMINATORS_SOURCE_BASENAMES
     KSTermMaxZ.cxx
     KSTermMinR.cxx
     KSTermMaxR.cxx
+        KSTermXRange.cxx
+        KSTermYRange.cxx
+        KSTermZRange.cxx
     KSTermMinEnergy.cxx
     KSTermMaxEnergy.cxx
     KSTermMinLongEnergy.cxx

@@ -8,6 +8,8 @@ set( FIELDS_ELECTRIC_HEADER_BASENAMES
     KElectricQuadrupoleField.hh
     KElectrostaticConstantField.hh
     KElectrostaticLinearField.hh
+        KElectrostaticExpoField.hh
+        KElectrostaticImportField.hh
     KElectrostaticField.hh
     KElectrostaticBoundaryField.hh
     KElectrostaticBoundaryFieldTimer.hh
@@ -30,6 +32,8 @@ set( FIELDS_ELECTRIC_SOURCE_BASENAMES
     KElectricQuadrupoleField.cc
     KElectrostaticConstantField.cc
     KElectrostaticLinearField.cc
+        KElectrostaticExpoField.cc
+        KElectrostaticImportField.cc
     KElectrostaticBoundaryField.cc
     KElectrostaticBoundaryFieldTimer.cc
     KInducedAzimuthalElectricField.cc

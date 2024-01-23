@@ -151,6 +151,9 @@ set( BINDINGS_HEADER_FILES
     Terminators/Include/KSTermMaxZBuilder.h
     Terminators/Include/KSTermMinRBuilder.h
     Terminators/Include/KSTermMaxRBuilder.h
+    Terminators/Include/KSTermXRangeBuilder.h
+    Terminators/Include/KSTermYRangeBuilder.h
+    Terminators/Include/KSTermZRangeBuilder.h
     Terminators/Include/KSTermMinEnergyBuilder.h
     Terminators/Include/KSTermMaxEnergyBuilder.h
     Terminators/Include/KSTermMinLongEnergyBuilder.h
@@ -378,6 +381,9 @@ set( BINDINGS_SOURCE_FILES
     Terminators/Source/KSTermMaxZBuilder.cxx
     Terminators/Source/KSTermMinRBuilder.cxx
     Terminators/Source/KSTermMaxRBuilder.cxx
+    Terminators/Source/KSTermXRangeBuilder.cxx
+    Terminators/Source/KSTermYRangeBuilder.cxx
+    Terminators/Source/KSTermZRangeBuilder.cxx
     Terminators/Source/KSTermMinEnergyBuilder.cxx
     Terminators/Source/KSTermMaxEnergyBuilder.cxx
     Terminators/Source/KSTermMinLongEnergyBuilder.cxx

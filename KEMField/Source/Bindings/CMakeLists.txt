@@ -10,6 +10,8 @@ set (KEMFIELD_BINDINGS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KBoundaryElementInfoDisplayBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectricQuadrupoleFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticConstantFieldBuilder.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticExpoFieldBuilder.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticImportFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticLinearFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticBoundaryFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticBoundaryFieldTimerBuilder.hh
@@ -19,6 +21,8 @@ set (KEMFIELD_BINDINGS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KRampedElectric2FieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticConstantFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagneticDipoleFieldBuilder.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticImportFieldBuilder.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticExpoFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KStaticElectromagnetFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagneticSuperpositionFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KRampedMagneticFieldBuilder.hh
@@ -55,6 +59,8 @@ set (KEMFIELD_BINDINGS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KBoundaryElementInfoDisplayBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectricQuadrupoleFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticConstantFieldBuilder.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticExpoFieldBuilder.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticImportFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticLinearFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticBoundaryFieldTimerBuilder.cc
@@ -64,6 +70,8 @@ set (KEMFIELD_BINDINGS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KRampedElectric2FieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticConstantFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagneticDipoleFieldBuilder.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticImportFieldBuilder.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticExpoFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KStaticElectromagnetFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagneticSuperpositionFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KRampedMagneticFieldBuilder.cc

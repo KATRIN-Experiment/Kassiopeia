@@ -8,10 +8,16 @@
 #include "KElectricQuadrupoleFieldBuilder.hh"
 #include "KElectrostaticBoundaryFieldBuilder.hh"
 #include "KElectrostaticConstantFieldBuilder.hh"
+#include "KElectrostaticExpoFieldBuilder.hh"
+#include "KElectrostaticImportFieldBuilder.hh"
+
 #include "KInducedAzimuthalElectricFieldBuilder.hh"
 #include "KMagneticDipoleFieldBuilder.hh"
 #include "KMagneticSuperpositionFieldBuilder.hh"
 #include "KMagnetostaticConstantFieldBuilder.hh"
+#include "KMagnetostaticExpoFieldBuilder.hh"
+#include "KMagnetostaticImportFieldBuilder.hh"
+
 #include "KRampedElectric2FieldBuilder.hh"
 #include "KRampedElectricFieldBuilder.hh"
 #include "KRampedMagneticFieldBuilder.hh"
@@ -32,6 +38,9 @@ namespace katrin
 STATICINT sKSRootConstant =
     // electric fields
     KSRootBuilder::ComplexElement<KElectrostaticConstantField>("ksfield_electric_constant") +
+    KSRootBuilder::ComplexElement<KElectrostaticExpoField>( "ksfield_electric_expo" ) +
+    KSRootBuilder::ComplexElement<KElectrostaticImportField>( "ksfield_electric_import" ) +
+
     KSRootBuilder::ComplexElement<KElectricQuadrupoleField>("ksfield_electric_quadrupole") +
     KSRootBuilder::ComplexElement<KGElectrostaticBoundaryField>("ksfield_electrostatic") +
     KSRootBuilder::ComplexElement<KRampedElectricField>("ksfield_electric_ramped") +
@@ -44,6 +53,9 @@ STATICINT sKSRootConstant =
 
     // magnetic fields
     KSRootBuilder::ComplexElement<KMagnetostaticConstantField>("ksfield_magnetic_constant") +
+    KSRootBuilder::ComplexElement<KMagnetostaticExpoField>( "ksfield_magnetic_expo" ) +
+    KSRootBuilder::ComplexElement<KMagnetostaticImportField>( "ksfield_magnetic_import" ) +
+
     KSRootBuilder::ComplexElement<KMagneticDipoleField>("ksfield_magnetic_dipole") +
     KSRootBuilder::ComplexElement<KRampedMagneticField>("ksfield_magnetic_ramped") +
     KSRootBuilder::ComplexElement<KMagneticSuperpositionField>("ksfield_magnetic_super_position") +
