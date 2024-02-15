@@ -39,8 +39,16 @@ Welcome to Kassiopeia's documentation!
    
  .. toctree::
     :maxdepth: 4
+    :caption: General information
 
     Contact, Meeting and References <contact.rst>
+    License <linktolicense.rst>
+    Authors <authors.rst>
+
+ .. toctree::
+    :maxdepth: 4
+    :caption: User Guide 
+
     Introduction <introduction.rst> 
     Getting Started <compiling.rst>
     Examples and Tests <examples.rst>
@@ -48,12 +56,11 @@ Welcome to Kassiopeia's documentation!
     Basic KGeoBag Shapes <kgeobag_basic.rst>
     Complex KGeoBag Shapes <kgeobag_complex.rst>
     Understanding Simulation Output <output.rst>
+ 
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
     KEMField <KEMField_manual_link.rst>
-    License <linktolicense.rst>
-    Authors <authors.rst>
 
 
 

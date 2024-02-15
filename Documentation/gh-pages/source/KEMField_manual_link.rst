@@ -8,7 +8,7 @@ Alternatively the manual is available for download :download:`here <../../../KEM
 and can also be found in the `Github repository <https://github.com/KATRIN-Experiment/Kassiopeia/>`_. 
 
 
-.. pdf-include:: ./kemfield/manual.pdf
+.. pdf-include:: ./PDFs/manual.pdf
     :width: 100%
     :height: 800px
 

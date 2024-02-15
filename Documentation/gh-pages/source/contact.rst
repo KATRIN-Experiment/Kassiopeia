@@ -40,7 +40,15 @@ References and Citation
     D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensible C++ Particle Tracking Package” (doi:10.1088/1367-2630/aa6950)
 
 
+.. pdf-include:: ./PDFs/Furse_2017_New_J_Phys_19_053012_noheader.pdf
+    :width: 100%
+    :height: 800px
+
+|
+
 In addition to this user guide, *Kassiopeia* and its associated libraries have been documented extensively in several
 PhD theses. Many of these can be found under the list of KATRIN publications_.
+
+
 
 .. _publications: https://www.katrin.kit.edu/375.php
