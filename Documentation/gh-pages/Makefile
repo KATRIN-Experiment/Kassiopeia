@@ -18,7 +18,8 @@ github:
 	@rm -rf "$(HTMLDIR)"
 	@mv "$(BUILDDIR)/html" "$(HTMLDIR)"
 	@touch "$(HTMLDIR)/.nojekyll"
-
+	@mkdir "$(HTMLDIR)/kemfield"
+	@cp ../../KEMField/Documentation/manual/manual.pdf "$(HTMLDIR)/kemfield"
 .PHONY: help github Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
