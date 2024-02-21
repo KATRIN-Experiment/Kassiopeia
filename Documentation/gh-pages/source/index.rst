@@ -45,18 +45,33 @@ Welcome to Kassiopeia's documentation!
     License <linktolicense.rst>
     Authors <authors.rst>
 
+
  .. toctree::
     :maxdepth: 4
-    :caption: User Guide 
+    :caption: Getting Started
 
     Introduction <introduction.rst> 
-    Getting Started <compiling.rst>
-    Examples and Tests <examples.rst>
-    Configuring Your Own Simulation <configuration.rst>
+    Setup with container <setup_container.rst>
+    Manual installation <setup_manual.rst>
+    Directory structure & environmental variables <directory_structure.rst>
+    
+ 
+ .. toctree::
+    :maxdepth: 4
+    :caption: Usage
+
+    Running Kassiopeia <runningKassiopeia.rst>
+    Example configurations <examples.rst>
+    Configuring your own simulation <configuring_simulation.rst>
+  
+
+ .. toctree::
+    :maxdepth: 4
+    :caption: Further Information
+
     Basic KGeoBag Shapes <kgeobag_basic.rst>
     Complex KGeoBag Shapes <kgeobag_complex.rst>
     Understanding Simulation Output <output.rst>
- 
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
@@ -64,25 +79,20 @@ Welcome to Kassiopeia's documentation!
 
 
 
-
-
-
-
-
 This simulation package by `the KATRIN collaboration`_ allows to run highly customizable particle tracking simulations
 along with calculations of electric and magnetic fields.
 
-.. _`the KATRIN collaboration`: https://katrin.kit.edu
+
 
 **Source Code:** https://github.com/KATRIN-Experiment/Kassiopeia
 
 
-**Quick start:** |Try it out online|_
+**Quick start:** `Try it out online`_
 in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab and run
 
 
-.. |Try it out online| replace:: **Try it out online**
-.. _Try it out online: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
+
+
 
 
 .. code-block:: bash
@@ -92,10 +102,8 @@ in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab 
 
 to run your first simulation! *Note: A VTK error indicates that the "VNC (Desktop)" tab is not open yet.*
 
-**Cite** |our paper|_\ **:**
+**Cite** `our paper`_ **:**
 
-.. |our paper| replace:: **our paper**
-.. _our paper: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
 
 .. code-block:: bash
 
@@ -113,10 +121,13 @@ PhD theses. Many of these can be found under the list of KATRIN publications_.
 The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
 
 
-|More information|_
+`More information`_
 
-.. |More information| replace:: **More information**
-.. _More information: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
+
+.. _`Try it out online`: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
+.. _`the KATRIN collaboration`: https://katrin.kit.edu
+.. _`our paper`: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
+.. _`More information`: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
 .. _publications: https://www.katrin.kit.edu/375.php
 
 

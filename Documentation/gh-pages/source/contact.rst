@@ -30,10 +30,9 @@ Please register for the `mailing list <https://www.lists.kit.edu/sympa/subscribe
 References and Citation
 ==========
 
-**Cite** |our paper|_\ **:**
+**Cite** `our paper`_ **:**
 
-.. |our paper| replace:: **our paper**
-.. _our paper: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
+
 
 .. code-block:: bash
 
@@ -44,7 +43,6 @@ References and Citation
     :width: 100%
     :height: 800px
 
-|
 
 In addition to this user guide, *Kassiopeia* and its associated libraries have been documented extensively in several
 PhD theses. Many of these can be found under the list of KATRIN publications_.
@@ -52,3 +50,4 @@ PhD theses. Many of these can be found under the list of KATRIN publications_.
 
 
 .. _publications: https://www.katrin.kit.edu/375.php
+.. _`our paper`: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
