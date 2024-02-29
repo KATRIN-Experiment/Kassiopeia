@@ -32,9 +32,9 @@ D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensib
 **[Documentation](http://katrin-experiment.github.io/Kassiopeia/index.html)** 
 =============================================================================================
 
-* **[System requirements & installation](https://katrin-experiment.github.io/Kassiopeia/compiling.html)**
-* **[Docker images](https://github.com/orgs/KATRIN-Experiment/packages), [more information](Docker/README.md)**
-* **[Meeting & Getting help](https://katrin-experiment.github.io/Kassiopeia/discussion.html)**
+* **[Manual installation](https://katrin-experiment.github.io/Kassiopeia/setup_manual.html)**
+* **[Docker images](https://github.com/orgs/KATRIN-Experiment/packages), [more information](https://katrin-experiment.github.io/Kassiopeia/setup_container.html)**
+* **[Meeting & Getting help](https://katrin-experiment.github.io/Kassiopeia/contact.html)**
 
 
 Open source
