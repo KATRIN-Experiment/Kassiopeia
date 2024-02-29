@@ -36,7 +36,12 @@ Welcome to Kassiopeia's documentation!
 **************************************
 
 .. dropdown:: **Documentation Contents**
-   
+
+ .. toctree::
+    :maxdepth: 4
+    
+    Welcome to Kassiopeia's documentation! <self>
+
  .. toctree::
     :maxdepth: 4
     :caption: General information
