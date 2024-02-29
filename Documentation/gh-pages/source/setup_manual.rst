@@ -423,12 +423,6 @@ Since this produces code compiled for the current CPU, this option should not be
 architectures where compiled code is shared between different machines. Be aware that this option is largely untested.
 
 
-
-
-
-
-
-
 .. _CMake: https://www.cmake.org/
 .. _GCC: https://gcc.gnu.org/
 .. _Clang: https://clang.llvm.org/
