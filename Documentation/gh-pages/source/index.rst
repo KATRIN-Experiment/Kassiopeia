@@ -119,15 +119,14 @@ PhD theses. Many of these can be found under the list of KATRIN publications_.
 **All images:** https://github.com/orgs/KATRIN-Experiment/packages
 
 The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
+For more information and a guide on how to set up `Kassiopeia` see chapter :ref:`setup-via-container`.
 
 
-`More information`_
 
 
 .. _`Try it out online`: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
 .. _`the KATRIN collaboration`: https://katrin.kit.edu
 .. _`our paper`: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
-.. _`More information`: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
 .. _publications: https://www.katrin.kit.edu/375.php
 
 

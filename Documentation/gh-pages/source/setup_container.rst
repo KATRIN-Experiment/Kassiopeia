@@ -1,3 +1,5 @@
+.. _setup-via-container: 
+
 Setup via container
 *******************
 This section describes how to set up `Kassiopeia` using  a Docker image as container.
@@ -5,6 +7,7 @@ This section describes how to set up `Kassiopeia` using  a Docker image as conta
 .. contents:: On this page
      :local:
      :depth: 2
+
 
 Docker image
 ============
@@ -17,8 +20,10 @@ so whenever a new version of an image is available, one can just start a new con
 immediately continue working without any configuration. To achieve this, e.g. folders from outside can be mounted 
 into the container.
 
+ 
 Docker/Podman/Apptainer(/Singularity)
 -------------------------
+
 There are many ways to run containers. On desktop machines, `docker` and `podman` are the most widespread and the 
 following commands from this readme can be used with both. Docker is more robust, Podman in root-less mode is safer 
 if you don't fully trust the images you run (see `here <https://github.com/containers/podman/blob/master/docs/tutorials/rootless_tutorial.md>`_).
@@ -131,8 +136,8 @@ File structure of the container
 
     /home/parrot        # The default user's home directory inside the container.
                         # Used in the examples here for custom code, shell scripts, 
-                          output files and other work. Mounted from host, therefore also
-                          available if the container is removed.
+                        # output files and other work. Mounted from host, therefore also
+                        # available if the container is removed.
 
     /kassiopeia         # Kassiopeia related files
     |
@@ -145,10 +150,10 @@ File structure of the container
     |     .
     |
     +-- build           # The Kassiopeia build directory. 
-    |                     Only available on target `build`.
+    |                   # Only available on target `build`.
     |
     +-- code            # The Kassiopeia code. If needed, this directory has to be
-                          mounted from the host using '-v'.
+                        # mounted from the host using '-v'.
   
 
 Listing and removing existing containers
@@ -430,14 +435,14 @@ To build the containers with knowledge of the used git version, one can use:
 
 ::
 
-    docker build --target minimal -t kassiopeia_minimal --build-arg KASSIOPEIA_GIT_BRANCH=<branch name here> --build-arg KASSIOPEIA_GIT_COMMIT=<first 9 characters of commit id here> .
+    docker build --target minimal -t kassiopeia_minimal --build-arg KASSIOPEIA_GIT_BRANCH=<branch name here> --build-arg KASSIOPEIA_GIT_COMMIT=<first 9 characters of commit id here> 
 
 
 or to automate getting the branch and commit names:
 
 ::
 
-    docker build --target minimal -t kassiopeia_minimal --build-arg KASSIOPEIA_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) --build-arg KASSIOPEIA_GIT_COMMIT=$(git rev-parse --short HEAD) .
+    docker build --target minimal -t kassiopeia_minimal --build-arg KASSIOPEIA_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) --build-arg KASSIOPEIA_GIT_COMMIT=$(git rev-parse --short HEAD) 
 
 
 
