@@ -57,13 +57,5 @@ compiled and tested to run on fresh installations of the Linux distributions Fed
 expected to compile and run on other Linux distributions, however this has not been tested, and the steps needed to
 compile *Kassiopeia* may deviate from what is outlined here.
 
-For minimal functionality and the ability to run the included example programs and simulations the following
-computer specifications or better are recommended:
-
-- Architecture: x86-64
-- CPU: Intel Core i3 @ 2.0 GHz
-- RAM: 4 GB
-- Free Disk Space: 10 GB
-
 
 .. _KATRIN: https://www.katrin.kit.edu
