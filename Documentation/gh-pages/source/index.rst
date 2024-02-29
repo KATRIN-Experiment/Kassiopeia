@@ -68,19 +68,20 @@ Welcome to Kassiopeia's documentation!
     Running Kassiopeia <runningKassiopeia.rst>
     Example configurations <examples.rst>
     Configuring your own simulation <configuring_simulation.rst>
+    KGeoBag - geometry definition <element_kgeobag.rst>
+    KEMField - field definition <element_kemfield.rst>
+    Kassiopeia element <element_kassiopeia.rst>
   
 
  .. toctree::
     :maxdepth: 4
     :caption: Further Information
 
-    Basic KGeoBag Shapes <kgeobag_basic.rst>
-    Complex KGeoBag Shapes <kgeobag_complex.rst>
     Understanding Simulation Output <output.rst>
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
-    KEMField <KEMField_manual_link.rst>
+
 
 
 

@@ -333,7 +333,7 @@ Root access
 
 Note that in nearly any case, there should be no need for actual root 
 access to an active container. Use the information from section
-|Customizing_docker_containers|_ instead. If you are developing with
+:ref:`customizing-docker-containers` instead. If you are developing with
 Docker, there may be reasons to install software lateron anyways,
 in which case you can get a root shell by running the container
 with the additional option ``--name myKassiopeia`` and then executing:

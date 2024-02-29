@@ -1,7 +1,13 @@
 Example configurations
 ======================
 
-Next in this section, we will investigate a number of pre-configured example files that are shipped with *Kassiopeia*.
+.. contents:: On this page
+    :local:
+    :depth: 2
+
+
+
+Next, we will investigate a number of pre-configured example files that are shipped with *Kassiopeia*.
 These files serve as a working example of various features of the simulation, but also as a reference for your own
 configurations. Please take some time to investigate these example files.
 
