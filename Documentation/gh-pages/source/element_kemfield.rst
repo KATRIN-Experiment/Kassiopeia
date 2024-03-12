@@ -1,6 +1,6 @@
 .. _KEMField:
 
-KEMField - field definition
+Field definition - <kemfield>
 ===========================
 
 
