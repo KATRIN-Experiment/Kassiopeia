@@ -68,9 +68,9 @@ Welcome to Kassiopeia's documentation!
     Running Kassiopeia <runningKassiopeia.rst>
     Example configurations <examples.rst>
     Configuring your own simulation <configuring_simulation.rst>
-    KGeoBag - <geometry> <element_kgeobag.rst>
-    Field definition - <kemfield>  <element_kemfield.rst>
-    Particle tracking - <kassiopeia> <element_kassiopeia.rst>
+    KGeoBag (geometry) - <geometry> <element_kgeobag.rst>
+    KEMField (fields) - <kemfield> <element_kemfield.rst>
+    Kassiopeia (particles) - <kassiopeia> <element_kassiopeia.rst>
   
 
  .. toctree::

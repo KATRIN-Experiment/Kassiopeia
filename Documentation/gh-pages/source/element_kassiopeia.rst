@@ -1,6 +1,6 @@
 .. _Kassiopeia-element: 
 
-Particle tracking - <kassiopeia>
+Kassiopeia (particles) - <kassiopeia>
 ====================
 
 .. contents:: On this page

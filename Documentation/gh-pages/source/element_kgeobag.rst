@@ -1,6 +1,6 @@
 
 
-KGeoBag - <geometry>
+KGeoBag (geometry) - <geometry>
 *****************************
 
 .. _KGeoBag:

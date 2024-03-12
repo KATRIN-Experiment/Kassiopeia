@@ -1,6 +1,6 @@
 .. _KEMField:
 
-Field definition - <kemfield>
+KEMField (fields) - <kemfield>
 ===========================
 
 
@@ -23,11 +23,6 @@ Note that in some configuration files, you may find the "legacy style" setup whe
 the *Kassiopeia* element (see below). Although both variants are supported, it is recommended to follow the one
 described here.
 
-Fields
-------
-
-
-
 Once the simulation geometry has been specified, the user may describe the types of electric and magnetic fields they
 wish associate with each geometric object. The field package *KEMField* takes care of solving the boundary value problem
 and computing the fields for electrostatic problems. It also handles the magnetic field computation from static current
@@ -41,8 +36,8 @@ implementations in *KEMField*.
 For example, in the ``DipoleTrapSimulation.xml`` example the electric and magnetic fields are axially symmetric and can
 be computed using the zonal harmonics expansion.
 
-Electric
-~~~~~~~~
+Electric fields
+-----------
 
 To specify the electric field, the geometric surfaces which are electrically active must be listed in the ``surfaces``
 element. It is important that the surfaces which are specified have a mesh extension and a boundary type extension. If
@@ -114,8 +109,8 @@ For a complete list and description of the XML bindings available for the electr
 the directory ``$KASPERSYS/config/KEMField/Complete``. The file ``ElectricFields.xml`` has examples of the binding for
 initializing electric field problems (see :gh-code:`KEMField/Source/XML/Complete/ElectricFields.xml`.)
 
-Magnetic
-~~~~~~~~
+Magnetic fields
+----------
 
 The specification of the magnetic field solving routines is considerably simpler since there is no need to solve a
 boundary value problem before hand. There are essentially two choices for solving magnetic fields from static current
