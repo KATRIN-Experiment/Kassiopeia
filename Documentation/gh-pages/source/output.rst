@@ -18,7 +18,7 @@ track and step level. In addition, if *Kassiopeia* was compiled with VTK_ suppor
 format may be written. These files are mainly intended for visualization, e.g. with the ParaView_ software. It is
 also possible to write simulation data as plaintext ASCII files, however this is not recommened for large simulations.
 
-As explained in :ref:`configuration-label`, the output format is configured by the available writers. Writers use the
+As explained in :ref:`Configuring Your Own Simulation <configuration-label>`, the output format is configured by the available writers. Writers use the
 description of the output format in the XML configuration file, which specifies the output fields that will be written
 to file. Different output descriptions may be used for different writers.
 

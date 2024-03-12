@@ -53,7 +53,7 @@ In addition, the mesh geometry can be viewed as well:
         />
     </vtk_window>
 
-The axial mesh painter needs a defined mesh (``<axial_mesh>`` XML element, see :ref:`configuration-label`). An
+The axial mesh painter needs a defined mesh (``<axial_mesh>`` XML element, see :ref:`Configuring Your Own Simulation <configuration-label>`). An
 ``<vtk_mesh_painter>`` exists as well, to be used with an asymmetric mesh (defined via ``<mesh>``.)
 
 Using Python

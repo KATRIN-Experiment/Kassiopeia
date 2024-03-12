@@ -36,7 +36,12 @@ Welcome to Kassiopeia's documentation!
 **************************************
 
 .. dropdown:: **Documentation Contents**
-   
+
+ .. toctree::
+    :maxdepth: 4
+    
+    Welcome to Kassiopeia's documentation! <self>
+
  .. toctree::
     :maxdepth: 4
     :caption: General information
@@ -63,24 +68,25 @@ Welcome to Kassiopeia's documentation!
     Running Kassiopeia <runningKassiopeia.rst>
     Example configurations <examples.rst>
     Configuring your own simulation <configuring_simulation.rst>
+    KGeoBag (geometry) - <geometry> <element_kgeobag.rst>
+    KEMField (fields) - <kemfield> <element_kemfield.rst>
+    Kassiopeia (particles) - <kassiopeia> <element_kassiopeia.rst>
   
 
  .. toctree::
     :maxdepth: 4
     :caption: Further Information
 
-    Basic KGeoBag Shapes <kgeobag_basic.rst>
-    Complex KGeoBag Shapes <kgeobag_complex.rst>
     Understanding Simulation Output <output.rst>
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
-    KEMField <KEMField_manual_link.rst>
+
 
 
 
 This simulation package by `the KATRIN collaboration`_ allows to run highly customizable particle tracking simulations
-along with calculations of electric and magnetic fields.
+along with calculations of electric and magnetic fields. *Kassiopeia* is supported and intended to run on systems running either Linux or MacOS X.
 
 
 

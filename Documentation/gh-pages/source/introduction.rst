@@ -46,16 +46,4 @@ certain specific features in their own novel applications. Code contributions th
 can be submitted through GitHub and are always welcome.
 
 
-
-
-
-Supported operating systems and hardware requirements
-=====================================================
-
-*Kassiopeia* is supported and intended to run on systems running either Linux or MacOS X. Currently, it has been
-compiled and tested to run on fresh installations of the Linux distributions Fedora 31 and Ubuntu 20.04 LTS. It is also
-expected to compile and run on other Linux distributions, however this has not been tested, and the steps needed to
-compile *Kassiopeia* may deviate from what is outlined here.
-
-
 .. _KATRIN: https://www.katrin.kit.edu
