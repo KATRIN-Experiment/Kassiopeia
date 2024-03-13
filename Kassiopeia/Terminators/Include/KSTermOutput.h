@@ -42,6 +42,7 @@ template<class XValueType> class KSTermOutput : public KSComponentTemplate<KSTer
         }
 
         if (*fValue >= fMaxValue || *fValue <= fMinValue) {
+            *fValue = 0;
             aFlag = true;
             return;
         }
