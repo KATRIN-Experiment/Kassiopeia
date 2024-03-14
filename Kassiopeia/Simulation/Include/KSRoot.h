@@ -56,8 +56,6 @@ class KSRoot : public KSComponentTemplate<KSRoot>
     static void SignalHandler(int aSignal);
 
   private:
-    katrin::KToolbox& fToolbox;
-
     KSSimulation* fSimulation;
     KSRun* fRun;
     KSEvent* fEvent;
