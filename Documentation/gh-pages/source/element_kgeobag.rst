@@ -378,10 +378,8 @@ and/or navigation.
 In addition, the geometry visualization can also be defined in the configuration file. In this case, output files
 may be produced before or after performing the simulation, and a visualization window can be shown as well. Note that
 the visualization window blocks the application until it is closed, so it is not advised to use this feature in a
-scripted environment. The examples in this section are based on the ``DipoleTrapSimulation.xml`` file, which may be extended accordingly to
-test the features explained here and in the corresponding sections :ref:`KEMField visualisation <kemfield-visualization>` and
-:ref:`Kassiopeia visualisation <kassiopeia-vizualisation>` The commandline option ``-b`` (or ``-batch``) will prevent 
-any visualization windows to appear regardless of the setting in the configuration file, e.g.:
+scripted environment. The examples in this section are based on the ``DipoleTrapSimulation.xml`` file, which may be extended accordingly to test the features explained here and in the following chapters. 
+The commandline option ``-b`` (or ``-batch``) will prevent any visualization windows to appear regardless of the setting in the configuration file, e.g.:
 
 .. code-block:: bash
 

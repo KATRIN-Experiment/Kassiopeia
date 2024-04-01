@@ -55,6 +55,8 @@ using MKS_ and their derived units. The exception to this rule is energy, which 
 It should be noted that XML elements are parsed in order, and elements which are referenced by other elements must be
 declared before their first use.
 
+To test your configuration, you can use the given visualization techniques for each *Kassiopeia* section, which are described in detail in the following chapters.
+
 XML Parsing and Features
 ========================
 

@@ -6,9 +6,7 @@ KEMField (fields) - <kemfield>
 
 
 **KEMField** is a toolkit that allows users to solve electrostatic and magnetostatic fields from user-defined inputs. 
-Detailed explanations on installation and implementation are available in the manual displayed at the bottom of this chapter. 
-Alternatively the manual is available for download :download:`here <../../../KEMField/Documentation/manual/manual.pdf>` 
-and can also be found in the `Github repository <https://github.com/KATRIN-Experiment/Kassiopeia/>`_. 
+Detailed explanations on installation and implementation are available in the manual displayed at the end of this chapter. 
 
 
 The field elements all live within the *KEMField* element and must be placed with start and end tags of the form:
@@ -256,6 +254,12 @@ the dimensions is equal to zero.) To speed up the computation, it is possible to
 (``compute_gradient``) or electric field (``compute_field``), or to make use of existing symmetries in either dimension.
 Note that the symmetry is not checked against the actual geometry, so it's a responsibility of the user to set this up
 correctly.
+
+Manual
+---------------
+
+The KEMField manual is desplayed below and is alternatively available for download :download:`here <../../../KEMField/Documentation/manual/manual.pdf>`. 
+It can also be found in the `Github repository <https://github.com/KATRIN-Experiment/Kassiopeia/>`_. 
 
 
 .. pdf-include:: ./PDFs/manual.pdf
