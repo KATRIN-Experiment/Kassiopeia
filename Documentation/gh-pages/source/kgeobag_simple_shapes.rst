@@ -1064,11 +1064,3 @@ The parameters are:
 .. _Xpath: https://www.w3.org/TR/xpath-10/
 .. _TinyExpr: https://github.com/codeplea/tinyexpr/
 .. _Log4CXX: https://logging.apache.org/log4cxx/
-
-.. rubric:: Footnotes
-
-[1] Daniel Lawrence Furse. Techniques for direct neutrino mass measurement utilizing tritium [beta]-decay. PhD thesis, Massachusetts Institute of Technology, 2015.
-
-[2] Thomas Corona. Methodology and application of high performance electrostatic field simulation in the KATRIN experiment. PhD thesis, University of North Carolina, Chapel Hill, 2014.
-
-[3] John P. Barrett. A Spatially Resolved Study of the KATRIN Main Spectrometer Using a Novel Fast Multipole Method. PhD thesis, Massachusetts Institute of Technology, 2016.
