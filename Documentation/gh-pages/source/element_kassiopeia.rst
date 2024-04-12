@@ -16,12 +16,16 @@ The elements which must be described within the *Kassiopeia* namespace include t
 generation, termination, propagation, interactions, navigation, output, and simulation. The different parts will be
 outlined in this chapter.
 
+.. toctree::
+     :maxdepth: 1
+     :hidden:
+
+     Chapter overview <self>
 
 .. toctree::
      :maxdepth: 1
      :caption: Chapter contents
 
-     Chapter overview <self>
      kassiopeia_structure
      kassiopeia_generation
      kassiopeia_propagation

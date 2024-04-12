@@ -31,9 +31,14 @@ Every relevant to the geometry description is processed by *KGeoBag* and must ap
 
 .. toctree::
      :maxdepth: 1
+     :hidden:
+
+     Chapter overview <self>
+
+.. toctree::
+     :maxdepth: 1
      :caption: Chapter contents
      
-     Chapter overview <self>
      kgeobag_geometry
      kgeobag_simple_shapes
      kgeobag_complex_shapes

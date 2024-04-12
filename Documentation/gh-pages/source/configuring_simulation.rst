@@ -50,12 +50,16 @@ declared before their first use.
 
 
 
+.. toctree::
+     :maxdepth: 1
+     :hidden:
+
+     Chapter overview <self>
 
 .. toctree::
      :maxdepth: 1
      :caption: Chapter contents
 
-     Chapter overview <self>
      configuring_simulation_statements
      configuring_simulation_expressions
      configuring_simulation_messagingsystem

@@ -21,9 +21,14 @@ described here.
 
 .. toctree::
      :maxdepth: 1
-     :caption: Chapter contents
+     :hidden:
 
      Chapter overview <self>
+
+.. toctree::
+     :maxdepth: 1
+     :caption: Chapter contents
+
      kemfield_fields
      kemfield_visualization
      kemfield_manual
