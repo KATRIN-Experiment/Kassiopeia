@@ -45,5 +45,3 @@ Furthermore, the object oriented approach of *Kassiopeia* provides a clear path 
 certain specific features in their own novel applications. Code contributions that extend *Kassiopeia's* functionality
 can be submitted through GitHub and are always welcome.
 
-
-.. _KATRIN: https://www.katrin.kit.edu

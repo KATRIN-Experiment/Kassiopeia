@@ -256,17 +256,6 @@ included by the syntax:
 As shown above, a comment can span multiple lines. Any text between ``<!-- ... -->`` is ignored by the XML initializer,
 including any XML elements. This makes it possible to quickly comment out parts of the file, e.g. for debugging.
 
-.. _TFormula: http://root.cern.ch/root/htmldoc/TFormula.html
-.. _TMath: http://root.cern.ch/root/htmldoc/TMath.html
-.. _PDG: http://pdg.lbl.gov/mc_particle_id_contents.html
-.. _Paraview: http://www.paraview.org/
-.. _ROOT: https://root.cern.ch/
-.. _VTK: http://www.vtk.org/
-.. _MKS: https://scienceworld.wolfram.com/physics/MKS.html
-.. _XML: https://www.w3.org/TR/xml11/
-.. _Xpath: https://www.w3.org/TR/xpath-10/
-.. _TinyExpr: https://github.com/codeplea/tinyexpr/
-.. _Log4CXX: https://logging.apache.org/log4cxx/
 
 
 .. rubric:: Footnotes

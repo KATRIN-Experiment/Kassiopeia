@@ -96,19 +96,3 @@ the dimensions is equal to zero.) To speed up the computation, it is possible to
 (``compute_gradient``) or electric field (``compute_field``), or to make use of existing symmetries in either dimension.
 Note that the symmetry is not checked against the actual geometry, so it's a responsibility of the user to set this up
 correctly.
-
-
-.. _TFormula: http://root.cern.ch/root/htmldoc/TFormula.html
-.. _TMath: http://root.cern.ch/root/htmldoc/TMath.html
-.. _PDG: http://pdg.lbl.gov/mc_particle_id_contents.html
-.. _Paraview: http://www.paraview.org/
-.. _ROOT: https://root.cern.ch/
-.. _VTK: http://www.vtk.org/
-.. _MKS: https://scienceworld.wolfram.com/physics/MKS.html
-.. _XML: https://www.w3.org/TR/xml11/
-.. _Xpath: https://www.w3.org/TR/xpath-10/
-.. _TinyExpr: https://github.com/codeplea/tinyexpr/
-.. _Log4CXX: https://logging.apache.org/log4cxx/
-.. _PyVista: https://www.pyvista.org/
-
-

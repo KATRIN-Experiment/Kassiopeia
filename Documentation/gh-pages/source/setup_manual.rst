@@ -422,36 +422,3 @@ The ``COMPILER_TUNE_OPTIONS`` flag activates the compiler options:
 Since this produces code compiled for the current CPU, this option should not be used on a computing cluster or other
 architectures where compiled code is shared between different machines. Be aware that this option is largely untested.
 
-
-.. _CMake: https://www.cmake.org/
-.. _GCC: https://gcc.gnu.org/
-.. _Clang: https://clang.llvm.org/
-.. _HDF5: https://support.hdfgroup.org/HDF5/
-.. _LibXml2: https://www.xmlsoft.org/
-.. _PCL: https://www.pointclouds.org/
-.. _PETSc: https://mcs.anl.gov/petsc/
-.. _DoxyGen: https://www.doxygen.nl/
-.. _GSL: https://www.gnu.org/software/gsl/
-.. _ROOT: https://root.cern.ch/
-.. _Boost: http://www.boost.org/
-.. _Log4CXX: https://logging.apache.org/log4cxx/latest_stable/
-.. _TBB: https://www.threadingbuildingblocks.org/
-.. _VTK: http://www.vtk.org/
-.. _OpenMPI: https://www.open-mpi.org/
-.. _MPICH: http://www.mpich.org/
-.. _FFTW: http://www.fftw.org/
-.. _CUDA: https://developer.nvidia.com/cuda-toolkit
-.. _OpenCL: https://www.khronos.org/opencl/
-.. _ZLIB: http://www.zlib.net/
-.. _miniz: https://code.google.com/archive/p/miniz/
-.. _Docker: https://www.docker.com/
-.. _GoogleTest: https://github.com/google/googletest/
-.. _gperftools: https://github.com/gperftools/gperftools/
-.. |gccVersion| replace:: 6.1
-.. |clangVersion| replace:: 3.4
-.. |CMakeVersion| replace:: 3.14
-.. |BoostVersion| replace:: 1.65
-.. |ROOTVersion| replace:: 6.24
-.. |FFTWVersion| replace:: 3.3.4
-.. |VTKVersion| replace:: 7.0
-
