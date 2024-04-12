@@ -451,24 +451,3 @@ An XML example is as follows:
 
 
 
-
-
-.. _TFormula: http://root.cern.ch/root/htmldoc/TFormula.html
-.. _TMath: http://root.cern.ch/root/htmldoc/TMath.html
-.. _PDG: http://pdg.lbl.gov/mc_particle_id_contents.html
-.. _Paraview: http://www.paraview.org/
-.. _ROOT: https://root.cern.ch/
-.. _VTK: http://www.vtk.org/
-.. _MKS: https://scienceworld.wolfram.com/physics/MKS.html
-.. _XML: https://www.w3.org/TR/xml11/
-.. _Xpath: https://www.w3.org/TR/xpath-10/
-.. _TinyExpr: https://github.com/codeplea/tinyexpr/
-.. _Log4CXX: https://logging.apache.org/log4cxx/
-
-.. rubric:: Footnotes
-
-[1] Daniel Lawrence Furse. Techniques for direct neutrino mass measurement utilizing tritium [beta]-decay. PhD thesis, Massachusetts Institute of Technology, 2015.
-
-[2] Thomas Corona. Methodology and application of high performance electrostatic field simulation in the KATRIN experiment. PhD thesis, University of North Carolina, Chapel Hill, 2014.
-
-[3] John P. Barrett. A Spatially Resolved Study of the KATRIN Main Spectrometer Using a Novel Fast Multipole Method. PhD thesis, Massachusetts Institute of Technology, 2016.

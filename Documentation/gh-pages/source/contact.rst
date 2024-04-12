@@ -48,6 +48,3 @@ In addition to this user guide, *Kassiopeia* and its associated libraries have b
 PhD theses. Many of these can be found under the list of KATRIN publications_.
 
 
-
-.. _publications: https://www.katrin.kit.edu/375.php
-.. _`our paper`: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950

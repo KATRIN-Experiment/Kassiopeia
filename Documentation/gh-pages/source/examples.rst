@@ -196,13 +196,4 @@ also distributed with Kassiopeia, and are described in the following table.
 +-----------------------------------------+---------------------------------------------------------------+
 
 
-
-
-.. _VTK: http://www.vtk.org/
-.. _Paraview: http://www.paraview.org/
-.. _TBrowser: https://root.cern.ch/doc/master/classTBrowser.html
-.. _PyROOT: https://root.cern/manual/python/
-.. _uproot: https://pypi.org/project/uproot/
-.. _STL: https://en.wikipedia.org/wiki/STL_%28file_format%29
-
 .. [*] D. Furse *et al.* (2017) New J. Phys. **19** 053012, `doi:10.1088/1367-2630/aa6950 <https://doi.org/10.1088/1367-2630/aa6950>`_

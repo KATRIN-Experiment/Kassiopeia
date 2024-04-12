@@ -777,10 +777,3 @@ However, because the storage is rather inefficient it should not be used for lar
 the order of several Gigabytes can be easily produced by a typical Monte-Carlo simulation!
 
 
-.. _Paraview: http://www.paraview.org/
-.. _ROOT: https://root.cern.ch/
-.. _VTK: http://www.vtk.org/
-.. _NumPy: https://numpy.org/
-.. _Pandas: https://pandas.pydata.org/
-.. _uproot: https://pypi.org/project/uproot/
-.. _Gnuplot: http://www.gnuplot.info/

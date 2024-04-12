@@ -129,10 +129,3 @@ For more information and a guide on how to set up `Kassiopeia` see chapter :ref:
 
 
 
-
-.. _`Try it out online`: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
-.. _`the KATRIN collaboration`: https://katrin.kit.edu
-.. _`our paper`: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
-.. _publications: https://www.katrin.kit.edu/375.php
-
-
