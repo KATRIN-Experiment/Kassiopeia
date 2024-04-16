@@ -52,22 +52,11 @@ template<class XValueType> class KSComponentMath : public KSComponent
         }
 
         // initialize function once, parameters are updated every PushUpdate call
-        fFunction = std::make_shared<TF1>("(anonymous)", fTerm.c_str(), -1., 1.);
+        // Object is automatically managed and garbage collected by the global TROOT object (gROOT)
+        fFunction = new TF1("(anonymous)", fTerm.c_str(), -1., 1.);
     }
     KSComponentMath(const KSComponentMath<XValueType>& aCopy) :
-        KSComponent(aCopy),
-        fParentComponents(aCopy.fParentComponents),
-        fParents(aCopy.fParents),
-        fResult(aCopy.fResult),
-        fTerm(aCopy.fTerm),
-        fFunction(aCopy.fFunction)
-    {
-        Set(&fResult);
-        this->SetParent(aCopy.fParentComponent);
-        for (size_t tIndex = 0; tIndex < aCopy.fParentComponents.size(); tIndex++) {
-            aCopy.fParentComponents.at(tIndex)->AddChild(this);
-        }
-    }
+        KSComponentMath(aCopy.fParentComponents, aCopy.fParents, aCopy.fTerm) {}
     ~KSComponentMath() override = default;
 
     //***********
@@ -136,7 +125,7 @@ template<class XValueType> class KSComponentMath : public KSComponent
     std::vector<XValueType*> fParents;
     XValueType fResult;
     std::string fTerm;
-    std::shared_ptr<TF1> fFunction;
+    TF1* fFunction;
 };
 
 }  // namespace Kassiopeia
