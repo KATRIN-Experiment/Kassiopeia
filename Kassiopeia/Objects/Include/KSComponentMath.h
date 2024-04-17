@@ -56,7 +56,19 @@ template<class XValueType> class KSComponentMath : public KSComponent
         fFunction = new TF1("(anonymous)", fTerm.c_str(), -1., 1.);
     }
     KSComponentMath(const KSComponentMath<XValueType>& aCopy) :
-        KSComponentMath(aCopy.fParentComponents, aCopy.fParents, aCopy.fTerm) {}
+        KSComponent(aCopy),
+        fParentComponents(aCopy.fParentComponents),
+        fParents(aCopy.fParents),
+        fResult(aCopy.fResult),
+        fTerm(aCopy.fTerm),
+        fFunction(aCopy.fFunction)
+    {
+        Set(&fResult);
+        this->SetParent(aCopy.fParentComponent);
+        for (size_t tIndex = 0; tIndex < aCopy.fParentComponents.size(); tIndex++) {
+            aCopy.fParentComponents.at(tIndex)->AddChild(this);
+        }
+    }
     ~KSComponentMath() override = default;
 
     //***********
