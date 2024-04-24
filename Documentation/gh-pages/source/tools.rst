@@ -159,5 +159,3 @@ Finally, some helper tools are provided with *Kassiopeia* that can be used toget
 All listed programs will show a brief usage summary if called without arguments.
 
 
-.. _ROOT: https://root.cern.ch/
-.. _VTK: http://www.vtk.org/

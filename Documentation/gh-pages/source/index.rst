@@ -36,45 +36,69 @@ Welcome to Kassiopeia's documentation!
 **************************************
 
 .. dropdown:: **Documentation Contents**
-   
+
  .. toctree::
     :maxdepth: 4
+    
+    Welcome to Kassiopeia's documentation! <self>
 
-    Introduction <introduction.rst>
-    References, Citation and Contact <external_documentation.rst>
-    Getting Started <compiling.rst>
-    Examples and Tests <examples.rst>
-    Configuring Your Own Simulation <configuration.rst>
-    Basic KGeoBag Shapes <kgeobag_basic.rst>
-    Complex KGeoBag Shapes <kgeobag_complex.rst>
+ .. toctree::
+    :maxdepth: 4
+    :caption: General information
+
+    Contact, Meeting and References <contact.rst>
+    License <linktolicense.rst>
+    Authors <authors.rst>
+
+
+ .. toctree::
+    :maxdepth: 4
+    :caption: Getting Started
+
+    Introduction <introduction.rst> 
+    Setup with container <setup_container.rst>
+    Manual installation <setup_manual.rst>
+    Directory structure & environmental variables <directory_structure.rst>
+    
+ 
+ .. toctree::
+    :maxdepth: 4
+    :caption: Usage
+
+    Running Kassiopeia <runningKassiopeia.rst>
+    Example configurations <examples.rst>
+    Configuring your own simulation <configuring_simulation.rst>
+    KGeoBag (geometry) - <geometry> <element_kgeobag.rst>
+    KEMField (fields) - <kemfield> <element_kemfield.rst>
+    Kassiopeia (particles) - <kassiopeia> <element_kassiopeia.rst>
+  
+
+ .. toctree::
+    :maxdepth: 4
+    :caption: Further Information
+
     Understanding Simulation Output <output.rst>
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
-    License <license.rst>
-    Authors <authors.rst>
- 
-
-
-
 
 
 
 
 This simulation package by `the KATRIN collaboration`_ allows to run highly customizable particle tracking simulations
-along with calculations of electric and magnetic fields.
+along with calculations of electric and magnetic fields. *Kassiopeia* is supported and intended to run on systems running either Linux or MacOS X.
 
-.. _`the KATRIN collaboration`: https://katrin.kit.edu
+
 
 **Source Code:** https://github.com/KATRIN-Experiment/Kassiopeia
 
 
-**Quick start:** |Try it out online|_
+**Quick start:** `Try it out online`_
 in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab and run
 
 
-.. |Try it out online| replace:: **Try it out online**
-.. _Try it out online: https://mybinder.org/v2/gh/KATRIN-Experiment/KassiopeiaBinder/HEAD
+
+
 
 
 .. code-block:: bash
@@ -84,15 +108,16 @@ in an interactive Binder session. Open a "VNC (Desktop)" tab and a terminal tab 
 
 to run your first simulation! *Note: A VTK error indicates that the "VNC (Desktop)" tab is not open yet.*
 
-**Cite** |our paper|_\ **:**
+**Cite** `our paper`_ **:**
 
-.. |our paper| replace:: **our paper**
-.. _our paper: https://iopscience.iop.org/article/10.1088/1367-2630/aa6950
 
 .. code-block:: bash
 
     D. Furse et al. (2017) New J. Phys. 19 053012: “Kassiopeia: A Modern, Extensible C++ Particle Tracking Package” (doi:10.1088/1367-2630/aa6950)
 
+
+In addition to this user guide, *Kassiopeia* and its associated libraries have been documented extensively in several
+PhD theses. Many of these can be found under the list of KATRIN publications_.
 
 **Docker images**
 --------------
@@ -100,12 +125,7 @@ to run your first simulation! *Note: A VTK error indicates that the "VNC (Deskto
 **All images:** https://github.com/orgs/KATRIN-Experiment/packages
 
 The `kassiopeia/full` image comes with a JupyterLab installation, can run on Kubernetes based JupyterHubs and is also used for the "try it out online" link above.
-
-
-|More information|_
-
-.. |More information| replace:: **More information**
-.. _More information: https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Docker/README.md
+For more information and a guide on how to set up `Kassiopeia` see chapter :ref:`setup-via-container`.
 
 
 

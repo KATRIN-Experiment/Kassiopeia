@@ -13,6 +13,7 @@ gases and offers specialized treatment of electron transport in silicon baseddet
     :local:
     :depth: 2
 
+
 The Kasper framework
 ====================
 
@@ -31,6 +32,7 @@ The *Kassiopeia* software relies upon three separate, but concurrently distribut
   constructing field maps for fast evaluation. *Kassiopeia* incorporates these three libraries in order to solve the
   equation of motion of a particle and deal with any stochastic interactions to which it might be subjected.
 
+
 Extending Functionality
 =======================
 
@@ -43,5 +45,3 @@ Furthermore, the object oriented approach of *Kassiopeia* provides a clear path 
 certain specific features in their own novel applications. Code contributions that extend *Kassiopeia's* functionality
 can be submitted through GitHub and are always welcome.
 
-
-.. _KATRIN: https://www.katrin.kit.edu
