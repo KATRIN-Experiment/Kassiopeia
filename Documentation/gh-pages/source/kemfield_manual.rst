@@ -2,7 +2,7 @@
 Manual
 ---------------
 
-The KEMField manual is desplayed below and is alternatively available for download :download:`here <../../../KEMField/Documentation/manual/manual.pdf>`. 
+The KEMField manual is displayed below and available for download :download:`here <../../../KEMField/Documentation/manual/manual.pdf>`. 
 It can also be found in the `Github repository <https://github.com/KATRIN-Experiment/Kassiopeia/>`_. 
 
 

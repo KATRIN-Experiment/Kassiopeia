@@ -60,24 +60,24 @@ if (KEMField_USE_OPENCL)
         execute_process(COMMAND ${CMAKE_CXX_COMPILER}
             -D KEMFIELD_OPENCL_PLATFORM=${KEMField_OPENCL_PLATFORM}
             -D KEMFIELD_OPENCL_DEVICE_TYPE=${KEMField_OPENCL_DEVICE_TYPE}
-            -o ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/GenerateOpenCLHeader
+            -o ${CMAKE_CURRENT_BINARY_DIR}/GenerateOpenCLHeader
             -I${OpenCL_INCLUDE_DIRS}
             ${KEMField_OPENCL_CFLAGS}
             -framework OpenCL
             ${SOURCE}/Plugins/OpenCL/Core/src/GenerateOpenCLHeader.cc
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             RESULT_VARIABLE COMPILE_STATUS
         )
     else (APPLE)
         execute_process(COMMAND ${CMAKE_CXX_COMPILER}
             -D KEMFIELD_OPENCL_PLATFORM=${KEMField_OPENCL_PLATFORM}
             -D KEMFIELD_OPENCL_DEVICE_TYPE=${KEMField_OPENCL_DEVICE_TYPE}
-            -o ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/GenerateOpenCLHeader
+            -o ${CMAKE_CURRENT_BINARY_DIR}/GenerateOpenCLHeader
             -I${OpenCL_INCLUDE_DIRS}
             ${KEMField_OPENCL_CFLAGS}
             ${SOURCE}/Plugins/OpenCL/Core/src/GenerateOpenCLHeader.cc
             ${OpenCL_LIBRARIES}
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             RESULT_VARIABLE COMPILE_STATUS
         )
     endif (APPLE)
@@ -89,10 +89,10 @@ if (KEMField_USE_OPENCL)
             "   KEMFIELD_OPENCL_DEVICE_TYPE=${KEMField_OPENCL_DEVICE_TYPE}")
     endif()
 
-    set(OPENCLPLUGIN_GENERATED_HEADER  ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/kEMField_opencl_defines.h)
-    execute_process(COMMAND ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/GenerateOpenCLHeader
+    set(OPENCLPLUGIN_GENERATED_HEADER ${CMAKE_CURRENT_BINARY_DIR}/kEMField_opencl_defines.h)
+    execute_process(COMMAND ${CMAKE_CURRENT_BINARY_DIR}/GenerateOpenCLHeader
         OUTPUT_FILE ${OPENCLPLUGIN_GENERATED_HEADER}
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         RESULT_VARIABLE EXEC_STATUS
     )
 
@@ -107,7 +107,7 @@ if (KEMField_USE_OPENCL)
     endif()
 
     #leave this binary around since it is useful for debugging if things go wrong
-    #execute_process(COMMAND rm GenerateOpenCLHeader WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+    #execute_process(COMMAND rm GenerateOpenCLHeader WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
     set (OPENCLPLUGIN_HEADERFILES
         ${OPENCLPLUGIN_GENERATED_HEADER}
