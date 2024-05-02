@@ -52,6 +52,7 @@ KASSIOPEIA_CPUS=${KASSIOPEIA_CPUS:-"$(($(nproc)-1))"}
 KASSIOPEIA_USE_OPENCL=${KASSIOPEIA_USE_OPENCL:-"OFF"}
 
 echo "Building KASPER $KASSIOPEIA_BUILD_TYPE for '$KASSIOPEIA_INSTALL_PREFIX' in '$KASSIOPEIA_BUILD_PREFIX'"
+echo "Building with KASSIOPEIA_USE_OPENCL value of '$KASSIOPEIA_USE_OPENCL'"
 
 # Cause script to exit after a command failed
 set -e
