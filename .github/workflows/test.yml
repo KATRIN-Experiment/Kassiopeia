@@ -44,7 +44,7 @@ jobs:
             export CC=/usr/bin/clang
             export CXX=/usr/bin/clang++
         fi
-        KASSIOPEIA_USE_OPENCL=${{ matrix.use_clang }} ./setup.sh
+        KASSIOPEIA_USE_OPENCL=${{ matrix.use_opencl }} ./setup.sh
       shell: bash
 
     - name: Launch environment and run tests
