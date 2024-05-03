@@ -26,10 +26,13 @@ jobs:
         export DEBIAN_FRONTEND=noninteractive
         export TZ=Etc/UTC
         
-        apt-get update -y && apt-get install -y \
+        apt update -y && apt install -y \
             build-essential cmake cmake-curses-gui \
             libboost-all-dev libfftw3-dev libgsl-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
-            libsqlite3-dev libssl-dev libvtk7-dev libxml2-dev opencl-headers ocl-icd-opencl-dev pocl-opencl-icd zlib1g-dev
+            libsqlite3-dev libssl-dev libvtk7-dev libxml2-dev opencl-headers ocl-icd-opencl-dev zlib1g-dev
+
+        apt update -y && apt install -y \
+             pocl-opencl-icd
     - name: Install root
       run: |
         apt install -y wget
