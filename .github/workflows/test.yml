@@ -29,7 +29,7 @@ jobs:
         apt-get update -y && apt-get install -y \
             build-essential cmake cmake-curses-gui \
             libboost-all-dev libfftw3-dev libgsl-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
-            libsqlite3-dev libssl-dev libvtk7-dev libxml2-dev opencl-headers ocl-icd-opencl-dev zlib1g-dev
+            libsqlite3-dev libssl-dev libvtk7-dev libxml2-dev opencl-headers ocl-icd-opencl-dev pocl zlib1g-dev
     - name: Install root
       run: |
         apt install -y wget
@@ -76,7 +76,7 @@ jobs:
             root-core root-io-xmlparser root-minuit2 root-spectrum root-genvector \
             vtk vtk-qt \
             boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel liburing-devel libxml2-devel log4cxx-devel \
-            opencl-headers ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
+            opencl-headers ocl-icd-devel pocl openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
     - name: Build code
       run: |
         if ${{ matrix.use_clang }}; then
