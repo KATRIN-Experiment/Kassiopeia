@@ -48,7 +48,7 @@ jobs:
             export CXX=/usr/bin/clang++
         fi
         KASSIOPEIA_USE_OPENCL=${{ matrix.use_opencl }} \
-        KASSIOPEIA_CUSTOM_CMAKE_ARGS="-DKEMField_OPENCL_DEVICE_TYPE=1" \
+        KASSIOPEIA_CUSTOM_CMAKE_ARGS="-DKEMField_OPENCL_DEVICE_TYPE=-1" \
            ./setup.sh
       shell: bash
 
