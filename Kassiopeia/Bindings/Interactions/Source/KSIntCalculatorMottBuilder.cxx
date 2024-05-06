@@ -12,7 +12,8 @@ template<> KSIntCalculatorMottBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntCalculatorMottStructure = KSIntCalculatorMottBuilder::Attribute<std::string>("name") +
                                               KSIntCalculatorMottBuilder::Attribute<double>("theta_min") +
-                                              KSIntCalculatorMottBuilder::Attribute<double>("theta_max");
+                                              KSIntCalculatorMottBuilder::Attribute<double>("theta_max") +
+                                              KSIntCalculatorMottBuilder::Attribute<std::string>("nucleus");
 
 STATICINT sToolboxKSIntCalculatorMott =
     KSRootBuilder::ComplexElement<KSIntCalculatorMott>("ksint_calculator_mott");
