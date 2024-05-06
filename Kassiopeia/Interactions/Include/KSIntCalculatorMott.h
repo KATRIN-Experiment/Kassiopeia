@@ -3,13 +3,12 @@
 
 #include "KField.h"
 #include "KSIntCalculator.h"
-#include "TF1.h"
 
 /* 
  * KSintCalculatorMott.h
  * 
  * Date: August 22, 2022
- * Author: Junior Peña (juniorpena)
+ * Author: Junior Ivan Peña (juniorpe)
  */
 
 namespace Kassiopeia
@@ -18,7 +17,7 @@ namespace Kassiopeia
 /* 
  * The xml configuration for using this calculator is as follows: 
  * <calculator_mott theta_min="[lower_bound]" theta_max="[upper_bound]"/>
- * where [lower_bound] is the lower limit, in radians, on the range of allowed scattering 
+ * where [lower_bound] is the lower limit, in degrees, on the range of allowed scattering 
  * angles and [upper_bound] is the upper limit. A theta_min of 0 is not allowed since the 
  * Mott Cross Section has a singularity there. 
  */
@@ -40,11 +39,14 @@ class KSIntCalculatorMott : public KSComponentTemplate<KSIntCalculatorMott, KSIn
     K_SET_GET(double, ThetaMin);  // radians
     ;
     K_SET_GET(double, ThetaMax);  // radians
+    ;
+    K_SET_GET(std::string, Nucleus);
 
   public:
     /**
             * \brief Returns scattering angle sampled from Mott Differential Cross Seciton for a given 
-            * incoming electron energy. Sampling is done using the GetRandom method for ROOT's TF1 class.
+            * incoming electron energy. Sampling is done using using inverse transform sampling of 
+            * Rutherford Differential Cross Section, then rejection sampling with a rescaled Ruth. Diff. X-Sec
             *  
             * \parameter electron's initial kinetic energy
             * 
@@ -63,23 +65,61 @@ class KSIntCalculatorMott : public KSComponentTemplate<KSIntCalculatorMott, KSIn
             */
     double GetEnergyLoss(const double& anEnergy, const double& aTheta);
     /**
-            * \brief Initializes Mott Differential Cross Section given in:
-            * M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66. 
-            * Also initializes Total Cross Section, where integration was done separately in mathematica
-            * and analytical form written in terms of constants given in publication above. The cross sections
-            * are initialized as ROOT TF1 objects.
+            * \parameter Electron's initial kinetic energy
             *  
+            * \return Electron's natural velocity beta = v/c
             */
-    void InitializeMDCS(const double E0);
+    double Beta(double const E0);
     /**
-            * \brief Deinitializes Mott Differential Cross Section and Mott Total Cross Section
+            * \brief Takes in the electron's initial energy and calculates the coefficients used in the 
+            * RMott calculation for He corresponding to equation (25) in: 
+            * M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.
+            * 
+            * \parameter Electron's initial kinetic energy
+            * 
+            * \return Vector containing 5 calculated coeffecients of a
+            */
+    std::vector<double> RMott_coeffs(double const E0);
+    /**
+            * \brief Returns the Mott Differential Cross Section(from equation (3) and (24) in: M.J Boschini, 
+            * C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.) Used for rejection 
+            * sampling in GetTheta function
+            * 
+            * \parameter Electron's initial kinetic energy and scatter angle
+            *
+            * \return Mott Differential Cross Section 
             *  
             */
-    void DeinitializeMDCS();
+    double MDCS(double theta, const double E0);
+    /**
+            * \brief Calculates the analytical integral result of the Mott Differential Cross Section(from
+            * equation (3) and (24) in: M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.)
+            * within the bounds [fThetaMin, theta] for a given electron initial kinetic energy and some 
+            * integral upper bound theta
+            * 
+            * \parameter Electron's initial kinetic energy, integral upper bound theta
+            *
+            * \return Integral of Mott Differential Cross Section from fThetaMin to theta
+            *  
+            */
+    double MTCS(double theta, const double E0);
+    /**
+            * \brief Used for rejection sampling in GetTheta function
+            * 
+            * \parameter Scatter Angle
+            *
+            * \return Rutherford Differential Cross Section normalized in range [fThetaMin, fThetaMax] 
+            *  
+            */
+    double Normalized_RDCS(double theta);
+    /**
+            * \brief Used for inverse transform sampling for obtaining scatter angle in GetTheta function
+            *
+            * \return Inverse of normalized Rutherford Differential Cross Section in range [fThetaMin, fThetaMax] 
+            *  
+            */
+    double Normalized_RTCSInverse(double x);
 
-  protected:
-    TF1* fMDCS;
-    TF1* fMTCS;
 };
 
 }  // namespace Kassiopeia
