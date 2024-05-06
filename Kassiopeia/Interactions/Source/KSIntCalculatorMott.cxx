@@ -1,4 +1,6 @@
 #include "KSIntCalculatorMott.h"
+#include <vector>
+#include <random>
 
 #include "KRandom.h"
 using katrin::KRandom;
@@ -10,13 +12,12 @@ using KGeoBag::KThreeVector;
 namespace Kassiopeia
 {
 
-KSIntCalculatorMott::KSIntCalculatorMott() : fThetaMin(0.), fThetaMax(0.), fMDCS(nullptr), fMTCS(nullptr) {}
+KSIntCalculatorMott::KSIntCalculatorMott() : fThetaMin(0.), fThetaMax(0.), fNucleus("") {}
 KSIntCalculatorMott::KSIntCalculatorMott(const KSIntCalculatorMott& aCopy) :
     KSComponent(aCopy),
     fThetaMin(aCopy.fThetaMin),
     fThetaMax(aCopy.fThetaMax),
-    fMDCS(nullptr),
-    fMTCS(nullptr)
+    fNucleus(aCopy.fNucleus)
 {}
 KSIntCalculatorMott* KSIntCalculatorMott::Clone() const
 {
@@ -28,14 +29,10 @@ void KSIntCalculatorMott::CalculateCrossSection(const KSParticle& anInitialParti
 {
 
     double tInitialKineticEnergy = anInitialParticle.GetKineticEnergy_eV();
-    InitializeMDCS(tInitialKineticEnergy);
 
-    double fCrossSection = (fMTCS->Eval(fThetaMax) - fMTCS->Eval(fThetaMin)) * pow(10, -30);
-
-    DeinitializeMDCS();
+    double fCrossSection = (MTCS(fThetaMax, tInitialKineticEnergy) - MTCS(fThetaMin, tInitialKineticEnergy));
 
     aCrossSection = fCrossSection;
-
     return;
 }
 void KSIntCalculatorMott::ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
@@ -51,7 +48,7 @@ void KSIntCalculatorMott::ExecuteInteraction(const KSParticle& anInitialParticle
 
 
     double tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
-    tMomentum.SetPolarAngle(tTheta);
+    tMomentum.SetPolarAngle(tTheta * katrin::KConst::Pi() / 180);
     tMomentum.SetAzimuthalAngle(tPhi);
 
     aFinalParticle.SetTime(tTime);
@@ -60,7 +57,7 @@ void KSIntCalculatorMott::ExecuteInteraction(const KSParticle& anInitialParticle
     aFinalParticle.SetKineticEnergy_eV(tInitialKineticEnergy - tLostKineticEnergy);
     aFinalParticle.SetLabel(GetName());
 
-    fStepAngularChange = tTheta * 180. / katrin::KConst::Pi();
+    fStepAngularChange = tTheta;
 
     return;
 }
@@ -69,11 +66,36 @@ double KSIntCalculatorMott::GetTheta(const double& anEnergy){
 
     double tTheta;
 
-    InitializeMDCS(anEnergy);
+    std::vector<double> theta_arr;
 
-    tTheta = fMDCS->GetRandom(fThetaMin, fThetaMax);
+    // Populate theta_arr
+    for (int i = 0; i <= 1000; ++i) {
+        theta_arr.push_back(fThetaMin + i * (fThetaMax - fThetaMin) / 1000.0);
+    }
 
-    DeinitializeMDCS();
+    double k = 0.0;
+
+    // Calculating rescaling factor for rejection sampling
+    for (double theta : theta_arr) {
+        double MDCS_val = MDCS(theta, anEnergy);
+        double PDF_val = Normalized_RDCS(theta);
+        double ratio = MDCS_val / PDF_val;
+        if (ratio > k) {
+            k = MDCS_val / PDF_val;
+        } else {
+            break;
+        }
+    }
+
+    // Rejection sampling taking initial sample from Rutherford Diff. X-Sec
+    while (true) {
+        double sample = Normalized_RTCSInverse(KRandom::GetInstance().Uniform(0.0, 1.0, false, true));
+        double uniform_sample = KRandom::GetInstance().Uniform(0.0, 1.0, false, true);
+        if (MDCS(sample, anEnergy) / (k * Normalized_RDCS(sample)) > uniform_sample) {
+            tTheta = sample;
+            break;
+        }
+    }
 
     return tTheta;
 
@@ -82,94 +104,108 @@ double KSIntCalculatorMott::GetTheta(const double& anEnergy){
 double KSIntCalculatorMott::GetEnergyLoss(const double& anEnergy, const double& aTheta){
     double M, me, p, anELoss;
 
-    M = 4.0026 * katrin::KConst::AtomicMassUnit_eV(); //  eV/c^2
+    double amu = 0.0;
+
+    if (fNucleus == "He") {
+        amu = 4.0026;
+    } else if (fNucleus == "Ne") {
+        amu = 20.1797;
+    } 
+
+    M = amu * katrin::KConst::AtomicMassUnit_eV(); //  eV/c^2
     me = katrin::KConst::M_el_eV(); // electron mass eV/c^2 
 
     p = sqrt(anEnergy * (anEnergy + 2 * me * pow(katrin::KConst::C(), 2))) / katrin::KConst::C();
 
-    anELoss = 2 * pow(p, 2) * M / (pow(me, 2) + pow(M, 2) + 2 * M * sqrt( pow((p/katrin::KConst::C()), 2) + pow(me, 2))) * (1 - cos(aTheta));
+    anELoss = 2 * pow(p, 2) * M / (pow(me, 2) + pow(M, 2) + 2 * M * sqrt( pow((p/katrin::KConst::C()), 2) + pow(me, 2))) * (1 - cos(aTheta * katrin::KConst::Pi() / 180));
 
     return anELoss;
 }
 
-void KSIntCalculatorMott::InitializeMDCS(const double E0)
-{ 
 
-    double beta = TMath::Sqrt( pow(E0, 2) + 2 * E0 * katrin::KConst::M_el_eV()) / (E0 + katrin::KConst::M_el_eV());
-
-    /* Constants given in publication in header file. These are the constants for scattering off of Helium */
-    static double b[5][6] = {{  1.                   ,  3.76476 * pow(10, -8), -3.05313 * pow(10, -7), -3.27422 * pow(10, -7),  2.44235 * pow(10, -6),  4.08754 * pow(10, -6)}, 
-                             {  2.35767 * pow(10, -2),  3.24642 * pow(10, -2), -6.37269 * pow(10, -4), -7.69160 * pow(10, -4),  5.28004 * pow(10, -3),  9.45642 * pow(10, -3)}, 
-                             { -2.73743 * pow(10, -1), -7.40767 * pow(10, -1), -4.98195 * pow(10, -1),  1.74337 * pow(10, -3), -1.25798 * pow(10, -2), -2.24046 * pow(10, -2)}, 
-                             { -7.79128 * pow(10, -4), -4.14495 * pow(10, -4), -1.62657 * pow(10, -3), -1.37286 * pow(10, -3),  1.04319 * pow(10, -2),  1.83488 * pow(10, -2)}, 
-                             {  2.02855 * pow(10, -4),  1.94598 * pow(10, -6),  4.30102 * pow(10, -4),  4.32180 * pow(10, -4), -3.31526 * pow(10, -3), -5.81788 * pow(10, -3)}};
-
-    double a[6] = {0, 0, 0, 0, 0, 0};
-
-    for (int j = 0; j < 5; j++){
-        for (int k = 0; k < 6; k++){
-            a[j] += b[j][k] * pow((beta - 0.7181287), k);
-        }
-    }
-    
-    /* ROOT TF1 takes in analytical formulas as strings. This is the conversion into strings */
-    std::string Rmott;
-    std::ostringstream RmottStream;
-
-    RmottStream << std::fixed;
-    RmottStream << std::setprecision(12);
-
-    RmottStream << a[0] << " + " << a[1] << " * pow( ( 1 - cos(x) ) , 0.5) + " << a[2] << " * ( 1 - cos(x) ) + " << a[3] << " * pow( ( 1 - cos(x) ) , 1.5) + " << a[4] << " * pow( ( 1 - cos(x) ) , 2)";
-    Rmott = RmottStream.str();
-
-
-
-    std::string RutherfordDCS;
-    std::ostringstream RutherfordDCSStream;
-
-    RutherfordDCSStream << std::fixed;
-    RutherfordDCSStream << std::setprecision(12);
-
-    RutherfordDCSStream << "pow((2 * 2.8179403227 ), 2) * ( (1 - pow(" << beta << ", 2) ) / ( pow(" << beta << ", 4) )) * (1 / pow( (1 - cos(x)), 2))";
-    RutherfordDCS = RutherfordDCSStream.str();
-
-
-
-    std::string MottDCS = "(" + RutherfordDCS + ") * (" + Rmott + ")";
-
-
-    std::string MottTCS;
-    std::ostringstream MottTCSStream;
-    std::ostringstream MottTCSStreamThetaIndepPrefactor;
-
-    MottTCSStream << std::fixed;
-    MottTCSStream << std::setprecision(12);
-    
-    MottTCSStreamThetaIndepPrefactor << std::fixed;
-    MottTCSStreamThetaIndepPrefactor << std::setprecision(12);
-
-    MottTCSStreamThetaIndepPrefactor << "pow((2 * 2.8179403227 ), 2) * ( (1 - pow(" << beta << ", 2) ) / ( pow(" << beta << ", 4) )) * ";
-
-    MottTCSStream << "(2 * " << katrin::KConst::Pi() << " * (-4 * sqrt(2) * ( (" << a[1] << ") + (-1) * (" << a[2]
-                    << ") * sqrt(( 1 - cos(x) )) * log( sin(x / 2) )) * pow(sin(x / 2), 4) + 4 * sqrt(2) * (2 * ("
-                    << a[3] << ") + (" << a[4] << ") * sqrt( (1 - cos(x))) ) * pow(sin(x / 2), 6) - 2 * (" << a[0]
-                    << ") * pow(sin( x / 2 ), 3) ) ) / ( pow((-1 + cos(x)), 2) * sin( x / 2 ))"; 
-
-    MottTCS = MottTCSStreamThetaIndepPrefactor.str() + MottTCSStream.str();
-
-    fMDCS = new TF1("function", MottDCS.c_str(), fThetaMin, fThetaMax); 
-    fMTCS = new TF1("function", MottTCS.c_str(), fThetaMin, fThetaMax);
-
-    return;
+double KSIntCalculatorMott::Beta(double const E0) {
+    return sqrt( pow(E0, 2) + 2 * E0 * katrin::KConst::M_el_eV()) / (E0 + katrin::KConst::M_el_eV());
 }
 
-void KSIntCalculatorMott::DeinitializeMDCS()
-{
-    delete fMDCS;
-    fMDCS = nullptr;
-    delete fMTCS;
-    fMTCS = nullptr;
-    return;
+std::vector<double> KSIntCalculatorMott::RMott_coeffs(double const E0) {
+
+    std::vector<double> a(6, 0.0); // Initialize a with 6 zeros, the last entry is not related to coefficient calculation it is Z for the nucleus of choice
+    std::vector<std::vector<double>> b(5, std::vector<double>(6));
+
+    if (fNucleus == "He") {
+        a[5] = 2; // Charge Z
+        b = {{ 1.0       ,  3.76476e-8, -3.05313e-7, -3.27422e-7,  2.44235e-6,  4.08754e-6},
+             { 2.35767e-2,  3.24642e-2, -6.37269e-4, -7.69160e-4,  5.28004e-3,  9.45642e-3},
+             {-2.73743e-1, -7.40767e-1, -4.98195e-1,  1.74337e-3, -1.25798e-2, -2.24046e-2},
+             {-7.79128e-4, -4.14495e-4, -1.62657e-3, -1.37286e-3,  1.04319e-2,  1.83488e-2},
+             { 2.02855e-4,  1.94598e-6,  4.30102e-4,  4.32180e-4, -3.31526e-3, -5.81788e-3}};
+    } else if (fNucleus == "Ne") {
+        a[5] = 10;
+        b = {{ 9.99997e-1, -1.87404e-7,  3.10276e-5,  5.20000e-5,  2.98132e-4, -5.19259e-4},
+             { 1.20783e-1,  1.66407e-1,  1.06608e-2,  6.48772e-3, -1.53031e-3, -7.59354e-2},
+             {-3.15222e-1, -8.28793e-1, -6.05740e-1, -1.47812e-1,  1.15760   ,  1.58565   },
+             {-2.89055e-2, -9.08096e-4,  1.21467e-1, -1.77575e-1, -1.29110   , -1.90333   },
+             { 7.65342e-3, -8.85417e-4, -3.89092e-2, -5.44040e-2,  3.93087e-1,  5.79439e-1}};
+    } 
+
+    for (int j = 0; j < 5; ++j) {
+        a[j] = 0.0;
+        for (int k = 0; k < 6; ++k) {
+            a[j] += b[j][k] * pow(Beta(E0) - 0.7181287, k);
+        }
+    }
+
+    return a;
+}
+
+double KSIntCalculatorMott::MDCS(double theta, const double E0) {
+
+    double r_e = 2.8179403227 * pow(10, -15);
+
+    std::vector<double> a = RMott_coeffs(E0);
+
+    double Z = a[5];
+
+    return  pow(Z, 2) * pow(r_e, 2) * ( (1 - pow(Beta(E0), 2))/(pow(Beta(E0), 4)) ) * ((a[0] * pow(1 - cos(theta), -2)) + (a[1] * pow((1 - cos(theta)), ((1 / 2) - 2))) + (a[2] * pow((1 - cos(theta)), (-1))) + (a[3] * pow((1 - cos(theta)), ((3 / 2) - 2))) + a[4] );
+}
+
+double KSIntCalculatorMott::MTCS(double theta, const double E0) {
+
+    double r_e = 2.8179403227 * pow(10, -15);
+
+    std::vector<double> a = RMott_coeffs(E0);
+
+    double Z = a[5]; 
+
+
+    return 2 * katrin::KConst::Pi() * pow(Z, 2) * pow(r_e, 2) * 
+                    ((1 - pow(Beta(E0), 2)) / pow(Beta(E0), 4)) *
+                    ((a[0] * pow((1 - cos(theta * katrin::KConst::Pi() / 180)), -1) / (-1)) + 
+                     (a[1] * pow((1 - cos(theta * katrin::KConst::Pi() / 180)), (1.0 / 2) - 1) / ((1.0 / 2) - 1)) + 
+                     (a[2] * log(1 - cos(theta * katrin::KConst::Pi() / 180))) + 
+                     (a[3] * pow((1 - cos(theta * katrin::KConst::Pi() / 180)), (3.0 / 2) - 1) / ((3.0 / 2) - 1)) + 
+                     (a[4] * -1 * cos(theta * katrin::KConst::Pi() / 180)))
+            - 2 * katrin::KConst::Pi() * pow(Z, 2) * pow(r_e, 2) * 
+                    ((1 - pow(Beta(E0), 2)) / pow(Beta(E0), 4)) *
+                    ((a[0] * pow((1 - cos(fThetaMin * katrin::KConst::Pi() / 180)), -1) / (-1)) + 
+                     (a[1] * pow((1 - cos(fThetaMin * katrin::KConst::Pi() / 180)), (1.0 / 2) - 1) / ((1.0 / 2) - 1)) + 
+                     (a[2] * log(1 - cos(fThetaMin * katrin::KConst::Pi() / 180))) + 
+                     (a[3] * pow((1 - cos(fThetaMin * katrin::KConst::Pi() / 180)), (3.0 / 2) - 1) / ((3.0 / 2) - 1)) + 
+                     (a[4] * -1 * cos(fThetaMin * katrin::KConst::Pi() / 180)));
+}
+
+double KSIntCalculatorMott::Normalized_RDCS(double theta) {
+
+    double C = 1 / ((1 / (1 - cos(fThetaMin* katrin::KConst::Pi() / 180))) - (1 / (1 - cos(fThetaMax* katrin::KConst::Pi() / 180))));
+
+    return C / pow((1 - cos(theta* katrin::KConst::Pi() / 180)), 2);
+}
+
+double KSIntCalculatorMott::Normalized_RTCSInverse(double x) {
+
+    double C = 1 / ((1 / (1 - cos(fThetaMin * katrin::KConst::Pi() / 180))) - (1 / (1 - cos(fThetaMax * katrin::KConst::Pi() / 180))));
+
+    return acos( 1 - (1 / ((1 / (1 - cos(fThetaMin * katrin::KConst::Pi() / 180))) - x / C)) ) * 180 / katrin::KConst::Pi();
 }
 
 }  // namespace Kassiopeia
