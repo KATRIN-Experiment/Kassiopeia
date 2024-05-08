@@ -48,6 +48,7 @@ target_link_libraries (KEMMagfieldCoils
 #        KEMCore
 #        KEMMath
 #        KEMFieldSolverCore
+        KEMFieldExceptions
 )
 
 kasper_install_headers (${MAGFIELDCOILS_HEADERFILES})
