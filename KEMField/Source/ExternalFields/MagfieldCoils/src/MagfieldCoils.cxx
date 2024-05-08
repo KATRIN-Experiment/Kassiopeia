@@ -1,4 +1,5 @@
 #include "MagfieldCoils.h"
+#include "KEMSimpleException.hh"
 
 
 MagfieldCoils::MagfieldCoils(string inputdirname, string inputobjectname, string inputcoilfilename, int inputNelliptic,
@@ -14,6 +15,9 @@ MagfieldCoils::MagfieldCoils(string inputdirname, string inputobjectname, string
     fcoilfilename = inputcoilfilename;  // name of coil input file
     fNelliptic =
         inputNelliptic;    // radial numerical integration parameter for magnetic field calc. with elliptic integrals
+    if(inputnmax <= 1) {
+        throw KEMField::KEMSimpleException("MagfieldCoils: nmax can't be <= 1. A recommended value for nmax is 500.\nThis error was added in May 2024, before results in this case could not be trusted.");
+    }
     fnmax = inputnmax;      // number of source coefficients for fixed source point: nmax+1
     fepstol = inputepstol;  // small tolerance parameter needed for the symmetry group definitions
                            // Recommended values: inputNelliptic=32, inputnmax=500, inputepstol=1.e-8.
