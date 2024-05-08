@@ -72,25 +72,24 @@ template<class XType> class KSList
 
   private:
     XType** fElements;
-    mutable int fCurrentElement;
     int fEndElement;
     const int fLastElement;
 };
 
 template<class XType>
-KSList<XType>::KSList(const int aMaxSize) : fCurrentElement(0), fEndElement(0), fLastElement(aMaxSize)
+KSList<XType>::KSList(const int aMaxSize) : fEndElement(0), fLastElement(aMaxSize)
 {
     fElements = new XType*[fLastElement];
-    for (fCurrentElement = 0; fCurrentElement < fLastElement; fCurrentElement++) {
-        fElements[fCurrentElement] = nullptr;
+    for (int currentElement = 0; currentElement < fLastElement; currentElement++) {
+        fElements[currentElement] = nullptr;
     }
 }
 template<class XType>
-KSList<XType>::KSList(const KSList& aCopy) : fCurrentElement(0), fEndElement(0), fLastElement(aCopy.fLastElement)
+KSList<XType>::KSList(const KSList& aCopy) : fEndElement(0), fLastElement(aCopy.fLastElement)
 {
     fElements = new XType*[fLastElement];
-    for (fCurrentElement = 0; fCurrentElement < fLastElement; fCurrentElement++) {
-        fElements[fCurrentElement] = aCopy.fElements[fCurrentElement];
+    for (int currentElement = 0; currentElement < fLastElement; currentElement++) {
+        fElements[currentElement] = aCopy.fElements[currentElement];
     }
 }
 template<class XType> KSList<XType>::~KSList()
@@ -109,9 +108,9 @@ template<class XType> bool KSList<XType>::Full() const
 
 template<class XType> void KSList<XType>::ClearContent()
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if (fElements[fCurrentElement] != nullptr) {
-            fElements[fCurrentElement] = nullptr;
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if (fElements[currentElement] != nullptr) {
+            fElements[currentElement] = nullptr;
         }
     }
     fEndElement = 0;
@@ -119,10 +118,10 @@ template<class XType> void KSList<XType>::ClearContent()
 }
 template<class XType> void KSList<XType>::DeleteContent()
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if (fElements[fCurrentElement] != nullptr) {
-            delete fElements[fCurrentElement];
-            fElements[fCurrentElement] = nullptr;
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if (fElements[currentElement] != nullptr) {
+            delete fElements[currentElement];
+            fElements[currentElement] = nullptr;
         }
     }
     fEndElement = 0;
@@ -134,21 +133,19 @@ template<class XType> int KSList<XType>::AddElement(XType* anElement)
     if (fEndElement == fLastElement) {
         return -1;
     }
-    fCurrentElement = fEndElement;
-    fElements[fCurrentElement] = anElement;
+    const int currentElement = fEndElement;
+    fElements[currentElement] = anElement;
     fEndElement++;
-    return fCurrentElement;
+    return currentElement;
 }
 template<class XType> int KSList<XType>::FindElement(XType* anElement)
 {
-    int tIndex = -1;
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if (fElements[fCurrentElement] == anElement) {
-            tIndex = fCurrentElement;
-            break;
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if (fElements[currentElement] == anElement) {
+            return currentElement;
         }
     }
-    return tIndex;
+    return -1;
 }
 template<class XType> int KSList<XType>::FindElementByType(XType* anElement)
 {
@@ -164,15 +161,15 @@ template<class XType> int KSList<XType>::FindElementByType(XType* anElement)
 template<class XType> int KSList<XType>::RemoveElement(XType* anElement)
 {
     int tIndex = -1;
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
         if (tIndex == -1) {
-            if (fElements[fCurrentElement] == anElement) {
-                fElements[fCurrentElement] = nullptr;
-                tIndex = fCurrentElement;
+            if (fElements[currentElement] == anElement) {
+                fElements[currentElement] = nullptr;
+                tIndex = currentElement;
             }
             continue;
         }
-        fElements[fCurrentElement - 1] = fElements[fCurrentElement];
+        fElements[currentElement - 1] = fElements[currentElement];
     }
     if (tIndex != -1) {
         fEndElement--;
@@ -182,19 +179,18 @@ template<class XType> int KSList<XType>::RemoveElement(XType* anElement)
 }
 template<class XType> XType* KSList<XType>::ElementAt(int& anIndex) const
 {
-    fCurrentElement = anIndex;
-    if (fCurrentElement >= fEndElement || fCurrentElement < 0) {
+    if (anIndex >= fEndElement || anIndex < 0) {
         return nullptr;
     }
-    return fElements[fCurrentElement];
+    return fElements[anIndex];
 }
 
 template<class XType>
 template<class XReturnType, class XClassType>
 void KSList<XType>::ForEach(XReturnType (XClassType::*aMember)())
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        (fElements[fCurrentElement]->*aMember)();
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        (fElements[currentElement]->*aMember)();
     }
     return;
 }
@@ -202,8 +198,8 @@ template<class XType>
 template<class XReturnType, class XClassType>
 void KSList<XType>::ForEach(XReturnType (XClassType::*aMember)() const)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        (fElements[fCurrentElement]->*aMember)();
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        (fElements[currentElement]->*aMember)();
     }
     return;
 }
@@ -211,8 +207,8 @@ template<class XType>
 template<class XReturnType, class XClassType, class XArgumentType>
 void KSList<XType>::ForEach(XReturnType (XClassType::*aMember)(XArgumentType), XArgumentType anArgument)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        (fElements[fCurrentElement]->*aMember)(anArgument);
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        (fElements[currentElement]->*aMember)(anArgument);
     }
     return;
 }
@@ -220,8 +216,8 @@ template<class XType>
 template<class XReturnType, class XClassType, class XArgumentType>
 void KSList<XType>::ForEach(XReturnType (XClassType::*aMember)(XArgumentType) const, XArgumentType anArgument)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        (fElements[fCurrentElement]->*aMember)(anArgument);
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        (fElements[currentElement]->*aMember)(anArgument);
     }
     return;
 }
@@ -231,8 +227,8 @@ template<class XReturnType, class XClassType, class XArgumentType1, class XArgum
 void KSList<XType>::ForEach(XReturnType (XClassType::*aMember)(XArgumentType1, XArgumentType2),
                             XArgumentType1 anArgument1, XArgumentType2 anArgument2)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        (fElements[fCurrentElement]->*aMember)(anArgument1, anArgument2);
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        (fElements[currentElement]->*aMember)(anArgument1, anArgument2);
     }
     return;
 }
@@ -241,16 +237,16 @@ template<class XReturnType, class XClassType, class XArgumentType1, class XArgum
 void KSList<XType>::ForEach(XReturnType (XClassType::*aMember)(XArgumentType1, XArgumentType2) const,
                             XArgumentType1 anArgument1, XArgumentType2 anArgument2)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        (fElements[fCurrentElement]->*aMember)(anArgument1, anArgument2);
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        (fElements[currentElement]->*aMember)(anArgument1, anArgument2);
     }
     return;
 }
 
 template<class XType> template<class XClassType> bool KSList<XType>::ForEachUntilTrue(bool (XClassType::*aMember)())
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)() == true) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)() == true) {
             return true;
         }
     }
@@ -260,8 +256,8 @@ template<class XType>
 template<class XClassType>
 bool KSList<XType>::ForEachUntilTrue(bool (XClassType::*aMember)() const)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)() == true) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)() == true) {
             return true;
         }
     }
@@ -271,8 +267,8 @@ template<class XType>
 template<class XClassType, class XArgumentType>
 bool KSList<XType>::ForEachUntilTrue(bool (XClassType::*aMember)(XArgumentType), XArgumentType anArgument)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument) == true) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument) == true) {
             return true;
         }
     }
@@ -282,8 +278,8 @@ template<class XType>
 template<class XClassType, class XArgumentType>
 bool KSList<XType>::ForEachUntilTrue(bool (XClassType::*aMember)(XArgumentType) const, XArgumentType anArgument)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument) == true) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument) == true) {
             return true;
         }
     }
@@ -294,8 +290,8 @@ template<class XClassType, class XArgumentType1, class XArgumentType2>
 bool KSList<XType>::ForEachUntilTrue(bool (XClassType::*aMember)(XArgumentType1, XArgumentType2),
                                      XArgumentType1 anArgument1, XArgumentType2 anArgument2)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument1, anArgument2) == true) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument1, anArgument2) == true) {
             return true;
         }
     }
@@ -306,8 +302,8 @@ template<class XClassType, class XArgumentType1, class XArgumentType2>
 bool KSList<XType>::ForEachUntilTrue(bool (XClassType::*aMember)(XArgumentType1, XArgumentType2) const,
                                      XArgumentType1 anArgument1, XArgumentType2 anArgument2)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument1, anArgument2) == true) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument1, anArgument2) == true) {
             return true;
         }
     }
@@ -316,8 +312,8 @@ bool KSList<XType>::ForEachUntilTrue(bool (XClassType::*aMember)(XArgumentType1,
 
 template<class XType> template<class XClassType> bool KSList<XType>::ForEachUntilFalse(bool (XClassType::*aMember)())
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)() == false) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)() == false) {
             return false;
         }
     }
@@ -327,8 +323,8 @@ template<class XType>
 template<class XClassType>
 bool KSList<XType>::ForEachUntilFalse(bool (XClassType::*aMember)() const)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)() == false) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)() == false) {
             return false;
         }
     }
@@ -338,8 +334,8 @@ template<class XType>
 template<class XClassType, class XArgumentType>
 bool KSList<XType>::ForEachUntilFalse(bool (XClassType::*aMember)(XArgumentType), XArgumentType anArgument)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument) == false) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument) == false) {
             return false;
         }
     }
@@ -349,8 +345,8 @@ template<class XType>
 template<class XClassType, class XArgumentType>
 bool KSList<XType>::ForEachUntilFalse(bool (XClassType::*aMember)(XArgumentType) const, XArgumentType anArgument)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument) == false) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument) == false) {
             return false;
         }
     }
@@ -361,8 +357,8 @@ template<class XClassType, class XArgumentType1, class XArgumentType2>
 bool KSList<XType>::ForEachUntilFalse(bool (XClassType::*aMember)(XArgumentType1, XArgumentType2),
                                       XArgumentType1 anArgument1, XArgumentType2 anArgument2)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument1, anArgument2) == false) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument1, anArgument2) == false) {
             return false;
         }
     }
@@ -373,8 +369,8 @@ template<class XClassType, class XArgumentType1, class XArgumentType2>
 bool KSList<XType>::ForEachUntilFalse(bool (XClassType::*aMember)(XArgumentType1, XArgumentType2) const,
                                       XArgumentType1 anArgument1, XArgumentType2 anArgument2)
 {
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if ((fElements[fCurrentElement]->*aMember)(anArgument1, anArgument2) == false) {
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        if ((fElements[currentElement]->*aMember)(anArgument1, anArgument2) == false) {
             return false;
         }
     }
@@ -387,8 +383,8 @@ XReturnType KSList<XType>::LargestOfAll(XReturnType (XClassType::*aMember)())
 {
     XReturnType Largest = -1.e300;
     XReturnType CurrentValue;
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        CurrentValue = (fElements[fCurrentElement]->*aMember)();
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        CurrentValue = (fElements[currentElement]->*aMember)();
         if (CurrentValue > Largest) {
             Largest = CurrentValue;
         }
@@ -402,8 +398,8 @@ XReturnType KSList<XType>::SmallestOfAll(XReturnType (XClassType::*aMember)())
 {
     XReturnType Smallest = 1.e300;
     XReturnType CurrentValue;
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        CurrentValue = (fElements[fCurrentElement]->*aMember)();
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        CurrentValue = (fElements[currentElement]->*aMember)();
         if (CurrentValue < Smallest) {
             Smallest = CurrentValue;
         }
@@ -416,8 +412,8 @@ template<class XClassType, class XReturnType>
 XReturnType KSList<XType>::SumOfAll(XReturnType (XClassType::*aMember)())
 {
     XReturnType Sum = 0.;
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        Sum += (fElements[fCurrentElement]->*aMember)();
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        Sum += (fElements[currentElement]->*aMember)();
     }
     return Sum;
 }
