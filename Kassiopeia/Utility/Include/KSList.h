@@ -1,6 +1,8 @@
 #ifndef KSLIST_H_
 #define KSLIST_H_
 
+#include <typeinfo>
+
 namespace Kassiopeia
 {
 
@@ -148,16 +150,16 @@ template<class XType> int KSList<XType>::FindElement(XType* anElement)
     }
     return tIndex;
 }
-template<class XType> int KSList<XType>::FindElementByType(XType*)
+template<class XType> int KSList<XType>::FindElementByType(XType* anElement)
 {
-    int tIndex = -1;
-    for (fCurrentElement = 0; fCurrentElement < fEndElement; fCurrentElement++) {
-        if (dynamic_cast<XType*>(fElements[fCurrentElement]) != nullptr) {
-            tIndex = fCurrentElement;
-            break;
+    const std::type_info& elementType = typeid(*anElement);
+    for (int currentElement = 0; currentElement < fEndElement; currentElement++) {
+        const std::type_info& compareType = typeid(*fElements[currentElement]);
+        if (elementType == compareType) {
+            return currentElement;
         }
     }
-    return tIndex;
+    return -1;
 }
 template<class XType> int KSList<XType>::RemoveElement(XType* anElement)
 {
