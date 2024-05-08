@@ -107,7 +107,7 @@ Several programs are available for working with electric fields:
 
 * ``SimpleElectricFieldCalculator`` calculates the electric field and potential at a single point in the global
   coordinate system, and prints the results to the terminal.
-* ``SimpleElectricFieldCalculatorAlongZAxis`` calculates the electric field and potential at several points spread
+* ``SimpleElectricFieldCalculatorAlongZaxis`` calculates the electric field and potential at several points spread
   along the z-axis, defined by a start and stop position on the z-axis and a distance between points. The results are
   printed to the terminal and saved to a output text file.
 * ``SimpleElectricFieldCalculatorOverXYplane`` calculates the electric field and potential at several points spread
