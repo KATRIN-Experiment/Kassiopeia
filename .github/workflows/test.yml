@@ -43,7 +43,7 @@ jobs:
             export CC=/usr/bin/clang
             export CXX=/usr/bin/clang++
         fi
-        ./setup.sh
+        KASSIOPEIA_CUSTOM_CMAKE_ARGS="-DENABLE_SANITIZE_ADDRESSES=ON" ./setup.sh
       shell: bash
 
     - name: Launch environment and run tests
@@ -72,7 +72,8 @@ jobs:
             root-core root-io-xmlparser root-minuit2 root-spectrum root-genvector \
             vtk vtk-qt \
             boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel liburing-devel libxml2-devel log4cxx-devel \
-            ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
+            ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel \
+            libasan
     - name: Build code
       run: |
         if ${{ matrix.use_clang }}; then
@@ -81,7 +82,7 @@ jobs:
             export CC=/usr/bin/clang
             export CXX=/usr/bin/clang++
         fi
-        ./setup.sh
+        KASSIOPEIA_CUSTOM_CMAKE_ARGS="-DENABLE_SANITIZE_ADDRESSES=ON" ./setup.sh
       shell: bash
 
     - name: Launch environment and run tests
