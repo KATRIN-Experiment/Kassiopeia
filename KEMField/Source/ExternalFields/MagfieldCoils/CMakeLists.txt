@@ -39,8 +39,6 @@ foreach( BASENAME ${MAGFIELDCOILS_SOURCE_BASENAMES} )
     list( APPEND MAGFIELDCOILS_SOURCEFILES ${MAGFIELDCOILS_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
-set_property(SOURCE ${MAGFIELDCOILS_SOURCEFILES} APPEND_STRING PROPERTY COMPILE_OPTIONS -Wno-error)  # FIXME
-
 add_library (KEMMagfieldCoils SHARED
     ${MAGFIELDCOILS_SOURCEFILES} ${MAGFIELDCOILS_HEADERFILES})
 target_include_directories(KEMMagfieldCoils
@@ -50,6 +48,7 @@ target_link_libraries (KEMMagfieldCoils
 #        KEMCore
 #        KEMMath
 #        KEMFieldSolverCore
+        KEMFieldExceptions
 )
 
 kasper_install_headers (${MAGFIELDCOILS_HEADERFILES})
