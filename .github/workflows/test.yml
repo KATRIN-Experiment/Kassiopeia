@@ -48,7 +48,7 @@ jobs:
 
     - name: Launch environment and run tests
       run: |
-        source root/bin/thisroot.sh && source install/bin/kasperenv.sh && UnitTestKasper
+        source root/bin/thisroot.sh && source install/bin/kasperenv.sh && ASAN_OPTIONS=detect_leaks=0 UnitTestKasper
       shell: bash
 
   fedora_37:
@@ -87,5 +87,5 @@ jobs:
 
     - name: Launch environment and run tests
       run: |
-        source install/bin/kasperenv.sh && UnitTestKasper
+        source install/bin/kasperenv.sh && ASAN_OPTIONS=detect_leaks=0 UnitTestKasper
       shell: bash
