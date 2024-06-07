@@ -149,7 +149,7 @@ Both examples together will yield the output::
     [INITIALIZATION NORMAL MESSAGE] This is a test message.
 
 Instead of showing normal messages, it is also possible to show a warning or an error message. An error message will
-terminate the prgogram, so it is most useful in combination with the conditional expressions described below:
+terminate the program, so it is most useful in combination with the conditional expressions described below:
 
 .. code-block:: xml
 
