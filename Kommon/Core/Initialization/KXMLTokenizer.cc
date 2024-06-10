@@ -409,6 +409,17 @@ void KXMLTokenizer::ParseElementEndName()
 
     //if at ">", then check and send end element, then prepare value, then ParseBody
     if (AtOneOf(fRightAngle)) {
+        if (fNames.empty()) {
+            fBuffer = string("no element open but got unexpected closing tag for element <") + fBuffer +
+                      string(">");
+            fError->SetValue(fBuffer);
+            fError->SetLine(fLine);
+            fError->SetColumn(fColumn);
+            ProcessToken(fError);
+            fState = fFinalState;
+            return;
+        }
+
         if (fNames.top() != fBuffer) {
             fBuffer = string("expected closing element name <") + fNames.top() + string(">, but got <") + fBuffer +
                       string("> instead");
