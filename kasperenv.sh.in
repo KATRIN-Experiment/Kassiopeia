@@ -67,10 +67,20 @@ fi
 export KEMFIELD_CACHE
 mkdir -p ${KEMFIELD_CACHE}
 
-export PATH=${KASPER_INSTALL_BIN}:$(echo $PATH | sed 's/${OLD_PATH}//g')
-export LD_LIBRARY_PATH=${KASPER_INSTALL_LIB}:$(echo $LD_LIBRARY_PATH | sed 's/${OLD_LDLIBPATH}//g')
-export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:$(echo $PKG_CONFIG_PATH | sed 's/${OLD_PKGCFGPATH}//g')
-export PYTHONPATH=${KASPER_INSTALL_LIB}/python:$(echo $PYTHONPATH | sed 's/${OLD_PYTHONPATH}//g')
-export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:$(echo $CMAKE_PREFIX_PATH | sed 's/${OLD_CMAKE_PREF}//g')
+
+[[ -n $OLD_PATH ]] && export PATH=$(echo $PATH | sed "s;${OLD_PATH};;g")
+export PATH=${KASPER_INSTALL_BIN}:$PATH
+
+[[ -n $OLD_LDLIBPATH ]] && export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s;${OLD_LDLIBPATH};;g")
+export LD_LIBRARY_PATH=${KASPER_INSTALL_LIB}:$LD_LIBRARY_PATH
+
+[[ -n $OLD_PKGCFGPATH ]] && export PKG_CONFIG_PATH=$(echo $PKG_CONFIG_PATH | sed "s;${OLD_PKGCFGPATH};;g")
+export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:$PKG_CONFIG_PATH
+
+[[ -n $OLD_PYTHONPATH ]] && export PYTHONPATH=$(echo $PYTHONPATH | sed "s;${OLD_PYTHONPATH};;g")
+export PYTHONPATH=${KASPER_INSTALL_LIB}/python:$PYTHONPATH
+
+[[ -n $OLD_CMAKE_PREF ]] && export CMAKE_PREFIX_PATH=$(echo $CMAKE_PREFIX_PATH | sed "s;${OLD_CMAKE_PREF};;g")
+export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:$CMAKE_PREFIX_PATH
 
 return 0
