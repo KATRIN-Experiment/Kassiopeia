@@ -136,6 +136,7 @@ RUN pip3 install --no-cache-dir jupyterlab \
  && pip3 install --no-cache-dir jupyter-server-proxy \
  && pip3 install --no-cache-dir jupyterhub \
  && pip3 install --no-cache-dir ipympl \
+ && pip3 install --no-cache-dir uproot \
  && pip3 install --no-cache-dir iminuit
 
 # Ensure if LDAP is used on a JupyterHub, user names are correctly resolved
