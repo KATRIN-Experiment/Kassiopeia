@@ -3,6 +3,7 @@
 
 #include "KSObjectsMessage.h"
 #include "KTagged.h"
+#include <memory>
 
 namespace Kassiopeia
 {
@@ -53,7 +54,7 @@ class KSObject : public katrin::KTagged
         XType* fObject;
     };
 
-    mutable KSHolder* fHolder;
+    mutable std::unique_ptr<KSHolder> fHolder;
 };
 
 inline KSObject::KSHolder::KSHolder() = default;
@@ -141,12 +142,8 @@ template<> inline const KSObject* KSObject::As<KSObject>() const
 
 template<class XType> inline void KSObject::Set(XType* anObject)
 {
-    if (fHolder != nullptr) {
-        delete fHolder;
-        fHolder = nullptr;
-    }
     auto* tHolder = new KSHolderTemplate<XType>(anObject);
-    fHolder = tHolder;
+    fHolder = std::unique_ptr<KSHolder>(tHolder);
     return;
 }
 
