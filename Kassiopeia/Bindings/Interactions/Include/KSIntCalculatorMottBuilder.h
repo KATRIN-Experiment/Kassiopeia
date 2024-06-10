@@ -19,7 +19,7 @@ template<> inline bool KSIntCalculatorMottBuilder::AddAttribute(KContainer* aCon
     if (aContainer->GetName() == "theta_min") {
         aContainer->CopyTo(fObject, &KSIntCalculatorMott::SetThetaMin);
 
-        if ((fObject->GetThetaMin() == 0.0)) {
+        if ((fObject->GetThetaMin() <= 0.0)) {
             initmsg(eError) << "\"" << fObject->GetThetaMin()
                            << R"(" is an invalid lower bound for Mott scattering! Change to a value > 0)" << eom;
 
