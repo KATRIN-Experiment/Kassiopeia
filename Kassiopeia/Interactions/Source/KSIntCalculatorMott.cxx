@@ -1,6 +1,6 @@
 #include "KSIntCalculatorMott.h"
 #include <vector>
-#include <random>
+#include <algorithm>
 
 #include "KRandom.h"
 using katrin::KRandom;
@@ -51,12 +51,22 @@ void KSIntCalculatorMott::ExecuteInteraction(const KSParticle& anInitialParticle
     tMomentum.SetPolarAngle(tTheta * katrin::KConst::Pi() / 180);
     tMomentum.SetAzimuthalAngle(tPhi);
 
+    KThreeVector tOrthogonalOne = tMomentum.Orthogonal();
+    KThreeVector tOrthogonalTwo = tMomentum.Cross(tOrthogonalOne);
+    KThreeVector tFinalDirection =
+        tMomentum.Magnitude() *
+        (sin(tTheta* katrin::KConst::Pi() / 180) * (cos(tPhi) * tOrthogonalOne.Unit() + sin(tPhi) * tOrthogonalTwo.Unit()) +
+         cos(tTheta* katrin::KConst::Pi() / 180) * tMomentum.Unit());
+
+
     aFinalParticle.SetTime(tTime);
     aFinalParticle.SetPosition(tPosition);
-    aFinalParticle.SetMomentum(tMomentum);
+    aFinalParticle.SetMomentum(tFinalDirection);
     aFinalParticle.SetKineticEnergy_eV(tInitialKineticEnergy - tLostKineticEnergy);
     aFinalParticle.SetLabel(GetName());
 
+    fStepNInteractions = 1;
+    fStepEnergyLoss = tLostKineticEnergy;
     fStepAngularChange = tTheta;
 
     return;
@@ -65,27 +75,29 @@ void KSIntCalculatorMott::ExecuteInteraction(const KSParticle& anInitialParticle
 double KSIntCalculatorMott::GetTheta(const double& anEnergy){
 
     double tTheta;
+    double resolution;
+    double resolution_factor = 10; // arbitrarily chosen for o(1ms) computation time for He; computation time increases linearly with resolution factor; resolution factors under 1 yields incorrect results
 
+
+    resolution = ceil((fThetaMax - fThetaMin) * resolution_factor);
+
+
+    // Initializing array for possible theta values
     std::vector<double> theta_arr;
-
-    // Populate theta_arr
-    for (int i = 0; i <= 1000; ++i) {
-        theta_arr.push_back(fThetaMin + i * (fThetaMax - fThetaMin) / 1000.0);
+    for (int i = 0; i <= int(resolution); ++i) {
+        theta_arr.push_back(fThetaMin + i * (fThetaMax - fThetaMin) / resolution);
     }
-
-    double k = 0.0;
 
     // Calculating rescaling factor for rejection sampling
+    std::vector<double> k_values;
     for (double theta : theta_arr) {
-        double MDCS_val = MDCS(theta, anEnergy);
-        double PDF_val = Normalized_RDCS(theta);
-        double ratio = MDCS_val / PDF_val;
-        if (ratio > k) {
-            k = MDCS_val / PDF_val;
-        } else {
-            break;
-        }
+        k_values.push_back(MDCS(theta, anEnergy) / Normalized_RDCS(theta));
     }
+
+    // Find the maximum value of k
+    double k = *std::max_element(k_values.begin(), k_values.end());
+
+
 
     // Rejection sampling taking initial sample from Rutherford Diff. X-Sec
     while (true) {
@@ -107,9 +119,9 @@ double KSIntCalculatorMott::GetEnergyLoss(const double& anEnergy, const double& 
     double amu = 0.0;
 
     if (fNucleus == "He") {
-        amu = 4.0026;
+        amu = 4.0026; // mass in amu from W.J. Huang et al 2021 Chinese Phys. C 45 030002
     } else if (fNucleus == "Ne") {
-        amu = 20.1797;
+        amu = 19.9924; // mass in amu from W.J. Huang et al 2021 Chinese Phys. C 45 030002
     } 
 
     M = amu * katrin::KConst::AtomicMassUnit_eV(); //  eV/c^2
@@ -140,7 +152,7 @@ std::vector<double> KSIntCalculatorMott::RMott_coeffs(double const E0) {
              {-7.79128e-4, -4.14495e-4, -1.62657e-3, -1.37286e-3,  1.04319e-2,  1.83488e-2},
              { 2.02855e-4,  1.94598e-6,  4.30102e-4,  4.32180e-4, -3.31526e-3, -5.81788e-3}};
     } else if (fNucleus == "Ne") {
-        a[5] = 10;
+        a[5] = 10; // Charge Z
         b = {{ 9.99997e-1, -1.87404e-7,  3.10276e-5,  5.20000e-5,  2.98132e-4, -5.19259e-4},
              { 1.20783e-1,  1.66407e-1,  1.06608e-2,  6.48772e-3, -1.53031e-3, -7.59354e-2},
              {-3.15222e-1, -8.28793e-1, -6.05740e-1, -1.47812e-1,  1.15760   ,  1.58565   },
@@ -160,18 +172,18 @@ std::vector<double> KSIntCalculatorMott::RMott_coeffs(double const E0) {
 
 double KSIntCalculatorMott::MDCS(double theta, const double E0) {
 
-    double r_e = 2.8179403227 * pow(10, -15);
+    double r_e = 2.8179403227 * pow(10, -15); // classical electron radius
 
     std::vector<double> a = RMott_coeffs(E0);
 
     double Z = a[5];
 
-    return  pow(Z, 2) * pow(r_e, 2) * ( (1 - pow(Beta(E0), 2))/(pow(Beta(E0), 4)) ) * ((a[0] * pow(1 - cos(theta), -2)) + (a[1] * pow((1 - cos(theta)), ((1 / 2) - 2))) + (a[2] * pow((1 - cos(theta)), (-1))) + (a[3] * pow((1 - cos(theta)), ((3 / 2) - 2))) + a[4] );
+    return  pow(Z, 2) * pow(r_e, 2) * ( (1 - pow(Beta(E0), 2))/(pow(Beta(E0), 4)) ) * ((a[0] * pow(1 - cos(theta * katrin::KConst::Pi() / 180), -2)) + (a[1] * pow(sqrt(1 - cos(theta * katrin::KConst::Pi() / 180)), -3)) + (a[2] * pow((1 - cos(theta * katrin::KConst::Pi() / 180)), (-1))) + (a[3] * pow(sqrt(1 - cos(theta * katrin::KConst::Pi() / 180)), -1)) + a[4] );
 }
 
 double KSIntCalculatorMott::MTCS(double theta, const double E0) {
 
-    double r_e = 2.8179403227 * pow(10, -15);
+    double r_e = 2.8179403227 * pow(10, -15); // classical electron radius
 
     std::vector<double> a = RMott_coeffs(E0);
 
