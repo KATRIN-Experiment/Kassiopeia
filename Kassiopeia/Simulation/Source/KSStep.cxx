@@ -45,6 +45,7 @@ KSStep::KSStep() :
 {}
 KSStep::KSStep(const KSStep& aCopy) :
     KSComponent(aCopy),
+    KSTimed(aCopy),
     fStepId(aCopy.fStepId),
     fStepCount(aCopy.fStepCount),
     fParentTrackId(aCopy.fParentTrackId),
@@ -84,6 +85,7 @@ KSStep::KSStep(const KSStep& aCopy) :
 {}
 KSStep& KSStep::operator=(const KSStep& aCopy)
 {
+    KSTimed::operator=(aCopy);
     fStepId = aCopy.fStepId;
     fStepCount = aCopy.fStepCount;
     fParentTrackId = aCopy.fParentTrackId;
@@ -163,5 +165,6 @@ STATICINT sKSStepDict =
     KSDictionary<KSStep>::AddComponent(&KSStep::GetTrajectoryParticle, "trajectory_particle") +
     KSDictionary<KSStep>::AddComponent(&KSStep::GetInteractionParticle, "interaction_particle") +
     KSDictionary<KSStep>::AddComponent(&KSStep::GetNavigationParticle, "navigation_particle") +
-    KSDictionary<KSStep>::AddComponent(&KSStep::GetFinalParticle, "final_particle");
+    KSDictionary<KSStep>::AddComponent(&KSStep::GetFinalParticle, "final_particle") + 
+    KSDictionary<KSStep>::AddComponent(&KSStep::GetProcessingDuration, "processing_duration");
 }  // namespace Kassiopeia
