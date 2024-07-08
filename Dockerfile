@@ -10,21 +10,13 @@ ARG KASSIOPEIA_GIT_COMMIT=""
 ARG KASSIOPEIA_CPUS=""
 
 # --- runtime-base ---
-# NOTE: For Fedora 39, remove marked lines below
-FROM fedora:38 as runtime-base
+FROM fedora:40 as runtime-base
 ARG KASSIOPEIA_UID
 ARG KASSIOPEIA_USER
 ARG KASSIOPEIA_GID
 ARG KASSIOPEIA_GROUP
 
 LABEL description="Runtime base container"
-
-# TODO REMOVE FOR FEDORA 39
-RUN dnf update -y \
- && dnf install -y --setopt=install_weak_deps=False dnf-plugins-core \
- && dnf clean all
-RUN dnf copr enable thofmann/log4xx-1.x -y
-# END TODO
 
 COPY Docker/packages.runtime packages
 RUN dnf update -y \
@@ -144,6 +136,7 @@ RUN pip3 install --no-cache-dir jupyterlab \
  && pip3 install --no-cache-dir jupyter-server-proxy \
  && pip3 install --no-cache-dir jupyterhub \
  && pip3 install --no-cache-dir ipympl \
+ && pip3 install --no-cache-dir uproot \
  && pip3 install --no-cache-dir iminuit
 
 # Ensure if LDAP is used on a JupyterHub, user names are correctly resolved
