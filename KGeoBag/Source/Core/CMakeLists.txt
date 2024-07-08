@@ -18,6 +18,7 @@ set( CORE_HEADER_FILES
     Include/KGExtendedSpaceFunctions.hh
     Include/KGInterface.hh
     Include/KGTypelist.hh
+    Include/KGPathAware.hh
 )
 
 # source
@@ -32,6 +33,7 @@ set( CORE_SOURCE_FILES
     Source/KGSpace.cc
     Source/KGExtensibleSpace.cc
     Source/KGInterface.cc
+    Source/KGPathAware.cc
 )
 
 # target

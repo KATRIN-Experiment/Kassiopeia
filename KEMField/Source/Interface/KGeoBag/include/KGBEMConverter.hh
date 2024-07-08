@@ -9,6 +9,8 @@
 #include "KAxis.hh"
 #include "KThreeVector.hh"
 
+#include "KGPathAware.hh"
+
 #include <vector>
 
 namespace KGeoBag
@@ -219,7 +221,7 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     katrin::KThreeVector fCurrentZAxis;
     katrin::KAxis fCurrentAxis;
 
-    katrin::KTagged* fCurrentElement;
+    KGPathAware* fCurrentElement;
 };
 
 template<class XBasisPolicy, class XBoundaryPolicy>

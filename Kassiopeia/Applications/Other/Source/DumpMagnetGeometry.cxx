@@ -77,7 +77,7 @@ void dumpRemoteSourcePoints(std::ostream& strm, const KZonalHarmonicContainer<Ba
 int main(int argc, char** argv)
 {
     if (argc < 4) {
-        cout
+        std::cout
             << "usage: ./DumpMagnetGeometry <config_file.xml> <output_file.txt> <magnetic_field_name1> [<magnetic_field_name2> <...>] "
             << endl;
         exit(-1);
@@ -99,7 +99,7 @@ int main(int argc, char** argv)
     ofstream outFileStream;
     streambuf* outFileBuf;
     if (outFileName == "-") {
-        outFileBuf = cout.rdbuf();
+        outFileBuf = std::cout.rdbuf();
     }
     else {
         outFileStream.open(outFileName);

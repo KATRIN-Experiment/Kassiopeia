@@ -4,6 +4,7 @@
 #include "KSurfaceID.hh"
 #include "KSurfacePrimitive.hh"
 #include "KSurfaceVisitors.hh"
+#include "KEMCoreMessage.hh"
 
 #include <iostream>
 #include <sstream>
@@ -39,12 +40,13 @@ class KSurface :
     using Boundary = KBoundaryType<BasisPolicy, BoundaryPolicy>;
     using Shape = ShapePolicy;
 
-    KSurface() : KSurfacePrimitive(), Basis(), Boundary(), Shape() {}
+    KSurface() : KSurfacePrimitive(), Basis(), Boundary(), Shape(), fShapeName("") {}
     KSurface(const Basis& basis, const Boundary& boundary, const Shape& shape) :
         KSurfacePrimitive(),
         Basis(basis),
         Boundary(boundary),
-        Shape(shape)
+        Shape(shape),
+        fShapeName(shape.GetName())
     {}
     ~KSurface() override = default;
 
@@ -89,19 +91,53 @@ class KSurface :
 
     void Accept(KBasisVisitor& visitor) override
     {
-        visitor.Visit(*this);
+        try {
+            visitor.Visit(*this);
+        }
+        catch (...) {
+            if (fShapeName.length() == 0) {
+                kem_cout(eWarning) << "Path of error is unavailable. Potentially surfaces have been loaded from cache and therefore have lost additional information?" << eom;
+                throw;
+            }
+
+            kem_cout(eWarning) << "Error in <" << fShapeName << ">" << eom;
+            throw;
+        }
     }
     void Accept(KBoundaryVisitor& visitor) override
     {
-        visitor.Visit(*this);
+        try {
+            visitor.Visit(*this);
+        }
+        catch (...) {
+            if (fShapeName.length() == 0) {
+                kem_cout(eWarning) << "Path of error is unavailable. Potentially surfaces have been loaded from cache and therefore have lost additional information?" << eom;
+                throw;
+            }
+
+            kem_cout(eWarning) << "Error in <" << fShapeName << ">" << eom;
+            throw;
+        }
     }
     void Accept(KShapeVisitor& visitor) override
     {
-        visitor.Visit(*this);
+        try {
+            visitor.Visit(*this);
+        }
+        catch (...) {
+            if (fShapeName.length() == 0) {
+                kem_cout(eWarning) << "Path of error is unavailable. Potentially surfaces have been loaded from cache and therefore have lost additional information?" << eom;
+                throw;
+            }
+
+            kem_cout(eWarning) << "Error in <" << fShapeName << ">" << eom;
+            throw;
+        }
     }
 
   private:
     static KSurfaceID fID;
+    std::string fShapeName;
 };
 
 template<typename BasisPolicy, typename BoundaryPolicy, typename ShapePolicy>

@@ -4,11 +4,12 @@
 
 #include "KThreeVector.hh"
 #include "KTransformation.hh"
+#include "KGPathAware.hh"
 
 namespace KGeoBag
 {
 
-class KGSurface : public katrin::KTagged
+class KGSurface : public KGPathAware
 {
   public:
     friend class KGSpace;
@@ -58,7 +59,7 @@ class KGSurface : public katrin::KTagged
     void Orphan();
 
     const KGSpace* GetParent() const;
-    std::string GetPath() const;
+    std::string GetPath() const override;
 
   protected:
     KGSpace* fParent;
