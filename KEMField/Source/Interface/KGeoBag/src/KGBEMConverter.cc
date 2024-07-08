@@ -217,12 +217,14 @@ void KGBEMMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
     fCurrentElement = aSurface;
     Add(aSurface->AsExtension<KGMesh>());
+    fCurrentElement = nullptr;
     return;
 }
 void KGBEMMeshConverter::DispatchSpace(KGSpace* aSpace)
 {
     fCurrentElement = aSpace;
     Add(aSpace->AsExtension<KGMesh>());
+    fCurrentElement = nullptr;
     return;
 }
 
@@ -320,14 +322,18 @@ KGBEMAxialMeshConverter::~KGBEMAxialMeshConverter() = default;
 
 void KGBEMAxialMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
+    fCurrentElement = aSurface;
     if (!Add(aSurface->AsExtension<KGAxialMesh>()))
         coremsg(eWarning) << "not adding surface <" << aSurface->GetPath() << "> since it is not coaxial" << eom;
+    fCurrentElement = nullptr;
     return;
 }
 void KGBEMAxialMeshConverter::DispatchSpace(KGSpace* aSpace)
 {
+    fCurrentElement = aSpace;
     if (!Add(aSpace->AsExtension<KGAxialMesh>()))
         coremsg(eWarning) << "not adding space <" << aSpace->GetPath() << "> since it is not coaxial" << eom;
+    fCurrentElement = nullptr;
     return;
 }
 
@@ -409,14 +415,18 @@ KGBEMDiscreteRotationalMeshConverter::~KGBEMDiscreteRotationalMeshConverter() = 
 
 void KGBEMDiscreteRotationalMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
+    fCurrentElement = aSurface;
     if (!Add(aSurface->AsExtension<KGDiscreteRotationalMesh>()))
         coremsg(eWarning) << "not adding surface <" << aSurface->GetPath() << "> since it is not coaxial" << eom;
+    fCurrentElement = nullptr;
     return;
 }
 void KGBEMDiscreteRotationalMeshConverter::DispatchSpace(KGSpace* aSpace)
 {
+    fCurrentElement = aSpace;
     if (!Add(aSpace->AsExtension<KGDiscreteRotationalMesh>()))
         coremsg(eWarning) << "not adding space <" << aSpace->GetPath() << "> since it is not coaxial" << eom;
+    fCurrentElement = nullptr;
     return;
 }
 
