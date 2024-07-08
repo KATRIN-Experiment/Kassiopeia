@@ -251,7 +251,7 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
             if ((tMeshTriangle != nullptr) && (tMeshTriangle->Area() > fMinimumArea) &&
                 (tMeshTriangle->Aspect() < fMaximumAspectRatio)) {
                 tTriangle = new Triangle();
-                tTriangle->SetName(tTriangle->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
+                tTriangle->SetName(tTriangle->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetPath() + ">") : ""));
                 tTriangle->SetTagsFrom(fCurrentElement);
                 tTriangle->SetValues(LocalToInternal(tMeshTriangle->GetP0()),
                                      LocalToInternal(tMeshTriangle->GetP1()),
@@ -264,7 +264,7 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
             if ((tMeshRectangle != nullptr) && (tMeshRectangle->Area() > fMinimumArea) &&
                 (tMeshRectangle->Aspect() < fMaximumAspectRatio)) {
                 tRectangle = new Rectangle();
-                tRectangle->SetName(tRectangle->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
+                tRectangle->SetName(tRectangle->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetPath() + ">") : ""));
                 tRectangle->SetTagsFrom(fCurrentElement);
                 tRectangle->SetValues(LocalToInternal(tMeshRectangle->GetP0()),
                                       LocalToInternal(tMeshRectangle->GetP1()),
@@ -278,7 +278,7 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
             if ((tMeshWire != nullptr) && (tMeshWire->Area() > fMinimumArea) &&
                 (tMeshWire->Aspect() < fMaximumAspectRatio)) {
                 tLineSegment = new LineSegment();
-                tLineSegment->SetName(tLineSegment->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
+                tLineSegment->SetName(tLineSegment->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetPath() + ">") : ""));
                 tLineSegment->SetTagsFrom(fCurrentElement);
                 tLineSegment->SetValues(LocalToInternal(tMeshWire->GetP0()),
                                         LocalToInternal(tMeshWire->GetP1()),
@@ -368,7 +368,7 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
             tAxialMeshLoop = dynamic_cast<KGAxialMeshLoop*>(tAxialMeshElement);
             if ((tAxialMeshLoop != nullptr) && (tAxialMeshLoop->Area() > fMinimumArea)) {
                 tConicSection = new ConicSection();
-                tConicSection->SetName(tConicSection->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
+                tConicSection->SetName(tConicSection->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetPath() + ">") : ""));
                 tConicSection->SetTagsFrom(fCurrentElement);
                 tConicSection->SetValues(LocalToInternal(tAxialMeshLoop->GetP0()),
                                          LocalToInternal(tAxialMeshLoop->GetP1()));
@@ -379,7 +379,7 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
             tAxialMeshRing = dynamic_cast<KGAxialMeshRing*>(tAxialMeshElement);
             if ((tAxialMeshRing != nullptr) && (tAxialMeshRing->Area() > fMinimumArea)) {
                 tRing = new Ring();
-                tRing->SetName(tRing->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
+                tRing->SetName(tRing->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetPath() + ">") : ""));
                 tRing->SetTagsFrom(fCurrentElement);
                 tRing->SetValues(LocalToInternal(tAxialMeshRing->GetP0()));
                 fRings.push_back(tRing);
