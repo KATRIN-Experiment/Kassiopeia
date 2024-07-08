@@ -1,5 +1,8 @@
 Tools
-=====
+*****
+
+Field calculation
+=================
 
 Although *Kassiopeia* is quite powerful in terms of configuration options, sometimes it is necessary to calculate the
 electric or magnetic field at one or more defined points in the geometry. This is especially useful to compare
@@ -29,8 +32,14 @@ and so on. In addition, there is:
 * ``SimpleMagneticGradientCalculator`` calculates the magnetic field and its gradient at a single point in the global
   coordinate system, and prints the results to the terminal.
 
+Development
+===========
+
+Some KEMField tools are especially useful for development. `InspectEMFile` e.g. prints an overview over all keys in 
+`.kbd` files (like KEMField cache files). These tools can be found here: :gh-code:`KEMField/Source/Applications/Tools`.
+
 Usage
------
+=====
 
 All listed programs will show a brief usage summary if called without arguments. For example, the
 ``SimpleElectricFieldCalculatorAlongZaxis`` will show a message:
