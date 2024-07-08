@@ -100,7 +100,7 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
         boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel liburing-devel libxml2-devel log4cxx-devel \
         ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
 
-Tested on Fedora Linux 37.
+Tested on Fedora Linux 40.
 
 Required dependencies
 ----------------------

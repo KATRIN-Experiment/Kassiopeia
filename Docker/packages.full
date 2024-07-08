@@ -3,6 +3,8 @@ vim
 zsh
 zsh-syntax-highlighting
 htop
+diffutils
+paraview
 
 root
 root-notebook
