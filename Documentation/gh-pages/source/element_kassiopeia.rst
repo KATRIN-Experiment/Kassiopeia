@@ -33,6 +33,4 @@ outlined in this chapter.
      kassiopeia_navigation
      kassiopeia_simulation
      kassiopeia_visualization
-
-
-
+     kassiopeia_tools

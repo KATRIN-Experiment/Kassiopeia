@@ -78,7 +78,6 @@ Welcome to Kassiopeia's documentation!
     :caption: Further Information
 
     Understanding Simulation Output <output.rst>
-    Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     XML Bindings <bindings.rst>
 
