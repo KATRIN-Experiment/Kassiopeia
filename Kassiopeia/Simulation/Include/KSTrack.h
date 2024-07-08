@@ -4,12 +4,13 @@
 #include "KField.h"
 #include "KSComponentTemplate.h"
 #include "KSParticle.h"
+#include "KSTimed.h"
 
 namespace Kassiopeia
 {
 class KSEvent;
 
-class KSTrack : public KSComponentTemplate<KSTrack>
+class KSTrack : public KSComponentTemplate<KSTrack>, public KSTimed
 {
   public:
     KSTrack();

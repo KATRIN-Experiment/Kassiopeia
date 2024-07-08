@@ -143,8 +143,8 @@ output is written after the completion of each step. Similary, at the track leve
 to the initial and final parameters of a track, i.e. the state at particle generation and termination.
 
 The standard output fields for the particle are defined at the end of the file
-:gh-code:`Kassiopeia/Operators/Source/KSParticle.cxx` while the step and track output fields can be found in
-:gh-code:`Kassiopeia/Operators/Source/KSStep.cxx` and :gh-code:`Kassiopeia/Operators/Source/KSTrack.cxx`, respectively.
+:gh-code:`Kassiopeia/Simulation/Source/KSParticle.cxx` while the step and track output fields can be found in
+:gh-code:`Kassiopeia/Simulation/Source/KSStep.cxx` and :gh-code:`Kassiopeia/Simulation/Source/KSTrack.cxx`, respectively.
 Other specialized output fields are also available for some propagation or interaction terms.
 
 Output fields
@@ -296,6 +296,8 @@ overview of the different fields and their types.
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 | Number of Turns    | ``number_of_turns``                 | ``unsigned int`` | ``KSRun``                  | Number of particle turns/reflections during run          |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
+| Processing Duration| ``processing_duration``             | ``double``       | ``KSRun``                  | Computing time used for run                              |
++--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 | Event ID           | ``event_id``                        | ``int``          | ``KSEvent``                | Event ID of current event                                |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 | Event Count        | ``event_count``                     | ``int``          | ``KSEvent``                | Total number of events                                   |
@@ -337,6 +339,8 @@ overview of the different fields and their types.
 | Generator Position | ``generator_location``              | ``KThreeVector`` | ``KSEvent``                | Center position of the generated particles (in m)        |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 | Generator Radius   | ``generator_radius``                | ``double``       | ``KSEvent``                | Maximum radius of the generated particles (in m)         |
++--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
+| Processing Duration| ``processing_duration``             | ``double``       | ``KSEvent``                | Computing time used for event                            |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 | Track ID           | ``event_id``                        | ``int``          | ``KSTrack``                | Track ID of current track                                |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
@@ -439,6 +443,8 @@ overview of the different fields and their types.
 | Intermed. Particle | ``terminator_particle``             | ``KSParticle``   | ``KSStep``                 | Pointer to initial particle before termination           |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 | Intermed. Particle | ``trajectory_particle``             | ``KSParticle``   | ``KSStep``                 | Pointer to initial particle before propagation           |
++--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
+| Processing Duration| ``processing_duration``             | ``double``       | ``KSStep``                 | Computing time used for step                             |
 +--------------------+-------------------------------------+------------------+----------------------------+----------------------------------------------------------+
 
 Vector and matrix type can be accessed by their components in the written output data. For example, when the ``position``

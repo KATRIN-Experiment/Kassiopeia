@@ -22,6 +22,7 @@ KSRun::KSRun() :
 {}
 KSRun::KSRun(const KSRun& aCopy) :
     KSComponent(aCopy),
+    KSTimed(aCopy),
     fRunId(aCopy.fRunId),
     fRunCount(aCopy.fRunCount),
     fTotalEvents(aCopy.fTotalEvents),
@@ -38,6 +39,7 @@ KSRun::KSRun(const KSRun& aCopy) :
 {}
 KSRun& KSRun::operator=(const KSRun& aCopy)
 {
+    KSTimed::operator=(aCopy);
     fRunId = aCopy.fRunId;
     fRunCount = aCopy.fRunCount;
     fTotalEvents = aCopy.fTotalEvents;
@@ -72,7 +74,6 @@ STATICINT sKSRunDict =
     KSDictionary<KSRun>::AddComponent(&KSRun::GetDiscreteSecondaries, "discrete_secondaries") +
     KSDictionary<KSRun>::AddComponent(&KSRun::GetDiscreteEnergyChange, "discrete_energy_change") +
     KSDictionary<KSRun>::AddComponent(&KSRun::GetDiscreteMomentumChange, "discrete_momentum_change") +
-    KSDictionary<KSRun>::AddComponent(&KSRun::GetNumberOfTurns, "number_of_turns");
-
-
+    KSDictionary<KSRun>::AddComponent(&KSRun::GetNumberOfTurns, "number_of_turns") + 
+    KSDictionary<KSRun>::AddComponent(&KSRun::GetProcessingDuration, "processing_duration");
 }  // namespace Kassiopeia

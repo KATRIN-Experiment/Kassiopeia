@@ -29,6 +29,7 @@ KSEvent::KSEvent() :
 {}
 KSEvent::KSEvent(const KSEvent& aCopy) :
     KSComponent(aCopy),
+    KSTimed(aCopy),
     fEventId(aCopy.fEventId),
     fEventCount(aCopy.fEventCount),
     fParentRunId(aCopy.fParentRunId),
@@ -54,6 +55,7 @@ KSEvent::KSEvent(const KSEvent& aCopy) :
 {}
 KSEvent& KSEvent::operator=(const KSEvent& aCopy)
 {
+    KSTimed::operator=(aCopy);
     fEventId = aCopy.fEventId;
     fEventCount = aCopy.fEventCount;
     fParentRunId = aCopy.fParentRunId;
@@ -105,6 +107,7 @@ STATICINT sKSEventDict =
     KSDictionary<KSEvent>::AddComponent(&KSEvent::GetGeneratorMinTime, "generator_min_time") +
     KSDictionary<KSEvent>::AddComponent(&KSEvent::GetGeneratorMaxTime, "generator_max_time") +
     KSDictionary<KSEvent>::AddComponent(&KSEvent::GetGeneratorLocation, "generator_location") +
-    KSDictionary<KSEvent>::AddComponent(&KSEvent::GetGeneratorRadius, "generator_radius");
+    KSDictionary<KSEvent>::AddComponent(&KSEvent::GetGeneratorRadius, "generator_radius") + 
+    KSDictionary<KSEvent>::AddComponent(&KSEvent::GetProcessingDuration, "processing_duration");
 
 }  // namespace Kassiopeia

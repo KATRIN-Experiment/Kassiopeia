@@ -26,6 +26,7 @@ set( SIMULATION_HEADER_BASENAMES
     KSRootTerminator.h
     KSRootWriter.h
     KSRoot.h
+    KSTimed.h
 )
 set( SIMULATION_HEADER_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/Include
@@ -62,6 +63,7 @@ set( SIMULATION_SOURCE_BASENAMES
     KSRootTerminator.cxx
     KSRootWriter.cxx
     KSRoot.cxx
+    KSTimed.cxx
 )
 set( SIMULATION_SOURCE_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/Source

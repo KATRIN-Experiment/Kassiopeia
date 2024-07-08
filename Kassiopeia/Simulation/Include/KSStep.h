@@ -4,13 +4,14 @@
 #include "KField.h"
 #include "KSComponentTemplate.h"
 #include "KSParticle.h"
+#include "KSTimed.h"
 
 namespace Kassiopeia
 {
 
 class KSTrack;
 
-class KSStep : public KSComponentTemplate<KSStep>
+class KSStep : public KSComponentTemplate<KSStep>, public KSTimed
 {
   public:
     KSStep();
@@ -122,6 +123,7 @@ class KSStep : public KSComponentTemplate<KSStep>
 
   public:
     K_REFS(KSParticleQueue, ParticleQueue)
+
 };
 
 }  // namespace Kassiopeia

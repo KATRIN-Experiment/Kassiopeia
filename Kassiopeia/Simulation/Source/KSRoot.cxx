@@ -418,6 +418,8 @@ void KSRoot::ExecuteRun()
     //clear any previous GSL errors
     KGslErrorHandler::GetInstance().ClearError();
 
+    fRun->StartTiming();
+
     // send report
     runmsg(eNormal) << "processing run " << fRun->GetRunId() << " ..." << eom;
 
@@ -468,6 +470,8 @@ void KSRoot::ExecuteRun()
         fRootRunModifier->ExecutePostRunModification();
     }
 
+    fRun->EndTiming();
+
     // write run
     fRun->PushUpdate();
     fRootRunModifier->PushUpdate();
@@ -501,7 +505,7 @@ void KSRoot::ExecuteEvent()
     fEvent->NumberOfTurns() = 0;
     fEventIndex++;
 
-    auto tClockStart = chrono::steady_clock::now();
+    fEvent->StartTiming();
 
     fRootEventModifier->ExecutePreEventModification();
 
@@ -579,6 +583,8 @@ void KSRoot::ExecuteEvent()
 
     fRootEventModifier->ExecutePostEventModification();
 
+    fEvent->EndTiming();
+
     // write event
     fEvent->PushUpdate();
     fRootEventModifier->PushUpdate();
@@ -589,8 +595,7 @@ void KSRoot::ExecuteEvent()
     fRootEventModifier->PushDeupdate();
 
     // determine time spent for event processing
-    auto tClockEnd = chrono::steady_clock::now();
-    auto tTimeSpan = chrono::duration_cast<chrono::duration<double>>(tClockEnd - tClockStart).count();
+    auto tTimeSpan = fEvent->GetProcessingDuration();
 
     fTotalExecTime += tTimeSpan;
 
@@ -622,6 +627,8 @@ void KSRoot::ExecuteTrack()
     fTrack->DiscreteMomentumChange() = 0.;
     fTrack->DiscreteSecondaries() = 0;
     fTrack->NumberOfTurns() = 0;
+
+    fTrack->StartTiming();
 
     fRootTrackModifier->ExecutePreTrackModification();
 
@@ -702,6 +709,8 @@ void KSRoot::ExecuteTrack()
 
     fRootTrackModifier->ExecutePostTrackModification();
 
+    fTrack->EndTiming();
+
 
     // write track
 
@@ -765,6 +774,8 @@ void KSRoot::ExecuteStep()
 
     fStep->SurfaceNavigationName().clear();
     fStep->SurfaceNavigationFlag() = false;
+
+    fStep->StartTiming();
 
     // run pre-step modification
     bool hasPreModified = fRootStepModifier->ExecutePreStepModification();
@@ -922,6 +933,8 @@ void KSRoot::ExecuteStep()
                             }
                         }
 
+                        fStep->EndTiming();
+
                         // push update
                         fStep->PushUpdate();
                         fRootTrajectory->PushUpdate();
@@ -975,6 +988,8 @@ void KSRoot::ExecuteStep()
                         }
                     }
 
+                    fStep->EndTiming();
+
                     // push update
                     fStep->PushUpdate();
                     fRootSurfaceInteraction->PushUpdate();
@@ -1001,6 +1016,8 @@ void KSRoot::ExecuteStep()
             fRootTerminator->ExecuteTermination();
 
             fStep->FinalParticle().SetActive(false);
+
+            fStep->EndTiming();
 
             // push update
             fStep->PushUpdate();
