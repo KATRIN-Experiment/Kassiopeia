@@ -52,7 +52,8 @@ void KSTrajTrajectoryMagnetic::SetIntegrator(KSTrajMagneticIntegrator* anIntegra
         fIntegrator = anIntegrator;
         return;
     }
-    trajmsg(eError) << "cannot set integrator in <" << this->GetName() << "> with <" << anIntegrator << ">" << eom;
+    trajmsg(eError) << "cannot set integrator <" << dynamic_cast<katrin::KNamed*>(anIntegrator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryMagnetic::ClearIntegrator(KSTrajMagneticIntegrator* anIntegrator)
@@ -61,7 +62,8 @@ void KSTrajTrajectoryMagnetic::ClearIntegrator(KSTrajMagneticIntegrator* anInteg
         fIntegrator = nullptr;
         return;
     }
-    trajmsg(eError) << "cannot clear integrator in <" << this->GetName() << "> with <" << anIntegrator << ">" << eom;
+    trajmsg(eError) << "cannot clear integrator <" << dynamic_cast<katrin::KNamed*>(anIntegrator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 
@@ -71,7 +73,8 @@ void KSTrajTrajectoryMagnetic::SetInterpolator(KSTrajMagneticInterpolator* anInt
         fInterpolator = anInterpolator;
         return;
     }
-    trajmsg(eError) << "cannot set interpolator in <" << this->GetName() << "> with <" << anInterpolator << ">" << eom;
+    trajmsg(eError) << "cannot set interpolator <" << dynamic_cast<katrin::KNamed*>(anInterpolator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryMagnetic::ClearInterpolator(KSTrajMagneticInterpolator* anInterpolator)
@@ -80,17 +83,22 @@ void KSTrajTrajectoryMagnetic::ClearInterpolator(KSTrajMagneticInterpolator* anI
         fInterpolator = nullptr;
         return;
     }
-    trajmsg(eError) << "cannot clear interpolator in <" << this->GetName() << "> with <" << anInterpolator << ">"
-                    << eom;
+    trajmsg(eError) << "cannot clear interpolator <" << dynamic_cast<katrin::KNamed*>(anInterpolator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 
 void KSTrajTrajectoryMagnetic::AddTerm(KSTrajMagneticDifferentiator* aTerm)
 {
+    if (fTerms.FindElementByType(aTerm) != -1) {
+        trajmsg(eWarning) << "adding term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                          << "> to already existing term of same type in <" << this->GetName() << ">" << eom;
+    }
     if (fTerms.AddElement(aTerm) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot add term <" << aTerm << "> to <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot add term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                    << "> to <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryMagnetic::RemoveTerm(KSTrajMagneticDifferentiator* aTerm)
@@ -98,16 +106,22 @@ void KSTrajTrajectoryMagnetic::RemoveTerm(KSTrajMagneticDifferentiator* aTerm)
     if (fTerms.RemoveElement(aTerm) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot remove term <" << aTerm << "> from <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot remove term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                    << "> from <" << this->GetName() << ">" << eom;
     return;
 }
 
 void KSTrajTrajectoryMagnetic::AddControl(KSTrajMagneticControl* aControl)
 {
+    if (fControls.FindElementByType(aControl) != -1) {
+        trajmsg(eWarning) << "adding control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                          << "> to already existing control of same type in <" << this->GetName() << ">" << eom;
+    }
     if (fControls.AddElement(aControl) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot add control <" << aControl << "> to <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot add control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                    << "> to <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryMagnetic::RemoveControl(KSTrajMagneticControl* aControl)
@@ -115,7 +129,8 @@ void KSTrajTrajectoryMagnetic::RemoveControl(KSTrajMagneticControl* aControl)
     if (fControls.RemoveElement(aControl) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot remove control <" << aControl << "> from <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot remove control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                    << "> from <" << this->GetName() << ">" << eom;
     return;
 }
 

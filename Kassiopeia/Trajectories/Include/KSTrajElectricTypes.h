@@ -13,7 +13,7 @@
 namespace Kassiopeia
 {
 
-typedef KSMathSystem<KSTrajElectricParticle, KSTrajElectricDerivative, KSTrajElectricError> KSTrajElectricSystem;
+using KSTrajElectricSystem = KSMathSystem<KSTrajElectricParticle, KSTrajElectricDerivative, KSTrajElectricError>;
 using KSTrajElectricControl = KSMathControl<KSTrajElectricSystem>;
 using KSTrajElectricDifferentiator = KSMathDifferentiator<KSTrajElectricSystem>;
 using KSTrajElectricIntegrator = KSMathIntegrator<KSTrajElectricSystem>;

@@ -78,8 +78,6 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
     fLineSegmentPolyApprox = 6;
     fArcPolyApprox = 120;
 
-    fQualityMeasure = VTK_QUALITY_SCALED_JACOBIAN;
-
     for (KSurfaceContainer::iterator it = aSurfaceContainer.begin(); it != aSurfaceContainer.end(); it++) {
         if (! *it)
             continue;
@@ -93,8 +91,8 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
     // Calculate functions of quality of the elements of a mesh.
     auto qualityFilter = vtkSmartPointer<vtkMeshQuality>::New();
     qualityFilter->SetInputData(fPolyData);
-    qualityFilter->SetTriangleQualityMeasure(fQualityMeasure);
-    qualityFilter->SetQuadQualityMeasure(fQualityMeasure);
+    qualityFilter->SetTriangleQualityMeasureToScaledJacobian();
+    qualityFilter->SetQuadQualityMeasureToScaledJacobian();
     qualityFilter->Update();
 
     vtkDataSet* qualityMesh = qualityFilter->GetOutput();

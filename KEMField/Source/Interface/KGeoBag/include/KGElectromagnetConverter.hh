@@ -27,7 +27,7 @@ class KGElectromagnetConverter :
     ~KGElectromagnetConverter() override;
 
   public:
-    void SetElectromagnetContainer(KEMField::KElectromagnetContainer* aContainer)
+    void SetElectromagnetContainer(std::shared_ptr<KEMField::KElectromagnetContainer> aContainer)
     {
         fElectromagnetContainer = aContainer;
         return;
@@ -36,7 +36,7 @@ class KGElectromagnetConverter :
     void SetDumpMagfield3ToFile(const std::string& aDirectory, const std::string& aFileName);
 
   protected:
-    KEMField::KElectromagnetContainer* fElectromagnetContainer;
+    std::shared_ptr<KEMField::KElectromagnetContainer> fElectromagnetContainer;
 
   public:
     void SetSystem(const katrin::KThreeVector& anOrigin, const katrin::KThreeVector& anXAxis, const katrin::KThreeVector& aYAxis,

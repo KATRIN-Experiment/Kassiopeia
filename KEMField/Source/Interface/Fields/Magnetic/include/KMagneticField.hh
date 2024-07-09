@@ -58,6 +58,14 @@ class KMagneticField : public katrin::KNamed
         }
     }
 
+    void Deinitialize()
+    {
+        if (fInitialized) {
+            DeinitializeCore();
+        }
+        fInitialized = false;
+    }
+
   protected:
     virtual KFieldVector MagneticPotentialCore(const KPosition& P, const double& time) const = 0;
 
@@ -83,6 +91,7 @@ class KMagneticField : public katrin::KNamed
     }
 
     virtual void InitializeCore() {}
+    virtual void DeinitializeCore() {}
 
     bool fInitialized;
 

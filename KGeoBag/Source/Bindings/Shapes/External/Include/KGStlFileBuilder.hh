@@ -42,26 +42,23 @@ template<> inline bool KGStlFileBuilder::AddAttribute(KContainer* anAttribute)
         return true;
     }
     if (anAttribute->GetName() == "selector") {
-        try {
-            // allowed syntax pattern: "a-b;c-d;..."
-            for (std::string& sel : KBaseStringUtils::SplitTrimAndConvert<std::string>(anAttribute->AsString(), ";")) {
-                size_t pos = sel.find_first_of("-");
-                size_t first = 0, last = 0;
-                if (pos == std::string::npos) {
-                    first = KBaseStringUtils::Convert<size_t>(sel);
-                    fObject->SelectCell(first);
-                }
-                else {
-                    first = KBaseStringUtils::Convert<size_t>(sel.substr(0, pos));
-                    last = KBaseStringUtils::Convert<size_t>(sel.substr(pos+1));
-                    fObject->SelectCellRange(first, last);
-                }
+        // allowed syntax pattern: "a-b;c-d;..."
+        for (std::string& sel : KBaseStringUtils::SplitTrimAndConvert<std::string>(anAttribute->AsString(), ";, ")) {
+            size_t pos = sel.find_first_of("-");
+            size_t first = 0, last = 0;
+            if (pos == std::string::npos) {
+                first = KBaseStringUtils::Convert<size_t>(sel);
+                fObject->SelectCell(first);
             }
-            return true;
+            else {
+                if (pos > 0)
+                    first = KBaseStringUtils::Convert<size_t>(sel.substr(0, pos));
+                if (pos+1 < sel.length())
+                    last = KBaseStringUtils::Convert<size_t>(sel.substr(pos+1));
+                fObject->SelectCellRange(first, last);
+            }
         }
-        catch (KException &e) { // Exception from KBaseStringUtils
-            return false;
-        }
+        return true;
     }
     return false;
 }

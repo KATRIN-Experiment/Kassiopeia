@@ -16,6 +16,8 @@
 #define SPARSE_PRODUCT_TAG 701
 #endif
 
+#include <memory>
+
 namespace KEMField
 {
 
@@ -41,20 +43,22 @@ class KFMBoundaryIntegralMatrix : public KSquareMatrix<typename DenseMatrixType:
     /**
          * leave memory management of the sparse end dense matrices to caller
          */
-    KFMBoundaryIntegralMatrix(const DenseMatrixType& dm, const SparseMatrixType& sm) :
-        fDenseMatrix(&dm, true),
-        fSparseMatrix(&sm, true)
-    {
-        fDimension = fDenseMatrix->Dimension();
-        fX.resize(fDimension);
-        fTempDense.resize(fDimension);
-        fTempSparse.resize(fDimension);
-    }
+//    KFMBoundaryIntegralMatrix(const DenseMatrixType& dm, const SparseMatrixType& sm) :
+//        //fDenseMatrix(&dm, true),
+//        //fSparseMatrix(&sm, true)
+//        fDenseMatrix(&dm),
+//        fSparseMatrix(&sm)
+//    {
+//        fDimension = fDenseMatrix->Dimension();
+//        fX.resize(fDimension);
+//        fTempDense.resize(fDimension);
+//        fTempSparse.resize(fDimension);
+//    }
 
     /**
          * let smart pointer solve the memory management of dense and sparse matrices
          */
-    KFMBoundaryIntegralMatrix(KSmartPointer<const DenseMatrixType> dm, KSmartPointer<const SparseMatrixType> sm) :
+    KFMBoundaryIntegralMatrix(std::shared_ptr<const DenseMatrixType> dm, std::shared_ptr<const SparseMatrixType> sm) :
         fDenseMatrix(dm),
         fSparseMatrix(sm)
     {
@@ -64,7 +68,7 @@ class KFMBoundaryIntegralMatrix : public KSquareMatrix<typename DenseMatrixType:
         fTempSparse.resize(fDimension);
     };
 
-    ~KFMBoundaryIntegralMatrix() override{};
+    ~KFMBoundaryIntegralMatrix() override = default;
 
     unsigned int Dimension() const override
     {
@@ -195,8 +199,8 @@ class KFMBoundaryIntegralMatrix : public KSquareMatrix<typename DenseMatrixType:
     }
 
     unsigned int fDimension;
-    const KSmartPointer<const DenseMatrixType> fDenseMatrix;
-    const KSmartPointer<const SparseMatrixType> fSparseMatrix;
+    const std::shared_ptr<const DenseMatrixType> fDenseMatrix;
+    const std::shared_ptr<const SparseMatrixType> fSparseMatrix;
     mutable KSimpleVector<ValueType> fTempDense;
     mutable KSimpleVector<ValueType> fTempSparse;
     mutable KSimpleVector<ValueType> fX;

@@ -39,7 +39,7 @@ class KGElectrostaticBoundaryField : public KElectrostaticBoundaryField
     void AddSurface(KGeoBag::KGSurface* aSurface);
     void AddSpace(KGeoBag::KGSpace* aSpace);
     void SetSymmetry(const Symmetry& aSymmetry);
-    KSmartPointer<KGeoBag::KGBEMConverter> GetConverter();
+    std::shared_ptr<KGeoBag::KGBEMConverter> GetConverter();
 
     const std::vector<KGeoBag::KGSurface*>& GetSurfaces() const { return fSurfaces; }
     const std::vector<KGeoBag::KGSpace*>& GetSpaces() const { return fSpaces; }
@@ -59,7 +59,7 @@ class KGElectrostaticBoundaryField : public KElectrostaticBoundaryField
     Symmetry fSymmetry;
 
   private:
-    KSmartPointer<KGeoBag::KGBEMConverter> fConverter;
+    std::shared_ptr<KGeoBag::KGBEMConverter> fConverter;
 };
 
 }  // namespace KEMField

@@ -24,17 +24,8 @@ template<size_t NDIM> class KGBall
   public:
     KGBall()
     {
-        for (size_t i = 0; i < NDIM + 1; i++) {
-            fData[i] = 0.0;
-        }
+        fData.fill(0.0);
     };
-
-    KGBall(const KGBall& copyObject)
-    {
-        for (size_t i = 0; i < NDIM + 1; i++) {
-            fData[i] = copyObject.fData[i];
-        }
-    }
 
 
     KGBall(KGPoint<NDIM> center, double radius)
@@ -46,7 +37,6 @@ template<size_t NDIM> class KGBall
     }
 
     virtual ~KGBall() = default;
-    ;
 
     size_t GetDimension() const
     {
@@ -64,9 +54,9 @@ template<size_t NDIM> class KGBall
 
     KGPoint<NDIM> GetCenter() const
     {
-        return KGPoint<NDIM>(fData);
+        return KGPoint<NDIM>(fData.data());
     };
-    void SetCenter(KGPoint<NDIM> center)
+    void SetCenter(const KGPoint<NDIM>& center)
     {
         for (size_t i = 0; i < NDIM; i++) {
             fData[i] = center[i];
@@ -124,20 +114,8 @@ template<size_t NDIM> class KGBall
     double& operator[](size_t i);
     const double& operator[](size_t i) const;
 
-
-    inline KGBall& operator=(const KGBall& rhs)
-    {
-        if (&rhs != this) {
-            for (size_t i = 0; i < NDIM + 1; i++) {
-                fData[i] = rhs.fData[i];
-            }
-        }
-        return *this;
-    }
-
-
   private:
-    double fData[NDIM + 1];  //center position + length, last element is length
+    std::array<double, NDIM + 1> fData;  //center position + length, last element is length
 };
 
 

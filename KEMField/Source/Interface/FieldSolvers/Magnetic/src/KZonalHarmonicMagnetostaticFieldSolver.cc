@@ -22,11 +22,13 @@ KZonalHarmonicMagnetostaticFieldSolver::KZonalHarmonicMagnetostaticFieldSolver()
 {
     fParameters = std::make_shared<KZonalHarmonicParameters>();
 }
+
 KZonalHarmonicMagnetostaticFieldSolver::~KZonalHarmonicMagnetostaticFieldSolver()
 {
     delete fZHContainer;
     delete fZonalHarmonicFieldSolver;
 }
+
 void KZonalHarmonicMagnetostaticFieldSolver::InitializeCore(KElectromagnetContainer& container)
 {
     // compute hash of the solved geometry
@@ -80,6 +82,18 @@ void KZonalHarmonicMagnetostaticFieldSolver::InitializeCore(KElectromagnetContai
     return;
 }
 
+void KZonalHarmonicMagnetostaticFieldSolver::DeinitializeCore()
+{
+    const auto& C = fZonalHarmonicFieldSolver->GetCentralExecutionCount();
+    const auto& R = fZonalHarmonicFieldSolver->GetRemoteExecutionCount();
+    const auto& D = fZonalHarmonicFieldSolver->GetDirectExecutionCount();
+    const auto& T = fZonalHarmonicFieldSolver->GetTotalExecutionCount();
+    kem_cout(eNormal) << "Magnetic ZH solver execution counts:" << ret
+                      << "central: " << C << " (" << std::floor(100.*C/T) << "%)" << ret
+                      << "remote:  " << R << " (" << std::floor(100.*R/T) << "%)" << ret
+                      << "direct:  " << D << " (" << std::floor(100.*D/T) << "%)" << eom;
+}
+
 KFieldVector KZonalHarmonicMagnetostaticFieldSolver::MagneticPotentialCore(const KPosition& P) const
 {
     return fZonalHarmonicFieldSolver->VectorPotential(P);
@@ -111,15 +125,9 @@ bool KZonalHarmonicMagnetostaticFieldSolver::UseRemoteExpansion(const KPosition&
     return fZonalHarmonicFieldSolver->RemoteExpansion(P);
 }
 
-std::set<std::pair<double, double>> KZonalHarmonicMagnetostaticFieldSolver::CentralSourcePoints()
+const KZonalHarmonicContainer<KMagnetostaticBasis>* KZonalHarmonicMagnetostaticFieldSolver::GetContainer() const
 {
-    return fZHContainer->CentralSourcePoints();
+    return fZHContainer;
 }
-
-std::set<std::pair<double, double>> KZonalHarmonicMagnetostaticFieldSolver::RemoteSourcePoints()
-{
-    return fZHContainer->RemoteSourcePoints();
-}
-
 
 } /* namespace KEMField */

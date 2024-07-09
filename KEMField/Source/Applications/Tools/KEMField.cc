@@ -2,6 +2,12 @@
 #include "KXMLInitializer.hh"
 #include "KXMLTokenizer.hh"
 
+#ifdef KEMFIELD_USE_PETSC
+#include "KPETScInterface.hh"
+#elif KEMFIELD_USE_MPI
+#include "KMPIInterface.hh"
+#endif
+
 using namespace KEMField;
 using namespace katrin;
 using namespace std;
@@ -16,6 +22,12 @@ int main(int argc, char** argv)
             << std::endl;
         exit(-1);
     }
+
+#ifdef KEMFIELD_USE_PETSC
+    KPETScInterface::GetInstance()->Initialize(&argc, &argv);
+#elif KEMFIELD_USE_MPI
+    KMPIInterface::GetInstance()->Initialize(&argc, &argv);
+#endif
 
     auto& tXML = KXMLInitializer::GetInstance();
     auto* tTokenizer = tXML.Configure(argc, argv);  // process extra files below

@@ -23,7 +23,8 @@ class KZonalHarmonicParameters
         fNRemoteCoefficients(500),
         fNRemoteSourcePoints(3),
         fRemoteZ1(0.),
-        fRemoteZ2(0.)
+        fRemoteZ2(0.),
+        fUseFixedRange(false)
     {}
 
     virtual ~KZonalHarmonicParameters() = default;
@@ -76,6 +77,10 @@ class KZonalHarmonicParameters
     void SetCentralZ2(double d)
     {
         fCentralZ2 = d;
+    }
+    void SetUseFixedRange(bool b)
+    {
+        fUseFixedRange = b;
     }
     void SetNRemoteCoefficients(unsigned int i)
     {
@@ -138,6 +143,10 @@ class KZonalHarmonicParameters
     {
         return fCentralZ2;
     }
+    bool GetUseFixedRange() const
+    {
+        return fUseFixedRange;
+    }
     unsigned int GetNRemoteCoefficients() const
     {
         return fNRemoteCoefficients;
@@ -171,6 +180,7 @@ class KZonalHarmonicParameters
     unsigned int fNRemoteSourcePoints;
     double fRemoteZ1;
     double fRemoteZ2;
+    bool fUseFixedRange;
 };
 
 template<typename Stream> Stream& operator>>(Stream& s, KZonalHarmonicParameters& p)
@@ -211,6 +221,11 @@ template<typename Stream> Stream& operator>>(Stream& s, KZonalHarmonicParameters
     p.SetRemoteZ1(d);
     s >> d;
     p.SetRemoteZ2(d);
+    // only read if already enabled during initialization (for backwards compat)
+    if (p.GetUseFixedRange()) {
+        s >> b;
+        p.SetUseFixedRange(b);
+    }
 
     s.PostStreamInAction(p);
     return s;
@@ -235,6 +250,9 @@ template<typename Stream> Stream& operator<<(Stream& s, const KZonalHarmonicPara
     s << p.GetNRemoteSourcePoints();
     s << p.GetRemoteZ1();
     s << p.GetRemoteZ2();
+    if (p.GetUseFixedRange()) {
+        s << p.GetUseFixedRange();
+    }
 
     s.PostStreamOutAction(p);
     return s;

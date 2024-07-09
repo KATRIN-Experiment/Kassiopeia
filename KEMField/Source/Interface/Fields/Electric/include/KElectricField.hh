@@ -40,13 +40,20 @@ class KElectricField : public katrin::KNamed
         return ElectricFieldAndPotentialCore(P, time);
     }
 
-
     void Initialize()
     {
         if (!fInitialized) {
             InitializeCore();
             fInitialized = true;
         }
+    }
+
+    void Deinitialize()
+    {
+        if (fInitialized) {
+            DeinitializeCore();
+        }
+        fInitialized = false;
     }
 
   private:
@@ -69,6 +76,7 @@ class KElectricField : public katrin::KNamed
     }
 
     virtual void InitializeCore() {}
+    virtual void DeinitializeCore() {}
 
     bool fInitialized;
 

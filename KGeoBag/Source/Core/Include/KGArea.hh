@@ -27,6 +27,7 @@ class KGArea : public KGBoundary
   public:
     KGArea();
     KGArea(const KGArea& aArea);
+    KGArea& operator=(const KGArea&);
     ~KGArea() override;
 
     static std::string Name()

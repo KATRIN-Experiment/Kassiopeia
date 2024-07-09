@@ -35,7 +35,8 @@ class KROOTWindow : public KWindow
     void AddWindow(KWindow* aWindow);
     void RemoveWindow(KWindow* aWindow);
 
-    TPad* GetPad();
+    TCanvas* GetCanvas();
+    TApplication* GetApplication();
 
   private:
     typedef std::vector<KROOTPainter*> PainterVector;
@@ -49,16 +50,15 @@ class KROOTWindow : public KWindow
     TCanvas* fCanvas;
 
     //settings
-    ;
     K_SET(unsigned int, CanvasWidth);
-    ;
     K_SET(unsigned int, CanvasHeight);
-    ;
     K_SET(bool, Active);
-    ;
     K_SET(bool, WriteEnabled);
-    ;
     K_SET(std::string, Path);
+    K_SET_GET(double, XMin);
+    K_SET_GET(double, XMax);
+    K_SET_GET(double, YMin);
+    K_SET_GET(double, YMax);
 };
 
 

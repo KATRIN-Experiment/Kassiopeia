@@ -9,7 +9,7 @@ namespace Kassiopeia
 template<class XValueType, class XDerivativeType, class XErrorType> class KSMathSystem
 {
   public:
-    typedef XValueType ValueType;
+    using ValueType = XValueType;
     using DerivativeType = XDerivativeType;
     using ErrorType = XErrorType;
 

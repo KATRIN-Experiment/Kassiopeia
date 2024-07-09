@@ -4,7 +4,7 @@
 # append this line to your ~/.bashrc or ~/.zshrc file (or similar):
 #    source <kasper install path>/bin/kasperenv.sh
 
-printf "\033[32;1mThis is KASPER v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]\n"
+printf "\033[32;1mThis is KASSIOPEIA v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]\n"
 
 if [ -n "${KASPERSYS}" ]
     then
@@ -14,6 +14,7 @@ if [ -n "${KASPERSYS}" ]
         OLD_PKGCFGPATH=${OLD_KASPERSYS}/lib/pkgconfig:
         OLD_PYTHONPATH=${OLD_KASPERSYS}/lib/python:
         OLD_CMAKE_PREF=${OLD_KASPERSYS}:
+        OLD_ROOT_INCLUDE_PATH=${OLD_KASPERSYS}/include:
 fi
 
 if [ -n "${KASPER_INSTALL}" ]
@@ -24,6 +25,7 @@ if [ -n "${KASPER_INSTALL}" ]
         OLD_PKGCFGPATH=${OLD_KASPER_INSTALL}/lib/pkgconfig:
         OLD_PYTHONPATH=${OLD_KASPER_INSTALL}/lib/python:
         OLD_CMAKE_PREF=${OLD_KASPER_INSTALL}:
+        OLD_ROOT_INCLUDE_PATH=${OLD_KASPER_INSTALL}/include:
 fi
 
 if [ -n "${KASPER_SOURCE}" ]
@@ -36,6 +38,7 @@ export KASPER_INSTALL=@KASPER_INSTALL_DIR@
 KASPER_INSTALL_BIN=@BIN_INSTALL_DIR@
 KASPER_INSTALL_LIB=@LIB_INSTALL_DIR@
 KASPER_INSTALL_CACHE=@CACHE_INSTALL_DIR@
+KASPER_INSTALL_INCLUDE=@INCLUDE_INSTALL_DIR@
 
 printf "\033[32;1m** KASPER source directory set to ${KASPER_SOURCE}\033[0m\n"
 printf "\033[32;1m** KASPER install directory set to ${KASPER_INSTALL}\033[0m\n"
@@ -67,10 +70,23 @@ fi
 export KEMFIELD_CACHE
 mkdir -p ${KEMFIELD_CACHE}
 
-export PATH=${KASPER_INSTALL_BIN}:$(echo $PATH | sed 's/${OLD_PATH}//g')
-export LD_LIBRARY_PATH=${KASPER_INSTALL_LIB}:$(echo $LD_LIBRARY_PATH | sed 's/${OLD_LDLIBPATH}//g')
-export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:$(echo $PKG_CONFIG_PATH | sed 's/${OLD_PKGCFGPATH}//g')
-export PYTHONPATH=${KASPER_INSTALL_LIB}/python:$(echo $PYTHONPATH | sed 's/${OLD_PYTHONPATH}//g')
-export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:$(echo $CMAKE_PREFIX_PATH | sed 's/${OLD_CMAKE_PREF}//g')
+
+[[ -n $OLD_PATH ]] && export PATH=$(echo $PATH | sed "s;${OLD_PATH};;g")
+export PATH=${KASPER_INSTALL_BIN}:$PATH
+
+[[ -n $OLD_LDLIBPATH ]] && export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s;${OLD_LDLIBPATH};;g")
+export LD_LIBRARY_PATH=${KASPER_INSTALL_LIB}:$LD_LIBRARY_PATH
+
+[[ -n $OLD_PKGCFGPATH ]] && export PKG_CONFIG_PATH=$(echo $PKG_CONFIG_PATH | sed "s;${OLD_PKGCFGPATH};;g")
+export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:$PKG_CONFIG_PATH
+
+[[ -n $OLD_PYTHONPATH ]] && export PYTHONPATH=$(echo $PYTHONPATH | sed "s;${OLD_PYTHONPATH};;g")
+export PYTHONPATH=${KASPER_INSTALL_LIB}/python:$PYTHONPATH
+
+[[ -n $OLD_CMAKE_PREF ]] && export CMAKE_PREFIX_PATH=$(echo $CMAKE_PREFIX_PATH | sed "s;${OLD_CMAKE_PREF};;g")
+export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:$CMAKE_PREFIX_PATH
+
+[[ -n $OLD_ROOT_INCLUDE_PATH ]] && export ROOT_INCLUDE_PATH=$(echo $ROOT_INCLUDE_PATH | sed "s;${OLD_ROOT_INCLUDE_PATH};;g")
+export ROOT_INCLUDE_PATH=${KASPER_INSTALL_INCLUDE}:$ROOT_INCLUDE_PATH
 
 return 0

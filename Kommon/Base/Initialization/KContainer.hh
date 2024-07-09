@@ -2,6 +2,7 @@
 #define Kommon_KContainer_hh_
 
 #include "KNamed.h"
+#include <memory>
 
 namespace katrin
 {
@@ -69,6 +70,7 @@ class KContainer : public KNamed
     KContainer* ReleaseToNewContainer();
 
     template<class XTargetType> void ReleaseTo(XTargetType*& aTarget);
+    template<class XTargetType> void ReleaseTo(std::shared_ptr<XTargetType>& aTarget);
 
     template<class XTargetType> void ReleaseTo(void (*aTarget)(XTargetType*));
     template<class XTargetType> void ReleaseTo(void (*aTarget)(const XTargetType*));
@@ -263,6 +265,21 @@ template<class XTargetType> inline void KContainer::ReleaseTo(XTargetType*& aTar
     }
     catch (XTargetType* tObject) {
         aTarget = tObject;
+        fHolder->Clear();
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+
+template<class XTargetType> inline void KContainer::ReleaseTo(std::shared_ptr<XTargetType>& aTarget)
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        aTarget.reset(tObject);
         fHolder->Clear();
         return;
     }

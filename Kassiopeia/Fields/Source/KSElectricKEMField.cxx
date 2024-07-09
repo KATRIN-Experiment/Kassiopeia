@@ -66,6 +66,9 @@ void KSElectricKEMField::InitializeComponent()
     fField->Initialize();
 }
 
-void KSElectricKEMField::DeinitializeComponent() {}
+void KSElectricKEMField::DeinitializeComponent()
+{
+    fField->Deinitialize();
+}
 
 }  // namespace Kassiopeia

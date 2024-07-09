@@ -25,7 +25,11 @@ STATICINT sKSROOTZonalHarmonicsPainterStructure =
     KSROOTZonalHarmonicsPainterBuilder::Attribute<int>("z_steps") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("path") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("file") +
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<bool>("write");
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<bool>("write") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<bool>("draw_source_points") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<bool>("draw_convergence_area") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<bool>("draw_central_boundary") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<bool>("draw_remote_boundary");
 //KSROOTZonalHarmonicsPainterBuilder::Attribute< string >("geometry_type" ) +
 //KSROOTZonalHarmonicsPainterBuilder::Attribute< double >( "radial_safety_margin" );
 

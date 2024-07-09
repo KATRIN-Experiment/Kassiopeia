@@ -8,7 +8,6 @@
 #ifndef KBOUNDARYMATRIXGENERATOR_HH_
 #define KBOUNDARYMATRIXGENERATOR_HH_
 
-#include "KSmartPointer.hh"
 #include "KSquareMatrix.hh"
 #include "KSurfaceContainer.hh"
 
@@ -22,7 +21,7 @@ template<typename ValueType> class KBoundaryMatrixGenerator
     KBoundaryMatrixGenerator() = default;
     virtual ~KBoundaryMatrixGenerator() = default;
 
-    virtual KSmartPointer<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const = 0;
+    virtual std::shared_ptr<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const = 0;
 };
 
 } /* namespace KEMField */

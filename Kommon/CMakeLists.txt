@@ -21,9 +21,6 @@ kasper_module_debug()
 # set(KOMMON_HEADER_FILES)
 # set(KOMMON_SOURCE_FILES)
 
-set( KASPER_USE_TBB OFF CACHE BOOL "Use the Intel TBB library in Kommon")
-mark_as_advanced( FORCE KASPER_USE_TBB )
-
 # subdirectories
 add_subdirectory( cmake )
 add_subdirectory( Documentation )
@@ -35,11 +32,6 @@ if( KASPER_USE_BOOST )
 endif( KASPER_USE_BOOST )
 
 add_subdirectory( Core )
-if( KASPER_USE_TBB )
-    # NOTE: This is not a separate library, but part of KommonCore. It *must* come after `Core`!
-    add_subdirectory( TBB )
-endif( KASPER_USE_TBB )
-
 add_subdirectory( Binning )
 add_subdirectory( Math )
 

@@ -34,6 +34,9 @@ class KROOTPad : public KROOTWindow
     void SetWindow(KWindow* aWindow);
     void ClearWindow(KWindow* aWindow);
 
+    TPad* GetPad();
+    KROOTWindow* GetWindow();
+
   private:
     typedef std::vector<KROOTPainter*> PainterVector;
     using PainterIt = PainterVector::iterator;
@@ -43,14 +46,10 @@ class KROOTPad : public KROOTWindow
     KROOTWindow* fWindow;
 
     //settings
-    ;
-    K_SET(double, xlow);
-    ;
-    K_SET(double, ylow);
-    ;
-    K_SET(double, xup);
-    ;
-    K_SET(double, yup);
+    K_SET_GET(double, XLow);
+    K_SET_GET(double, YLow);
+    K_SET_GET(double, XUp);
+    K_SET_GET(double, YUp);
 };
 
 

@@ -1,9 +1,9 @@
 cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # KGeoBag version
-set( MODULE_VERSION_MAJOR 3 )
-set( MODULE_VERSION_MINOR 8 )
-set( MODULE_VERSION_PATCH 2 )
+set( MODULE_VERSION_MAJOR 4 )
+set( MODULE_VERSION_MINOR 0 )
+set( MODULE_VERSION_PATCH 1 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
 #project( KGeoBag VERSION ${MODULE_VERSION})
@@ -46,7 +46,7 @@ add_subdirectory( Source/Extensions/Deformation )
 add_subdirectory( Source/Extensions/Refinement )
 add_subdirectory( Source/Visualization )
 add_subdirectory( Source/Bindings )
-add_subdirectory( Source/Application )
+add_subdirectory( Source/Applications )
 add_subdirectory( Source/Test/MeshNavigation )
 add_subdirectory( Source/XML )
 

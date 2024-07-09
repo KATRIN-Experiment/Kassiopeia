@@ -45,6 +45,22 @@ template<> inline bool KROOTWindowBuilder::AddAttribute(KContainer* aContainer)
         aContainer->CopyTo(fObject, &KROOTWindow::SetPath);
         return true;
     }
+    if (aContainer->GetName() == "xmin") {
+        aContainer->CopyTo(fObject, &KROOTWindow::SetXMin);
+        return true;
+    }
+    if (aContainer->GetName() == "ymin") {
+        aContainer->CopyTo(fObject, &KROOTWindow::SetYMin);
+        return true;
+    }
+    if (aContainer->GetName() == "xmax") {
+        aContainer->CopyTo(fObject, &KROOTWindow::SetXMax);
+        return true;
+    }
+    if (aContainer->GetName() == "ymax") {
+        aContainer->CopyTo(fObject, &KROOTWindow::SetYMax);
+        return true;
+    }
     return false;
 }
 

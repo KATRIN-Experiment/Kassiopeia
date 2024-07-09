@@ -239,7 +239,8 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GenerateCentralSourcePointsByFix
         nSPs = 1;
 
     kem_cout(eNormal) << "Computing " << nSPs << " central source points for " << Basis::Name()
-                      << " along the local z-axis from " << z1 << " to " << z2 << "." << eom;
+                      << " along the local z-axis from " << z1 << " to " << z2
+                      << " (z0 = " << GetCoordinateSystem()->GetOrigin().Z() << ")." << eom;
 
     KTicker ticker;
     ticker.StartTicker(nSPs);
@@ -278,8 +279,9 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GenerateCentralSourcePointsByFra
     if (fabs(z1 - z2) < 1.e-10)
         SourcePointExtrema(z1, z2);
 
-    kem_cout(eNormal) << "Computing central source points for " << Basis::Name() << " along the local z-axis from "
-                      << z1 << " to " << z2 << "." << eom;
+    kem_cout(eNormal) << "Computing central source points for " << Basis::Name()
+                      << " along the local z-axis from " << z1 << " to " << z2
+                      << " (z0 = " << GetCoordinateSystem()->GetOrigin().Z() << ")." << eom;
 
     KTicker ticker;
     ticker.StartTicker(z2 - z1);
@@ -342,7 +344,8 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GenerateRemoteSourcePoints(std::
     }
 
     kem_cout(eNormal) << "Computing " << nSPs << " remote source points for " << Basis::Name()
-                      << " along the local z-axis from " << z1 << " to " << z2 << "." << eom;
+                      << " along the local z-axis from " << z1 << " to " << z2
+                      << " (z0 = " << GetCoordinateSystem()->GetOrigin().Z() << ")." << eom;
 
     KTicker ticker;
     ticker.StartTicker(nSPs);

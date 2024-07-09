@@ -10,7 +10,6 @@
 
 #include "KEMStringUtils.hh"
 #include "KKrylovChargeDensitySolver.hh"
-#include "KSmartPointerRelease.hh"
 
 namespace katrin
 {
@@ -18,9 +17,8 @@ namespace katrin
 template<class ObjectType> bool SetKrylovSolverMatrixAndPrecon(KContainer& anElement, ObjectType& fObject)
 {
     if (anElement.Is<KEMField::KKrylovChargeDensitySolver::MatrixGenerator>()) {
-        KEMField::KSmartPointer<KEMField::KKrylovChargeDensitySolver::MatrixGenerator> matrixGenerator =
-            ReleaseToSmartPtr<KEMField::KKrylovChargeDensitySolver::MatrixGenerator>(anElement);
-
+        std::shared_ptr<KEMField::KKrylovChargeDensitySolver::MatrixGenerator> matrixGenerator;
+        anElement.ReleaseTo(matrixGenerator);
         if (KEMField::endsWith(anElement.GetName(), "preconditioner"))
             fObject.SetPreconditionerGenerator(matrixGenerator);
         else

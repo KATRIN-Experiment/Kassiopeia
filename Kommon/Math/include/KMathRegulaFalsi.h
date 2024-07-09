@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <functional>
 #include <utility>
+#include <cstdint>
 
 namespace katrin
 {

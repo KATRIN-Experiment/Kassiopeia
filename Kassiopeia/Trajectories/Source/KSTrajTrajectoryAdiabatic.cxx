@@ -56,7 +56,8 @@ void KSTrajTrajectoryAdiabatic::SetIntegrator(KSTrajAdiabaticIntegrator* anInteg
         fIntegrator = anIntegrator;
         return;
     }
-    trajmsg(eError) << "cannot set integrator in <" << this->GetName() << "> with <" << anIntegrator << ">" << eom;
+    trajmsg(eError) << "cannot set integrator <" << dynamic_cast<katrin::KNamed*>(anIntegrator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryAdiabatic::ClearIntegrator(KSTrajAdiabaticIntegrator* anIntegrator)
@@ -65,7 +66,8 @@ void KSTrajTrajectoryAdiabatic::ClearIntegrator(KSTrajAdiabaticIntegrator* anInt
         fIntegrator = nullptr;
         return;
     }
-    trajmsg(eError) << "cannot clear integrator in <" << this->GetName() << "> with <" << anIntegrator << ">" << eom;
+    trajmsg(eError) << "cannot clear integrator <" << dynamic_cast<katrin::KNamed*>(anIntegrator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 
@@ -75,7 +77,8 @@ void KSTrajTrajectoryAdiabatic::SetInterpolator(KSTrajAdiabaticInterpolator* anI
         fInterpolator = anInterpolator;
         return;
     }
-    trajmsg(eError) << "cannot set interpolator in <" << this->GetName() << "> with <" << anInterpolator << ">" << eom;
+    trajmsg(eError) << "cannot set interpolator <" << dynamic_cast<katrin::KNamed*>(anInterpolator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryAdiabatic::ClearInterpolator(KSTrajAdiabaticInterpolator* anInterpolator)
@@ -84,17 +87,22 @@ void KSTrajTrajectoryAdiabatic::ClearInterpolator(KSTrajAdiabaticInterpolator* a
         fInterpolator = nullptr;
         return;
     }
-    trajmsg(eError) << "cannot clear interpolator in <" << this->GetName() << "> with <" << anInterpolator << ">"
-                    << eom;
+    trajmsg(eError) << "cannot clear interpolator <" << dynamic_cast<katrin::KNamed*>(anInterpolator)->GetName()
+                    << "> in <" << this->GetName() << ">" << eom;
     return;
 }
 
 void KSTrajTrajectoryAdiabatic::AddTerm(KSTrajAdiabaticDifferentiator* aTerm)
 {
+    if (fTerms.FindElementByType(aTerm) != -1) {
+        trajmsg(eWarning) << "adding term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                          << "> to already existing term of same type in <" << this->GetName() << ">" << eom;
+    }
     if (fTerms.AddElement(aTerm) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot add term <" << aTerm << "> to <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot add term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                    << "> to <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryAdiabatic::RemoveTerm(KSTrajAdiabaticDifferentiator* aTerm)
@@ -102,16 +110,22 @@ void KSTrajTrajectoryAdiabatic::RemoveTerm(KSTrajAdiabaticDifferentiator* aTerm)
     if (fTerms.RemoveElement(aTerm) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot remove term <" << aTerm << "> from <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot remove term <" << dynamic_cast<katrin::KNamed*>(aTerm)->GetName()
+                    << "> from <" << this->GetName() << ">" << eom;
     return;
 }
 
 void KSTrajTrajectoryAdiabatic::AddControl(KSTrajAdiabaticControl* aControl)
 {
+    if (fControls.FindElementByType(aControl) != -1) {
+        trajmsg(eWarning) << "adding control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                          << "> to already existing control of same type in <" << this->GetName() << ">" << eom;
+    }
     if (fControls.AddElement(aControl) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot add step <" << aControl << "> to <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot add control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                    << "> to <" << this->GetName() << ">" << eom;
     return;
 }
 void KSTrajTrajectoryAdiabatic::RemoveControl(KSTrajAdiabaticControl* aControl)
@@ -119,7 +133,8 @@ void KSTrajTrajectoryAdiabatic::RemoveControl(KSTrajAdiabaticControl* aControl)
     if (fControls.RemoveElement(aControl) != -1) {
         return;
     }
-    trajmsg(eError) << "cannot remove step <" << aControl << "> from <" << this->GetName() << ">" << eom;
+    trajmsg(eError) << "cannot remove control <" << dynamic_cast<katrin::KNamed*>(aControl)->GetName()
+                    << "> from <" << this->GetName() << ">" << eom;
     return;
 }
 

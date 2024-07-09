@@ -63,7 +63,7 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
         }
 
         // parse command line arguments - but only up to the -r flag
-        commandLineArgs = move(KArgumentList(lastArg, argv));
+        commandLineArgs = std::move(KArgumentList(lastArg, argv));
         KDEBUG("Commandline: " << commandLineArgs.CommandLine());
 
         // parse `key=value` pairs after the -r flag
@@ -88,9 +88,10 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
         for (lastArg = 1; lastArg < argc; lastArg++) {
             string arg = argv[lastArg];
             auto length = arg.find_first_of('=');
+            const bool has_value = length != string::npos;
             string key = arg.substr(0, length);
             string value = "";
-            if (length != string::npos)
+            if (has_value)
                 value = arg.substr(length + 1);
 
             if (key.length() > 0 && key[0] == '-') {
@@ -122,7 +123,7 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
             else
                 continue;  // ignore `key[=value]` args here
 
-            if (key.length() > 0 && value.length() > 0) {
+            if (key.length() > 0 && has_value) {
                 //KDEBUG("adding option: " << key << " = " << value);
                 commandLineArgs.SetOption(key, value);
             }
@@ -161,7 +162,7 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
         commandLineArgs.SetOption("KEMFIELD_CACHE", path);
     }
 
-    fArguments = move(commandLineArgs);
+    fArguments = std::move(commandLineArgs);
 }
 
 pair<string, KTextFile> KXMLInitializer::GetConfigFile()

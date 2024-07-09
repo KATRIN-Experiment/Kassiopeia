@@ -11,7 +11,8 @@
 #include "KElectromagnetIntegratingFieldSolver.hh"
 #include "KElectromagnetIntegrator.hh"
 #include "KMagneticFieldSolver.hh"
-#include "KSmartPointer.hh"
+
+#include <memory>
 
 namespace KEMField
 {
@@ -22,7 +23,9 @@ class KIntegratingMagnetostaticFieldSolver : public KMagneticFieldSolver
   public:
     KIntegratingMagnetostaticFieldSolver();
 
+  private:
     void InitializeCore(KElectromagnetContainer& container) override;
+    void DeinitializeCore() override {}
 
     KFieldVector MagneticPotentialCore(const KPosition& P) const override;
     KFieldVector MagneticFieldCore(const KPosition& P) const override;
@@ -30,7 +33,7 @@ class KIntegratingMagnetostaticFieldSolver : public KMagneticFieldSolver
 
   private:
     KElectromagnetIntegrator fIntegrator;
-    KSmartPointer<KIntegratingFieldSolver<KElectromagnetIntegrator>> fIntegratingFieldSolver;
+    std::shared_ptr<KIntegratingFieldSolver<KElectromagnetIntegrator>> fIntegratingFieldSolver;
 };
 
 } /* namespace KEMField */

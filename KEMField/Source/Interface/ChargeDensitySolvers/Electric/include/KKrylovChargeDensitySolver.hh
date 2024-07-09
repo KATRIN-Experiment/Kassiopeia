@@ -26,9 +26,9 @@ class KKrylovChargeDensitySolver : public KChargeDensitySolver
     KKrylovChargeDensitySolver();
     ~KKrylovChargeDensitySolver() override;
 
-    void SetMatrixGenerator(const KSmartPointer<MatrixGenerator>& matrixGen);
-    KSmartPointer<const MatrixGenerator> GetMatrixGenerator() const;
-    void SetPreconditionerGenerator(const KSmartPointer<MatrixGenerator>& preconGen);
+    void SetMatrixGenerator(const std::shared_ptr<MatrixGenerator>& matrixGen);
+    std::shared_ptr<const MatrixGenerator> GetMatrixGenerator() const;
+    void SetPreconditionerGenerator(const std::shared_ptr<MatrixGenerator>& preconGen);
 
     void SetIterationsBetweenRestart(unsigned int iterationsBetweenRestart)
     {
@@ -89,8 +89,8 @@ class KKrylovChargeDensitySolver : public KChargeDensitySolver
     void InitializeCore(KSurfaceContainer& container) override;
     void ComputeSolution(KSurfaceContainer& container);
 
-    KSmartPointer<MatrixGenerator> fMatrixGenerator;
-    KSmartPointer<MatrixGenerator> fPreconditionerGenerator;
+    std::shared_ptr<MatrixGenerator> fMatrixGenerator;
+    std::shared_ptr<MatrixGenerator> fPreconditionerGenerator;
 
     KKrylovSolverConfiguration fKrylovConfig;
 };

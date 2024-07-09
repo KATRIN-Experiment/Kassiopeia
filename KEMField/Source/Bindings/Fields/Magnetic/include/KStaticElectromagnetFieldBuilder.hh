@@ -11,7 +11,6 @@
 #include "KComplexElement.hh"
 #include "KEMBindingsMessage.hh"
 #include "KGStaticElectromagnetField.hh"
-#include "KSmartPointerRelease.hh"
 #include "KIntegratingMagnetostaticFieldSolver.hh"
 
 namespace katrin
@@ -98,8 +97,8 @@ template<> inline bool KStaticElectromagnetFieldBuilder::AddElement(KContainer* 
 {
     if (anElement->Is<KEMField::KMagneticFieldSolver>()) {
         if (!(fObject->GetFieldSolver())) {
-            KEMField::KSmartPointer<KEMField::KMagneticFieldSolver> solver =
-                ReleaseToSmartPtr<KEMField::KMagneticFieldSolver>(anElement);
+            std::shared_ptr<KEMField::KMagneticFieldSolver> solver;
+            anElement->ReleaseTo(solver);
             fObject->SetFieldSolver(solver);
         }
         else {
@@ -118,7 +117,7 @@ template<> inline bool KStaticElectromagnetFieldBuilder::End()
     if (!(fObject->GetFieldSolver())) {
         BINDINGMSG(eWarning) << " No magnetic field solver set in field "
                            << GetName() << " - falling back to integrating solver!" << eom;
-        auto solver = new KEMField::KIntegratingMagnetostaticFieldSolver();
+        auto solver = std::make_shared<KEMField::KIntegratingMagnetostaticFieldSolver>();
         fObject->SetFieldSolver(solver);
         return true;
     }

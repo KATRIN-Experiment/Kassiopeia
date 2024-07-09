@@ -46,10 +46,7 @@ class KFMSparseBoundaryIntegralMatrix : public KBoundaryIntegralMatrix<FastMulti
         Initialize();
     };
 
-    virtual ~KFMSparseBoundaryIntegralMatrix()
-    {
-        ;
-    };
+    virtual ~KFMSparseBoundaryIntegralMatrix() = default;
 
     virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
     {

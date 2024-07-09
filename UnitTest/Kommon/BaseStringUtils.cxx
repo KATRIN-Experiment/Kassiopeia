@@ -10,6 +10,8 @@
 #include "KBaseStringUtils.h"
 #include "KException.h"
 
+#include <cmath>
+
 using namespace katrin;
 
 TEST(KBaseStringUtils, Comparison)
@@ -35,14 +37,59 @@ TEST(KBaseStringUtils, Conversion)
     const std::string s1 = "1234";
     const std::string s2 = "1234.5678";
     const std::string s3 = "abcd";
+    const std::string s4 = "0xfe";
+    const std::string s5 = "0x090000001";
+    const std::string s6 = "0xabcdefg";
+    const std::string s7 = "nan";
+    const std::string s8 = "NaN";
+    const std::string s9 = "NAN";
+    const std::string s10 = "naN";
 
     EXPECT_EQ(KBaseStringUtils::Convert<int>(s1), 1234);
     EXPECT_THROW(KBaseStringUtils::Convert<int>(s2), KException);
     EXPECT_THROW(KBaseStringUtils::Convert<int>(s3), KException);
+    EXPECT_EQ(KBaseStringUtils::Convert<int>(s4), 0xfe);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s5), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s6), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s7), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s8), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s9), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<int>(s10), KException);
 
     EXPECT_NEAR(KBaseStringUtils::Convert<float>(s1), 1234., 1e-4);
     EXPECT_NEAR(KBaseStringUtils::Convert<float>(s2), 1234.5678, 1e-4);
     EXPECT_THROW(KBaseStringUtils::Convert<float>(s3), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<float>(s4), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<float>(s5), KException);
+    EXPECT_THROW(KBaseStringUtils::Convert<float>(s6), KException);
+    EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<float>(s7)));
+    EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<float>(s8)));
+    EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<float>(s9)));
+    EXPECT_THROW(KBaseStringUtils::Convert<float>(s10), KException);
+
+    EXPECT_EQ(KBaseStringUtils::Convert<unsigned int>(s4), (unsigned) 0xfe);
+    EXPECT_EQ(KBaseStringUtils::Convert<unsigned int>(s5), (unsigned) 0x090000001);
+
+    EXPECT_EQ(KBaseStringUtils::Convert<long int>(s5), 0x090000001);
+    EXPECT_THROW(KBaseStringUtils::Convert<long int>(s6), KException);
+
+    EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<double>(s7)));
+    EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<double>(s8)));
+    EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<double>(s9)));
+    EXPECT_THROW(KBaseStringUtils::Convert<double>(s10), KException);
+}
+
+
+TEST(KBaseStringUtils, Replacing)
+{
+    EXPECT_EQ("a", KBaseStringUtils::Replace("a", "b", "c"));
+    EXPECT_EQ("", KBaseStringUtils::Replace("", "b", "c"));
+    EXPECT_EQ("", KBaseStringUtils::Replace("b", "b", ""));
+    EXPECT_EQ("ab", KBaseStringUtils::Replace("a", "a", "ab"));
+    EXPECT_EQ("bb", KBaseStringUtils::Replace("b", "b", "bb"));
+    EXPECT_EQ("bb bbbb", KBaseStringUtils::Replace("b bb", "b", "bb"));
+    EXPECT_EQ(" ab abab ", KBaseStringUtils::Replace(" b bb ", "b", "ab"));
+    EXPECT_EQ("A quick fox jumps", KBaseStringUtils::Replace("A quick placeholder jumps", "placeholder", "fox"));
 }
 
 TEST(KBaseStringUtils, Manipulation)

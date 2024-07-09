@@ -104,6 +104,8 @@ class KOpenCLInterface
   public:
     static KOpenCLInterface* GetInstance();
 
+    void Initialize();
+
     cl::Context GetContext() const
     {
         return *fContext;
@@ -120,6 +122,9 @@ class KOpenCLInterface
 
     unsigned int GetNumberOfDevices() const
     {
+        if (! fContext)
+            return 0;
+
         CL_VECTOR_TYPE<cl::Device> availableDevices = fContext->getInfo<CL_CONTEXT_DEVICES>();
         return availableDevices.size();
     };
@@ -141,8 +146,6 @@ class KOpenCLInterface
   protected:
     KOpenCLInterface();
     virtual ~KOpenCLInterface();
-
-    void InitializeOpenCL();
 
     static KOpenCLInterface* fOpenCLInterface;
 

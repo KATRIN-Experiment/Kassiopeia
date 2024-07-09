@@ -3,6 +3,10 @@ if (Kassiopeia_ENABLE_APP)
 
     set( APPLICATIONS_OTHER_BASENAMES )
 
+    list( APPEND APPLICATIONS_OTHER_BASENAMES
+        DumpMagnetGeometry
+    )
+
     if( Kassiopeia_USE_ROOT )
         list( APPEND APPLICATIONS_OTHER_BASENAMES
             ROOTFileMerge

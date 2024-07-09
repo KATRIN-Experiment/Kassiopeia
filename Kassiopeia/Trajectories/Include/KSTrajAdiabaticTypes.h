@@ -13,7 +13,7 @@
 namespace Kassiopeia
 {
 
-typedef KSMathSystem<KSTrajAdiabaticParticle, KSTrajAdiabaticDerivative, KSTrajAdiabaticError> KSTrajAdiabaticSystem;
+using KSTrajAdiabaticSystem = KSMathSystem<KSTrajAdiabaticParticle, KSTrajAdiabaticDerivative, KSTrajAdiabaticError>;
 using KSTrajAdiabaticControl = KSMathControl<KSTrajAdiabaticSystem>;
 using KSTrajAdiabaticDifferentiator = KSMathDifferentiator<KSTrajAdiabaticSystem>;
 using KSTrajAdiabaticIntegrator = KSMathIntegrator<KSTrajAdiabaticSystem>;

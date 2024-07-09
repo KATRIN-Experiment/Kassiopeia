@@ -25,7 +25,7 @@
 	<test_element value="this is awesome"/>
 </if>
 
-<if condition="1 ne 2">
+<if condition="{ 1 ne 2 }">
 	<test_element value="not equal also works"/>
 </if>
 

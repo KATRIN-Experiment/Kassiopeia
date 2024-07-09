@@ -62,6 +62,10 @@ class KCoil : public KElectromagnet
     {
         fIntegrationScale = i;
     }
+    void SetNumberOfTurns(unsigned int i)
+    {
+        fNumberOfTurns = i;
+    }
 
     double GetCurrent() const
     {
@@ -70,6 +74,10 @@ class KCoil : public KElectromagnet
     double GetCurrentDensity() const
     {
         return fCurrent / fabs(fP1[0] - fP0[0]) / fabs(fP1[2] - fP0[2]);
+    }
+    double GetCurrentPerTurn() const
+    {
+        return fCurrent / fNumberOfTurns;
     }
     double GetR0() const
     {
@@ -99,6 +107,10 @@ class KCoil : public KElectromagnet
     {
         return fIntegrationScale;
     }
+    int GetNumberOfTurns() const
+    {
+        return fNumberOfTurns;
+    }
 
     void Accept(KElectromagnetVisitor& visitor) override;
 
@@ -106,7 +118,8 @@ class KCoil : public KElectromagnet
     KPosition fP0;
     KPosition fP1;
     double fCurrent;
-    int fIntegrationScale;
+    unsigned int fIntegrationScale;
+    unsigned int fNumberOfTurns;
 };
 
 template<typename Stream> Stream& operator>>(Stream& s, KCoil& c)

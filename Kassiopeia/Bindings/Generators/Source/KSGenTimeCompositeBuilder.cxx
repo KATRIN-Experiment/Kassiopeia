@@ -3,6 +3,7 @@
 #include "KSGenValueFixBuilder.h"
 #include "KSGenValueGaussBuilder.h"
 #include "KSGenValueGeneralizedGaussBuilder.h"
+#include "KSGenValueFermiBuilder.h"
 #include "KSGenValueListBuilder.h"
 #include "KSGenValueSetBuilder.h"
 #include "KSGenValueUniformBuilder.h"
@@ -29,7 +30,8 @@ STATICINT sKSGenTimeCompositeStructure =
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueList>("time_list") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueUniform>("time_uniform") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueGauss>("time_gauss") +
-    KSGenTimeCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("time_generalized_gauss");
+    KSGenTimeCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("time_generalized_gauss") +
+    KSGenTimeCompositeBuilder::ComplexElement<KSGenValueFermi>("time_fermi");
 
 STATICINT sKSGenTimeComposite = KSRootBuilder::ComplexElement<KSGenTimeComposite>("ksgen_time_composite");
 

@@ -75,6 +75,9 @@ void KSMagneticKEMField::InitializeComponent()
     fField->Initialize();
 }
 
-void KSMagneticKEMField::DeinitializeComponent() {}
+void KSMagneticKEMField::DeinitializeComponent()
+{
+    fField->Deinitialize();
+}
 
 } /* namespace Kassiopeia */

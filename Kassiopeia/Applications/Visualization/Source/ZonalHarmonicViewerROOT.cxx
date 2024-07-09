@@ -92,7 +92,8 @@ int main(int argc, char** argv)
 
     tPainterZH.SetDrawSourcePoints(true);
     tPainterZH.SetDrawConvergenceArea(true);
-    tPainterZH.SetDrawExpansionArea(true);
+    tPainterZH.SetDrawCentralBoundary(false);
+    tPainterZH.SetDrawRemoteBoundary(false);
 
     for (auto& tField : tFieldList) {
         KGElectrostaticBoundaryField* tElectricFieldObject = KToolbox::GetInstance().Get<KGElectrostaticBoundaryField>(tField);
@@ -133,15 +134,6 @@ int main(int argc, char** argv)
             }
         }
     }
-
-    // set ZH painiting limits based on geometry
-    tPainter.Render();  // update bounds
-    tPainterZH.SetZmin(tPainter.GetXMin());
-    tPainterZH.SetZmax(tPainter.GetXMax());
-    tPainterZH.SetRmax(max(fabs(tPainter.GetYMin()), fabs(tPainter.GetYMax())));
-
-    //tPainterZH.SetZdist();
-    //tPainterZH.SetRdist();
 
     tWindow.AddPainter(&tPainter);
     tWindow.AddPainter(&tPainterZH);

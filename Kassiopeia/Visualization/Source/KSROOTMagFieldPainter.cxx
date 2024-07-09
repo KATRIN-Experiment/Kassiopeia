@@ -497,7 +497,7 @@ void KSROOTMagFieldPainter::Display()
     gStyle->SetNumberContours(NCont);
 
     if (fDisplayEnabled == true) {
-        fWindow->GetPad()->SetRightMargin(0.15);
+        fWindow->GetCanvas()->SetRightMargin(0.15);
 
         //			gStyle->SetPalette(57);
         if (fDraw == "COLZ")
@@ -558,7 +558,7 @@ void KSROOTMagFieldPainter::Display()
         else if (fYAxis == "x")
             fMap->GetYaxis()->SetTitle("x (m)");
         if (fUseLogZ == true)
-            fWindow->GetPad()->SetLogz();
+            fWindow->GetCanvas()->SetLogz();
 
         fMap->GetZaxis()->SetTitleOffset(1.4);
         fMap->SetStats(false);

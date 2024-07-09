@@ -20,6 +20,8 @@ class KROOTPainter : public KPainter
     void SetDisplayMode(bool aMode);
     void SetWriteMode(bool aMode);
 
+    KROOTWindow* GetWindow();
+
     virtual double GetXMin() = 0;
     virtual double GetXMax() = 0;
     virtual double GetYMin() = 0;

@@ -17,7 +17,7 @@ void KGStlFileSurfaceMesher::VisitWrappedSurface(KGStlFileSurface* stlSurface)
 
     fCurrentElements->reserve(fCurrentElements->size() + nElements);
 
-    for (auto & elem : object->GetElements()) {
+    for (auto & elem : object->GetTriangles()) {
         auto t = new KGMeshTriangle(elem);
 
         if (object->GetNDisc() < 2)
