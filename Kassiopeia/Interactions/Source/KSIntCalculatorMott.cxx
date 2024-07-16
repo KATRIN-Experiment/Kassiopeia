@@ -7,7 +7,8 @@ using katrin::KRandom;
 
 #include "KConst.h"
 
-using KGeoBag::KThreeVector;
+#include "KThreeVector.hh"
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {
