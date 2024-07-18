@@ -49,8 +49,6 @@ void KSIntCalculatorMott::ExecuteInteraction(const KSParticle& anInitialParticle
 
 
     double tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
-    tMomentum.SetPolarAngle(tTheta * katrin::KConst::Pi() / 180);
-    tMomentum.SetAzimuthalAngle(tPhi);
 
     KThreeVector tOrthogonalOne = tMomentum.Orthogonal();
     KThreeVector tOrthogonalTwo = tMomentum.Cross(tOrthogonalOne);
