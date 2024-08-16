@@ -36,7 +36,7 @@ Development
 ===========
 
 Some KEMField tools are especially useful for development. `InspectEMFile` e.g. prints an overview over all keys in 
-`.kbd` files (like KEMField cache files). These tools can be found here: :gh-code:`KEMField/Source/Applications/Tools`.
+`.kbd` files (like KEMField cache files, from which the hash values can be used for the `explicit_superposition_cached_charge_density_solver`). These tools can be found here: :gh-code:`KEMField/Source/Applications/Tools`.
 
 Usage
 =====
