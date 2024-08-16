@@ -44,8 +44,8 @@ TEST_F(KGeoBagShapeTest, KGBox)
     tSurface3->SetP0(KThreeVector(0.1, 0.2, 0.3));
     tSurface3->SetP1(KThreeVector(1., 2., 3.));
 
-    EXPECT_EQ(tSurface2->GetP0(), KThreeVector(0.1, 0.2, 0.3));
-    EXPECT_EQ(tSurface2->GetP1(), KThreeVector(1., 2., 3.));
+    EXPECT_EQ(tSurface3->GetP0(), KThreeVector(0.1, 0.2, 0.3));
+    EXPECT_EQ(tSurface3->GetP1(), KThreeVector(1., 2., 3.));
 
     tSurface3->SetX0(1.1);
     tSurface3->SetX1(2.1);
@@ -60,8 +60,8 @@ TEST_F(KGeoBagShapeTest, KGBox)
     tSurface3->SetP0(KThreeVector(0.1, 0.2, 0.3));
     tSurface3->SetP1(KThreeVector(1., 2., 3.));
 
-    EXPECT_EQ(tSurface2->GetP0(), KThreeVector(0.1, 0.2, 0.3));
-    EXPECT_EQ(tSurface2->GetP1(), KThreeVector(1., 2., 3.));
+    EXPECT_EQ(tSurface3->GetP0(), KThreeVector(0.1, 0.2, 0.3));
+    EXPECT_EQ(tSurface3->GetP1(), KThreeVector(1., 2., 3.));
 
     delete tSurface3;
 }
