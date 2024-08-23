@@ -31,7 +31,5 @@ described here.
 
      kemfield_fields
      kemfield_visualization
+     kemfield_tools
      kemfield_manual
-
-
-
