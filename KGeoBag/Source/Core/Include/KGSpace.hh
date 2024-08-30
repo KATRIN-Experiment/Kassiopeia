@@ -2,10 +2,12 @@
 #error "do not include KGSpace.hh directly; include KGCore.hh instead."
 #else
 
+#include "KGPathAware.hh"
+
 namespace KGeoBag
 {
 
-class KGSpace : public katrin::KTagged
+class KGSpace : public KGPathAware
 {
   public:
     friend class KGSurface;
@@ -58,7 +60,7 @@ class KGSpace : public katrin::KTagged
     void AddChildSpace(KGSpace* aSpace);
 
     const KGSpace* GetParent() const;
-    std::string GetPath() const;
+    std::string GetPath() const override;
 
     const std::vector<KGSurface*>* GetBoundaries() const;
     const std::vector<KGSurface*>* GetChildSurfaces() const;
