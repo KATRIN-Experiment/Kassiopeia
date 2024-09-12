@@ -114,11 +114,11 @@
 
 	<ksint_scattering name="int_scattering_mott" split="false">
             <density_constant temperature="80" pressure_mbar="0.5e3"/>
-            <calculator_mott nucleus="He" theta_min="40" theta_max="140"/>
+            <calculator_mott nucleus="He-4" theta_min="40" theta_max="140"/>
     </ksint_scattering>
 	<!--
      description:
-     this is the Mott scattering calculator. Only He and Ne nuclei have been implemented. To add any other 
+     this is the Mott scattering calculator. Only He-4 and Ne-20 nuclei have been implemented. To add any other 
 	 nucleus add Z and b values from Table 3 in [M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.]
 
 		elements:
@@ -130,7 +130,7 @@
 
 				parameters:
 					nucleus:
-						set the nucleus name to scatter from either He or Ne nuclei.
+						set the nucleus name to scatter from either He-4 or Ne-20 nuclei.
 
 					theta_min:
 						set the minimum angle (in degrees) allowable to scatter into. 0 not allowed, because singularity in cross section.
