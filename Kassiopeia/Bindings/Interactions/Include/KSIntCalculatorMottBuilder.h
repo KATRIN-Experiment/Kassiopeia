@@ -44,9 +44,9 @@ template<> inline bool KSIntCalculatorMottBuilder::AddAttribute(KContainer* aCon
     if (aContainer->GetName() == "nucleus") {
         aContainer->CopyTo(fObject, &KSIntCalculatorMott::SetNucleus);
 
-        if ((fObject->GetNucleus().compare("He") != 0) && (fObject->GetNucleus().compare("Ne") != 0)) {
+        if ((fObject->GetNucleus().compare("He-4") != 0) && (fObject->GetNucleus().compare("Ne-20") != 0)) {
             initmsg(eError) << "\"" << fObject->GetNucleus()
-                           << R"(" is not available for Mott scattering! Available gases: "He", "Ne")" << eom;
+                           << R"(" is not available for Mott scattering! Available gases: "He-4", "Ne-20")" << eom;
 
             return false;
         }
