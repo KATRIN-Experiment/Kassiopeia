@@ -43,5 +43,4 @@ Every relevant to the geometry description is processed by *KGeoBag* and must ap
      kgeobag_simple_shapes
      kgeobag_complex_shapes
      kgeobag_visualization
-
-
+     kgeobag_tools
