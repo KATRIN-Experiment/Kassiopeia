@@ -24,6 +24,7 @@ set( INTERACTIONS_HEADER_BASENAMES
     KSIntCalculatorIon.h
     KSIntCalculatorTritium.h
     KSIntCalculatorArgon.h
+    KSIntCalculatorMott.h
 
     KSIntSurfaceSpecular.h
     KSIntSurfaceUCN.h
@@ -78,6 +79,7 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KSIntCalculatorIon.cxx
     KSIntCalculatorTritium.cxx
     KSIntCalculatorArgon.cxx
+    KSIntCalculatorMott.cxx
 
     KSIntSurfaceSpecular.cxx
     KSIntSurfaceUCN.cxx
