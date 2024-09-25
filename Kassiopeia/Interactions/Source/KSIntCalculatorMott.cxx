@@ -6,6 +6,8 @@
 using katrin::KRandom;
 
 #include "KConst.h"
+#include "KStringUtils.h"
+using katrin::KStringUtils;
 
 #include "KThreeVector.hh"
 using katrin::KThreeVector;
@@ -143,14 +145,14 @@ std::vector<double> KSIntCalculatorMott::RMott_coeffs(double const E0) {
     std::vector<double> a(6, 0.0); // Initialize a with 6 zeros, the last entry is not related to coefficient calculation it is Z for the nucleus of choice
     std::vector<std::vector<double>> b(5, std::vector<double>(6));
 
-    if (fNucleus == "He-4") { // independent of mass number, dependent on atomic number (ie. He-3 would have same data as He-4)
+    if (KStringUtils::IStartsWith(fNucleus, "He-")) {
         a[5] = 2; // Charge Z
         b = {{ 1.0       ,  3.76476e-8, -3.05313e-7, -3.27422e-7,  2.44235e-6,  4.08754e-6},
              { 2.35767e-2,  3.24642e-2, -6.37269e-4, -7.69160e-4,  5.28004e-3,  9.45642e-3},
              {-2.73743e-1, -7.40767e-1, -4.98195e-1,  1.74337e-3, -1.25798e-2, -2.24046e-2},
              {-7.79128e-4, -4.14495e-4, -1.62657e-3, -1.37286e-3,  1.04319e-2,  1.83488e-2},
              { 2.02855e-4,  1.94598e-6,  4.30102e-4,  4.32180e-4, -3.31526e-3, -5.81788e-3}};
-    } else if (fNucleus == "Ne-20") { // independent of mass number, dependent on atomic number (ie. Ne-21 would have same data as Ne-20)
+    } else if (KStringUtils::IStartsWith(fNucleus, "Ne-")) {
         a[5] = 10; // Charge Z
         b = {{ 9.99997e-1, -1.87404e-7,  3.10276e-5,  5.20000e-5,  2.98132e-4, -5.19259e-4},
              { 1.20783e-1,  1.66407e-1,  1.06608e-2,  6.48772e-3, -1.53031e-3, -7.59354e-2},
