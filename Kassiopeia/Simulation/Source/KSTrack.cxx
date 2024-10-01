@@ -26,6 +26,7 @@ KSTrack::KSTrack() :
 {}
 KSTrack::KSTrack(const KSTrack& aCopy) :
     KSComponent(aCopy),
+    KSTimed(aCopy),
     fTrackId(aCopy.fTrackId),
     fTrackCount(aCopy.fTrackCount),
     fParentEventId(aCopy.fParentEventId),
@@ -46,6 +47,7 @@ KSTrack::KSTrack(const KSTrack& aCopy) :
 {}
 KSTrack& KSTrack::operator=(const KSTrack& aCopy)
 {
+    KSTimed::operator=(aCopy);
     fTrackId = aCopy.fTrackId;
     fTrackCount = aCopy.fTrackCount;
     fParentEventId = aCopy.fParentEventId;
@@ -87,6 +89,7 @@ STATICINT sKSTrackDict =
     KSDictionary<KSTrack>::AddComponent(&KSTrack::GetCreatorName, "creator_name") +
     KSDictionary<KSTrack>::AddComponent(&KSTrack::GetTerminatorName, "terminator_name") +
     KSDictionary<KSTrack>::AddComponent(&KSTrack::GetInitialParticle, "initial_particle") +
-    KSDictionary<KSTrack>::AddComponent(&KSTrack::GetFinalParticle, "final_particle");
+    KSDictionary<KSTrack>::AddComponent(&KSTrack::GetFinalParticle, "final_particle") + 
+    KSDictionary<KSTrack>::AddComponent(&KSTrack::GetProcessingDuration, "processing_duration");
 
 }  // namespace Kassiopeia

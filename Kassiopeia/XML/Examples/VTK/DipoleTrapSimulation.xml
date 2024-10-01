@@ -293,6 +293,7 @@
         <component_member name="final_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_final_particle"/>
         <component_member name="final_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_final_particle"/>
         <component_member name="final_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_final_particle"/>
+        <component_member name="processing_duration" field="processing_duration" parent="track"/>
     </ks_component_group>
 
     <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
@@ -313,6 +314,7 @@
         <component_member name="orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_step_final_particle"/>
         <component_member name="polar_angle_to_z" field="polar_angle_to_z" parent="component_step_final_particle"/>
         <component_member name="polar_angle_to_b" field="polar_angle_to_b" parent="component_step_final_particle"/>
+        <component_member name="processing_duration" field="processing_duration" parent="step"/>
     </ks_component_group>
 
     <!-- structure -->

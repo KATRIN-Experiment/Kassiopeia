@@ -4,6 +4,7 @@
 #include "KSurfaceID.hh"
 #include "KSurfacePrimitive.hh"
 #include "KSurfaceVisitors.hh"
+#include "KEMCoreMessage.hh"
 
 #include <iostream>
 #include <sstream>
@@ -89,15 +90,54 @@ class KSurface :
 
     void Accept(KBasisVisitor& visitor) override
     {
-        visitor.Visit(*this);
+        try {
+            visitor.Visit(*this);
+        }
+        catch (...) {
+            std::string name = Shape::GetName();
+        
+            if (name.length() == 0 || name == "(anonymous)") {
+                kem_cout(eWarning) << "Path of error is unavailable." << eom;
+                throw;
+            }
+
+            kem_cout(eWarning) << "Error in <" << name << ">" << eom;
+            throw;
+        }
     }
     void Accept(KBoundaryVisitor& visitor) override
     {
-        visitor.Visit(*this);
+        try {
+            visitor.Visit(*this);
+        }
+        catch (...) {
+            std::string name = Shape::GetName();
+            
+            if (name.length() == 0 || name == "(anonymous)") {
+                kem_cout(eWarning) << "Path of error is unavailable." << eom;
+                throw;
+            }
+
+            kem_cout(eWarning) << "Error in <" << name << ">" << eom;
+            throw;
+        }
     }
     void Accept(KShapeVisitor& visitor) override
     {
-        visitor.Visit(*this);
+        try {
+            visitor.Visit(*this);
+        }
+        catch (...) {
+            std::string name = Shape::GetName();
+            
+            if (name.length() == 0 || name == "(anonymous)") {
+                kem_cout(eWarning) << "Path of error is unavailable." << eom;
+                throw;
+            }
+
+            kem_cout(eWarning) << "Error in <" << name << ">" << eom;
+            throw;
+        }
     }
 
   private:

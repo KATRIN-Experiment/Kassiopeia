@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# Keep the following in sync with Documentation/gh-pages/source/compiling.rst !
+# Keep the following in sync with Documentation/gh-pages/source/setup_manual.rst !
 jobs:
   ubuntu_20_04:
     strategy:
@@ -43,28 +43,22 @@ jobs:
             export CC=/usr/bin/clang
             export CXX=/usr/bin/clang++
         fi
-        ./setup.sh
+        KASSIOPEIA_CUSTOM_CMAKE_ARGS="-DENABLE_SANITIZE_ADDRESSES=ON" ./setup.sh
       shell: bash
 
     - name: Launch environment and run tests
       run: |
-        source root/bin/thisroot.sh && source install/bin/kasperenv.sh && UnitTestKasper
+        source root/bin/thisroot.sh && source install/bin/kasperenv.sh && ASAN_OPTIONS=detect_leaks=0 UnitTestKasper
       shell: bash
 
-  fedora_37:
+  fedora_40:
     strategy:
       matrix:
         use_clang: [false] # FIXME add "true" after solving https://github.com/KATRIN-Experiment/Kassiopeia/issues/87 
     runs-on: ubuntu-latest
-    container: fedora:37
+    container: fedora:40
     steps:
     - uses: actions/checkout@v3
-    - name: Run workaround for log4cxx bug (no longer needed with Fedora 39)
-      run: |
-        dnf update -y
-        dnf install -y --setopt=install_weak_deps=False dnf-plugins-core
-        dnf clean all
-        dnf copr enable thofmann/log4xx-1.x -y
     - name: Install dependencies
       run: |
         dnf install -y \
@@ -72,7 +66,8 @@ jobs:
             root-core root-io-xmlparser root-minuit2 root-spectrum root-genvector \
             vtk vtk-qt \
             boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel liburing-devel libxml2-devel log4cxx-devel \
-            ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
+            ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel \
+            libasan
     - name: Build code
       run: |
         if ${{ matrix.use_clang }}; then
@@ -81,10 +76,10 @@ jobs:
             export CC=/usr/bin/clang
             export CXX=/usr/bin/clang++
         fi
-        ./setup.sh
+        KASSIOPEIA_CUSTOM_CMAKE_ARGS="-DENABLE_SANITIZE_ADDRESSES=ON" ./setup.sh
       shell: bash
 
     - name: Launch environment and run tests
       run: |
-        source install/bin/kasperenv.sh && UnitTestKasper
+        source install/bin/kasperenv.sh && ASAN_OPTIONS=detect_leaks=0 UnitTestKasper
       shell: bash
