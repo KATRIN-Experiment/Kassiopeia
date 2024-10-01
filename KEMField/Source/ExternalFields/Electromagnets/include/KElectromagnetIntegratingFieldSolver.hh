@@ -49,7 +49,7 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
         {
             typename std::vector<Electromagnet*>::const_iterator it;
             for (it = fContainer.Vector<Electromagnet>().begin(); it != fContainer.Vector<Electromagnet>().end(); ++it)
-                fVectorPotential += fIntegrator.VectorPotential(*(*it), fP);
+                fVectorPotential = fIntegrator.VectorPotential(*(*it), fP);
         }
 
       private:
@@ -80,7 +80,7 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
         {
             typename std::vector<Electromagnet*>::const_iterator it;
             for (it = fContainer.Vector<Electromagnet>().begin(); it != fContainer.Vector<Electromagnet>().end(); ++it)
-                fMagneticField += fIntegrator.MagneticField(*(*it), fP);
+                fMagneticField = fIntegrator.MagneticField(*(*it), fP);
         }
 
       private:
