@@ -1427,15 +1427,9 @@ void KSIntCalculatorHydrogenIonisation::ExecuteInteraction(const KSParticle& anI
     fStepEnergyLoss = (tInitialKineticEnergy - tReducedFinalEnergy * BindingEnergy);
 
     // outgoing secondary
-
-    tTheta = acos(KRandom::GetInstance().Uniform(-1., 1.));
-    tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
-
-    tOrthogonalOne = tInitialDirection.Orthogonal();
-    tOrthogonalTwo = tInitialDirection.Cross(tOrthogonalOne);
-    tFinalDirection = tInitialDirection.Magnitude() *
-                      (sin(tTheta) * (cos(tPhi) * tOrthogonalOne.Unit() + sin(tPhi) * tOrthogonalTwo.Unit()) +
-                       cos(tTheta) * tInitialDirection.Unit());
+    //   energy:    initial energy - primary energy - binding energy
+    //   direction: use momentum conservation for free electron-electron scattering
+    tFinalDirection = tInitialDirection - tPrimaryDirection;
 
     KSParticle* tSecondary = KSParticleFactory::GetInstance().Create(11);
     (*tSecondary) = anInitialParticle;
