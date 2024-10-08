@@ -1429,11 +1429,11 @@ void KSIntCalculatorHydrogenIonisation::ExecuteInteraction(const KSParticle& anI
     // outgoing secondary
     //   energy:    initial energy - primary energy - binding energy
     //   direction: use momentum conservation for free electron-electron scattering
-    tFinalDirection = tInitialDirection - tPrimaryDirection;
+    KThreeVector tSecondaryDirection = tInitialDirection - aFinalParticle.GetMomentum();
 
     KSParticle* tSecondary = KSParticleFactory::GetInstance().Create(11);
     (*tSecondary) = anInitialParticle;
-    tSecondary->SetMomentum(tFinalDirection);
+    tSecondary->SetMomentum(tSecondaryDirection);
     tSecondary->SetKineticEnergy_eV((tReducedInitialEnergy - tReducedFinalEnergy - 1.) * BindingEnergy);
     tSecondary->SetLabel(GetName());
 
