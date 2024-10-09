@@ -2,6 +2,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <utility>
+#include "KStringUtils.h"
 
 using namespace std;
 
@@ -112,6 +113,10 @@ vector<KGSpace*> KGInterface::RetrieveSpaces()
 vector<KGSpace*> KGInterface::RetrieveSpaces(const string& aSpecifier)
 {
     coremsg_debug("retrieving spaces for <" << aSpecifier << ">..." << eom);
+
+    if (katrin::KStringUtils::StartsWith(aSpecifier, "@") == true){
+        coremsg(eWarning) << "Path definition is ambiguous <" << aSpecifier << ">. Please specify a distinct geometry path!" << eom;
+    }
 
     vector<KGSpace*> tAccumulator;
     RetrieveSpacesBySpecifier(tAccumulator, fRoot, aSpecifier);
