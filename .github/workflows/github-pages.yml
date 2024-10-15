@@ -10,6 +10,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    # Needed due to PEP 668 to install local packages
+    - name: Create and activate virtual Python environment
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        echo PATH=$PATH >> $GITHUB_ENV
+
     - name: Install dependencies
       run: pip install sphinx_rtd_theme sphinx_design m2r2 sphinx-simplepdf 
     
