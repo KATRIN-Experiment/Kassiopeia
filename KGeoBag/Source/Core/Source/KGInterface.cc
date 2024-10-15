@@ -179,6 +179,10 @@ void KGInterface::RetrieveSurfacesByPath(vector<KGSurface*>& anAccumulator, KGSp
 
     if (tNestPos == string::npos) {
         if (tHead.find_first_of(sTag) == 0) {
+            if (aNode == fRoot){
+                coremsg(eWarning) << "Path definition for surfaces just contains a tag, which can make it ambiguous: <" << aPath << ">. Please specify a distinct geometry path!" << eom;
+            }
+
             string tTag;
             int tRecursion;
 
@@ -310,6 +314,10 @@ void KGInterface::RetrieveSpacesByPath(vector<KGSpace*>& anAccumulator, KGSpace*
 
     if (tNestPos == string::npos) {
         if (tHead.find_first_of(sTag) == 0) {
+            if (aNode == fRoot){
+                coremsg(eWarning) << "Path definition for spaces just contains a tag, which can make it ambiguous: <" << aPath << ">. Please specify a distinct geometry path!" << eom;
+            }
+
             string tTag;
             int tRecursion;
 
