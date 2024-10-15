@@ -16,6 +16,11 @@ jobs:
         python -m venv .venv
         source .venv/bin/activate
         echo PATH=$PATH >> $GITHUB_ENV
+
+    # Needed since otherwise in the KATRIN repository this fails
+    # (the same does not fail in the main branch of a fork)
+    - name: Install/upgrade setuptools
+      run: pip install --upgrade setuptools
     
     - name: Workaround for issue in m2d2 (https://github.com/CrossNox/m2r2/issues/68)
       run: pip install "docutils>=0.18.1,<0.21"
