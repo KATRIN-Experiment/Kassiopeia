@@ -114,10 +114,6 @@ vector<KGSpace*> KGInterface::RetrieveSpaces(const string& aSpecifier)
 {
     coremsg_debug("retrieving spaces for <" << aSpecifier << ">..." << eom);
 
-    if (katrin::KStringUtils::StartsWith(aSpecifier, "@") == true){
-        coremsg(eWarning) << "Path definition is ambiguous <" << aSpecifier << ">. Please specify a distinct geometry path!" << eom;
-    }
-
     vector<KGSpace*> tAccumulator;
     RetrieveSpacesBySpecifier(tAccumulator, fRoot, aSpecifier);
 
@@ -151,6 +147,10 @@ void KGInterface::RetrieveSurfacesBySpecifier(vector<KGSurface*>& anAccumulator,
     vector<string> tPathList;
     boost::split(tPathList, aSpecifier, boost::is_any_of(sSeparator));
 
+    if (aSpecifier.find_first_of(sTag) == 0){
+        coremsg(eWarning) << "Path definition for surfaces just contains a tag, which can make it ambiguous: <" << aSpecifier << ">. Please specify a distinct geometry path!" << eom;
+    }
+
     coremsg_debug("  retrieving surfaces for specifier <" << aSpecifier << "> at <" << aNode->GetName() << ">" << eom);
 
     for (auto& tPath : tPathList) {
@@ -164,6 +164,10 @@ void KGInterface::RetrieveSpacesBySpecifier(vector<KGSpace*>& anAccumulator, KGS
 {
     vector<string> tPathList;
     boost::split(tPathList, aSpecifier, boost::is_any_of(sSeparator));
+
+    if (aSpecifier.find_first_of(sTag) == 0){
+        coremsg(eWarning) << "Path definition for spaces just contains a tag, which can make it ambiguous: <" << aSpecifier << ">. Please specify a distinct geometry path!" << eom;
+    }
 
     coremsg_debug("  retrieving spaces for specifier <" << aSpecifier << "> at <" << aNode->GetName() << ">" << eom);
 
