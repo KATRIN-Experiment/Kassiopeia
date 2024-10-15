@@ -146,10 +146,6 @@ void KGInterface::RetrieveSurfacesBySpecifier(vector<KGSurface*>& anAccumulator,
     vector<string> tPathList;
     boost::split(tPathList, aSpecifier, boost::is_any_of(sSeparator));
 
-    if (aSpecifier.find_first_of(sTag) == 0){
-        coremsg(eWarning) << "Path definition for surfaces just contains a tag, which can make it ambiguous: <" << aSpecifier << ">. Please specify a distinct geometry path!" << eom;
-    }
-
     coremsg_debug("  retrieving surfaces for specifier <" << aSpecifier << "> at <" << aNode->GetName() << ">" << eom);
 
     for (auto& tPath : tPathList) {
@@ -163,10 +159,6 @@ void KGInterface::RetrieveSpacesBySpecifier(vector<KGSpace*>& anAccumulator, KGS
 {
     vector<string> tPathList;
     boost::split(tPathList, aSpecifier, boost::is_any_of(sSeparator));
-
-    if (aSpecifier.find_first_of(sTag) == 0){
-        coremsg(eWarning) << "Path definition for spaces just contains a tag, which can make it ambiguous: <" << aSpecifier << ">. Please specify a distinct geometry path!" << eom;
-    }
 
     coremsg_debug("  retrieving spaces for specifier <" << aSpecifier << "> at <" << aNode->GetName() << ">" << eom);
 
@@ -187,6 +179,10 @@ void KGInterface::RetrieveSurfacesByPath(vector<KGSurface*>& anAccumulator, KGSp
 
     if (tNestPos == string::npos) {
         if (tHead.find_first_of(sTag) == 0) {
+            if (aNode == fRoot){
+                coremsg(eWarning) << "Path definition for surfaces just contains a tag, which can make it ambiguous: <" << aPath << ">. Please specify a distinct geometry path!" << eom;
+            }
+
             string tTag;
             int tRecursion;
 
@@ -318,6 +314,10 @@ void KGInterface::RetrieveSpacesByPath(vector<KGSpace*>& anAccumulator, KGSpace*
 
     if (tNestPos == string::npos) {
         if (tHead.find_first_of(sTag) == 0) {
+            if (aNode == fRoot){
+                coremsg(eWarning) << "Path definition for spaces just contains a tag, which can make it ambiguous: <" << aPath << ">. Please specify a distinct geometry path!" << eom;
+            }
+
             string tTag;
             int tRecursion;
 
