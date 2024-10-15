@@ -2,7 +2,6 @@
 
 #include <boost/algorithm/string.hpp>
 #include <utility>
-#include "KStringUtils.h"
 
 using namespace std;
 
