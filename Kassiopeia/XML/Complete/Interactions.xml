@@ -112,4 +112,33 @@
                         only H_2 is available at present and is used by default.
 	-->
 
+	<ksint_scattering name="int_scattering_mott" split="false">
+            <density_constant temperature="80" pressure_mbar="0.5e3"/>
+            <calculator_mott nucleus="He-4" theta_min="40" theta_max="140"/>
+    </ksint_scattering>
+	<!--
+     description:
+     this is the Mott scattering calculator. Only He-4 and Ne-20 nuclei have been implemented. To add any other 
+	 nucleus add Z and b values from Table 3 in [M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.]
+
+		elements:
+			density_constant:
+				builds a constant density.
+
+			calculator_mott:
+				builds a mott calculator
+
+				parameters:
+					nucleus:
+						set the nucleus name to scatter from either He-4 or Ne-20 nuclei.
+
+					theta_min:
+						set the minimum angle (in degrees) allowable to scatter into. 0 not allowed, because singularity in cross section.
+
+					theta_max:
+						set the maximum angle (in degrees) allowable to scatter into. 180 is the upper limit.
+
+	-->
+
+
 </kassiopeia>
