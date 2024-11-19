@@ -16,5 +16,5 @@ STATICINT sKSIntCalculatorMottStructure = KSIntCalculatorMottBuilder::Attribute<
                                               KSIntCalculatorMottBuilder::Attribute<std::string>("nucleus");
 
 STATICINT sToolboxKSIntCalculatorMott =
-    KSRootBuilder::ComplexElement<KSIntCalculatorMott>("ksint_calculator_mott");
+    KSRootBuilder::ComplexElement<KSIntCalculatorMott>("calculator_mott");
 }  // namespace katrin
