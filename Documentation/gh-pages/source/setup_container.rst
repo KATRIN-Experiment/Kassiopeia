@@ -46,7 +46,7 @@ You can download and name them the following way:
     docker pull ghcr.io/katrin-experiment/kassiopeia/full:main
 
     # Give the image a short name
-    docker tag kassiopeia_full ghcr.io/katrin-experiment/kassiopeia/full:main
+    docker tag ghcr.io/katrin-experiment/kassiopeia/full:main kassiopeia_full
 
 
 It is also possible to build the images yourself. That is described in section :ref:`building-the-docker-image`.
