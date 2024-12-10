@@ -86,17 +86,6 @@ string KSWriteASCII::Data::OutputObjectASCII::getValue()
     return s.str();
 }
 
-KSWriteASCII::Data::Data(KSComponent* aComponent) :
-    fLabel(""),
-    fType(""),
-    fWriter(),
-    fIndex(0),
-    fLength(0),
-    fComponents()
-{
-    MakeTitle(aComponent, 0);
-}
-
 KSWriteASCII::Data::Data(KSComponent* aComponent, KSWriteASCII* aWriter) :
     fLabel(""),
     fType(""),

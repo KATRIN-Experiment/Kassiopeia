@@ -16,7 +16,6 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
     class Data
     {
       public:
-        Data(KSComponent* aComponent);
         Data(KSComponent* aComponent, KSWriteASCII* aWriter);
         ~Data();
 
