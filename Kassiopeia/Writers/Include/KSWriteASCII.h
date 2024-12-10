@@ -31,7 +31,7 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
         unsigned int fIndex;
         unsigned int fLength;
 
-        class Objekt
+        class OutputObjectASCII
         {
           private:
             KSComponent* fComponent;
@@ -39,13 +39,13 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
             int fPrecision;
 
           public:
-            Objekt(KSComponent* aComponent, std::string aType, int Precision);
-            ~Objekt();
+            OutputObjectASCII(KSComponent* aComponent, std::string aType, int Precision);
+            ~OutputObjectASCII();
             std::string getValue();
         };
 
         std::vector<KSComponent*> fComponents;
-        std::vector<Objekt*> fObjekts;
+        std::vector<OutputObjectASCII*> fOutputObjectASCIIs;
     };
 
     using KSComponentMap = std::map<KSComponent*, Data*>;

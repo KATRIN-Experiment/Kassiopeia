@@ -29,14 +29,14 @@ const int KSWriteASCII::fBufferSize = 64000;
 const int KSWriteASCII::fSplitLevel = 99;
 const string KSWriteASCII::fLabel = string("KASSIOPEIA_TREE_DATA");
 
-KSWriteASCII::Data::Objekt::Objekt(KSComponent* aComponent, string aType, int aPrecision)
+KSWriteASCII::Data::OutputObjectASCII::OutputObjectASCII(KSComponent* aComponent, string aType, int aPrecision)
 {
     fComponent = aComponent;
     fType = aType;
     fPrecision = aPrecision;
 }
 
-string KSWriteASCII::Data::Objekt::getValue()
+string KSWriteASCII::Data::OutputObjectASCII::getValue()
 {
     stringstream s;
     s << std::setprecision(fPrecision);
@@ -120,7 +120,7 @@ void KSWriteASCII::Data::Start(const unsigned int& anIndex)
 void KSWriteASCII::Data::Fill()
 {
     KSComponent* tComponent;
-    Objekt* tObjekt;
+    OutputObjectASCII* tOutputObjectASCII;
     vector<KSComponent*>::iterator tIt;
 
     for (tIt = fComponents.begin(); tIt != fComponents.end(); ++tIt) {
@@ -129,9 +129,9 @@ void KSWriteASCII::Data::Fill()
     }
 
     string str;
-    for (auto& objekt : fObjekts) {
-        tObjekt = objekt;
-        str = tObjekt->getValue();
+    for (auto& outputObjectASCII : fOutputObjectASCIIs) {
+        tOutputObjectASCII = outputObjectASCII;
+        str = tOutputObjectASCII->getValue();
 
         for (char& it : str)
             fWriter->TextFile()->File()->put(it);
@@ -168,8 +168,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "string", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "string", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
 
@@ -185,8 +185,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "KTwoVector", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "KTwoVector", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -201,8 +201,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "KThreeVector", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "KThreeVector", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -218,8 +218,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "KTwoMatrix", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "KTwoMatrix", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -235,8 +235,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "KThreeMatrix", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "KThreeMatrix", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -251,8 +251,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "bool", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "bool", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -267,8 +267,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "unsigned char", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "unsigned char", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -283,8 +283,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "char", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "char", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -299,8 +299,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "unsigned short", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "unsigned short", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -315,8 +315,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "short", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "short", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -331,8 +331,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "unsigned int", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "unsigned int", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -347,8 +347,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "int", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "int", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -363,8 +363,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "unsigned long", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "unsigned long", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -379,8 +379,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "long", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "long", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -395,8 +395,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "long_long", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "long_long", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -411,8 +411,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "float", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "float", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
@@ -427,8 +427,8 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
             fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            auto* obj = new Objekt(aComponent, "double", fWriter->Precision());
-            fObjekts.push_back(obj);
+            auto* obj = new OutputObjectASCII(aComponent, "double", fWriter->Precision());
+            fOutputObjectASCIIs.push_back(obj);
             fComponents.push_back(aComponent);
         }
         return;
