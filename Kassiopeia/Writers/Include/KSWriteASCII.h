@@ -20,8 +20,9 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
         ~Data();
 
         void Start(const unsigned int& anIndex);
-        void Fill();
+        std::string ValuesAsString();
         void MakeTitle(KSComponent* aComponent, int aTrack);
+
 
       private:
         std::string fLabel;
@@ -65,6 +66,7 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
     void SetPrecision(const unsigned int& aValue);
 
     katrin::KTextFile* TextFile();
+    void Write(std::string str);
     int Precision() const;
 
   protected:
@@ -162,6 +164,12 @@ inline void KSWriteASCII::SetPrecision(const unsigned int& aValue)
 inline katrin::KTextFile* KSWriteASCII::TextFile()
 {
     return fTextFile;
+}
+    
+inline void KSWriteASCII::Write(std::string str)
+{
+    for (char& it : str)
+        fTextFile->File()->put(it);
 }
 
 inline int KSWriteASCII::Precision() const

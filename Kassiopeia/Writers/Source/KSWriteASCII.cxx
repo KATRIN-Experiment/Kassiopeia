@@ -106,24 +106,19 @@ void KSWriteASCII::Data::Start(const unsigned int& anIndex)
     return;
 }
 
-void KSWriteASCII::Data::Fill()
+std::string KSWriteASCII::Data::ValuesAsString()
 {
     KSComponent* tComponent;
-    OutputObjectASCII* tOutputObjectASCII;
     vector<KSComponent*>::iterator tIt;
+    string result;
 
     for (tIt = fComponents.begin(); tIt != fComponents.end(); ++tIt) {
         tComponent = (*tIt);
         tComponent->PullUpdate();
     }
 
-    string str;
-    for (auto& outputObjectASCII : fOutputObjectASCIIs) {
-        tOutputObjectASCII = outputObjectASCII;
-        str = tOutputObjectASCII->getValue();
-
-        for (char& it : str)
-            fWriter->TextFile()->File()->put(it);
+    for (OutputObjectASCII*& outputObjectASCII : fOutputObjectASCIIs) {
+        result += outputObjectASCII->getValue();
     }
 
     for (tIt = fComponents.begin(); tIt != fComponents.end(); ++tIt) {
@@ -132,7 +127,7 @@ void KSWriteASCII::Data::Fill()
     }
 
     fLength++;
-    return;
+    return result;
 }
 
 void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
@@ -520,7 +515,7 @@ void KSWriteASCII::ExecuteRun()
         fRunLastStepIndex = fStepIndex - 1;
 
     for (auto& activeRunComponent : fActiveRunComponents)
-        activeRunComponent.second->Fill();
+        Write(activeRunComponent.second->ValuesAsString());
 
     fRunIndex++;
     fRunFirstEventIndex = fEventIndex;
@@ -541,7 +536,7 @@ void KSWriteASCII::ExecuteEvent()
         fEventLastStepIndex = fStepIndex - 1;
 
     for (auto& activeEventComponent : fActiveEventComponents)
-        activeEventComponent.second->Fill();
+        Write(activeEventComponent.second->ValuesAsString());
 
     fEventIndex++;
     fEventFirstTrackIndex = fTrackIndex;
@@ -558,7 +553,7 @@ void KSWriteASCII::ExecuteTrack()
 
     fTextFile->File()->put('\n');
     for (auto& activeTrackComponent : fActiveTrackComponents)
-        activeTrackComponent.second->Fill();
+        Write(activeTrackComponent.second->ValuesAsString());
 
     wtrmsg(eNormal) << "ASCII output was written to file <" << fTextFile->GetName() << ">" << eom;
     fTextFile->Close();
@@ -603,7 +598,7 @@ void KSWriteASCII::ExecuteStep()
         wtrmsg_debug("ASCII writer <" << GetName() << "> is filling a step" << eom);
 
         for (auto& activeStepComponent : fActiveStepComponents)
-            activeStepComponent.second->Fill();
+            Write(activeStepComponent.second->ValuesAsString());
     }
 
     fStepIndex++;
