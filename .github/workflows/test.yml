@@ -51,12 +51,12 @@ jobs:
         source root/bin/thisroot.sh && source install/bin/kasperenv.sh && ASAN_OPTIONS=detect_leaks=0 UnitTestKasper
       shell: bash
 
-  fedora_40:
+  fedora_41:
     strategy:
       matrix:
         use_clang: [false] # FIXME add "true" after solving https://github.com/KATRIN-Experiment/Kassiopeia/issues/87 
     runs-on: ubuntu-latest
-    container: fedora:40
+    container: fedora:41
     steps:
     - uses: actions/checkout@v3
     - name: Install dependencies
