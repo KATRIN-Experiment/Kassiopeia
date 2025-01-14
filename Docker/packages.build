@@ -10,6 +10,7 @@ boost-devel
 hdf5-devel
 liburing-devel
 vtk-devel
+json-devel
 ocl-icd-devel
 log4cxx-devel
 openmpi-devel
