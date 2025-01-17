@@ -16,8 +16,8 @@ log4cxx
 ocl-icd
 openmpi
 
-root-core
-root-genvector
+root-core:6.32.06-1.fc41
+root-genvector:6.32.06-1.fc41
 liburing
 
 git

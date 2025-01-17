@@ -6,10 +6,9 @@ htop
 diffutils
 paraview
 
-root
-root-notebook
-python3-root
-python3-jupyroot
+root:6.32.06-1.fc41
+python3-root:6.32.06-1.fc41
+python3-jupyroot:6.32.06-1.fc41
 root-graf-gpadv7
 
 tigervnc-server
