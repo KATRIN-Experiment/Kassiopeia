@@ -205,6 +205,7 @@ if(NOT DEFINED KASPER_USE_VTK)
     find_package(GLEW QUIET)
     find_package(Freetype QUIET)
     find_package(JsonCpp QUIET)
+    find_package(nlohmann_json QUIET) # Workaround for https://gitlab.kitware.com/vtk/vtk/-/issues/19588
     if(VTK_FOUND)
         message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this.")
     endif()
@@ -214,6 +215,7 @@ elseif(KASPER_USE_VTK)
     find_package(GLEW QUIET)
     find_package(Freetype QUIET)
     find_package(JsonCpp QUIET)
+    find_package(nlohmann_json QUIET) # Workaround for https://gitlab.kitware.com/vtk/vtk/-/issues/19588
 endif()
 option( KASPER_USE_VTK "Build VTK dependent modules" ${VTK_FOUND} )
 
