@@ -16,22 +16,22 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
     class Data
     {
       public:
-        Data(KSComponent* aComponent);
-        Data(KSComponent* aComponent, KSWriteASCII* aWriter);
+        Data(KSComponent* aComponent, int aPrecision);
         ~Data();
 
+        void Initialize(KSComponent* aComponent, int aPrecision);
         void Start(const unsigned int& anIndex);
-        void Fill();
-        void MakeTitle(KSComponent* aComponent, int aTrack);
+        std::string ValuesAsString();
+        std::string Label();
+
 
       private:
         std::string fLabel;
         std::string fType;
-        KSWriteASCII* fWriter;
         unsigned int fIndex;
         unsigned int fLength;
 
-        class Objekt
+        class OutputObjectASCII
         {
           private:
             KSComponent* fComponent;
@@ -39,13 +39,13 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
             int fPrecision;
 
           public:
-            Objekt(KSComponent* aComponent, std::string aType, int Precision);
-            ~Objekt();
+            OutputObjectASCII(KSComponent* aComponent, std::string aType, int Precision);
+            ~OutputObjectASCII();
             std::string getValue();
         };
 
         std::vector<KSComponent*> fComponents;
-        std::vector<Objekt*> fObjekts;
+        std::vector<OutputObjectASCII*> fOutputObjectASCIIs;
     };
 
     using KSComponentMap = std::map<KSComponent*, Data*>;
@@ -66,10 +66,12 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
     void SetPrecision(const unsigned int& aValue);
 
     katrin::KTextFile* TextFile();
+    void Write(std::string str);
+    void Write(char c);
     int Precision() const;
 
   protected:
-    katrin::KTextFile* MakeOutputFile(int anIndex) const;
+    void MakeOutputFile(int anIndex);
 
   private:
     std::string fBase;
@@ -162,12 +164,31 @@ inline void KSWriteASCII::SetPrecision(const unsigned int& aValue)
 
 inline katrin::KTextFile* KSWriteASCII::TextFile()
 {
+    if (!fTextFile)
+        MakeOutputFile(fTrackIndex);
+    
     return fTextFile;
+}
+    
+inline void KSWriteASCII::Write(std::string str)
+{
+    for (char& it : str)
+        TextFile()->File()->put(it);
+}
+    
+inline void KSWriteASCII::Write(char c)
+{
+    TextFile()->File()->put(c);
 }
 
 inline int KSWriteASCII::Precision() const
 {
     return fPrecision;
+}
+    
+inline std::string KSWriteASCII::Data::Label()
+{
+    return fLabel;
 }
 
 }  // namespace Kassiopeia
