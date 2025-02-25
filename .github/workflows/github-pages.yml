@@ -33,7 +33,7 @@ jobs:
       run: cd Documentation/gh-pages && make github
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v4
+      uses: actions/upload-pages-artifact@v3
       with:
         path: 'Documentation/gh-pages/docs'
 
