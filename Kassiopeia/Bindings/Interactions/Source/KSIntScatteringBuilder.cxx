@@ -5,6 +5,7 @@
 #include "KSIntCalculatorHydrogenBuilder.h"
 #include "KSIntCalculatorIonBuilder.h"
 #include "KSIntCalculatorKESSBuilder.h"
+#include "KSIntCalculatorMottBuilder.h"
 #include "KSIntDensityConstantBuilder.h"
 #include "KSRootBuilder.h"
 
@@ -32,5 +33,6 @@ STATICINT sKSIntScatteringStructure =
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorHydrogenSet>("calculator_hydrogen") +
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorIon>("calculator_ion") +
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorArgonSet>("calculator_argon") +
-    KSIntScatteringBuilder::ComplexElement<KSIntCalculatorKESSSet>("calculator_kess");
+    KSIntScatteringBuilder::ComplexElement<KSIntCalculatorKESSSet>("calculator_kess") +
+    KSIntScatteringBuilder::ComplexElement<KSIntCalculatorMott>("calculator_mott");
 }  // namespace katrin
