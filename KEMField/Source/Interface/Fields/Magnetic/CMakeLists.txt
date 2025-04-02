@@ -40,7 +40,7 @@ endforeach( BASENAME )
 add_library( KEMFieldsMagnetic SHARED
     ${FIELDS_MAGNETIC_SOURCE_FILENAMES} ${FIELDS_MAGNETIC_HEADER_FILENAMES} )
 #set_target_properties( KEMFieldsMagnetic PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
-
+    
 target_include_directories(KEMFieldsMagnetic
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KEMFieldsMagnetic
@@ -51,6 +51,7 @@ target_link_libraries( KEMFieldsMagnetic
         KEMFieldExceptions
         KEMFileManipulation
         KEMMagneticFieldSolvers
+        KEMFieldMagneticChargeDensitySolvers                
         KEMZHSolver
 )
 
