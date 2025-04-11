@@ -14,7 +14,7 @@ STATICINT sKSGenValueAngleCosineStructure = KSGenValueAngleCosineBuilder::Attrib
                                             KSGenValueAngleCosineBuilder::Attribute<std::string>("mode") +
                                             KSGenValueAngleCosineBuilder::Attribute<double>("angle_min") +
                                             KSGenValueAngleCosineBuilder::Attribute<double>("angle_max") +
-                                            KSGenValueAngleCosineBuilder::Attribute<double>("direction");
+                                            KSGenValueAngleCosineBuilder::Attribute<std::string>("direction");
 
 STATICINT sToolboxKSGenValueAngleCosine =
     KSRootBuilder::ComplexElement<KSGenValueAngleCosine>("ksgen_value_angle_cosine");
