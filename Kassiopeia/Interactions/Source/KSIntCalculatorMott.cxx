@@ -130,7 +130,7 @@ double KSIntCalculatorMott::GetEnergyLoss(const double& anEnergy, const double& 
 
     p = sqrt(anEnergy * (anEnergy + 2 * me * pow(katrin::KConst::C(), 2))) / katrin::KConst::C();
 
-    anELoss = 2 * pow(p, 2) * M / (pow(me, 2) + pow(M, 2) + 2 * M * sqrt( pow((p/katrin::KConst::C()), 2) + pow(me, 2))) * (1 - cos(aTheta * katrin::KConst::Pi() / 180));
+    anELoss = pow(p, 2) * M / (pow(me, 2) + pow(M, 2) + 2 * M * sqrt( pow((p/katrin::KConst::C()), 2) + pow(me, 2))) * (1 - cos(aTheta * katrin::KConst::Pi() / 180));
 
     return anELoss;
 }
