@@ -34,6 +34,10 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
         aContainer->CopyTo(fObject, &KSGenValueAngleCosine::SetAngleMax);
         return true;
     }
+    if (aContainer->GetName() == "direction") {
+        aContainer->CopyTo(fObject, &KSGenValueAngleCosine::SetDirection);
+        return true;
+    }
     return false;
 }
 

@@ -13,7 +13,8 @@ template<> KSGenValueAngleCosineBuilder::~KComplexElement() = default;
 STATICINT sKSGenValueAngleCosineStructure = KSGenValueAngleCosineBuilder::Attribute<std::string>("name") +
                                             KSGenValueAngleCosineBuilder::Attribute<std::string>("mode") +
                                             KSGenValueAngleCosineBuilder::Attribute<double>("angle_min") +
-                                            KSGenValueAngleCosineBuilder::Attribute<double>("angle_max");
+                                            KSGenValueAngleCosineBuilder::Attribute<double>("angle_max") +
+                                            KSGenValueAngleCosineBuilder::Attribute<double>("direction");
 
 STATICINT sToolboxKSGenValueAngleCosine =
     KSRootBuilder::ComplexElement<KSGenValueAngleCosine>("ksgen_value_angle_cosine");
