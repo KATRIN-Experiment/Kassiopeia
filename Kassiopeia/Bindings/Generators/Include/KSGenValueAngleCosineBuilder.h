@@ -25,8 +25,8 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
         else if (KStringUtils::IContains(tok, "clas"))
             fObject->SetMode(KSGenValueAngleCosine::EDistributionMode::Classic);
         else {
-            objctmsg(eError) << "ksgen_value_angle_cosine: invalid mode <" << tok << ">"
-                             << "ksgen_value_angle_cosine: valid modes are <molecular_flow> or <classic>" << eom;
+            objctmsg(eError) << "ksgen_value_angle_cosine: invalid mode <" << tok << ">" << "\n"
+                             << "ksgen_value_angle_cosine: Valid modes are <molecular_flow> or <classic>" << eom;
             return false;
         }
         return true;
@@ -46,7 +46,7 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
         else if (KStringUtils::IContains(tok, "back"))
             fObject->SetDirection(KSGenValueAngleCosine::EDirection::Backward);
         else {
-            objctmsg(eError) << "ksgen_value_angle_cosine: invalid direction <" << tok << ">"
+            objctmsg(eError) << "ksgen_value_angle_cosine: invalid direction <" << tok << ">" << "\n"
                              << "ksgen_value_angle_cosine: valid directions are <forward> or <backward>" << eom;
             return false;
         }
