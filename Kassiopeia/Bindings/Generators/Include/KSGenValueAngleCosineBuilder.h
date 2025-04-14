@@ -20,13 +20,13 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
     }
     if (aContainer->GetName() == "mode") {
         const std::string& tok = aContainer->AsReference<std::string>();
-        if (KBaseStringUtils::IEquals(tok, "molecular"))
+        if (KStringUtils::IContains(tok, "mol"))
             fObject->SetMode(KSGenValueAngleCosine::EDistributionMode::MolecularFlow);
-        else if (KBaseStringUtils::IEquals(tok, "classic"))
+        else if (KStringUtils::IContains(tok, "clas"))
             fObject->SetMode(KSGenValueAngleCosine::EDistributionMode::Classic);
         else {
             objctmsg(eError) << "ksgen_value_angle_cosine: invalid mode <" << tok << ">" << "\n"
-                             << "ksgen_value_angle_cosine: Valid modes are <molecular> or <classic>" << eom;
+                             << "ksgen_value_angle_cosine: Valid modes are <molecular_flow> or <classic>" << eom;
             return false;
         }
         return true;
@@ -41,9 +41,9 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
     }
     if (aContainer->GetName() == "direction") {
         const std::string& tok = aContainer->AsReference<std::string>();
-        if (KBaseStringUtils::IEquals(tok, "forward"))
+        if (KStringUtils::IContains(tok, "for"))
             fObject->SetDirection(KSGenValueAngleCosine::EDirection::Forward);
-        else if (KBaseStringUtils::IEquals(tok, "backward"))
+        else if (KStringUtils::IContains(tok, "back"))
             fObject->SetDirection(KSGenValueAngleCosine::EDirection::Backward);
         else {
             objctmsg(eError) << "ksgen_value_angle_cosine: invalid direction <" << tok << ">" << "\n"
