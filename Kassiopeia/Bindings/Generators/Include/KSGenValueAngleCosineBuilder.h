@@ -27,7 +27,7 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
         else {
             objctmsg(eError) << "ksgen_value_angle_cosine: invalid mode <" << tok << ">" << "\n"
                              << "ksgen_value_angle_cosine: Valid modes are <molecular_flow> or <classic> \n"
-                             << "This error message was added 04/2025. Before, the default classic was used" << eom;
+                             << "This error message was added 04/2025. Before, this configuration corresponded to <classic>." << eom;
             return false;
         }
         return true;
