@@ -26,7 +26,8 @@ template<> inline bool KSGenValueAngleCosineBuilder::AddAttribute(KContainer* aC
             fObject->SetMode(KSGenValueAngleCosine::EDistributionMode::Classic);
         else {
             objctmsg(eError) << "ksgen_value_angle_cosine: invalid mode <" << tok << ">" << "\n"
-                             << "ksgen_value_angle_cosine: Valid modes are <molecular_flow> or <classic>" << eom;
+                             << "ksgen_value_angle_cosine: Valid modes are <molecular_flow> or <classic> \n"
+                             << "This error message was added 04/2025. Before, the default classic was used" << eom;
             return false;
         }
         return true;
