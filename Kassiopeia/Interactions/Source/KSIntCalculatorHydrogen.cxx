@@ -1427,19 +1427,13 @@ void KSIntCalculatorHydrogenIonisation::ExecuteInteraction(const KSParticle& anI
     fStepEnergyLoss = (tInitialKineticEnergy - tReducedFinalEnergy * BindingEnergy);
 
     // outgoing secondary
-
-    tTheta = acos(KRandom::GetInstance().Uniform(-1., 1.));
-    tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
-
-    tOrthogonalOne = tInitialDirection.Orthogonal();
-    tOrthogonalTwo = tInitialDirection.Cross(tOrthogonalOne);
-    tFinalDirection = tInitialDirection.Magnitude() *
-                      (sin(tTheta) * (cos(tPhi) * tOrthogonalOne.Unit() + sin(tPhi) * tOrthogonalTwo.Unit()) +
-                       cos(tTheta) * tInitialDirection.Unit());
+    //   energy:    initial energy - primary energy - binding energy
+    //   direction: use momentum conservation for free electron-electron scattering
+    KThreeVector tSecondaryDirection = tInitialDirection - aFinalParticle.GetMomentum();
 
     KSParticle* tSecondary = KSParticleFactory::GetInstance().Create(11);
     (*tSecondary) = anInitialParticle;
-    tSecondary->SetMomentum(tFinalDirection);
+    tSecondary->SetMomentum(tSecondaryDirection);
     tSecondary->SetKineticEnergy_eV((tReducedInitialEnergy - tReducedFinalEnergy - 1.) * BindingEnergy);
     tSecondary->SetLabel(GetName());
 
@@ -1451,33 +1445,61 @@ void KSIntCalculatorHydrogenIonisation::ExecuteInteraction(const KSParticle& anI
 void KSIntCalculatorHydrogenIonisation::CalculateFinalEnergy(const double aReducedInitalEnergy,
                                                              double& aReducedFinalEnergy)
 {
+
+    // Get final energy of primary electron after ionization scattering via 
+    // rejection sampling from the SDCS with a custom powerlaw proposal distribution:
+    // pdf(e) = 2*sigma_min*1/(e+1)^2.5, where sigma_min = SCDS(eMin)
+    // (compatible with shape of Rudd 1991 SDCS parametrization).
+    // Proposal samples are generated through inverse transform sampling.
+    
+    // local output variable
     double tReducedFinalEnergy;
-    double tCrossSection = 0;
 
+    // relevant energy values
+    //double e_max = (aReducedInitalEnergy-(1+1e-12));
+    double e_hlf = (aReducedInitalEnergy-1.)/2.;
+    //double e_min = (0+1e-12);
+    
+    // value of SDCS at those values
+    //double sigma_max; CalculateEnergyDifferentialCrossSection(aReducedInitalEnergy, aReducedInitalEnergy-(1.+1e-12), sigma_max);
+    //double sigma_hlf; CalculateEnergyDifferentialCrossSection(aReducedInitalEnergy, (aReducedInitalEnergy-1.)/2., sigma_hlf);
+    double sigma_min; CalculateEnergyDifferentialCrossSection(aReducedInitalEnergy, 0.+1e-12, sigma_min);
 
-    double sigma_max;
-    CalculateEnergyDifferentialCrossSection(aReducedInitalEnergy, aReducedInitalEnergy - 1.01, sigma_max);
+    // normalization factor for ppf
+    double norm  = (2./3.*(1-1/pow((e_hlf+1), 3./2.)));
+    
+    // pdf of proposal distribution defined on e in [e_min,e_hlf]
+    auto _pdf = [=] (double e) { return 2*sigma_min*1/pow((e+1.),2.5); };
 
-    double sigma_min;
-    CalculateEnergyDifferentialCrossSection(aReducedInitalEnergy, (aReducedInitalEnergy - 1) / 2, sigma_min);
+    // ppf of proposal distribution defined on u in [0,1]
+    auto _ppf = [=] (double u) { return (pow(2.,(2./3.))-pow((2.-3.*u*norm),(2./3.)))/(pow((2.-3.*u*norm),(2./3.))); };
 
+    // generate only energies below minimum at e_hlf, i.e. energy of secondary
+    // later exploit symmetry around e_hlf to get energy of primary electron
+    // maximal u value (ppf(u_max) = e_hlf)
+    double u_max = (2./3.)*(1-1/pow((e_hlf+1),(3./2.)))/norm;
+    
+    // variable that stores cross section at tried sample
+    double tCrossSection = 0.;
+    
     while (true) {
-        tReducedFinalEnergy =
-            KRandom::GetInstance().Uniform((aReducedInitalEnergy - 1.) / 2., aReducedInitalEnergy - 1., false, true);
-
+        // sample energy from proposal distribution
+        double tUniform = KRandom::GetInstance().Uniform(0., u_max, false, true);
+        tReducedFinalEnergy = _ppf(tUniform);
+        
+        // get uniform random number between 0 and proposal pdf at sample energy
+        double tRandom = KRandom::GetInstance().Uniform(0., _pdf(tReducedFinalEnergy), false, true);
+        
+        // get value of target pdf for sample energy
         CalculateEnergyDifferentialCrossSection(aReducedInitalEnergy, tReducedFinalEnergy, tCrossSection);
-
-        double tRandom = KRandom::GetInstance().Uniform(0.,
-                                                        2. * (sigma_max - sigma_min) / (aReducedInitalEnergy - 1.) *
-                                                            (tReducedFinalEnergy - (aReducedInitalEnergy - 1.) / 2.),
-                                                        false,
-                                                        true);
-
+        
+        // accept or reject
         if (tRandom < tCrossSection)
             break;
     }
-
-    aReducedFinalEnergy = tReducedFinalEnergy;
+    
+    // convert to energy of primary by subtracting binding energy and secondary energy from input
+    aReducedFinalEnergy = aReducedInitalEnergy-1.-tReducedFinalEnergy;
 }
 
 void KSIntCalculatorHydrogenIonisation::CalculateTheta(const double aReducedInitialEnergy,
