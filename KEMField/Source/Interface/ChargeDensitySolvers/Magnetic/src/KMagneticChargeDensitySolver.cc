@@ -25,6 +25,10 @@ using namespace std;
 
 namespace KEMField
 {
+    bool KMagneticChargeDensitySolver::FindSolution()
+    {
+        return true;
+    }
 
 
 }  // namespace KEMField

@@ -4,6 +4,8 @@
 # header files
 set( CHARGEDENSITYSOLVER_MAGNETIC_HEADER_BASENAMES
     KMagneticChargeDensitySolver.hh
+    KCachedMagneticChargeDensitySolver.hh
+    KBiotSavartChargeDensitySolver.hh
 )
 
 set( CHARGEDENSITYSOLVER_MAGNETIC_HEADER_PATH
@@ -17,6 +19,8 @@ endforeach( BASENAME )
 # source files
 set( CHARGEDENSITYSOLVER_MAGNETIC_SOURCE_BASENAMES
     KMagneticChargeDensitySolver.cc
+    KCachedMagneticChargeDensitySolver.cc    
+    KBiotSavartChargeDensitySolver.cc
 )
 
 set( CHARGEDENSITYSOLVER_MAGNETIC_SOURCE_PATH

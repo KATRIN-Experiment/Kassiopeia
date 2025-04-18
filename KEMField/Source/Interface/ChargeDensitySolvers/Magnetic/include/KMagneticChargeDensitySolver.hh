@@ -28,10 +28,8 @@ class KMagneticChargeDensitySolver
         }
     }
 
-    void SetHashProperties(unsigned int maskedBits, double hashThreshold);
-
   protected:
-    virtual bool FindSolution(double threshold, KSurfaceContainer& container);
+    virtual bool FindSolution();
     void SaveSolution(double threshold, KSurfaceContainer& container) const;
 
   private:

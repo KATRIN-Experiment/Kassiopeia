@@ -1,8 +1,8 @@
 /*
  * KBiotSavartChargeDensitySolver.cc
  *
- *  Created on: 12 Aug 2015
- *      Author: wolfgang
+ *  Created on: 18 Apr 2025
+ *      Author: pslocum
  */
 
 #include "KBiotSavartChargeDensitySolver.hh"
@@ -21,7 +21,7 @@ KBiotSavartChargeDensitySolver::~KBiotSavartChargeDensitySolver() = default;
 void KBiotSavartChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
     if (container.empty()) {
-        kem_cout(eError) << "ERROR: Krylov solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+        kem_cout(eError) << "ERROR: Biot Savart solver container is empty (did you forget to set up the geometry?)" << eom;
     }
 }
 
