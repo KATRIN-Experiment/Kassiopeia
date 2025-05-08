@@ -3,6 +3,7 @@
 
 set (KGEOBAGINTERFACE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KGElectrostaticBoundaryField.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KGMagnetostaticBoundaryField.hh    
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KGBEM.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KGBEMConverter.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KGElectromagnet.hh
@@ -12,6 +13,7 @@ set (KGEOBAGINTERFACE_HEADERFILES
 
 set (KGEOBAGINTERFACE_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KGElectrostaticBoundaryField.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/KGMagnetostaticBoundaryField.cc    
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KGBEM.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KGBEMConverter.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KGElectromagnet.cc
