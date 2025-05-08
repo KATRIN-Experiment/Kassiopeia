@@ -4,6 +4,7 @@
 # header files
 set( FIELDSOLVER_MAGNETIC_HEADER_BASENAMES
     KMagneticFieldSolver.hh
+    KMagneticFFTMFieldSolver.hh
     KIntegratingMagnetostaticFieldSolver.hh
     KZonalHarmonicMagnetostaticFieldSolver.hh
     KMagfieldCoilsFieldSolver.hh
