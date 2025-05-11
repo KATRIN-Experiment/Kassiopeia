@@ -6,7 +6,6 @@ set (FIELDS_MAGNETIC_HEADER_BASENAMES
     KMagneticField.hh
     KStaticElectromagnetField.hh
     KMagnetostaticField.hh
-    KMagnetostaticBoundaryField.hh    
     KMagnetostaticConstantField.hh
     KMagneticDipoleField.hh
     KMagneticSuperpositionField.hh
@@ -25,7 +24,6 @@ endforeach( BASENAME )
 set( FIELDS_MAGNETIC_SOURCE_BASENAMES
     KStaticElectromagnetField.cc
     KMagneticDipoleField.cc
-    KMagnetostaticBoundaryField.cc        
     KMagnetostaticConstantField.cc
     KMagneticSuperpositionField.cc
     KRampedMagneticField.cc
