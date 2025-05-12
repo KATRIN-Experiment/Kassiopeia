@@ -18,10 +18,17 @@ KBiotSavartChargeDensitySolver::KBiotSavartChargeDensitySolver()
 
 KBiotSavartChargeDensitySolver::~KBiotSavartChargeDensitySolver() = default;
 
-void KBiotSavartChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
+    void KBiotSavartChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
+    {
+        if (container.empty()) {
+            kem_cout(eError) << "ERROR: Biot Savart solver container is empty (did you forget to set up the geometry?)" << eom;
+        }
+    }
+
+void KBiotSavartChargeDensitySolver::ComputeSolution(KSurfaceContainer& container)
 {
     if (container.empty()) {
-        kem_cout(eError) << "ERROR: Biot Savart solver container is empty (did you forget to set up the geometry?)" << eom;
+        kem_cout(eError) << "ERROR: Solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
     }
 }
 

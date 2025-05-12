@@ -25,8 +25,16 @@ using namespace std;
 
 namespace KEMField
 {
-    bool KMagneticChargeDensitySolver::FindSolution()
+    bool KMagneticChargeDensitySolver::FindSolution(double threshold, KSurfaceContainer& container)
     {
+        if (container.empty())
+        {
+            kem_cout(eError) << "ERROR: Solver got no electrode elements (did you forget to setup a geometry mesh?)" << eom;
+        }
+        if (threshold < 0.)
+        {
+            kem_cout(eError) << "ERROR: Threshold is < 0.)" << eom;            
+		}        
         return true;
     }
 

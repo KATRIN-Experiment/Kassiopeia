@@ -28,13 +28,17 @@ class KMagneticChargeDensitySolver
         }
     }
 
+    void SetHashProperties(unsigned int maskedBits, double hashThreshold);
+
   protected:
-    virtual bool FindSolution();
+    virtual bool FindSolution(double threshold, KSurfaceContainer& container);
     void SaveSolution(double threshold, KSurfaceContainer& container) const;
 
   private:
     virtual void InitializeCore(KSurfaceContainer& container) = 0;
 
+    unsigned int fHashMaskedBits;
+    double fHashThreshold;
     bool fInitialized;
 };
 

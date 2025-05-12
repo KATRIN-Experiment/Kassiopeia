@@ -23,8 +23,8 @@ class KBiotSavartChargeDensitySolver : public KMagneticChargeDensitySolver
     ~KBiotSavartChargeDensitySolver() override;
 
   private:
-
     void InitializeCore(KSurfaceContainer& container) override;
+    void ComputeSolution(KSurfaceContainer& container);
 
 
 
