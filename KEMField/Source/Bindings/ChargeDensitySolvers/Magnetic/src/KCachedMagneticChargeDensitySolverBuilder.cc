@@ -10,7 +10,7 @@
 
 #include "KCachedMagneticChargeDensitySolverBuilder.hh"
 
-//#include "KElectrostaticBoundaryFieldBuilder.hh"
+#include "KElectrostaticBoundaryFieldBuilder.hh"
 
 using namespace KEMField;
 
