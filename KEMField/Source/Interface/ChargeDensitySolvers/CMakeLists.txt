@@ -16,9 +16,8 @@ set( CHARGEDENSITYSOLVER_ELECTRIC_HEADER_BASENAMES
 )
 
 set( CHARGEDENSITYSOLVER_MAGNETIC_HEADER_BASENAMES
-    KMagneticChargeDensitySolver.hh
     KCachedMagneticChargeDensitySolver.hh
-    KBiotSavartChargeDensitySolver.hh    
+    KBiotSavartChargeDensitySolver.hh        
 )
 
 set( CHARGEDENSITYSOLVER_ELECTRIC_HEADER_PATH
@@ -52,9 +51,8 @@ set( CHARGEDENSITYSOLVER_ELECTRIC_SOURCE_BASENAMES
 )
 
 set( CHARGEDENSITYSOLVER_MAGNETIC_SOURCE_BASENAMES
-    KMagneticChargeDensitySolver.cc
     KCachedMagneticChargeDensitySolver.cc
-    KBiotSavartChargeDensitySolver.cc    
+    KBiotSavartChargeDensitySolver.cc        
 )
 
 set( CHARGEDENSITYSOLVER_ELECTRIC_SOURCE_PATH
