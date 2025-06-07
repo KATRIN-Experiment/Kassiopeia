@@ -51,7 +51,6 @@ target_link_libraries( KEMFieldsMagnetic
         KEMFieldExceptions
         KEMFileManipulation
         KEMMagneticFieldSolvers
-        KEMFieldMagneticChargeDensitySolvers                
         KEMZHSolver
 )
 
