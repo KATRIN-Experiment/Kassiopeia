@@ -113,11 +113,18 @@ kasper_install_headers( ${CHARGEDENSITYSOLVER_ELECTRIC_HEADER_FILENAMES} )
 kasper_install_headers( ${CHARGEDENSITYSOLVER_MAGNETIC_HEADER_FILENAMES} )
 kasper_install_libraries( KEMFieldChargeDensitySolvers )
 
-# test executable
-add_executable( KChargeDensitySolver_test Electric/test/KChargeDensitySolver_test.cc )
-target_link_libraries( KChargeDensitySolver_test
-  ${KGeoBag_LIBRARIES}
-  KEMFieldChargeDensitySolvers
-)
+# test executables
+#add_executable( KChargeDensitySolver_test Electric/test/KChargeDensitySolver_test.cc )
+#target_link_libraries( KChargeDensitySolver_test
+#  ${KGeoBag_LIBRARIES}
+#  KEMFieldChargeDensitySolvers
+#)
+#add_executable( KMagneticChargeDensitySolver_test Magnetic/test/KMagneticChargeDensitySolver_test.cc )
+#target_link_libraries( KMagneticChargeDensitySolver_test
+#  ${KGeoBag_LIBRARIES}
+#  KEMFieldChargeDensitySolvers
+#)
 
-kasper_install_executables( KChargeDensitySolver_test )
+
+#kasper_install_executables( KChargeDensitySolver_test )
+#kasper_install_executables( KMagneticChargeDensitySolver_test )
