@@ -22,10 +22,15 @@ class KSGenValueAngleCosine : public KSComponentTemplate<KSGenValueAngleCosine, 
         Classic,
         MolecularFlow
     };
+    enum EDirection {
+        Forward,
+        Backward
+    };
 
     K_SET_GET(double, AngleMin)
     K_SET_GET(double, AngleMax)
     K_SET_GET(EDistributionMode, Mode)
+    K_SET_GET(EDirection, Direction)
 };
 
 }  // namespace Kassiopeia
