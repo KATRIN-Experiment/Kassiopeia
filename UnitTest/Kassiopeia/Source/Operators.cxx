@@ -42,7 +42,7 @@ using namespace Kassiopeia;
 // Operators Unit Testing
 /////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaOperatorsTest, KSParticle)
+TEST_CASE_FIXTURE(KassiopeiaOperatorsTest, "KassiopeiaOperatorsTest - KSParticle")
 {
     auto* tOperator = new KSParticle();
     ASSERT_PTR(tOperator);
@@ -69,7 +69,7 @@ TEST_F(KassiopeiaOperatorsTest, KSParticle)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaOperatorsTest, KSParticleFactory)
+TEST_CASE_FIXTURE(KassiopeiaOperatorsTest, "KassiopeiaOperatorsTest - KSParticleFactory")
 {
     KSParticleFactory* tFactory = &KSParticleFactory::GetInstance();
     ASSERT_PTR(tFactory);

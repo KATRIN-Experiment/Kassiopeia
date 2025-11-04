@@ -14,7 +14,7 @@ using namespace KGeoBag;
 // SpaceTree Unit Testing
 /////////////////////////////////////////////////////////////////////////////
 
-TEST(KGeoBagSpaceTreeTest, KGPoint)
+TEST_CASE("KGeoBagSpaceTreeTest - KGPoint")
 {
     KGPoint<3> p;
 

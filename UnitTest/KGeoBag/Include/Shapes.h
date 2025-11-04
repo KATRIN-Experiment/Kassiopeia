@@ -3,8 +3,6 @@
 
 #include "UnitTest.h"
 
-#include "gtest/gtest.h"
-
 //using namespace KGeoBag;
 
 
@@ -12,12 +10,12 @@
 class KGeoBagShapeTest : public TimeoutTest
 {
   protected:
-    void SetUp() override
+    void SetUp()
     {
         TimeoutTest::SetUp();
     }
 
-    void TearDown() override
+    void TearDown()
     {
         TimeoutTest::TearDown();
     }

@@ -14,7 +14,7 @@
 using namespace katrin;
 using namespace std;
 
-TEST(KommonMath, RegulaFalsi)
+TEST_CASE("KommonMath - RegulaFalsi")
 {
     const double epsilon = 1E-6;
 

@@ -39,119 +39,119 @@ using namespace Kassiopeia;
 // Messages Unit Testing
 /////////////////////////////////////////////////////////////////////////////
 
-TEST(KassiopeiaMessageTest, KSFieldsMessage)
+TEST_CASE("KassiopeiaMessageTest - KSFieldsMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_fieldmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSGeneratorsMessage)
+TEST_CASE("KassiopeiaMessageTest - KSGeneratorsMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_genmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSInteractionsMessage)
+TEST_CASE("KassiopeiaMessageTest - KSInteractionsMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_intmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSMathMessage)
+TEST_CASE("KassiopeiaMessageTest - KSMathMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_mathmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSNavigatorsMessage)
+TEST_CASE("KassiopeiaMessageTest - KSNavigatorsMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_navmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSObjectsMessage)
+TEST_CASE("KassiopeiaMessageTest - KSObjectsMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_objctmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSOperatorsMessage)
+TEST_CASE("KassiopeiaMessageTest - KSOperatorsMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_oprmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSReadersMessage)
+TEST_CASE("KassiopeiaMessageTest - KSReadersMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_readermsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSRunMessage)
+TEST_CASE("KassiopeiaMessageTest - KSRunMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_runmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSEventMessage)
+TEST_CASE("KassiopeiaMessageTest - KSEventMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_eventmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSTrackMessage)
+TEST_CASE("KassiopeiaMessageTest - KSTrackMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_trackmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSStepMessage)
+TEST_CASE("KassiopeiaMessageTest - KSStepMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_stepmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSTerminatorsMessage)
+TEST_CASE("KassiopeiaMessageTest - KSTerminatorsMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_termmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSTrajectoriesMessage)
+TEST_CASE("KassiopeiaMessageTest - KSTrajectoriesMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_trajmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSUtilityMessage)
+TEST_CASE("KassiopeiaMessageTest - KSUtilityMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_ksutilmsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSVisualizationMessage)
+TEST_CASE("KassiopeiaMessageTest - KSVisualizationMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_vismsg();
     EXPECT_PTR(tMessageClass);
     delete tMessageClass;
 }
 
-TEST(KassiopeiaMessageTest, KSWritersMessage)
+TEST_CASE("KassiopeiaMessageTest - KSWritersMessage")
 {
     auto* tMessageClass = new Kassiopeia::KMessage_wtrmsg();
     EXPECT_PTR(tMessageClass);

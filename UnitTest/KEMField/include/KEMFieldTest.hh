@@ -21,7 +21,7 @@ extern char** __argv;
 class KEMFieldTest : public TimeoutTest
 {
   protected:
-    void SetUp() override
+    void SetUp()
     {
         TimeoutTest::SetUp();
 
@@ -32,7 +32,7 @@ class KEMFieldTest : public TimeoutTest
 #endif
     }
 
-    void TearDown() override
+    void TearDown()
     {
         // we cannot call Finalize() here because it will mess up subsequent tests
 #ifdef KEMFIELD_USE_PETSC

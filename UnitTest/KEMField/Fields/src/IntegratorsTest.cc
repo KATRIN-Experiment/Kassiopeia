@@ -30,7 +30,7 @@ using namespace KEMField;
 
 #include "KEMFieldTest.hh"
 
-TEST_F(KEMFieldTest, RectangleIntegrator)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - RectangleIntegrator")
 {
     // Rectangles
     // ----------
@@ -99,7 +99,7 @@ TEST_F(KEMFieldTest, RectangleIntegrator)
     }
 }
 
-TEST_F(KEMFieldTest, TriangleIntegrator)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - TriangleIntegrator")
 {
     // Triangle
     // --------

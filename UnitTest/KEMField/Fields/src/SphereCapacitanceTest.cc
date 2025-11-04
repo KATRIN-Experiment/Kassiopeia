@@ -137,7 +137,7 @@ protected:
     KGeoBag::KGBEMMeshConverter* geometryConverter;
 };
 
-TEST_F(KEMFieldSphereTest, Capacitance_GaussAnalytic)
+TEST_CASE_FIXTURE(KEMFieldSphereTest, "KEMFieldSphereTest - Capacitance_GaussAnalytic")
 {
     // method 0 = gauss; integrator type 0 = analytic
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeAnalytic();
@@ -150,7 +150,7 @@ TEST_F(KEMFieldSphereTest, Capacitance_GaussAnalytic)
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, Capacitance_GaussRWG)
+TEST_CASE_FIXTURE(KEMFieldSphereTest, "KEMFieldSphereTest - Capacitance_GaussRWG")
 {
     // method 0 = gauss; integrator type 1 = RWG
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeRWG();
@@ -163,7 +163,7 @@ TEST_F(KEMFieldSphereTest, Capacitance_GaussRWG)
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, Capacitance_GaussNumeric)
+TEST_CASE_FIXTURE(KEMFieldSphereTest, "KEMFieldSphereTest - Capacitance_GaussNumeric")
 {
     // method 0 = gauss; integrator type 2 = numeric
     KElectrostaticBoundaryIntegrator integrator = KEBIFactory::MakeNumeric();
@@ -176,7 +176,7 @@ TEST_F(KEMFieldSphereTest, Capacitance_GaussNumeric)
     gaussianElimination.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodRWG)
+TEST_CASE_FIXTURE(KEMFieldSphereTest, "KEMFieldSphereTest - Capacitance_RobinHoodRWG")
 {
     // method 1 = robin hood; integrator type 1 = RWG
     double accuracy = 1.e-4;
@@ -194,7 +194,7 @@ TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodRWG)
     robinHood.Solve(A, x, b);
 }
 
-TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodNumeric)
+TEST_CASE_FIXTURE(KEMFieldSphereTest, "KEMFieldSphereTest - Capacitance_RobinHoodNumeric")
 {
     // method 1 = robin hood; integrator type 2 = numeric
     double accuracy = 1.e-4;
@@ -214,7 +214,7 @@ TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodNumeric)
 
 #ifdef KEMFIELD_USE_OPENCL
 /* FIXME: this test is broken - investigate! */
-TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodRWG_OpenCL)
+TEST_CASE_FIXTURE(KEMFieldSphereTest, "KEMFieldSphereTest - Capacitance_RobinHoodRWG_OpenCL")
 {
     // method 1 = robin hood; integrator type 1 = RWG
     double accuracy = 1.e-4;
@@ -239,7 +239,7 @@ TEST_F(KEMFieldSphereTest, Capacitance_RobinHoodRWG_OpenCL)
 #endif
 
 #ifdef KEMFIELD_USE_PETSC
-TEST_F(KEMFieldSphereTest, Capacitance_PETSc)
+TEST_CASE_FIXTURE(KEMFieldSphereTest, "KEMFieldSphereTest - Capacitance_PETSc")
 {
     // method 2 = PETSc
     KElectrostaticBoundaryIntegrator integrator{KEBIFactory::MakeNumeric()};

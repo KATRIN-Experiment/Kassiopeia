@@ -17,7 +17,7 @@
 using namespace katrin;
 using namespace std;
 
-TEST(KommonMath, Integrator)
+TEST_CASE("KommonMath - Integrator")
 {
     const double analytical = 0.5 * (erf(3.0 / sqrt(2)) - erf(-3.0 / sqrt(2)));  // range [-3; 3]
     const double analyticalOE = 0.5 * (1. - erf(-3.0 / sqrt(2)));  // range [-3; inf)

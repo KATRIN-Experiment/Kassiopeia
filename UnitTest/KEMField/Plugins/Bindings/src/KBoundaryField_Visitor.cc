@@ -15,21 +15,21 @@
 using namespace KEMField;
 using namespace katrin;
 
-TEST_F(KEMFieldTest, KBoundaryField_Visitor_VTKViewer_Inheritance)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KBoundaryField_Visitor_VTKViewer_Inheritance")
 {
     KContainer container;
     container.Set(new KVTKViewerAsBoundaryFieldVisitor);
     ASSERT_TRUE(container.Is<KElectrostaticBoundaryField::Visitor>());
 }
 
-TEST_F(KEMFieldTest, KBoundaryField_Visitor_VTKViewerBuilder_Inheritance)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KBoundaryField_Visitor_VTKViewerBuilder_Inheritance")
 {
     KVTKViewerVisitorBuilder builder;
     builder.Begin();
     ASSERT_TRUE(builder.Is<KElectrostaticBoundaryField::Visitor>());
 }
 
-TEST_F(KEMFieldTest, KBoundaryField_Visitor_Process_VTKViewer)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KBoundaryField_Visitor_Process_VTKViewer")
 {
     KVTKViewerVisitorBuilder* viewerBuilder = new KVTKViewerVisitorBuilder;
     viewerBuilder->Begin();

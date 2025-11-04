@@ -14,7 +14,7 @@
 
 using namespace KEMField;
 
-TEST_F(KEMToolboxFixture, KEMToolbox_PickingFromEmptyToolbox)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_PickingFromEmptyToolbox")
 {
     try {
         KEMToolbox::GetInstance().Get<KElectricField>("field1");
@@ -26,14 +26,14 @@ TEST_F(KEMToolboxFixture, KEMToolbox_PickingFromEmptyToolbox)
     }
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_SimplePointer)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_SimplePointer")
 {
     ToolboxAdd<KElectrostaticConstantField>("field1");
     KElectrostaticConstantField* ptr = KEMToolbox::GetInstance().Get<KElectrostaticConstantField>("field1");
     ASSERT_EQ(ptr, sField);
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_DeleteAll)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_DeleteAll")
 {
     ToolboxAdd<KElectrostaticConstantField>("field1");
     KEMToolbox::GetInstance().DeleteAll();
@@ -47,14 +47,14 @@ TEST_F(KEMToolboxFixture, KEMToolbox_DeleteAll)
     }
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_BasePointer)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_BasePointer")
 {
     ToolboxAdd<KElectricField>("field2");
     KElectricField* ptr = KEMToolbox::GetInstance().Get<KElectricField>("field2");
     ASSERT_EQ(ptr, sField);
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_BaseToNormalPtr)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_BaseToNormalPtr")
 {
     ToolboxAdd<KElectricField>("field3");
     try {
@@ -68,14 +68,14 @@ TEST_F(KEMToolboxFixture, KEMToolbox_BaseToNormalPtr)
 }
 
 
-TEST_F(KEMToolboxFixture, KEMToolbox_NormalToBasePtr)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_NormalToBasePtr")
 {
     ToolboxAdd<KElectrostaticConstantField>("field4");
     KElectricField* ptr = KEMToolbox::GetInstance().Get<KElectricField>("field4");
     ASSERT_EQ(ptr, sField);
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_BaseToWrongPtr)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_BaseToWrongPtr")
 {
     ToolboxAdd<KElectricField>("field5");
     try {
@@ -88,7 +88,7 @@ TEST_F(KEMToolboxFixture, KEMToolbox_BaseToWrongPtr)
     }
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_NoSuchEntry)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_NoSuchEntry")
 {
     ToolboxAdd<KElectricField>("field6");
     try {
@@ -101,7 +101,7 @@ TEST_F(KEMToolboxFixture, KEMToolbox_NoSuchEntry)
     }
 }
 
-TEST(KEMToolboxDeathTest, KEMToolbox_KeyAlreadyExists)
+TEST_CASE("KEMToolboxDeathTest - KEMToolbox_KeyAlreadyExists")
 {
     KDirection fieldStrength(1, 1, 1);
     KElectrostaticConstantField* field = new KElectrostaticConstantField(fieldStrength);
@@ -109,7 +109,7 @@ TEST(KEMToolboxDeathTest, KEMToolbox_KeyAlreadyExists)
     ASSERT_DEATH(KEMToolbox::GetInstance().Add<KElectricField>("field7", field), "");
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_DoubleAccess)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_DoubleAccess")
 {
     ToolboxAdd<KElectricField>("field8");
     KEMToolbox::GetInstance().Get<KElectricField>("field8");
@@ -117,7 +117,7 @@ TEST_F(KEMToolboxFixture, KEMToolbox_DoubleAccess)
     ASSERT_EQ(ptr, sField);
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_ScopeTest)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_ScopeTest")
 {
     {
         KElectrostaticConstantField* field = new KElectrostaticConstantField(sFieldStrength);
@@ -127,26 +127,26 @@ TEST_F(KEMToolboxFixture, KEMToolbox_ScopeTest)
     ASSERT_EQ(sFieldStrength.X(), ptr->ElectricField(KPosition(0, 0, 0), 0).X());
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_DirectFromContainer)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_DirectFromContainer")
 {
     ToolboxContainerAdd("field10");
     auto ptr = KEMToolbox::GetInstance().Get<KElectrostaticField>("field10");
     ASSERT_EQ(ptr, sField);
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_DirectFromContainer_KeyAlreadyExists)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_DirectFromContainer_KeyAlreadyExists")
 {
     ToolboxContainerAdd("field11");
     ASSERT_DEATH(ToolboxContainerAdd("field11"), "");
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_GetAll_EmptyToolbox)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_GetAll_EmptyToolbox")
 {
     auto vec = KEMToolbox::GetInstance().GetAll<KElectricQuadrupoleField>();
     ASSERT_EQ(vec.size(), 0);
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_GetAll_FullToolbox)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_GetAll_FullToolbox")
 {
     ToolboxContainerAdd("field12");
     ToolboxContainerAdd("field13");
@@ -155,7 +155,7 @@ TEST_F(KEMToolboxFixture, KEMToolbox_GetAll_FullToolbox)
     ASSERT_EQ(vec.size(), 3);
 }
 
-TEST_F(KEMToolboxFixture, KEMToolbox_GetAll_One_Wrong_Kind)
+TEST_CASE_FIXTURE(KEMToolboxFixture, "KEMToolboxFixture - KEMToolbox_GetAll_One_Wrong_Kind")
 {
     ToolboxContainerAdd("field15");
     ToolboxContainerAdd("field16");

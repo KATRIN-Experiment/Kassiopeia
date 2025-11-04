@@ -14,7 +14,7 @@
 using namespace katrin;
 
 
-TEST(KStringUtils, Comparison)
+TEST_CASE("KStringUtils - Comparison")
 {
 
     const std::string s1 = "1234";
@@ -64,7 +64,7 @@ TEST(KStringUtils, Comparison)
     EXPECT_GE(1.0, KStringUtils::ISimilarity(s5, s6));
 }
 
-TEST(KStringUtils, Manipulation)
+TEST_CASE("KStringUtils - Manipulation")
 {
     const std::string s8 = "123456789";
 
@@ -75,7 +75,7 @@ TEST(KStringUtils, Manipulation)
     EXPECT_EQ("123 456 789", KStringUtils::GroupDigits(s8, " "));
 }
 
-TEST(KStringUtils, Generation)
+TEST_CASE("KStringUtils - Generation")
 {
 
     for (unsigned i = 0; i < 100; i++) {

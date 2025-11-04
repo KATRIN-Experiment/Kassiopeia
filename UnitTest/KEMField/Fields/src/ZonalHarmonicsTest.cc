@@ -92,7 +92,7 @@ protected:
 
 };
 
-TEST_F(KEMFieldZonalHarmonicsTest, Electromagnet)
+TEST_CASE_FIXTURE(KEMFieldZonalHarmonicsTest, "KEMFieldZonalHarmonicsTest - Electromagnet")
 {
     // make some direct solvers
 
@@ -151,7 +151,7 @@ TEST_F(KEMFieldZonalHarmonicsTest, Electromagnet)
 
 }
 
-TEST_F(KEMFieldZonalHarmonicsTest, ElectrostaticBoundary)
+TEST_CASE_FIXTURE(KEMFieldZonalHarmonicsTest, "KEMFieldZonalHarmonicsTest - ElectrostaticBoundary")
 {
     // make some direct solvers
 

@@ -12,7 +12,7 @@
 
 using namespace katrin;
 
-TEST(KComplexElement, KComplexElement_AsReference)
+TEST_CASE("KComplexElement - KComplexElement_AsReference")
 {
     KComplexElement<B> element;
     element.Begin();
@@ -21,7 +21,7 @@ TEST(KComplexElement, KComplexElement_AsReference)
     EXPECT_EQ(ptr->Number(), 2);
 }
 
-TEST(KComplexElement, KComplexElement_AsPointer)
+TEST_CASE("KComplexElement - KComplexElement_AsPointer")
 {
 
     KComplexElement<B> element(nullptr);

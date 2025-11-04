@@ -55,7 +55,7 @@ using katrin::KThreeVector;
 // Generators Unit Testing
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenValueFix)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenValueFix")
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
@@ -74,7 +74,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueFix)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenValueFormula)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenValueFormula")
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
@@ -98,7 +98,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueFormula)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenValueGauss)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenValueGauss")
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
@@ -121,7 +121,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueGauss)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenValueAngleSpherical)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenValueAngleSpherical")
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
@@ -142,7 +142,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueAngleSpherical)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenValueSet)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenValueSet")
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
@@ -164,7 +164,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueSet)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenValueUniform)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenValueUniform")
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
@@ -185,7 +185,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueUniform)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Kr83)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenConversion_Kr83")
 {
     ASSERT_EQ(fValues.size(), 0UL);
     std::vector<int> tVacancies;
@@ -213,7 +213,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Kr83)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn219)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenConversion_Rn219")
 {
     ASSERT_EQ(fValues.size(), 0UL);
     std::vector<int> tVacancies;
@@ -241,7 +241,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn219)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn220)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenConversion_Rn220")
 {
     ASSERT_EQ(fValues.size(), 0UL);
     std::vector<int> tVacancies;
@@ -274,7 +274,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn220)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaGeneratorTest, KSGenShakeOff_Rn)
+TEST_CASE_FIXTURE(KassiopeiaGeneratorTest, "KassiopeiaGeneratorTest - KSGenShakeOff_Rn")
 {
     ASSERT_EQ(fValues.size(), 0UL);
     std::vector<int> tVacancies;
@@ -303,7 +303,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenShakeOff_Rn)
 // DEATH TESTS ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-TEST(KassiopeiaGeneratorDeathTest, KSGenConversion)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaGeneratorDeathTest - KSGenConversion")  // test case name should end in "DeathTest"
 {
     // should fail because isotope 0 is not defined
     auto* tGenerator = new KSGenConversion();
@@ -316,7 +316,7 @@ TEST(KassiopeiaGeneratorDeathTest, KSGenConversion)  // test case name should en
 // Composite Generators Unit Testing
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenDirectionSphericalComposite)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenDirectionSphericalComposite")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -359,7 +359,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenDirectionSphericalComposite)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyComposite)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenEnergyComposite")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -393,7 +393,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyComposite)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenCompositePositionCylindrical)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenCompositePositionCylindrical")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -446,7 +446,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenCompositePositionCylindrical)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenCompositePositionRectangular)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenCompositePositionRectangular")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -499,7 +499,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenCompositePositionRectangular)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenPositionSpaceRandom)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenPositionSpaceRandom")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -539,7 +539,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenPositionSpaceRandom)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenPositionSurfaceRandom)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenPositionSurfaceRandom")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -577,7 +577,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenPositionSurfaceRandom)
 }
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenTimeComposite)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenTimeComposite")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -611,7 +611,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenTimeComposite)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenGeneratorComposite)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenGeneratorComposite")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -727,7 +727,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenGeneratorComposite)
 
 #if __TEST_IS_BROKEN
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyKryptonEvent_Kr83)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenEnergyKryptonEvent_Kr83")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -762,7 +762,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyKryptonEvent_Kr83)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyRadonEvent_Rn219)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenEnergyRadonEvent_Rn219")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -799,7 +799,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyRadonEvent_Rn219)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyRadonEvent_Rn220)
+TEST_CASE_FIXTURE(KassiopeiaCompositeGeneratorTest, "KassiopeiaCompositeGeneratorTest - KSGenEnergyRadonEvent_Rn220")
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
@@ -850,7 +850,7 @@ TEST(KassiopeiaCompositeGeneratorDeathTest,
     //    tCompositeGenerator->Deinitialize();
 }
 
-TEST(KassiopeiaCompositeGeneratorDeathTest, KSGenEnergyComposite)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaCompositeGeneratorDeathTest - KSGenEnergyComposite")  // test case name should end in "DeathTest"
 {
     KSParticleQueue tParticles;
     auto* tCompositeGenerator = new KSGenEnergyComposite();
@@ -879,7 +879,7 @@ TEST(KassiopeiaCompositeGeneratorDeathTest,
     //    tCompositeGenerator->Deinitialize();
 }
 
-TEST(KassiopeiaCompositeGeneratorDeathTest, KSGenTimeComposite)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaCompositeGeneratorDeathTest - KSGenTimeComposite")  // test case name should end in "DeathTest"
 {
     KSParticleQueue tParticles;
     auto* tCompositeGenerator = new KSGenTimeComposite();

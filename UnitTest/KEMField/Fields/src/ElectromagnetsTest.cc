@@ -27,7 +27,7 @@
 
 using namespace KEMField;
 
-TEST_F(KEMFieldTest, Electromagnets_LineCurrent)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - Electromagnets_LineCurrent")
 {
     // testNumber == 0
     KLineCurrentIntegrator lineCurrentIntegrator;
@@ -45,7 +45,7 @@ TEST_F(KEMFieldTest, Electromagnets_LineCurrent)
     ASSERT_NEAR(B_analytic, lineCurrentIntegrator.MagneticField(lineCurrent, KPosition(dist, 0., 0.)).Magnitude(), 1e-12);
 }
 
-TEST_F(KEMFieldTest, Electromagnets_CurrentLoop)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - Electromagnets_CurrentLoop")
 {
     // testNumber == 1
     KCurrentLoopIntegrator currentLoopIntegrator;
@@ -62,7 +62,7 @@ TEST_F(KEMFieldTest, Electromagnets_CurrentLoop)
     ASSERT_NEAR(B_analytic, currentLoopIntegrator.MagneticField(currentLoop, KPosition(0., 0., offset)).Magnitude(), 1e-12);
 }
 
-TEST_F(KEMFieldTest, Electromagnets_LineCurrent_CurrentLoop)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - Electromagnets_LineCurrent_CurrentLoop")
 {
     // testNumber == 2
     KLineCurrentIntegrator lineCurrentIntegrator;
@@ -125,7 +125,7 @@ TEST_F(KEMFieldTest, Electromagnets_LineCurrent_CurrentLoop)
         delete lineCurrents.at(i);
 }
 
-TEST_F(KEMFieldTest, Electromagnets_Solenoid_CurrentLoop)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - Electromagnets_Solenoid_CurrentLoop")
 {
     // testNumber == 3
     KSolenoidIntegrator solenoidIntegrator;
@@ -178,7 +178,7 @@ TEST_F(KEMFieldTest, Electromagnets_Solenoid_CurrentLoop)
 }
 
 
-TEST_F(KEMFieldTest, Electromagnets_Solenoid_Coil)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - Electromagnets_Solenoid_Coil")
 {
     // testNumber == 4
     KSolenoidIntegrator solenoidIntegrator;

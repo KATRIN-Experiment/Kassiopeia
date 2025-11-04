@@ -14,7 +14,7 @@
 
 using namespace katrin;
 
-TEST(KBaseStringUtils, Comparison)
+TEST_CASE("KBaseStringUtils - Comparison")
 {
 
     const std::string s1 = "1234";
@@ -31,7 +31,7 @@ TEST(KBaseStringUtils, Comparison)
     EXPECT_TRUE(KBaseStringUtils::IEquals(s3, s5));
 }
 
-TEST(KBaseStringUtils, Conversion)
+TEST_CASE("KBaseStringUtils - Conversion")
 {
 
     const std::string s1 = "1234";
@@ -80,7 +80,7 @@ TEST(KBaseStringUtils, Conversion)
 }
 
 
-TEST(KBaseStringUtils, Replacing)
+TEST_CASE("KBaseStringUtils - Replacing")
 {
     EXPECT_EQ("a", KBaseStringUtils::Replace("a", "b", "c"));
     EXPECT_EQ("", KBaseStringUtils::Replace("", "b", "c"));
@@ -92,7 +92,7 @@ TEST(KBaseStringUtils, Replacing)
     EXPECT_EQ("A quick fox jumps", KBaseStringUtils::Replace("A quick placeholder jumps", "placeholder", "fox"));
 }
 
-TEST(KBaseStringUtils, Manipulation)
+TEST_CASE("KBaseStringUtils - Manipulation")
 {
     const std::string s1 = "1234";
     const std::string s2 = "1234  ";

@@ -19,11 +19,8 @@ find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS filesystem)
 
 include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 
-## GoogleTest main module
-
-# Add GoogleTest directly to our build. This defines
-# the gtest and gtest_main targets.
-add_subdirectory(GoogleTest)
+## doctest main module
+# doctest is a single-header testing library
 
 ## MockUps sub-modules
 
@@ -33,12 +30,11 @@ add_library( UnitTestBase INTERFACE )
 target_include_directories( UnitTestBase INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MockUps/Include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/GoogleTest/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
-target_link_libraries( UnitTestBase INTERFACE gtest )
 kasper_install_libraries( UnitTestBase )
 
-set(GTEST_MAIN_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/GoogleTest//src/gtest_main.cc)
+set(DOCTEST_MAIN_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/doctest_main.cc)
 
 ## Kasper sub-modules
 

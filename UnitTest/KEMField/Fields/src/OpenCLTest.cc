@@ -32,7 +32,7 @@ using namespace KEMField;
 class KEMFieldOpenCLTest : public KEMFieldTest
 {};
 
-TEST_F(KEMFieldOpenCLTest, Triangle)
+TEST_CASE_FIXTURE(KEMFieldOpenCLTest, "KEMFieldOpenCLTest - Triangle")
 {
     double a_ = 1.5;
     double b_ = 1.3;
@@ -121,7 +121,7 @@ TEST_F(KEMFieldOpenCLTest, Triangle)
         ASSERT_NEAR(x1(i), x2(i), accuracy*fabs(x2(i)));
 }
 
-TEST_F(KEMFieldOpenCLTest, LineSegment)
+TEST_CASE_FIXTURE(KEMFieldOpenCLTest, "KEMFieldOpenCLTest - LineSegment")
 {
     auto* w1 = new KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>();
 

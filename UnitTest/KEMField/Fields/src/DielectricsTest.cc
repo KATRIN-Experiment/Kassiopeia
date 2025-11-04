@@ -1084,7 +1084,7 @@ class KEMFieldDielectricsTest : public KEMFieldTest
     KSurfaceContainer surfaceContainer;
 };
 
-TEST_F(KEMFieldDielectricsTest, ElectrostaticBoundary)
+TEST_CASE_FIXTURE(KEMFieldDielectricsTest, "KEMFieldDielectricsTest - ElectrostaticBoundary")
 {
     KElectrostaticBoundaryIntegrator integrator{KEBIFactory::MakeDefault()}; /* default: numeric integrator */
 
@@ -1122,7 +1122,7 @@ TEST_F(KEMFieldDielectricsTest, ElectrostaticBoundary)
 /* FIXME - this test takes far too long when OpenCL is enabled (on CPU) */
 //#if 0
 #ifdef KEMFIELD_USE_OPENCL
-TEST_F(KEMFieldDielectricsTest, ElectrostaticBoundary_OpenCL)
+TEST_CASE_FIXTURE(KEMFieldDielectricsTest, "KEMFieldDielectricsTest - ElectrostaticBoundary_OpenCL")
 {
     KEBIPolicy integratorPolicy;
 

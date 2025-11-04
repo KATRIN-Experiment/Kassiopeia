@@ -11,7 +11,7 @@
 
 using namespace KEMField;
 
-TEST_F(KEMFieldTest, KElectrostaticConstantField_Potential)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KElectrostaticConstantField_Potential")
 {
     KElectrostaticConstantField field;
     field.SetField(KDirection(2, 0, -1));
@@ -23,7 +23,7 @@ TEST_F(KEMFieldTest, KElectrostaticConstantField_Potential)
     ASSERT_DOUBLE_EQ(6, field.Potential(KPosition(1, 1, -1)));
 }
 
-TEST_F(KEMFieldTest, KELectrostaticConstantField_Initialize)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KELectrostaticConstantField_Initialize")
 {
     KElectrostaticConstantField field;
     field.Initialize();

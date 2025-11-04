@@ -24,7 +24,7 @@ using katrin::KThreeVector;
 // Shapes (Volumes) Unit Testing
 /////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KGeoBagShapeTest, KGBox)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGBox")
 {
     auto* tSurface1 = new KGBox(0.1, 1., 0.2, 2., 0.3, 3.);
 
@@ -71,4 +71,4 @@ TEST_F(KGeoBagShapeTest, KGBox)
 // DEATH TESTS ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-TEST(KGeoBagShapeDeathTest, KGBox) {}
+TEST_CASE("KGeoBagShapeDeathTest - KGBox") {}

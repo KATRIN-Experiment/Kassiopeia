@@ -38,7 +38,7 @@ using katrin::KThreeVector;
 // Terminators Unit Testing
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermDeath)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermDeath")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -63,7 +63,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermDeath)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMaxEnergy)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMaxEnergy")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -111,7 +111,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxEnergy)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMaxLength)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMaxLength")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -159,7 +159,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxLength)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMaxLongEnergy)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMaxLongEnergy")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -225,7 +225,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxLongEnergy)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMaxR)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMaxR")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -275,7 +275,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxR)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMaxSteps)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMaxSteps")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -318,7 +318,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxSteps)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMaxTime)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMaxTime")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -366,7 +366,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxTime)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMaxZ)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMaxZ")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -416,7 +416,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxZ)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMinEnergy)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMinEnergy")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -464,7 +464,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMinEnergy)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMinLongEnergy)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMinLongEnergy")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -530,7 +530,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMinLongEnergy)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMinR)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMinR")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -580,7 +580,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMinR)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermMinZ)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermMinZ")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -630,7 +630,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMinZ)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KassiopeiaTerminatorTest, KSTermTrapped)
+TEST_CASE_FIXTURE(KassiopeiaTerminatorTest, "KassiopeiaTerminatorTest - KSTermTrapped")
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
@@ -680,7 +680,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermTrapped)
 // DEATH TESTS ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMaxEnergy)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMaxEnergy")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -690,7 +690,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMaxEnergy)  // test case name should e
     ASSERT_ANY_THROW(tTerminator->CalculateTermination(tInitialParticle, tResult));
 }
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMaxLength)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMaxLength")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -700,7 +700,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMaxLength)  // test case name should e
     ASSERT_ANY_THROW(tTerminator->CalculateTermination(tInitialParticle, tResult));
 }
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMaxLongEnergy)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMaxLongEnergy")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -710,7 +710,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMaxLongEnergy)  // test case name shou
     ASSERT_ANY_THROW(tTerminator->CalculateTermination(tInitialParticle, tResult));
 }
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMaxR)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMaxR")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -722,7 +722,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMaxR)  // test case name should end in
 
 /* TODO there is no death test for KSTermMaxSteps */
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMaxTime)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMaxTime")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -734,7 +734,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMaxTime)  // test case name should end
 
 /* TODO there is no death test for KSTermMaxZ */
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMinEnergy)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMinEnergy")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -744,7 +744,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMinEnergy)  // test case name should e
     ASSERT_ANY_THROW(tTerminator->CalculateTermination(tInitialParticle, tResult));
 }
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMinLongEnergy)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMinLongEnergy")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -754,7 +754,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMinLongEnergy)  // test case name shou
     ASSERT_ANY_THROW(tTerminator->CalculateTermination(tInitialParticle, tResult));
 }
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermMinR)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermMinR")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;
@@ -766,7 +766,7 @@ TEST(KassiopeiaTerminatorDeathTest, KSTermMinR)  // test case name should end in
 
 /* TODO there is no death test for KSTermMinZ */
 
-TEST(KassiopeiaTerminatorDeathTest, KSTermTrapped)  // test case name should end in "DeathTest"
+TEST_CASE("KassiopeiaTerminatorDeathTest - KSTermTrapped")  // test case name should end in "DeathTest"
 {
     KSParticle tInitialParticle;
     bool tResult = true;

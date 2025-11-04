@@ -143,7 +143,7 @@ STATICINT sTestParentElement = KElementProcessor::ComplexElement<TestParent>("pa
 
 }  // namespace katrin
 
-TEST(XML, Includes)
+TEST_CASE("XML - Includes")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
@@ -169,7 +169,7 @@ TEST(XML, Includes)
     tTokenizer.ProcessFile(tFile);
 }
 
-TEST(XML, Loops)
+TEST_CASE("XML - Loops")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
@@ -189,7 +189,7 @@ TEST(XML, Loops)
     tTokenizer.ProcessFile(tFile);
 }
 
-TEST(XML, Serialization)
+TEST_CASE("XML - Serialization")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
@@ -205,7 +205,7 @@ TEST(XML, Serialization)
     tTokenizer.ProcessFile(tFile);
 }
 
-TEST(XML, Tokenizer)
+TEST_CASE("XML - Tokenizer")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
@@ -218,7 +218,7 @@ TEST(XML, Tokenizer)
     tTokenizer.ProcessFile(tFile);
 }
 
-TEST(XML, Variables)
+TEST_CASE("XML - Variables")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eNormal);
     KMessageTable::GetInstance().SetLogVerbosity(eNormal);
@@ -241,7 +241,7 @@ TEST(XML, Variables)
 
 #include "KFormulaProcessor.hh"
 
-TEST(XML, Formulas)
+TEST_CASE("XML - Formulas")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
@@ -259,7 +259,7 @@ TEST(XML, Formulas)
     tTokenizer.ProcessFile(tFile);
 }
 
-TEST(XML, Print)
+TEST_CASE("XML - Print")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
@@ -277,7 +277,7 @@ TEST(XML, Print)
     tTokenizer.ProcessFile(tFile);
 }
 
-TEST(XML, Conditions)
+TEST_CASE("XML - Conditions")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
@@ -299,7 +299,7 @@ TEST(XML, Conditions)
     tTokenizer.ProcessFile(tFile);
 }
 
-TEST(XML, Elements)
+TEST_CASE("XML - Elements")
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);

@@ -11,7 +11,7 @@
 
 using namespace KEMField;
 
-TEST_F(KEMFieldTest, KElectricQuadrupoleField_Potential)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KElectricQuadrupoleField_Potential")
 {
     KElectricQuadrupoleField field;
     field.SetLocation(KPosition(0, 0, 0));
@@ -28,7 +28,7 @@ TEST_F(KEMFieldTest, KElectricQuadrupoleField_Potential)
     ASSERT_DOUBLE_EQ(100/3., field.ElectricField(KPosition(0, -0.5, 0)).Magnitude());
 }
 
-TEST_F(KEMFieldTest, KElectricQuadrupoleField_Initialize)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KElectricQuadrupoleField_Initialize")
 {
     KElectricQuadrupoleField field;
     field.Initialize();

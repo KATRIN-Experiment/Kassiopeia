@@ -12,21 +12,21 @@
 namespace KEMField
 {
 
-TEST_F(KrylovFactoryFixture, DefaultToGMRES)
+TEST_CASE_FIXTURE(KrylovFactoryFixture, "KrylovFactoryFixture - DefaultToGMRES")
 {
     ElectricSolverPtr solver = KBuildKrylovSolver<ElectricType>(fConfig, fA);
     ASSERT_TRUE(dynamic_cast<ElectricGMRES*>(&(*solver)));
     ASSERT_FALSE(dynamic_cast<ElectricBiCGSTAB*>(&(*solver)));
 }
 
-TEST_F(KrylovFactoryFixture, GiveBiCGSTAB)
+TEST_CASE_FIXTURE(KrylovFactoryFixture, "KrylovFactoryFixture - GiveBiCGSTAB")
 {
     fConfig.SetSolverName("bicgstab");
     ElectricSolverPtr solver = KBuildKrylovSolver<ElectricType>(fConfig, fA);
     ASSERT_TRUE(dynamic_cast<ElectricBiCGSTAB*>(&(*solver)));
 }
 
-TEST_F(KrylovFactoryFixture, FailOnUnknownSolver)
+TEST_CASE_FIXTURE(KrylovFactoryFixture, "KrylovFactoryFixture - FailOnUnknownSolver")
 {
     fConfig.SetSolverName("unknown");
     try {
@@ -39,13 +39,13 @@ TEST_F(KrylovFactoryFixture, FailOnUnknownSolver)
     ASSERT_FALSE("Should have caught exception.");
 }
 
-TEST_F(KrylovFactoryFixture, WithPreconDefaultToPGMRES)
+TEST_CASE_FIXTURE(KrylovFactoryFixture, "KrylovFactoryFixture - WithPreconDefaultToPGMRES")
 {
     ElectricSolverPtr solver = KBuildKrylovSolver<ElectricType>(fConfig, fA, fP);
     ASSERT_TRUE(dynamic_cast<ElectricPGMRES*>(&(*solver)));
 }
 
-TEST_F(KrylovFactoryFixture, GivePBiCGSTAB)
+TEST_CASE_FIXTURE(KrylovFactoryFixture, "KrylovFactoryFixture - GivePBiCGSTAB")
 {
     fConfig.SetSolverName("bicgstab");
     ElectricSolverPtr solver = KBuildKrylovSolver<ElectricType>(fConfig, fA, fP);

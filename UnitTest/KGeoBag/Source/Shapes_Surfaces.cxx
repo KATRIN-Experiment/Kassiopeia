@@ -24,7 +24,7 @@ using katrin::KThreeVector;
 // Shapes (Surfaces) Unit Testing
 /////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KGeoBagShapeTest, KGAnnulusSurface)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGAnnulusSurface")
 {
     auto* tSurface = new KGAnnulusSurface();
 
@@ -41,7 +41,7 @@ TEST_F(KGeoBagShapeTest, KGAnnulusSurface)
     delete tSurface;
 }
 
-TEST_F(KGeoBagShapeTest, KGAnnulusSurface_AreaAbove)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGAnnulusSurface_AreaAbove")
 {
     auto* tSurface = new KGAnnulusSurface();
 
@@ -127,7 +127,7 @@ TEST_F(KGeoBagShapeTest, KGAnnulusSurface_AreaAbove)
     delete tSurface;
 }
 
-TEST_F(KGeoBagShapeTest, KGAnnulusSurface_AreaNormal)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGAnnulusSurface_AreaNormal")
 {
     auto* tSurface = new KGAnnulusSurface();
 
@@ -158,7 +158,7 @@ TEST_F(KGeoBagShapeTest, KGAnnulusSurface_AreaNormal)
     delete tSurface;
 }
 
-TEST_F(KGeoBagShapeTest, KGAnnulusSurface_AbovePoint)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGAnnulusSurface_AbovePoint")
 {
     auto* tSurface = new KGAnnulusSurface();
 
@@ -176,7 +176,7 @@ TEST_F(KGeoBagShapeTest, KGAnnulusSurface_AbovePoint)
 
 //////////////////////////////////////////////////////////////////////////////
 
-TEST_F(KGeoBagShapeTest, KGConeSurface)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGConeSurface")
 {
     auto* tSurface = new KGConeSurface();
 
@@ -193,7 +193,7 @@ TEST_F(KGeoBagShapeTest, KGConeSurface)
     delete tSurface;
 }
 
-TEST_F(KGeoBagShapeTest, KGConeSurface_AreaAbove)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGConeSurface_AreaAbove")
 {
     auto* tSurface = new KGConeSurface();
 
@@ -211,7 +211,7 @@ TEST_F(KGeoBagShapeTest, KGConeSurface_AreaAbove)
     delete tSurface;
 }
 
-TEST_F(KGeoBagShapeTest, KGConeSurface_AreaNormal)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGConeSurface_AreaNormal")
 {
     auto* tSurface = new KGConeSurface();
 
@@ -226,7 +226,7 @@ TEST_F(KGeoBagShapeTest, KGConeSurface_AreaNormal)
     delete tSurface;
 }
 
-TEST_F(KGeoBagShapeTest, KGConeSurface_PointAbove)
+TEST_CASE_FIXTURE(KGeoBagShapeTest, "KGeoBagShapeTest - KGConeSurface_PointAbove")
 {
     auto* tSurface = new KGConeSurface();
 
@@ -245,6 +245,6 @@ TEST_F(KGeoBagShapeTest, KGConeSurface_PointAbove)
 // DEATH TESTS ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-TEST(KGeoBagShapeDeathTest, KGAnnulusSurface) {}
+TEST_CASE("KGeoBagShapeDeathTest - KGAnnulusSurface") {}
 
-TEST(KGeoBagShapeDeathTest, KGConeSurface) {}
+TEST_CASE("KGeoBagShapeDeathTest - KGConeSurface") {}

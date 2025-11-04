@@ -11,7 +11,7 @@
 
 using namespace KEMField;
 
-TEST_F(KEMFieldTest, KMagneticDipoleField_Field)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KMagneticDipoleField_Field")
 {
     const double tol = 1e-14;
 
@@ -27,7 +27,7 @@ TEST_F(KEMFieldTest, KMagneticDipoleField_Field)
     ASSERT_TRUE(std::isnan(field.MagneticField(KPosition(1.0, 0, 0)).Magnitude()));
 }
 
-TEST_F(KEMFieldTest, KMagneticDipoleField_Initialize)
+TEST_CASE_FIXTURE(KEMFieldTest, "KEMFieldTest - KMagneticDipoleField_Initialize")
 {
     KMagneticDipoleField field;
     field.Initialize();

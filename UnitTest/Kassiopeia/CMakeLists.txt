@@ -34,7 +34,7 @@ kasper_install_libraries (KassiopeiaUnitTests)
 
 ## Build executable for Kassiopeia's unit tests
 
-add_executable (UnitTestKassiopeia ${GTEST_MAIN_SOURCE})
+add_executable (UnitTestKassiopeia ${DOCTEST_MAIN_SOURCE})
 target_link_libraries (UnitTestKassiopeia KassiopeiaUnitTests)
 kasper_install_executables (UnitTestKassiopeia)
 

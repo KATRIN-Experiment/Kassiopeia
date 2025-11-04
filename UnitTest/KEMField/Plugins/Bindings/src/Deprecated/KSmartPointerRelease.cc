@@ -13,12 +13,12 @@
 using namespace katrin;
 using namespace KEMField;
 
-TEST_F(KSmartPointerReleaseTest, Constructor)
+TEST_CASE_FIXTURE(KSmartPointerReleaseTest, "KSmartPointerReleaseTest - Constructor")
 {
     ASSERT_FALSE(fPtr.Null());
 }
 
-TEST_F(KSmartPointerReleaseTest, ExceptionOnDoubleRelease)
+TEST_CASE_FIXTURE(KSmartPointerReleaseTest, "KSmartPointerReleaseTest - ExceptionOnDoubleRelease")
 {
     try {
         KSmartPointer<A> ptr2 = ReleaseToSmartPtr<A>(&fContainer);
@@ -28,7 +28,7 @@ TEST_F(KSmartPointerReleaseTest, ExceptionOnDoubleRelease)
     }
 }
 
-TEST_F(KSmartPointerReleaseTest, WrongTypeRelease)
+TEST_CASE_FIXTURE(KSmartPointerReleaseTest, "KSmartPointerReleaseTest - WrongTypeRelease")
 {
     try {
         fContainer.Set<A>(new A());
