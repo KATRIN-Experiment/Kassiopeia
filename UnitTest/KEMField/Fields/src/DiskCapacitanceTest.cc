@@ -51,8 +51,8 @@ using namespace KEMField;
 class KEMFieldDiskTest : public KEMFieldTest
 {
 
-protected:
-    void SetUp() override
+public:
+    KEMFieldDiskTest()
     {
         KEMFieldTest::SetUp();
 
@@ -89,7 +89,7 @@ protected:
         std::cout << "Discretized disk has " << surfaceContainer->size() << " elements" << std::endl;
     }
 
-    void TearDown() override
+    ~KEMFieldDiskTest()
     {
         typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KConicSection> KEMConicSection;
 

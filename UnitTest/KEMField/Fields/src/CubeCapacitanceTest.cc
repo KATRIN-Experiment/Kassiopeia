@@ -54,8 +54,8 @@ using namespace KEMField;
 class KEMFieldCubeTest : public KEMFieldTest
 {
 
-protected:
-    void SetUp() override
+public:
+    KEMFieldCubeTest()
     {
         KEMFieldTest::SetUp();
 
@@ -101,7 +101,7 @@ protected:
         std::cout << "Discretized cube has " << surfaceContainer->size() << " elements" << std::endl;
     }
 
-    void TearDown() override
+    ~KEMFieldCubeTest()
     {
         double tol = 1e-2;  // depends on discretization scale
         double Q = 0.;

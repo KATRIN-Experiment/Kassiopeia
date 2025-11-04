@@ -28,7 +28,7 @@ using namespace KEMField;
 class KEMFieldZonalHarmonicsTest : public KEMFieldTest
 {
 protected:
-    void SetUp() override
+    void SetUp()
     {
         KEMFieldTest::SetUp();
 

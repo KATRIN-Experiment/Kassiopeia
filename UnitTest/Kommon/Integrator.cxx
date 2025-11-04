@@ -12,7 +12,7 @@
 
 #include <math.h>
 
-#include <gtest/gtest.h>
+#include "UnitTest.h"
 
 using namespace katrin;
 using namespace std;

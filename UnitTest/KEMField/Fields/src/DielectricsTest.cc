@@ -334,7 +334,7 @@ class KEMFieldDielectricsTest : public KEMFieldTest
     }
 
   protected:
-    void SetUp() override
+    void SetUp()
     {
         KEMFieldTest::SetUp();
 

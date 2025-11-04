@@ -5,14 +5,14 @@
 #include "KSParticle.h"
 #include "UnitTest.h"
 
-#include "gtest/gtest.h"
+#include "UnitTest.h"
 
 using namespace Kassiopeia;
 
 class KassiopeiaTerminatorTest : public TimeoutTest
 {
   protected:
-    void SetUp() override
+    void SetUp()
     {
         TimeoutTest::SetUp();
 
@@ -31,7 +31,7 @@ class KassiopeiaTerminatorTest : public TimeoutTest
         fInitialParticle->SetMagneticFieldCalculator(fMagneticField);
     }
 
-    void TearDown() override
+    void TearDown()
     {
         delete fInitialParticle;
         delete fFinalParticle;

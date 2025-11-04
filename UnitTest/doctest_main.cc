@@ -1,6 +1,6 @@
 // Main file for doctest - provides main() function for all tests
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
 
 // global variables for argc/argv, used by some tests (e.g., MPI/PETSc initialization)

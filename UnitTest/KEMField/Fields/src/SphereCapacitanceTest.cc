@@ -50,8 +50,8 @@ using namespace KEMField;
 
 class KEMFieldSphereTest : public KEMFieldTest
 {
-protected:
-    void SetUp() override
+public:
+    KEMFieldSphereTest()
     {
         KEMFieldTest::SetUp();
 
@@ -107,7 +107,7 @@ protected:
         std::cout << "Discretized sphere has " << surfaceContainer->size() << " elements" << std::endl;
     }
 
-    void TearDown() override
+    ~KEMFieldSphereTest()
     {
         double tol = 5e-2;  // depends on discretization scale
         double Q = 0.;

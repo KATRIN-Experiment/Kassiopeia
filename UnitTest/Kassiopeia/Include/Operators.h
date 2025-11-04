@@ -3,7 +3,7 @@
 
 #include "UnitTest.h"
 
-#include "gtest/gtest.h"
+#include "UnitTest.h"
 
 //using namespace Kassiopeia;
 
@@ -12,12 +12,12 @@
 class KassiopeiaOperatorsTest : public TimeoutTest
 {
   protected:
-    void SetUp() override
+    void SetUp()
     {
         TimeoutTest::SetUp();
     }
 
-    void TearDown() override
+    void TearDown()
     {
         TimeoutTest::TearDown();
     }
