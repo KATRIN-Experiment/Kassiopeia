@@ -46,7 +46,7 @@ using KEMWire = KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>;
 
 class KEMFieldDielectricsTest : public KEMFieldTest
 {
-  protected:
+  public:
     /**
    * This function takes an interval of length <interval> and discretizes it
    * into <nSegments> # of segments, with the size distribution determined by
@@ -333,8 +333,8 @@ class KEMFieldDielectricsTest : public KEMFieldTest
         fGroup++;
     }
 
-  protected:
-    void SetUp()
+  public:
+        KEMFieldDielectricsTest()
     {
         KEMFieldTest::SetUp();
 

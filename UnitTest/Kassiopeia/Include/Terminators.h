@@ -11,8 +11,8 @@ using namespace Kassiopeia;
 
 class KassiopeiaTerminatorTest : public TimeoutTest
 {
-  protected:
-    void SetUp()
+  public:
+        KassiopeiaTerminatorTest()
     {
         TimeoutTest::SetUp();
 
@@ -31,7 +31,7 @@ class KassiopeiaTerminatorTest : public TimeoutTest
         fInitialParticle->SetMagneticFieldCalculator(fMagneticField);
     }
 
-    void TearDown()
+        ~KassiopeiaTerminatorTest()
     {
         delete fInitialParticle;
         delete fFinalParticle;

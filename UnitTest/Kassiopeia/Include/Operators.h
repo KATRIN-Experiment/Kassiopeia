@@ -11,13 +11,13 @@
 /* Use fixture to set up tracks used in several test cases */
 class KassiopeiaOperatorsTest : public TimeoutTest
 {
-  protected:
-    void SetUp()
+  public:
+        KassiopeiaOperatorsTest()
     {
         TimeoutTest::SetUp();
     }
 
-    void TearDown()
+        ~KassiopeiaOperatorsTest()
     {
         TimeoutTest::TearDown();
     }

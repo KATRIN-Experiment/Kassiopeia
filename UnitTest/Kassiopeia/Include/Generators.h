@@ -12,15 +12,15 @@ using namespace Kassiopeia;
 /* Use fixture to set up tracks used in several test cases */
 class KassiopeiaGeneratorTest : public TimeoutTest
 {
-  protected:
-    virtual void SetUp()
+  public:
+    virtual     KassiopeiaGeneratorTest()
     {
         TimeoutTest::SetUp();
 
         fNTests = 1000;  // generate 1000 values in each test
     }
 
-    virtual void TearDown()
+    virtual     ~KassiopeiaGeneratorTest()
     {
         fValues.clear();
 
@@ -34,8 +34,8 @@ class KassiopeiaGeneratorTest : public TimeoutTest
 /* Use fixture to set up tracks used in several test cases */
 class KassiopeiaCompositeGeneratorTest : public TimeoutTest
 {
-  protected:
-    virtual void SetUp()
+  public:
+    virtual     KassiopeiaGeneratorTest()
     {
         TimeoutTest::SetUp();
 
@@ -48,7 +48,7 @@ class KassiopeiaCompositeGeneratorTest : public TimeoutTest
             fParticles->push_back(new KSParticle());
     }
 
-    virtual void TearDown()
+    virtual     ~KassiopeiaGeneratorTest()
     {
         ASSERT_PTR(fParticles);
         for (KSParticleIt tParticleIt = fParticles->begin(); tParticleIt != fParticles->end(); tParticleIt++)
