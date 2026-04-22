@@ -426,12 +426,7 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
     getline(file, inBuf);
     token = Tokenize(" \t", inBuf);
 
-    int lineNum = 0;
-
-    int counter = 0;
-
     while (!file.eof()) {
-        lineNum++;
         if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 getline(file, inBuf);
@@ -487,7 +482,6 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
 
                     surfaceContainer.push_back(t);
                 }
-                counter++;
             }
         }
         getline(file, inBuf);
@@ -510,12 +504,7 @@ void ReadInRectangles(const std::string& fileName, KSurfaceContainer& surfaceCon
     getline(file, inBuf);
     token = Tokenize(" \t", inBuf);
 
-    int lineNum = 0;
-
-    int counter = 0;
-
     while (!file.eof()) {
-        lineNum++;
         if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 getline(file, inBuf);
@@ -569,7 +558,6 @@ void ReadInRectangles(const std::string& fileName, KSurfaceContainer& surfaceCon
 
                     surfaceContainer.push_back(t);
                 }
-                counter++;
             }
         }
         getline(file, inBuf);
@@ -591,12 +579,7 @@ void ReadInWires(const std::string& fileName, KSurfaceContainer& surfaceContaine
     getline(file, inBuf);
     token = Tokenize(" \t", inBuf);
 
-    int lineNum = 0;
-
-    int counter = 0;
-
     while (!file.eof()) {
-        lineNum++;
         if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 getline(file, inBuf);
@@ -635,7 +618,6 @@ void ReadInWires(const std::string& fileName, KSurfaceContainer& surfaceContaine
 
                     surfaceContainer.push_back(t);
                 }
-                counter++;
             }
         }
         getline(file, inBuf);
