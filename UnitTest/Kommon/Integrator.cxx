@@ -2,9 +2,8 @@
  * Unit testing for numerical integrator classes.
  * @author M. Kleesiek
  *
- * See the official GoogleTest pages for more info:
- *   https://code.google.com/p/googletest/wiki/Primer
- *   https://code.google.com/p/googletest/wiki/AdvancedGuide
+ * See doctest documentation for more info:
+ *   https://github.com/doctest/doctest
  */
 
 #include "KConst.h"
@@ -12,7 +11,7 @@
 
 #include <math.h>
 
-#include <gtest/gtest.h>
+#include "UnitTest.h"
 
 using namespace katrin;
 using namespace std;

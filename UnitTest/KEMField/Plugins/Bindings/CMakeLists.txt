@@ -40,7 +40,7 @@ kasper_install_libraries (KEMBindingsUnitTests)
 
 # Build executable for KEMField's unit tests
 
-add_executable (UnitTestKEMBindings ${GTEST_MAIN_SOURCE})
+add_executable (UnitTestKEMBindings ${DOCTEST_MAIN_SOURCE})
 target_link_libraries (UnitTestKEMBindings KEMBindingsUnitTests)
 kasper_install_executables (UnitTestKEMBindings)
 

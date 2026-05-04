@@ -76,7 +76,7 @@ kasper_install_libraries(KEMFieldUnitTests)
 
 # Build executable for KEMField's unit tests
 
-add_executable(UnitTestKEMField ${GTEST_MAIN_SOURCE})
+add_executable(UnitTestKEMField ${DOCTEST_MAIN_SOURCE})
 target_link_libraries(UnitTestKEMField KEMFieldUnitTests)
 kasper_install_executables(UnitTestKEMField)
 

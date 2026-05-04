@@ -106,7 +106,7 @@ TEST(KEMToolboxDeathTest, KEMToolbox_KeyAlreadyExists)
     KDirection fieldStrength(1, 1, 1);
     KElectrostaticConstantField* field = new KElectrostaticConstantField(fieldStrength);
     KEMToolbox::GetInstance().Add<KElectricField>("field7", field);
-    ASSERT_DEATH(KEMToolbox::GetInstance().Add<KElectricField>("field7", field), "");
+    REQUIRE_THROWS(KEMToolbox::GetInstance().Add<KElectricField>("field7", field));
 }
 
 TEST_F(KEMToolboxFixture, KEMToolbox_DoubleAccess)
@@ -137,7 +137,7 @@ TEST_F(KEMToolboxFixture, KEMToolbox_DirectFromContainer)
 TEST_F(KEMToolboxFixture, KEMToolbox_DirectFromContainer_KeyAlreadyExists)
 {
     ToolboxContainerAdd("field11");
-    ASSERT_DEATH(ToolboxContainerAdd("field11"), "");
+    REQUIRE_THROWS(ToolboxContainerAdd("field11"));
 }
 
 TEST_F(KEMToolboxFixture, KEMToolbox_GetAll_EmptyToolbox)

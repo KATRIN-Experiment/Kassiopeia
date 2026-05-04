@@ -3,8 +3,6 @@
 
 #include "UnitTest.h"
 
-#include "gtest/gtest.h"
-
 //using namespace Kassiopeia;
 
 

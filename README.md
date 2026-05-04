@@ -45,7 +45,7 @@ This software is distributed "as-is" under an open source license
 
 Kassiopeia includes the following open-source libraries:
 
-* GoogleTest (https://github.com/google/googletest)
+* doctest (https://github.com/doctest/doctest)
 * hapPLY (https://github.com/nmwsharp/happly/)
 * stl_reader (https://github.com/sreiter/stl_reader)
 
@@ -56,7 +56,6 @@ Contact
 *  Kasper development list: katrin-kasper@lists.kit.edu
 *  Richard Salomon: richardsalomon@uni-muenster.de
 *  Benedikt Bieringer: benedikt.b@uni-muenster.de
-
 
 
 

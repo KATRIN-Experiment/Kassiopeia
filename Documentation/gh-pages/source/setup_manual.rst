@@ -317,8 +317,8 @@ The following options control the overall build process:
 +-------------------------+---------------------------------------+--------------------------------------------+
 
 The ``BUILD_UNIT_TESTS`` flag enables the compilation of additional unit tests for some parts of the code. The tests
-only built for the active sub-modules. The unit tests uses the GoogleTest_ suite, which is embedded in the sources
-so that not external dependencies are required.
+are only built for the active sub-modules. Unit tests use the embedded doctest_ framework, so no external test
+dependencies are required.
 
 Kassiopeia module
 ------------------
