@@ -1030,7 +1030,6 @@ int main(int argc, char* argv[])
         Q_2 = 0.;
         Q_3 = 0.;
 
-        unsigned int i = 0;
         for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
             if ((*it)->GetShape()->Centroid().Magnitude() < .5 * (radius1 + radius2))
                 Q_1 += ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
@@ -1038,7 +1037,6 @@ int main(int argc, char* argv[])
                 Q_2 += ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
             else
                 Q_3 += ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
-            i++;
         }
 
         Q_computed = Q_1 + Q_2 + Q_3;
@@ -1416,13 +1414,9 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
     //getline(file, inBuf);
     //token = Tokenize(" \t", inBuf);
 
-    int lineNum = 0;
-    int counter = 0;
-
     while (getline(file, inBuf)){
         token = Tokenize(" \t", inBuf);
 
-        lineNum++;
         if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 //getline(file, inBuf);
@@ -1476,7 +1470,6 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
 
                     surfaceContainer.push_back(t);
                 }
-                counter++;
             }
         }
         //getline(file, inBuf);

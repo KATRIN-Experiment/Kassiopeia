@@ -205,9 +205,7 @@ void KGVTKMeshPainter::PaintElements()
     unsigned int tMod = 0;
     const unsigned int tModBase = 13;
 
-    unsigned int count = 0;
     for (auto* element : *fCurrentElements) {
-        count++;
 
         if (auto* tMeshRectangle = dynamic_cast<KGMeshRectangle*>(element)) {
             KThreeVector tPoint0 = fCurrentOrigin + tMeshRectangle->GetP0().X() * fCurrentXAxis +

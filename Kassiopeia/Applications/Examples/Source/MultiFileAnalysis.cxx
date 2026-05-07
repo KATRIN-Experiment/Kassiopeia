@@ -16,8 +16,8 @@ int main()
 {
 
     int term_max_step_count = 0;
-    int term_max_r_count = 0;
-    int term_minmax_z_count = 0;
+    //int term_max_r_count = 0;
+    //int term_minmax_z_count = 0;
 
     std::vector<double> term_times;
 
@@ -101,10 +101,10 @@ int main()
                             final_ke_values.push_back(tFKE.Value());
                         }
                         else if (tTerm.Value() == "term_max_r") {
-                            term_max_r_count++;
+                            //term_max_r_count++;
                         }
                         else if (tTerm.Value() == "term_max_z" || tTerm.Value() == "term_min_z") {
-                            term_minmax_z_count++;
+                            //term_minmax_z_count++;
                         }
                         else {
                             std::cout << "Error: bad terminator name.\n";

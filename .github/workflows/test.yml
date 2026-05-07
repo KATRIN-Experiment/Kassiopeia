@@ -54,7 +54,7 @@ jobs:
   fedora_40:
     strategy:
       matrix:
-        use_clang: [false] # FIXME add "true" after solving https://github.com/KATRIN-Experiment/Kassiopeia/issues/87 
+        use_clang: [false, true]
     runs-on: ubuntu-latest
     container: fedora:40
     steps:
