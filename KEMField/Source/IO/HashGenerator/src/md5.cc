@@ -251,7 +251,7 @@ char* MD5::hex_digest()
     }
 
     for (i = 0; i < 16; i++)
-        sprintf(s + i * 2, "%02x", digest[i]);
+        snprintf(s + i * 2, 3, "%02x", digest[i]); // n=3 since 2 bytes for hex and 1 for null termination
 
     s[32] = '\0';
 
