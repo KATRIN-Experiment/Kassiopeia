@@ -1,4 +1,4 @@
-find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS filesystem system )
+find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS filesystem )
 
 # include directories
 
@@ -36,7 +36,6 @@ target_link_libraries(KommonBoost
     PUBLIC
         KommonBase
         Boost::boost
-        Boost::system
         Boost::filesystem
 )
 
