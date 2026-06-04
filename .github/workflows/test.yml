@@ -108,7 +108,7 @@ jobs:
       run: |
         export CC=/usr/bin/clang
         export CXX=/usr/bin/clang++
-        KASSIOPEIA_CUSTOM_CMAKE_ARGS="-DCMAKE_PREFIX_PATH=$(brew --prefix)" ./setup.sh
+        ./setup.sh
       shell: bash
     - name: Launch environment and run tests
       run: |
