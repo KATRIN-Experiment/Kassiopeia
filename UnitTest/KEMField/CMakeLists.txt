@@ -40,7 +40,7 @@ endif()
 
 # Build (static) library for KEMField's unit tests
 
-add_library(KEMFieldUnitTests SHARED ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
+add_library(KEMFieldUnitTests STATIC ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
 target_include_directories( KEMFieldUnitTests
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(KEMFieldUnitTests
