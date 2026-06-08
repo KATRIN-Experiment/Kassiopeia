@@ -2152,6 +2152,7 @@
         <theta_cosine
             angle_max="(double)"
             angle_min="(double)"
+            direction="(string)"
             mode="(string)"
             name="(string)"
         >
@@ -2315,6 +2316,7 @@
         <theta_cosine
             angle_max="(double)"
             angle_min="(double)"
+            direction="(string)"
             mode="(string)"
             name="(string)"
         >
@@ -2479,6 +2481,7 @@
         <theta_cosine
             angle_max="(double)"
             angle_min="(double)"
+            direction="(string)"
             mode="(string)"
             name="(string)"
         >
@@ -4194,6 +4197,7 @@
             <theta_cosine
                 angle_max="(double)"
                 angle_min="(double)"
+                direction="(string)"
                 mode="(string)"
                 name="(string)"
             >
@@ -4348,6 +4352,7 @@
             <theta_cosine
                 angle_max="(double)"
                 angle_min="(double)"
+                direction="(string)"
                 mode="(string)"
                 name="(string)"
             >
@@ -4701,6 +4706,7 @@
     <ksgen_value_angle_cosine
         angle_max="(double)"
         angle_min="(double)"
+        direction="(string)"
         mode="(string)"
         name="(string)"
     >
@@ -5022,6 +5028,14 @@
     >
     </ksint_calculator_ion>
 
+    <ksint_calculator_mott
+        name="(string)"
+        nucleus="(string)"
+        theta_max="(double)"
+        theta_min="(double)"
+    >
+    </ksint_calculator_mott>
+
     <ksint_decay
         calculator="(string)"
         calculators="(string)"
@@ -5298,6 +5312,14 @@
         >
         </calculator_kess>
 
+        <calculator_mott
+            name="(string)"
+            nucleus="(string)"
+            theta_max="(double)"
+            theta_min="(double)"
+        >
+        </calculator_mott>
+
         <density_constant
             density="(double)"
             name="(string)"
@@ -5354,6 +5376,16 @@
         side="(string)"
     >
     </ksint_surface_multiplication>
+
+    <ksint_surface_scattering
+        name="(string)"
+        scat_loss_fraction="(double)"
+        scat_probability="(double)"
+        sec_electron_mean_energy="(double)"
+        sec_electron_probability="(double)"
+        side="(string)"
+    >
+    </ksint_surface_scattering>
 
     <ksint_surface_specular
         name="(string)"

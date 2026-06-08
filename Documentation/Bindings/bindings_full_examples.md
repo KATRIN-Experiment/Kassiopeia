@@ -867,12 +867,12 @@ Example:
 ##### KGPlanarPolyLineLineArguments
 Example:
 ```
-<previous_line
+<next_line
     line_mesh_count="(unsigned int)"
     line_mesh_power="(double)"
     x="(double)"
 >
-</previous_line>
+</next_line>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -976,12 +976,12 @@ Example:
 ##### KGPlanarPolyLoopLineArguments
 Example:
 ```
-<previous_line
+<next_line
     line_mesh_count="(unsigned int)"
     line_mesh_power="(double)"
     x="(double)"
 >
-</previous_line>
+</next_line>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -1065,12 +1065,12 @@ Example:
 ##### KGExtrudedObjectArc
 Example:
 ```
-<outer_arc
+<inner_arc
     positive_orientation="(bool)"
     radius="(double)"
     x1="(double)"
 >
-</outer_arc>
+</inner_arc>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2095,7 +2095,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksroot">`kassiopeia`</a>|[*KSRootBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx)|[`kess_elastic_elsepa`](#kesselasticelsepa)<br>[`kess_inelastic_bethefano`](#kessinelasticbethefano)<br>[`kess_inelastic_penn`](#kessinelasticpenn)<br>[`kess_surface_interaction`](#kesssurfaceinteraction)<br>[`ks_command_group`](#kscommandgroup)<br>[`ks_command_member`](#kscommandmemberdata)<br>[`ks_component_delta`](#kscomponentdeltadata)<br>[`ks_component_group`](#kscomponentgroup)<br>[`ks_component_integral`](#kscomponentintegraldata)<br>[`ks_component_math`](#kscomponentmathdata)<br>[`ks_component_maximum`](#kscomponentmaximumdata)<br>[`ks_component_maximum_at`](#kscomponentmaximumatdata)<br>[`ks_component_member`](#kscomponentmemberdata)<br>[`ks_component_minimum`](#kscomponentminimumdata)<br>[`ks_component_minimum_at`](#kscomponentminimumatdata)<br>[`ks_root_electric_field`](#ksrootelectricfield)<br>[`ks_root_event_modifier`](#ksrooteventmodifier)<br>[`ks_root_generator`](#ksrootgenerator)<br>[`ks_root_magnetic_field`](#ksrootmagneticfield)<br>[`ks_root_run_modifier`](#ksrootrunmodifier)<br>[`ks_root_space_interaction`](#ksrootspaceinteraction)<br>[`ks_root_space_navigator`](#ksrootspacenavigator)<br>[`ks_root_step_modifier`](#ksrootstepmodifier)<br>[`ks_root_surface_interaction`](#ksrootsurfaceinteraction)<br>[`ks_root_surface_navigator`](#ksrootsurfacenavigator)<br>[`ks_root_terminator`](#ksrootterminator)<br>[`ks_root_track_modifier`](#ksroottrackmodifier)<br>[`ks_root_trajectory`](#ksroottrajectory)<br>[`ks_root_writer`](#ksrootwriter)<br>[`ks_simulation`](#kssimulation)<br>[`ksfield_electric_constant`](#kelectrostaticconstantfield)<br>[`ksfield_electric_induced_azi`](#kinducedazimuthalelectricfield)<br>[`ksfield_electric_potentialmap`](#kelectrostaticpotentialmap)<br>[`ksfield_electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator)<br>[`ksfield_electric_quadrupole`](#kelectricquadrupolefield)<br>[`ksfield_electric_ramped`](#krampedelectricfield)<br>[`ksfield_electric_ramped_2fields`](#krampedelectric2field)<br>[`ksfield_electromagnet`](#kgstaticelectromagnetfield)<br>[`ksfield_electrostatic`](#kgelectrostaticboundaryfield)<br>[`ksfield_magnetic_constant`](#kmagnetostaticconstantfield)<br>[`ksfield_magnetic_dipole`](#kmagneticdipolefield)<br>[`ksfield_magnetic_fieldmap`](#kmagnetostaticfieldmap)<br>[`ksfield_magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator)<br>[`ksfield_magnetic_ramped`](#krampedmagneticfield)<br>[`ksfield_magnetic_super_position`](#kmagneticsuperpositionfield)<br>[`ksgen_direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`ksgen_direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`ksgen_direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`ksgen_energy_beta_decay`](#ksgenenergybetadecay)<br>[`ksgen_energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`ksgen_energy_composite`](#ksgenenergycomposite)<br>[`ksgen_energy_krypton_event`](#ksgenenergykryptonevent)<br>[`ksgen_energy_lead_event`](#ksgenenergyleadevent)<br>[`ksgen_energy_radon_event`](#ksgenenergyradonevent)<br>[`ksgen_energy_rydberg`](#ksgenenergyrydberg)<br>[`ksgen_generator_composite`](#ksgengeneratorcomposite)<br>[`ksgen_generator_file`](#ksgengeneratortextfile)<br>[`ksgen_generator_simulation`](#ksgengeneratorsimulation)<br>[`ksgen_l_composite`](#ksgenlcomposite)<br>[`ksgen_l_statistical`](#ksgenlstatistical)<br>[`ksgen_l_uniform_max_n`](#ksgenluniformmaxn)<br>[`ksgen_momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`ksgen_n_composite`](#ksgenncomposite)<br>[`ksgen_position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`ksgen_position_flux_tube`](#ksgenpositionfluxtube)<br>[`ksgen_position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`ksgen_position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`ksgen_position_mask`](#ksgenpositionmask)<br>[`ksgen_position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`ksgen_position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`ksgen_position_space_random`](#ksgenpositionspacerandom)<br>[`ksgen_position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`ksgen_position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`ksgen_position_surface_random`](#ksgenpositionsurfacerandom)<br>[`ksgen_spin_composite`](#ksgenspincomposite)<br>[`ksgen_spin_composite_relative`](#ksgenspinrelativecomposite)<br>[`ksgen_time_composite`](#ksgentimecomposite)<br>[`ksgen_value_angle_cosine`](#ksgenvalueanglecosine)<br>[`ksgen_value_angle_spherical`](#ksgenvalueanglespherical)<br>[`ksgen_value_boltzmann`](#ksgenvalueboltzmann)<br>[`ksgen_value_fermi`](#ksgenvaluefermi)<br>[`ksgen_value_fix`](#ksgenvaluefix)<br>[`ksgen_value_formula`](#ksgenvalueformula)<br>[`ksgen_value_gauss`](#ksgenvaluegauss)<br>[`ksgen_value_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`ksgen_value_histogram`](#ksgenvaluehistogram)<br>[`ksgen_value_list`](#ksgenvaluelist)<br>[`ksgen_value_pareto`](#ksgenvaluepareto)<br>[`ksgen_value_radius_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`ksgen_value_radius_fraction`](#ksgenvalueradiusfraction)<br>[`ksgen_value_radius_spherical`](#ksgenvalueradiusspherical)<br>[`ksgen_value_set`](#ksgenvalueset)<br>[`ksgen_value_uniform`](#ksgenvalueuniform)<br>[`ksgen_value_z_frustrum`](#ksgenvaluezfrustrum)<br>[`ksgeo_side`](#ksgeoside)<br>[`ksgeo_space`](#ksgeospace)<br>[`ksgeo_surface`](#ksgeosurface)<br>[`ksint_calculator_constant`](#ksintcalculatorconstant)<br>[`ksint_calculator_ion`](#ksintcalculatorion)<br>[`ksint_decay`](#ksintdecay)<br>[`ksint_decay_calculator_death_const_rate`](#ksintdecaycalculatordeathconstrate)<br>[`ksint_decay_calculator_ferenc_bbr_transition`](#ksintdecaycalculatorferencbbrtransition)<br>[`ksint_decay_calculator_ferenc_ionisation`](#ksintdecaycalculatorferencionisation)<br>[`ksint_decay_calculator_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous)<br>[`ksint_decay_calculator_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation)<br>[`ksint_decay_calculator_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation)<br>[`ksint_decay_calculator_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation)<br>[`ksint_decay_calculator_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous)<br>[`ksint_density_constant`](#ksintdensityconstant)<br>[`ksint_scattering`](#ksintscattering)<br>[`ksint_spin_flip`](#ksintspinflip)<br>[`ksint_spin_flip_pulse`](#ksintspinflippulse)<br>[`ksint_spin_rotate_y_pulse`](#ksintspinrotateypulse)<br>[`ksint_surface_UCN`](#ksintsurfaceucn)<br>[`ksint_surface_diffuse`](#ksintsurfacediffuse)<br>[`ksint_surface_multiplication`](#ksintsurfacemultiplication)<br>[`ksint_surface_specular`](#ksintsurfacespecular)<br>[`ksint_surface_spin_flip`](#ksintsurfacespinflip)<br>[`ksmod_dynamic_enhancement`](#ksmoddynamicenhancement)<br>[`ksmod_event_report`](#ksmodeventreport)<br>[`ksmod_split_on_turn`](#ksmodsplitonturn)<br>[`ksnav_meshed_space`](#ksnavmeshedspace)<br>[`ksnav_space`](#ksnavspace)<br>[`ksnav_surface`](#ksnavsurface)<br>[`ksterm_death`](#kstermdeath)<br>[`ksterm_magnetron`](#kstermmagnetron)<br>[`ksterm_max_energy`](#kstermmaxenergy)<br>[`ksterm_max_length`](#kstermmaxlength)<br>[`ksterm_max_long_energy`](#kstermmaxlongenergy)<br>[`ksterm_max_r`](#kstermmaxr)<br>[`ksterm_max_step_time`](#kstermmaxsteptime)<br>[`ksterm_max_steps`](#kstermmaxsteps)<br>[`ksterm_max_time`](#kstermmaxtime)<br>[`ksterm_max_total_time`](#kstermmaxtotaltime)<br>[`ksterm_max_z`](#kstermmaxz)<br>[`ksterm_min_distance`](#kstermmindistance)<br>[`ksterm_min_energy`](#kstermminenergy)<br>[`ksterm_min_long_energy`](#kstermminlongenergy)<br>[`ksterm_min_r`](#kstermminr)<br>[`ksterm_min_z`](#kstermminz)<br>[`ksterm_output`](#kstermoutputdata)<br>[`ksterm_secondaries`](#kstermsecondaries)<br>[`ksterm_stepsize`](#kstermstepsize)<br>[`ksterm_trapped`](#kstermtrapped)<br>[`ksterm_zh_radius`](#kstermzhradius)<br>[`kstraj_control_B_change`](#kstrajcontrolbchange)<br>[`kstraj_control_cyclotron`](#kstrajcontrolcyclotron)<br>[`kstraj_control_energy`](#kstrajcontrolenergy)<br>[`kstraj_control_length`](#kstrajcontrollength)<br>[`kstraj_control_m_dot`](#kstrajcontrolmdot)<br>[`kstraj_control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`kstraj_control_momentum_numerical_error`](#kstrajcontrolmomentumnumericalerror)<br>[`kstraj_control_position_numerical_error`](#kstrajcontrolpositionnumericalerror)<br>[`kstraj_control_spin_precession`](#kstrajcontrolspinprecession)<br>[`kstraj_control_time`](#kstrajcontroltime)<br>[`kstraj_integrator_rk54`](#kstrajintegratorrk54)<br>[`kstraj_integrator_rk65`](#kstrajintegratorrk65)<br>[`kstraj_integrator_rk8`](#kstrajintegratorrk8)<br>[`kstraj_integrator_rk86`](#kstrajintegratorrk86)<br>[`kstraj_integrator_rk87`](#kstrajintegratorrk87)<br>[`kstraj_integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`kstraj_integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`kstraj_integrator_sym4`](#kstrajintegratorsym4)<br>[`kstraj_interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`kstraj_interpolator_fast`](#kstrajinterpolatorfast)<br>[`kstraj_interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`kstraj_term_constant_force_propagation`](#kstrajtermconstantforcepropagation)<br>[`kstraj_term_drift`](#kstrajtermdrift)<br>[`kstraj_term_gravity`](#kstrajtermgravity)<br>[`kstraj_term_gyration`](#kstrajtermgyration)<br>[`kstraj_term_propagation`](#kstrajtermpropagation)<br>[`kstraj_term_synchrotron`](#kstrajtermsynchrotron)<br>[`kstraj_trajectory_adiabatic`](#kstrajtrajectoryadiabatic)<br>[`kstraj_trajectory_adiabatic_spin`](#kstrajtrajectoryadiabaticspin)<br>[`kstraj_trajectory_electric`](#kstrajtrajectoryelectric)<br>[`kstraj_trajectory_exact`](#kstrajtrajectoryexact)<br>[`kstraj_trajectory_exact_spin`](#kstrajtrajectoryexactspin)<br>[`kstraj_trajectory_exact_trapped`](#kstrajtrajectoryexacttrapped)<br>[`kstraj_trajectory_linear`](#kstrajtrajectorylinear)<br>[`kstraj_trajectory_magnetic`](#kstrajtrajectorymagnetic)<br>[`kswrite_ascii`](#kswriteascii)<br>[`kswrite_root`](#kswriteroot)<br>[`kswrite_root_condition_output`](#kswriterootconditionoutputdata)<br>[`kswrite_root_condition_periodic`](#kswriterootconditionperiodicdata)<br>[`kswrite_root_condition_step`](#kswriterootconditionstepdata)<br>[`kswrite_root_condition_terminator`](#kswriterootconditionterminatordata)<br>[`kswrite_vtk`](#kswritevtk)<br>[`output`](#kscomponentmemberdata)<br>[`output_delta`](#kscomponentdeltadata)<br>[`output_group`](#kscomponentgroup)<br>[`output_integral`](#kscomponentintegraldata)<br>[`output_math`](#kscomponentmathdata)<br>[`output_maximum`](#kscomponentmaximumdata)<br>[`output_maximum_at`](#kscomponentmaximumatdata)<br>[`output_minimum`](#kscomponentminimumdata)<br>[`output_minimum_at`](#kscomponentminimumatdata)|*`KESSElasticElsepa`*<br>*`KESSInelasticBetheFano`*<br>*`KESSInelasticPenn`*<br>*`KESSSurfaceInteraction`*<br>*`KSCommandGroup`*<br>*`KSCommandMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMemberData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*<br>*`KSRootElectricField`*<br>*`KSRootEventModifier`*<br>*`KSRootGenerator`*<br>*`KSRootMagneticField`*<br>*`KSRootRunModifier`*<br>*`KSRootSpaceInteraction`*<br>*`KSRootSpaceNavigator`*<br>*`KSRootStepModifier`*<br>*`KSRootSurfaceInteraction`*<br>*`KSRootSurfaceNavigator`*<br>*`KSRootTerminator`*<br>*`KSRootTrackModifier`*<br>*`KSRootTrajectory`*<br>*`KSRootWriter`*<br>*`KSSimulation`*<br>*`KElectrostaticConstantField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KRampedElectricField`*<br>*`KRampedElectric2Field`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KRampedMagneticField`*<br>*`KMagneticSuperpositionField`*<br>*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenGeneratorComposite`*<br>*`KSGenGeneratorTextFile`*<br>*`KSGenGeneratorSimulation`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueBoltzmann`*<br>*`KSGenValueFermi`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueZFrustrum`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorIon`*<br>*`KSIntDecay`*<br>*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*<br>*`KSIntDensityConstant`*<br>*`KSIntScattering`*<br>*`KSIntSpinFlip`*<br>*`KSIntSpinFlipPulse`*<br>*`KSIntSpinRotateYPulse`*<br>*`KSIntSurfaceUCN`*<br>*`KSIntSurfaceDiffuse`*<br>*`KSIntSurfaceMultiplication`*<br>*`KSIntSurfaceSpecular`*<br>*`KSIntSurfaceSpinFlip`*<br>*`KSModDynamicEnhancement`*<br>*`KSModEventReport`*<br>*`KSModSplitOnTurn`*<br>*`KSNavMeshedSpace`*<br>*`KSNavSpace`*<br>*`KSNavSurface`*<br>*`KSTermDeath`*<br>*`KSTermMagnetron`*<br>*`KSTermMaxEnergy`*<br>*`KSTermMaxLength`*<br>*`KSTermMaxLongEnergy`*<br>*`KSTermMaxR`*<br>*`KSTermMaxStepTime`*<br>*`KSTermMaxSteps`*<br>*`KSTermMaxTime`*<br>*`KSTermMaxTotalTime`*<br>*`KSTermMaxZ`*<br>*`KSTermMinDistance`*<br>*`KSTermMinEnergy`*<br>*`KSTermMinLongEnergy`*<br>*`KSTermMinR`*<br>*`KSTermMinZ`*<br>*`KSTermOutputData`*<br>*`KSTermSecondaries`*<br>*`KSTermStepsize`*<br>*`KSTermTrapped`*<br>*`KSTermZHRadius`*<br>*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermConstantForcePropagation`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*<br>*`KSTrajTrajectoryAdiabatic`*<br>*`KSTrajTrajectoryAdiabaticSpin`*<br>*`KSTrajTrajectoryElectric`*<br>*`KSTrajTrajectoryExact`*<br>*`KSTrajTrajectoryExactSpin`*<br>*`KSTrajTrajectoryExactTrapped`*<br>*`KSTrajTrajectoryLinear`*<br>*`KSTrajTrajectoryMagnetic`*<br>*`KSWriteASCII`*<br>*`KSWriteROOT`*<br>*`KSWriteROOTConditionOutputData`*<br>*`KSWriteROOTConditionPeriodicData`*<br>*`KSWriteROOTConditionStepData`*<br>*`KSWriteROOTConditionTerminatorData`*<br>*`KSWriteVTK`*<br>*`KSComponentMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*|`random_seed`|*`unsigned int`*|
+|<a name="ksroot">`kassiopeia`</a>|[*KSRootBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Simulation/Source/KSRootBuilder.cxx)|[`kess_elastic_elsepa`](#kesselasticelsepa)<br>[`kess_inelastic_bethefano`](#kessinelasticbethefano)<br>[`kess_inelastic_penn`](#kessinelasticpenn)<br>[`kess_surface_interaction`](#kesssurfaceinteraction)<br>[`ks_command_group`](#kscommandgroup)<br>[`ks_command_member`](#kscommandmemberdata)<br>[`ks_component_delta`](#kscomponentdeltadata)<br>[`ks_component_group`](#kscomponentgroup)<br>[`ks_component_integral`](#kscomponentintegraldata)<br>[`ks_component_math`](#kscomponentmathdata)<br>[`ks_component_maximum`](#kscomponentmaximumdata)<br>[`ks_component_maximum_at`](#kscomponentmaximumatdata)<br>[`ks_component_member`](#kscomponentmemberdata)<br>[`ks_component_minimum`](#kscomponentminimumdata)<br>[`ks_component_minimum_at`](#kscomponentminimumatdata)<br>[`ks_root_electric_field`](#ksrootelectricfield)<br>[`ks_root_event_modifier`](#ksrooteventmodifier)<br>[`ks_root_generator`](#ksrootgenerator)<br>[`ks_root_magnetic_field`](#ksrootmagneticfield)<br>[`ks_root_run_modifier`](#ksrootrunmodifier)<br>[`ks_root_space_interaction`](#ksrootspaceinteraction)<br>[`ks_root_space_navigator`](#ksrootspacenavigator)<br>[`ks_root_step_modifier`](#ksrootstepmodifier)<br>[`ks_root_surface_interaction`](#ksrootsurfaceinteraction)<br>[`ks_root_surface_navigator`](#ksrootsurfacenavigator)<br>[`ks_root_terminator`](#ksrootterminator)<br>[`ks_root_track_modifier`](#ksroottrackmodifier)<br>[`ks_root_trajectory`](#ksroottrajectory)<br>[`ks_root_writer`](#ksrootwriter)<br>[`ks_simulation`](#kssimulation)<br>[`ksfield_electric_constant`](#kelectrostaticconstantfield)<br>[`ksfield_electric_induced_azi`](#kinducedazimuthalelectricfield)<br>[`ksfield_electric_potentialmap`](#kelectrostaticpotentialmap)<br>[`ksfield_electric_potentialmap_calculator`](#kelectrostaticpotentialmapcalculator)<br>[`ksfield_electric_quadrupole`](#kelectricquadrupolefield)<br>[`ksfield_electric_ramped`](#krampedelectricfield)<br>[`ksfield_electric_ramped_2fields`](#krampedelectric2field)<br>[`ksfield_electromagnet`](#kgstaticelectromagnetfield)<br>[`ksfield_electrostatic`](#kgelectrostaticboundaryfield)<br>[`ksfield_magnetic_constant`](#kmagnetostaticconstantfield)<br>[`ksfield_magnetic_dipole`](#kmagneticdipolefield)<br>[`ksfield_magnetic_fieldmap`](#kmagnetostaticfieldmap)<br>[`ksfield_magnetic_fieldmap_calculator`](#kmagnetostaticfieldmapcalculator)<br>[`ksfield_magnetic_ramped`](#krampedmagneticfield)<br>[`ksfield_magnetic_super_position`](#kmagneticsuperpositionfield)<br>[`ksgen_direction_spherical_composite`](#ksgendirectionsphericalcomposite)<br>[`ksgen_direction_spherical_magnetic_field`](#ksgendirectionsphericalmagneticfield)<br>[`ksgen_direction_surface_composite`](#ksgendirectionsurfacecomposite)<br>[`ksgen_energy_beta_decay`](#ksgenenergybetadecay)<br>[`ksgen_energy_beta_recoil`](#ksgenenergybetarecoil)<br>[`ksgen_energy_composite`](#ksgenenergycomposite)<br>[`ksgen_energy_krypton_event`](#ksgenenergykryptonevent)<br>[`ksgen_energy_lead_event`](#ksgenenergyleadevent)<br>[`ksgen_energy_radon_event`](#ksgenenergyradonevent)<br>[`ksgen_energy_rydberg`](#ksgenenergyrydberg)<br>[`ksgen_generator_composite`](#ksgengeneratorcomposite)<br>[`ksgen_generator_file`](#ksgengeneratortextfile)<br>[`ksgen_generator_simulation`](#ksgengeneratorsimulation)<br>[`ksgen_l_composite`](#ksgenlcomposite)<br>[`ksgen_l_statistical`](#ksgenlstatistical)<br>[`ksgen_l_uniform_max_n`](#ksgenluniformmaxn)<br>[`ksgen_momentum_rectangular_composite`](#ksgenmomentumrectangularcomposite)<br>[`ksgen_n_composite`](#ksgenncomposite)<br>[`ksgen_position_cylindrical_composite`](#ksgenpositioncylindricalcomposite)<br>[`ksgen_position_flux_tube`](#ksgenpositionfluxtube)<br>[`ksgen_position_frustrum_composite`](#ksgenpositionfrustrumcomposite)<br>[`ksgen_position_homogeneous_flux_tube`](#ksgenpositionhomogeneousfluxtube)<br>[`ksgen_position_mask`](#ksgenpositionmask)<br>[`ksgen_position_mesh_surface_random`](#ksgenpositionmeshsurfacerandom)<br>[`ksgen_position_rectangular_composite`](#ksgenpositionrectangularcomposite)<br>[`ksgen_position_space_random`](#ksgenpositionspacerandom)<br>[`ksgen_position_spherical_composite`](#ksgenpositionsphericalcomposite)<br>[`ksgen_position_surface_adjustment_step`](#ksgenpositionsurfaceadjustmentstep)<br>[`ksgen_position_surface_random`](#ksgenpositionsurfacerandom)<br>[`ksgen_spin_composite`](#ksgenspincomposite)<br>[`ksgen_spin_composite_relative`](#ksgenspinrelativecomposite)<br>[`ksgen_time_composite`](#ksgentimecomposite)<br>[`ksgen_value_angle_cosine`](#ksgenvalueanglecosine)<br>[`ksgen_value_angle_spherical`](#ksgenvalueanglespherical)<br>[`ksgen_value_boltzmann`](#ksgenvalueboltzmann)<br>[`ksgen_value_fermi`](#ksgenvaluefermi)<br>[`ksgen_value_fix`](#ksgenvaluefix)<br>[`ksgen_value_formula`](#ksgenvalueformula)<br>[`ksgen_value_gauss`](#ksgenvaluegauss)<br>[`ksgen_value_generalized_gauss`](#ksgenvaluegeneralizedgauss)<br>[`ksgen_value_histogram`](#ksgenvaluehistogram)<br>[`ksgen_value_list`](#ksgenvaluelist)<br>[`ksgen_value_pareto`](#ksgenvaluepareto)<br>[`ksgen_value_radius_cylindrical`](#ksgenvalueradiuscylindrical)<br>[`ksgen_value_radius_fraction`](#ksgenvalueradiusfraction)<br>[`ksgen_value_radius_spherical`](#ksgenvalueradiusspherical)<br>[`ksgen_value_set`](#ksgenvalueset)<br>[`ksgen_value_uniform`](#ksgenvalueuniform)<br>[`ksgen_value_z_frustrum`](#ksgenvaluezfrustrum)<br>[`ksgeo_side`](#ksgeoside)<br>[`ksgeo_space`](#ksgeospace)<br>[`ksgeo_surface`](#ksgeosurface)<br>[`ksint_calculator_constant`](#ksintcalculatorconstant)<br>[`ksint_calculator_ion`](#ksintcalculatorion)<br>[`ksint_calculator_mott`](#ksintcalculatormott)<br>[`ksint_decay`](#ksintdecay)<br>[`ksint_decay_calculator_death_const_rate`](#ksintdecaycalculatordeathconstrate)<br>[`ksint_decay_calculator_ferenc_bbr_transition`](#ksintdecaycalculatorferencbbrtransition)<br>[`ksint_decay_calculator_ferenc_ionisation`](#ksintdecaycalculatorferencionisation)<br>[`ksint_decay_calculator_ferenc_spontaneous`](#ksintdecaycalculatorferencspontaneous)<br>[`ksint_decay_calculator_glukhov_deexcitation`](#ksintdecaycalculatorglukhovdeexcitation)<br>[`ksint_decay_calculator_glukhov_excitation`](#ksintdecaycalculatorglukhovexcitation)<br>[`ksint_decay_calculator_glukhov_ionisation`](#ksintdecaycalculatorglukhovionisation)<br>[`ksint_decay_calculator_glukhov_spontaneous`](#ksintdecaycalculatorglukhovspontaneous)<br>[`ksint_density_constant`](#ksintdensityconstant)<br>[`ksint_scattering`](#ksintscattering)<br>[`ksint_spin_flip`](#ksintspinflip)<br>[`ksint_spin_flip_pulse`](#ksintspinflippulse)<br>[`ksint_spin_rotate_y_pulse`](#ksintspinrotateypulse)<br>[`ksint_surface_UCN`](#ksintsurfaceucn)<br>[`ksint_surface_diffuse`](#ksintsurfacediffuse)<br>[`ksint_surface_multiplication`](#ksintsurfacemultiplication)<br>[`ksint_surface_scattering`](#ksintsurfacescattering)<br>[`ksint_surface_specular`](#ksintsurfacespecular)<br>[`ksint_surface_spin_flip`](#ksintsurfacespinflip)<br>[`ksmod_dynamic_enhancement`](#ksmoddynamicenhancement)<br>[`ksmod_event_report`](#ksmodeventreport)<br>[`ksmod_split_on_turn`](#ksmodsplitonturn)<br>[`ksnav_meshed_space`](#ksnavmeshedspace)<br>[`ksnav_space`](#ksnavspace)<br>[`ksnav_surface`](#ksnavsurface)<br>[`ksterm_death`](#kstermdeath)<br>[`ksterm_magnetron`](#kstermmagnetron)<br>[`ksterm_max_energy`](#kstermmaxenergy)<br>[`ksterm_max_length`](#kstermmaxlength)<br>[`ksterm_max_long_energy`](#kstermmaxlongenergy)<br>[`ksterm_max_r`](#kstermmaxr)<br>[`ksterm_max_step_time`](#kstermmaxsteptime)<br>[`ksterm_max_steps`](#kstermmaxsteps)<br>[`ksterm_max_time`](#kstermmaxtime)<br>[`ksterm_max_total_time`](#kstermmaxtotaltime)<br>[`ksterm_max_z`](#kstermmaxz)<br>[`ksterm_min_distance`](#kstermmindistance)<br>[`ksterm_min_energy`](#kstermminenergy)<br>[`ksterm_min_long_energy`](#kstermminlongenergy)<br>[`ksterm_min_r`](#kstermminr)<br>[`ksterm_min_z`](#kstermminz)<br>[`ksterm_output`](#kstermoutputdata)<br>[`ksterm_secondaries`](#kstermsecondaries)<br>[`ksterm_stepsize`](#kstermstepsize)<br>[`ksterm_trapped`](#kstermtrapped)<br>[`ksterm_zh_radius`](#kstermzhradius)<br>[`kstraj_control_B_change`](#kstrajcontrolbchange)<br>[`kstraj_control_cyclotron`](#kstrajcontrolcyclotron)<br>[`kstraj_control_energy`](#kstrajcontrolenergy)<br>[`kstraj_control_length`](#kstrajcontrollength)<br>[`kstraj_control_m_dot`](#kstrajcontrolmdot)<br>[`kstraj_control_magnetic_moment`](#kstrajcontrolmagneticmoment)<br>[`kstraj_control_momentum_numerical_error`](#kstrajcontrolmomentumnumericalerror)<br>[`kstraj_control_position_numerical_error`](#kstrajcontrolpositionnumericalerror)<br>[`kstraj_control_spin_precession`](#kstrajcontrolspinprecession)<br>[`kstraj_control_time`](#kstrajcontroltime)<br>[`kstraj_integrator_rk54`](#kstrajintegratorrk54)<br>[`kstraj_integrator_rk65`](#kstrajintegratorrk65)<br>[`kstraj_integrator_rk8`](#kstrajintegratorrk8)<br>[`kstraj_integrator_rk86`](#kstrajintegratorrk86)<br>[`kstraj_integrator_rk87`](#kstrajintegratorrk87)<br>[`kstraj_integrator_rkdp54`](#kstrajintegratorrkdp54)<br>[`kstraj_integrator_rkdp853`](#kstrajintegratorrkdp853)<br>[`kstraj_integrator_sym4`](#kstrajintegratorsym4)<br>[`kstraj_interpolator_crk`](#kstrajinterpolatorcontinuousrungekutta)<br>[`kstraj_interpolator_fast`](#kstrajinterpolatorfast)<br>[`kstraj_interpolator_hermite`](#kstrajinterpolatorhermite)<br>[`kstraj_term_constant_force_propagation`](#kstrajtermconstantforcepropagation)<br>[`kstraj_term_drift`](#kstrajtermdrift)<br>[`kstraj_term_gravity`](#kstrajtermgravity)<br>[`kstraj_term_gyration`](#kstrajtermgyration)<br>[`kstraj_term_propagation`](#kstrajtermpropagation)<br>[`kstraj_term_synchrotron`](#kstrajtermsynchrotron)<br>[`kstraj_trajectory_adiabatic`](#kstrajtrajectoryadiabatic)<br>[`kstraj_trajectory_adiabatic_spin`](#kstrajtrajectoryadiabaticspin)<br>[`kstraj_trajectory_electric`](#kstrajtrajectoryelectric)<br>[`kstraj_trajectory_exact`](#kstrajtrajectoryexact)<br>[`kstraj_trajectory_exact_spin`](#kstrajtrajectoryexactspin)<br>[`kstraj_trajectory_exact_trapped`](#kstrajtrajectoryexacttrapped)<br>[`kstraj_trajectory_linear`](#kstrajtrajectorylinear)<br>[`kstraj_trajectory_magnetic`](#kstrajtrajectorymagnetic)<br>[`kswrite_ascii`](#kswriteascii)<br>[`kswrite_root`](#kswriteroot)<br>[`kswrite_root_condition_output`](#kswriterootconditionoutputdata)<br>[`kswrite_root_condition_periodic`](#kswriterootconditionperiodicdata)<br>[`kswrite_root_condition_step`](#kswriterootconditionstepdata)<br>[`kswrite_root_condition_terminator`](#kswriterootconditionterminatordata)<br>[`kswrite_vtk`](#kswritevtk)<br>[`output`](#kscomponentmemberdata)<br>[`output_delta`](#kscomponentdeltadata)<br>[`output_group`](#kscomponentgroup)<br>[`output_integral`](#kscomponentintegraldata)<br>[`output_math`](#kscomponentmathdata)<br>[`output_maximum`](#kscomponentmaximumdata)<br>[`output_maximum_at`](#kscomponentmaximumatdata)<br>[`output_minimum`](#kscomponentminimumdata)<br>[`output_minimum_at`](#kscomponentminimumatdata)|*`KESSElasticElsepa`*<br>*`KESSInelasticBetheFano`*<br>*`KESSInelasticPenn`*<br>*`KESSSurfaceInteraction`*<br>*`KSCommandGroup`*<br>*`KSCommandMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMemberData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*<br>*`KSRootElectricField`*<br>*`KSRootEventModifier`*<br>*`KSRootGenerator`*<br>*`KSRootMagneticField`*<br>*`KSRootRunModifier`*<br>*`KSRootSpaceInteraction`*<br>*`KSRootSpaceNavigator`*<br>*`KSRootStepModifier`*<br>*`KSRootSurfaceInteraction`*<br>*`KSRootSurfaceNavigator`*<br>*`KSRootTerminator`*<br>*`KSRootTrackModifier`*<br>*`KSRootTrajectory`*<br>*`KSRootWriter`*<br>*`KSSimulation`*<br>*`KElectrostaticConstantField`*<br>*`KInducedAzimuthalElectricField`*<br>*`KElectrostaticPotentialmap`*<br>*`KElectrostaticPotentialmapCalculator`*<br>*`KElectricQuadrupoleField`*<br>*`KRampedElectricField`*<br>*`KRampedElectric2Field`*<br>*`KGStaticElectromagnetField`*<br>*`KGElectrostaticBoundaryField`*<br>*`KMagnetostaticConstantField`*<br>*`KMagneticDipoleField`*<br>*`KMagnetostaticFieldmap`*<br>*`KMagnetostaticFieldmapCalculator`*<br>*`KRampedMagneticField`*<br>*`KMagneticSuperpositionField`*<br>*`KSGenDirectionSphericalComposite`*<br>*`KSGenDirectionSphericalMagneticField`*<br>*`KSGenDirectionSurfaceComposite`*<br>*`KSGenEnergyBetaDecay`*<br>*`KSGenEnergyBetaRecoil`*<br>*`KSGenEnergyComposite`*<br>*`KSGenEnergyKryptonEvent`*<br>*`KSGenEnergyLeadEvent`*<br>*`KSGenEnergyRadonEvent`*<br>*`KSGenEnergyRydberg`*<br>*`KSGenGeneratorComposite`*<br>*`KSGenGeneratorTextFile`*<br>*`KSGenGeneratorSimulation`*<br>*`KSGenLComposite`*<br>*`KSGenLStatistical`*<br>*`KSGenLUniformMaxN`*<br>*`KSGenMomentumRectangularComposite`*<br>*`KSGenNComposite`*<br>*`KSGenPositionCylindricalComposite`*<br>*`KSGenPositionFluxTube`*<br>*`KSGenPositionFrustrumComposite`*<br>*`KSGenPositionHomogeneousFluxTube`*<br>*`KSGenPositionMask`*<br>*`KSGenPositionMeshSurfaceRandom`*<br>*`KSGenPositionRectangularComposite`*<br>*`KSGenPositionSpaceRandom`*<br>*`KSGenPositionSphericalComposite`*<br>*`KSGenPositionSurfaceAdjustmentStep`*<br>*`KSGenPositionSurfaceRandom`*<br>*`KSGenSpinComposite`*<br>*`KSGenSpinRelativeComposite`*<br>*`KSGenTimeComposite`*<br>*`KSGenValueAngleCosine`*<br>*`KSGenValueAngleSpherical`*<br>*`KSGenValueBoltzmann`*<br>*`KSGenValueFermi`*<br>*`KSGenValueFix`*<br>*`KSGenValueFormula`*<br>*`KSGenValueGauss`*<br>*`KSGenValueGeneralizedGauss`*<br>*`KSGenValueHistogram`*<br>*`KSGenValueList`*<br>*`KSGenValuePareto`*<br>*`KSGenValueRadiusCylindrical`*<br>*`KSGenValueRadiusFraction`*<br>*`KSGenValueRadiusSpherical`*<br>*`KSGenValueSet`*<br>*`KSGenValueUniform`*<br>*`KSGenValueZFrustrum`*<br>*`KSGeoSide`*<br>*`KSGeoSpace`*<br>*`KSGeoSurface`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorIon`*<br>*`KSIntCalculatorMott`*<br>*`KSIntDecay`*<br>*`KSIntDecayCalculatorDeathConstRate`*<br>*`KSIntDecayCalculatorFerencBBRTransition`*<br>*`KSIntDecayCalculatorFerencIonisation`*<br>*`KSIntDecayCalculatorFerencSpontaneous`*<br>*`KSIntDecayCalculatorGlukhovDeExcitation`*<br>*`KSIntDecayCalculatorGlukhovExcitation`*<br>*`KSIntDecayCalculatorGlukhovIonisation`*<br>*`KSIntDecayCalculatorGlukhovSpontaneous`*<br>*`KSIntDensityConstant`*<br>*`KSIntScattering`*<br>*`KSIntSpinFlip`*<br>*`KSIntSpinFlipPulse`*<br>*`KSIntSpinRotateYPulse`*<br>*`KSIntSurfaceUCN`*<br>*`KSIntSurfaceDiffuse`*<br>*`KSIntSurfaceMultiplication`*<br>*`KSIntSurfaceScattering`*<br>*`KSIntSurfaceSpecular`*<br>*`KSIntSurfaceSpinFlip`*<br>*`KSModDynamicEnhancement`*<br>*`KSModEventReport`*<br>*`KSModSplitOnTurn`*<br>*`KSNavMeshedSpace`*<br>*`KSNavSpace`*<br>*`KSNavSurface`*<br>*`KSTermDeath`*<br>*`KSTermMagnetron`*<br>*`KSTermMaxEnergy`*<br>*`KSTermMaxLength`*<br>*`KSTermMaxLongEnergy`*<br>*`KSTermMaxR`*<br>*`KSTermMaxStepTime`*<br>*`KSTermMaxSteps`*<br>*`KSTermMaxTime`*<br>*`KSTermMaxTotalTime`*<br>*`KSTermMaxZ`*<br>*`KSTermMinDistance`*<br>*`KSTermMinEnergy`*<br>*`KSTermMinLongEnergy`*<br>*`KSTermMinR`*<br>*`KSTermMinZ`*<br>*`KSTermOutputData`*<br>*`KSTermSecondaries`*<br>*`KSTermStepsize`*<br>*`KSTermTrapped`*<br>*`KSTermZHRadius`*<br>*`KSTrajControlBChange`*<br>*`KSTrajControlCyclotron`*<br>*`KSTrajControlEnergy`*<br>*`KSTrajControlLength`*<br>*`KSTrajControlMDot`*<br>*`KSTrajControlMagneticMoment`*<br>*`KSTrajControlMomentumNumericalError`*<br>*`KSTrajControlPositionNumericalError`*<br>*`KSTrajControlSpinPrecession`*<br>*`KSTrajControlTime`*<br>*`KSTrajIntegratorRK54`*<br>*`KSTrajIntegratorRK65`*<br>*`KSTrajIntegratorRK8`*<br>*`KSTrajIntegratorRK86`*<br>*`KSTrajIntegratorRK87`*<br>*`KSTrajIntegratorRKDP54`*<br>*`KSTrajIntegratorRKDP853`*<br>*`KSTrajIntegratorSym4`*<br>*`KSTrajInterpolatorContinuousRungeKutta`*<br>*`KSTrajInterpolatorFast`*<br>*`KSTrajInterpolatorHermite`*<br>*`KSTrajTermConstantForcePropagation`*<br>*`KSTrajTermDrift`*<br>*`KSTrajTermGravity`*<br>*`KSTrajTermGyration`*<br>*`KSTrajTermPropagation`*<br>*`KSTrajTermSynchrotron`*<br>*`KSTrajTrajectoryAdiabatic`*<br>*`KSTrajTrajectoryAdiabaticSpin`*<br>*`KSTrajTrajectoryElectric`*<br>*`KSTrajTrajectoryExact`*<br>*`KSTrajTrajectoryExactSpin`*<br>*`KSTrajTrajectoryExactTrapped`*<br>*`KSTrajTrajectoryLinear`*<br>*`KSTrajTrajectoryMagnetic`*<br>*`KSWriteASCII`*<br>*`KSWriteROOT`*<br>*`KSWriteROOTConditionOutputData`*<br>*`KSWriteROOTConditionPeriodicData`*<br>*`KSWriteROOTConditionStepData`*<br>*`KSWriteROOTConditionTerminatorData`*<br>*`KSWriteVTK`*<br>*`KSComponentMemberData`*<br>*`KSComponentDeltaData`*<br>*`KSComponentGroup`*<br>*`KSComponentIntegralData`*<br>*`KSComponentMathData`*<br>*`KSComponentMaximumData`*<br>*`KSComponentMaximumAtData`*<br>*`KSComponentMinimumData`*<br>*`KSComponentMinimumAtData`*|`random_seed`|*`unsigned int`*|
 
 ### KESSElasticElsepa
 Example:
@@ -2177,12 +2177,12 @@ Example:
 ### KSCommandMemberData
 Example:
 ```
-<command
+<ks_command_member
     child="(string)"
     field="(string)"
     name="(string)"
 >
-</command>
+</ks_command_member>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2192,12 +2192,12 @@ Example:
 ### KSComponentDeltaData
 Example:
 ```
-<ks_component_delta
+<component_delta
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_delta>
+</component_delta>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2232,12 +2232,12 @@ Example:
 ### KSComponentMathData
 Example:
 ```
-<component_math
+<ks_component_math
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</component_math>
+</ks_component_math>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2247,12 +2247,12 @@ Example:
 ### KSComponentMaximumData
 Example:
 ```
-<ks_component_maximum
+<component_maximum
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_maximum>
+</component_maximum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2262,12 +2262,12 @@ Example:
 ### KSComponentMaximumAtData
 Example:
 ```
-<output_maximum_at
+<ks_component_maximum_at
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</output_maximum_at>
+</ks_component_maximum_at>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2292,12 +2292,12 @@ Example:
 ### KSComponentMinimumData
 Example:
 ```
-<ks_component_minimum
+<output_minimum
     component="(string)"
     group="(string)"
     name="(string)"
 >
-</ks_component_minimum>
+</output_minimum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2533,12 +2533,12 @@ Example:
 ### KElectrostaticConstantField
 Example:
 ```
-<ksfield_electric_constant
+<constant_electric_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_electric_constant>
+</constant_electric_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2548,11 +2548,11 @@ Example:
 ### KInducedAzimuthalElectricField
 Example:
 ```
-<ksfield_electric_induced_azi
+<induced_azimuthal_electric_field
     name="(string)"
     root_field="(string)"
 >
-</ksfield_electric_induced_azi>
+</induced_azimuthal_electric_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2577,7 +2577,7 @@ Example:
 ### KElectrostaticPotentialmapCalculator
 Example:
 ```
-<electric_potentialmap_calculator
+<ksfield_electric_potentialmap_calculator
     center="(KEMStreamableThreeVector)"
     compute_field="(bool)"
     directory="(string)"
@@ -2589,7 +2589,7 @@ Example:
     >
     </field_electric_constant>
 
-</electric_potentialmap_calculator>
+</ksfield_electric_potentialmap_calculator>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2599,12 +2599,12 @@ Example:
 #### KElectricQuadrupoleField
 Example:
 ```
-<electric_quadrupole_field
+<ksfield_electric_quadrupole
     length="(double)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</electric_quadrupole_field>
+</ksfield_electric_quadrupole>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2614,14 +2614,14 @@ Example:
 #### KGElectrostaticBoundaryField
 Example:
 ```
-<field_electrostatic
+<electrostatic_field
     directory="(string)"
     file="(string)"
     hash_masked_bits="(unsigned int)"
 >
     <boundary_element_info/>
 
-</field_electrostatic>
+</electrostatic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2727,11 +2727,11 @@ Example:
 ##### KGaussSeidelChargeDensitySolver
 Example:
 ```
-<gauss_seidel_bem_solver
+<gauss_seidel_charge_density_solver
     integrator="(string)"
     use_opencl="(bool)"
 >
-</gauss_seidel_bem_solver>
+</gauss_seidel_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2741,10 +2741,10 @@ Example:
 ##### KGaussianEliminationChargeDensitySolver
 Example:
 ```
-<gaussian_elimination_charge_density_solver
+<gaussian_elimination_bem_solver
     integrator="(string)"
 >
-</gaussian_elimination_charge_density_solver>
+</gaussian_elimination_bem_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2768,7 +2768,7 @@ Example:
 ##### KKrylovChargeDensitySolverOld
 Example:
 ```
-<krylov_bem_solver
+<krylov_charge_density_solver_old
     intermediate_save_interval="(unsigned int)"
     iterations_between_restarts="(unsigned int)"
     max_iterations="(unsigned int)"
@@ -2780,7 +2780,7 @@ Example:
     >
     </fftm_multiplication>
 
-</krylov_bem_solver>
+</krylov_charge_density_solver_old>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2790,12 +2790,12 @@ Example:
 ###### KFMElectrostaticParameters
 Example:
 ```
-<fftm_multiplication
+<preconditioner_electrostatic_parameters
     allowed_fraction="(unsigned int)"
     allowed_number="(unsigned int)"
     bias_degree="(double)"
 >
-</fftm_multiplication>
+</preconditioner_electrostatic_parameters>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2805,7 +2805,7 @@ Example:
 ##### KKrylovChargeDensitySolver
 Example:
 ```
-<krylov_bem_solver_new
+<krylov_charge_density_solver
     intermediate_save_interval="(unsigned int)"
     iterations_between_restarts="(unsigned int)"
     max_iterations="(unsigned int)"
@@ -2824,7 +2824,7 @@ Example:
 
     </krylov_preconditioner>
 
-</krylov_bem_solver_new>
+</krylov_charge_density_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2849,12 +2849,12 @@ Example:
 ##### KRobinHoodChargeDensitySolver
 Example:
 ```
-<robin_hood_charge_density_solver
+<robin_hood_bem_solver
     cache_matrix_elements="(bool)"
     check_sub_interval="(unsigned int)"
     display_interval="(unsigned int)"
 >
-</robin_hood_charge_density_solver>
+</robin_hood_bem_solver>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2904,12 +2904,12 @@ Example:
 ### KRampedElectricField
 Example:
 ```
-<ramped_electric_field
+<ksfield_electric_ramped
     name="(string)"
     num_cycles="(int)"
     ramp_down_delay="(double)"
 >
-</ramped_electric_field>
+</ksfield_electric_ramped>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2919,12 +2919,12 @@ Example:
 ### KRampedElectric2Field
 Example:
 ```
-<ramped_transitional_electric_field
+<ksfield_electric_ramped_2fields
     focus_exponent="(double)"
     focus_time="(double)"
     name="(string)"
 >
-</ramped_transitional_electric_field>
+</ksfield_electric_ramped_2fields>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2934,14 +2934,14 @@ Example:
 ### KGStaticElectromagnetField
 Example:
 ```
-<electromagnet_field
+<ksfield_electromagnet
     directory="(string)"
     directory_magfield3="(string)"
     file="(string)"
 >
     <integrating_field_solver/>
 
-</electromagnet_field>
+</ksfield_electromagnet>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -2991,12 +2991,12 @@ Example:
 ### KMagnetostaticConstantField
 Example:
 ```
-<ksfield_magnetic_constant
+<constant_magnetic_field
     field="(KEMStreamableThreeVector)"
     location="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</ksfield_magnetic_constant>
+</constant_magnetic_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3006,12 +3006,12 @@ Example:
 ### KMagneticDipoleField
 Example:
 ```
-<magnetic_dipole_field
+<ksfield_magnetic_dipole
     location="(KEMStreamableThreeVector)"
     moment="(KEMStreamableThreeVector)"
     name="(string)"
 >
-</magnetic_dipole_field>
+</ksfield_magnetic_dipole>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3073,12 +3073,12 @@ Example:
 ### KRampedMagneticField
 Example:
 ```
-<ramped_magnetic_field
+<ksfield_magnetic_ramped
     name="(string)"
     num_cycles="(int)"
     ramp_down_delay="(double)"
 >
-</ramped_magnetic_field>
+</ksfield_magnetic_ramped>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3088,7 +3088,7 @@ Example:
 ### KMagneticSuperpositionField
 Example:
 ```
-<ksfield_magnetic_super_position
+<magnetic_superposition_field
     name="(string)"
     require="(string)"
     use_caching="(bool)"
@@ -3099,7 +3099,7 @@ Example:
     >
     </add_field>
 
-</ksfield_magnetic_super_position>
+</magnetic_superposition_field>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3123,7 +3123,7 @@ Example:
 ### KSGenDirectionSphericalComposite
 Example:
 ```
-<direction_spherical_composite
+<ksgen_direction_spherical_composite
     name="(string)"
     phi="(string)"
     space="(string)"
@@ -3135,7 +3135,7 @@ Example:
     >
     </phi_fermi>
 
-</direction_spherical_composite>
+</ksgen_direction_spherical_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3145,12 +3145,12 @@ Example:
 #### KSGenValueFermi
 Example:
 ```
-<theta_fermi
+<phi_fermi
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</theta_fermi>
+</phi_fermi>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3160,11 +3160,11 @@ Example:
 #### KSGenValueFix
 Example:
 ```
-<r_fix
+<energy_fix
     name="(string)"
     value="(double)"
 >
-</r_fix>
+</energy_fix>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3174,12 +3174,12 @@ Example:
 #### KSGenValueFormula
 Example:
 ```
-<pid_formula
+<y_formula
     name="(string)"
     value_formula="(string)"
     value_max="(double)"
 >
-</pid_formula>
+</y_formula>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3189,12 +3189,12 @@ Example:
 #### KSGenValueGauss
 Example:
 ```
-<x_gauss
+<l_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</x_gauss>
+</l_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3204,12 +3204,12 @@ Example:
 #### KSGenValueGeneralizedGauss
 Example:
 ```
-<time_generalized_gauss
+<ksgen_value_generalized_gauss
     name="(string)"
     value_max="(double)"
     value_mean="(double)"
 >
-</time_generalized_gauss>
+</ksgen_value_generalized_gauss>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3219,12 +3219,12 @@ Example:
 #### KSGenValueHistogram
 Example:
 ```
-<pid_histogram
+<energy_histogram
     base="(string)"
     formula="(string)"
     histogram="(string)"
 >
-</pid_histogram>
+</energy_histogram>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3234,12 +3234,12 @@ Example:
 #### KSGenValueList
 Example:
 ```
-<phi_list
+<x_list
     add_value="(double)"
     name="(string)"
     randomize="(bool)"
 >
-</phi_list>
+</x_list>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3249,12 +3249,12 @@ Example:
 #### KSGenValueSet
 Example:
 ```
-<theta_set
+<z_set
     name="(string)"
     value_count="(unsigned int)"
     value_increment="(double)"
 >
-</theta_set>
+</z_set>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3264,12 +3264,12 @@ Example:
 #### KSGenValueUniform
 Example:
 ```
-<phi_uniform
+<energy_uniform
     name="(string)"
     value_max="(double)"
     value_min="(double)"
 >
-</phi_uniform>
+</energy_uniform>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3282,24 +3282,24 @@ Example:
 <ksgen_value_angle_cosine
     angle_max="(double)"
     angle_min="(double)"
-    mode="(string)"
+    direction="(string)"
 >
 </ksgen_value_angle_cosine>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksgenvalueanglecosine">`theta_cosine`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenValueAngleCosineBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueAngleCosineBuilder.cxx)|—    |—    |`angle_max`<br>`angle_min`<br>`mode`<br>`name`|*`double`*<br>*`double`*<br>*`string`*<br>*`string`*|
+|<a name="ksgenvalueanglecosine">`theta_cosine`</a>|[*KSGenDirectionSphericalCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx)<br>[*KSGenDirectionSphericalMagneticFieldBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx)<br>[*KSGenDirectionSurfaceCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx)<br>[*KSGenSpinCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinCompositeBuilder.cxx)<br>[*KSGenSpinRelativeCompositeBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx)<br>[*KSGenValueAngleCosineBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Generators/Source/KSGenValueAngleCosineBuilder.cxx)|—    |—    |`angle_max`<br>`angle_min`<br>`direction`<br>`mode`<br>`name`|*`double`*<br>*`double`*<br>*`string`*<br>*`string`*<br>*`string`*|
 
 #### KSGenValueAngleSpherical
 Example:
 ```
-<theta_spherical
+<ksgen_value_angle_spherical
     angle_max="(double)"
     angle_min="(double)"
     name="(string)"
 >
-</theta_spherical>
+</ksgen_value_angle_spherical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3382,7 +3382,7 @@ Example:
 ### KSGenEnergyComposite
 Example:
 ```
-<ksgen_energy_composite
+<energy_composite
     energy="(string)"
     name="(string)"
 >
@@ -3393,7 +3393,7 @@ Example:
     >
     </energy_boltzmann>
 
-</ksgen_energy_composite>
+</energy_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3418,12 +3418,12 @@ Example:
 ### KSGenEnergyKryptonEvent
 Example:
 ```
-<ksgen_energy_krypton_event
+<energy_krypton_event
     do_auger="(bool)"
     do_conversion="(bool)"
     force_conversion="(bool)"
 >
-</ksgen_energy_krypton_event>
+</energy_krypton_event>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3433,12 +3433,12 @@ Example:
 ### KSGenEnergyLeadEvent
 Example:
 ```
-<ksgen_energy_lead_event
+<energy_lead_event
     do_auger="(bool)"
     do_conversion="(bool)"
     force_conversion="(bool)"
 >
-</ksgen_energy_lead_event>
+</energy_lead_event>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3448,12 +3448,12 @@ Example:
 ### KSGenEnergyRadonEvent
 Example:
 ```
-<ksgen_energy_radon_event
+<energy_radon_event
     do_auger="(bool)"
     do_conversion="(bool)"
     do_shake_off="(bool)"
 >
-</ksgen_energy_radon_event>
+</energy_radon_event>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3478,7 +3478,7 @@ Example:
 ### KSGenGeneratorComposite
 Example:
 ```
-<decay_product_generator
+<ksgen_generator_composite
     creator="(string)"
     name="(string)"
     pid="(double)"
@@ -3490,7 +3490,7 @@ Example:
     >
     </direction_spherical_composite>
 
-</decay_product_generator>
+</ksgen_generator_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3520,10 +3520,10 @@ Example:
 #### KSGenLStatistical
 Example:
 ```
-<ksgen_l_statistical
+<l_statistical
     name="(string)"
 >
-</ksgen_l_statistical>
+</l_statistical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3533,10 +3533,10 @@ Example:
 #### KSGenLUniformMaxN
 Example:
 ```
-<l_uniform_max_n
+<ksgen_l_uniform_max_n
     name="(string)"
 >
-</l_uniform_max_n>
+</ksgen_l_uniform_max_n>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3546,7 +3546,7 @@ Example:
 #### KSGenMomentumRectangularComposite
 Example:
 ```
-<ksgen_momentum_rectangular_composite
+<momentum_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
@@ -3557,7 +3557,7 @@ Example:
     >
     </x_fix>
 
-</ksgen_momentum_rectangular_composite>
+</momentum_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3567,7 +3567,7 @@ Example:
 #### KSGenNComposite
 Example:
 ```
-<ksgen_n_composite
+<n_composite
     n_value="(string)"
     name="(string)"
 >
@@ -3577,7 +3577,7 @@ Example:
     >
     </n_fix>
 
-</ksgen_n_composite>
+</n_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3587,12 +3587,12 @@ Example:
 ##### KSGenValuePareto
 Example:
 ```
-<n_pareto
+<ksgen_value_pareto
     cutoff="(double)"
     name="(string)"
     offset="(double)"
 >
-</n_pareto>
+</ksgen_value_pareto>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3602,7 +3602,7 @@ Example:
 #### KSGenPositionCylindricalComposite
 Example:
 ```
-<position_cylindrical_composite
+<ksgen_position_cylindrical_composite
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -3613,7 +3613,7 @@ Example:
     >
     </phi_fix>
 
-</position_cylindrical_composite>
+</ksgen_position_cylindrical_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3623,12 +3623,12 @@ Example:
 ##### KSGenValueRadiusCylindrical
 Example:
 ```
-<r_cylindrical
+<ksgen_value_radius_cylindrical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</r_cylindrical>
+</ksgen_value_radius_cylindrical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3638,10 +3638,10 @@ Example:
 ##### KSGenValueRadiusFraction
 Example:
 ```
-<r_fraction
+<ksgen_value_radius_fraction
     name="(string)"
 >
-</r_fraction>
+</ksgen_value_radius_fraction>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3672,7 +3672,7 @@ Example:
 #### KSGenPositionFrustrumComposite
 Example:
 ```
-<position_frustrum_composite
+<ksgen_position_frustrum_composite
     name="(string)"
     phi="(string)"
     r="(string)"
@@ -3683,7 +3683,7 @@ Example:
     >
     </phi_fix>
 
-</position_frustrum_composite>
+</ksgen_position_frustrum_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3693,12 +3693,12 @@ Example:
 ##### KSGenValueZFrustrum
 Example:
 ```
-<ksgen_value_z_frustrum
+<z_frustrum
     name="(string)"
     r1="(double)"
     r2="(double)"
 >
-</ksgen_value_z_frustrum>
+</z_frustrum>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3708,12 +3708,12 @@ Example:
 #### KSGenPositionHomogeneousFluxTube
 Example:
 ```
-<position_homogeneous_flux_tube
+<ksgen_position_homogeneous_flux_tube
     flux="(double)"
     magnetic_field_name="(string)"
     n_integration_step="(int)"
 >
-</position_homogeneous_flux_tube>
+</ksgen_position_homogeneous_flux_tube>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3745,11 +3745,11 @@ Example:
 ##### KSGenPositionMeshSurfaceRandom
 Example:
 ```
-<position_mesh_surface_random
+<ksgen_position_mesh_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</position_mesh_surface_random>
+</ksgen_position_mesh_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3759,7 +3759,7 @@ Example:
 ##### KSGenPositionRectangularComposite
 Example:
 ```
-<ksgen_position_rectangular_composite
+<position_rectangular_composite
     name="(string)"
     space="(string)"
     surface="(string)"
@@ -3770,7 +3770,7 @@ Example:
     >
     </x_fix>
 
-</ksgen_position_rectangular_composite>
+</position_rectangular_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3815,12 +3815,12 @@ Example:
 ###### KSGenValueRadiusSpherical
 Example:
 ```
-<ksgen_value_radius_spherical
+<r_spherical
     name="(string)"
     radius_max="(double)"
     radius_min="(double)"
 >
-</ksgen_value_radius_spherical>
+</r_spherical>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3854,11 +3854,11 @@ Example:
 #### KSGenPositionSurfaceRandom
 Example:
 ```
-<ksgen_position_surface_random
+<position_surface_random
     name="(string)"
     surfaces="(string)"
 >
-</ksgen_position_surface_random>
+</position_surface_random>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -3889,7 +3889,7 @@ Example:
 #### KSGenSpinRelativeComposite
 Example:
 ```
-<ksgen_spin_composite_relative
+<spin_relative_composite
     name="(string)"
     phi="(string)"
     space="(string)"
@@ -3900,7 +3900,7 @@ Example:
     >
     </phi_fix>
 
-</ksgen_spin_composite_relative>
+</spin_relative_composite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4214,14 +4214,14 @@ Example:
 #### KSGeoSurface
 Example:
 ```
-<geo_surface
+<ksgeo_surface
     name="(string)"
     spaces="(string)"
     surfaces="(string)"
 >
     <add_electric_field/>
 
-</geo_surface>
+</ksgeo_surface>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4331,11 +4331,11 @@ Example:
 ### KSIntCalculatorConstant
 Example:
 ```
-<calculator_constant
+<ksint_calculator_constant
     cross_section="(double)"
     name="(string)"
 >
-</calculator_constant>
+</ksint_calculator_constant>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4345,16 +4345,31 @@ Example:
 ### KSIntCalculatorIon
 Example:
 ```
-<calculator_ion
+<ksint_calculator_ion
     gas="(string)"
     name="(string)"
 >
-</calculator_ion>
+</ksint_calculator_ion>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintcalculatorion">`ksint_calculator_ion`</a>|[*KSIntCalculatorIonBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntCalculatorIonBuilder.cxx)<br>[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`gas`<br>`name`|*`string`*<br>*`string`*|
+
+### KSIntCalculatorMott
+Example:
+```
+<calculator_mott
+    name="(string)"
+    nucleus="(string)"
+    theta_max="(double)"
+>
+</calculator_mott>
+```
+
+|element name|source files|child elements|child types|attributes|attribute types|
+|-----|-----|-----|-----|-----|-----|
+|<a name="ksintcalculatormott">`ksint_calculator_mott`</a>|[*KSIntCalculatorMottBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntCalculatorMottBuilder.cxx)<br>[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|—    |—    |`name`<br>`nucleus`<br>`theta_max`<br>`theta_min`|*`string`*<br>*`string`*<br>*`double`*<br>*`double`*|
 
 ### KSIntDecay
 Example:
@@ -4388,12 +4403,12 @@ Example:
 #### KSIntDecayCalculatorDeathConstRate
 Example:
 ```
-<decay_death_const_rate
+<ksint_decay_calculator_death_const_rate
     life_time="(double)"
     max_pid="(long long)"
     min_pid="(long long)"
 >
-</decay_death_const_rate>
+</ksint_decay_calculator_death_const_rate>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4403,7 +4418,7 @@ Example:
 #### KSIntDecayCalculatorFerencBBRTransition
 Example:
 ```
-<ksint_decay_calculator_ferenc_bbr_transition
+<decay_ferenc_bbr
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4415,7 +4430,7 @@ Example:
     >
     </decay_product_generator>
 
-</ksint_decay_calculator_ferenc_bbr_transition>
+</decay_ferenc_bbr>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4447,7 +4462,7 @@ Example:
 #### KSIntDecayCalculatorFerencSpontaneous
 Example:
 ```
-<decay_ferenc_spontaneous
+<ksint_decay_calculator_ferenc_spontaneous
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4459,7 +4474,7 @@ Example:
     >
     </decay_product_generator>
 
-</decay_ferenc_spontaneous>
+</ksint_decay_calculator_ferenc_spontaneous>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4491,7 +4506,7 @@ Example:
 #### KSIntDecayCalculatorGlukhovExcitation
 Example:
 ```
-<ksint_decay_calculator_glukhov_excitation
+<decay_glukhov_excitation
     max_pid="(long long)"
     min_pid="(long long)"
     name="(string)"
@@ -4503,7 +4518,7 @@ Example:
     >
     </decay_product_generator>
 
-</ksint_decay_calculator_glukhov_excitation>
+</decay_glukhov_excitation>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -4589,7 +4604,7 @@ Example:
 
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
-|<a name="ksintscattering">`ksint_scattering`</a>|[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|[`calculator_argon`](#ksintcalculatorargonset)<br>[`calculator_constant`](#ksintcalculatorconstant)<br>[`calculator_hydrogen`](#ksintcalculatorhydrogenset)<br>[`calculator_ion`](#ksintcalculatorion)<br>[`calculator_kess`](#ksintcalculatorkessset)<br>[`density_constant`](#ksintdensityconstant)|*`KSIntCalculatorArgonSet`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorHydrogenSet`*<br>*`KSIntCalculatorIon`*<br>*`KSIntCalculatorKESSSet`*<br>*`KSIntDensityConstant`*|`calculator`<br>`calculators`<br>`density`<br>`enhancement`<br>`name`<br>`split`|*`string`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`bool`*|
+|<a name="ksintscattering">`ksint_scattering`</a>|[*KSIntScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntScatteringBuilder.cxx)|[`calculator_argon`](#ksintcalculatorargonset)<br>[`calculator_constant`](#ksintcalculatorconstant)<br>[`calculator_hydrogen`](#ksintcalculatorhydrogenset)<br>[`calculator_ion`](#ksintcalculatorion)<br>[`calculator_kess`](#ksintcalculatorkessset)<br>[`calculator_mott`](#ksintcalculatormott)<br>[`density_constant`](#ksintdensityconstant)|*`KSIntCalculatorArgonSet`*<br>*`KSIntCalculatorConstant`*<br>*`KSIntCalculatorHydrogenSet`*<br>*`KSIntCalculatorIon`*<br>*`KSIntCalculatorKESSSet`*<br>*`KSIntCalculatorMott`*<br>*`KSIntDensityConstant`*|`calculator`<br>`calculators`<br>`density`<br>`enhancement`<br>`name`<br>`split`|*`string`*<br>*`string`*<br>*`string`*<br>*`double`*<br>*`string`*<br>*`bool`*|
 
 #### KSIntCalculatorArgonSet
 Example:
@@ -4722,6 +4737,21 @@ Example:
 |element name|source files|child elements|child types|attributes|attribute types|
 |-----|-----|-----|-----|-----|-----|
 |<a name="ksintsurfacemultiplication">`ksint_surface_multiplication`</a>|[*KSIntSurfaceMultiplicationBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntSurfaceMultiplicationBuilder.cxx)|—    |—    |`energy_loss_fraction`<br>`name`<br>`required_energy_per_particle_ev`<br>`side`|*`double`*<br>*`string`*<br>*`double`*<br>*`string`*|
+
+### KSIntSurfaceScattering
+Example:
+```
+<ksint_surface_scattering
+    name="(string)"
+    scat_loss_fraction="(double)"
+    scat_probability="(double)"
+>
+</ksint_surface_scattering>
+```
+
+|element name|source files|child elements|child types|attributes|attribute types|
+|-----|-----|-----|-----|-----|-----|
+|<a name="ksintsurfacescattering">`ksint_surface_scattering`</a>|[*KSIntSurfaceScatteringBuilder.cxx*](https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Kassiopeia/Bindings/Interactions/Source/KSIntSurfaceScatteringBuilder.cxx)|—    |—    |`name`<br>`scat_loss_fraction`<br>`scat_probability`<br>`sec_electron_mean_energy`<br>`sec_electron_probability`<br>`side`|*`string`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`double`*<br>*`string`*|
 
 ### KSIntSurfaceSpecular
 Example:
@@ -5139,11 +5169,11 @@ Example:
 ### KSTrajControlBChange
 Example:
 ```
-<control_B_change
+<kstraj_control_B_change
     fraction="(double)"
     name="(string)"
 >
-</control_B_change>
+</kstraj_control_B_change>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5167,12 +5197,12 @@ Example:
 ### KSTrajControlEnergy
 Example:
 ```
-<kstraj_control_energy
+<control_energy
     adjustment="(double)"
     adjustment_down="(double)"
     adjustment_up="(double)"
 >
-</kstraj_control_energy>
+</control_energy>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5196,11 +5226,11 @@ Example:
 ### KSTrajControlMDot
 Example:
 ```
-<kstraj_control_m_dot
+<control_m_dot
     fraction="(double)"
     name="(string)"
 >
-</kstraj_control_m_dot>
+</control_m_dot>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5240,12 +5270,12 @@ Example:
 ### KSTrajControlPositionNumericalError
 Example:
 ```
-<control_position_error
+<kstraj_control_position_numerical_error
     absolute_position_error="(double)"
     name="(string)"
     safety_factor="(double)"
 >
-</control_position_error>
+</kstraj_control_position_numerical_error>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5255,11 +5285,11 @@ Example:
 ### KSTrajControlSpinPrecession
 Example:
 ```
-<control_spin_precession
+<kstraj_control_spin_precession
     fraction="(double)"
     name="(string)"
 >
-</control_spin_precession>
+</kstraj_control_spin_precession>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5309,10 +5339,10 @@ Example:
 ### KSTrajIntegratorRK8
 Example:
 ```
-<kstraj_integrator_rk8
+<integrator_rk8
     name="(string)"
 >
-</kstraj_integrator_rk8>
+</integrator_rk8>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5322,10 +5352,10 @@ Example:
 ### KSTrajIntegratorRK86
 Example:
 ```
-<kstraj_integrator_rk86
+<integrator_rk86
     name="(string)"
 >
-</kstraj_integrator_rk86>
+</integrator_rk86>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5348,10 +5378,10 @@ Example:
 ### KSTrajIntegratorRKDP54
 Example:
 ```
-<kstraj_integrator_rkdp54
+<integrator_rkdp54
     name="(string)"
 >
-</kstraj_integrator_rkdp54>
+</integrator_rkdp54>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5361,10 +5391,10 @@ Example:
 ### KSTrajIntegratorRKDP853
 Example:
 ```
-<integrator_rkdp853
+<kstraj_integrator_rkdp853
     name="(string)"
 >
-</integrator_rkdp853>
+</kstraj_integrator_rkdp853>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5413,10 +5443,10 @@ Example:
 ### KSTrajInterpolatorHermite
 Example:
 ```
-<kstraj_interpolator_hermite
+<interpolator_hermite
     name="(string)"
 >
-</kstraj_interpolator_hermite>
+</interpolator_hermite>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5467,10 +5497,10 @@ Example:
 ### KSTrajTermGyration
 Example:
 ```
-<kstraj_term_gyration
+<term_gyration
     name="(string)"
 >
-</kstraj_term_gyration>
+</term_gyration>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
@@ -5494,12 +5524,12 @@ Example:
 ### KSTrajTermSynchrotron
 Example:
 ```
-<term_synchrotron
+<kstraj_term_synchrotron
     enhancement="(double)"
     name="(string)"
     old_methode="(bool)"
 >
-</term_synchrotron>
+</kstraj_term_synchrotron>
 ```
 
 |element name|source files|child elements|child types|attributes|attribute types|
