@@ -52,12 +52,13 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
 {
   double tChoice;
   KSSurface* tCurrentSurface = anInitialParticle.GetCurrentSurface();
-  
-  intmsg_debug("*************** initial particle" << eom);
+
 #ifdef Kassiopeia_ENABLE_DEBUG
+  intmsg_debug("*************** initial particle" << eom);
   anInitialParticle.Print();
-#endif
+
   intmsg_debug("*************** initial particle kinetic energy = " << anInitialParticle.GetKineticEnergy_eV() << " eV" << eom);
+#endif
   
   // figure out the basis directions for the particle ejection
   // eject it with a diffuse 'Lambertian' distribution
@@ -125,12 +126,14 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
       aFinalParticle = anInitialParticle;
       aFinalParticle.AddLabel("transmitted");
     }
-  
-  intmsg(eInfo) << "*************** final particle" << eom;
+
+#ifdef Kassiopeia_ENABLE_DEBUG
+  intmsg_debug("*************** final particle" << eom);
   aFinalParticle.Print();
-  intmsg(eInfo) << "*************** secondaries" << eom;
+  intmsg_debug("*************** secondaries" << eom);
   for (KSParticle* sec : aSecondaries) sec->Print();
-  
+#endif
+
   return;
 }
 
