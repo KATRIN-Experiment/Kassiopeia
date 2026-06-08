@@ -59,8 +59,21 @@ TEST(KBaseStringUtils, Conversion)
     EXPECT_NEAR(KBaseStringUtils::Convert<float>(s1), 1234., 1e-4);
     EXPECT_NEAR(KBaseStringUtils::Convert<float>(s2), 1234.5678, 1e-4);
     EXPECT_THROW(KBaseStringUtils::Convert<float>(s3), KException);
-    EXPECT_THROW(KBaseStringUtils::Convert<float>(s4), KException);
-    EXPECT_THROW(KBaseStringUtils::Convert<float>(s5), KException);
+    
+    try {
+        float res4float = KBaseStringUtils::Convert<float>(s4);
+        EXPECT_EQ(res4float, (float) 0xfe);
+    }
+    catch (KException const&) {
+    }
+
+    try {
+        float res5float = KBaseStringUtils::Convert<float>(s5);
+        EXPECT_EQ(res5float, (float) 0x090000001);
+    }
+    catch (KException const&) {
+    }
+
     EXPECT_THROW(KBaseStringUtils::Convert<float>(s6), KException);
     EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<float>(s7)));
     EXPECT_TRUE(std::isnan(KBaseStringUtils::Convert<float>(s8)));
