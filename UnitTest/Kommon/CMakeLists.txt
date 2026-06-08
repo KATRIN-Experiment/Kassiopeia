@@ -14,7 +14,7 @@ set (UNIT_TESTS_SOURCEFILES
 
 ## Build (static) library for Kommon's unit tests
 
-add_library (KommonUnitTests STATIC
+add_library (KommonUnitTests OBJECT
     ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
 
 target_include_directories( KommonUnitTests
