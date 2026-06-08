@@ -9,6 +9,7 @@
 #include "KField.h"
 #include "KSSurfaceInteraction.h"
 
+#include <string>
 namespace Kassiopeia
 {
 

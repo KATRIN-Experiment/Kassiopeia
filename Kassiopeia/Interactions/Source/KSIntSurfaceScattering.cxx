@@ -23,7 +23,9 @@ KSIntSurfaceScattering::KSIntSurfaceScattering() :
     fScatLossFraction(0.0),
     fSecElectronProbability(0.25),
     fSecElectronMeanEnergy(4.0),
-    fSideName(std::string("top"))
+    fPerformSideCheck(false),
+    fSideSignIsNegative(false),
+    fSideName(std::string("both"))
 {}
 
 KSIntSurfaceScattering::KSIntSurfaceScattering(const KSIntSurfaceScattering& aCopy) :
@@ -32,6 +34,8 @@ KSIntSurfaceScattering::KSIntSurfaceScattering(const KSIntSurfaceScattering& aCo
     fScatLossFraction(aCopy.fScatLossFraction),
     fSecElectronProbability(aCopy.fSecElectronProbability),
     fSecElectronMeanEnergy(aCopy.fSecElectronMeanEnergy),
+    fPerformSideCheck(aCopy.fPerformSideCheck),
+    fSideSignIsNegative(aCopy.fSideSignIsNegative),
     fSideName(aCopy.fSideName)
 {}
 
@@ -49,9 +53,11 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
   double tChoice;
   KSSurface* tCurrentSurface = anInitialParticle.GetCurrentSurface();
   
-  intmsg(eInfo) << "*************** initial particle" << eom;
+  intmsg_debug("*************** initial particle" << eom);
+#ifdef Kassiopeia_ENABLE_DEBUG
   anInitialParticle.Print();
-  intmsg(eInfo) << "*************** initial particle kinetic energy = " << anInitialParticle.GetKineticEnergy_eV() << " eV" << eom;
+#endif
+  intmsg_debug("*************** initial particle kinetic energy = " << anInitialParticle.GetKineticEnergy_eV() << " eV" << eom);
   
   // figure out the basis directions for the particle ejection
   // eject it with a diffuse 'Lambertian' distribution
@@ -68,19 +74,8 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
     return;
   }
   
-  KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
-  KThreeVector momDirection = tInitialMomentum.Unit();
-  
-  double dot_prod = tInitialMomentum.Dot(tNormal);
-  KThreeVector tInitialNormalMomentum = dot_prod * tNormal;
-  
-  tInitialNormalMomentum = -1.0 * tInitialNormalMomentum;  //reverse direction for reflection
-  KThreeVector tInitialTangentMomentum = tInitialMomentum - tInitialNormalMomentum;
-  
-  tInitialNormalMomentum = tInitialNormalMomentum.Unit();
-  tInitialTangentMomentum = tInitialTangentMomentum.Unit();
-  KThreeVector tInitialOrthogonalMomentum = tInitialTangentMomentum.Cross(tInitialNormalMomentum.Unit());
-
+  const KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
+  const double dot_prod = tInitialMomentum.Dot(tNormal);
   bool execute_interaction = true;
   if (fPerformSideCheck) {
     if (fSideSignIsNegative && dot_prod > 0) {
@@ -97,14 +92,20 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
       tChoice = KRandom::GetInstance().Uniform(0., 1.);
       if (tChoice < fSecElectronProbability) {
         CreateSecondaryElectron(anInitialParticle, aFinalParticle, aSecondaries);
-        intmsg(eNormal) << "  secondary electron production occurred on child surface <" << tCurrentSurface->GetName() << ">" << eom;
+        intmsg(eNormal) << "  secondary electron production occurred on child surface <"
+                        << (tCurrentSurface != nullptr ? tCurrentSurface->GetName()
+                                                       : anInitialParticle.GetCurrentSide()->GetName())
+                        << ">" << eom;
       }
     
       tChoice = KRandom::GetInstance().Uniform(0., 1.);
       if (tChoice < fScatProbability)
         {
           ExecuteReflection(anInitialParticle, aFinalParticle, aSecondaries);
-          intmsg(eNormal) << "  backscattering occurred on child surface <" << tCurrentSurface->GetName() << ">" << eom;
+          intmsg(eNormal) << "  backscattering occurred on child surface <"
+                          << (tCurrentSurface != nullptr ? tCurrentSurface->GetName()
+                                                         : anInitialParticle.GetCurrentSide()->GetName())
+                          << ">" << eom;
         }
       else
         {
@@ -112,9 +113,11 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
           aFinalParticle = anInitialParticle;
           aFinalParticle.SetActive(false);
           aFinalParticle.AddLabel("absorbed");
-          aFinalParticle.SetMomentum(-1.0 * anInitialParticle.GetMomentum());
-          aFinalParticle.SetKineticEnergy(0);
-          intmsg(eNormal) << "  particle absorption occurred on child surface <" << tCurrentSurface->GetName() << ">" << eom;
+          aFinalParticle.SetMomentum(0., 0., 0.);
+          intmsg(eNormal) << "  particle absorption occurred on child surface <"
+                          << (tCurrentSurface != nullptr ? tCurrentSurface->GetName()
+                                                         : anInitialParticle.GetCurrentSide()->GetName())
+                          << ">" << eom;
         }
     }
   else
