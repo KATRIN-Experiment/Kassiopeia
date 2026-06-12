@@ -9,12 +9,13 @@ using katrin::KRandom;
 namespace Kassiopeia
 {
 
-KSGenValueAngleCosine::KSGenValueAngleCosine() : fAngleMin(0.), fAngleMax(0.) {}
+KSGenValueAngleCosine::KSGenValueAngleCosine() : fAngleMin(0.), fAngleMax(0.), fMode(EDistributionMode::Classic), fDirection(EDirection::Forward) {}
 KSGenValueAngleCosine::KSGenValueAngleCosine(const KSGenValueAngleCosine& aCopy) :
     KSComponent(aCopy),
     fAngleMin(aCopy.fAngleMin),
     fAngleMax(aCopy.fAngleMax),
-    fMode(EDistributionMode::Classic)
+    fMode(aCopy.fMode),
+    fDirection(aCopy.fDirection)
 {}
 KSGenValueAngleCosine* KSGenValueAngleCosine::Clone() const
 {
@@ -44,6 +45,10 @@ void KSGenValueAngleCosine::DiceValue(std::vector<double>& aDicedValues)
 
         double tSinTheta = KRandom::GetInstance().Uniform( tSinThetaMin, tSinThetaMax );
         tAngle = acos( sqrt( 1. - tSinTheta*tSinTheta ) );
+    }
+
+    if (fDirection == EDirection::Backward) {
+        tAngle = katrin::KConst::Pi() - tAngle;
     }
 
     aDicedValues.push_back((180.0 / katrin::KConst::Pi()) * tAngle);

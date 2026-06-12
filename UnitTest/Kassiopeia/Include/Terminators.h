@@ -5,8 +5,6 @@
 #include "KSParticle.h"
 #include "UnitTest.h"
 
-#include "gtest/gtest.h"
-
 using namespace Kassiopeia;
 
 class KassiopeiaTerminatorTest : public TimeoutTest

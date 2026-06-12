@@ -14,7 +14,7 @@ set (UNIT_TESTS_SOURCEFILES
 
 ## Build (static) library for Kommon's unit tests
 
-add_library (KommonUnitTests SHARED
+add_library (KommonUnitTests OBJECT
     ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
 
 target_include_directories( KommonUnitTests
@@ -61,7 +61,7 @@ kasper_install_config( ${TEST_CONFIG_FILES} )
 
 ## Build executable for Kommon's unit tests
 
-add_executable (UnitTestKommon ${GTEST_MAIN_SOURCE})
+add_executable (UnitTestKommon ${DOCTEST_MAIN_SOURCE})
 target_link_libraries (UnitTestKommon KommonUnitTests)
 kasper_install_executables (UnitTestKommon)
 

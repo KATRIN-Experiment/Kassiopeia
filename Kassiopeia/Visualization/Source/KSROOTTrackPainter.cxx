@@ -8,6 +8,7 @@
 #include "TStyle.h"
 
 #include <limits>
+#include <vector>
 
 using namespace katrin;
 using namespace std;
@@ -577,10 +578,10 @@ void KSROOTTrackPainter::CreateColors(KSReadFileROOT& aReader)
         int tColorBins = 100;
         size_t tNumberBaseColors = fBaseColors.size();
 
-        double tRed[tNumberBaseColors];
-        double tGreen[tNumberBaseColors];
-        double tBlue[tNumberBaseColors];
-        double tFraction[tNumberBaseColors];
+        std::vector<double> tRed(tNumberBaseColors);
+        std::vector<double> tGreen(tNumberBaseColors);
+        std::vector<double> tBlue(tNumberBaseColors);
+        std::vector<double> tFraction(tNumberBaseColors);
 
         for (size_t tIndex = 0; tIndex < tNumberBaseColors; tIndex++) {
             tRed[tIndex] = fBaseColors.at(tIndex).first.GetRed();
@@ -592,7 +593,8 @@ void KSROOTTrackPainter::CreateColors(KSReadFileROOT& aReader)
             }
         }
 
-        int tMinColor = TColor::CreateGradientColorTable(tNumberBaseColors, tFraction, tRed, tGreen, tBlue, tColorBins);
+        int tMinColor = TColor::CreateGradientColorTable(
+            static_cast<int>(tNumberBaseColors), tFraction.data(), tRed.data(), tGreen.data(), tBlue.data(), tColorBins);
         int tMaxColor = tMinColor + tColorBins - 1;
 
         if (fColorPalette == eColorDefault) {

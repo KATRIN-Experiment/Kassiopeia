@@ -503,7 +503,7 @@ void KFMElectrostaticMultipoleCalculatorAnalytic::TranslateMomentsAlongZ(
     std::vector<std::complex<double>>& source_moments, std::vector<std::complex<double>>& target_moments) const
 {
     //compute the array of powers of r
-    double r_pow[fDegree + 1];
+    std::vector<double> r_pow(static_cast<size_t>(fDegree) + 1);
     r_pow[0] = 1.0;
     for (int i = 1; i <= fDegree; i++) {
         r_pow[i] = fDelMag * r_pow[i - 1];

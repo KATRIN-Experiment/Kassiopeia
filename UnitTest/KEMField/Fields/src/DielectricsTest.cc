@@ -88,9 +88,8 @@ class KEMFieldDielectricsTest : public KEMFieldTest
    */
     void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KFieldVector fP0,
                  KFieldVector fN1, KFieldVector fN2, double fU, /* potential */
-                 double fNRot, int fNumDiscA, int fNumDiscB)
+                 double /*fNRot*/, int fNumDiscA, int fNumDiscB)
     {
-        fNRot++;
         fChDen += (fNumDiscA * fNumDiscB);
 
         // do not discretize if discretization parameters are set to 0
@@ -165,9 +164,8 @@ class KEMFieldDielectricsTest : public KEMFieldTest
    * constant charge density is more reasonable.
    */
     void AddWire(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, KPosition fPA, KPosition fPB,
-                 double fD /*diameter*/, double fU /*potential*/, int fNRot, int fNumDisc)
+                 double fD /*diameter*/, double fU /*potential*/, int /*fNRot*/, int fNumDisc)
     {
-        (void) fNRot;
         fChDen += fNumDisc;
 
         // do not discretize if discretization parameter is set to 0
@@ -250,9 +248,8 @@ class KEMFieldDielectricsTest : public KEMFieldTest
 
     void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB,
                      const KFieldVector& fP0, const KFieldVector& fN1, const KFieldVector& fN2, double fEpsRAbove,
-                     double fEpsRBelow, double fNRot, int fNumDiscA, int fNumDiscB)
+                     double fEpsRBelow, double /*fNRot*/, int fNumDiscA, int fNumDiscB)
     {
-        (void) fNRot;
         fChDen += (fNumDiscA * fNumDiscB);
 
         // do not discretize if discretization parameters are set to 0

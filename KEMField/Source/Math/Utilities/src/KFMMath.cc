@@ -1,6 +1,7 @@
 #include "KFMMath.hh"
 
 #include <cstdlib>
+#include <vector>
 
 namespace KEMField
 {
@@ -1061,19 +1062,19 @@ void KFMMath::RegularSolidHarmonic_Cart_Array(int n_max, const double* cartesian
     double r = KFMMath::Radius(cartesian_coords);
 
     //compute the array of powers of r
-    double r_pow[n_max + 1];
+    std::vector<double> r_pow(static_cast<size_t>(n_max) + 1);
     r_pow[0] = 1.0;
     for (int i = 1; i <= n_max; i++) {
         r_pow[i] = r * r_pow[i - 1];
     }
 
     //compute alp array
-    double plm[max_size];
-    KFMMath::ALP_nm_array(n_max, cosTheta, plm);
+    std::vector<double> plm(max_size);
+    KFMMath::ALP_nm_array(n_max, cosTheta, plm.data());
 
     //compute the array of cos(m*x) and sin(m*x)
-    double cos_vec[n_max + 1];
-    double sin_vec[n_max + 1];
+    std::vector<double> cos_vec(static_cast<size_t>(n_max) + 1);
+    std::vector<double> sin_vec(static_cast<size_t>(n_max) + 1);
 
     //intial values needed for recursion
     double sin = std::sin(phi);
@@ -1131,19 +1132,19 @@ void KFMMath::IrregularSolidHarmonic_Cart_Array(int n_max, const double* cartesi
     double inv_r = 1.0 / KFMMath::Radius(cartesian_coords);
 
     //compute the array of powers of r
-    double r_pow[n_max + 1];
+    std::vector<double> r_pow(static_cast<size_t>(n_max) + 1);
     r_pow[0] = inv_r;
     for (int i = 1; i <= n_max; i++) {
         r_pow[i] = inv_r * r_pow[i - 1];
     }
 
     //compute alp array
-    double plm[max_size];
-    KFMMath::ALP_nm_array(n_max, cosTheta, plm);
+    std::vector<double> plm(max_size);
+    KFMMath::ALP_nm_array(n_max, cosTheta, plm.data());
 
     //compute the array of cos(m*x) and sin(m*x)
-    double cos_vec[n_max + 1];
-    double sin_vec[n_max + 1];
+    std::vector<double> cos_vec(static_cast<size_t>(n_max) + 1);
+    std::vector<double> sin_vec(static_cast<size_t>(n_max) + 1);
 
     //intial values needed for recursion
     double sin = std::sin(phi);

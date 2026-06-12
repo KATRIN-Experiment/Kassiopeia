@@ -917,7 +917,6 @@ int main(int argc, char* argv[])
 
         double center_frac = 10.;
 
-        unsigned int i = 0;
         for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
             double _Q = ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
             if ((*it)->GetShape()->Centroid().Z() <= distance1 + distance2 / 2.) {
@@ -935,7 +934,6 @@ int main(int argc, char* argv[])
                 if ((*it)->GetShape()->Centroid().Perp() <= radius / center_frac)
                     Q_3_cen += _Q;
             }
-            i++;
         }
 
         Q_computed = Q_1 + Q_2 + Q_3;
@@ -1321,13 +1319,9 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
     //getline(file, inBuf);
     //token = Tokenize(" \t", inBuf);
 
-    int lineNum = 0;
-    int counter = 0;
-
     while (getline(file, inBuf)){
         token = Tokenize(" \t", inBuf);
 
-        lineNum++;
         if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 //getline(file, inBuf);
@@ -1381,7 +1375,6 @@ void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceCont
 
                     surfaceContainer.push_back(t);
                 }
-                counter++;
             }
         }
         //getline(file, inBuf);

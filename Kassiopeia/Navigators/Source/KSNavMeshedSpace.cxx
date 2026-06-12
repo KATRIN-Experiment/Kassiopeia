@@ -539,7 +539,6 @@ void KSNavMeshedSpace::CalculateNavigation(const KSTrajectory& aTrajectory,
         stopIt++;
 
         unsigned int repeatCount = 0;
-        unsigned int seg = 0;
         while (stopIt != fIntermediateParticleStates.end()) {
             tInitialPoint = startIt->GetPosition();
             tFinalPoint = stopIt->GetPosition();
@@ -747,8 +746,6 @@ void KSNavMeshedSpace::CalculateNavigation(const KSTrajectory& aTrajectory,
 
                         break;
                 };
-
-                seg++;
 
                 if (validIntersection)  //intersection is not a repeat of the last
                 {

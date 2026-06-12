@@ -94,7 +94,7 @@ option( BUILD_KEMFIELD ${BUILD_KEMFIELD_DESC} ON )
 set( BUILD_KASSIOPEIA_DESC "Build Kassiopeia [particle tracking simulation system]" )
 option( BUILD_KASSIOPEIA ${BUILD_KASSIOPEIA_DESC} ON )
 
-set( BUILD_UNIT_TESTS_DESC "Build Unit Tests [automatic testing of core functionality using GoogleTest]" )
+set( BUILD_UNIT_TESTS_DESC "Build Unit Tests [automatic testing of core functionality using doctest]" )
 option( BUILD_UNIT_TESTS ${BUILD_UNIT_TESTS_DESC} OFF )
 
 
