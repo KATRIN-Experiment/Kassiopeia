@@ -36,6 +36,8 @@ set (KEMFIELD_BINDINGS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KKrylovChargeDensitySolverOldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KKrylovPreconditionerGeneratorBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KKrylovSolverConfigurationReader.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Magnetic/include/KCachedMagneticChargeDensitySolverBuilder.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Magnetic/include/KBiotSavartChargeDensitySolverBuilder.hh    
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/include/KFMElectrostaticParametersBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/include/KIntegratingElectrostaticFieldSolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/include/KElectricZHFieldSolverBuilder.hh
@@ -80,6 +82,8 @@ set (KEMFIELD_BINDINGS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KKrylovChargeDensitySolverOldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KKrylovPreconditionerGeneratorBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Electric/src/KFMElectrostaticParametersBuilder.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Magnetic/src/KCachedMagneticChargeDensitySolverBuilder.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDensitySolvers/Magnetic/src/KBiotSavartChargeDensitySolverBuilder.cc    
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/src/KIntegratingElectrostaticFieldSolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/src/KElectricZHFieldSolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Electric/src/KElectricFastMultipoleFieldSolverBuilder.cc
