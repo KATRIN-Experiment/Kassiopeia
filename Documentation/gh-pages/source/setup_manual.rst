@@ -102,6 +102,27 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
 
 Tested on Fedora Linux 42.
 
+macOS
+~~~~~
+
+On a macOS system, the packages can be installed using Homebrew (https://brew.sh/):
+
+.. code-block:: bash
+    brew install \
+        cmake \
+        coreutils \
+        boost \
+        fftw \
+        gsl \
+        hdf5 \
+        libxml2 \
+        log4cxx \
+        open-mpi \
+        root \
+        sqlite \
+        vtk \
+        libomp
+
 Required dependencies
 ----------------------
 

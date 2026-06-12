@@ -19,7 +19,7 @@ set (UNIT_TESTS_SOURCEFILES
 
 ## Build (static) library for Kassiopeia's unit tests
 
-add_library (KassiopeiaUnitTests SHARED ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
+add_library (KassiopeiaUnitTests OBJECT ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
 target_include_directories( KassiopeiaUnitTests
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Include)
 target_link_libraries (KassiopeiaUnitTests

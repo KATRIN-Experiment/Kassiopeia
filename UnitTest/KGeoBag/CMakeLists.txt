@@ -15,7 +15,7 @@ set (UNIT_TESTS_SOURCEFILES
 
 ## Build (static) library for KGeoBag's unit tests
 
-add_library (KGeoBagUnitTests SHARED ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
+add_library (KGeoBagUnitTests OBJECT ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
 target_include_directories( KGeoBagUnitTests
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Include )
 target_link_libraries( KGeoBagUnitTests
