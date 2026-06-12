@@ -55,8 +55,7 @@ for dir in $@; do
     SOURCES=$(git ls-tree --full-tree -r --name-only HEAD -- "${dir}" \
             | egrep '\.([chi]pp|[chi]xx|[chi]{2}|h|[CHI])$' \
             | egrep -v '(std)?soap[[:alnum:]]*\.(cpp|h)' \
-            | egrep -v '(opencl)\/(1.1|1.2)\/(Open)?CL\/\w*\.(hpp|cpp|h)$' \
-            | egrep -v 'gtest(-all|_main)?\.(cc|h)$')
+            | egrep -v '(opencl)\/(1.1|1.2)\/(Open)?CL\/\w*\.(hpp|cpp|h)$')
 
     if [ -z "${SOURCES}" ]; then
         echo "(... no source files)"

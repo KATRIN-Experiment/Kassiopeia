@@ -19,7 +19,7 @@ set (UNIT_TESTS_SOURCEFILES
 
 ## Build (static) library for Kassiopeia's unit tests
 
-add_library (KassiopeiaUnitTests SHARED ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
+add_library (KassiopeiaUnitTests OBJECT ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
 target_include_directories( KassiopeiaUnitTests
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Include)
 target_link_libraries (KassiopeiaUnitTests
@@ -34,7 +34,7 @@ kasper_install_libraries (KassiopeiaUnitTests)
 
 ## Build executable for Kassiopeia's unit tests
 
-add_executable (UnitTestKassiopeia ${GTEST_MAIN_SOURCE})
+add_executable (UnitTestKassiopeia ${DOCTEST_MAIN_SOURCE})
 target_link_libraries (UnitTestKassiopeia KassiopeiaUnitTests)
 kasper_install_executables (UnitTestKassiopeia)
 

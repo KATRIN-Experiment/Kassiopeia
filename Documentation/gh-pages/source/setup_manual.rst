@@ -100,7 +100,28 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
         boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel liburing-devel libxml2-devel log4cxx-devel \
         ocl-icd-devel openmpi-devel openssl-devel sqlite-devel vtk-devel zlib-devel
 
-Tested on Fedora Linux 40.
+Tested on Fedora Linux 42.
+
+macOS
+~~~~~
+
+On a macOS system, the packages can be installed using Homebrew (https://brew.sh/):
+
+.. code-block:: bash
+    brew install \
+        cmake \
+        coreutils \
+        boost \
+        fftw \
+        gsl \
+        hdf5 \
+        libxml2 \
+        log4cxx \
+        open-mpi \
+        root \
+        sqlite \
+        vtk \
+        libomp
 
 Required dependencies
 ----------------------
@@ -317,8 +338,8 @@ The following options control the overall build process:
 +-------------------------+---------------------------------------+--------------------------------------------+
 
 The ``BUILD_UNIT_TESTS`` flag enables the compilation of additional unit tests for some parts of the code. The tests
-only built for the active sub-modules. The unit tests uses the GoogleTest_ suite, which is embedded in the sources
-so that not external dependencies are required.
+are only built for the active sub-modules. Unit tests use the embedded doctest_ framework, so no external test
+dependencies are required.
 
 Kassiopeia module
 ------------------

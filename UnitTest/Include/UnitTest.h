@@ -1,8 +1,57 @@
 #ifndef UNITTEST_H_
 #define UNITTEST_H_
 
-#include "gtest/gtest.h"
+#include "doctest/doctest.h"
 #include <csignal>
+#include <cmath>
+#include <unistd.h>
+
+namespace kasper_unittest
+{
+template<class Fixture>
+class FixtureWrapper : public Fixture
+{
+  public:
+    FixtureWrapper()
+    {
+        this->SetUp();
+    }
+    ~FixtureWrapper()
+    {
+        this->TearDown();
+    }
+};
+}  // namespace kasper_unittest
+
+#define TEST(test_suite_name, test_name) TEST_CASE(#test_suite_name "." #test_name)
+#define TEST_F(fixture_name, test_name)                                                                  \
+    TEST_CASE_FIXTURE(kasper_unittest::FixtureWrapper<fixture_name>, #fixture_name "." #test_name)
+
+#define EXPECT_EQ(a, b) CHECK_EQ(a, b)
+#define ASSERT_EQ(a, b) REQUIRE_EQ(a, b)
+#define EXPECT_NE(a, b) CHECK_NE(a, b)
+#define ASSERT_NE(a, b) REQUIRE_NE(a, b)
+#define EXPECT_LT(a, b) CHECK_LT(a, b)
+#define ASSERT_LT(a, b) REQUIRE_LT(a, b)
+#define EXPECT_LE(a, b) CHECK_LE(a, b)
+#define ASSERT_LE(a, b) REQUIRE_LE(a, b)
+#define EXPECT_GT(a, b) CHECK_GT(a, b)
+#define ASSERT_GT(a, b) REQUIRE_GT(a, b)
+#define EXPECT_GE(a, b) CHECK_GE(a, b)
+#define ASSERT_GE(a, b) REQUIRE_GE(a, b)
+#define EXPECT_TRUE(a) CHECK(a)
+#define ASSERT_TRUE(a) REQUIRE(a)
+#define EXPECT_FALSE(a) CHECK_FALSE(a)
+#define ASSERT_FALSE(a) REQUIRE_FALSE(a)
+#define EXPECT_NEAR(a, b, eps) CHECK(std::fabs((a) - (b)) <= (eps))
+#define ASSERT_NEAR(a, b, eps) REQUIRE(std::fabs((a) - (b)) <= (eps))
+#define EXPECT_DOUBLE_EQ(a, b) CHECK_EQ(a, b)
+#define ASSERT_DOUBLE_EQ(a, b) REQUIRE_EQ(a, b)
+#define EXPECT_DOUBLE_LT(a, b) CHECK_LT(a, b)
+#define ASSERT_DOUBLE_LT(a, b) REQUIRE_LT(a, b)
+#define EXPECT_THROW(statement, exception_type) CHECK_THROWS_AS(statement, exception_type)
+#define ASSERT_THROW(statement, exception_type) REQUIRE_THROWS_AS(statement, exception_type)
+#define ASSERT_ANY_THROW(statement) REQUIRE_THROWS(statement)
 
 /* Some useful macros to access values from numeric_limits */
 
@@ -24,11 +73,11 @@
 
 /* Some additional macros for certain value checks in unit tests */
 
-#define EXPECT_PTR(p) EXPECT_FALSE((p) == NULL)
-#define ASSERT_PTR(p) ASSERT_FALSE((p) == NULL)
+#define EXPECT_PTR(p) EXPECT_TRUE((p) != nullptr)
+#define ASSERT_PTR(p) ASSERT_TRUE((p) != nullptr)
 
-#define EXPECT_NULL(p) EXPECT_TRUE((p) == NULL)
-#define ASSERT_NULL(p) ASSERT_TRUE((p) == NULL)
+#define EXPECT_NULL(p) EXPECT_TRUE((p) == nullptr)
+#define ASSERT_NULL(p) ASSERT_TRUE((p) == nullptr)
 
 #define EXPECT_STRING_EQ(a, b) EXPECT_EQ(std::string(a), std::string(b))
 #define ASSERT_STRING_EQ(a, b) ASSERT_EQ(std::string(a), std::string(b))
@@ -44,9 +93,12 @@
  * A fancy fixture class which adds timeouts to fixtures/tests deriving from this one.
  * @author J. Behrens
  */
-class TimeoutTest : public ::testing::Test
+class TimeoutTest
 {
   public:
+    TimeoutTest() = default;
+    virtual ~TimeoutTest() = default;
+
     static int GetTimeoutSeconds()
     {
         return 60;
@@ -75,17 +127,16 @@ class TimeoutTest : public ::testing::Test
         signal_intr(SIGALRM, SIG_IGN);
         signal_intr(SIGALRM, acceptAlarm);
         alarm(GetTimeoutSeconds());
-        const ::testing::TestInfo* const test_info = ::testing::UnitTest::GetInstance()->current_test_info();
-        FAIL() << "ALARM: Timeout on test " << test_info->name() << " (signal " << signalVal << ")";
+        FAIL("ALARM: Timeout on test (signal " << signalVal << ")");
     }
 
-    void SetUp() override
+    virtual void SetUp()
     {
         signal_intr(SIGALRM, acceptAlarm);
         alarm(GetTimeoutSeconds());
     }
 
-    void TearDown() override
+    virtual void TearDown()
     {
         alarm(0);  // cancel alarm
     }

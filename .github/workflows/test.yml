@@ -51,12 +51,12 @@ jobs:
         source root/bin/thisroot.sh && source install/bin/kasperenv.sh && ASAN_OPTIONS=detect_leaks=0 UnitTestKasper
       shell: bash
 
-  fedora_40:
+  fedora_42:
     strategy:
       matrix:
-        use_clang: [false] # FIXME add "true" after solving https://github.com/KATRIN-Experiment/Kassiopeia/issues/87 
+        use_clang: [false, true]
     runs-on: ubuntu-latest
-    container: fedora:40
+    container: fedora:42
     steps:
     - uses: actions/checkout@v3
     - name: Install dependencies
@@ -82,4 +82,35 @@ jobs:
     - name: Launch environment and run tests
       run: |
         source install/bin/kasperenv.sh && ASAN_OPTIONS=detect_leaks=0 UnitTestKasper
+      shell: bash
+
+  macos_latest:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        brew install \
+            cmake \
+            coreutils \
+            boost \
+            fftw \
+            gsl \
+            hdf5 \
+            libxml2 \
+            log4cxx \
+            open-mpi \
+            root \
+            sqlite \
+            vtk \
+            libomp
+    - name: Build code
+      run: |
+        export CC=/usr/bin/clang
+        export CXX=/usr/bin/clang++
+        ./setup.sh
+      shell: bash
+    - name: Launch environment and run tests
+      run: |
+        source install/bin/kasperenv.sh && UnitTestKasper
       shell: bash

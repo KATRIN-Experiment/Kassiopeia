@@ -45,7 +45,7 @@
 .. _ZLIB: http://www.zlib.net/
 .. _miniz: https://code.google.com/archive/p/miniz/
 .. _Docker: https://www.docker.com/
-.. _GoogleTest: https://github.com/google/googletest/
+.. _doctest: https://github.com/doctest/doctest/
 .. _gperftools: https://github.com/gperftools/gperftools/
 
 .. |gccVersion| replace:: 6.1

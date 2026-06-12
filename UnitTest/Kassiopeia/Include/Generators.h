@@ -4,7 +4,6 @@
 #include "KSParticleFactory.h"
 #include "UnitTest.h"
 
-#include "gtest/gtest.h"
 #include <vector>
 
 using namespace Kassiopeia;

@@ -36,6 +36,17 @@ if [ $# -ne 0 ] ; then
     exit -1
 fi
 
+# Aliases for macOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    if ! command -v grealpath &> /dev/null; then
+        echo "grealpath is missing. It can be installed with 'brew install coreutils'."
+        exit -1
+    fi
+
+    nproc() { sysctl -n hw.logicalcpu; }
+    realpath() { grealpath "$@"; }
+fi
+
 KASSIOPEIA_BUILD_TYPE=${KASSIOPEIA_BUILD_TYPE:-"RelWithDebInfo"}
 KASSIOPEIA_INSTALL_PREFIX=$(realpath -s ${KASSIOPEIA_INSTALL_PREFIX:-"install"})
 KASSIOPEIA_BUILD_PREFIX=$(realpath -s ${KASSIOPEIA_BUILD_PREFIX:-"build"})

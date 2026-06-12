@@ -8,9 +8,8 @@
  * as simple as possible (think of a minimal example of how to use a certain
  * class). It is a good idea to also include a death-test for each class.
  *
- * See the official GoogleTest pages for more info:
- *   https://code.google.com/p/googletest/wiki/Primer
- *   https://code.google.com/p/googletest/wiki/AdvancedGuide
+ * See the doctest documentation for more info:
+ *   https://github.com/doctest/doctest/blob/master/doc/markdown/tutorial.md
  */
 
 #include "Terminators.h"

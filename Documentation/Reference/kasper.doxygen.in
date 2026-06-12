@@ -911,8 +911,6 @@ EXCLUDE_PATTERNS       = *Dict.* \
                          CySpecialFits.c \
                          __init__.py \
                          __pycache__/* \
-                         gtest.h \
-                         gtest*.cc \
                          dl_*.h \
                          dl_*.cpp \
                          cl_*.h \

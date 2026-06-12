@@ -12,6 +12,8 @@
 #include "TStyle.h"
 
 #include <cmath>
+#include <stdexcept>
+#include <vector>
 
 namespace KEMField
 {
@@ -59,26 +61,38 @@ void KEMRootFieldCanvas::DrawGeomRZ(const std::string& conicSectfile, const std:
 {
     // Read in the conicSects
 
-    int __attribute__((unused)) _ret;
-
     if (conicSectfile != "NULL") {
         FILE* inputfull = fopen(conicSectfile.c_str(), "r");
 
         int NconicSect;
 
-        _ret = fscanf(inputfull, "%i", &NconicSect);
+        int _ret = fscanf(inputfull, "%i", &NconicSect);
 
-        TLine* eline[NconicSect];
+        if (_ret != 1) {
+            throw std::runtime_error("Could not read NconicSect");
+        }
 
-        double ex_0[NconicSect];
-        double ey_0[NconicSect];
-        double ex_1[NconicSect];
-        double ey_1[NconicSect];
+        if (NconicSect < 0) {
+            throw std::runtime_error("NconicSect must be positive");
+        }
+
+        size_t nConicSect = static_cast<size_t>(NconicSect);
+        std::vector<TLine*> eline(nConicSect);
+
+        std::vector<double> ex_0(nConicSect);
+        std::vector<double> ey_0(nConicSect);
+        std::vector<double> ex_1(nConicSect);
+        std::vector<double> ey_1(nConicSect);
         double temp1;
         int temp2;
 
         for (int s = 0; s < NconicSect; s++) {
-            _ret = fscanf(inputfull, "%le %le %le %le %le %i", &ex_0[s], &ey_0[s], &ex_1[s], &ey_1[s], &temp1, &temp2);
+            int _ret = fscanf(inputfull, "%le %le %le %le %le %i", &ex_0[s], &ey_0[s], &ex_1[s], &ey_1[s], &temp1, &temp2);
+
+            if (_ret < 4 || _ret > 6) {
+                throw std::runtime_error("Could not read conic section");
+            }
+
             eline[s] = new TLine(ex_0[s], ey_0[s], ex_1[s], ey_1[s]);
         }
 
@@ -124,22 +138,31 @@ void KEMRootFieldCanvas::DrawGeomRZ(const std::string& conicSectfile, const std:
 
         int Nwire;
 
-        _ret = fscanf(inputwire, "%i", &Nwire);
+        int _ret = fscanf(inputwire, "%i", &Nwire);
 
-        TLine* wline[Nwire];
+        if (_ret != 1) {
+            throw std::runtime_error("Could not read Nwire");
+        }
 
-        double wx_0[Nwire];
-        double wy_0[Nwire];
-        double wx_1[Nwire];
-        double wy_1[Nwire];
-        double wd[Nwire];
+        if (Nwire < 0) {
+            throw std::runtime_error("Nwire must be positive");
+        }
+
+        size_t nWire = static_cast<size_t>(Nwire);
+        std::vector<TLine*> wline(nWire);
+
+        std::vector<double> wx_0(nWire);
+        std::vector<double> wy_0(nWire);
+        std::vector<double> wx_1(nWire);
+        std::vector<double> wy_1(nWire);
+        std::vector<double> wd(nWire);
         double temp3;
         int temp4;
         double temp5;
         int temp6;
 
         for (int s = 0; s < Nwire; s++) {
-            _ret = fscanf(inputwire,
+            int _ret = fscanf(inputwire,
                           "%le %le %le %le %le %le %i %le %i",
                           &wx_0[s],
                           &wy_0[s],
@@ -150,6 +173,11 @@ void KEMRootFieldCanvas::DrawGeomRZ(const std::string& conicSectfile, const std:
                           &temp4,
                           &temp5,
                           &temp6);
+            
+            if (_ret < 5 || _ret > 9) {
+                throw std::runtime_error("Could not read wire");
+            }
+
             wline[s] = new TLine(wx_0[s], wy_0[s], wx_1[s], wy_1[s]);
         }
 
@@ -197,18 +225,32 @@ void KEMRootFieldCanvas::DrawGeomRZ(const std::string& conicSectfile, const std:
 
         int Ncoil;
 
-        _ret = fscanf(inputcoil, "%i", &Ncoil);
+        int _ret = fscanf(inputcoil, "%i", &Ncoil);
 
-        TBox* box[Ncoil];
+        if (_ret != 1) {
+            throw std::runtime_error("Could not read Ncoil");
+        }
 
-        double z_mid[Ncoil];
-        double r_min[Ncoil];
-        double r_thk[Ncoil];
-        double z_len[Ncoil];
+        if (Ncoil < 0) {
+            throw std::runtime_error("Ncoil must be positive");
+        }
+
+        size_t nCoil = static_cast<size_t>(Ncoil);
+        std::vector<TBox*> box(nCoil);
+
+        std::vector<double> z_mid(nCoil);
+        std::vector<double> r_min(nCoil);
+        std::vector<double> r_thk(nCoil);
+        std::vector<double> z_len(nCoil);
         double temp;
 
         for (int j = 0; j < Ncoil; j++) {
-            _ret = fscanf(inputcoil, "%le %le %le %le %le ", &z_mid[j], &r_min[j], &r_thk[j], &z_len[j], &temp);
+            int _ret = fscanf(inputcoil, "%le %le %le %le %le ", &z_mid[j], &r_min[j], &r_thk[j], &z_len[j], &temp);
+            
+            if (_ret < 4 || _ret > 5) {
+                throw std::runtime_error("Could not read coil");
+            }
+            
             box[j] = new TBox((z_mid[j] - z_len[j] / 2), r_min[j], (z_mid[j] + z_len[j] / 2), (r_min[j] + r_thk[j]));
         }
 
@@ -241,26 +283,37 @@ void KEMRootFieldCanvas::DrawGeomXY(double z, const std::string& conicSectfile, 
 {
     // Read in the conicSects
 
-    int __attribute__((unused)) _ret;
-
     if (conicSectfile != "NULL") {
         FILE* inputfull = fopen(conicSectfile.c_str(), "r");
 
         int NconicSect;
 
-        _ret = fscanf(inputfull, "%i", &NconicSect);
+        int _ret = fscanf(inputfull, "%i", &NconicSect);
 
-        TEllipse* e[NconicSect];
+        if (_ret != 1) {
+            throw std::runtime_error("Could not read NconicSect");
+        }
 
-        double ez_0[NconicSect];
-        double er_0[NconicSect];
-        double ez_1[NconicSect];
-        double er_1[NconicSect];
+        if (NconicSect < 0) {
+            throw std::runtime_error("NconicSect must be positive");
+        }
+
+        size_t nConicSect = static_cast<size_t>(NconicSect);
+        std::vector<TEllipse*> e(nConicSect);
+
+        std::vector<double> ez_0(nConicSect);
+        std::vector<double> er_0(nConicSect);
+        std::vector<double> ez_1(nConicSect);
+        std::vector<double> er_1(nConicSect);
         double temp1;
         int temp2;
 
         for (int s = 0; s < NconicSect; s++) {
-            _ret = fscanf(inputfull, "%le %le %le %le %le %i", &ez_0[s], &er_0[s], &ez_1[s], &er_1[s], &temp1, &temp2);
+            int _ret = fscanf(inputfull, "%le %le %le %le %le %i", &ez_0[s], &er_0[s], &ez_1[s], &er_1[s], &temp1, &temp2);
+
+            if (_ret < 4 || _ret > 6) {
+                throw std::runtime_error("Could not read conic section");
+            }
 
             if (ez_0[s] < z && ez_1[s] > z) {
                 double z_tot = fabs(ez_1[s] - ez_0[s]);
@@ -284,22 +337,31 @@ void KEMRootFieldCanvas::DrawGeomXY(double z, const std::string& conicSectfile, 
 
         int Nwire;
 
-        _ret = fscanf(inputwire, "%i", &Nwire);
+        int _ret = fscanf(inputwire, "%i", &Nwire);
 
-        TEllipse* w[Nwire];
+        if (_ret != 1) {
+            throw std::runtime_error("Could not read Nwire");
+        }
 
-        double wz_0[Nwire];
-        double wr_0[Nwire];
-        double wz_1[Nwire];
-        double wr_1[Nwire];
-        double wd[Nwire];
-        double phi[Nwire];
-        int numwire[Nwire];
+        if (Nwire < 0) {
+            throw std::runtime_error("Nwire must be positive");
+        }
+
+        size_t nWire = static_cast<size_t>(Nwire);
+        std::vector<TEllipse*> w(nWire);
+
+        std::vector<double> wz_0(nWire);
+        std::vector<double> wr_0(nWire);
+        std::vector<double> wz_1(nWire);
+        std::vector<double> wr_1(nWire);
+        std::vector<double> wd(nWire);
+        std::vector<double> phi(nWire);
+        std::vector<int> numwire(nWire);
         double temp5;
         int temp6;
 
         for (int s = 0; s < Nwire; s++) {
-            _ret = fscanf(inputwire,
+            int _ret = fscanf(inputwire,
                           "%le %le %le %le %le %le %i %le %i",
                           &wz_0[s],
                           &wr_0[s],
@@ -310,6 +372,10 @@ void KEMRootFieldCanvas::DrawGeomXY(double z, const std::string& conicSectfile, 
                           &numwire[s],
                           &temp5,
                           &temp6);
+            
+            if (_ret < 7 || _ret > 9) {
+                throw std::runtime_error("Could not read wire");
+            }
 
             double z_tot = fabs(wz_1[s] - wz_0[s]);
 
@@ -351,18 +417,32 @@ void KEMRootFieldCanvas::DrawGeomXY(double z, const std::string& conicSectfile, 
 
         int Ncoil;
 
-        _ret = fscanf(inputcoil, "%i", &Ncoil);
+        int _ret = fscanf(inputcoil, "%i", &Ncoil);
 
-        TEllipse* coil[Ncoil];
+        if (_ret != 1) {
+            throw std::runtime_error("Could not read Ncoil");
+        }
 
-        double z_mid[Ncoil];
-        double r_min[Ncoil];
-        double r_thk[Ncoil];
-        double z_len[Ncoil];
+        if (Ncoil < 0) {
+            throw std::runtime_error("Ncoil must be positive");
+        }
+
+        size_t nCoil = static_cast<size_t>(Ncoil);
+        std::vector<TEllipse*> coil(nCoil);
+
+        std::vector<double> z_mid(nCoil);
+        std::vector<double> r_min(nCoil);
+        std::vector<double> r_thk(nCoil);
+        std::vector<double> z_len(nCoil);
         double temp;
 
         for (int j = 0; j < Ncoil; j++) {
-            _ret = fscanf(inputcoil, "%le %le %le %le %le ", &z_mid[j], &r_min[j], &r_thk[j], &z_len[j], &temp);
+            int _ret = fscanf(inputcoil, "%le %le %le %le %le ", &z_mid[j], &r_min[j], &r_thk[j], &z_len[j], &temp);
+            
+            if (_ret < 4 || _ret > 5) {
+                throw std::runtime_error("Could not read coil");
+            }
+            
             if (z_mid[j] + z_len[j] / 2 > z && z_mid[j] - z_len[j] / 2 < z) {
                 coil[j] = new TEllipse(0, 0, r_min[j] + r_thk[j], r_min[j]);
                 coil[j]->SetLineWidth(0);
@@ -458,7 +538,8 @@ void KEMRootFieldCanvas::DrawFieldLines(const std::vector<double>& x, const std:
 {
     int nLineSegs = x.size() - 1;
 
-    TLine* fl[nLineSegs];
+    size_t nLineSegsSize = nLineSegs > 0 ? static_cast<size_t>(nLineSegs) : 0;
+    std::vector<TLine*> fl(nLineSegsSize);
 
     for (int n = 0; n < nLineSegs; n++) {
         fl[n] = new TLine(x[n], y[n], x[n + 1], y[n + 1]);
