@@ -7,13 +7,22 @@
 #define Kassiopeia_KSIntSurfaceScattering_h_
 
 #include "KField.h"
+#include "KSInteractionsMessage.h"
 #include "KSSurfaceInteraction.h"
+#include "KThreeVector.hh"
 
 #include <string>
 namespace Kassiopeia
 {
 
 class KSStep;
+
+enum class KSIntSurfaceScatteringSide
+{
+    Both,
+    Top,
+    Bottom
+};
 
 class KSIntSurfaceScattering : public KSComponentTemplate<KSIntSurfaceScattering, KSSurfaceInteraction>
 {
@@ -33,43 +42,40 @@ class KSIntSurfaceScattering : public KSComponentTemplate<KSIntSurfaceScattering
     void ExecuteReflection(const KSParticle& anInitialParticle,
                                  KSParticle& aFinalParticle,
                                  KSParticleQueue& aSecondaries);
+    katrin::KThreeVector GetReflectionDirection(const KSParticle& anInitialParticle,
+                                        const double tSinTheta,
+                                        const double tCosTheta,
+                                        const double tAzimuthalAngle);
 
     void SetSide(std::string side_name)
     {
-        //default is both sides of the surface execute the interaction
-        fSideName = std::string("both");
-        fPerformSideCheck = false;
-
-        //top is the side on which the normal points outward
+        if (side_name == "both") {
+            fSide = KSIntSurfaceScatteringSide::Both;
+            return;
+        }
+        
         if (side_name == "top") {
-            fSideName = side_name;
-            fPerformSideCheck = true;
-            fSideSignIsNegative = true;
+            fSide = KSIntSurfaceScatteringSide::Top;
+            return;
         }
-
-        //bottom is the side on which the normal std::vector points inward
+        
         if (side_name == "bottom") {
-            fSideName = side_name;
-            fPerformSideCheck = true;
-            fSideSignIsNegative = false;
+            fSide = KSIntSurfaceScatteringSide::Bottom;
+            return;
         }
+        
+       intmsg(eError) << "surface diffuse interaction named <" << GetName()
+        << "> does not understand side <" << side_name
+        << ">. Valid sides are: both, top, bottom." << eom;
+       return;
     }
-
-    std::string GetSide() const
-    {
-        return fSideName;
-    };
 
   public:
     K_SET_GET(double, ScatProbability)
     K_SET_GET(double, ScatLossFraction)
     K_SET_GET(double, SecElectronProbability)
     K_SET_GET(double, SecElectronMeanEnergy)
-
-  private:
-    bool fPerformSideCheck;
-    bool fSideSignIsNegative;
-    std::string fSideName;
+    K_SET_GET(KSIntSurfaceScatteringSide, Side)
 };
 
 }  // namespace Kassiopeia
