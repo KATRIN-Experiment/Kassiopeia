@@ -7,6 +7,8 @@
 
 #include "KConst.h"
 #include "KRandom.h"
+#include "KSInteractionsMessage.h"
+#include "KThreeVector.hh"
 
 #include <cmath>
 #include <limits>
@@ -17,6 +19,19 @@ using katrin::KThreeVector;
 namespace Kassiopeia
 {
 
+namespace
+{
+std::string GetSurfaceOrSideName(const KSParticle& aParticle)
+{
+    if (aParticle.GetCurrentSurface() != nullptr) {
+        return aParticle.GetCurrentSurface()->GetName();
+    }
+    if (aParticle.GetCurrentSide() != nullptr) {
+        return aParticle.GetCurrentSide()->GetName();
+    }
+    return "";
+}
+}  // namespace
 
 KSIntSurfaceScattering::KSIntSurfaceScattering() :
     fScatProbability(std::numeric_limits<double>::quiet_NaN()),
@@ -75,7 +90,21 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
                                                       KSParticleQueue& aSecondaries)
 {
   double tChoice;
-  KSSurface* tCurrentSurface = anInitialParticle.GetCurrentSurface();
+
+  if (std::isnan(fScatProbability) || std::isnan(fScatLossFraction) || std::isnan(fSecElectronProbability) ||
+      std::isnan(fSecElectronMeanEnergy)) {
+    intmsg(eError) << "surface diffuse interaction named <" << GetName()
+                   << "> is missing a required parameter (ScatProbability, ScatLossFraction, "
+                      "SecElectronProbability and SecElectronMeanEnergy must all be set)"
+                   << eom;
+    return;
+  }
+  if (!(fScatLossFraction >= 0.0 && fScatLossFraction < 1.0)) {
+    intmsg(eError) << "surface diffuse interaction named <" << GetName()
+                   << "> is configured for an out-of-range ScatLossFraction of <" << fScatLossFraction << ">."
+                   << eom;
+    return;
+  }
 
 #ifdef Kassiopeia_ENABLE_DEBUG
   intmsg_debug("*************** initial particle" << eom);
@@ -113,6 +142,7 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
   if (!execute_interaction) {
     aFinalParticle = anInitialParticle;
     aFinalParticle.AddLabel(GetName());
+    aFinalParticle.AddLabel(GetSurfaceOrSideName(anInitialParticle));
     aFinalParticle.AddLabel("transmitted");
     return;
   }
@@ -120,20 +150,16 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
   tChoice = KRandom::GetInstance().Uniform(0., 1.);
   if (tChoice < fSecElectronProbability) {
     CreateSecondaryElectron(anInitialParticle, aFinalParticle, aSecondaries);
-    intmsg(eNormal) << "  secondary electron production occurred on child surface <"
-                    << (tCurrentSurface != nullptr ? tCurrentSurface->GetName()
-                                                   : anInitialParticle.GetCurrentSide()->GetName())
-                    << ">" << eom;
+    intmsg_debug("  secondary electron production occurred on child surface <"
+                    << GetSurfaceOrSideName(anInitialParticle) << ">" << eom);
   }
 
   tChoice = KRandom::GetInstance().Uniform(0., 1.);
-  if (tChoice >= fScatProbability)
+  if (tChoice < fScatProbability)
   {
     ExecuteReflection(anInitialParticle, aFinalParticle, aSecondaries);
-    intmsg(eNormal) << "  backscattering occurred on child surface <"
-                    << (tCurrentSurface != nullptr ? tCurrentSurface->GetName()
-                                                   : anInitialParticle.GetCurrentSide()->GetName())
-                    << ">" << eom;
+    intmsg_debug("  backscattering occurred on child surface <"
+                    << GetSurfaceOrSideName(anInitialParticle) << ">" << eom);
   }
   else
   {
@@ -141,12 +167,11 @@ void KSIntSurfaceScattering::ExecuteInteraction(const KSParticle& anInitialParti
     aFinalParticle = anInitialParticle;
     aFinalParticle.SetActive(false);
     aFinalParticle.AddLabel(GetName());
+    aFinalParticle.AddLabel(GetSurfaceOrSideName(anInitialParticle));
     aFinalParticle.AddLabel("absorbed");
     aFinalParticle.SetMomentum(0., 0., 0.);
-    intmsg(eNormal) << "  particle absorption occurred on child surface <"
-                    << (tCurrentSurface != nullptr ? tCurrentSurface->GetName()
-                                                     : anInitialParticle.GetCurrentSide()->GetName())
-                      << ">" << eom;
+    intmsg_debug("  particle absorption occurred on child surface <"
+                    << GetSurfaceOrSideName(anInitialParticle) << ">" << eom);
   }
 
 #ifdef Kassiopeia_ENABLE_DEBUG
@@ -187,6 +212,8 @@ void KSIntSurfaceScattering::CreateSecondaryElectron(const KSParticle& anInitial
   tParticle->SetMomentum(tDirection);
   tParticle->SetKineticEnergy_eV(tChildEnergy);
   tParticle->SetCurrentSurface(nullptr);
+  tParticle->AddLabel(GetName());
+  tParticle->AddLabel(GetSurfaceOrSideName(anInitialParticle));
   tParticle->AddLabel("secondary");
   aSecondaries.push_back(tParticle);
   
@@ -200,23 +227,9 @@ void KSIntSurfaceScattering::ExecuteReflection(const KSParticle& anInitialPartic
                                                      KSParticleQueue&)
 {
     double tKineticEnergy = anInitialParticle.GetKineticEnergy();
-    
-    if(!(fScatLossFraction >= 0.0 && fScatLossFraction <= 1.0)) {
-        intmsg(eError) << "surface diffuse interaction named <" << GetName()
-                       << "> is configured for an out-of-range ScatLossFraction of <"
-                       << fScatLossFraction << ">." << eom;
-        return;
-    }
 
     // energy loss due to backscattering
     tKineticEnergy *= (1.0 - fScatLossFraction);
-
-    //prevent kinetic energy from going negative
-    if (tKineticEnergy < 0.0) {
-        intmsg(eError) << "surface diffuse interaction named <" << GetName()
-                       << "> tried to give a particle a negative kinetic energy." << eom;
-        return;
-    }
 
     //generate angles for diffuse 'Lambertian' reflection direction
     double tAzimuthalAngle = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
@@ -231,6 +244,8 @@ void KSIntSurfaceScattering::ExecuteReflection(const KSParticle& anInitialPartic
     aFinalParticle = anInitialParticle;
     aFinalParticle.SetMomentum(tReflectedMomentum);
     aFinalParticle.SetKineticEnergy(tKineticEnergy);
+    aFinalParticle.AddLabel(GetName());
+    aFinalParticle.AddLabel(GetSurfaceOrSideName(anInitialParticle));
     aFinalParticle.AddLabel("backscattered");
 
     return;
