@@ -29,6 +29,8 @@ add_library( UnitTestBase INTERFACE )
 target_include_directories( UnitTestBase INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MockUps/Include>
+)
+target_include_directories( UnitTestBase SYSTEM INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Doctest/include>
 )
 kasper_install_libraries( UnitTestBase )

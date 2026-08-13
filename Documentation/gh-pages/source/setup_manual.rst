@@ -55,7 +55,7 @@ Required software dependencies
 *Kassiopeia* has been designed with an eye towards keeping reliance on external software packages and libraries to a
 minimum. That being said, there are a few packages which are required in order to build the software.
 
-The first and most obvious is a C/C++ compiler which is new enough to support the C++14 standard. The two recommended
+The first and most obvious is a C/C++ compiler which is new enough to support the C++17 standard. The two recommended
 compilers are GCC and Clang. The minimum required versions are gcc |gccVersion| and clang |clangVersion|.
 
 Secondly, in order to build *Kassiopeia*, CMake version |CMakeVersion| or greater is needed, along with a suitable build tool such

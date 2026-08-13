@@ -48,8 +48,8 @@
 .. _doctest: https://github.com/doctest/doctest/
 .. _gperftools: https://github.com/gperftools/gperftools/
 
-.. |gccVersion| replace:: 6.1
-.. |clangVersion| replace:: 3.4
+.. |gccVersion| replace:: 7.0
+.. |clangVersion| replace:: 5.0
 .. |CMakeVersion| replace:: 3.14
 .. |BoostVersion| replace:: 1.65
 .. |ROOTVersion| replace:: 6.24

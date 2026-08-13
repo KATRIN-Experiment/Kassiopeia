@@ -66,7 +66,7 @@ for dir in $@; do
         echo "  ${file}"
         cp -af "${file}" "${file}.clang-check.bak" \
             && $CHECK -analyze "${file}" \
-            -- -x c++ -std=c++14 ${EXTRA_HEADERS} \
+            -- -x c++ -std=c++17 ${EXTRA_HEADERS} \
             | tee -a "${log_file}"
     done
 done

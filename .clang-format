@@ -4,7 +4,7 @@ BasedOnStyle: LLVM
 # To see all the default values of the base style, run: clang-format --style=LLVM --dump-config
 
 Language: Cpp
-Standard: c++14
+Standard: c++17
 ColumnLimit: 120
 IndentWidth: 4
 

@@ -85,7 +85,7 @@ add_link_options( $<$<STREQUAL:"${_target_type}","MODULE_LIBRARY">:${VTK_REQUIRE
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS ${VTK_DEFINITIONS})
 
 # Add include directories needed to use VTK.
-target_include_directories(KommonVtk PUBLIC ${VTK_INCLUDE_DIRS})
+target_include_directories(KommonVtk SYSTEM PUBLIC ${VTK_INCLUDE_DIRS})
 
 # Add link directories needed to use VTK.
 target_link_directories(KommonVtk PUBLIC ${VTK_LIBRARY_DIRS})
