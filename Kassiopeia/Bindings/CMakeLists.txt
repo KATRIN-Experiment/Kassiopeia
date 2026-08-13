@@ -444,6 +444,18 @@ if( Kassiopeia_USE_ROOT )
             Visualization/Source/KSVTKTrackTerminatorPainterBuilder.cxx
         )
     endif( Kassiopeia_USE_VTK )
+
+    # ROOT's prebuilt Ubuntu 20.04 binary (used in CI) ships a bundled Vc that fails
+    # to compile under C++17 when TF1.h/TFormula.h -> Math/Types.h pulls it in (Vc's
+    # prefetch helpers end up looked up in namespace std and are not found). Pin
+    # these translation units to C++14, which that ROOT build handles correctly.
+    set_source_files_properties(
+        ${CMAKE_CURRENT_SOURCE_DIR}/Objects/Source/KSComponentMathBuilder.cxx
+        ${CMAKE_CURRENT_SOURCE_DIR}/Generators/Source/KSGenValueFormulaBuilder.cxx
+        ${CMAKE_CURRENT_SOURCE_DIR}/Generators/Source/KSGenValueHistogramBuilder.cxx
+        ${CMAKE_CURRENT_SOURCE_DIR}/Generators/Source/KSGenGeneratorSimulationBuilder.cxx
+        PROPERTIES CXX_STANDARD 14
+    )
 endif( Kassiopeia_USE_ROOT )
 
 if( Kassiopeia_USE_VTK )

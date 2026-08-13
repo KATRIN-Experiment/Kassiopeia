@@ -35,6 +35,12 @@ set(KOMMON_ROOT_EXTRA_FILES
 
 set_property(SOURCE Initialization/tinyexpr.c APPEND PROPERTY COMPILE_OPTIONS "-Wno-array-bounds" )  # FIXME
 
+# ROOT's prebuilt Ubuntu 20.04 binary (used in CI) ships a bundled Vc that fails to
+# compile under C++17 when TFormula.h -> Math/Types.h pulls it in (Vc's prefetch
+# helpers end up looked up in namespace std and are not found). Pin this one
+# translation unit to C++14, which that ROOT build handles correctly.
+set_source_files_properties(Initialization/KFormulaProcessor.cc PROPERTIES CXX_STANDARD 14)
+
 add_library( KommonRoot SHARED
     ${KOMMON_ROOT_SOURCE_FILES} ${KOMMON_ROOT_HEADER_FILES} ${KOMMON_ROOT_EXTRA_FILES} )
 
