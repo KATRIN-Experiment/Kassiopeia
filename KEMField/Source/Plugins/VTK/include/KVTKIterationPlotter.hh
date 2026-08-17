@@ -16,6 +16,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkTable.h>
 #include <vtkVersion.h>
+#include <vtkVersionMacros.h>
 
 namespace KEMField
 {
@@ -82,8 +83,11 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::CreatePlot()
     dots->SetInputData(table, 0, 1);
 #endif
     dots->SetColor(0, 0, 0, 255);
-
+#if VTK_VERSION_NUMBER >= VTK_VERSION_CHECK(9, 7, 0)
     if (fArrayX->GetCapacity() >= 2) {
+#else
+    if (fArrayX->GetSize() >= 2) {
+#endif
         vtkPlot* line = fChart->AddPlot(vtkChart::LINE);
 #if VTK_MAJOR_VERSION <= 5
         line->SetInput(table, 0, 1);
