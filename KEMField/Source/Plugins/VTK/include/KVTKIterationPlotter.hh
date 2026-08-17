@@ -83,7 +83,7 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::CreatePlot()
 #endif
     dots->SetColor(0, 0, 0, 255);
 
-    if (fArrayX->GetSize() >= 2) {
+    if (fArrayX->GetCapacity() >= 2) {
         vtkPlot* line = fChart->AddPlot(vtkChart::LINE);
 #if VTK_MAJOR_VERSION <= 5
         line->SetInput(table, 0, 1);
