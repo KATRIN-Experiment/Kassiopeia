@@ -16,7 +16,6 @@
 #include <vtkSmartPointer.h>
 #include <vtkTable.h>
 #include <vtkVersion.h>
-#include <vtkVersionMacros.h>
 
 namespace KEMField
 {
@@ -83,7 +82,7 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::CreatePlot()
     dots->SetInputData(table, 0, 1);
 #endif
     dots->SetColor(0, 0, 0, 255);
-#if VTK_VERSION_NUMBER >= VTK_VERSION_CHECK(9, 7, 0)
+#if VTK_VERSION_NUMBER >= 90700000000ULL 
     if (fArrayX->GetCapacity() >= 2) {
 #else
     if (fArrayX->GetSize() >= 2) {
