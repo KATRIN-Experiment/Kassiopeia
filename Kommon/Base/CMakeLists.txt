@@ -38,7 +38,6 @@ set(KOMMON_BASE_HEADER_FILES
     Utility/Gnuplot.hpp
 
     Utility/KUtilityMessage.h
-    Utility/KAlgorithm.h
     Utility/KException.h
     Utility/KCast.h
     Utility/KConst_2006.h
