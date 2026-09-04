@@ -516,7 +516,7 @@ template<class XIntegrandType>
 inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGS(XIntegrandType&& integrand)
 {
     /*Use gsl implementation for integral int_a^b. Implementation is experimental. */
-	const uint ws_size = 100;
+	const size_t ws_size = 100;
     gsl_integration_workspace* workspace = gsl_integration_workspace_alloc(ws_size);
     FType proxy = integrand;
     gsl_function F=GSLFunction(proxy);
@@ -561,7 +561,7 @@ template<class XIntegrandType>
 inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGIU(XIntegrandType&& integrand)
 {
     /*Use gsl implementation for integral int_xmin^infty. Use case is the krypton spectrum. Implementation is experimental. */
-	const uint ws_size = 100;
+	const size_t ws_size = 100;
     gsl_integration_workspace* workspace = gsl_integration_workspace_alloc(ws_size);
     FType proxy = integrand;
     gsl_function F=GSLFunction(proxy);
