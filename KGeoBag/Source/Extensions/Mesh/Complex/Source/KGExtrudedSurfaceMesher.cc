@@ -261,7 +261,7 @@ void KGExtrudedSurfaceMesher::DiscretizeSegment(const KGExtrudedObject::Arc* arc
     double n1[3] = {};
     n1[2] = 0;
 
-    double p0[3];
+    double p0[3] = {};
     p0[2] = fExtrudedObject->GetZMin();
 
     double xy_len = 0;

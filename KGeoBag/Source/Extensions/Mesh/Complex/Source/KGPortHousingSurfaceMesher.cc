@@ -40,8 +40,8 @@ void KGPortHousingSurfaceMesher::VisitWrappedSurface(KGWrappedSurface<KGPortHous
     double x_loc[3];
     double y_loc[3];
     double z_loc[3];
-    double x_min;
-    double x_max;
+    double x_min = 0.;
+    double x_max = 0.;
 
     KGCoordinateTransform* coordTransform = nullptr;
 
