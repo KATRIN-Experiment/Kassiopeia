@@ -129,6 +129,7 @@ set( BINDINGS_HEADER_FILES
     Interactions/Include/KSIntSurfaceSpecularBuilder.h
     Interactions/Include/KSIntSurfaceUCNBuilder.h
     Interactions/Include/KSIntSurfaceDiffuseBuilder.h
+    Interactions/Include/KSIntSurfaceScatteringBuilder.h
     Interactions/Include/KSIntSurfaceMultiplicationBuilder.h
     Interactions/Include/KSIntSurfaceSpinFlipBuilder.h
     Interactions/Include/KESSSurfaceInteractionBuilder.h
@@ -357,6 +358,7 @@ set( BINDINGS_SOURCE_FILES
     Interactions/Source/KSIntSurfaceSpecularBuilder.cxx
     Interactions/Source/KSIntSurfaceUCNBuilder.cxx
     Interactions/Source/KSIntSurfaceDiffuseBuilder.cxx
+    Interactions/Source/KSIntSurfaceScatteringBuilder.cxx
     Interactions/Source/KSIntSurfaceMultiplicationBuilder.cxx
     Interactions/Source/KSIntSurfaceSpinFlipBuilder.cxx
     Interactions/Source/KESSSurfaceInteractionBuilder.cxx
