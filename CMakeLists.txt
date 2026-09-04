@@ -22,8 +22,9 @@ mark_as_advanced( FORCE CMAKE_CXX_STANDARD )
 
 # ROOT may force a newer C++ standard
 # Using the same C++ standard as ROOT is recommended in https://root.cern/manual/integrate_root_into_my_cmake_project/ .
+# Older ROOT releases don't export ROOT_CXX_STANDARD at all, so only override our default when it's actually set.
 find_package(ROOT QUIET)
-if(ROOT_FOUND AND KASPER_USE_ROOT)
+if(ROOT_FOUND AND KASPER_USE_ROOT AND ROOT_CXX_STANDARD)
     set( CMAKE_CXX_STANDARD ${ROOT_CXX_STANDARD} CACHE STRING "The C++ standard, as requested by the ROOT library. Can't be changed." FORCE)
 endif()
 
