@@ -25,7 +25,7 @@ KSTrajTermPropagation::~KSTrajTermPropagation() = default;
 void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle,
                                           KSTrajExactDerivative& aDerivative) const
 {
-    KThreeVector tVelocity = fDirection * aParticle.GetVelocity();
+    KThreeVector tVelocity = (+fDirection) * aParticle.GetVelocity();
     KThreeVector tForce =
         aParticle.GetCharge() * (aParticle.GetElectricField() + tVelocity.Cross(aParticle.GetMagneticField()));
 
@@ -39,7 +39,7 @@ void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajExactSpi
 {
     double TempSN = std::sqrt(aParticle.GetSpin().MagnitudeSquared() - aParticle.GetSpin0() * aParticle.GetSpin0());
 
-    KThreeVector tVelocity = fDirection * aParticle.GetVelocity();
+    KThreeVector tVelocity = (+fDirection) * aParticle.GetVelocity();
 
     KThreeVector MagneticMoment = aParticle.GetGyromagneticRatio() * aParticle.GetSpin() /
                                   aParticle.GetSpin().Magnitude() * aParticle.GetSpinMagnitude() *
@@ -157,7 +157,7 @@ void KSTrajTermPropagation::Differentiate(double aTime, const KSTrajExactTrapped
 void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle,
                                           KSTrajAdiabaticDerivative& aDerivative) const
 {
-    double tLongVelocity = fDirection * aParticle.GetLongVelocity();
+    double tLongVelocity = (+fDirection) * aParticle.GetLongVelocity();
     double tLongitudinalMomentum = aParticle.GetLongMomentum();
     double tTransverseMomentum = aParticle.GetTransMomentum();
     double tLorentzFactor = aParticle.GetLorentzFactor();
@@ -219,7 +219,7 @@ void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajAdiabati
         GradE1 / E1.Magnitude() - KThreeMatrix::OuterProduct(E1, GradE1Magnitude) / E1.Magnitude() / E1.Magnitude();
     KThreeVector A = Grade1 * e2;
 
-    KThreeVector tVelocity = fDirection * aParticle.GetVelocity();
+    KThreeVector tVelocity = (+fDirection) * aParticle.GetVelocity();
     KThreeVector tForce =
         aParticle.GetCharge() * (aParticle.GetElectricField() + tVelocity.Cross(aParticle.GetMagneticField())) +
         aParticle.GetGyromagneticRatio() * aParticle.GetSpinMagnitude() * katrin::KConst::Hbar() *
@@ -244,7 +244,7 @@ void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajAdiabati
 void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajMagneticParticle& aParticle,
                                           KSTrajMagneticDerivative& aDerivative) const
 {
-    KThreeVector tVelocity = fDirection * aParticle.GetMagneticField().Unit();
+    KThreeVector tVelocity = (+fDirection) * aParticle.GetMagneticField().Unit();
 
     aDerivative.AddToVelocity(tVelocity);
 
@@ -254,7 +254,7 @@ void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajMagnetic
 void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajElectricParticle& aParticle,
                                           KSTrajElectricDerivative& aDerivative) const
 {
-    KThreeVector tVelocity = fDirection * aParticle.GetElectricField().Unit();
+    KThreeVector tVelocity = (+fDirection) * aParticle.GetElectricField().Unit();
 
     aDerivative.AddToVelocity(tVelocity);
 
