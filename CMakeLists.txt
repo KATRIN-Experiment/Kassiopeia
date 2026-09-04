@@ -19,6 +19,15 @@ set( Boost_USE_STATIC_RUNTIME OFF )
 
 set( CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard whose features are requested to build this target" )
 mark_as_advanced( FORCE CMAKE_CXX_STANDARD )
+
+# ROOT may force a newer C++ standard
+# Using the same C++ standard as ROOT is recommended in https://root.cern/manual/integrate_root_into_my_cmake_project/ .
+# Older ROOT releases don't export ROOT_CXX_STANDARD at all, so only override our default when it's actually set.
+find_package(ROOT QUIET)
+if(ROOT_FOUND AND KASPER_USE_ROOT AND ROOT_CXX_STANDARD)
+    set( CMAKE_CXX_STANDARD ${ROOT_CXX_STANDARD} CACHE STRING "The C++ standard, as requested by the ROOT library. Can't be changed." FORCE)
+endif()
+
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS ON )
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
@@ -187,7 +196,7 @@ mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 #option( KASPER_USE_BOOST "Build Boost dependent modules" ${Boost_FOUND} )
 set(KASPER_USE_BOOST ON)
 
-find_package(ROOT QUIET)
+#ROOT was already searched at the beginning for the C++ standard
 if(ROOT_FOUND AND NOT DEFINED KASPER_USE_ROOT)
     message("ROOT was found and enabled automatically. Set KASPER_USE_ROOT=OFF to change this.")
 endif()
