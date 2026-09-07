@@ -78,9 +78,9 @@ int main(int argc, char* argv[])
 
     while (true) {
         char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
-        if (optId == -1)
-            break;
         switch (optId) {
+            case (-1):
+                break;
             case ('h'):  // help
                 std::cout << usage << std::endl;
                 break;
