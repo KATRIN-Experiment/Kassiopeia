@@ -137,10 +137,8 @@ void DiscretizeInterval(double interval, int nSegments, double power, std::vecto
  */
 void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KFieldVector fP0,
              KFieldVector fN1, KFieldVector fN2, double fU, /* potential */
-             double fNRot=0., int fNumDiscA=2, int fNumDiscB=2)
+             int fNumDiscA=2, int fNumDiscB=2)
 {
-    (void) fNRot;
-    fNRot++;
     fChDen += (fNumDiscA * fNumDiscB);
 
     // do not discretize if discretization parameters are set to 0
@@ -220,9 +218,8 @@ void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA,
  * constant charge density is more reasonable.
  */
 void AddWire(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, KPosition fPA, KPosition fPB,
-             double fD /*diameter*/, double fU /*potential*/, int fNRot, int fNumDisc)
+             double fD /*diameter*/, double fU /*potential*/, int fNumDisc)
 {
-    (void) fNRot;
     fChDen += fNumDisc;
 
     // do not discretize if discretization parameter is set to 0
@@ -306,10 +303,9 @@ void AddWire(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, KPosition 
 
 #ifdef USENEUMANNTRI
 void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, const KFieldVector& fP0,
-                 const KFieldVector& fN1, const KFieldVector& fN2, double fEpsRAbove, double fEpsRBelow, double fNRot,
+                 const KFieldVector& fN1, const KFieldVector& fN2, double fEpsRAbove, double fEpsRBelow,
                  int fNumDiscA, int fNumDiscB)
 {
-    (void) fNRot;
     fChDen += (fNumDiscA * fNumDiscB);
 
     // do not discretize if discretization parameters are set to 0
@@ -389,10 +385,9 @@ void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double
 }
 #else
 void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KFieldVector fP0,
-                 KFieldVector fN1, KFieldVector fN2, double fEpsRAbove, double fEpsRBelow, double fNRot, int fNumDiscA,
+                 KFieldVector fN1, KFieldVector fN2, double fEpsRAbove, double fEpsRBelow, int fNumDiscA,
                  int fNumDiscB)
 {
-    (void) fNRot;
     fChDen += (fNumDiscA * fNumDiscB);
 
     // do not discretize if discretization parameters are set to 0
@@ -705,7 +700,6 @@ int main(int argc, char* argv[])
                         fWireAnodePB,
                         fWireDiameter,
                         fAnodeU,
-                        1,
                         fWireDisc);
 
                 // Connect wire endpoints (in total 4 wire elements)
@@ -721,7 +715,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fAnodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -735,7 +728,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fAnodeU,
-                                1,
                                 fWireConnectDisc);
                     }
 
@@ -749,7 +741,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fAnodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -763,7 +754,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fAnodeU,
-                                1,
                                 fWireConnectDisc);
                     }
                 }
@@ -778,7 +768,6 @@ int main(int argc, char* argv[])
                         fWireAnodePB,
                         fWireDiameter,
                         fAnodeU,
-                        1,
                         fWireDisc);
 
                 // Connect wire endpoints (in total 4 wire elements)
@@ -796,7 +785,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fAnodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -810,7 +798,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fAnodeU,
-                                1,
                                 fWireConnectDisc);
                     }
 
@@ -826,7 +813,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fAnodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -840,7 +826,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fAnodeU,
-                                1,
                                 fWireConnectDisc);
                     }
                 }
@@ -858,7 +843,6 @@ int main(int argc, char* argv[])
                         fWireCathodePB,
                         fWireDiameter,
                         fCathodeU,
-                        1,
                         fWireDisc);
 
                 // Connect wire endpoints (in total 4 wire elements)
@@ -874,7 +858,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fCathodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -888,7 +871,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fCathodeU,
-                                1,
                                 fWireConnectDisc);
                     }
 
@@ -904,7 +886,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fCathodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -918,7 +899,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fCathodeU,
-                                1,
                                 fWireConnectDisc);
                     }
                 }
@@ -933,7 +913,6 @@ int main(int argc, char* argv[])
                         fWireCathodePB,
                         fWireDiameter,
                         fCathodeU,
-                        1,
                         fWireDisc);
 
                 // Connect wire endpoints (in total 4 wire elements)
@@ -951,7 +930,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fCathodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -965,7 +943,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fCathodeU,
-                                1,
                                 fWireConnectDisc);
                     }
 
@@ -981,7 +958,6 @@ int main(int argc, char* argv[])
                             fWireConnectPB,
                             fWireDiameter,
                             fCathodeU,
-                            1,
                             fWireConnectDisc);
                     if (i < fWiresPerLayer) {
                         // to ensure a quadratic area, the following step would be too much
@@ -995,7 +971,6 @@ int main(int argc, char* argv[])
                                 fWireConnectPB,
                                 fWireDiameter,
                                 fCathodeU,
-                                1,
                                 fWireConnectDisc);
                     }
                 }
@@ -1019,7 +994,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fAnodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., -fWireLengthX, fLayerDistanceZ);
@@ -1033,7 +1007,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fAnodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(-fWireLengthX, 0., fLayerDistanceZ);
@@ -1047,7 +1020,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fAnodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., 0., fLayerDistanceZ);
@@ -1061,7 +1033,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fAnodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
         }
 
@@ -1077,7 +1048,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fCathodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., -fWireLengthX, -fLayerDistanceZ);
@@ -1091,7 +1061,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fCathodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(-fWireLengthX, 0., -fLayerDistanceZ);
@@ -1105,7 +1074,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fCathodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., 0., -fLayerDistanceZ);
@@ -1119,7 +1087,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fCathodeU,
                     fRectElectrodeDisc,
-                    1,
                     fRectElectrodeDisc);
         }
     }
@@ -1142,7 +1109,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1156,7 +1122,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY26,
                 fRectDiscXY26);
 
@@ -1170,7 +1135,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1184,7 +1148,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY48,
                 fRectDiscXY48);
 
@@ -1198,7 +1161,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1212,7 +1174,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY26,
                 fRectDiscXY26);
 
@@ -1226,7 +1187,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1240,7 +1200,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY48,
                 fRectDiscXY48);
 
@@ -1254,7 +1213,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY9,
                 fRectDiscXY9);
 
@@ -1272,7 +1230,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1286,7 +1243,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY26,
                 fRectDiscXY26);
 
@@ -1300,7 +1256,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1314,7 +1269,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY48,
                 fRectDiscXY48);
 
@@ -1328,7 +1282,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1342,7 +1295,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY26,
                 fRectDiscXY26);
 
@@ -1356,7 +1308,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY1357,
                 fRectDiscXY1357);
 
@@ -1370,7 +1321,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY48,
                 fRectDiscXY48);
 
@@ -1384,7 +1334,6 @@ int main(int argc, char* argv[])
                 fNx,
                 fNy,
                 fBoxU,
-                1,
                 fRectDiscXY9,
                 fRectDiscXY9);
     }
@@ -1407,7 +1356,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY1357,
                     fBoundaryDiscXY1357);
 
@@ -1422,7 +1370,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY26,
                     fBoundaryDiscXY26);
 
@@ -1437,7 +1384,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY1357,
                     fBoundaryDiscXY1357);
 
@@ -1452,7 +1398,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY48,
                     fBoundaryDiscXY48);
 
@@ -1467,7 +1412,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY1357,
                     fBoundaryDiscXY1357);
 
@@ -1482,7 +1426,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY26,
                     fBoundaryDiscXY26);
 
@@ -1497,7 +1440,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY1357,
                     fBoundaryDiscXY1357);
 
@@ -1512,12 +1454,11 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY48,
                     fBoundaryDiscXY48);
 
         /* No. 9 */ fP0.SetComponents(-fXY489LengthX / 2.e0, -fXY269WidthY / 2.e0, fBoundaryHeightZ);
-        //      AddBoundary(surfaceContainer, fGroupIndex, fChDensities, fXY489LengthX, fXY269WidthY, fP0, fNx, fNy, fGXeEpsR, fLXeEpsR, 1,
+        //      AddBoundary(surfaceContainer, fGroupIndex, fChDensities, fXY489LengthX, fXY269WidthY, fP0, fNx, fNy, fGXeEpsR, fLXeEpsR,
         //              fBoundaryDiscXY9, fBoundaryDiscXY9);
 
         // Subdividing rectangle no. 9 into 4 additional rectangles:
@@ -1532,7 +1473,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY9,
                     fBoundaryDiscXY9);
 
@@ -1547,7 +1487,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY9,
                     fBoundaryDiscXY9);
 
@@ -1562,7 +1501,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY9,
                     fBoundaryDiscXY9);
 
@@ -1577,7 +1515,6 @@ int main(int argc, char* argv[])
                     fNy,
                     fGXeEpsR,
                     fLXeEpsR,
-                    1,
                     fBoundaryDiscXY9,
                     fBoundaryDiscXY9);
     }
@@ -1599,7 +1536,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1613,7 +1549,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ2,
                 fRectDiscYZ2);
 
@@ -1627,7 +1562,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1641,7 +1575,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
 
@@ -1655,7 +1588,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ5,
                 fRectDiscYZ5);
 
@@ -1669,7 +1601,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
 
@@ -1687,7 +1618,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1701,7 +1631,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ2,
                 fRectDiscYZ2);
 
@@ -1715,7 +1644,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1729,7 +1657,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
 
@@ -1743,7 +1670,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ5,
                 fRectDiscYZ5);
 
@@ -1757,7 +1683,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
 
@@ -1775,7 +1700,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1789,7 +1713,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ2,
                 fRectDiscYZ2);
 
@@ -1803,7 +1726,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1817,7 +1739,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
 
@@ -1831,7 +1752,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ5,
                 fRectDiscYZ5);
 
@@ -1845,7 +1765,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
 
@@ -1863,7 +1782,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1877,7 +1795,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ2,
                 fRectDiscYZ2);
 
@@ -1891,7 +1808,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ13,
                 fRectDiscYZ13);
 
@@ -1905,7 +1821,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
 
@@ -1919,7 +1834,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ5,
                 fRectDiscYZ5);
 
@@ -1933,7 +1847,6 @@ int main(int argc, char* argv[])
                 fNy,
                 fNz,
                 fBoxU,
-                1,
                 fRectDiscYZ46,
                 fRectDiscYZ46);
     }
@@ -1955,7 +1868,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -1969,7 +1881,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX2,
                 fRectDiscZX2);
 
@@ -1983,7 +1894,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -1997,7 +1907,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
 
@@ -2011,7 +1920,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX5,
                 fRectDiscZX5);
 
@@ -2025,7 +1933,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
 
@@ -2043,7 +1950,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -2057,7 +1963,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX2,
                 fRectDiscZX2);
 
@@ -2071,7 +1976,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -2085,7 +1989,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
 
@@ -2099,7 +2002,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX5,
                 fRectDiscZX5);
 
@@ -2113,7 +2015,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
 
@@ -2131,7 +2032,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -2145,7 +2045,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX2,
                 fRectDiscZX2);
 
@@ -2159,7 +2058,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -2173,7 +2071,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
 
@@ -2187,7 +2084,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX5,
                 fRectDiscZX5);
 
@@ -2201,7 +2097,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
 
@@ -2219,7 +2114,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -2233,7 +2127,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX2,
                 fRectDiscZX2);
 
@@ -2247,7 +2140,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX13,
                 fRectDiscZX13);
 
@@ -2261,7 +2153,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
 
@@ -2275,7 +2166,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX5,
                 fRectDiscZX5);
 
@@ -2289,7 +2179,6 @@ int main(int argc, char* argv[])
                 fNz,
                 fNx,
                 fBoxU,
-                1,
                 fRectDiscZX46,
                 fRectDiscZX46);
     }
