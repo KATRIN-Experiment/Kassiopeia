@@ -137,8 +137,9 @@ void DiscretizeInterval(double interval, int nSegments, double power, std::vecto
  */
 void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KFieldVector fP0,
              KFieldVector fN1, KFieldVector fN2, double fU, /* potential */
-             double fNRot, int fNumDiscA, int fNumDiscB)
+             double fNRot=0., int fNumDiscA=2, int fNumDiscB=2)
 {
+    (void) fNRot;
     fNRot++;
     fChDen += (fNumDiscA * fNumDiscB);
 
