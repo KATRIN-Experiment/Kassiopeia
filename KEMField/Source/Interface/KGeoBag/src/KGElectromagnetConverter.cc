@@ -221,7 +221,7 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
         double tZMin = cylinderTube->Z1() > cylinderTube->Z2() ? cylinderTube->Z2() : cylinderTube->Z1();
         double tZMax = cylinderTube->Z1() > cylinderTube->Z2() ? cylinderTube->Z1() : cylinderTube->Z2();
         double tCurrent = fCurrentElectromagnetSpace->GetCurrent();
-        unsigned int tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
+        double tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
 
         if (fabs(tCurrent) < 1e-12)
             kem_cout(eInfo) << "adding coil with no current defined: " << fCurrentElectromagnetSpace->GetName() << eom;
