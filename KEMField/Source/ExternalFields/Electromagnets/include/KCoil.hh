@@ -25,8 +25,10 @@ class KCoil : public KElectromagnet
         return "Coil";
     }
 
-    void SetValues(const KPosition& p0, const KPosition& p1, double current, int integrationScale);
-    void SetValues(double r0, double r1, double z0, double z1, double current, int integrationScale);
+    void SetValues(const KPosition& p0, const KPosition& p1, double current, unsigned int integrationScale);
+    void SetValues(double r0, double r1, double z0, double z1, double current, unsigned int integrationScale);
+    void SetValues(const KPosition& p0, const KPosition& p1, double current, unsigned int integrationScale, double numberOfTurns);
+    void SetValues(double r0, double r1, double z0, double z1, double current, unsigned int integrationScale, double numberOfTurns);
 
     void SetCurrent(double current)
     {
@@ -62,9 +64,9 @@ class KCoil : public KElectromagnet
     {
         fIntegrationScale = i;
     }
-    void SetNumberOfTurns(unsigned int i)
+    void SetNumberOfTurns(double d)
     {
-        fNumberOfTurns = i;
+        fNumberOfTurns = d;
     }
 
     double GetCurrent() const
@@ -103,11 +105,11 @@ class KCoil : public KElectromagnet
     {
         return fP1;
     }
-    int GetIntegrationScale() const
+    unsigned int GetIntegrationScale() const
     {
         return fIntegrationScale;
     }
-    int GetNumberOfTurns() const
+    double GetNumberOfTurns() const
     {
         return fNumberOfTurns;
     }
@@ -119,7 +121,7 @@ class KCoil : public KElectromagnet
     KPosition fP1;
     double fCurrent;
     unsigned int fIntegrationScale;
-    unsigned int fNumberOfTurns;
+    double fNumberOfTurns;
 };
 
 template<typename Stream> Stream& operator>>(Stream& s, KCoil& c)
