@@ -5,7 +5,7 @@ namespace KGeoBag
 void KGElectromagnetData::SetCurrent(double d)
 {
     fLineCurrent = d;
-    fCurrentTurns = 1;
+    fCurrentTurns = 1.;
 }
 double KGElectromagnetData::GetCurrent() const
 {
