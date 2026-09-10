@@ -51,6 +51,7 @@ target_link_libraries(KEMFieldUnitTests
         KEMLinearAlgebraCore
         KEMBoundaryIntegralsCore
         KEMElectrostaticBoundaryIntegrals
+        KEMFieldMagneticChargeDensitySolvers        
         KEMFieldChargeDensitySolvers
         KEMFieldsElectric
         KEMFieldsMagnetic
