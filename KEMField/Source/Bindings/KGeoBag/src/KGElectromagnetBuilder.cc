@@ -17,6 +17,7 @@ KGElectromagnetAttributor::~KGElectromagnetAttributor()
         tElectromagnetSurface->SetTags(GetTags());
         tElectromagnetSurface->SetLineCurrent(GetLineCurrent());
         tElectromagnetSurface->SetCurrentTurns(GetCurrentTurns());
+        tElectromagnetSurface->SetAllowNonIntTurns(GetAllowNonIntTurns());
     }
     KGElectromagnetSpace* tElectromagnetSpace;
     for (auto& space : fSpaces) {
@@ -25,6 +26,7 @@ KGElectromagnetAttributor::~KGElectromagnetAttributor()
         tElectromagnetSpace->SetTags(GetTags());
         tElectromagnetSpace->SetLineCurrent(GetLineCurrent());
         tElectromagnetSpace->SetCurrentTurns(GetCurrentTurns());
+        tElectromagnetSpace->SetAllowNonIntTurns(GetAllowNonIntTurns());
     }
 }
 

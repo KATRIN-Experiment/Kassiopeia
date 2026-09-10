@@ -108,6 +108,7 @@ template<> inline bool KGElectromagnetBuilder::End()
 {
     fObject->SetLineCurrent(fObject->GetLineCurrent() * fObject->GetDirection());
     fObject->SetCurrentTurns(fObject->GetCurrentTurns());
+    fObject->SetAllowNonIntTurns(fObject->GetAllowNonIntTurns());
     return true;
 }
 

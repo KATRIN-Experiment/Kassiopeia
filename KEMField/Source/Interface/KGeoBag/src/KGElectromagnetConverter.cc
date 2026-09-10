@@ -224,18 +224,21 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
         double tCurrent = fCurrentElectromagnetSpace->GetCurrent();
 
         double tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
-        bool tAllowNonIntWindings = fCurrentElectromagnetSpace->GetAllowNonIntTurns();
+        bool tAllowNonIntTurns = fCurrentElectromagnetSpace->GetAllowNonIntTurns();
 
         if (fabs(tCurrent) < 1e-12)
             kem_cout(eInfo) << "adding coil with no current defined: " << fCurrentElectromagnetSpace->GetName() << eom;
 
         auto* coil = new KEMField::KCoil();
         coil->SetValues(tRMin, tRMax, tZMin, tZMax, tCurrent, tNDisc);
-        if( tAllowNonIntWindings )
+        if( tAllowNonIntTurns ){
             coil->SetNumberOfTurns( tNumTurns );
-        else
+            std::cout<< tAllowNonIntTurns << "        " << coil->GetNumberOfTurns() <<std::endl ;
+            }
+        else {
             coil->SetNumberOfTurns( (unsigned int)tNumTurns );
-
+            std::cout<< tAllowNonIntTurns << "        " << coil->GetNumberOfTurns() <<std::endl ;
+            }
         coil->GetCoordinateSystem().SetValues(GlobalToInternalPosition(fCurrentOrigin),
                                               GlobalToInternalVector(fCurrentXAxis),
                                               GlobalToInternalVector(fCurrentYAxis),
