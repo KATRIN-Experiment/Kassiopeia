@@ -28,6 +28,9 @@ class KGElectromagnetData
     void SetCurrent(double d);
     double GetCurrent() const;
 
+    void SetAllowNonIntTurns(bool b); 
+    bool GetAllowNonIntTurns() const;
+
     void SetCurrentTurns(double d);
     double GetCurrentTurns() const;
 
@@ -37,6 +40,7 @@ class KGElectromagnetData
   private:
     double fLineCurrent;
     double fCurrentTurns;
+    bool fAllowNonIntTurns;
 };
 
 class KGElectromagnet

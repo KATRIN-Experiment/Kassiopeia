@@ -27,8 +27,6 @@ class KCoil : public KElectromagnet
 
     void SetValues(const KPosition& p0, const KPosition& p1, double current, unsigned int integrationScale);
     void SetValues(double r0, double r1, double z0, double z1, double current, unsigned int integrationScale);
-    void SetValues(const KPosition& p0, const KPosition& p1, double current, unsigned int integrationScale, double numberOfTurns);
-    void SetValues(double r0, double r1, double z0, double z1, double current, unsigned int integrationScale, double numberOfTurns);
 
     void SetCurrent(double current)
     {
@@ -64,11 +62,14 @@ class KCoil : public KElectromagnet
     {
         fIntegrationScale = i;
     }
+    void SetNumberOfTurns(unsigned int i)
+    {
+        fNumberOfTurns = i;
+    }
     void SetNumberOfTurns(double d)
     {
         fNumberOfTurns = d;
     }
-
     double GetCurrent() const
     {
         return fCurrent;

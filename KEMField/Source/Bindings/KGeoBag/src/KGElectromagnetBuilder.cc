@@ -6,7 +6,7 @@ using namespace std;
 namespace KGeoBag
 {
 
-KGElectromagnetAttributor::KGElectromagnetAttributor() : fLineCurrent(0.0), fCurrentTurns(1.0), fDirection(1.0) {}
+KGElectromagnetAttributor::KGElectromagnetAttributor() : fAllowNonIntTurns(false), fLineCurrent(0.0), fCurrentTurns(1.0), fDirection(1.0) {}
 
 KGElectromagnetAttributor::~KGElectromagnetAttributor()
 {
@@ -50,6 +50,8 @@ template<> inline KGElectromagnetBuilder::~KComplexElement() = default;
 
 STATICINT sKGElectromagnetStructure = KGElectromagnetBuilder::Attribute<std::string>("name") +
                                       KGElectromagnetBuilder::Attribute<double>("current") +
+                                      KGElectromagnetBuilder::Attribute<bool>("allow_non_integer_scalingfactor") +
+                                      KGElectromagnetBuilder::Attribute<bool>("allow_non_integer_turns") + 
                                       KGElectromagnetBuilder::Attribute<double>("scaling_factor") +
                                       KGElectromagnetBuilder::Attribute<double>("num_turns") +
                                       KGElectromagnetBuilder::Attribute<std::string>("direction") +
