@@ -11,22 +11,27 @@ namespace KGeoBag
 class KGElectromagnetData
 {
   public:
-    KGElectromagnetData() : fLineCurrent(0.), fCurrentTurns(1) {}
-    KGElectromagnetData(KGSpace*) : fLineCurrent(0.), fCurrentTurns(1) {}
-    KGElectromagnetData(KGSurface*) : fLineCurrent(0.), fCurrentTurns(1) {}
+    KGElectromagnetData() : fLineCurrent(0.), fCurrentTurns(1.), fAllowNonIntTurns(false) {}
+    KGElectromagnetData(KGSpace*) : fLineCurrent(0.), fCurrentTurns(1.), fAllowNonIntTurns(false) {}
+    KGElectromagnetData(KGSurface*) : fLineCurrent(0.), fCurrentTurns(1.), fAllowNonIntTurns(false) {}
     KGElectromagnetData(KGSpace*, const KGElectromagnetData& aCopy) :
         fLineCurrent(aCopy.fLineCurrent),
-        fCurrentTurns(aCopy.fCurrentTurns)
+        fCurrentTurns(aCopy.fCurrentTurns),
+        fAllowNonIntTurns(aCopy.fAllowNonIntTurns)
     {}
     KGElectromagnetData(KGSurface*, const KGElectromagnetData& aCopy) :
         fLineCurrent(aCopy.fLineCurrent),
-        fCurrentTurns(aCopy.fCurrentTurns)
+        fCurrentTurns(aCopy.fCurrentTurns),
+        fAllowNonIntTurns(aCopy.fAllowNonIntTurns)
     {}
 
     virtual ~KGElectromagnetData() = default;
 
     void SetCurrent(double d);
     double GetCurrent() const;
+
+    void SetAllowNonIntTurns(bool b); 
+    bool GetAllowNonIntTurns() const;
 
     void SetCurrentTurns(double d);
     double GetCurrentTurns() const;
@@ -37,6 +42,7 @@ class KGElectromagnetData
   private:
     double fLineCurrent;
     double fCurrentTurns;
+    bool fAllowNonIntTurns;
 };
 
 class KGElectromagnet

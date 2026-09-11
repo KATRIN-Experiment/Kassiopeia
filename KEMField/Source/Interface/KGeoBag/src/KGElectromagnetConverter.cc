@@ -220,16 +220,24 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
         double tRMax = cylinderTube->R1() > cylinderTube->R2() ? cylinderTube->R1() : cylinderTube->R2();
         double tZMin = cylinderTube->Z1() > cylinderTube->Z2() ? cylinderTube->Z2() : cylinderTube->Z1();
         double tZMax = cylinderTube->Z1() > cylinderTube->Z2() ? cylinderTube->Z1() : cylinderTube->Z2();
+
         double tCurrent = fCurrentElectromagnetSpace->GetCurrent();
-        unsigned int tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
+
+        double tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
+        bool tAllowNonIntTurns = fCurrentElectromagnetSpace->GetAllowNonIntTurns();
 
         if (fabs(tCurrent) < 1e-12)
             kem_cout(eInfo) << "adding coil with no current defined: " << fCurrentElectromagnetSpace->GetName() << eom;
 
         auto* coil = new KEMField::KCoil();
         coil->SetValues(tRMin, tRMax, tZMin, tZMax, tCurrent, tNDisc);
-        coil->SetNumberOfTurns(tNumTurns);
-
+        if( tAllowNonIntTurns ){
+            coil->SetNumberOfTurns( tNumTurns );
+            }
+        else {
+            kem_cout(eInfo) << "Encountered unexpected non-integer winding. This is supported, but needs to be enabled manually by using allow_non_integer_turns=false. Before 09/2026, this was silently downcast to the next lowest integer value." << eom;
+            coil->SetNumberOfTurns( (unsigned int)tNumTurns );
+            }
         coil->GetCoordinateSystem().SetValues(GlobalToInternalPosition(fCurrentOrigin),
                                               GlobalToInternalVector(fCurrentXAxis),
                                               GlobalToInternalVector(fCurrentYAxis),
