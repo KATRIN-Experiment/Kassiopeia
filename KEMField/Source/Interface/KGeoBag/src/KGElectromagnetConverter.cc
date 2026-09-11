@@ -235,6 +235,7 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
             coil->SetNumberOfTurns( tNumTurns );
             }
         else {
+            kem_cout(eInfo) << "Encountered unexpected non-integer winding. This is supported, but needs to be enabled manually by using allow_non_integer_turns=false. Before 09/2026, this was silently downcast to the next lowest integer value." << eom;
             coil->SetNumberOfTurns( (unsigned int)tNumTurns );
             }
         coil->GetCoordinateSystem().SetValues(GlobalToInternalPosition(fCurrentOrigin),
