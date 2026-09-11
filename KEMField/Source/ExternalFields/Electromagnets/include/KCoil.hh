@@ -58,10 +58,6 @@ class KCoil : public KElectromagnet
         SetZ1(p1[2]);
         SetR1(sqrt(p1[0] * p1[0] + p1[1] * p1[1]));
     }
-    void SetAllowNonIntTurns( bool b )
-    {
-        fAllowNonIntTurns = b;
-    }    
     void SetIntegrationScale(unsigned int i)
     {
         fIntegrationScale = i;
@@ -110,10 +106,6 @@ class KCoil : public KElectromagnet
     {
         return fP1;
     }
-    bool GetAlloNoIntTurn() const
-    {
-        return fAllowNonIntTurns;
-    }
     unsigned int GetIntegrationScale() const
     {
         return fIntegrationScale;
@@ -129,7 +121,6 @@ class KCoil : public KElectromagnet
     KPosition fP0;
     KPosition fP1;
     double fCurrent;
-    bool fAllowNonIntTurns;
     unsigned int fIntegrationScale;
     double fNumberOfTurns;
 };

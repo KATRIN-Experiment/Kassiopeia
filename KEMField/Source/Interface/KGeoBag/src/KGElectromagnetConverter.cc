@@ -232,11 +232,9 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
         auto* coil = new KEMField::KCoil();
         coil->SetValues(tRMin, tRMax, tZMin, tZMax, tCurrent, tNDisc);
         if( tAllowNonIntTurns ){
-            coil->SetAllowNonIntTurns( tAllowNonIntTurns );
             coil->SetNumberOfTurns( tNumTurns );
             }
         else {
-            coil->SetAllowNonIntTurns( tAllowNonIntTurns );
             coil->SetNumberOfTurns( (unsigned int)tNumTurns );
             }
         coil->GetCoordinateSystem().SetValues(GlobalToInternalPosition(fCurrentOrigin),
