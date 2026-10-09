@@ -2,6 +2,7 @@
 #define Kommon_KContainer_hh_
 
 #include "KNamed.h"
+#include "KInitializationMessage.hh"
 #include <memory>
 
 namespace katrin
@@ -175,7 +176,7 @@ template<class XTargetType> inline void KContainer::CopyTo(XTargetType& aTarget)
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 
@@ -189,7 +190,7 @@ template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(XTarg
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(const XTargetType&))
@@ -202,7 +203,7 @@ template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(const
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 
@@ -217,7 +218,7 @@ inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 template<class XObjectType, class XMemberType, class XTargetType>
@@ -231,7 +232,7 @@ inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 template<class XObjectType, class XMemberType, class XTargetType>
@@ -245,7 +246,7 @@ inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 
@@ -269,7 +270,7 @@ template<class XTargetType> inline void KContainer::ReleaseTo(XTargetType*& aTar
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 
@@ -284,7 +285,7 @@ template<class XTargetType> inline void KContainer::ReleaseTo(std::shared_ptr<XT
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 
@@ -299,7 +300,7 @@ template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(XT
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(const XTargetType*))
@@ -313,7 +314,7 @@ template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(co
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 
@@ -329,7 +330,7 @@ inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMem
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 template<class XObjectType, class XMemberType, class XTargetType>
@@ -344,7 +345,7 @@ inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMem
         return;
     }
     catch (...) {
-        return;
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
     }
 }
 
