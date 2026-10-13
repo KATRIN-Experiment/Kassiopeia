@@ -93,7 +93,7 @@ bool KFile::IsUsingDefaultPath() const
 
 bool KFile::Test(const std::string& aName)
 {
-    FILE* fp = fopen(aName.c_str(), "r+");  // this fails on directories
+    FILE* fp = fopen(aName.c_str(), "r");  // this fails on directories
     if (!fp)
         return false;
     fclose(fp);
