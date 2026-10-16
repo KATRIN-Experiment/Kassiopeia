@@ -21,8 +21,8 @@ STATICINT sKMagfieldCoilsFieldSolverStructure =
     KMagfieldCoilsFieldSolverBuilder::Attribute<string>("file") +  // coil file name
     KMagfieldCoilsFieldSolverBuilder::Attribute<bool>("replace_file") +  // write coil file
     KMagfieldCoilsFieldSolverBuilder::Attribute<bool>("force_elliptic") +
-    KMagfieldCoilsFieldSolverBuilder::Attribute<unsigned>("n_elliptic") +
-    KMagfieldCoilsFieldSolverBuilder::Attribute<unsigned>("n_max") +
+    KMagfieldCoilsFieldSolverBuilder::Attribute<int>("n_elliptic") +
+    KMagfieldCoilsFieldSolverBuilder::Attribute<int>("n_max") +
     KMagfieldCoilsFieldSolverBuilder::Attribute<double>("eps_tol");
 
 STATICINT sKStaticElectromagnetFieldStructure =
