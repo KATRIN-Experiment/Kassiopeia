@@ -64,6 +64,7 @@ std::string KMagfieldCoilsFieldSolver::WriteCoilFile(katrin::KTextFile* aFile, K
 
     for (size_t i = 0; i < aContainer.size(); ++i ) {
         auto tCoil = dynamic_cast<KCoil*>(aContainer.at(i));
+
         if (tCoil) {
 
             // do not use coil->GetP0|P1() because it is defined as (r,0,z); z-axis is flipped here!
