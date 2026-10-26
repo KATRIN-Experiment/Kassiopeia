@@ -123,9 +123,9 @@ int main(int argc, char* argv[])
 
     while (true) {
         char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
-        if (optId == -1)
-            break;
         switch (optId) {
+            case (-1):
+                break;
             case ('h'):  // help
                 MPI_SINGLE_PROCESS
                 std::cout << usage << std::endl;
@@ -368,6 +368,7 @@ int main(int argc, char* argv[])
         double Q = 0.;
 
         unsigned int i = 0;
+        (void) i;
         for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
             Q += (dynamic_cast<KTriangle*>(*it)->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
             i++;
