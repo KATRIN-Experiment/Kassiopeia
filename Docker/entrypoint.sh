@@ -15,16 +15,16 @@ if [[ -n "${kassiopeia_dir_build}" && -d /kassiopeia/build ]]; then
   ln -s "/home/parrot/$kassiopeia_dir_build" /kassiopeia/build
 fi
 
+source /kassiopeia/install/bin/kasperenv.sh /kassiopeia/install
+
 if [[ -n "${kassiopeia_dir_install}" ]]; then
-  mkdir -p /home/parrot/${kassiopeia_dir_install}
-  if ! [ "$(ls -A /home/parrot/$kassiopeia_dir_install)" ]; then
-    echo "Preparing custom install folder"
-    mv /kassiopeia/install/* /home/parrot/$kassiopeia_dir_install
-  fi
-  rm -r /kassiopeia/install
-  ln -s "/home/parrot/$kassiopeia_dir_install" /kassiopeia/install
+  source /kassiopeia/install/bin/create_kasper_user_directory.sh /home/parrot/${kassiopeia_dir_install}
 fi
 
-source /kassiopeia/install/bin/kasperenv.sh /kassiopeia/install
+rm -rf /tmp/kassiopeia_tmp_userdir # Ensure /tmp/kassiopeia_tmp_userdir does not exist
+if [[ ! -w $KASPERSYS ]]; then
+  echo "/kassiopeia/install is not writable. Creating user directory in /tmp/kassiopeia_tmp_userdir instead."
+  source /kassiopeia/install/bin/create_kasper_user_directory.sh /tmp/kassiopeia_tmp_userdir
+fi
 
 exec "$@"

@@ -125,7 +125,9 @@ FROM build-base AS full-base
 
 LABEL description="Full base container"
 
-ENV JUPYTER_CONFIG_DIR=/kassiopeia/install/python/.jupyter
+ENV KASSIOPEIA_JUPYTER_DIR=/kassiopeia/install/python/.jupyter
+ENV JUPYTER_CONFIG_PATH=$KASSIOPEIA_JUPYTER_DIR:$JUPYTER_CONFIG_PATH
+
 
 COPY Docker/packages.full packages
 RUN dnf update -y \
@@ -164,7 +166,7 @@ RUN echo /kassiopeia/install/lib64 > /etc/ld.so.conf.d/local-x86_64.conf \
  && echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /home/$KASSIOPEIA_USER/.zshrc
 
 # Always show Kasper information when opening a terminal
-RUN echo "source /kassiopeia/install/bin/kasperenv.sh" >> /etc/profile
+RUN echo "source $KASPERENV/bin/kasperenv.sh" >> /etc/profile.d/run_kasperenv.sh
 
 # JupyterLab VNC desktop environment:
 #  Adapted from renku-vnc by SwissDataScienceCenter
@@ -193,7 +195,7 @@ RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
 USER $KASSIOPEIA_USER
 
 # Configure VNC desktop
-RUN jupyter lab --generate-config \
+RUN mkdir -p $KASSIOPEIA_JUPYTER_DIR \
     && echo "c.ServerProxy.servers = {\
     'vnc': {\
         'command': ['/startvnc', '{port}'],\
@@ -205,7 +207,7 @@ RUN jupyter lab --generate-config \
             'title': 'VNC (Desktop)'\
         }\
     }\
-}" >> $JUPYTER_CONFIG_DIR/jupyter_lab_config.py
+}" >> $KASSIOPEIA_JUPYTER_DIR/jupyter_server_config.py
 # Fix DISPLAY so applications can also use it outside the desktop environment
 ENV DISPLAY=:20
 
