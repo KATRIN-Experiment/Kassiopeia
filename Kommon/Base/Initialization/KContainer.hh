@@ -120,6 +120,10 @@ template<class XTargetType> inline void KContainer::Set(XTargetType* aType)
 
 template<class XTargetType> inline bool KContainer::Is()
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to check type of empty container.");
+    }
+
     try {
         fHolder->Type();
     }
@@ -134,6 +138,9 @@ template<class XTargetType> inline bool KContainer::Is()
 
 template<class XTargetType> inline XTargetType& KContainer::AsReference()
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to reference.");
+    }
     try {
         fHolder->Type();
     }
@@ -148,6 +155,9 @@ template<class XTargetType> inline XTargetType& KContainer::AsReference()
 }
 template<class XTargetType> inline XTargetType* KContainer::AsPointer()
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to pointer.");
+    }
     try {
         fHolder->Type();
     }
@@ -168,6 +178,9 @@ template<class XTargetType> inline KContainer::operator XTargetType()
 
 template<class XTargetType> inline void KContainer::CopyTo(XTargetType& aTarget)
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to reference.");
+    }
     try {
         fHolder->Type();
     }
@@ -176,12 +189,15 @@ template<class XTargetType> inline void KContainer::CopyTo(XTargetType& aTarget)
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 
 template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(XTargetType&))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to reference.");
+    }
     try {
         fHolder->Type();
     }
@@ -190,11 +206,14 @@ template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(XTarg
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(const XTargetType&))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to reference.");
+    }
     try {
         fHolder->Type();
     }
@@ -203,13 +222,16 @@ template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(const
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 
 template<class XObjectType, class XMemberType, class XTargetType>
 inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to reference.");
+    }
     try {
         fHolder->Type();
     }
@@ -218,12 +240,15 @@ inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 template<class XObjectType, class XMemberType, class XTargetType>
 inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType&))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to reference.");
+    }
     try {
         fHolder->Type();
     }
@@ -232,12 +257,15 @@ inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 template<class XObjectType, class XMemberType, class XTargetType>
 inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(const XTargetType&))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to reference.");
+    }
     try {
         fHolder->Type();
     }
@@ -246,7 +274,7 @@ inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 
@@ -261,6 +289,9 @@ inline KContainer* KContainer::ReleaseToNewContainer()
 
 template<class XTargetType> inline void KContainer::ReleaseTo(XTargetType*& aTarget)
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to pointer.");
+    }
     try {
         fHolder->Type();
     }
@@ -270,12 +301,15 @@ template<class XTargetType> inline void KContainer::ReleaseTo(XTargetType*& aTar
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 
 template<class XTargetType> inline void KContainer::ReleaseTo(std::shared_ptr<XTargetType>& aTarget)
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to pointer.");
+    }
     try {
         fHolder->Type();
     }
@@ -285,12 +319,15 @@ template<class XTargetType> inline void KContainer::ReleaseTo(std::shared_ptr<XT
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 
 template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(XTargetType*))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to pointer.");
+    }
     try {
         fHolder->Type();
     }
@@ -300,11 +337,14 @@ template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(XT
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(const XTargetType*))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to pointer.");
+    }
     try {
         fHolder->Type();
     }
@@ -314,13 +354,16 @@ template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(co
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 
 template<class XObjectType, class XMemberType, class XTargetType>
 inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType*))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to pointer.");
+    }
     try {
         fHolder->Type();
     }
@@ -330,12 +373,15 @@ inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMem
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 template<class XObjectType, class XMemberType, class XTargetType>
 inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMember)(const XTargetType*))
 {
+    if (fHolder == nullptr) {
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Attempt to convert empty container to pointer.");
+    }
     try {
         fHolder->Type();
     }
@@ -345,7 +391,7 @@ inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMem
         return;
     }
     catch (...) {
-        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 09/2026, before this value was silently ignored.");
+        throw std::runtime_error("This is a bug with some XML bindings, please report. Internal error: Failed to convert type to expected element. This error message was added 10/2026, before this value was silently ignored.");
     }
 }
 
