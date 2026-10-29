@@ -29,6 +29,7 @@ set( INTERACTIONS_HEADER_BASENAMES
     KSIntSurfaceSpecular.h
     KSIntSurfaceUCN.h
     KSIntSurfaceDiffuse.h
+    KSIntSurfaceScattering.h
     KSIntSurfaceMultiplication.h
 
     KSIntSurfaceSpinFlip.h
@@ -84,6 +85,7 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KSIntSurfaceSpecular.cxx
     KSIntSurfaceUCN.cxx
     KSIntSurfaceDiffuse.cxx
+    KSIntSurfaceScattering.cxx
     KSIntSurfaceMultiplication.cxx
 
     KSIntSurfaceSpinFlip.cxx
