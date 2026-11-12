@@ -114,13 +114,17 @@
 				in a cache. The next time the same point will be evaluated, the
 				value is already available from the cache.
 				This works only with static fields.
+
+		elements:
 			add_field:
 				add a magnetic field to the superposition and specify the factor
-				by which it's intensity is scaled
-				name:
-					the name of the field that takes part in the superposition.
-				enhancement:
-					the scale factor of the field for the superposition.
+				by which its intensity is scaled.
+
+				parameters:
+					name:
+						the name of the field that takes part in the superposition.
+					enhancement:
+						the scale factor of the field for the superposition.
 	-->
 	
 	<ramped_magnetic_field
@@ -290,10 +294,10 @@
 			number_of_remote_coefficients:
 				the number of remote coefficients to store per source point.
 
-			remote_source_point_start:
+			remote_sourcepoint_start:
 				starting z value for the remote set of source points.
 
-			remote_source_point_end:
+			remote_sourcepoint_end:
 				ending z value for the remote set of source points.
 	-->
 

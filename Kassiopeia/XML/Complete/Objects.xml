@@ -38,12 +38,14 @@
 				the name of the child object to bind with the member.
 	-->
 	
-	<!-- command members can also be written in a simpler form -->
-	<add_control parent="trajectory_exact" child="control_cyclotron"/>
-	<remove_control parent="trajectory_exact" child="control_cyclotron"/>
-	
-	<!-- if no parent is specified, the corresponding root object is used as parent -->
-	<add_trajectory child="trajcetory_exact"/>
+	<!-- inside navigation elements (ksgeo_space, ksgeo_side, ksgeo_surface), command members can also be written in a simpler form -->
+	<ksgeo_space name="space_world" spaces="world">
+		<add_control parent="trajectory_exact" child="control_cyclotron"/>
+		<remove_control parent="trajectory_exact" child="control_cyclotron"/>
+
+		<!-- if no parent is specified, the corresponding root object is used as parent -->
+		<set_trajectory child="trajectory_exact"/>
+	</ksgeo_space>
 	
 	
 

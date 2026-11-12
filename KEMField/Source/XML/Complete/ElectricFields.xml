@@ -626,7 +626,7 @@
    				specify the maximum number of iterations after which the solver
    				will finish regardless of convergence
 
-   			iterations_between_restart:
+   			iterations_between_restarts:
    				specify the maximuum number of iterations before the algorithm will
    				restart. This means using the last solution but discarding the constructed
    				Krylov subspace. For more information on the theory of restarted gmres or bicgstab,
@@ -635,7 +635,7 @@
     		use_display:
     			display progress in the form of iteration number and residual on the console
 
-			show_ploy:
+			show_plot:
 				works with vtk only: display the convergence curve in a graph
 
 
@@ -924,7 +924,7 @@
    				specify the maximum number of iterations after which the solver
    				will finish regardless of convergence
 
-   			iterations_between_restart:
+   			iterations_between_restarts:
    				specify the maximuum number of iterations before the algorithm will
    				restart. This means using the last solution but discarding the constructed
    				Krylov subspace. For more information on the theory of restarted gmres or bicgstab,
@@ -951,7 +951,7 @@
     		use_display:
     			display progress in the form of iteration number and residual on the console
 
-			show_ploy:
+			show_plot:
 				works with vtk only: display the convergence curve in a graph
 
     		use_timer:
@@ -1060,10 +1060,10 @@
 			number_of_remote_coefficients:
 				the number of remote coefficients to store per source point.
 
-			remote_source_point_start:
+			remote_sourcepoint_start:
 				starting z value for the remote set of source points.
 
-			remote_source_point_end:
+			remote_sourcepoint_end:
 				ending z value for the remote set of source points.
 	-->
 

@@ -142,26 +142,26 @@
 			name:
 				the name of this value.
 
-			value_min:
+			radius_min:
 				the minimum radius in meters to return. must be positive and less than radius_max.
 
-			value_max:
+			radius_max:
 				the maximum radius in meters to return. must be positive and greater than radius_min.
 	-->
 
 	<ksgen_value_radius_spherical name="value_radius_spherical" radius_min="5." radius_max="10."/>
 	<!--
 		description:
-			generates a single random value drawn from a distribution suitable for randomly distributing radii in cylindrical coordinates.
+			generates a single random value drawn from a distribution suitable for randomly distributing radii in spherical coordinates.
 
 		parameters:
 			name:
 				the name of this value.
 
-			value_min:
+			radius_min:
 				the minimum radius in meters to return. must be positive and less than radius_max.
 
-			value_max:
+			radius_max:
 				the maximum radius in meters to return. must be positive and greater than radius_min.
 	-->
 
