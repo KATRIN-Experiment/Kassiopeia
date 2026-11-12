@@ -188,7 +188,7 @@
 	
 	<ksterm_output name="term_max_scattering" group="output_track_h2" component="track_n_h2_inelastic" max_value="1"/>
 	<!-- 
-		descrition:
+		description:
 			this terminator kills particles depending on a specific output value.
 			
 			parameters:
@@ -210,7 +210,7 @@
 
 	<ksterm_magnetron name="term_magnetron" max_phi="360"/>
 	<!-- 
-		descrition:
+		description:
 			this terminator kills particles after completing a certain azimuthal portion of a magnetron period
 			
 			parameters:
