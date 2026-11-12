@@ -25,7 +25,7 @@ CLUSTER_ALPHA = '20'
 
 
 def cleanStr(txt):
-    return txt.translate(dict([(ord(c), '_') for c in "<>-"]))  # strip invalid chars
+    return txt.translate(dict([(ord(c), '_') for c in "<>-:, "]))  # strip invalid chars
 
 
 def makeGraph(element, stack, nodes, level=0, key='', with_children=True, with_attributes=False):

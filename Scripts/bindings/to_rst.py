@@ -19,7 +19,7 @@ def escapeStr(txt):
 
 
 def cleanStr(txt):
-    return txt.translate(dict([(ord(c), '_') for c in "<>"]))  # strip invalid chars
+    return txt.translate(dict([(ord(c), '_') for c in "<>:, "]))  # strip invalid chars
 
 
 def printLine(separators):
