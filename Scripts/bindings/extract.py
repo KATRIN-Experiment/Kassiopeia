@@ -174,9 +174,90 @@ def newElement(kind):
         'kind': kind,
         'tags': set(),
         'source_files': set(),
+        'description': None,
+        'examples': [],
+        'deprecated': None,
+        'defined_at': None,
         'children': {},
         'attributes': {},
     }
+
+
+def newRelation(target, location):
+    return {
+        'type': target,
+        'description': None,
+        'deprecated': None,
+        'registered_at': location,
+    }
+
+
+DOC_PREFIX = '//!'
+DOC_TAG = re.compile(r'@(\w+)\b\s*(.*)')
+
+
+def docCommentAbove(lines, line_number):
+    """Returns the '//!' comment lines directly above the given (1-based) line, without the prefix."""
+    doc = []
+    i = line_number - 2
+    while i >= 0 and lines[i].strip().startswith(DOC_PREFIX):
+        text = lines[i].strip()[len(DOC_PREFIX):]
+        doc.insert(0, text[1:] if text.startswith(' ') else text)
+        i -= 1
+    return doc
+
+
+def parseDocComment(doc):
+    """Parses '//!' lines into description, examples, deprecation note and
+    @attribute/@child descriptions. A tag line continues on the following
+    lines until the next tag."""
+    result = {'description': [], 'examples': [], 'deprecated': None, 'attributes': {}, 'children': {}, 'unknown': []}
+    current = result['description']
+    for line in doc:
+        m = DOC_TAG.match(line.strip())
+        if not m:
+            current.append(line)
+            continue
+        tag, rest = m.groups()
+        if tag == 'example':
+            current = [rest] if rest else []
+            result['examples'].append(current)
+        elif tag == 'deprecated':
+            current = [rest] if rest else []
+            result['deprecated'] = current
+        elif tag in ('attribute', 'child'):
+            name, _, text = rest.partition(':')
+            current = [text.strip()] if text.strip() else []
+            result['attributes' if tag == 'attribute' else 'children'][name.strip()] = current
+        else:
+            result['unknown'].append(tag)
+            current = []
+
+    def join(lines, keep_indent=False):
+        if lines is None:
+            return None
+        if keep_indent:
+            text = '\n'.join(lines)
+            # remove common indentation, keep relative indentation of examples
+            indents = [len(l) - len(l.lstrip()) for l in lines if l.strip()]
+            cut = min(indents) if indents else 0
+            text = '\n'.join(l[cut:] for l in lines)
+        else:
+            text = '\n'.join(l.strip() for l in lines)
+        return text.strip('\n').rstrip()
+
+    return {
+        'description': join(result['description']) or None,
+        'examples': [join(e, keep_indent=True) for e in result['examples'] if join(e, keep_indent=True)],
+        'deprecated': join(result['deprecated']) if result['deprecated'] is not None else None,
+        'attributes': {k: join(v) for k, v in result['attributes'].items()},
+        'children': {k: join(v) for k, v in result['children'].items()},
+        'unknown': result['unknown'],
+    }
+
+
+def warn(location, message):
+    print(f"{location}: warning: {message}", file=sys.stderr)
 
 
 def getBindingsFiles(root_paths):
@@ -225,53 +306,119 @@ def processFiles(file_list, namespaces):
     for file_name in file_list:
         buffers[file_name] = expandTemplateFunctions(expandMacros(buffers[file_name], macros))
 
-    # first collect builder aliases (typedef/using)
+    lines = {file_name: buffer.split('\n') for file_name, buffer in buffers.items()}
+    lineOf = lambda buffer, pos: buffer.count('\n', 0, pos) + 1
+
+    # first collect builder aliases (typedef/using) and element documentation
+    element_docs = []  # (target, location, parsed doc)
     for file_name in file_list:
         buffer = buffers[file_name]
-        found = [(kind, target, alias) for kind, target, alias, _ in re.findall(REGEX_PATTERN_TYPEDEF, buffer)]
-        found += [(kind, target, alias) for alias, _, kind, target in re.findall(REGEX_PATTERN_USING, buffer)]
-        for kind, target, alias in found:
+        found = [(m.start(), m.group(1), m.group(2), m.group(3)) for m in re.finditer(REGEX_PATTERN_TYPEDEF, buffer)]
+        found += [(m.start(), m.group(3), m.group(4), m.group(1)) for m in re.finditer(REGEX_PATTERN_USING, buffer)]
+        for pos, kind, target, alias in sorted(found):
             target = normalizeType(target, namespaces)
+            line = lineOf(buffer, pos)
+            location = f"{file_name}:{line}"
 
             if not target in elements:
                 elements[target] = newElement(kind)
+            if elements[target]['defined_at'] is None:
+                elements[target]['defined_at'] = location
 
             if alias != target:
                 aliases[alias] = target
+
+            doc = docCommentAbove(lines[file_name], line)
+            if doc:
+                element_docs.append((target, location, parseDocComment(doc)))
 
     # now collect registrations of attributes and child elements
     for file_name in file_list:
         buffer = buffers[file_name]
         warnUnmatched(file_name, buffer)
-        for source, _, kind, target, name in re.findall(REGEX_PATTERN, buffer):
-            target = normalizeType(target, namespaces)
+        matches = list(re.finditer(REGEX_PATTERN, buffer))
+        registrations_per_line = {}
+        for m in matches:
+            registrations_per_line.setdefault(lineOf(buffer, m.start()), []).append(m)
 
-            if source == 'K' and _ == 'ElementProcessor':
-                source = ROOT_ELEMENT  # KElementProcessor registers top-level elements
-            elif source in aliases:
-                source = aliases[source]
+        for line, line_matches in registrations_per_line.items():
+            location = f"{file_name}:{line}"
+            doc = docCommentAbove(lines[file_name], line)
+            parsed = parseDocComment(doc) if doc else None
+            if parsed and len(line_matches) > 1:
+                warn(location, "documentation comment above a line with several registrations is ignored; "
+                               "use @attribute/@child in the element documentation instead")
+                parsed = None
+            if parsed and (parsed['examples'] or parsed['attributes'] or parsed['children'] or parsed['unknown']):
+                warn(location, "only a description and @deprecated are supported above a registration")
 
-            if not source in elements:
-                elements[source] = newElement('ComplexElement')
+            for m in line_matches:
+                source, suffix, kind, target, name = m.groups()
+                target = normalizeType(target, namespaces)
 
-            if kind == 'Attribute':
-                elements[source]['attributes'][name] = target
+                if source == 'K' and suffix == 'ElementProcessor':
+                    source = ROOT_ELEMENT  # KElementProcessor registers top-level elements
+                elif source in aliases:
+                    source = aliases[source]
 
-            elif kind == 'ComplexElement' or kind == 'SimpleElement':
-                if not target in elements:
-                    elements[target] = newElement(kind)
-                elements[target]['tags'].add(name)
-                elements[target]['source_files'].add(file_name)
-                elements[source]['children'][name] = target
+                if not source in elements:
+                    elements[source] = newElement('ComplexElement')
 
+                if kind == 'Attribute':
+                    relations = elements[source]['attributes']
+                elif kind == 'ComplexElement' or kind == 'SimpleElement':
+                    if not target in elements:
+                        elements[target] = newElement(kind)
+                    elements[target]['tags'].add(name)
+                    elements[target]['source_files'].add(file_name)
+                    relations = elements[source]['children']
+                else:
+                    raise RuntimeError("Unrecognized element type: %s" % kind)
+
+                if name not in relations:
+                    relations[name] = newRelation(target, location)
+                elif relations[name]['type'] != target:
+                    # KComplexElement keeps the first registration (std::map::insert)
+                    warn(location, f"'{name}' is already registered for {source} as {relations[name]['type']} "
+                                   f"at {relations[name]['registered_at']}; this registration ({target}) has no effect")
+                if parsed:
+                    applyRelationDoc(relations[name], parsed['description'], parsed['deprecated'], location)
+
+    # element documentation (after all registrations, so that @attribute/@child can refer to them)
+    for target, location, parsed in element_docs:
+        element = elements[target]
+        for tag in parsed['unknown']:
+            warn(location, f"unknown documentation tag @{tag}")
+        if parsed['description'] or parsed['examples']:
+            if element['description'] or element['examples']:
+                warn(location, f"{target} is already documented, ignoring this comment")
             else:
-                raise RuntimeError("Unrecognized element type: %s" % kind)
+                element['description'] = parsed['description']
+                element['examples'] = parsed['examples']
+        if parsed['deprecated'] is not None:
+            element['deprecated'] = parsed['deprecated']
+        for key, relations in (('attributes', element['attributes']), ('children', element['children'])):
+            for name, text in parsed[key].items():
+                if name not in relations:
+                    warn(location, f"documented {key[:-1] if key == 'children' else 'attribute'} '{name}' is not registered for {target}")
+                    continue
+                applyRelationDoc(relations[name], text, None, location)
 
     for element in elements.values():
         element['tags'] = sorted(element['tags'])
         element['source_files'] = sorted(element['source_files'])
 
     return (elements, aliases)
+
+
+def applyRelationDoc(relation, description, deprecated, location):
+    if description:
+        if relation['description'] and relation['description'] != description:
+            warn(location, f"'{relation['type']}' registration is already documented, ignoring this comment")
+        else:
+            relation['description'] = description
+    if deprecated is not None:
+        relation['deprecated'] = deprecated
 
 
 def parseArguments():

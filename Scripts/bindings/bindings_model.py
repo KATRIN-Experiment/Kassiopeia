@@ -1,22 +1,50 @@
 """
 Shared data model for the XML bindings JSON written by extract.py.
 
-JSON format (format_version 1):
+JSON format (format_version 2):
 
     {
-      "format_version": 1,
+      "format_version": 2,
       "elements": {
         "<C++ type>": {
           "kind": "ComplexElement" | "SimpleElement",
           "tags": ["<XML tag name>", ...],          # names this type is bound to
           "source_files": ["<path>", ...],          # files registering this type as a child
-          "children": {"<XML tag name>": "<C++ type>", ...},
-          "attributes": {"<attribute name>": "<C++ type>", ...}
+          "description": "<text>" | null,           # from //! comments above the builder typedef/using
+          "examples": ["<XML snippet>", ...],       # from //! @example
+          "deprecated": "<text>" | null,            # from //! @deprecated
+          "defined_at": "<path>:<line>" | null,     # builder typedef/using
+          "children": {
+            "<XML tag name>": {
+              "type": "<C++ type>",
+              "description": "<text>" | null,       # from //! comments above the registration
+              "deprecated": "<text>" | null,
+              "registered_at": "<path>:<line>"
+            }, ...
+          },
+          "attributes": {
+            "<attribute name>": { same fields as children, "type" is the attribute's C++ type }, ...
+          }
         },
         ...
       },
       "aliases": {"<builder name>": "<C++ type>", ...}
     }
+
+Documentation comments in the C++ builder sources (see extract.py):
+
+    //! Description of the element (several lines possible).
+    //! @example <element attribute="value"/>
+    //! @attribute name: description, for attributes registered by macros
+    //! @child tag: description, for child elements registered by macros
+    //! @deprecated what to use instead
+    typedef KComplexElement<KType> KTypeBuilder;
+
+    STATICINT sKTypeStructure =
+        //! Description of this attribute.
+        KTypeBuilder::Attribute<double>("value") +
+        //! @deprecated use <new_child> instead
+        KTypeBuilder::ComplexElement<KChild>("old_child");
 
 Renderers load this with load() and select their starting points with
 select_roots().
@@ -25,19 +53,34 @@ select_roots().
 import sys
 import json
 
-FORMAT_VERSION = 1
+FORMAT_VERSION = 2
 
 MASTER_ROOT = 'KRoot'
 
 
+class Relation:
+    """An attribute or child element registration of an element."""
+    def __init__(self, entry):
+        self.type = entry['type']                    # C++ type name
+        self.description = entry.get('description')
+        self.deprecated = entry.get('deprecated')
+        self.registered_at = entry.get('registered_at')
+
+
 class Element:
-    def __init__(self, name, kind, tags, source_files, attributes):
+    def __init__(self, name, entry):
         self.name = name
-        self.kind = kind
-        self.tags = tags                  # sorted list of XML tag names
-        self.source_files = source_files  # sorted list of paths
-        self.attributes = attributes      # attribute name -> C++ type name
-        self.children = {}                # XML tag name -> Element
+        self.kind = entry['kind']
+        self.tags = entry['tags']                  # sorted list of XML tag names
+        self.source_files = entry['source_files']  # sorted list of paths
+        self.description = entry.get('description')
+        self.examples = entry.get('examples', [])
+        self.deprecated = entry.get('deprecated')
+        self.defined_at = entry.get('defined_at')
+        self.attribute_info = {k: Relation(v) for k, v in entry['attributes'].items()}  # name -> Relation
+        self.child_info = {k: Relation(v) for k, v in entry['children'].items()}        # tag -> Relation
+        self.attributes = {k: v.type for k, v in self.attribute_info.items()}  # attribute name -> C++ type name
+        self.children = {}                         # XML tag name -> Element
         self.parents = []
 
     def __repr__(self):
@@ -67,11 +110,11 @@ def load(path):
 
     elements = {}
     for name, entry in data['elements'].items():
-        elements[name] = Element(name, entry['kind'], entry['tags'], entry['source_files'], entry['attributes'])
+        elements[name] = Element(name, entry)
 
-    for name, entry in data['elements'].items():
-        for tag, child_name in entry['children'].items():
-            child = elements[child_name]
+    for name, element in elements.items():
+        for tag, relation in element.child_info.items():
+            child = elements[relation.type]
             elements[name].children[tag] = child
             if elements[name] not in child.parents:
                 child.parents.append(elements[name])
