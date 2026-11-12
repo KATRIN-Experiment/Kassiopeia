@@ -125,6 +125,10 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static', '_images']
 
+# Files copied unchanged to the root of the HTML output, e.g. the generated
+# bindings data at <site>/bindings/bindings_full.json (see "make bindings").
+html_extra_path = ['_extra']
+
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
 html_css_files = [

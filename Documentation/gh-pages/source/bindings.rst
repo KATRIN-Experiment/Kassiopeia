@@ -28,17 +28,57 @@ have a number of attributes. Note that in some cases, certain child elements
 and attributes are required; in other cases, they are mutually exclusive. Note
 that this information is not represented here in the documentation.
 
-Additional documentation on the XML bindings is available on GitHub:
-`Documentation/Bindings <https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Documentation/Bindings/>`_.
+This page is generated from the C++ sources of the bindings by the scripts in
+`Scripts/bindings <https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Scripts/bindings>`_.
+The underlying data is also available for download:
+
+* `bindings_full.json <bindings/bindings_full.json>`_: all elements, child
+  elements and attributes in machine-readable form, e.g. for editor tooling.
+* `bindings_full.xml <bindings/bindings_full.xml>`_: an XML file listing all
+  elements and attributes, with placeholder values indicating their data type.
+  It is not meant to be run, but serves as an almost-complete syntax example.
 
 Bindings graph
 ==============
 
-The graphs shows the relation between the available XML elements.
+The graph shows the relation between the available XML elements.
 
 .. image:: _images/bindings_full.svg
     :width: 1000px
     :alt: XML bindings graph
+
+Module graphs
+-------------
+
+The graphs below show the XML elements of the individual modules, including their attributes.
+
+Kommon
+~~~~~~
+
+.. image:: _images/bindings_Kommon.svg
+    :width: 1000px
+    :alt: XML bindings graph of Kommon
+
+KGeoBag
+~~~~~~~
+
+.. image:: _images/bindings_KGeoBag.svg
+    :width: 1000px
+    :alt: XML bindings graph of KGeoBag
+
+KEMField
+~~~~~~~~
+
+.. image:: _images/bindings_KEMField.svg
+    :width: 1000px
+    :alt: XML bindings graph of KEMField
+
+Kassiopeia
+~~~~~~~~~~
+
+.. image:: _images/bindings_Kassiopeia.svg
+    :width: 1000px
+    :alt: XML bindings graph of Kassiopeia
 
 List of bindings
 ================
