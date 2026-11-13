@@ -17,7 +17,7 @@ STATICINT sKSComponentMaximumStructure =
     KSComponentMaximumBuilder::Attribute<std::string>("group") +
     KSComponentMaximumBuilder::Attribute<std::string>("component") +
     //! the name of the analyzed component.
-    //! must have appeared in the file above its point of reference.
+    //! must be defined earlier in the configuration.
     KSComponentMaximumBuilder::Attribute<std::string>("parent");
 
 STATICINT sKSComponentMaximum = KSComponentGroupBuilder::ComplexElement<KSComponentMaximumData>("component_maximum") +

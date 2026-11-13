@@ -26,8 +26,8 @@ STATICINT sKSExplicitSuperpositionSolutionComponentStructure =
     KExplicitSuperpositionSolutionComponentBuilder::Attribute<double>("scale") +
     //! the hash value of the solution for this component.
     //! These hash values are machine dependent and can be found in the
-    //! output of the InspectEMFile helper programm. See instruction at the
-    //! top of this file
+    //! output of the InspectEMFile helper program, run on the .kbd files of the
+    //! individual configurations in the KEMField cache directory.
     KExplicitSuperpositionSolutionComponentBuilder::Attribute<std::string>("hash");
 
 } /* namespace katrin */

@@ -17,9 +17,9 @@ namespace katrin
 {
 
 //! provides a magnetic field arising from current-bearing elements computed with kemfield as initialized with kgeobag.
-//! to use this field a valid geometry must have been constructed, as is given above.
+//! to use this field a valid geometry must have been constructed in the <geometry> section.
 //! this field must be equipped with at least one field solver to operate.
-//! see below for examples of field solvers.
+//! see the field solver elements for the available solvers.
 //! @example
 //! <electromagnet_field
 //!     name="field_electromagnet"

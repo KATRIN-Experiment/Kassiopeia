@@ -17,10 +17,10 @@ STATICINT sKSComponentMinimumAtStructure =
     KSComponentMinimumAtBuilder::Attribute<std::string>("group") +
     KSComponentMinimumAtBuilder::Attribute<std::string>("component") +
     //! the name of the output component.
-    //! must have appeared in the file above its point of reference.
+    //! must be defined earlier in the configuration.
     KSComponentMinimumAtBuilder::Attribute<std::string>("parent") +
     //! the name of the analyzed source component.
-    //! must have appeared in the file above its point of reference.
+    //! must be defined earlier in the configuration.
     KSComponentMinimumAtBuilder::Attribute<std::string>("source");
 
 STATICINT sKSComponentMinimumAt =

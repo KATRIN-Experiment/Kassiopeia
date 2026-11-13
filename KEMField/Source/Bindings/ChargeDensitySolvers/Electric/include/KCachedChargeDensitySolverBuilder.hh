@@ -20,8 +20,8 @@ namespace katrin
 //! If only the hash is provided it will scan the KEMField cache for a solution
 //! with the same hash.
 //!
-//! Compute the field_electrostatic_gaussian_elimination_charge_density_solver
-//! to have the solution ready in the cache for this example.
+//! The solution must have been computed before (e.g. with the same geometry and
+//! another charge density solver), so that it is available in the cache.
 //! @example
 //! <cached_charge_density_solver
 //!     name="SurfaceContainer_25630838769cd7b820865b2f7c245ef2"

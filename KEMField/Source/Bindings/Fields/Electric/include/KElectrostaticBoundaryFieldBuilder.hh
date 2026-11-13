@@ -18,11 +18,11 @@ namespace katrin
 
 //! provides an electric field arising from disctretized elements computed
 //! with kemfield as initialized with kgeobag. To use this field, a valid
-//! geometry must have been constructed, as in the beginning of this file.
+//! geometry must have been constructed in the <geometry> section.
 //! The electrostatic field requires exactly one charge density solver for
 //! the boundary element method and one field solver.
-//! All solvers available are presented in the examples further down in this
-//! file.
+//! See the charge density solver and field solver elements for the available
+//! solvers.
 //! @example
 //! <electrostatic_field
 //!     name="field_electrostatic"

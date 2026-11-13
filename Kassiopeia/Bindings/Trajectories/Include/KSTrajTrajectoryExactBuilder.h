@@ -12,9 +12,9 @@ namespace katrin
 //! in normal fields good results can be obtained only if the control suggests step sizes much smaller than the cyclotron period.
 //!
 //! child elements:
-//! integrators: any integrator listed above may be used.
-//! interpolators: any interpolator listed above may be used.
-//! controls: any control listed above may be used.
+//! integrators: any integrator element (integrator_*) may be used.
+//! interpolators: any interpolator element (interpolator_*) may be used.
+//! controls: any control element (control_*) may be used.
 //! terms: only the propagation and synchrotron terms may be used with this trajectory.
 //! @example
 //! <kstraj_trajectory_exact name="trajectory_exact">

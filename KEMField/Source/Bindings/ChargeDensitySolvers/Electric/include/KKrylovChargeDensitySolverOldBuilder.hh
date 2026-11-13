@@ -23,7 +23,7 @@ namespace katrin
 //!
 //! The parameters for the fftm_multiplication and
 //! the preconditioner_electrostatic_parameters are the same
-//! as for the fast_multipole_matrix above. So read there how they work.
+//! as for <fast_multipole_matrix>, see its documentation.
 //! @example
 //! <krylov_charge_density_solver_old
 //!     solver_name="gmres"

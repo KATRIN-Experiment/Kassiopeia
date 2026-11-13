@@ -22,11 +22,11 @@ STATICINT sKElectricQuadrupoleFieldStructure =
     KElectricQuadrupoleFieldBuilder::Attribute<std::string>("name") +
     //! the vertex of the asymptotic cones.
     KElectricQuadrupoleFieldBuilder::Attribute<KEMStreamableThreeVector>("location") +
-    //! V0 in the equation above, in volts.
+    //! V0 in the equation of the element description, in volts.
     KElectricQuadrupoleFieldBuilder::Attribute<double>("strength") +
-    //! z0 in the equation above, in meters.
+    //! z0 in the equation of the element description, in meters.
     KElectricQuadrupoleFieldBuilder::Attribute<double>("length") +
-    //! r0 in the equation above, in meters.
+    //! r0 in the equation of the element description, in meters.
     KElectricQuadrupoleFieldBuilder::Attribute<double>("radius");
 
 STATICINT sKToolboxStructure = KEMToolboxBuilder::ComplexElement<KElectricQuadrupoleField>("electric_quadrupole_field");

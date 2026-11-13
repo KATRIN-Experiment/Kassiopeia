@@ -20,13 +20,11 @@ class KSIntCalculatorSet
     virtual void ReleaseCalculators(KSIntScattering* aScattering) = 0;
 };
 
-//! this is the inline form of the main scattering interaction for kassiopeia.
+//! the main scattering interaction for kassiopeia.
 //! it requires a density object and at least one calculator object to operate.
 //!
-//! this is the condensed form of the main scattering interaction for kassiopeia.
-//!
-//! this is the Mott scattering calculator. Only He-4 and Ne-20 nuclei have been implemented. To add any other
-//! nucleus add Z and b values from Table 3 in [M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.]
+//! in the inline form, the density and calculators are defined elsewhere and referenced by name
+//! (density, calculator and calculators attributes); in the condensed form, they are given as child elements.
 //! @example <ksint_scattering name="int_scattering_inline" split="false" density="density_constant" calculator="calculator_constant"/>
 //! @example
 //! <ksint_scattering name="int_scattering" split="false">

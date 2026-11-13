@@ -27,11 +27,11 @@ STATICINT sKSIntScatteringStructure =
     KSIntScatteringBuilder::Attribute<std::string>("name") +
     //! if true, the interaction will split tracks whenever a scattering occurs.
     KSIntScatteringBuilder::Attribute<bool>("split") +
-    //! the name of a density which has been added to the toolbox above.
+    //! the name of a density which has been defined earlier in the configuration.
     KSIntScatteringBuilder::Attribute<std::string>("density") +
-    //! the name of a calculator which has been added to the toolbox above.
+    //! the name of a calculator which has been defined earlier in the configuration.
     KSIntScatteringBuilder::Attribute<std::string>("calculator") +
-    //! the name of a tag containing calculators which has been added to the toolbox above.
+    //! the name of a tag containing calculators which has been defined earlier in the configuration.
     KSIntScatteringBuilder::Attribute<std::string>("calculators") +
     KSIntScatteringBuilder::Attribute<double>("enhancement") +
     //! builds a constant density.

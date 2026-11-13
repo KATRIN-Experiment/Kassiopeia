@@ -17,7 +17,7 @@ STATICINT sKSComponentMinimumStructure =
     KSComponentMinimumBuilder::Attribute<std::string>("group") +
     KSComponentMinimumBuilder::Attribute<std::string>("component") +
     //! the name of the analyzed component.
-    //! must have appeared in the file above its point of reference.
+    //! must be defined earlier in the configuration.
     KSComponentMinimumBuilder::Attribute<std::string>("parent");
 
 STATICINT sKSComponentMinimum = KSComponentGroupBuilder::ComplexElement<KSComponentMinimumData>("component_minimum") +

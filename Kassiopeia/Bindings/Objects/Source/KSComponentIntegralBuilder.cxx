@@ -17,7 +17,7 @@ STATICINT sKSComponentIntegralStructure =
     KSComponentIntegralBuilder::Attribute<std::string>("group") +
     KSComponentIntegralBuilder::Attribute<std::string>("component") +
     //! the name of the integrand.
-    //! must have appeared in the file above its point of reference.
+    //! must be defined earlier in the configuration.
     KSComponentIntegralBuilder::Attribute<std::string>("parent");
 
 STATICINT sKSComponentIntegral =
