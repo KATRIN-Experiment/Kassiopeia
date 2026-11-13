@@ -18,7 +18,9 @@ namespace katrin
 template<> KExplicitSuperpositionCachedChargeDensitySolverBuilder::~KComplexElement() = default;
 
 STATICINT sKExplicitSuperpositionCachedChargeDensitySolverStructure =
+    //! the name of the cached charge density solver.
     KExplicitSuperpositionCachedChargeDensitySolverBuilder::Attribute<std::string>("name") +
+    //! this describes one potential configuration that is part of the superposition.
     KExplicitSuperpositionCachedChargeDensitySolverBuilder::ComplexElement<KExplicitSuperpositionSolutionComponent>(
         "component");
 

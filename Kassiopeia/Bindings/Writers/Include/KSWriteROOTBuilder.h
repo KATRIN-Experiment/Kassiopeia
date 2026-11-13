@@ -8,6 +8,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! a writer that makes ROOT files containing results of simulations.
+//! suitable for viewing in the ROOT browser.
+//! @example <kswrite_root name="write_root" path="." base="Writers.root"/>
 typedef KComplexElement<KSWriteROOT> KSWriteROOTBuilder;
 
 template<> inline bool KSWriteROOTBuilder::AddAttribute(KContainer* aContainer)

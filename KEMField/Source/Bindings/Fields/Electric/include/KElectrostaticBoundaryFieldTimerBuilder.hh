@@ -14,6 +14,9 @@
 namespace katrin
 {
 
+//! display the times for charge density solving and
+//! field solver initialization.
+//! @example <timer/>
 typedef KComplexElement<KEMField::KElectrostaticBoundaryFieldTimer> KElectrostaticBoundaryFieldTimerBuilder;
 
 template<> inline bool KElectrostaticBoundaryFieldTimerBuilder::AddAttribute(KContainer*)

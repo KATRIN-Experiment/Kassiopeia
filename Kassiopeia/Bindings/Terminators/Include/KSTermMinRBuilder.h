@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose position's radial coordinate falls below a given value.
+//! @example <ksterm_min_r name="term_min_r" r="1.239"/>
 typedef KComplexElement<KSTermMinR> KSTermMinRBuilder;
 
 template<> inline bool KSTermMinRBuilder::AddAttribute(KContainer* aContainer)

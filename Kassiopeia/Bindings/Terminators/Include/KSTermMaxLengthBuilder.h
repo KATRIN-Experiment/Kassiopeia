@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose track length rises above a given value.
+//! @example <ksterm_max_length name="term_max_length" length="1.239"/>
 typedef KComplexElement<KSTermMaxLength> KSTermMaxLengthBuilder;
 
 template<> inline bool KSTermMaxLengthBuilder::AddAttribute(KContainer* aContainer)

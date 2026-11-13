@@ -10,8 +10,11 @@ namespace katrin
 
 template<> KSTrajTrajectoryLinearBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajTrajectoryLinearStructure = KSTrajTrajectoryLinearBuilder::Attribute<std::string>("name") +
-                                             KSTrajTrajectoryLinearBuilder::Attribute<double>("length");
+STATICINT sKSTrajTrajectoryLinearStructure =
+    //! the name of this trajectory.
+    KSTrajTrajectoryLinearBuilder::Attribute<std::string>("name") +
+    //! the length of the resulting trajectory segment in meters.
+    KSTrajTrajectoryLinearBuilder::Attribute<double>("length");
 
 STATICINT sKSTrajTrajectoryLinear = KSRootBuilder::ComplexElement<KSTrajTrajectoryLinear>("kstraj_trajectory_linear");
 

@@ -13,6 +13,8 @@
 namespace katrin
 {
 
+//! performs a sum over all components to obtain the final field.
+//! @example <integrating_field_solver/>
 typedef KComplexElement<KEMField::KIntegratingMagnetostaticFieldSolver> KIntegratingMagnetostaticFieldSolverBuilder;
 
 } /* namespace katrin */

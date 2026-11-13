@@ -15,6 +15,12 @@
 namespace katrin
 {
 
+//! provides a perfect quadrupole electric field.
+//! equipotential surfaces are hyperboloids of revolution about the z axis, with asymptotic cones at zero potential.
+//! the potential in cylindrical coordinates obeys:
+//!
+//! V(z,r,phi) = V0 * (z^2 - r^2 / 2) / (z0^2 + r0^2 / 2)
+//! @example <electric_quadrupole_field name="electric_quadrupole" location="0. 0. 0." strength="-10000." length="1.e-2" radius="1.e-2"/>
 typedef KComplexElement<KEMField::KElectricQuadrupoleField> KElectricQuadrupoleFieldBuilder;
 
 template<> inline bool KElectricQuadrupoleFieldBuilder::AddAttribute(KContainer* aContainer)

@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose kinetic energy rises above a given value.
+//! @example <ksterm_max_energy name="term_max_energy" energy="1.239"/>
 typedef KComplexElement<KSTermMaxEnergy> KSTermMaxEnergyBuilder;
 
 template<> inline bool KSTermMaxEnergyBuilder::AddAttribute(KContainer* aContainer)

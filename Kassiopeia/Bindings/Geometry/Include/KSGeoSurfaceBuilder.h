@@ -10,6 +10,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! a very lightweight wrapper around a kgeobag surface.
+//! can be equipped with commands that change the simulation configuration on this surface.
+//! @example <ksgeo_surface name="geo_surface" surfaces="assembly/outer/inner"/>
 typedef KComplexElement<KSGeoSurface> KSGeoSurfaceBuilder;
 
 template<> inline bool KSGeoSurfaceBuilder::AddAttribute(KContainer* aContainer)

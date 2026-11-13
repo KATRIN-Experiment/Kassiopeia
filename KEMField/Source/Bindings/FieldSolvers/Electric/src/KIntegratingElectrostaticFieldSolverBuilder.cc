@@ -18,6 +18,7 @@ template<> KIntegratingElectrostaticFieldSolverBuilder::~KComplexElement() = def
 
 STATICINT sKIntegratingElectrostaticFieldSolverStructure =
     KIntegratingElectrostaticFieldSolverBuilder::Attribute<std::string>("integrator") +
+    //! if true and kemfield has been compiled with opencl support, opencl will be used in the computation.
     KIntegratingElectrostaticFieldSolverBuilder::Attribute<bool>("use_opencl");
 
 STATICINT sKElectrostaticBoundaryField =

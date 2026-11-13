@@ -25,6 +25,7 @@ namespace katrin
 template<> KSTrajTrajectoryMagneticBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryMagneticStructure =
+    //! the name of this trajectory.
     KSTrajTrajectoryMagneticBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryMagneticBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryMagneticBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +

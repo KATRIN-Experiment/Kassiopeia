@@ -10,6 +10,11 @@
 namespace katrin
 {
 
+//! provides a perfect linear electric field.
+//! the potential in cylindrical coordinates obeys:
+//!
+//! V(z,r,phi) = V0 + (V1 - V0) / (z1 - z0) * (z - z0)
+//! @example <linear_electric_field name="electric_linear" z1="0" z2="1.e-2" U1="100" U2="0"/>
 typedef KComplexElement<KEMField::KElectrostaticLinearField> KElectrostaticLinearFieldBuilder;
 
 template<> inline bool KElectrostaticLinearFieldBuilder::AddAttribute(KContainer* aContainer)

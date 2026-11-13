@@ -8,6 +8,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this control suggests a constant temporal step.
+//! it never rejects steps.
+//! @example <kstraj_control_time name="control_time" time="1.e-10"/>
 typedef KComplexElement<KSTrajControlTime> KSTrajControlTimeBuilder;
 
 template<> inline bool KSTrajControlTimeBuilder::AddAttribute(KContainer* aContainer)

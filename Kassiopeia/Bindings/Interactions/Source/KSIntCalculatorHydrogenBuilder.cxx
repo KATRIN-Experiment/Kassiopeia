@@ -43,9 +43,13 @@ void KSIntCalculatorHydrogenSet::ReleaseCalculators(KSIntScattering* aScattering
 template<> KSIntCalculatorHydrogenSetBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntCalculatorHydrogenStructure = KSIntCalculatorHydrogenSetBuilder::Attribute<std::string>("name") +
+                                              //! if true, all elastic processes are enabled.
                                               KSIntCalculatorHydrogenSetBuilder::Attribute<bool>("elastic") +
+                                              //! if true, all excitation processes are enabled.
                                               KSIntCalculatorHydrogenSetBuilder::Attribute<bool>("excitation") +
+                                              //! if true, all ionisation processes are enabled. note british spelling!
                                               KSIntCalculatorHydrogenSetBuilder::Attribute<bool>("ionisation") +
+                                              //! if set to tritium, the rot20 calculator is also added
                                               KSIntCalculatorHydrogenSetBuilder::Attribute<std::string>("molecule");
 
 }  // namespace katrin

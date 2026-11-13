@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this calculator returns a constant cross section and scatters isotropically.
+//! @example <ksint_calculator_constant name="calculator_constant" cross_section="1.e-18"/>
 typedef KComplexElement<KSIntCalculatorConstant> KSIntCalculatorConstantBuilder;
 
 template<> inline bool KSIntCalculatorConstantBuilder::AddAttribute(KContainer* aContainer)

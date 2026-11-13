@@ -88,6 +88,8 @@ inline KSComponent* BuildOutputIntegral(KSComponent* aComponent)
     return nullptr;
 }
 
+//! an integral of a component over some set of simulation events.
+//! @example <output_integral name="step_final_particle_position_z_integral" parent="step_final_particle_position_z"/>
 typedef KComplexElement<KSComponentIntegralData> KSComponentIntegralBuilder;
 
 template<> inline bool KSComponentIntegralBuilder::Begin()

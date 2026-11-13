@@ -8,6 +8,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this is the principal surface navigator within kassiopeia.
+//! given a particle state, it determines whether the particle has been transmitted through the surface or reflected from it, and what space it subsequently enters.
+//! @example <ksnav_surface name="nav_surface" transmission_split="false" reflection_split="false"/>
 typedef KComplexElement<KSNavSurface> KSNavSurfaceBuilder;
 
 template<> inline bool KSNavSurfaceBuilder::AddAttribute(KContainer* aContainer)

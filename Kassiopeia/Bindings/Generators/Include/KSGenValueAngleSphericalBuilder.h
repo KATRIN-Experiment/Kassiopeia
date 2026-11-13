@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! generates a single random value drawn from a distribution suitable for randomly distributing polar angles in cylindrical coordinates.
+//! @example <ksgen_value_angle_spherical name="value_angle_spherical" angle_min="10." angle_max="70."/>
 typedef KComplexElement<KSGenValueAngleSpherical> KSGenValueAngleSphericalBuilder;
 
 template<> inline bool KSGenValueAngleSphericalBuilder::AddAttribute(KContainer* aContainer)

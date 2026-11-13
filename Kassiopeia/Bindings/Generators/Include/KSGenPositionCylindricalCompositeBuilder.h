@@ -11,6 +11,14 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! creates the position of a generated particle according to the value objects supplied, interpreting them to be cylindrical coordinates.
+//! r values are in meters, phi values are in degrees, and z values are in meters.
+//! @example
+//! <ksgen_position_cylindrical_composite name="position_cylindrical_composite" surface="world/top">
+//!     <r_cylindrical radius_min="1." radius_max="2."/>
+//!     <phi_set value_start="45." value_stop="90." value_count="10"/>
+//!     <z_formula value_min="2." value_max="4." value_formula="x * x / 2. + 1."/>
+//! </ksgen_position_cylindrical_composite>
 typedef KComplexElement<KSGenPositionCylindricalComposite> KSGenPositionCylindricalCompositeBuilder;
 
 template<> inline bool KSGenPositionCylindricalCompositeBuilder::AddAttribute(KContainer* aContainer)

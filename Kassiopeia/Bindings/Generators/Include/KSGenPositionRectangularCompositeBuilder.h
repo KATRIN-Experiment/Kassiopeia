@@ -11,6 +11,14 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! creates the position of a generated particle according to the value objects supplied, interpreting them in rectangular coordinates.
+//! x, y, and z values are in meters.
+//! @example
+//! <ksgen_position_rectangular_composite name="position_rectangular_composite" space="world">
+//!     <x_fix value="0."/>
+//!     <y_gauss value_min="0." value_max="5." value_mean="2." value_sigma=".5"/>
+//!     <z_formula value_min="2." value_max="4." value_formula="x * x / 2. + 1."/>
+//! </ksgen_position_rectangular_composite>
 typedef KComplexElement<KSGenPositionRectangularComposite> KSGenPositionRectangularCompositeBuilder;
 
 template<> inline bool KSGenPositionRectangularCompositeBuilder::AddAttribute(KContainer* aContainer)

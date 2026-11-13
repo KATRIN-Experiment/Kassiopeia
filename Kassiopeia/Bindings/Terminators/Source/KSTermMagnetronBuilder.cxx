@@ -9,7 +9,10 @@ namespace katrin
 template<> KSTermMagnetronBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMagnetronStructure =
-    KSTermMagnetronBuilder::Attribute<std::string>("name") + KSTermMagnetronBuilder::Attribute<double>("max_phi");
+    //! the name of the terminator
+    KSTermMagnetronBuilder::Attribute<std::string>("name") +
+    //! the azimuthal angle surpassed under magnetron motion before the particle is killed
+    KSTermMagnetronBuilder::Attribute<double>("max_phi");
 
 STATICINT sKSTermMagnetron = KSRootBuilder::ComplexElement<KSTermMagnetron>("ksterm_magnetron");
 

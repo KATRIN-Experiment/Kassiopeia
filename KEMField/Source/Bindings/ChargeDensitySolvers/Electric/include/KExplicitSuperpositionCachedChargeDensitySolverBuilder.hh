@@ -14,6 +14,16 @@
 namespace katrin
 {
 
+//! the explicit superposition cached charge densiy solver
+//! computes the superposition field of the different configurations specified
+//! in the component elements by adding their scaled charge densities. All
+//! component have to use the same geometric setup, but with different electric potentials.
+//! The precomputed charge densities have to be in the KEMField cache directory.
+//! @example
+//! <explicit_superposition_cached_charge_density_solver name="super">
+//!     <component name="outer" scale="100" hash="50b0ed03244d564f56efa6249412f8ce"/>
+//!     <component name="inner" scale="-20" hash="844296c98e90b612273736ccb0f81ffe"/>
+//! </explicit_superposition_cached_charge_density_solver>
 typedef KComplexElement<KEMField::KExplicitSuperpositionCachedChargeDensitySolver>
     KExplicitSuperpositionCachedChargeDensitySolverBuilder;
 

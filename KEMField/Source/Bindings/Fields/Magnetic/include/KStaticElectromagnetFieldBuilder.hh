@@ -16,6 +16,21 @@
 namespace katrin
 {
 
+//! provides a magnetic field arising from current-bearing elements computed with kemfield as initialized with kgeobag.
+//! to use this field a valid geometry must have been constructed, as is given above.
+//! this field must be equipped with at least one field solver to operate.
+//! see below for examples of field solvers.
+//! @example
+//! <electromagnet_field
+//!     name="field_electromagnet"
+//!     directory="."
+//!     file="Magnets.kbd"
+//!     system="assembly"
+//!     surfaces="assembly/@hoop_tag"
+//!     spaces="assembly/@coil_tag"
+//! >
+//!     <integrating_field_solver/>
+//! </electromagnet_field>
 typedef KComplexElement<KEMField::KGStaticElectromagnetField> KStaticElectromagnetFieldBuilder;
 
 template<> inline bool KStaticElectromagnetFieldBuilder::AddAttribute(KContainer* aContainer)

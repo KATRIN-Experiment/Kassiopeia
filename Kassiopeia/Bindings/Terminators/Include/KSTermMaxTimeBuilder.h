@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose track time rises above a given value.
+//! @example <ksterm_max_time name="term_max_time" time="1.239"/>
 typedef KComplexElement<KSTermMaxTime> KSTermMaxTimeBuilder;
 
 template<> inline bool KSTermMaxTimeBuilder::AddAttribute(KContainer* aContainer)

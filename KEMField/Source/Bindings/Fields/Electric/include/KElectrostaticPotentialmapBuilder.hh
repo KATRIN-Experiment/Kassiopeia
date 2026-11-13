@@ -19,6 +19,14 @@
 namespace katrin
 {
 
+//! electric field interpolated from a precomputed potentialmap
+//! @example
+//! <electric_potentialmap
+//!     name="electric_potentialmap"
+//!     directory="."
+//!     file="CompleteXMLPotentialMap.vti"
+//!     interpolation="cubic"
+//! />
 typedef KComplexElement<KEMField::KElectrostaticPotentialmap> KElectrostaticPotentialmapBuilder;
 
 template<> inline bool KElectrostaticPotentialmapBuilder::AddAttribute(KContainer* aContainer)
@@ -47,6 +55,21 @@ template<> inline bool KElectrostaticPotentialmapBuilder::AddAttribute(KContaine
 
 ////////////////////////////////////////////////////////////////////
 
+//! Creates a potential map stored in the .vti image format.
+//! @example
+//! <electric_potentialmap_calculator
+//!     name="electric_potentialmap_calculator"
+//!     directory="."
+//!     file="CompleteXMLPotentialMap.vti"
+//!     center="0 0 0"
+//!     length="1.5 1.5 1.5"
+//!     mirror_x="false"
+//!     mirror_y="false"
+//!     mirror_z="false"
+//!     spacing="0.1"
+//!     spaces="outer_space"
+//!     field="electric_quadrupole"
+//! />
 typedef KComplexElement<KEMField::KElectrostaticPotentialmapCalculator> KElectrostaticPotentialmapCalculatorBuilder;
 
 template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute(KContainer* aContainer)

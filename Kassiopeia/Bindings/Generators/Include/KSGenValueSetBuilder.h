@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! generates a set of constant values evenly spaced along an interval inclusive of the beginning and end points.
+//! @example <ksgen_value_set name="value_set" value_start="1." value_stop="2." value_count="11"/>
 typedef KComplexElement<KSGenValueSet> KSGenValueSetBuilder;
 
 template<> inline bool KSGenValueSetBuilder::AddAttribute(KContainer* aContainer)

@@ -10,11 +10,17 @@ namespace katrin
 
 template<> KSWriteROOTConditionOutputBuilder::~KComplexElement() = default;
 
-STATICINT sKSWriteROOTConditionOutputStructure = KSWriteROOTConditionOutputBuilder::Attribute<std::string>("name") +
-                                                 KSWriteROOTConditionOutputBuilder::Attribute<double>("min_value") +
-                                                 KSWriteROOTConditionOutputBuilder::Attribute<double>("max_value") +
-                                                 KSWriteROOTConditionOutputBuilder::Attribute<std::string>("group") +
-                                                 KSWriteROOTConditionOutputBuilder::Attribute<std::string>("parent");
+STATICINT sKSWriteROOTConditionOutputStructure =
+    //! the name of this write condition.
+    KSWriteROOTConditionOutputBuilder::Attribute<std::string>("name") +
+    //! the writer does only write to disc if the value of the output variable is above this value
+    KSWriteROOTConditionOutputBuilder::Attribute<double>("min_value") +
+    //! the writer does only write to disc if the value of the output variable is below this value
+    KSWriteROOTConditionOutputBuilder::Attribute<double>("max_value") +
+    //! the name of the group the output variable is in (optional)
+    KSWriteROOTConditionOutputBuilder::Attribute<std::string>("group") +
+    //! the name of the output variable which is used for the write decision
+    KSWriteROOTConditionOutputBuilder::Attribute<std::string>("parent");
 
 
 STATICINT sKSWriteROOTConditionOutput =

@@ -10,6 +10,7 @@ namespace katrin
 
 template<> KSTrajInterpolatorFastBuilder::~KComplexElement() = default;
 
+//! the name of this interpolator.
 STATICINT sKSTrajInterpolatorFastStructure = KSTrajInterpolatorFastBuilder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajInterpolatorFast =

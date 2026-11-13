@@ -32,6 +32,7 @@ namespace katrin
 template<> KSTrajTrajectoryExactBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryExactStructure =
+    //! the name of this trajectory.
     KSTrajTrajectoryExactBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryExactBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryExactBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +

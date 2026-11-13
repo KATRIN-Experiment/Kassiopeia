@@ -8,6 +8,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! generates a single random value drawn from a portion of a user-defined distribution.
+//! implemented using a root tf1.
+//! @example <ksgen_value_formula name="value_formula" value_min="0." value_max="1." value_formula="x * x / 2."/>
 typedef KComplexElement<KSGenValueFormula> KSGenValueFormulaBuilder;
 
 template<> inline bool KSGenValueFormulaBuilder::AddAttribute(KContainer* aContainer)

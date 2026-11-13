@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! generates a single random value drawn from a portion of a uniform distribution.
+//! @example <ksgen_value_uniform name="value_uniform" value_min="-10." value_max="10."/>
 typedef KComplexElement<KSGenValueUniform> KSGenValueUniformBuilder;
 
 template<> inline bool KSGenValueUniformBuilder::AddAttribute(KContainer* aContainer)

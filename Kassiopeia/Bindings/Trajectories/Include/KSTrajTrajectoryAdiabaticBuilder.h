@@ -8,6 +8,20 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this trajectory internally uses an adiabatic representation of the particle.
+//! this is a good trajectory anywhere the adiabatic approximation is valid.
+//!
+//! child elements:
+//! integrators: any integrator listed above may be used.
+//! interpolators: any interpolator listed above may be used.
+//! controls: any control listed above may be used.
+//! terms: only the propagation, synchrotron, drift and gyration terms may be used with this trajectory.
+//! @example
+//! <kstraj_trajectory_adiabatic name="trajectory_adiabatic">
+//!     <integrator_rk8/>
+//!     <control_time time="1.e-10"/>
+//!     <term_propagation/>
+//! </kstraj_trajectory_adiabatic>
 typedef KComplexElement<KSTrajTrajectoryAdiabatic> KSTrajTrajectoryAdiabaticBuilder;
 
 template<> inline bool KSTrajTrajectoryAdiabaticBuilder::AddAttribute(KContainer* aContainer)

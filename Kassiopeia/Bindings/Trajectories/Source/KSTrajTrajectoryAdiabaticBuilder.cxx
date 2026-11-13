@@ -33,6 +33,7 @@ namespace katrin
 template<> KSTrajTrajectoryAdiabaticBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryAdiabaticStructure =
+    //! the name of this trajectory.
     KSTrajTrajectoryAdiabaticBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryAdiabaticBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryAdiabaticBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +

@@ -9,6 +9,12 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! creates the kinetic energy of a generated particle according to the value objects supplied.
+//! energy is in electron volts.
+//! @example
+//! <ksgen_energy_composite name="energy_composite">
+//!     <energy_gauss value_min="18500." value_max="18700." value_mean="18600." value_sigma="50."/>
+//! </ksgen_energy_composite>
 typedef KComplexElement<KSGenEnergyComposite> KSGenEnergyCompositeBuilder;
 
 template<> inline bool KSGenEnergyCompositeBuilder::AddAttribute(KContainer* aContainer)

@@ -19,6 +19,11 @@ class KSCommandMemberData
     std::string fChildName;
 };
 
+//! command object encapsulating a request to combine or change simulation objects.
+//! given an instance of a kassiopeia object, a string can be given to it to request a command.
+//! if a matching association between the string and a member function of the parent's class is found, a command is created which binds the parent, its member, and a given child object together.
+//! typically commands come in add/remove or set/clear pairs which compose objects together as in the example, or get/set pairs by which an object's configuration may be altered.
+//! @example <ks_command_member name="command_remove_cyclotron" parent="trajectory_exact" field="remove_control" child="control_cyclotron"/>
 typedef KComplexElement<KSCommandMemberData> KSCommandMemberBuilder;
 
 template<> inline bool KSCommandMemberBuilder::Begin()

@@ -11,7 +11,10 @@ namespace katrin
 template<> KSTermMaxEnergyBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxEnergyStructure =
-    KSTermMaxEnergyBuilder::Attribute<std::string>("name") + KSTermMaxEnergyBuilder::Attribute<double>("energy");
+    //! the name of the terminator.
+    KSTermMaxEnergyBuilder::Attribute<std::string>("name") +
+    //! the maximum allowed kinetic energy.
+    KSTermMaxEnergyBuilder::Attribute<double>("energy");
 
 STATICINT sKSTermMaxEnergy = KSRootBuilder::ComplexElement<KSTermMaxEnergy>("ksterm_max_energy");
 

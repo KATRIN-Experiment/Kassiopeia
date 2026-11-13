@@ -11,7 +11,10 @@ namespace katrin
 template<> KSTermMaxZBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxZStructure =
-    KSTermMaxZBuilder::Attribute<std::string>("name") + KSTermMaxZBuilder::Attribute<double>("z");
+    //! the name of the terminator.
+    KSTermMaxZBuilder::Attribute<std::string>("name") +
+    //! the maximum allowed z coordinate.
+    KSTermMaxZBuilder::Attribute<double>("z");
 
 STATICINT sToolboxKSTermMaxZ = KSRootBuilder::ComplexElement<KSTermMaxZ>("ksterm_max_z");
 

@@ -20,6 +20,26 @@ class KSIntCalculatorSet
     virtual void ReleaseCalculators(KSIntScattering* aScattering) = 0;
 };
 
+//! this is the inline form of the main scattering interaction for kassiopeia.
+//! it requires a density object and at least one calculator object to operate.
+//!
+//! this is the condensed form of the main scattering interaction for kassiopeia.
+//!
+//! this is the Mott scattering calculator. Only He-4 and Ne-20 nuclei have been implemented. To add any other
+//! nucleus add Z and b values from Table 3 in [M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.]
+//! @example <ksint_scattering name="int_scattering_inline" split="false" density="density_constant" calculator="calculator_constant"/>
+//! @example
+//! <ksint_scattering name="int_scattering" split="false">
+//!     <density_constant temperature="300." pressure="1.e-7"/>
+//!     <calculator_constant cross_section="1.e-15"/>
+//!     <calculator_hydrogen elastic="true" excitation="true" ionisation="true"/>
+//!     <calculator_ion gas="H_2"/>
+//! </ksint_scattering>
+//! @example
+//! <ksint_scattering name="int_scattering_mott" split="false">
+//!         <density_constant temperature="80" pressure_mbar="0.5e3"/>
+//!         <calculator_mott nucleus="He-4" theta_min="40" theta_max="140"/>
+//! </ksint_scattering>
 typedef KComplexElement<KSIntScattering> KSIntScatteringBuilder;
 
 template<> inline bool KSIntScatteringBuilder::AddAttribute(KContainer* aContainer)

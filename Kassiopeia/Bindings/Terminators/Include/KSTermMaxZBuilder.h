@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose position's z coordinate rises above a given value.
+//! @example <ksterm_max_z name="term_max_z" z="1.239"/>
 typedef KComplexElement<KSTermMaxZ> KSTermMaxZBuilder;
 
 template<> inline bool KSTermMaxZBuilder::AddAttribute(KContainer* aContainer)

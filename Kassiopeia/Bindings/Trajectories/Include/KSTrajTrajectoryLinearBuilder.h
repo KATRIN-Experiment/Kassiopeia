@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this trajectory moves the particle forward at constant speed along the direction of its momentum.
+//! @example <kstraj_trajectory_linear name="trajectory_linear" length="1.e-8"/>
 typedef KComplexElement<KSTrajTrajectoryLinear> KSTrajTrajectoryLinearBuilder;
 
 template<> inline bool KSTrajTrajectoryLinearBuilder::AddAttribute(KContainer* aContainer)

@@ -88,6 +88,8 @@ inline KSComponent* BuildOutputMinimum(KSComponent* aComponent)
     return nullptr;
 }
 
+//! the minimum value attained by a component over some set of simulation events.
+//! @example <output_minimum name="step_final_particle_position_z_minimum" parent="step_final_particle_position_z"/>
 typedef KComplexElement<KSComponentMinimumData> KSComponentMinimumBuilder;
 
 template<> inline bool KSComponentMinimumBuilder::Begin()

@@ -10,8 +10,12 @@ namespace katrin
 
 template<> KSTrajTermPropagationBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajTermPropagationStructure = KSTrajTermPropagationBuilder::Attribute<std::string>("name") +
-                                            KSTrajTermPropagationBuilder::Attribute<std::string>("direction");
+STATICINT sKSTrajTermPropagationStructure =
+    //! the name of this term.
+    KSTrajTermPropagationBuilder::Attribute<std::string>("name") +
+    //! if forward, the term moves the particle forwards in time.
+    //! if backward, the term moves the particle backwards in time.
+    KSTrajTermPropagationBuilder::Attribute<std::string>("direction");
 
 STATICINT sToolboxKSTrajTermPropagation =
     KSRootBuilder::ComplexElement<KSTrajTermPropagation>("kstraj_term_propagation");

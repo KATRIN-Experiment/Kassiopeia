@@ -8,6 +8,16 @@
 namespace katrin
 {
 
+//! a set of components treated a single composite.
+//!
+//! name:
+//! the name of this group.
+//! @example
+//! <output_group name="component_group">
+//!     <output name="step_final_particle_nested" parent="step" field="final_particle"/>
+//!     <output name="step_final_particle_position_nested" parent="step_final_particle" field="position"/>
+//!     <output name="step_final_particle_position_z_nested" parent="step_final_particle_position" field="z"/>
+//! </output_group>
 typedef KComplexElement<Kassiopeia::KSComponentGroup> KSComponentGroupBuilder;
 
 template<> inline bool KSComponentGroupBuilder::AddAttribute(KContainer* aContainer)

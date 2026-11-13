@@ -11,7 +11,10 @@ namespace katrin
 template<> KSTermMaxStepsBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxStepsStructure =
-    KSTermMaxStepsBuilder::Attribute<std::string>("name") + KSTermMaxStepsBuilder::Attribute<unsigned int>("steps");
+    //! the name of the terminator.
+    KSTermMaxStepsBuilder::Attribute<std::string>("name") +
+    //! the maximum allowed track step count.
+    KSTermMaxStepsBuilder::Attribute<unsigned int>("steps");
 
 STATICINT sKSTermMaxSteps = KSRootBuilder::ComplexElement<KSTermMaxSteps>("ksterm_max_steps");
 

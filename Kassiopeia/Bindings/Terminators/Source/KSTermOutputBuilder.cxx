@@ -11,8 +11,16 @@ namespace katrin
 template<> KSTermOutputBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermOutputStructure =
-    KSTermOutputBuilder::Attribute<std::string>("name") + KSTermOutputBuilder::Attribute<double>("min_value") +
-    KSTermOutputBuilder::Attribute<double>("max_value") + KSTermOutputBuilder::Attribute<std::string>("group") +
+    //! the name of the terminator
+    KSTermOutputBuilder::Attribute<std::string>("name") +
+    //! the minimal value
+    //!
+    //! max_value
+    //! the maximal value
+    KSTermOutputBuilder::Attribute<double>("min_value") + KSTermOutputBuilder::Attribute<double>("max_value") +
+    //! the output group with the specific output component
+    KSTermOutputBuilder::Attribute<std::string>("group") +
+    //! the output component (must be of int or double like typ)
     KSTermOutputBuilder::Attribute<std::string>("component");
 
 

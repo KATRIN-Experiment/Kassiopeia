@@ -10,6 +10,7 @@ namespace katrin
 
 template<> KSTrajTermDriftBuilder::~KComplexElement() = default;
 
+//! the name of this term.
 STATICINT sKSTrajTermDriftStructure = KSTrajTermDriftBuilder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajTermDrift = KSRootBuilder::ComplexElement<KSTrajTermDrift>("kstraj_term_drift");

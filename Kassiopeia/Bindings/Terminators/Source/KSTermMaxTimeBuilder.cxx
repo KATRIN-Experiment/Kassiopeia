@@ -11,7 +11,10 @@ namespace katrin
 template<> KSTermMaxTimeBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxTimeStructure =
-    KSTermMaxTimeBuilder::Attribute<std::string>("name") + KSTermMaxTimeBuilder::Attribute<double>("time");
+    //! the name of the terminator.
+    KSTermMaxTimeBuilder::Attribute<std::string>("name") +
+    //! the maximum allowed track time.
+    KSTermMaxTimeBuilder::Attribute<double>("time");
 
 STATICINT sKSTermMaxTime = KSRootBuilder::ComplexElement<KSTermMaxTime>("ksterm_max_time");
 

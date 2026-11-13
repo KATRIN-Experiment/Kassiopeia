@@ -11,9 +11,13 @@ namespace katrin
 {
 
 STATICINT sKSSpaceStructure =
-    KSGeoSpaceBuilder::Attribute<std::string>("name") + KSGeoSpaceBuilder::Attribute<std::string>("spaces") +
-    KSGeoSpaceBuilder::ComplexElement<KSGeoSpace>("geo_space") +
+    //! the name of the space.
+    KSGeoSpaceBuilder::Attribute<std::string>("name") +
+    //! paths to a set of kgeobag spaces in which to apply the enclosed commands.
+    KSGeoSpaceBuilder::Attribute<std::string>("spaces") + KSGeoSpaceBuilder::ComplexElement<KSGeoSpace>("geo_space") +
+    //! must be a free surface which bounds this space.
     KSGeoSpaceBuilder::ComplexElement<KSGeoSurface>("geo_surface") +
+    //! must be a side which bounds this space.
     KSGeoSpaceBuilder::ComplexElement<KSGeoSide>("geo_side") +
     KSGeoSpaceBuilder::ComplexElement<KSCommandMemberData>("command") +
     KSGeoSpaceBuilder::ComplexElement<KSCommandMemberAddTerminatorData>("add_terminator") +

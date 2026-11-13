@@ -21,6 +21,19 @@ class KSWriteROOTConditionStepData
     int fNthStepValue;
 };
 
+//! a write condition for the root writer to reduce output file size while keeping tracking precision
+//! only every nth_step (int!) the root writer records a step
+//! @example <kswrite_root_condition_step name="condition_nth_step" group="component_step_world" parent="step_id" nth_step="{1000}"/>
+//! @example
+//! <ks_component_group name="component_step_world">
+//!     <component_member name="step_id" field="step_id" parent="step"/>
+//! </ks_component_group>
+//!
+//! <kswrite_root_condition_step name="condition_nth_step" group="component_step_world" parent="step_id" nth_step="{1000}"/>
+//! <ksgeo_space name="space_world" spaces="world">
+//!     <command parent="write_root" field="add_step_output" child="component_step_world"/>
+//!     <command parent="write_root" field="add_step_write_condition" child="condition_nth_step"/>
+//! </ksgeo_space>
 typedef KComplexElement<KSWriteROOTConditionStepData> KSWriteROOTConditionStepBuilder;
 
 template<> inline bool KSWriteROOTConditionStepBuilder::Begin()

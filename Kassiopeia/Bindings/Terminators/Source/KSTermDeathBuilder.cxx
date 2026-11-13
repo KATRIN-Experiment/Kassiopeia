@@ -10,6 +10,7 @@ namespace katrin
 
 template<> KSTermDeathBuilder::~KComplexElement() = default;
 
+//! the name of the terminator.
 STATICINT sKSTermDeathStructure = KSTermDeathBuilder::Attribute<std::string>("name");
 
 STATICINT sKSTermDeath = KSRootBuilder::ComplexElement<KSTermDeath>("ksterm_death");

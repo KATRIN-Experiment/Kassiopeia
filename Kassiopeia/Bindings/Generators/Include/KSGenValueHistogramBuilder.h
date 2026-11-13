@@ -8,6 +8,10 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! generates a single random value drawn from a ROOT histogram.
+//! implemented using a ROOT TH1D and TFile->Get(), and a ROOT TF1 formula.
+//! given ROOT file has to exist and contain a histogram with given name/path.
+//! @example <ksgen_value_histogram name="value_histogram" path="" base="histogram.root" histogram="gaussian" formula="x"/>
 typedef KComplexElement<KSGenValueHistogram> KSGenValueHistogramBuilder;
 
 template<> inline bool KSGenValueHistogramBuilder::AddAttribute(KContainer* aContainer)

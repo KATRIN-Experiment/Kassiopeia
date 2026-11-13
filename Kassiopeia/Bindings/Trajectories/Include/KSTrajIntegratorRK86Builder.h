@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! an 8th/6th order embedded runge-kutta integrator.
+//! @example <kstraj_integrator_rk86 name="integrator_rk86"/>
 typedef KComplexElement<KSTrajIntegratorRK86> KSTrajIntegratorRK86Builder;
 
 template<> inline bool KSTrajIntegratorRK86Builder::AddAttribute(KContainer* aContainer)

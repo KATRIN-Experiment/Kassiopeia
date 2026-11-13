@@ -8,6 +8,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! an 5th/4th order embedded runge-kutta integrator.
+//! this is the fastest and least accurate integrator in kassiopeia.
+//! @example <kstraj_integrator_rk54 name="integrator_rk54"/>
 typedef KComplexElement<KSTrajIntegratorRK54> KSTrajIntegratorRK54Builder;
 
 template<> inline bool KSTrajIntegratorRK54Builder::AddAttribute(KContainer* aContainer)

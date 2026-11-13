@@ -17,6 +17,11 @@
 namespace katrin
 {
 
+//! uses the gaussian elimination technique to compute charge densities.
+//! @example
+//! <gaussian_elimination_charge_density_solver
+//!     integrator="analytic"
+//! />
 typedef KComplexElement<KEMField::KGaussianEliminationChargeDensitySolver>
     KGaussianEliminationChargeDensitySolverBuilder;
 

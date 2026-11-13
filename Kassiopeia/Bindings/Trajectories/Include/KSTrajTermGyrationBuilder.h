@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this term in the equation of motion adds cyclotron gyrations to adiabatic simulations.
+//! @example <kstraj_term_gyration name="term_gyration"/>
 typedef KComplexElement<KSTrajTermGyration> KSTrajTermGyrationBuilder;
 
 template<> inline bool KSTrajTermGyrationBuilder::AddAttribute(KContainer* aContainer)

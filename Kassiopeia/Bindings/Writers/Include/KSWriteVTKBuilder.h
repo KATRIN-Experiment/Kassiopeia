@@ -10,6 +10,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! a writer that makes VTK polydata files containing results of simulations.
+//! suitable for viewing in Paraview.
+//! @example <kswrite_vtk name="write_vtk" path="." base="Writers.vtp"/>
 typedef KComplexElement<KSWriteVTK> KSWriteVTKBuilder;
 
 template<> inline bool KSWriteVTKBuilder::AddAttribute(KContainer* aContainer)

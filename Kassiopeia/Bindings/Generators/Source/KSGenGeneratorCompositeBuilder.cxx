@@ -49,10 +49,18 @@ namespace katrin
 template<> KSGenGeneratorCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenGeneratorCompositeStructure =
+    //! the name of this generator.
     KSGenGeneratorCompositeBuilder::Attribute<std::string>("name") +
     KSGenGeneratorCompositeBuilder::Attribute<std::string>("special") +
     KSGenGeneratorCompositeBuilder::Attribute<std::string>("creator") +
+    //! the id of the particle species to generate.
+    //! 11 is electron.
     KSGenGeneratorCompositeBuilder::Attribute<double>("pid") +
+    //! the string id of the particle species to generate.
+    //! "e-" is for the electron.
+    //! This is an alternative to using a pid.
+    //! If both pid and string_id are used, pid overrides string_id.
+    //! Only one should be used, to avoid confusion.
     KSGenGeneratorCompositeBuilder::Attribute<std::string>("string_id") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenEnergyComposite>("energy_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenEnergyBetaDecay>("energy_beta_decay") +
@@ -81,7 +89,8 @@ STATICINT sKSGenGeneratorCompositeStructure =
         "momentum_rectangular_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenDirectionSphericalComposite>("direction_spherical_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenDirectionSurfaceComposite>("direction_surface_composite") +
-    KSGenGeneratorCompositeBuilder::ComplexElement<KSGenDirectionSphericalMagneticField>("direction_spherical_magnetic_field") +
+    KSGenGeneratorCompositeBuilder::ComplexElement<KSGenDirectionSphericalMagneticField>(
+        "direction_spherical_magnetic_field") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenSpinComposite>("spin_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenSpinRelativeComposite>("spin_relative_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenTimeComposite>("time_composite") +

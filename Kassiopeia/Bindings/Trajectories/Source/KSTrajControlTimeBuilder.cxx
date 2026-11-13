@@ -11,7 +11,10 @@ namespace katrin
 template<> KSTrajControlTimeBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajControlTimeStructure =
-    KSTrajControlTimeBuilder::Attribute<std::string>("name") + KSTrajControlTimeBuilder::Attribute<double>("time");
+    //! the name of this control.
+    KSTrajControlTimeBuilder::Attribute<std::string>("name") +
+    //! the temporal step to use in seconds.
+    KSTrajControlTimeBuilder::Attribute<double>("time");
 
 STATICINT sToolboxKSTrajControlTime = KSRootBuilder::ComplexElement<KSTrajControlTime>("kstraj_control_time");
 

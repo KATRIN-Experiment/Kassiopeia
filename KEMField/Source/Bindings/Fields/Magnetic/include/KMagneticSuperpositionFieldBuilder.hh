@@ -36,6 +36,16 @@ template<> inline bool KMagneticSuperpositionFieldEntryBuilder::AddAttribute(KCo
     return false;
 }
 
+//! combine an unlimited number of magnetic fields to a superposition field
+//! acting like a single magnetic field
+//! @example
+//! <magnetic_superposition_field
+//!     name="magnetic_superposition"
+//!     use_caching="true"
+//! >
+//!     <add_field name="magnetic_constant" enhancement="1.0" />
+//!     <add_field name="magnetic_dipole" enhancement="1.0" />
+//! </magnetic_superposition_field>
 using KMagneticSuperpositionFieldBuilder = KComplexElement<KEMField::KMagneticSuperpositionField>;
 
 template<> inline bool KMagneticSuperpositionFieldBuilder::AddAttribute(KContainer* aContainer)

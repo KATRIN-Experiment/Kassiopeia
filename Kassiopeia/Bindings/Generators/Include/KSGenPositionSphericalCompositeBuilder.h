@@ -11,6 +11,14 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! creates the position of a generated particle according to the value objects supplied, interpreting them to be spherical coordinates.
+//! r values are in meters, theta and phi values are in degrees.
+//! @example
+//! <ksgen_position_spherical_composite name="position_spherical_composite" surface="world/bottom">
+//!     <r_spherical radius_min="1." radius_max="2."/>
+//!     <theta_spherical angle_min="20." angle_max="160."/>
+//!     <phi_uniform value_min="2." value_max="4."/>
+//! </ksgen_position_spherical_composite>
 typedef KComplexElement<KSGenPositionSphericalComposite> KSGenPositionSphericalCompositeBuilder;
 
 template<> inline bool KSGenPositionSphericalCompositeBuilder::AddAttribute(KContainer* aContainer)
