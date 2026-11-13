@@ -296,9 +296,11 @@ def processFiles(file_list, namespaces):
     elements = {}
 
     buffers = {}
+    original_lines = {}
     for file_name in file_list:
         with open(file_name) as f:
             buffers[file_name] = ' '.join(f.readlines())
+        original_lines[file_name] = buffers[file_name].split('\n')
 
     macros = {}
     for buffer in buffers.values():
@@ -345,9 +347,11 @@ def processFiles(file_list, namespaces):
             location = f"{file_name}:{line}"
             doc = docCommentAbove(lines[file_name], line)
             parsed = parseDocComment(doc) if doc else None
-            if parsed and len(line_matches) > 1:
-                warn(location, "documentation comment above a line with several registrations is ignored; "
-                               "use @attribute/@child in the element documentation instead")
+            if parsed and len(line_matches) > 1 and not re.match(r'\s*(?:\w+\s*=\s*)?' + REGEX_PATTERN,
+                                                                  re.sub(r'^\s*STATICINT\s+', '', original_lines[file_name][line - 1])):
+                # the line does not start with a registration in the source (e.g. a macro generates several)
+                warn(location, "documentation comment above a line with several registrations that are not written out "
+                               "in the source is ignored; use @attribute/@child in the element documentation instead")
                 parsed = None
             if parsed and (parsed['examples'] or parsed['attributes'] or parsed['children'] or parsed['unknown']):
                 warn(location, "only a description and @deprecated are supported above a registration")
@@ -381,7 +385,8 @@ def processFiles(file_list, namespaces):
                     # KComplexElement keeps the first registration (std::map::insert)
                     warn(location, f"'{name}' is already registered for {source} as {relations[name]['type']} "
                                    f"at {relations[name]['registered_at']}; this registration ({target}) has no effect")
-                if parsed:
+                if parsed and m is line_matches[0]:
+                    # a comment documents the registration that starts directly below it
                     applyRelationDoc(relations[name], parsed['description'], parsed['deprecated'], location)
 
     # element documentation (after all registrations, so that @attribute/@child can refer to them)

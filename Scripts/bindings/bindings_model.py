@@ -46,6 +46,9 @@ Documentation comments in the C++ builder sources (see extract.py):
         //! @deprecated use <new_child> instead
         KTypeBuilder::ComplexElement<KChild>("old_child");
 
+A comment documents the registration that starts directly below it (if
+several registrations share that line, the first one).
+
 Renderers load this with load() and select their starting points with
 select_roots().
 """
