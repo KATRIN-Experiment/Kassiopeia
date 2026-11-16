@@ -1,15 +1,3 @@
-kasper_install_config_subdir( Complete
-    Complete/Objects.xml
-    Complete/Geometry.xml
-    Complete/Generators.xml
-    Complete/Trajectories.xml
-    Complete/Interactions.xml
-    Complete/Navigators.xml
-    Complete/Terminators.xml
-    Complete/Writers.xml
-    Complete/Fields.xml
-)
-
 kasper_install_config_subdir( Validation
     Validation/TestGenerator.xml
     Validation/TestTrajectory.xml

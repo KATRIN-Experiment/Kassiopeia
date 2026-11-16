@@ -83,9 +83,9 @@ The fast multipole field solver on the other hand is somewhat more complex and r
 additional parameters to be specified in order to configure its use according to the user's desired level of accuracy
 and computational effort.
 
-For a complete list and description of the XML bindings available for the electric field solving routines, navigate to
-the directory ``$KASPERSYS/config/KEMField/Complete``. The file ``ElectricFields.xml`` has examples of the binding for
-initializing electric field problems (see :gh-code:`KEMField/Source/XML/Complete/ElectricFields.xml`.)
+A complete list and description of the XML elements available for the electric field solving routines, including
+examples, can be found in the :ref:`bindings documentation <bindings-label>`. Complete example configurations are
+installed in ``$KASPERSYS/config/KEMField/Examples`` (see :gh-code:`KEMField/Source/XML/Examples`.)
 
 Magnetic fields
 ----------
@@ -132,8 +132,8 @@ space, and rod space. For details, see the above section `Extensions`. If other 
 field elemenet, they will not be recognized as magnet geometries. When using rod spaces, the resulting magnet element
 will be a "line current" that does not allow any zonal harmonic approximation and is always solved directly.
 
-A complete list and set of examples of the XML bindings for magnetic fields can be found in the file
-``$KASPERSYS/config/KEMField/Complete/MagneticFields.xml`` (see :gh-code:`KEMField/Source/XML/Complete/MagneticFields.xml`.)
+A complete list and description of the XML elements for magnetic fields, including examples, can be found in the
+:ref:`bindings documentation <bindings-label>`.
 
 Further documentation on the exact methods and parameters used in *KEMField* can be found in [2] and [3].
 
