@@ -8,8 +8,8 @@ namespace katrin
 {
 
 //! A flattened poly loop surface is a surface consisting of several lines, arcs or both, creating a polygon of your desired
-//! shape. The first line and the last line are connected automatically. By using the features of the poly-loop outlined
-//! above, this provides a very flexible method of designing surface elements.
+//! shape. The first line and the last line are connected automatically. By using the features of the
+//! :ref:`<poly_loop> <binding-kgplanarpolyloop>`, this provides a very flexible method of designing surface elements.
 //!
 //! @image Documentation/gh-pages/source/_images/kgeobag_flattened_poly_loop_surface_model.png 400pt
 //!

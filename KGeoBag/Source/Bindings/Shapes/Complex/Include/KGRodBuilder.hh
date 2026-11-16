@@ -118,7 +118,7 @@ template<> inline bool KGRodSurfaceBuilder::AddElement(KContainer* anElement)
 }
 
 
-//! For visualization, see the above rod surface.
+//! For visualization, see :ref:`<rod_surface> <binding-kgwrappedsurface-kgrod>`.
 //!
 //! - Works with GeometryViewer: No.
 //! - Works with MeshViewer: No.

@@ -211,7 +211,7 @@ template<> inline bool KGPortHousingSurfaceBuilder::AddElement(KContainer* anEle
 }
 
 
-//! For visualization, see the above pump port surface.
+//! For visualization, see :ref:`<port_housing_surface> <binding-kgwrappedsurface-kgporthousing>`.
 //!
 //! - Works with GeometryViewer: No.
 //! - Works with MeshViewer: No.

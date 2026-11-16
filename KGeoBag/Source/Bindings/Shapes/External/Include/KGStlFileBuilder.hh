@@ -114,7 +114,7 @@ template<> inline bool KGStlFileSurfaceBuilder::AddElement(KContainer* anElement
 }
 
 
-//! For visualization see the above STL file surface.
+//! For visualization, see :ref:`<stl_file_surface> <binding-kgwrappedsurface-kgstlfile>`.
 //!
 //! - Works with GeometryViewer: Yes.
 //! - Works with MeshViewer: Yes.

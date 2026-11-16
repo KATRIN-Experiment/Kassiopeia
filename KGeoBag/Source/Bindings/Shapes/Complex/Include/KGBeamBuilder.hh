@@ -86,7 +86,7 @@ template<> inline bool KGBeamBuilder::AddElement(KContainer* anElement)
 }
 
 //! A beam creates a pipe which connects two polygons at each end. The polygons must have the same number of vertices but
-//! may lie in planes which are not parallel to each other. For the description of the parameters involved see the images
+//! may lie in planes which are not parallel to each other. For the description of the parameters involved see the image
 //! below.
 //!
 //! @image Documentation/gh-pages/source/_images/beam_description.png 250pt
@@ -138,7 +138,7 @@ template<> inline bool KGBeamSurfaceBuilder::AddElement(KContainer* anElement)
 }
 
 
-//! For visualization, see the beam surface above.
+//! For visualization, see :ref:`<beam_surface> <binding-kgwrappedsurface-kgbeam>`.
 //!
 //! - Works with GeometryViewer: No.
 //! - Works with MeshViewer: No.

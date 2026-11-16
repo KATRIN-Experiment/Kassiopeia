@@ -209,7 +209,7 @@ template<> inline bool KGConicSectPortHousingSurfaceBuilder::AddElement(KContain
 }
 
 
-//! For visualization, see the above conic section pump port surface.
+//! For visualization, see :ref:`<conic_section_port_housing_surface> <binding-kgwrappedsurface-kgconicsectporthousing>`.
 //!
 //! - Works with GeometryViewer: No.
 //! - Works with MeshViewer: No.

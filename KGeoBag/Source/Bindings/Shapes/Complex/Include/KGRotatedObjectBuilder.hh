@@ -173,7 +173,7 @@ template<> inline bool KGRotatedSurfaceBuilder::AddElement(KContainer* anElement
 }
 
 
-//! For visualization see the above rotated surface.
+//! For visualization, see :ref:`<rotated_surface> <binding-kgwrappedsurface-kgrotatedobject>`.
 //!
 //! - Works with GeometryViewer: No.
 //! - Works with MeshViewer: No.

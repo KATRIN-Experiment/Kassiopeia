@@ -207,7 +207,7 @@ template<> inline bool KGExtrudedSurfaceBuilder::AddElement(KContainer* anElemen
 }
 
 
-//! For visualization see the above extruded space.
+//! For visualization, see :ref:`<extruded_surface> <binding-kgwrappedsurface-kgextrudedobject>`.
 //!
 //! - Works with GeometryViewer: No.
 //! - Works with MeshViewer: No.

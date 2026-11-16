@@ -28,7 +28,7 @@ namespace katrin
 //! operate, all geometric objects (spaces, surfaces) which have navigation commands attached to them must also have a mesh
 //! extension in the geometry specification. Furthermore, since ``ksnav_meshed_space`` requires access to the root space
 //! ``space_world`` and all of the navigation commands associated with the shapes it contains, it must be declared after the
-//! definition of the simulation command structure element ``ksgeo_space`` (see below).
+//! definition of the simulation command structure element :ref:`<ksgeo_space> <binding-ksgeospace>`.
 //!
 //! The mesh navigator can also be used together with geometry from external files, as shown in the ``MeshSimulation.xml``
 //! example.
