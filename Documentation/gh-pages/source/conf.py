@@ -65,7 +65,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 
 # Exclude link file
-exclude_patterns = ['links.rst', 'bindings_full.rst']  # bindings_full.rst is only included by bindings.rst
+exclude_patterns = ['links.rst']
 
 # make rst_epilog a variable, so you can add other epilog parts to it
 rst_epilog =""

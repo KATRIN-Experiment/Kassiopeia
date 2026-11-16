@@ -18,7 +18,7 @@ BINDINGS_DIR="$(dirname $0)/bindings"
 SOURCE_DIRS="Kassiopeia KEMField KGeoBag Kommon"
 OUTPUT_DIR="${OUTPUT_DIR:-Documentation/gh-pages/build/bindings}"
 
-GH_BASE="https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/"
+GH_BASE="https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/"
 
 mkdir -p ${OUTPUT_DIR}
 
@@ -27,9 +27,10 @@ echo "Extracting global bindings"
 JSON="${OUTPUT_DIR}/bindings_full.json"
 python3 ${BINDINGS_DIR}/extract.py ${SOURCE_DIRS} -o "${JSON}"
 
-## Generate reStructuredText tables and XML example
+## Generate reStructuredText reference pages and XML example
 echo "Generating global bindings files"
-python3 ${BINDINGS_DIR}/to_rst.py "${JSON}" --root='KRoot' --base-url=${GH_BASE} --with-sections > "${OUTPUT_DIR}/bindings_full.rst"
+rm -rf "${OUTPUT_DIR}/reference"
+python3 ${BINDINGS_DIR}/to_rst.py "${JSON}" --base-url=${GH_BASE} -o "${OUTPUT_DIR}/reference"
 python3 ${BINDINGS_DIR}/to_xml.py "${JSON}" --root='KRoot' > "${OUTPUT_DIR}/bindings_full.xml"
 
 ## Generate GraphViz files

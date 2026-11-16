@@ -30,7 +30,7 @@ The files are produced in two steps by the Python scripts in
    to a JSON file. The JSON format is documented in
    [bindings_model.py](../../Scripts/bindings/bindings_model.py).
 2. Separate renderers read that JSON and produce the output files:
-   [to_rst.py](../../Scripts/bindings/to_rst.py) (reStructuredText tables),
+   [to_rst.py](../../Scripts/bindings/to_rst.py) (reStructuredText reference pages),
    [to_xml.py](../../Scripts/bindings/to_xml.py) (XML example) and
    [to_graphviz.py](../../Scripts/bindings/to_graphviz.py) (GraphViz graphs).
 

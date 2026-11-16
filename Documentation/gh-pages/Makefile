@@ -18,7 +18,8 @@ help:
 # the files used by the Sphinx sources (requires GraphViz "dot").
 bindings:
 	@cd ../.. && OUTPUT_DIR="$(CURDIR)/$(BINDINGSDIR)" bash Scripts/gen-bindings-docs.sh
-	@cp "$(BINDINGSDIR)/bindings_full.rst" "$(SOURCEDIR)/bindings_full.rst"
+	@rm -rf "$(SOURCEDIR)/bindings_reference"
+	@cp -r "$(BINDINGSDIR)/reference" "$(SOURCEDIR)/bindings_reference"
 	@cp "$(BINDINGSDIR)"/bindings_*.svg "$(SOURCEDIR)/_images/"
 	@mkdir -p "$(SOURCEDIR)/_extra/bindings"
 	@cp "$(BINDINGSDIR)/bindings_full.json" "$(BINDINGSDIR)/bindings_full.xml" "$(SOURCEDIR)/_extra/bindings/"
