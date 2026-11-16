@@ -5,9 +5,10 @@ usage guide) into '//!' comments in the C++ builder sources, and replaces it in 
 page by an `.. xml-element::` directive, which renders it from there again (see
 Documentation/gh-pages/source/_ext/xml_bindings.py).
 
-A section is migrated if it has no subsections and contains exactly one XML example
-(`.. code-block:: xml`) whose root element is a known binding and matches the section
-heading. Its content is moved as follows:
+The content of a section up to its first subsection is migrated if it contains exactly
+one XML example (`.. code-block:: xml`) whose root element is a known binding and matches
+the section heading (or is confirmed with --assign), and no structural directives such as
+toctree. Its content is moved as follows:
 
     - the XML example                    -> @example
     - images                             -> @image (path relative to the repository root)
@@ -101,9 +102,17 @@ def elementsByTag(bindings):
     return by_tag
 
 
-def migrateSection(section, lines, path, bindings, by_tag, plan, problems, repo_dir):
-    where = f"{path}:{section.start + 1} ({section.title})"
+def migrateSection(section, lines, path, bindings, by_tag, plan, problems, repo_dir, assignments):
+    """Migrates the content of a section up to its first subsection (subsections stay)."""
+    location = f"{path}:{section.start + 1}"
+    where = f"{location} ({section.title})"
+    assigned = assignments.get(location)
     body = blocks(lines[section.body_start:section.end])
+    structural = [b[0].split('::')[0][3:] for b in body
+                  if re.match(r'\.\. (toctree|include|contents|only|raw)::', b[0].strip())]
+    if structural:
+        problems['contains structural directives (not migrated)'].append(f"{where}: {', '.join(structural)}")
+        return None
     examples = [b for b in body if b[0].strip() in ('.. code-block:: xml', '.. code:: xml')]
     if len(examples) != 1:
         if examples:
@@ -121,8 +130,12 @@ def migrateSection(section, lines, path, bindings, by_tag, plan, problems, repo_
         return None
     element = next(iter(by_tag[tag].values()))
     heading, name = normalize(re.sub(r'\(.*?\)', '', section.title)), normalize(tag)
-    if not name.startswith(heading) and not heading.startswith(name):
-        problems['heading does not match the example element'].append(f"{where}: example is <{tag}>")
+    if assigned and assigned != tag:
+        problems['assigned element does not match the example'].append(f"{where}: example is <{tag}>, assigned <{assigned}>")
+        return None
+    if not assigned and not name.startswith(heading) and not heading.startswith(name):
+        problems['heading does not match the example element'].append(
+            f"{where}: example is <{tag}> (confirm with --assign {location}={tag})")
         return None
     if element.description or element.examples or element.images:
         problems['already documented in C++'].append(f"{where}: <{tag}> ({element.name})")
@@ -204,12 +217,16 @@ def main():
     parser.add_argument('bindings', metavar='JSON', help='bindings JSON written by extract.py (before migrating)')
     parser.add_argument('rst_files', metavar='RST', nargs='+', help='reStructuredText pages to migrate')
     parser.add_argument('--base-dir', default='.', help='repository root (paths in the JSON are relative to it)')
+    parser.add_argument('--assign', metavar='FILE:LINE=TAG', action='append', default=[],
+                        help='migrate the section at FILE:LINE (its title line) although its heading does not '
+                             'match the example element TAG')
     parser.add_argument('--apply', action='store_true', help='modify the C++ files and the pages')
     parser.add_argument('--format', metavar='CLANG_FORMAT', nargs='?', const='clang-format',
                         help='with --apply: run clang-format on the modified C++ lines')
     parser.add_argument('-v', '--verbose', action='store_true', help='show the planned comments')
     args = parser.parse_args()
 
+    assignments = dict(a.rpartition('=')[::2] for a in args.assign)
     bindings = bindings_model.load(args.bindings)
     by_tag = elementsByTag(bindings)
     plan = Plan(bindings)
@@ -222,9 +239,7 @@ def main():
         lines = data.split(newline)
         edits = []
         for section in parseSections(lines):
-            if section.has_subsections:
-                continue
-            spec = migrateSection(section, lines, path, bindings, by_tag, plan, problems, args.base_dir)
+            spec = migrateSection(section, lines, path, bindings, by_tag, plan, problems, args.base_dir, assignments)
             if spec:
                 edits.append((section, spec))
         page_edits[path] = (lines, newline, edits)
@@ -233,6 +248,9 @@ def main():
     migrated = sum(len(e[2]) for e in page_edits.values())
     print(f"{migrated} sections migrated: {len(plan.element_docs)} element descriptions, "
           f"{len(plan.attribute_docs)} attribute descriptions")
+    for path, (_, _, edits) in page_edits.items():
+        for section, spec in edits:
+            print(f"  {path}:{section.start + 1} ({section.title}) -> <{spec}>")
     if args.verbose:
         for path in sorted(set(comments) | set(splits)):
             for line in sorted(set(comments.get(path, {})) | set(splits.get(path, {}))):
