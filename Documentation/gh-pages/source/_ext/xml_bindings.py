@@ -106,8 +106,9 @@ class XmlElementDirective(Directive):
         target['xml_binding'] = element.name
         target['xml_binding_id'] = target_id  # Sphinx moves the id to the following node
 
-        lines = to_rst.renderElementBody(tag, element, bindings(app), app.config.xml_bindings_base_url,
-                                         more=[f'Reference: {to_rst.ref(element, "<" + tag + ">")}'])
+        # the link to the reference page comes first, directly below the section title
+        lines = [f'Reference: {to_rst.ref(element, "<" + tag + ">")}', '']
+        lines += to_rst.renderElementBody(tag, element, bindings(app), app.config.xml_bindings_base_url)
         container = nodes.container(classes=['xml-element'])
         nested_parse_with_titles(self.state, StringList(lines, source=self.arguments[0]), container)
 
