@@ -106,8 +106,8 @@ class XmlElementDirective(Directive):
         target['xml_binding'] = element.name
         target['xml_binding_id'] = target_id  # Sphinx moves the id to the following node
 
-        lines = [f'Reference: {to_rst.ref(element, "<" + tag + ">")}', '']
-        lines += to_rst.renderElementBody(tag, element, bindings(app), app.config.xml_bindings_base_url)
+        lines = to_rst.renderElementBody(tag, element, bindings(app), app.config.xml_bindings_base_url,
+                                         more=[f'Reference: {to_rst.ref(element, "<" + tag + ">")}'])
         container = nodes.container(classes=['xml-element'])
         nested_parse_with_titles(self.state, StringList(lines, source=self.arguments[0]), container)
 
@@ -396,6 +396,8 @@ def resolve_usages(app, doctree, docname):
                     item += nodes.Text('>')
                 items.append(item)
             result += labelled_list('Used in example configurations:', items)
+        if result:
+            result.insert(0, nodes.rubric('', 'More information'))
         node.replace_self(result)
 
 

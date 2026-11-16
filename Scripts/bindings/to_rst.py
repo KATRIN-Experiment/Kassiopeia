@@ -155,7 +155,7 @@ def deprecationText(text):
     return ' '.join(text.split())
 
 
-def renderElementBody(tag, element, bindings, base_url, show_description=True, usage_links=False):
+def renderElementBody(tag, element, bindings, base_url, show_description=True, usage_links=False, more=None):
     """Renders the documentation of one element without title: description, images, facts, child
     elements, attributes, examples and where it can be used. Used by the reference pages and by the
     xml-element directive of the Sphinx extension (Documentation/gh-pages/source/_ext/xml_bindings.py)."""
@@ -181,8 +181,6 @@ def renderElementBody(tag, element, bindings, base_url, show_description=True, u
     if element.defined_at:
         facts.append('Defined in: ' + sourceLink(element.defined_at, base_url))
     out += ['| ' + f for f in facts] + ['']
-    if usage_links:
-        out += [f'.. xml-element-usages:: {element.name}', '']
 
     if element.child_info:
         out += ['.. list-table:: Child elements', '    :header-rows: 1', '    :widths: 30 70', '    :class: xml-bindings-table', '',
@@ -239,6 +237,14 @@ def renderElementBody(tag, element, bindings, base_url, show_description=True, u
         usages.append(f"{', '.join(tags)} {where}")
     if usages:
         out += ['**Used as:**', ''] + ['- ' + u for u in usages] + ['']
+
+    # links to further documentation and examples (with usage_links, the Sphinx extension adds the
+    # heading itself if there are any)
+    links = list(more or [])
+    if links:
+        out += ['.. rubric:: More information', ''] + ['| ' + l for l in links] + ['']
+    if usage_links:
+        out += [f'.. xml-element-usages:: {element.name}', '']
     return out
 
 
@@ -247,8 +253,6 @@ def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None
     heading = title or titleMarkup(tree.titles.get(element.name, tag))
     out = [f'.. _{label(element)}:', '', heading, '=' * len(heading), '']
     out += intro or []
-    if not element.description and not intro:
-        out += ['*No description available.*', '']
     return out + renderElementBody(tag, element, bindings, base_url, usage_links=usage_links)
 
 
