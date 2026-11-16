@@ -53,7 +53,7 @@ extlinks = {
                      'Issue %s'),
     'gh-pull':      ('https://github.com/KATRIN-Experiment/Kassiopeia/pull/%s',
                      'Pull request %s'),
-    'gh-code':      ('https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/%s',
+    'gh-code':      ('https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/%s',
                      'GitHub: %s'),
 }
 
