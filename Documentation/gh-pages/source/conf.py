@@ -55,6 +55,10 @@ sys.path.insert(0, os.path.join(_here, '_ext'))
 xml_bindings_json = os.path.join(_here, '..', 'build', 'bindings', 'bindings_full.json')
 xml_bindings_scripts = os.path.join(_here, '..', '..', '..', 'Scripts', 'bindings')
 xml_bindings_base_url = 'https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/'
+xml_bindings_repo_root = os.path.join(_here, '..', '..', '..')
+xml_bindings_example_files = ['Kassiopeia/XML/**/*.xml', 'KEMField/Source/XML/Examples/*.xml',
+                              'KGeoBag/Source/XML/Examples/*.xml']
+xml_bindings_example_docs = ['examples']
 
 extlinks = {
     'gh-issue':     ('https://github.com/KATRIN-Experiment/Kassiopeia/issues/%s',

@@ -25,6 +25,11 @@ Configuration (conf.py):
     xml_bindings_json      path of the bindings JSON written by extract.py
     xml_bindings_scripts   path of Scripts/bindings (for the shared renderer)
     xml_bindings_base_url  base URL for links to source files
+    xml_bindings_repo_root      repository root
+    xml_bindings_example_files  globs (relative to the repository root) of example configurations;
+                                element pages list the examples using the element
+    xml_bindings_example_docs   pages describing example configurations: an example mentioned
+                                there links to the section of its first mention, else to GitHub
 """
 
 import os
@@ -39,6 +44,8 @@ from sphinx.util import logging
 from sphinx.util.nodes import nested_parse_with_titles
 
 logger = logging.getLogger(__name__)
+
+MASTER_ROOT = "KRoot"
 
 _cache = {}
 
@@ -178,6 +185,41 @@ def xml_tags(app, code, closing=False):
     return result
 
 
+def example_files(app):
+    """Example configurations using each element: {C++ type: [repository-relative path, ...]}."""
+    key = ('examples', app.config.xml_bindings_json)
+    if key not in _cache:
+        import glob
+        import collections
+        import migrate_xml_docs
+        b = bindings(app)
+        root = app.config.xml_bindings_repo_root
+        usage = collections.defaultdict(set)
+        transparent = set(migrate_xml_docs.DEFAULT_TRANSPARENT)
+        ignored = set(migrate_xml_docs.DEFAULT_IGNORED)
+        for pattern in app.config.xml_bindings_example_files:
+            for path in sorted(glob.glob(os.path.join(root, pattern), recursive=True)):
+                rel = os.path.relpath(path, root)
+                try:
+                    tree, _ = migrate_xml_docs.parseXML(path)
+                except ValueError as e:
+                    logger.warning(f'cannot parse example {rel}: {e}')
+                    continue
+                migrate_xml_docs.resolveTypes(tree, b.elements[MASTER_ROOT], transparent, ignored,
+                                              collections.defaultdict(list), rel)
+                for node in migrate_xml_docs.descendants(tree, transparent):
+                    if node.type is not None:
+                        usage[node.type.name].add(rel)
+        _cache[key] = {name: sorted(paths) for name, paths in usage.items()}
+    return _cache[key]
+
+
+def example_display_name(path):
+    """'Kassiopeia/XML/Examples/VTK/X.xml' -> 'Kassiopeia/Examples/VTK/X.xml'"""
+    parts = path.replace(os.sep, '/').split('/')
+    return '/'.join(parts[:1] + parts[parts.index('XML') + 1:]) if 'XML' in parts else path
+
+
 def xml_blocks(doctree):
     for node in doctree.findall(nodes.literal_block):
         if node.get('language') == 'xml':
@@ -191,8 +233,22 @@ def enclosing_section(node):
 
 
 def collect_usages(app, doctree):
-    """Records where elements are documented with xml-element, and where they appear in XML examples."""
+    """Records where elements are documented with xml-element, where they appear in XML examples, and
+    where example configurations are described."""
     env = app.env
+    if not hasattr(env, 'xml_binding_example_mentions'):
+        env.xml_binding_example_mentions = []
+    if env.docname in app.config.xml_bindings_example_docs:
+        names = {os.path.basename(p) for paths in example_files(app).values() for p in paths}
+        seen = set()
+        for text in doctree.findall(nodes.Text):
+            for name in names - seen:
+                if name in text.astext():
+                    seen.add(name)
+                    section = enclosing_section(text.parent)
+                    section_id = section['ids'][0] if section is not None and section['ids'] else ''
+                    title = section[0].astext() if section is not None else env.docname
+                    env.xml_binding_example_mentions.append((name, env.docname, section_id, title))
     if not hasattr(env, 'xml_binding_usages'):
         env.xml_binding_usages = []
     if not hasattr(env, 'xml_binding_examples'):
@@ -253,6 +309,18 @@ def link_examples(app, doctree, docname):
                                      format='html'))
 
 
+def labelled_list(label, items):
+    """A label followed by a bullet list with one entry per line."""
+    paragraph = nodes.paragraph()
+    paragraph += nodes.Text(label)
+    bullets = nodes.bullet_list()
+    for item in items:
+        list_item = nodes.list_item()
+        list_item += item
+        bullets += list_item
+    return [paragraph, bullets]
+
+
 def resolve_usages(app, doctree, docname):
     usages = getattr(app.env, 'xml_binding_usages', [])
     examples = getattr(app.env, 'xml_binding_examples', [])
@@ -279,36 +347,66 @@ def resolve_usages(app, doctree, docname):
             if b == node['xml_binding'] and doc != docname and page_element not in explained:
                 pages.setdefault(doc, {})[section_id] = section_title
         if pages:
-            paragraph = nodes.paragraph()
-            paragraph += nodes.Text('Appears in the documentation: ')
+            items = []
             title = lambda d: app.env.titles[d].astext() if d in app.env.titles else d
-            for k, doc in enumerate(sorted(pages, key=title)):
-                if k:
-                    paragraph += nodes.Text('; ')
+            for doc in sorted(pages, key=title):
+                item = nodes.paragraph()
                 sections = sorted(pages[doc].items(), key=lambda s: s[1])
                 uri = app.builder.get_relative_uri(docname, doc)
                 if len(sections) == 1 and sections[0][1] == title(doc):
-                    paragraph += nodes.reference('', title(doc), internal=True, refuri=uri)
-                    continue
-                paragraph += nodes.Text(title(doc) + ' (')
-                for j, (section_id, section_title) in enumerate(sections):
-                    if j:
-                        paragraph += nodes.Text(', ')
-                    paragraph += nodes.reference('', section_title, internal=True,
-                                                 refuri=uri + ('#' + section_id if section_id else ''))
-                paragraph += nodes.Text(')')
-            result.append(paragraph)
+                    item += nodes.reference('', title(doc), internal=True, refuri=uri)
+                else:
+                    item += nodes.Text(title(doc) + ' (')
+                    for j, (section_id, section_title) in enumerate(sections):
+                        if j:
+                            item += nodes.Text(', ')
+                        item += nodes.reference('', section_title, internal=True,
+                                                refuri=uri + ('#' + section_id if section_id else ''))
+                    item += nodes.Text(')')
+                items.append(item)
+            result += labelled_list('Appears in the documentation:', items)
+
+        # example configurations using the element: link to their description, or to the file
+        files = example_files(app).get(node['xml_binding'], [])
+        if files:
+            mentions = getattr(app.env, 'xml_binding_example_mentions', [])
+            order = app.config.xml_bindings_example_docs
+
+            def descriptions(path):
+                return sorted((m for m in mentions if m[0] == os.path.basename(path)),
+                              key=lambda m: order.index(m[1]) if m[1] in order else len(order))
+
+            items = []
+            # described examples first
+            for path in sorted(files, key=lambda path: (not descriptions(path), path)):
+                item = nodes.paragraph()
+                described = descriptions(path)
+                if described:
+                    _, doc, section_id, section_title = described[0]
+                    uri = app.builder.get_relative_uri(docname, doc) + ('#' + section_id if section_id else '')
+                    reftitle = f'Described in: {section_title}'
+                else:
+                    uri, reftitle = app.config.xml_bindings_base_url + path, 'View on GitHub'
+                # examples described in the documentation are enclosed in <>
+                if described:
+                    item += nodes.Text('<')
+                item += nodes.reference('', example_display_name(path), internal=bool(described),
+                                        refuri=uri, reftitle=reftitle)
+                if described:
+                    item += nodes.Text('>')
+                items.append(item)
+            result += labelled_list('Used in example configurations:', items)
         node.replace_self(result)
 
 
 def purge(app, env, docname):
-    for attr in ('xml_binding_usages', 'xml_binding_examples'):
+    for attr in ('xml_binding_usages', 'xml_binding_examples', 'xml_binding_example_mentions'):
         if hasattr(env, attr):
             setattr(env, attr, [u for u in getattr(env, attr) if u[1] != docname])
 
 
 def merge(app, env, docnames, other):
-    for attr in ('xml_binding_usages', 'xml_binding_examples'):
+    for attr in ('xml_binding_usages', 'xml_binding_examples', 'xml_binding_example_mentions'):
         if not hasattr(env, attr):
             setattr(env, attr, [])
         getattr(env, attr).extend(u for u in getattr(other, attr, []) if u[1] in docnames)
@@ -318,6 +416,9 @@ def setup(app):
     app.add_config_value('xml_bindings_json', '', 'env')
     app.add_config_value('xml_bindings_scripts', '', 'env')
     app.add_config_value('xml_bindings_base_url', '', 'env')
+    app.add_config_value('xml_bindings_repo_root', '', 'env')
+    app.add_config_value('xml_bindings_example_files', [], 'env')  # globs relative to the repository root
+    app.add_config_value('xml_bindings_example_docs', [], 'env')   # pages describing example configurations
     app.add_node(usages_placeholder)
     app.add_directive('xml-element', XmlElementDirective)
     app.add_directive('xml-element-usages', XmlElementUsagesDirective)

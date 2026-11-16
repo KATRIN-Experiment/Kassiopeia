@@ -150,6 +150,11 @@ The mesh simulation uses a geometry from an external STL_ file, which is a forma
 The external geometry must provide a surface mesh in order to be usable with *KEMField* and *Kassiopeia*. In this
 example, an electric field is defined by two copies of the so-called `Menger sponge` cubes that are placed next to each
 other. Particles are tracked along a linear trajectory, which are reflected when they hit one of the cube surfaces.
+To run this simulation type:
+
+.. code-block:: bash
+
+    Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/MeshSimulation.xml
 
 .. image:: _images/mesh_simulation.png
    :width: 500pt
