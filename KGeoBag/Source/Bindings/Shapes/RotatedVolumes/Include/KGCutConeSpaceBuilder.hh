@@ -8,6 +8,21 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Produces a cut cone volume (frustrum).
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_cut_cone_space_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//!
+//! An XML example is as follows:
+//!
+//! .. code-block:: xml
+//!
+//!     <cut_cone_space name="cut_cone_space" z1="-0.3" r1="0.4" z2="0.2" r2="0.2" longitudinal_mesh_count="88" longitudinal_mesh_power="1." radial_mesh_count="28" radial_mesh_power="1.6" axial_mesh_count="50"/>
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
 typedef KComplexElement<KGCutConeSpace> KGCutConeSpaceBuilder;
 
 template<> inline bool KGCutConeSpaceBuilder::AddAttribute(KContainer* anAttribute)

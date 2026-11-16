@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Generates a cone centered on the z axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_cone_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <cone_surface name="cone_surface" za="-0.4" zb="0.4" rb="0.25" longitudinal_mesh_count="48" longitudinal_mesh_power="1." axial_mesh_count="72"/>
 typedef KComplexElement<KGConeSurface> KGConeSurfaceBuilder;
 
 template<> inline bool KGConeSurfaceBuilder::AddAttribute(KContainer* anAttribute)

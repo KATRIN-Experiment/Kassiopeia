@@ -77,6 +77,22 @@ template<> inline bool KGPlanarPolyLineArcArgumentsBuilder::AddAttribute(KContai
     return false;
 }
 
+//! This element is desribed using the same procedure as in poly-loop. However, the first and last points are not
+//! necessarily connected. An XML example is below:
+//!
+//! .. code-block:: xml
+//!
+//!     <poly_line>
+//!         <start_point x="0.2" y="0.3"/>
+//!         <next_line x="0.1" y="0.1" line_mesh_count="36" line_mesh_power="4.5"/>
+//!         <next_arc x="-0.1" y="0.1" radius="0.2" right="true" short="true" arc_mesh_count="96"/>
+//!         <next_line x="-0.2" y="0.2" line_mesh_count="36" line_mesh_power="1."/>
+//!         <next_line x="-0.3" y="0.1" line_mesh_count="24" line_mesh_power="4.5"/>
+//!     </poly_line>
+//!
+//! In this case, the sequence progresses through five (x,y) points but does not connect back to the starting point. Hence,
+//! it does not form a closed loop like the poly-loop element does, and does not need a ``<last_...>`` command. Otherwise,
+//! the parameters for poly-line are the same as for poly-loop.
 using KGPlanarPolyLineBuilder = KComplexElement<KGPlanarPolyLine>;
 
 template<> inline bool KGPlanarPolyLineBuilder::AddAttribute(KContainer* /*anAttribute*/)

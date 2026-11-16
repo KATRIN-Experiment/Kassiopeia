@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Generates a tubular frustrum (a cut cone with central axially symmetric void).
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_cut_cone_tube_space_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <cut_cone_tube_space name="cut_cone_tube_space" z1="-0.3" z2="0.3" r11="0.3" r12="0.48" r21="0.1" r22="0.18" longitudinal_mesh_count="32" longitudinal_mesh_power="2." radial_mesh_count="24" radial_mesh_power="1.5" axial_mesh_count="32"/>
 typedef KComplexElement<KGCutConeTubeSpace> KGCutConeTubeSpaceBuilder;
 
 template<> inline bool KGCutConeTubeSpaceBuilder::AddAttribute(KContainer* anAttribute)

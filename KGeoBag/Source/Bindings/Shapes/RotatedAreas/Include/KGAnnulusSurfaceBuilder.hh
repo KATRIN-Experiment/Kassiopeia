@@ -7,6 +7,13 @@
 namespace katrin
 {
 
+//! This produces an annulus centered on the z axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_annulus_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <annulus_surface name="annulus_surface" z="-.01" r1="0.1" r2="0.45" radial_mesh_count="22" radial_mesh_power="1.5" axial_mesh_count="32"/>
 typedef KComplexElement<KGeoBag::KGAnnulusSurface> KGAnnulusSurfaceBuilder;
 
 template<> inline bool KGAnnulusSurfaceBuilder::AddAttribute(KContainer* anAttribute)

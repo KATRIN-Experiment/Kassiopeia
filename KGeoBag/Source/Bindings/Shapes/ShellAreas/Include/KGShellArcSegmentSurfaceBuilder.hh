@@ -7,6 +7,17 @@
 namespace katrin
 {
 
+//! This produces an angularly limited portion of a surface of revolution from an arc that is rotated around the local
+//! x-axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_shell_arc_segment_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example
+//! <shell_arc_segment_surface name="shell_arc_segment_right_short_surface" shell_mesh_count="128" shell_mesh_power="6">
+//!     <arc_segment x1="0.15" y1="0.1" x2="-0.1" y2="0.05" radius="0.3" right="true" short="true" arc_mesh_count="64"/>
+//! </shell_arc_segment_surface>
 typedef KComplexElement<KGShellArcSegmentSurface> KGShellArcSegmentSurfaceBuilder;
 
 template<> inline bool KGShellArcSegmentSurfaceBuilder::AddAttribute(KContainer* anAttribute)

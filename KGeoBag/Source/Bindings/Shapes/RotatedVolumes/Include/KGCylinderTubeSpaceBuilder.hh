@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Creates a tube, (a hollow cylinder with finite wall thickness).
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_cylinder_tube_space_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <cylinder_tube_space name="cylinder_tube_space" z1="-0.45" r1="0.25" z2="0.45" r2="0.45" longitudinal_mesh_count="32" longitudinal_mesh_power="2." radial_mesh_count="24" radial_mesh_power="1.5" axial_mesh_count="32"/>
 typedef KComplexElement<KGCylinderTubeSpace> KGCylinderTubeSpaceBuilder;
 
 template<> inline bool KGCylinderTubeSpaceBuilder::AddAttribute(KContainer* anAttribute)

@@ -7,6 +7,13 @@
 namespace katrin
 {
 
+//! This produces a disk centered on the local z-axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_disk_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <disk_surface name="disk_surface" z=".01" r=".35" radial_mesh_count="14" radial_mesh_power="5" axial_mesh_count="20"/>
 typedef KComplexElement<KGeoBag::KGDiskSurface> KGDiskSurfaceBuilder;
 
 template<> inline bool KGDiskSurfaceBuilder::AddAttribute(KContainer* anAttribute)
