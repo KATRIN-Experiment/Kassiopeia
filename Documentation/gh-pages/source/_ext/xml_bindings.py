@@ -215,9 +215,9 @@ def example_files(app):
 
 
 def example_display_name(path):
-    """'Kassiopeia/XML/Examples/VTK/X.xml' -> 'Kassiopeia/Examples/VTK/X.xml'"""
-    parts = path.replace(os.sep, '/').split('/')
-    return '/'.join(parts[:1] + parts[parts.index('XML') + 1:]) if 'XML' in parts else path
+    """Examples are shown with their path in the repository (installed paths can coincide, e.g. for
+    the VTK variants of the Kassiopeia examples)."""
+    return path.replace(os.sep, '/')
 
 
 def xml_blocks(doctree):
