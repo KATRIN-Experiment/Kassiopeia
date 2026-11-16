@@ -12,6 +12,8 @@ JSON format (format_version 2):
           "source_files": ["<path>", ...],          # files registering this type as a child
           "description": "<text>" | null,           # from //! comments above the builder typedef/using
           "examples": ["<XML snippet>", ...],       # from //! @example
+          "images": [{"path": "<path>", "width": "<width>" | null,   # from //! @image, shown before
+                      "line": <line of the description>}, ...]     # that line of the description
           "deprecated": "<text>" | null,            # from //! @deprecated
           "defined_at": "<path>:<line>" | null,     # builder typedef/using
           "children": {
@@ -33,8 +35,9 @@ JSON format (format_version 2):
 
 Documentation comments in the C++ builder sources (see extract.py):
 
-    //! Description of the element (several lines possible).
+    //! Description of the element (several lines possible, reStructuredText).
     //! @example <element attribute="value"/>
+    //! @image Documentation/gh-pages/source/_images/element.png 400pt
     //! @attribute name: description, for attributes registered by macros
     //! @child tag: description, for child elements registered by macros
     //! @deprecated what to use instead
@@ -45,6 +48,13 @@ Documentation comments in the C++ builder sources (see extract.py):
         KTypeBuilder::Attribute<double>("value") +
         //! @deprecated use <new_child> instead
         KTypeBuilder::ComplexElement<KChild>("old_child");
+
+An @image line is shown at its position in the description (which continues
+after it); @example blocks continue until the next @ tag and are shown after
+the attribute table (an example in the middle of the text can be written as a
+".. code-block:: xml" in the description). @image paths are relative to the repository root; extract.py fails if an
+image does not exist. Images must be inside the documentation sources
+(Documentation/gh-pages/source) to be shown there.
 
 A comment documents the registration that starts directly below it (if
 several registrations share that line, the first one).
@@ -78,6 +88,7 @@ class Element:
         self.source_files = entry['source_files']  # sorted list of paths
         self.description = entry.get('description')
         self.examples = entry.get('examples', [])
+        self.images = entry.get('images', [])
         self.deprecated = entry.get('deprecated')
         self.defined_at = entry.get('defined_at')
         self.attribute_info = {k: Relation(v) for k, v in entry['attributes'].items()}  # name -> Relation

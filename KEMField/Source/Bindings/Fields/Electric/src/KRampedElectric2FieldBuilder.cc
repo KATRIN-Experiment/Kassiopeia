@@ -22,9 +22,9 @@ STATICINT sKRampedElectric2FieldStructure =
     KRampedElectric2FieldBuilder::Attribute<std::string>("name") +
     //! the name of the field before the transition starts
     KRampedElectric2FieldBuilder::Attribute<std::string>("root_field_1") +
-    //! the name of the field after the transition starts
-    //! all other parameters:
-    //! same as in <ramped_electric_field/>
+    //! the name of the field after the transition starts.
+    //!
+    //! All other parameters are the same as in ``<ramped_electric_field>``.
     KRampedElectric2FieldBuilder::Attribute<std::string>("root_field_2") +
     KRampedElectric2FieldBuilder::Attribute<std::string>("ramping_type") +
     KRampedElectric2FieldBuilder::Attribute<int>("num_cycles") +

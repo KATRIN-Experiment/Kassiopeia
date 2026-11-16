@@ -11,11 +11,12 @@ namespace katrin
 //! this trajectory internally uses an adiabatic representation of the particle.
 //! this is a good trajectory anywhere the adiabatic approximation is valid.
 //!
-//! child elements:
-//! integrators: any integrator element (integrator_*) may be used.
-//! interpolators: any interpolator element (interpolator_*) may be used.
-//! controls: any control element (control_*) may be used.
-//! terms: only the propagation, synchrotron, drift and gyration terms may be used with this trajectory.
+//! Child elements:
+//!
+//! - integrators: any integrator element (``integrator_*``) may be used.
+//! - interpolators: any interpolator element (``interpolator_*``) may be used.
+//! - controls: any control element (``control_*``) may be used.
+//! - terms: only the propagation, synchrotron, drift and gyration terms may be used with this trajectory.
 //! @example
 //! <kstraj_trajectory_adiabatic name="trajectory_adiabatic">
 //!     <integrator_rk8/>

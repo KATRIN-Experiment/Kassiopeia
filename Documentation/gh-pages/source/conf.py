@@ -45,8 +45,16 @@ extensions = [
     'sphinx_design',
     'm2r2',
     'sphinx_simplepdf',
-       
+    'xml_bindings',
 ]
+
+# XML bindings documentation (see _ext/xml_bindings.py); the JSON is written by "make bindings"
+import os, sys
+_here = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(_here, '_ext'))
+xml_bindings_json = os.path.join(_here, '..', 'build', 'bindings', 'bindings_full.json')
+xml_bindings_scripts = os.path.join(_here, '..', '..', '..', 'Scripts', 'bindings')
+xml_bindings_base_url = 'https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/'
 
 extlinks = {
     'gh-issue':     ('https://github.com/KATRIN-Experiment/Kassiopeia/issues/%s',
@@ -65,7 +73,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 
 # Exclude link file
-exclude_patterns = ['links.rst']
+exclude_patterns = ['links.rst', '_ext']
 
 # make rst_epilog a variable, so you can add other epilog parts to it
 rst_epilog =""

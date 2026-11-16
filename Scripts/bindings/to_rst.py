@@ -12,17 +12,16 @@ sections in the order given by --page) from which it can be reached.
 
 import os
 import re
+import sys
 import argparse
+import textwrap
 import collections
 
 import bindings_model
 
-# heading underlines (page title, element sections)
-
-
-def escape(text):
-    """Escapes characters with a meaning in reStructuredText inline markup."""
-    return re.sub(r'([\\*`_|\[\]])', r'\\\1', text)
+# image paths in the documentation comments are relative to the repository root; images must be
+# inside the Sphinx source directory to be shown
+DOCS_SOURCE = 'Documentation/gh-pages/source'
 
 
 def label(element):
@@ -37,29 +36,13 @@ def literal(text):
     return '``' + text + '``' if text else ''
 
 
-RE_KEY_LINE = re.compile(r'^[\w ()|*.-]+:\s')
-
-
 def renderText(text, indent=''):
-    """Renders a plain-text description: paragraphs are separated by empty lines; within a
-    paragraph, lines are joined unless they look like a list of 'key: value' lines (or follow a
-    line ending with ':'), in which case line breaks are kept (line block)."""
-    out = []
-    for paragraph in re.split(r'\n\s*\n', text.strip()):
-        lines = [l.strip() for l in paragraph.split('\n') if l.strip()]
-        if not lines:
-            continue
-        keep_breaks = any(RE_KEY_LINE.match(l) for l in lines[1:]) or any(l.endswith(':') for l in lines[:-1])
-        if keep_breaks:
-            out += [indent + '| ' + escape(l) for l in lines]
-        else:
-            out.append(indent + escape(' '.join(lines)))
-        out.append('')
-    return out[:-1] if out else []
+    """Documentation texts are reStructuredText: they are passed through, indented as needed."""
+    return [(indent + l) if l.strip() else '' for l in textwrap.dedent(text.strip('\n')).split('\n')]
 
 
 def summary(text):
-    """First sentence of a description."""
+    """First sentence of a description (as a single line)."""
     if not text:
         return ''
     first = re.split(r'(?<=[.!?])\s|\n\s*\n', text.strip(), maxsplit=1)[0]
@@ -159,19 +142,37 @@ def toctree(entries, prefix):
     return ['.. toctree::', '    :hidden:', ''] + [f'    {prefix}{docName(e)}' for _, e in entries] + ['']
 
 
-def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None):
-    """Renders the document of one element. `title` replaces the heading (used for the section pages)."""
-    heading = title or titleMarkup(tree.titles.get(element.name, tag))
-    out = [f'.. _{label(element)}:', '', heading, '=' * len(heading), '']
-    out += intro or []
+def imagePath(path, docs_source=DOCS_SOURCE):
+    """Path of an image for the Sphinx image directive (absolute paths are relative to the source dir)."""
+    rel = os.path.relpath(path, docs_source)
+    if rel.startswith('..'):
+        print(f"warning: image {path} is outside of {docs_source} and cannot be shown", file=sys.stderr)
+        return None
+    return '/' + rel.replace(os.sep, '/')
 
+
+def deprecationText(text):
+    return ' '.join(text.split())
+
+
+def renderElementBody(tag, element, bindings, base_url, show_description=True, usage_links=False):
+    """Renders the documentation of one element without title: description, images, facts, child
+    elements, attributes, examples and where it can be used. Used by the reference pages and by the
+    xml-element directive of the Sphinx extension (Documentation/gh-pages/source/_ext/xml_bindings.py)."""
+    out = []
     if element.deprecated is not None:
-        out += ['.. warning::', '', '    **Deprecated.** ' + escape(' '.join(element.deprecated.split())), '']
+        out += ['.. warning::', '', '    **Deprecated.** ' + deprecationText(element.deprecated), '']
 
-    if element.description:
-        out += renderText(element.description) + ['']
-    elif not intro:
-        out += ['*No description available.*', '']
+    if show_description:
+        description = renderText(element.description) if element.description else []
+        # images are shown at their position in the description
+        for image in sorted(element.images, key=lambda i: -i.get('line', len(description))):
+            path = imagePath(image['path'])
+            if path:
+                at = min(image.get('line', len(description)), len(description))
+                description[at:at] = ['', f'.. image:: {path}'] + \
+                    ([f'    :width: {image["width"]}'] if image.get('width') else []) + ['']
+        out += description + ['']
 
     facts = [f'XML element: {literal("<" + tag + ">")}', f'C++ type: {literal(element.name)}']
     other_tags = [t for t in element.tags if t != tag]
@@ -180,6 +181,8 @@ def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None
     if element.defined_at:
         facts.append('Defined in: ' + sourceLink(element.defined_at, base_url))
     out += ['| ' + f for f in facts] + ['']
+    if usage_links:
+        out += [f'.. xml-element-usages:: {element.name}', '']
 
     if element.child_info:
         out += ['.. list-table:: Child elements', '    :header-rows: 1', '    :widths: 30 70', '',
@@ -190,11 +193,11 @@ def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None
             cell = []
             if info.deprecated is not None or child.deprecated is not None:
                 text = info.deprecated if info.deprecated is not None else child.deprecated
-                cell += ['**Deprecated:** ' + escape(' '.join(text.split())), '']
+                cell += ['**Deprecated:** ' + deprecationText(text), '']
             if info.description:
                 cell += renderText(info.description)
             elif child.description:
-                cell += [escape(summary(child.description))]
+                cell += [summary(child.description)]
             out += cellLines(cell)
         out.append('')
 
@@ -205,7 +208,7 @@ def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None
             out += [f'    * - {literal(name)}', f'      - {literal(info.type)}']
             cell = []
             if info.deprecated is not None:
-                cell += ['**Deprecated:** ' + escape(' '.join(info.deprecated.split())), '']
+                cell += ['**Deprecated:** ' + deprecationText(info.deprecated), '']
             cell += renderText(info.description) if info.description else []
             out += cellLines(cell)
         out.append('')
@@ -225,7 +228,7 @@ def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None
                 continue
             text = literal('<' + child_tag + '>')
             if info.deprecated is not None:
-                text += ' (**deprecated:** ' + escape(' '.join(info.deprecated.split())) + ')'
+                text += ' (**deprecated:** ' + deprecationText(info.deprecated) + ')'
             tags.append(text)
         if not tags:
             continue
@@ -239,7 +242,17 @@ def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None
     return out
 
 
-def writeDocs(tree, bindings, base_url, output_dir):
+def renderElement(tag, element, bindings, base_url, tree, title=None, intro=None, usage_links=True):
+    """Renders the reference document of one element. `title` replaces the heading (used for the section pages)."""
+    heading = title or titleMarkup(tree.titles.get(element.name, tag))
+    out = [f'.. _{label(element)}:', '', heading, '=' * len(heading), '']
+    out += intro or []
+    if not element.description and not intro:
+        out += ['*No description available.*', '']
+    return out + renderElementBody(tag, element, bindings, base_url, usage_links=usage_links)
+
+
+def writeDocs(tree, bindings, base_url, output_dir, usage_links=True):
     os.makedirs(os.path.join(output_dir, 'elements'), exist_ok=True)
 
     def write(name, lines):
@@ -253,14 +266,14 @@ def writeDocs(tree, bindings, base_url, output_dir):
             tag = page.roots[0][0]
             intro = [f'This page documents the {literal("<" + tag + ">")} section of the configuration. '
                      'Each child element links to its own page, which in turn lists what can go into it.', '']
-            lines = renderElement(tag, root, bindings, base_url, tree, title=page.title, intro=intro)
+            lines = renderElement(tag, root, bindings, base_url, tree, title=page.title, intro=intro, usage_links=usage_links)
             lines += toctree(tree.children.get(root.name, []), '')
         else:
             lines = [f'.. _bindings-{page.name}:', '', page.title, '=' * len(page.title), '',
                      '.. list-table:: Elements', '    :header-rows: 1', '    :widths: 30 70', '',
                      '    * - Element', '      - Description']
             for tag, element in page.roots:
-                lines += [f'    * - {ref(element, tag)}'] + cellLines([escape(summary(element.description))]
+                lines += [f'    * - {ref(element, tag)}'] + cellLines([summary(element.description)]
                                                                    if element.description else [])
             lines += [''] + toctree(tree.children.get(page.name, []), '')
         write(page.name, lines)
@@ -270,7 +283,7 @@ def writeDocs(tree, bindings, base_url, output_dir):
         if tree.single_root.get(page.name) is element:
             continue
         tag = tree.titles[name].split(' ')[0]
-        lines = renderElement(tag, element, bindings, base_url, tree)
+        lines = renderElement(tag, element, bindings, base_url, tree, usage_links=usage_links)
         lines += toctree(tree.children.get(name, []), '/bindings_reference/')
         write(docName(element), lines)
 
@@ -290,6 +303,8 @@ if __name__ == "__main__":
                         help='directory to write one .rst file per page into')
     parser.add_argument('-b', '--base-url', metavar='URL', type=str, default="",
                         help='base url for links to source files (e.g. GitHub tree)')
+    parser.add_argument('--no-usage-links', action='store_true',
+                        help='do not emit xml-element-usages directives (only for use without the Sphinx extension)')
     parser.add_argument('--page', metavar='NAME:TITLE:TAG[,TAG...]', action='append',
                         help='a page for the given top-level tags (repeatable; default: geometry, kemfield, kassiopeia); '
                              'remaining top-level elements go to an additional page')
@@ -301,6 +316,6 @@ if __name__ == "__main__":
 
     bindings = bindings_model.load(args.input)
     tree = buildTree(bindings, specs)
-    writeDocs(tree, bindings, args.base_url, args.output_dir)
+    writeDocs(tree, bindings, args.base_url, args.output_dir, not args.no_usage_links)
     with open(os.path.join(args.output_dir, 'pages.txt'), 'w') as f:
         f.write('\n'.join(page.name for page in tree.pages) + '\n')

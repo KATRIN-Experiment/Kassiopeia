@@ -40,10 +40,9 @@ STATICINT sKSIntScatteringStructure =
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorConstant>("calculator_constant") +
     //! builds a set of hydrogen calculators.
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorHydrogenSet>("calculator_hydrogen") +
-    //! builds an ion calculator, used for ionization of gas by ions
-    //! this affects the following ions: H^+, H_2^+, H_3^+, H^-
-    //! D^+, D_2^+, D_3^+, D^-
-    //! T^+, T_2^+, T_3^+, T^-
+    //! builds an ion calculator, used for ionization of gas by ions.
+    //!
+    //! This affects the following ions: H^+, H_2^+, H_3^+, H^-, D^+, D_2^+, D_3^+, D^-, T^+, T_2^+, T_3^+, T^-.
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorIon>("calculator_ion") +
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorArgonSet>("calculator_argon") +
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorKESSSet>("calculator_kess") +

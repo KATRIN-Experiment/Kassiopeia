@@ -18,8 +18,9 @@ STATICINT sKSExplicitSuperpositionSolutionComponentStructure =
     //! the name of the component, just for clarification
     KExplicitSuperpositionSolutionComponentBuilder::Attribute<std::string>("name") +
     //! by what factor to scale the potential (and thus charge density values)
-    //! of the precomputed charge densities. For example:
-    //! There is a precomputed charge density with all surfaces set to zero potential except
+    //! of the precomputed charge densities.
+    //!
+    //! For example, there is a precomputed charge density with all surfaces set to zero potential except
     //! for one particular electrode which is at 1 Volt. To describe a situation in which
     //! this electrode is at -20 Volts, this configuration is scaled by -20 and added to the
     //! superposition solver.

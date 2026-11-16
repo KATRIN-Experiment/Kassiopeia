@@ -25,9 +25,11 @@ STATICINT sKElectrostaticPotentialmapStructure =
     KElectrostaticPotentialmapBuilder::Attribute<std::string>("directory") +
     //! the name of the potential map image data file
     KElectrostaticPotentialmapBuilder::Attribute<std::string>("file") +
-    //! none or nearest: just take the value of the nearest point of the map
-    //! linear: linear interpolation from surrounding points
-    //! cubic: cubic interpolation from surrounding points
+    //! interpolation method:
+    //!
+    //! - ``none`` or ``nearest``: just take the value of the nearest point of the map
+    //! - ``linear``: linear interpolation from surrounding points
+    //! - ``cubic``: cubic interpolation from surrounding points
     KElectrostaticPotentialmapBuilder::Attribute<std::string>("interpolation");
 
 STATICINT sKElectrostaticPotentialmap =

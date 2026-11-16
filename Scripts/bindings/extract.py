@@ -176,6 +176,7 @@ def newElement(kind):
         'source_files': set(),
         'description': None,
         'examples': [],
+        'images': [],
         'deprecated': None,
         'defined_at': None,
         'children': {},
@@ -211,7 +212,8 @@ def parseDocComment(doc):
     """Parses '//!' lines into description, examples, deprecation note and
     @attribute/@child descriptions. A tag line continues on the following
     lines until the next tag."""
-    result = {'description': [], 'examples': [], 'deprecated': None, 'attributes': {}, 'children': {}, 'unknown': []}
+    result = {'description': [], 'examples': [], 'images': [], 'deprecated': None, 'attributes': {}, 'children': {},
+              'unknown': []}
     current = result['description']
     for line in doc:
         m = DOC_TAG.match(line.strip())
@@ -222,6 +224,11 @@ def parseDocComment(doc):
         if tag == 'example':
             current = [rest] if rest else []
             result['examples'].append(current)
+        elif tag == 'image':
+            # an image is shown where it appears in the description; the description continues after it
+            path, _, width = rest.strip().partition(' ')
+            result['images'].append({'path': path, 'width': width.strip() or None, 'line': len(result['description'])})
+            current = result['description']
         elif tag == 'deprecated':
             current = [rest] if rest else []
             result['deprecated'] = current
@@ -246,9 +253,18 @@ def parseDocComment(doc):
             text = '\n'.join(l.strip() for l in lines)
         return text.strip('\n').rstrip()
 
+    # image positions refer to the lines of the final (stripped) description
+    raw = result['description']
+    leading = next((k for k, l in enumerate(raw) if l.strip()), len(raw))
+    description = join(raw, keep_indent=True)
+    count = len(description.split('\n')) if description else 0
+    for image in result['images']:
+        image['line'] = min(max(image['line'] - leading, 0), count)
+
     return {
-        'description': join(result['description']) or None,
+        'description': description or None,
         'examples': [join(e, keep_indent=True) for e in result['examples'] if join(e, keep_indent=True)],
+        'images': result['images'],
         'deprecated': join(result['deprecated']) if result['deprecated'] is not None else None,
         'attributes': {k: join(v) for k, v in result['attributes'].items()},
         'children': {k: join(v) for k, v in result['children'].items()},
@@ -258,6 +274,14 @@ def parseDocComment(doc):
 
 def warn(location, message):
     print(f"{location}: warning: {message}", file=sys.stderr)
+
+
+errors = []
+
+
+def error(location, message):
+    print(f"{location}: error: {message}", file=sys.stderr)
+    errors.append(message)
 
 
 def getBindingsFiles(root_paths):
@@ -353,7 +377,7 @@ def processFiles(file_list, namespaces):
                 warn(location, "documentation comment above a line with several registrations that are not written out "
                                "in the source is ignored; use @attribute/@child in the element documentation instead")
                 parsed = None
-            if parsed and (parsed['examples'] or parsed['attributes'] or parsed['children'] or parsed['unknown']):
+            if parsed and (parsed['examples'] or parsed['images'] or parsed['attributes'] or parsed['children'] or parsed['unknown']):
                 warn(location, "only a description and @deprecated are supported above a registration")
 
             for m in line_matches:
@@ -394,12 +418,16 @@ def processFiles(file_list, namespaces):
         element = elements[target]
         for tag in parsed['unknown']:
             warn(location, f"unknown documentation tag @{tag}")
-        if parsed['description'] or parsed['examples']:
-            if element['description'] or element['examples']:
+        for image in parsed['images']:
+            if not os.path.isfile(image['path']):
+                error(location, f"image '{image['path']}' does not exist (paths are relative to the repository root)")
+        if parsed['description'] or parsed['examples'] or parsed['images']:
+            if element['description'] or element['examples'] or element['images']:
                 warn(location, f"{target} is already documented, ignoring this comment")
             else:
                 element['description'] = parsed['description']
                 element['examples'] = parsed['examples']
+                element['images'] = parsed['images']
         if parsed['deprecated'] is not None:
             element['deprecated'] = parsed['deprecated']
         for key, relations in (('attributes', element['attributes']), ('children', element['children'])):
@@ -432,6 +460,7 @@ def parseArguments():
                         help='base paths to search for bindings files')
     parser.add_argument('-o', '--output', metavar='FILE', type=str, default='-',
                         help='output file (default: standard output)')
+    parser.epilog = 'Run from the repository root: @image paths in documentation comments are relative to it.'
     return parser.parse_args()
 
 
@@ -453,6 +482,10 @@ if __name__ == "__main__":
         'elements': elements,
         'aliases': aliases,
     }
+
+    if errors:
+        print(f"{len(errors)} error(s) in the binding documentation", file=sys.stderr)
+        sys.exit(1)
 
     out = sys.stdout if args.output == '-' else open(args.output, 'w')
     json.dump(data, out, indent=1)

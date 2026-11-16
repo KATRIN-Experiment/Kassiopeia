@@ -22,17 +22,14 @@ STATICINT sKKrylovChargeDensitySolverOldStructure =
     //! specify the solver type by name. gmres and bicgstab are available.
     KKrylovChargeDensitySolverOldBuilder::Attribute<std::string>("solver_name") +
     //! specify the preconditioner type. Options are:
-    //! - none
-    //! use no preconditioner
-    //! - jacobi
-    //! use the inverse of the diagonal as preconditioner
-    //! - implicit_krylov
-    //! use an inner Krylov solver with a different FFTM matrix defined by
-    //! the attributes of the Krylov solver.
-    //! - independent_implicit_krylov
-    //! use an inner Krylov solver with a different FFTM matrix defined by
-    //! the preconditioner_electrostatic_parameters element. This is more
-    //! flexible than the other Krylov preconditioner option.
+    //!
+    //! - ``none``: use no preconditioner
+    //! - ``jacobi``: use the inverse of the diagonal as preconditioner
+    //! - ``implicit_krylov``: use an inner Krylov solver with a different FFTM matrix defined by
+    //!   the attributes of the Krylov solver.
+    //! - ``independent_implicit_krylov``: use an inner Krylov solver with a different FFTM matrix defined by
+    //!   the preconditioner_electrostatic_parameters element. This is more
+    //!   flexible than the other Krylov preconditioner option.
     KKrylovChargeDensitySolverOldBuilder::Attribute<std::string>("preconditioner") +
     //! specify the desired reduction of the start residual to define convergence.
     //! This defaults to 1e-8, meaning that the algorithm will stop

@@ -11,11 +11,12 @@ namespace katrin
 //! this trajectory internally uses a magnetic representation of the particle.
 //! this trajectory is used to compute magnetic field lines.
 //!
-//! child elements:
-//! integrators: any integrator element (integrator_*) may be used.
-//! interpolators: any interpolator element (interpolator_*) may be used.
-//! controls: any control element (control_*) may be used.
-//! terms: only the propagation term may be used with this trajectory.
+//! Child elements:
+//!
+//! - integrators: any integrator element (``integrator_*``) may be used.
+//! - interpolators: any interpolator element (``interpolator_*``) may be used.
+//! - controls: any control element (``control_*``) may be used.
+//! - terms: only the propagation term may be used with this trajectory.
 //! @example
 //! <kstraj_trajectory_magnetic name="trajectory_magnetic">
 //!     <integrator_rk8/>

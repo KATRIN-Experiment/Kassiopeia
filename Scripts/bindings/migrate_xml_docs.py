@@ -439,7 +439,12 @@ class Plan:
         for type_name in list(self.element_docs) + [t for t in element_lines if t not in self.element_docs]:
             element = self.bindings.elements[type_name]
             doc = self.element_docs.get(type_name, {'description': None, 'examples': [], 'source': None})
-            lines = docLines('', doc['description']) if doc['description'] else []
+            if doc.get('description_lines') is not None:
+                lines = list(doc['description_lines'])  # pre-formatted (reStructuredText, indentation kept)
+            else:
+                lines = docLines('', doc['description']) if doc['description'] else []
+            for image in doc.get('images', []):
+                lines.append(f"@image {image['path']}" + (f" {image['width']}" if image.get('width') else ''))
             for example in doc['examples']:
                 lines += docLines('@example ', example, keep_indent=True)
             lines += element_lines.get(type_name, [])

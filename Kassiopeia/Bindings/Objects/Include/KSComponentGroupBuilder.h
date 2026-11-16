@@ -8,10 +8,7 @@
 namespace katrin
 {
 
-//! a set of components treated a single composite.
-//!
-//! name:
-//! the name of this group.
+//! a set of components treated as a single composite.
 //! @example
 //! <output_group name="component_group">
 //!     <output name="step_final_particle_nested" parent="step" field="final_particle"/>

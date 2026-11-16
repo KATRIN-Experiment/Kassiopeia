@@ -19,13 +19,13 @@ template<> KFastMultipoleMatrixGeneratorBuilder::~KComplexElement() = default;
 
 STATICINT sKFastMultipoleMatrixGeneratorStructure =
     KFastMultipoleMatrixGeneratorBuilder::Attribute<std::string>("integrator") +
-    //! strategy for the construction of the tree of cubes. The option are:
-    //! - agressive
-    //! divide a cube into smaller subcubes if at least on element can be
-    //! used for at least one of the subcubes multipole expansions. This
-    //! option like all other does respect the maximum_tree_depth.
-    //! - balanced
-    //! - guided
+    //! strategy for the construction of the tree of cubes. The options are:
+    //!
+    //! - ``aggressive``: divide a cube into smaller subcubes if at least one element can be
+    //!   used for at least one of the subcubes multipole expansions. This
+    //!   option, like all others, respects the maximum_tree_depth.
+    //! - ``balanced``
+    //! - ``guided``
     KFastMultipoleMatrixGeneratorBuilder::Attribute<std::string>("strategy") +
     //! the world cube gets divided into this many cubes along each side
     //! to create the first level of cubes. For MPI the number of top level cubes
