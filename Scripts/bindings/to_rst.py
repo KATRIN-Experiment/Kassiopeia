@@ -185,7 +185,7 @@ def renderElementBody(tag, element, bindings, base_url, show_description=True, u
         out += [f'.. xml-element-usages:: {element.name}', '']
 
     if element.child_info:
-        out += ['.. list-table:: Child elements', '    :header-rows: 1', '    :widths: 30 70', '',
+        out += ['.. list-table:: Child elements', '    :header-rows: 1', '    :widths: 30 70', '    :class: xml-bindings-table', '',
                 '    * - Element', '      - Description']
         for child_tag, info in sorted(element.child_info.items()):
             child = bindings.elements[info.type]
@@ -202,7 +202,7 @@ def renderElementBody(tag, element, bindings, base_url, show_description=True, u
         out.append('')
 
     if element.attribute_info:
-        out += ['.. list-table:: Attributes', '    :header-rows: 1', '    :widths: 20 15 65', '',
+        out += ['.. list-table:: Attributes', '    :header-rows: 1', '    :widths: 20 15 65', '    :class: xml-bindings-table', '',
                 '    * - Attribute', '      - Type', '      - Description']
         for name, info in sorted(element.attribute_info.items()):
             out += [f'    * - {literal(name)}', f'      - {literal(info.type)}']
@@ -270,7 +270,7 @@ def writeDocs(tree, bindings, base_url, output_dir, usage_links=True):
             lines += toctree(tree.children.get(root.name, []), '')
         else:
             lines = [f'.. _bindings-{page.name}:', '', page.title, '=' * len(page.title), '',
-                     '.. list-table:: Elements', '    :header-rows: 1', '    :widths: 30 70', '',
+                     '.. list-table:: Elements', '    :header-rows: 1', '    :widths: 30 70', '    :class: xml-bindings-table', '',
                      '    * - Element', '      - Description']
             for tag, element in page.roots:
                 lines += [f'    * - {ref(element, tag)}'] + cellLines([summary(element.description)]
