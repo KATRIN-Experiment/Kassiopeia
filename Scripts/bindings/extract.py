@@ -4,7 +4,7 @@ Extracts the XML bindings (elements, child elements and attributes) from the
 C++ builder sources and writes them as JSON.
 
 This is the only script that reads C++ code. All output formats (Markdown,
-reStructuredText, GraphViz, ...) are produced by separate renderers reading
+reStructuredText, XML example, ...) are produced by separate renderers reading
 the JSON written here; see bindings_model.py for the format.
 """
 

@@ -8,7 +8,7 @@ the Kassiopeia website:
 **https://katrin-experiment.github.io/Kassiopeia/bindings.html**
 
 It is generated from the C++ sources whenever the website is built, so it
-always matches the `main` branch. Besides the tables and graphs shown there,
+always matches the `main` branch. Besides the pages shown there,
 the website also provides the underlying data for download:
 
 * [bindings_full.json](https://katrin-experiment.github.io/Kassiopeia/bindings/bindings_full.json):
@@ -30,12 +30,11 @@ The files are produced in two steps by the Python scripts in
    to a JSON file. The JSON format is documented in
    [bindings_model.py](../../Scripts/bindings/bindings_model.py).
 2. Separate renderers read that JSON and produce the output files:
-   [to_rst.py](../../Scripts/bindings/to_rst.py) (reStructuredText reference pages),
-   [to_xml.py](../../Scripts/bindings/to_xml.py) (XML example) and
-   [to_graphviz.py](../../Scripts/bindings/to_graphviz.py) (GraphViz graphs).
+   [to_rst.py](../../Scripts/bindings/to_rst.py) (reStructuredText reference pages) and
+   [to_xml.py](../../Scripts/bindings/to_xml.py) (XML example).
 
 [gen-bindings-docs.sh](../../Scripts/gen-bindings-docs.sh) runs all steps
-(requires Python 3 and GraphViz). Run it from the repository root; the
+(requires Python 3). Run it from the repository root; the
 output is written to `Documentation/gh-pages/build/bindings` unless
 `OUTPUT_DIR` is set:
 

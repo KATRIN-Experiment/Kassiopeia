@@ -15,12 +15,11 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 # Generate the XML bindings documentation from the C++ sources and copy
-# the files used by the Sphinx sources (requires GraphViz "dot").
+# the files used by the Sphinx sources.
 bindings:
 	@cd ../.. && OUTPUT_DIR="$(CURDIR)/$(BINDINGSDIR)" bash Scripts/gen-bindings-docs.sh
 	@rm -rf "$(SOURCEDIR)/bindings_reference"
 	@cp -r "$(BINDINGSDIR)/reference" "$(SOURCEDIR)/bindings_reference"
-	@cp "$(BINDINGSDIR)"/bindings_*.svg "$(SOURCEDIR)/_images/"
 	@mkdir -p "$(SOURCEDIR)/_extra/bindings"
 	@cp "$(BINDINGSDIR)/bindings_full.json" "$(BINDINGSDIR)/bindings_full.xml" "$(SOURCEDIR)/_extra/bindings/"
 

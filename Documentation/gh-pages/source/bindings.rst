@@ -43,48 +43,6 @@ The underlying data is also available for download:
   elements and attributes, with placeholder values indicating their data type.
   It is not meant to be run, but serves as an almost-complete syntax example.
 
-Bindings graph
-==============
-
-The graph shows the relation between the available XML elements.
-
-.. image:: _images/bindings_full.svg
-    :width: 1000px
-    :alt: XML bindings graph
-
-Module graphs
--------------
-
-The graphs below show the XML elements of the individual modules, including their attributes.
-
-Kommon
-~~~~~~
-
-.. image:: _images/bindings_Kommon.svg
-    :width: 1000px
-    :alt: XML bindings graph of Kommon
-
-KGeoBag
-~~~~~~~
-
-.. image:: _images/bindings_KGeoBag.svg
-    :width: 1000px
-    :alt: XML bindings graph of KGeoBag
-
-KEMField
-~~~~~~~~
-
-.. image:: _images/bindings_KEMField.svg
-    :width: 1000px
-    :alt: XML bindings graph of KEMField
-
-Kassiopeia
-~~~~~~~~~~
-
-.. image:: _images/bindings_Kassiopeia.svg
-    :width: 1000px
-    :alt: XML bindings graph of Kassiopeia
-
 Element reference
 =================
 

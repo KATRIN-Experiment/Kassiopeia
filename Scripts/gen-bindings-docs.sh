@@ -9,11 +9,6 @@
 
 set -e
 
-if ! command -v dot > /dev/null; then
-    echo "GraphViz 'dot' is required but was not found." >&2
-    exit 1
-fi
-
 BINDINGS_DIR="$(dirname $0)/bindings"
 SOURCE_DIRS="Kassiopeia KEMField KGeoBag Kommon"
 OUTPUT_DIR="${OUTPUT_DIR:-Documentation/gh-pages/build/bindings}"
@@ -32,18 +27,3 @@ echo "Generating global bindings files"
 rm -rf "${OUTPUT_DIR}/reference"
 python3 ${BINDINGS_DIR}/to_rst.py "${JSON}" --base-url=${GH_BASE} -o "${OUTPUT_DIR}/reference"
 python3 ${BINDINGS_DIR}/to_xml.py "${JSON}" --root='KRoot' > "${OUTPUT_DIR}/bindings_full.xml"
-
-## Generate GraphViz files
-echo "Generating global bindings graph"
-python3 ${BINDINGS_DIR}/to_graphviz.py "${JSON}" --root='KRoot' > "${OUTPUT_DIR}/bindings_full.dot"
-dot -Tsvg "${OUTPUT_DIR}/bindings_full.dot" > "${OUTPUT_DIR}/bindings_full.svg"
-
-# individual file per module
-MODULE_JSON="$(mktemp)"
-trap 'rm -f "${MODULE_JSON}"' EXIT
-for dirname in ${SOURCE_DIRS}; do
-    echo "Generating ${dirname} bindings graph"
-    python3 ${BINDINGS_DIR}/extract.py ${dirname} -o "${MODULE_JSON}" || continue
-    python3 ${BINDINGS_DIR}/to_graphviz.py "${MODULE_JSON}" --with-attributes > "${OUTPUT_DIR}/bindings_${dirname}.dot"
-    dot -Tsvg "${OUTPUT_DIR}/bindings_${dirname}.dot" > "${OUTPUT_DIR}/bindings_${dirname}.svg"
-done
