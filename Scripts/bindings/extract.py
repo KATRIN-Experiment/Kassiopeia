@@ -371,6 +371,41 @@ DOC_PREFIX = '//!'
 DOC_TAG = re.compile(r'@(\w+)\b\s*(.*)')
 
 
+def stripComments(text):
+    """Replaces the contents of // and /* */ comments by spaces (keeping newlines, so positions and line
+    numbers stay the same), leaving string, character and raw string literals untouched. Used for
+    matching code, so that commented-out registrations are not documented."""
+    out, i, n = list(text), 0, len(text)
+    while i < n:
+        c = text[i]
+        if text.startswith('R"', i) and (i == 0 or not (text[i - 1].isalnum() or text[i - 1] == '_')):
+            open_paren = text.find('(', i + 2)
+            delimiter = text[i + 2:open_paren] if open_paren >= 0 else ''
+            end = text.find(')' + delimiter + '"', open_paren + 1) if open_paren >= 0 else -1
+            i = end + len(delimiter) + 2 if end >= 0 else n
+        elif c == '"' or c == "'":
+            j = i + 1
+            while j < n and text[j] != c and text[j] != '\n':
+                j += 2 if text[j] == '\\' else 1
+            i = j + 1
+        elif text.startswith('//', i):
+            j = text.find('\n', i)
+            j = n if j < 0 else j
+            for k in range(i, j):
+                out[k] = ' '
+            i = j
+        elif text.startswith('/*', i):
+            j = text.find('*/', i + 2)
+            j = n if j < 0 else j + 2
+            for k in range(i, j):
+                if out[k] != '\n':
+                    out[k] = ' '
+            i = j
+        else:
+            i += 1
+    return ''.join(out)
+
+
 def docCommentAbove(lines, line_number):
     """Returns the '//!' comment lines directly above the given (1-based) line, without the prefix."""
     doc = []
@@ -538,12 +573,14 @@ def processFiles(file_list, namespaces):
 
     lines = {file_name: buffer.split('\n') for file_name, buffer in buffers.items()}
     lineOf = lambda buffer, pos: buffer.count('\n', 0, pos) + 1
+    # code without comments (same positions), for matching; documentation comments are read from `lines`
+    code = {file_name: stripComments(buffer) for file_name, buffer in buffers.items()}
 
     # C++ type aliases of element types, e.g.
     #   typedef KGBEMAttributor<KElectrostaticBasis, KDirichletBoundary> KGElectrostaticDirichletAttributor;
     # so that registrations using either name refer to the same element
     type_aliases = {}
-    for buffer in buffers.values():
+    for buffer in code.values():
         found = [(m.group(2), m.group(1)) for m in RE_TYPE_TYPEDEF.finditer(buffer)]
         found += [(m.group(1), m.group(2)) for m in RE_TYPE_USING.finditer(buffer)]
         for alias, target in found:
@@ -560,7 +597,7 @@ def processFiles(file_list, namespaces):
     # first collect builder aliases (typedef/using) and element documentation
     element_docs = []  # (target, location, parsed doc)
     for file_name in file_list:
-        buffer = buffers[file_name]
+        buffer = code[file_name]
         found = [(m.start(), m.group(1), m.group(2), m.group(3)) for m in re.finditer(REGEX_PATTERN_TYPEDEF, buffer)]
         found += [(m.start(), m.group(3), m.group(4), m.group(1)) for m in re.finditer(REGEX_PATTERN_USING, buffer)]
         for pos, kind, target, alias in sorted(found):
@@ -582,7 +619,7 @@ def processFiles(file_list, namespaces):
 
     # now collect registrations of attributes and child elements
     for file_name in file_list:
-        buffer = buffers[file_name]
+        buffer = code[file_name]
         warnUnmatched(file_name, buffer)
         references.update(findReferences(buffer, namespaces))
         created.update(findCreatedTypes(buffer, namespaces))
