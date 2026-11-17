@@ -34,7 +34,11 @@ STATICINT sKMessageTableStructure =
     KMessageTableBuilder::Attribute<std::string>("format") +
     KMessageTableBuilder::Attribute<KMessagePrecision>("precision") +
     KMessageTableBuilder::Attribute<bool>("shutdown_message") +
-    KMessageTableBuilder::Attribute<bool>("parser_context") + KMessageTableBuilder::ComplexElement<KTextFile>("file") +
+    KMessageTableBuilder::Attribute<bool>("parser_context") +
+    //! the log file to which messages are written. Its default directory is the log directory of the
+    //! installation and its default name ``KasperLog.txt`` (``default_path`` and ``default_base`` are
+    //! ignored here).
+    KMessageTableBuilder::ComplexElement<KTextFile>("file") +
     KMessageTableBuilder::ComplexElement<KMessageData>("message");
 
 STATICINT sMessageTable = KRootBuilder::ComplexElement<KMessageTable>("messages");
