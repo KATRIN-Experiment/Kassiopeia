@@ -284,19 +284,36 @@ def error(location, message):
     errors.append(message)
 
 
-def getBindingsFiles(root_paths):
-    file_list = []
+# a file defines bindings if it contains a builder typedef/using or a registration call
+RE_HAS_BINDINGS = re.compile(r'\bK(?:Simple|Complex)Element\s*<|(?:Builder|Binding|ElementProcessor)\s*::\s*(?:template\s+)?'
+                             r'(?:Attribute|SimpleElement|ComplexElement)\s*<')
+RE_CMAKE_FILE = re.compile(r'[\w.+-]+\.(?:cc|cxx|cpp|h|hh|hpp|hxx)\b')
+
+
+def getBindingsFiles(root_paths, compiled_only=True):
+    """Returns the C++ files below the given paths that define bindings. With compiled_only, files
+    that are not referenced in any CMakeLists.txt below the paths (i.e. not part of the build) are
+    skipped with a warning, so that bindings that do not exist at runtime are not documented."""
+    candidates, cmake_names = [], set()
     for path_name in root_paths:
         for file_name in glob.glob(path_name + '/**', recursive=True):
-            root, ext = os.path.splitext(file_name)
-            if ext not in CXX_EXTENSIONS:
+            if os.path.basename(file_name) == 'CMakeLists.txt':
+                with open(file_name, errors='replace') as f:
+                    cmake_names.update(RE_CMAKE_FILE.findall(f.read()))
                 continue
-            if not root.endswith("Builder"):
+            if os.path.splitext(file_name)[1] not in CXX_EXTENSIONS or not os.path.isfile(file_name):
                 continue
+            with open(file_name, errors='replace') as f:
+                if RE_HAS_BINDINGS.search(f.read()):
+                    candidates.append(file_name)
 
-            file_list.append(file_name)
-
-    return sorted(file_list)
+    file_list = []
+    for file_name in sorted(candidates):
+        if compiled_only and os.path.basename(file_name) not in cmake_names:
+            warn(file_name, "defines bindings but is not part of the build (not in any CMakeLists.txt), skipped")
+            continue
+        file_list.append(file_name)
+    return file_list
 
 
 # a registration call: "...::Attribute<" etc. (as opposed to typedefs or template definitions)
@@ -458,6 +475,8 @@ def parseArguments():
     parser = argparse.ArgumentParser(description='Extract XML bindings from C++ builder sources and write them as JSON.')
     parser.add_argument('paths', metavar='PATH', type=str, nargs='+',
                         help='base paths to search for bindings files')
+    parser.add_argument('--all-files', action='store_true',
+                        help='also read files that are not referenced in any CMakeLists.txt')
     parser.add_argument('-o', '--output', metavar='FILE', type=str, default='-',
                         help='output file (default: standard output)')
     parser.epilog = 'Run from the repository root: @image paths in documentation comments are relative to it.'
@@ -467,7 +486,7 @@ def parseArguments():
 if __name__ == "__main__":
     args = parseArguments()
 
-    file_list = getBindingsFiles(args.paths)
+    file_list = getBindingsFiles(args.paths, not args.all_files)
     if not file_list:
         print("The provided path doesn't contain any bindings files.", file=sys.stderr)
         sys.exit(1)
