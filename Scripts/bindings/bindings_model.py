@@ -16,11 +16,18 @@ JSON format (format_version 2):
                       "line": <line of the description>}, ...]     # that line of the description
           "deprecated": "<text>" | null,            # from //! @deprecated
           "defined_at": "<path>:<line>" | null,     # builder typedef/using
+          "creates": "<C++ type>" | null,           # type of the object actually created, if the element
+                                                    # type is only a data wrapper (detected from Set() in End())
+          "bases": ["<C++ class>", ...],            # all base classes of the type (or of "creates")
           "children": {
             "<XML tag name>": {
               "type": "<C++ type>",
               "description": "<text>" | null,       # from //! comments above the registration
               "deprecated": "<text>" | null,
+              "reference": null | {"type": "<C++ type>"} | {"geometry": "surfaces" | "spaces" | ...},
+                                                    # attributes naming another object (detected from
+                                                    # KToolbox::Get<T> / KGInterface::Retrieve* in the
+                                                    # builder, or given with //! @reference)
               "registered_at": "<path>:<line>"
             }, ...
           },
@@ -47,7 +54,10 @@ Documentation comments in the C++ builder sources (see extract.py):
         //! Description of this attribute.
         KTypeBuilder::Attribute<double>("value") +
         //! @deprecated use <new_child> instead
-        KTypeBuilder::ComplexElement<KChild>("old_child");
+        KTypeBuilder::ComplexElement<KChild>("old_child") +
+        //! Name of the magnetic field to use.
+        //! @reference KSMagneticField
+        KTypeBuilder::Attribute<std::string>("magnetic_field");
 
 An @image line is shown at its position in the description (which continues
 after it); @example blocks continue until the next @ tag and are shown after
@@ -78,6 +88,7 @@ class Relation:
         self.description = entry.get('description')
         self.deprecated = entry.get('deprecated')
         self.registered_at = entry.get('registered_at')
+        self.reference = entry.get('reference')
 
 
 class Element:
@@ -91,6 +102,7 @@ class Element:
         self.images = entry.get('images', [])
         self.deprecated = entry.get('deprecated')
         self.defined_at = entry.get('defined_at')
+        self.bases = entry.get('bases', [])
         self.attribute_info = {k: Relation(v) for k, v in entry['attributes'].items()}  # name -> Relation
         self.child_info = {k: Relation(v) for k, v in entry['children'].items()}        # tag -> Relation
         self.attributes = {k: v.type for k, v in self.attribute_info.items()}  # attribute name -> C++ type name

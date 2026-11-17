@@ -155,6 +155,90 @@ def deprecationText(text):
     return ' '.join(text.split())
 
 
+# references to more element types than this are only named (e.g. KSComponent, the base of all
+# Kassiopeia objects), not listed
+MAX_LISTED_REFERENCES = 40
+
+GEOMETRY_TARGETS = {'surfaces': 'KGeoBag surfaces', 'spaces': 'KGeoBag spaces',
+                    'surface': 'a KGeoBag surface', 'space': 'a KGeoBag space'}
+
+
+def className(type_name):
+    return re.sub(r'<.*', '', type_name).split('::')[-1]
+
+
+def primaryTag(element, bindings):
+    """The tag under which an element is usually defined: one registered directly in a top-level
+    section (e.g. <ksgen_value_set> in <kassiopeia> rather than <energy_set> in a composite)."""
+    root = bindings.elements.get(bindings_model.MASTER_ROOT)
+    sections = {e.name for e in root.children.values()} if root else set()
+    for parent in element.parents:
+        if parent.name in sections:
+            for tag, info in sorted(parent.child_info.items()):
+                if info.type == element.name:
+                    return tag
+    return element.tags[0] if element.tags else element.name
+
+
+def reachableElements(bindings):
+    """Elements that can be used in a configuration (reachable from the top level), i.e. those with a page."""
+    if '_reachable' not in bindings.__dict__:
+        reachable, todo = set(), [bindings.elements[bindings_model.MASTER_ROOT]]
+        while todo:
+            element = todo.pop()
+            for child in element.children.values():
+                if child.name not in reachable:
+                    reachable.add(child.name)
+                    todo.append(child)
+        bindings.__dict__['_reachable'] = reachable
+    return bindings.__dict__['_reachable']
+
+
+def referableElements(bindings, type_name):
+    """Elements creating objects of the given C++ type (or a derived one), which can therefore be
+    referenced by name where an object of that type is expected."""
+    cache = bindings.__dict__.setdefault('_referable', {})
+    if type_name not in cache:
+        cls = className(type_name)
+        reachable = reachableElements(bindings)
+        cache[type_name] = sorted((e for n, e in bindings.elements.items()
+                                   if n in reachable and (className(n) == cls or cls in e.bases)),
+                                  key=lambda e: primaryTag(e, bindings))
+    return cache[type_name]
+
+
+def referenceText(reference, bindings):
+    """reStructuredText describing what a reference attribute names."""
+    if 'geometry' in reference:
+        target = GEOMETRY_TARGETS.get(reference['geometry'], reference['geometry'])
+        return f'**Refers to** {target} (:ref:`path <kgeobag-geometry-paths>` in the geometry).'
+    elements = referableElements(bindings, reference['type'])
+    if not elements:
+        return f'**Refers to** the name of a {literal(reference["type"])} object.'
+    if len(elements) > MAX_LISTED_REFERENCES:
+        return f'**Refers to** the name of any {literal(reference["type"])} object.'
+    links = ', '.join(ref(e, '<' + primaryTag(e, bindings) + '>') for e in elements)
+    return f'**Refers to** the name of one of: {links}.'
+
+
+def referencingAttributes(bindings, element):
+    """(attribute name, referencing element) for attributes that can refer to this element by name."""
+    index = bindings.__dict__.get('_referenced_by')
+    if index is None:
+        index = bindings.__dict__.setdefault('_referenced_by', {})
+        reachable = reachableElements(bindings)
+        for owner in bindings.elements.values():
+            if owner.name not in reachable:
+                continue
+            for name, info in owner.attribute_info.items():
+                if info.reference and 'type' in info.reference:
+                    targets = referableElements(bindings, info.reference['type'])
+                    if len(targets) <= MAX_LISTED_REFERENCES:
+                        for target in targets:
+                            index.setdefault(target.name, []).append((name, owner))
+    return sorted(index.get(element.name, []), key=lambda r: (primaryTag(r[1], bindings), r[0]))
+
+
 def renderElementBody(tag, element, bindings, base_url, show_description=True, usage_links=False, more=None):
     """Renders the documentation of one element without title: description, images, facts, child
     elements, attributes, examples and where it can be used. Used by the reference pages and by the
@@ -208,6 +292,8 @@ def renderElementBody(tag, element, bindings, base_url, show_description=True, u
             if info.deprecated is not None:
                 cell += ['**Deprecated:** ' + deprecationText(info.deprecated), '']
             cell += renderText(info.description) if info.description else []
+            if info.reference:
+                cell += ([''] if cell else []) + [referenceText(info.reference, bindings)]
             out += cellLines(cell)
         out.append('')
 
@@ -237,6 +323,13 @@ def renderElementBody(tag, element, bindings, base_url, show_description=True, u
         usages.append(f"{', '.join(tags)} {where}")
     if usages:
         out += ['**Used as:**', ''] + ['- ' + u for u in usages] + ['']
+
+    # attributes of other elements naming objects of this element
+    referenced = referencingAttributes(bindings, element)
+    if referenced:
+        out += ['**Can be referenced by:**', '']
+        out += [f'- {literal(name)} of {ref(owner, "<" + primaryTag(owner, bindings) + ">")}' for name, owner in referenced]
+        out.append('')
 
     # links to further documentation and examples (with usage_links, the Sphinx extension adds the
     # heading itself if there are any)

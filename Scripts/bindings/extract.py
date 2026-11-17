@@ -14,6 +14,7 @@ import re
 import glob
 import json
 import argparse
+import collections
 
 from bindings_model import FORMAT_VERSION, MASTER_ROOT as ROOT_ELEMENT
 
@@ -179,6 +180,8 @@ def newElement(kind):
         'images': [],
         'deprecated': None,
         'defined_at': None,
+        'bases': [],
+        'creates': None,
         'children': {},
         'attributes': {},
     }
@@ -189,8 +192,149 @@ def newRelation(target, location):
         'type': target,
         'description': None,
         'deprecated': None,
+        'reference': None,   # attributes naming another object: {'type': <C++ type>} or {'geometry': 'surfaces'|...}
         'registered_at': location,
     }
+
+
+def parseReference(text):
+    if text in ('surface', 'surfaces', 'space', 'spaces'):
+        return {'geometry': text}
+    return {'type': text}
+
+
+###############################################################################
+# references: string attributes naming another object
+
+RE_ADD_ATTRIBUTE = re.compile(r'bool\s+(\w+?)(?:Builder|Binding)\s*::\s*AddAttribute\s*\(')
+RE_ATTRIBUTE_CASE = re.compile(r'GetName\s*\(\s*\)\s*==\s*(?:std::)?(?:string\s*\()?\s*"(\w+)"')
+# lookups of the attribute value (not of a fixed name like Get<KSRootMagneticField>("root_magnetic_field"))
+RE_TOOLBOX_GET = re.compile(r'KToolbox::GetInstance\(\)\s*\.\s*Get\s*<\s*([\w:]+)\s*>\s*\(\s*(?!")')
+RE_GEOMETRY_GET = re.compile(r'Retrieve(Surfaces|Spaces|Surface|Space)\b')
+
+
+def braceBlock(text, start):
+    """The statement starting at text[start]: a {...} block, or up to the next ';'."""
+    brace, semicolon = text.find('{', start), text.find(';', start)
+    if brace < 0 or 0 <= semicolon < brace:
+        return text[start:semicolon + 1] if semicolon >= 0 else ''
+    depth = 0
+    for i in range(brace, len(text)):
+        depth += {'{': 1, '}': -1}.get(text[i], 0)
+        if depth == 0:
+            return text[brace:i + 1]
+    return text[brace:]
+
+
+RE_MEMBER = re.compile(r'fObject\s*->\s*(f\w+)')
+RE_END = re.compile(r'bool\s+(\w+?)(?:Builder|Binding)\s*::\s*End\s*\(\s*\)')
+RE_SET = re.compile(r'\bSet\s*\(\s*(\w+)\s*\)')
+
+
+def findReferences(buffer, namespaces):
+    """Finds attributes that are resolved to other objects in a builder: {(builder name, attribute): reference}.
+    An attribute is a reference if its case in AddAttribute calls KToolbox::Get<T>(...) or
+    KGInterface::Retrieve*(...), or if it stores the value in a member of the builder's object that is
+    later passed to KToolbox::Get<T>(fObject->fMember) (e.g. in End())."""
+    found = {}
+    for m in RE_ADD_ATTRIBUTE.finditer(buffer):
+        body = braceBlock(buffer, m.end())
+        for case in RE_ATTRIBUTE_CASE.finditer(body):
+            block = braceBlock(body, case.end())
+            get = RE_TOOLBOX_GET.search(block)
+            if get:
+                found[(m.group(1), case.group(1))] = {'type': normalizeType(get.group(1), namespaces)}
+                continue
+            geometry = RE_GEOMETRY_GET.search(block)
+            if geometry:
+                found[(m.group(1), case.group(1))] = {'geometry': geometry.group(1).lower()}
+                continue
+            members = set(RE_MEMBER.findall(block))
+            for member in members:
+                later = re.search(r'KToolbox::GetInstance\(\)\s*\.\s*Get\s*<\s*([\w:]+)\s*>\s*\(\s*fObject\s*->\s*'
+                                  + member + r'\b', buffer)
+                if later:
+                    found[(m.group(1), case.group(1))] = {'type': normalizeType(later.group(1), namespaces)}
+                    break
+    return found
+
+
+def findCreatedTypes(buffer, namespaces):
+    """Builders whose element type is only a data wrapper create the actual object in End() and hand it
+    over with Set(tObject): {builder name: C++ type of the created object}."""
+    created = {}
+    for m in RE_END.finditer(buffer):
+        body = braceBlock(buffer, m.end())
+        for variable in RE_SET.findall(body):
+            if variable == 'fObject':
+                continue
+            decl = re.search(r'([\w:<>, ]+?)\s*\*\s*' + variable + r'\s*=\s*(?:new\s+([\w:<>, ]+?)\s*[(;{])?', body)
+            if not decl:
+                continue
+            type_name = decl.group(2) if decl.group(1).strip() == 'auto' else decl.group(1)
+            if type_name and type_name.strip() != 'auto':
+                created[m.group(1)] = normalizeType(type_name.strip(), namespaces)
+                break
+    return created
+
+
+# also template specializations: class KSComponentTemplate<XThisType, void, void, void> : virtual public KSComponent
+RE_TYPE_TYPEDEF = re.compile(r'\btypedef\s+((?:typename\s+)?[\w:]+(?:\s*<[^;]*>)?)\s+(\w+)\s*;')
+RE_TYPE_USING = re.compile(r'\busing\s+(\w+)\s*=\s*((?:typename\s+)?[\w:]+(?:\s*<[^;]*>)?)\s*;')
+RE_CLASS = re.compile(r'\b(?:class|struct)\s+(\w+)\s*(?:<[^{;]*?>)?\s*(?:final\s*)?:(?!:)\s*([^{;]+)\{')
+
+
+def splitTopLevel(text, separator=','):
+    parts, depth, current = [], 0, ''
+    for c in text:
+        depth += {'<': 1, '>': -1}.get(c, 0)
+        if c == separator and depth == 0:
+            parts.append(current)
+            current = ''
+        else:
+            current += c
+    return parts + [current]
+
+
+def collectClassBases(root_paths):
+    """Direct base classes of all classes declared in headers below the given paths. The base is the
+    last component of a qualified name (A::Visitor -> Visitor); template arguments only count for the
+    CRTP pattern Template<Self, Base, ...> (e.g. KSComponentTemplate<KSGenValueSet, KSGenValue>)."""
+    bases = collections.defaultdict(set)
+    for path_name in root_paths:
+        for file_name in glob.glob(path_name + '/**', recursive=True):
+            if os.path.splitext(file_name)[1] not in ('.h', '.hh', '.hpp', '.hxx') or not os.path.isfile(file_name):
+                continue
+            with open(file_name, errors='replace') as f:
+                text = f.read()
+            for m in RE_CLASS.finditer(text):
+                cls = m.group(1)
+                for spec in splitTopLevel(m.group(2)):
+                    spec = re.sub(r'\b(public|protected|private|virtual)\b', '', spec).strip()
+                    name, _, args = spec.partition('<')
+                    name = name.strip().split('::')[-1]
+                    if name and name != cls:
+                        bases[cls].add(name)
+                    if args:
+                        args = [re.sub(r'<.*', '', a).strip().split('::')[-1] for a in splitTopLevel(args.rsplit('>', 1)[0])]
+                        if args and args[0] == cls:
+                            bases[cls].update(a for a in args[1:] if a and a != cls)
+    return bases
+
+
+def ancestors(name, bases):
+    seen, todo = set(), [name]
+    while todo:
+        for base in bases.get(todo.pop(), ()):
+            if base not in seen:
+                seen.add(base)
+                todo.append(base)
+    return seen
+
+
+def className(type_name):
+    """'KGWrappedSurface<KGRod>' -> 'KGWrappedSurface', 'KGPlanarPolyLoop::LineArguments' -> 'LineArguments'."""
+    return re.sub(r'<.*', '', type_name).split('::')[-1]
 
 
 DOC_PREFIX = '//!'
@@ -213,7 +357,7 @@ def parseDocComment(doc):
     @attribute/@child descriptions. A tag line continues on the following
     lines until the next tag."""
     result = {'description': [], 'examples': [], 'images': [], 'deprecated': None, 'attributes': {}, 'children': {},
-              'unknown': []}
+              'reference': None, 'unknown': []}
     current = result['description']
     for line in doc:
         m = DOC_TAG.match(line.strip())
@@ -232,6 +376,10 @@ def parseDocComment(doc):
         elif tag == 'deprecated':
             current = [rest] if rest else []
             result['deprecated'] = current
+        elif tag == 'reference':
+            # the attribute names an object of this C++ type (or "surfaces"/"spaces": a KGeoBag path)
+            result['reference'] = rest.strip()
+            current = result['description']
         elif tag in ('attribute', 'child'):
             name, _, text = rest.partition(':')
             current = [text.strip()] if text.strip() else []
@@ -268,6 +416,7 @@ def parseDocComment(doc):
         'deprecated': join(result['deprecated']) if result['deprecated'] is not None else None,
         'attributes': {k: join(v) for k, v in result['attributes'].items()},
         'children': {k: join(v) for k, v in result['children'].items()},
+        'reference': result['reference'],
         'unknown': result['unknown'],
     }
 
@@ -335,6 +484,8 @@ def warnUnmatched(file_name, buffer):
 def processFiles(file_list, namespaces):
     aliases = {}
     elements = {}
+    references = {}
+    created = {}
 
     buffers = {}
     original_lines = {}
@@ -352,6 +503,24 @@ def processFiles(file_list, namespaces):
     lines = {file_name: buffer.split('\n') for file_name, buffer in buffers.items()}
     lineOf = lambda buffer, pos: buffer.count('\n', 0, pos) + 1
 
+    # C++ type aliases of element types, e.g.
+    #   typedef KGBEMAttributor<KElectrostaticBasis, KDirichletBoundary> KGElectrostaticDirichletAttributor;
+    # so that registrations using either name refer to the same element
+    type_aliases = {}
+    for buffer in buffers.values():
+        found = [(m.group(2), m.group(1)) for m in RE_TYPE_TYPEDEF.finditer(buffer)]
+        found += [(m.group(1), m.group(2)) for m in RE_TYPE_USING.finditer(buffer)]
+        for alias, target in found:
+            if not re.match(r'K(Simple|Complex)Element\b', target.strip()):
+                type_aliases[alias] = normalizeType(target, namespaces)
+
+    def canonical(name):
+        seen = set()
+        while name in type_aliases and name not in seen:
+            seen.add(name)
+            name = type_aliases[name]
+        return name
+
     # first collect builder aliases (typedef/using) and element documentation
     element_docs = []  # (target, location, parsed doc)
     for file_name in file_list:
@@ -359,7 +528,7 @@ def processFiles(file_list, namespaces):
         found = [(m.start(), m.group(1), m.group(2), m.group(3)) for m in re.finditer(REGEX_PATTERN_TYPEDEF, buffer)]
         found += [(m.start(), m.group(3), m.group(4), m.group(1)) for m in re.finditer(REGEX_PATTERN_USING, buffer)]
         for pos, kind, target, alias in sorted(found):
-            target = normalizeType(target, namespaces)
+            target = canonical(normalizeType(target, namespaces))
             line = lineOf(buffer, pos)
             location = f"{file_name}:{line}"
 
@@ -379,6 +548,8 @@ def processFiles(file_list, namespaces):
     for file_name in file_list:
         buffer = buffers[file_name]
         warnUnmatched(file_name, buffer)
+        references.update(findReferences(buffer, namespaces))
+        created.update(findCreatedTypes(buffer, namespaces))
         matches = list(re.finditer(REGEX_PATTERN, buffer))
         registrations_per_line = {}
         for m in matches:
@@ -395,11 +566,11 @@ def processFiles(file_list, namespaces):
                                "in the source is ignored; use @attribute/@child in the element documentation instead")
                 parsed = None
             if parsed and (parsed['examples'] or parsed['images'] or parsed['attributes'] or parsed['children'] or parsed['unknown']):
-                warn(location, "only a description and @deprecated are supported above a registration")
+                warn(location, "only a description, @deprecated and @reference are supported above a registration")
 
             for m in line_matches:
                 source, suffix, kind, target, name = m.groups()
-                target = normalizeType(target, namespaces)
+                target = canonical(normalizeType(target, namespaces))
 
                 if source == 'K' and suffix == 'ElementProcessor':
                     source = ROOT_ELEMENT  # KElementProcessor registers top-level elements
@@ -429,6 +600,9 @@ def processFiles(file_list, namespaces):
                 if parsed and m is line_matches[0]:
                     # a comment documents the registration that starts directly below it
                     applyRelationDoc(relations[name], parsed['description'], parsed['deprecated'], location)
+                    if parsed['reference']:
+                        relations[name]['reference'] = parseReference(parsed['reference'])
+                        relations[name]['reference']['annotated'] = True
 
     # element documentation (after all registrations, so that @attribute/@child can refer to them)
     for target, location, parsed in element_docs:
@@ -454,11 +628,42 @@ def processFiles(file_list, namespaces):
                     continue
                 applyRelationDoc(relations[name], text, None, location)
 
+    # references detected in the builders (an explicit @reference takes precedence)
+    builders = {target: alias for alias, target in aliases.items()}
+    for name, element in elements.items():
+        builder = builders.get(name, name)
+        for attribute, relation in element['attributes'].items():
+            found = references.get((builder, attribute))
+            if found and not relation['reference']:
+                relation['reference'] = found
+
+    for name, element in elements.items():
+        builder = builders.get(name, name)
+        element['creates'] = created.get(builder) if created.get(builder) not in (None, name) else None
+
     for element in elements.values():
         element['tags'] = sorted(element['tags'])
         element['source_files'] = sorted(element['source_files'])
 
     return (elements, aliases)
+
+
+def addBases(elements, root_paths):
+    """Stores the (transitive) base classes of every element type, so that renderers can list the
+    elements an attribute with a reference can refer to."""
+    bases = collectClassBases(root_paths)
+    for name, element in elements.items():
+        found = ancestors(className(name), bases)
+        if element.get('creates'):  # the object put into the toolbox is of another type
+            found |= {className(element['creates'])} | ancestors(className(element['creates']), bases)
+        element['bases'] = sorted(found)
+    for name, element in elements.items():
+        for attribute, relation in element['attributes'].items():
+            ref = relation['reference']
+            if ref and 'type' in ref and not any(className(ref['type']) == className(n) or className(ref['type']) in e['bases']
+                                                 for n, e in elements.items() if e['tags']):
+                warn(relation['registered_at'], f"attribute '{attribute}' of {name} refers to {ref['type']}, "
+                                                f"but no XML element creates such objects")
 
 
 def applyRelationDoc(relation, description, deprecated, location):
@@ -495,6 +700,7 @@ if __name__ == "__main__":
     if not elements:
         print("No valid bindings were found in the input files.", file=sys.stderr)
         sys.exit(1)
+    addBases(elements, args.paths)
 
     data = {
         'format_version': FORMAT_VERSION,
