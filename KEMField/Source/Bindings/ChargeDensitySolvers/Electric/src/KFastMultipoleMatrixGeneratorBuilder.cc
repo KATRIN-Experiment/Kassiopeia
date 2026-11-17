@@ -18,6 +18,7 @@ namespace katrin
 template<> KFastMultipoleMatrixGeneratorBuilder::~KComplexElement() = default;
 
 STATICINT sKFastMultipoleMatrixGeneratorStructure =
+    //! @values numeric, analytic, rwg, reference, default
     KFastMultipoleMatrixGeneratorBuilder::Attribute<std::string>("integrator") +
     //! strategy for the construction of the tree of cubes. The options are:
     //!

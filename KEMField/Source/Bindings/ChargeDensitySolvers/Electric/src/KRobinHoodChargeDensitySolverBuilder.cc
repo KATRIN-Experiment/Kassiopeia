@@ -60,6 +60,7 @@ STATICINT sKRobinHoodChargeDensitySolverStructure =
     //! a graph showing the convergence
     KRobinHoodChargeDensitySolverBuilder::Attribute<bool>("use_vtk") +
     KRobinHoodChargeDensitySolverBuilder::Attribute<bool>("split_mode") +
+    //! @values numeric, analytic, rwg, reference, default
     KRobinHoodChargeDensitySolverBuilder::Attribute<std::string>("integrator");
 
 STATICINT sKElectrostaticBoundaryField =

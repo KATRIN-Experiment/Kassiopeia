@@ -57,6 +57,7 @@ STATICINT sKElectricZHFieldSolverBuilderStructure =
     //! ending z value for the remote set of source points.
     KElectricZHFieldSolverBuilder::Attribute<double>("remote_sourcepoint_end") +
     KElectricZHFieldSolverBuilder::Attribute<bool>("use_fixed_sourcepoint_range") +
+    //! @values numeric, analytic, rwg, reference, default
     KElectricZHFieldSolverBuilder::Attribute<std::string>("integrator");
 
 STATICINT sKElectrostaticBoundaryField =
