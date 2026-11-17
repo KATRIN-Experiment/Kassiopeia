@@ -193,6 +193,7 @@ def newRelation(target, location):
         'description': None,
         'deprecated': None,
         'reference': None,   # attributes naming another object: {'type': <C++ type>} or {'geometry': 'surfaces'|...}
+        'values': None,      # choice attributes: {'values': [...], 'open': bool (other values possible)}
         'registered_at': location,
     }
 
@@ -256,6 +257,35 @@ def findReferences(buffer, namespaces):
                 if later:
                     found[(m.group(1), case.group(1))] = {'type': normalizeType(later.group(1), namespaces)}
                     break
+    return found
+
+
+# a string literal the attribute value (or a variable holding it) is compared with
+RE_VALUE_COMPARISON = re.compile(r'(\w[\w\s.\->()]*?)\s*==\s*(?:std::)?(?:string\s*\(\s*)?"([^"]*)"'
+                                 r'|"([^"]*)"\s*==|\.compare\s*\(\s*"([^"]*)"\s*\)')
+RE_VALUE_WORD = re.compile(r'^[\w.+-]+$')
+
+
+def findValues(buffer):
+    """Finds choice attributes: {(builder name, attribute): {'values': [...], 'open': bool}}, from string
+    literals the value is compared with in the attribute's case in AddAttribute. Comparisons that are
+    no complete values (e.g. a "#" prefix for colours) mark the list as open."""
+    found = {}
+    for m in RE_ADD_ATTRIBUTE.finditer(buffer):
+        body = braceBlock(buffer, m.end())
+        for case in RE_ATTRIBUTE_CASE.finditer(body):
+            block = braceBlock(body, case.end())
+            values, is_open = [], False
+            for c in RE_VALUE_COMPARISON.finditer(block):
+                if c.group(1) and 'GetName' in c.group(1):
+                    continue
+                value = c.group(2) if c.group(2) is not None else c.group(3) if c.group(3) is not None else c.group(4)
+                if c.group(1) and 'substr' in c.group(1) or not RE_VALUE_WORD.match(value):
+                    is_open = True
+                elif value not in values:
+                    values.append(value)
+            if values:
+                found[(m.group(1), case.group(1))] = {'values': values, 'open': is_open}
     return found
 
 
@@ -357,7 +387,7 @@ def parseDocComment(doc):
     @attribute/@child descriptions. A tag line continues on the following
     lines until the next tag."""
     result = {'description': [], 'examples': [], 'images': [], 'deprecated': None, 'attributes': {}, 'children': {},
-              'reference': None, 'unknown': []}
+              'reference': None, 'values': None, 'unknown': []}
     current = result['description']
     for line in doc:
         m = DOC_TAG.match(line.strip())
@@ -376,6 +406,10 @@ def parseDocComment(doc):
         elif tag == 'deprecated':
             current = [rest] if rest else []
             result['deprecated'] = current
+        elif tag == 'values':
+            # the attribute accepts these values: "@values a, b, c" (", ..." if others are possible)
+            result['values'] = [v.strip() for v in rest.split(',') if v.strip()]
+            current = result['description']
         elif tag == 'reference':
             # the attribute names an object of this C++ type (or "surfaces"/"spaces": a KGeoBag path)
             result['reference'] = rest.strip()
@@ -417,6 +451,7 @@ def parseDocComment(doc):
         'attributes': {k: join(v) for k, v in result['attributes'].items()},
         'children': {k: join(v) for k, v in result['children'].items()},
         'reference': result['reference'],
+        'values': result['values'],
         'unknown': result['unknown'],
     }
 
@@ -486,6 +521,7 @@ def processFiles(file_list, namespaces):
     elements = {}
     references = {}
     created = {}
+    choices = {}
 
     buffers = {}
     original_lines = {}
@@ -550,6 +586,7 @@ def processFiles(file_list, namespaces):
         warnUnmatched(file_name, buffer)
         references.update(findReferences(buffer, namespaces))
         created.update(findCreatedTypes(buffer, namespaces))
+        choices.update(findValues(buffer))
         matches = list(re.finditer(REGEX_PATTERN, buffer))
         registrations_per_line = {}
         for m in matches:
@@ -603,6 +640,10 @@ def processFiles(file_list, namespaces):
                     if parsed['reference']:
                         relations[name]['reference'] = parseReference(parsed['reference'])
                         relations[name]['reference']['annotated'] = True
+                    if parsed['values']:
+                        values = [v for v in parsed['values'] if v != '...']
+                        relations[name]['values'] = {'values': values, 'open': '...' in parsed['values'],
+                                                     'annotated': True}
 
     # element documentation (after all registrations, so that @attribute/@child can refer to them)
     for target, location, parsed in element_docs:
@@ -636,6 +677,9 @@ def processFiles(file_list, namespaces):
             found = references.get((builder, attribute))
             if found and not relation['reference']:
                 relation['reference'] = found
+            values = choices.get((builder, attribute))
+            if values and not relation['values']:
+                relation['values'] = values
 
     for name, element in elements.items():
         builder = builders.get(name, name)

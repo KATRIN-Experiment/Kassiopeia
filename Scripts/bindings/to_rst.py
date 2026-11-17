@@ -294,6 +294,9 @@ def renderElementBody(tag, element, bindings, base_url, show_description=True, u
             cell += renderText(info.description) if info.description else []
             if info.reference:
                 cell += ([''] if cell else []) + [referenceText(info.reference, bindings)]
+            if info.values:
+                values = ', '.join(literal(v) for v in info.values['values'])
+                cell += ([''] if cell else []) + [f'**Values:** {values}' + (', or others.' if info.values.get('open') else '.')]
             out += cellLines(cell)
         out.append('')
 

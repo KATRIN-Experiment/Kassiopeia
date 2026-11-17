@@ -25,6 +25,10 @@ JSON format (format_version 2):
               "description": "<text>" | null,       # from //! comments above the registration
               "deprecated": "<text>" | null,
               "reference": null | {"type": "<C++ type>"} | {"geometry": "surfaces" | "spaces" | ...},
+              "values": null | {"values": ["<value>", ...], "open": <bool>},
+                                                    # choice attributes: values compared with in the
+                                                    # builder, or given with //! @values a, b, c
+                                                    # (open: other values are possible as well)
                                                     # attributes naming another object (detected from
                                                     # KToolbox::Get<T> / KGInterface::Retrieve* in the
                                                     # builder, or given with //! @reference)
@@ -57,7 +61,9 @@ Documentation comments in the C++ builder sources (see extract.py):
         KTypeBuilder::ComplexElement<KChild>("old_child") +
         //! Name of the magnetic field to use.
         //! @reference KSMagneticField
-        KTypeBuilder::Attribute<std::string>("magnetic_field");
+        KTypeBuilder::Attribute<std::string>("magnetic_field") +
+        //! @values linear, exponential, ...
+        KTypeBuilder::Attribute<std::string>("ramping_type");
 
 An @image line is shown at its position in the description (which continues
 after it); @example blocks continue until the next @ tag and are shown after
@@ -89,6 +95,7 @@ class Relation:
         self.deprecated = entry.get('deprecated')
         self.registered_at = entry.get('registered_at')
         self.reference = entry.get('reference')
+        self.values = entry.get('values')
 
 
 class Element:
