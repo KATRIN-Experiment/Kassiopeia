@@ -20,6 +20,7 @@ class KGElectromagnetAttributor : public katrin::KTagged, public KGElectromagnet
   private:
     std::vector<KGSurface*> fSurfaces;
     std::vector<KGSpace*> fSpaces;
+    K_SET_GET(bool, AllowNonIntTurns)
     K_SET_GET(double, LineCurrent)
     K_SET_GET(double, CurrentTurns)
     K_SET_GET(double, Direction)
@@ -45,6 +46,10 @@ template<> inline bool KGElectromagnetBuilder::AddAttribute(KContainer* aContain
     }
     if (aContainer->GetName() == "current") {
         fObject->SetLineCurrent(aContainer->AsReference<double>());
+        return true;
+    }
+    if (aContainer->GetName() == "allow_non_integer_scalingfactor" || aContainer->GetName() == "allow_non_integer_turns") {
+        fObject->SetAllowNonIntTurns(aContainer->AsReference<bool>());
         return true;
     }
     if (aContainer->GetName() == "scaling_factor" || aContainer->GetName() == "num_turns") {
@@ -103,6 +108,7 @@ template<> inline bool KGElectromagnetBuilder::End()
 {
     fObject->SetLineCurrent(fObject->GetLineCurrent() * fObject->GetDirection());
     fObject->SetCurrentTurns(fObject->GetCurrentTurns());
+    fObject->SetAllowNonIntTurns(fObject->GetAllowNonIntTurns());
     return true;
 }
 
