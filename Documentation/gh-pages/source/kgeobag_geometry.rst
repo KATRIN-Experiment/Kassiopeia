@@ -237,6 +237,8 @@ value of (0,255,127,127), where all values are given in the range 0..255 and the
 opacity. If you have VTK enabled you may wish to experiment with the changes introduced by modifying these parameters.
 When using the ROOT_ visualization, the appearance settings will be ignored.
 
+.. _kgeobag-geometry-paths:
+
 In the line above, you also find an example of referencing tags throught the ``@tag_name`` syntax. Generally the
 placed shapes can be referenced through a XPath_-like syntax that defines the location in the geometry tree, starting
 at the "root" volume (which is typically called `world`.) This usually works with all `spaces` and `surfaces`

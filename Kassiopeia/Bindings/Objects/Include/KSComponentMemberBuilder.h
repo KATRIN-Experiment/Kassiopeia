@@ -18,6 +18,14 @@ class KSComponentMemberData
     std::string fParentName;
 };
 
+//! component object encapsulating the extraction of a component from within a composite.
+//! given an instance of a kassiopeia object, a string can be given to it to request a component.
+//! if a matching association between the string and a member function of the parent's class is found, a component is created which binds the result of calling the member function of the parent into a kassiopeia object.
+//! typically components are built from getter functions, and may be chained together by using another component as parent, as in the example.
+//! @example
+//! <output name="step_final_particle" parent="step" field="final_particle"/>
+//! <output name="step_final_particle_position" parent="step_final_particle" field="position"/>
+//! <output name="step_final_particle_position_z" parent="step_final_particle_position" field="z"/>
 typedef KComplexElement<KSComponentMemberData> KSComponentBuilder;
 
 template<> inline bool KSComponentBuilder::Begin()

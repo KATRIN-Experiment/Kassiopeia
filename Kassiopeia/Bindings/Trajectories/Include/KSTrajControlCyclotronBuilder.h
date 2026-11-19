@@ -8,6 +8,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this control suggests a temporal step which is a fraction of the instantaneous cyclotron period.
+//! it never rejects steps.
+//! @example <kstraj_control_cyclotron name="control_cyclotron" fraction="{1. / 16.}"/>
 typedef KComplexElement<KSTrajControlCyclotron> KSTrajControlCyclotronBuilder;
 
 template<> inline bool KSTrajControlCyclotronBuilder::AddAttribute(KContainer* aContainer)

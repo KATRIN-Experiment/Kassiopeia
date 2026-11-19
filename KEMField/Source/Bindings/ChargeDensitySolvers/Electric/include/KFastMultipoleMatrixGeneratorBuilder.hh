@@ -16,6 +16,42 @@
 namespace katrin
 {
 
+//! The fast multipole matrix uses the KATRIN FFTM method to compute the multiplication
+//! of the charge density problem matrix with a vector.
+//! It works by constructing an adaptive tree of cubes and subcubes, computing
+//! multipole expansions as approximations of the electric field by local charges and
+//! converting them into local expansion to approximate the field of far away
+//! charges. Then the result vector is created by evaluating at the source element's
+//! centroids.
+//!
+//! Most important for accuracy of this approximate multiplication method
+//! are the neighbor_order and expansion_degree.
+//!
+//! The level divisions and maximum tree depth allow to optimize the computation
+//! time.
+//!
+//! The world cube is the top level cube that has to contain all source elements
+//! and is a starting point for the algorithm.
+//! @example
+//! <fast_multipole_matrix
+//!     strategy="balanced"
+//!     top_level_divisions="4"
+//!     tree_level_divisions="2"
+//!     expansion_degree="4"
+//!     neighbor_order="2"
+//!     maximum_tree_depth="2"
+//!     region_expansion_factor="1.1"
+//!     use_region_size_estimation="true"
+//!     world_cube_center="0 0 0"
+//!     world_cube_length="10"
+//!     use_caching="false"
+//!     verbosity="3"
+//!     insertion_ratio="1.33333333333"
+//!     bias_degree="2"
+//!     allowed_number="1"
+//!     allowed_fraction="0.5"
+//!
+//! />
 typedef KComplexElement<KEMField::KFastMultipoleMatrixGenerator> KFastMultipoleMatrixGeneratorBuilder;
 
 template<> inline bool KFastMultipoleMatrixGeneratorBuilder::AddAttribute(KContainer* aContainer)

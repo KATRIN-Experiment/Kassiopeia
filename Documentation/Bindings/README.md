@@ -1,70 +1,44 @@
-
 Bindings documentation
 ======================
 
-This section provides documentation for the **XML bindings**. Many Kasper
-modules can parse XML files during intialization; the bindings classes define
-the available XML elements, their attributes and their relation to C++ classes.
+The documentation of the **XML bindings** (the XML elements and attributes
+available in configuration files, and the C++ classes they map to) is part of
+the Kassiopeia website:
 
-Overview
---------
+**https://katrin-experiment.github.io/Kassiopeia/bindings.html**
 
-The files below show the allowed *elements* and *attributes* that can be used
-in Kasper XML files; according to the syntax:
-```
-  <element attribute_1="value_1" attribute_2="value_2">
-    <child_element attribute_3="value_3" />
-  </element>
-```
+It is generated from the C++ sources whenever the website is built, so it
+always matches the `main` branch. Besides the pages shown there,
+the website also provides the underlying data for download:
 
-Elements can be nested according to what is shown here, and each element can
-have a number of attributes. Note that in some cases, certain child elements
-and attributes are required; in other cases, they are mutually exclusive. Note
-that this information is not represented here in the documentation.
+* [bindings_full.json](https://katrin-experiment.github.io/Kassiopeia/bindings/bindings_full.json):
+  all elements, child elements and attributes in machine-readable form, e.g.
+  for editor tooling.
+* [bindings_full.xml](https://katrin-experiment.github.io/Kassiopeia/bindings/bindings_full.xml):
+  an XML file listing all elements and attributes, with placeholder values
+  indicating their data type. It is not meant to be run, but serves as an
+  almost-complete syntax example.
 
-* **[bindings_full.md](bindings_full.md)** contains a Markdown representation
-  of the available bindings. The document is grouped into section that each
-  have a table with all XML elements and attributes. Each section also
-  includes links to child elements and corresponding source files.
-* **[bindings_full_examples.md](bindings_full_examples.md)** contains the same
-  information in Markdown format, but with XML snippets serving as usage
-  examples in each section.
-* **[bindings_full.rst](bindings_full.rst)** contains the same representation
-  of the available bindings in reStructuredText (rST) format.
-* **[bindings_full.xml](bindings_full.xml)** contains all available bindings
-  and their attributes in XML format. The attributes contain placeholder values
-  which indicate their data type. This file is not intended to be processed
-  by Kasper applications, but servers as an almost-complete XML code example.
-* **[bindings_full.svg](bindings_full.svg)** contains a graphical
-  representation of the XML elements and their relations. The graph is produced
-  with the GraphViz software. The graph shows all relations between XML
-  elements and their C++ classes, but not their attributes.
-* The following files contain a more detailed graphical representation of the
-  XML elements of individual Kasper modules along with their attributes:
-  * **[bindings_Kommon.svg](bindings_Kommon.svg)** for the `Kommon` module
-  * **[bindings_KaLi.svg](bindings_KaLi.svg)** for the `KaLi` module
-  * **[bindings_KGeoBag.svg](bindings_KGeoBag.svg)** for the `KGeoBag` module
-  * **[bindings_KEMField.svg](bindings_KEMField.svg)** for the `KEMField` module
-  * **[bindings_Kassiopeia.svg](bindings_Kassiopeia.svg)** for the `Kassiopeia` module
-  * **[bindings_KSC.svg](bindings_KSC.svg)** for the `KSC` module
-  * **[bindings_SSC.svg](bindings_SSC.svg)** for the `SSC` module
-  * **[bindings_KaFit.svg](bindings_KaFit.svg)** for the `KaFit` module
+Generating the files locally
+----------------------------
 
-Source script
--------------
+The files are produced in two steps by the Python scripts in
+[Scripts/bindings](../../Scripts/bindings):
 
-The files in this directory can be autgenerated with a Python script
-[gen-bindings-docs.py](../../Scripts/gen-bindings-docs.py) which provides
-options to generate XML, Markdown (`.md`), reStructuredText (`.rst`), and
-GraphViz (`.dot`) files. The GraphViz files can be converted into image
-files (`.svg`). Run the script with the `--help` option to see all options.
+1. [extract.py](../../Scripts/bindings/extract.py) reads the C++ builder
+   sources and writes all XML elements, their child elements and attributes
+   to a JSON file. The JSON format is documented in
+   [bindings_model.py](../../Scripts/bindings/bindings_model.py).
+2. Separate renderers read that JSON and produce the output files:
+   [to_rst.py](../../Scripts/bindings/to_rst.py) (reStructuredText reference pages) and
+   [to_xml.py](../../Scripts/bindings/to_xml.py) (XML example).
 
-The shell script [gen-bindings-docs.sh](../../Scripts/gen-bindings-docs.sh)
-carries out all these individual steps and updates the files listed here.
+[gen-bindings-docs.sh](../../Scripts/gen-bindings-docs.sh) runs all steps
+(requires Python 3). Run it from the repository root; the
+output is written to `Documentation/gh-pages/build/bindings` unless
+`OUTPUT_DIR` is set:
 
-Bindings graph
---------------
+    Scripts/gen-bindings-docs.sh
 
-This graph shows the available XML elements in Kasper and their relations:
-
-<img src="bindings_full.svg" width="800" >
+When building the website (see [Documentation/gh-pages](../gh-pages)), this
+happens automatically via `make bindings`.

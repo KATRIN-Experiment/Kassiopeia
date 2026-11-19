@@ -17,6 +17,15 @@
 namespace katrin
 {
 
+//! this rather specialized electric field computes the induced electric
+//! field from the changes of the z-component of a ramped magnetic field.
+//! Those circular electric field lines around a changing magnet field.
+//! I'm not sure what exactly the formula in the code describes! Be careful!
+//! @example
+//! <induced_azimuthal_electric_field
+//!     name="induced_azimuthal_electric_field"
+//!     root_field="magnetic_ramped"
+//! />
 typedef KComplexElement<KEMField::KInducedAzimuthalElectricField> KInducedAzimuthalElectricFieldBuilder;
 
 template<> inline bool KInducedAzimuthalElectricFieldBuilder::AddAttribute(KContainer* aContainer)

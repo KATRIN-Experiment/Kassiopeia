@@ -8,6 +8,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this trajectory internally uses the exact representation of the particle.
+//! in normal fields good results can be obtained only if the control suggests step sizes much smaller than the cyclotron period.
+//!
+//! Child elements:
+//!
+//! - integrators: any integrator element (``integrator_*``) may be used.
+//! - interpolators: any interpolator element (``interpolator_*``) may be used.
+//! - controls: any control element (``control_*``) may be used.
+//! - terms: only the propagation and synchrotron terms may be used with this trajectory.
+//! @example
+//! <kstraj_trajectory_exact name="trajectory_exact">
+//!     <integrator_rk8/>
+//!     <control_time time="1.e-10"/>
+//!     <term_propagation/>
+//! </kstraj_trajectory_exact>
 typedef KComplexElement<KSTrajTrajectoryExact> KSTrajTrajectoryExactBuilder;
 
 template<> inline bool KSTrajTrajectoryExactBuilder::AddAttribute(KContainer* aContainer)

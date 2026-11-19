@@ -70,4 +70,3 @@ target_link_libraries( KassiopeiaNavigators
 kasper_install_headers( ${NAVIGATORS_HEADER_FILENAMES} )
 kasper_install_libraries( KassiopeiaNavigators )
 kasper_install_data( ${NAVIGATORS_DATA_FILENAMES} )
-kasper_install_config_subdir( Complete ${NAVIGATORS_CONFIG_FILENAMES} )

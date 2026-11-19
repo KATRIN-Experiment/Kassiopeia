@@ -15,6 +15,8 @@
 namespace katrin
 {
 
+//! provides a constant, uniform magnetic field.
+//! @example <constant_magnetic_field name="magnetic_constant" field="0. 0. 10."/>
 typedef KComplexElement<KEMField::KMagnetostaticConstantField> KSFieldMagneticConstantBuilder;
 
 template<> inline bool KSFieldMagneticConstantBuilder::AddAttribute(KContainer* aContainer)

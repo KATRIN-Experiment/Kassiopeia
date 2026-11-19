@@ -15,6 +15,28 @@
 namespace katrin
 {
 
+//! takes an electric field and modulates it with the time according
+//! to the selected profile.
+//! This field does not consider electrodynamics and just scales the
+//! underlying static field. It is only for sufficiently slowly varying
+//! fields. Don't simulate an antenna with it!
+//!
+//! For details please see the implementation of the different profiles in
+//! the code (the file is KRampedElectricField.cc).
+//! @example
+//! <ramped_electric_field
+//!     name="ramped_electric_field"
+//!     root_field="electric_quadrupole"
+//!     ramping_type="linear"
+//!     num_cycles="10"
+//!     ramp_up_delay="-0.1"
+//!     ramp_down_delay="0.1"
+//!     ramp_up_time="0.2"
+//!     ramp_down_time="0.2"
+//!     time_constant="2.0"
+//!     time_scaling="1.0"
+//!
+//! />
 typedef KComplexElement<KEMField::KRampedElectricField> KRampedElectricFieldBuilder;
 
 template<> inline bool KRampedElectricFieldBuilder::AddAttribute(KContainer* aContainer)

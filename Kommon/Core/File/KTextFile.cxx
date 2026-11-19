@@ -71,8 +71,18 @@ namespace katrin
 {
 
 STATICINT sTextFileStructure =
-    KTextFileBuilder::Attribute<std::string>("path") + KTextFileBuilder::Attribute<std::string>("default_path") +
-    KTextFileBuilder::Attribute<std::string>("base") + KTextFileBuilder::Attribute<std::string>("default_base") +
+    //! a directory in which the file is looked for.
+    KTextFileBuilder::Attribute<std::string>("path") +
+    //! the directory used if the file cannot be opened with any ``path``.
+    //! @deprecated has no effect: ``<messages>`` sets the default directory of its log file itself.
+    KTextFileBuilder::Attribute<std::string>("default_path") +
+    //! the name of the file (without directory).
+    KTextFileBuilder::Attribute<std::string>("base") +
+    //! the file name used if the file cannot be opened with any ``base``.
+    //! @deprecated has no effect: ``<messages>`` sets the default name of its log file itself.
+    KTextFileBuilder::Attribute<std::string>("default_base") +
+    //! same as ``base``.
+    //! @deprecated use ``base`` instead.
     KTextFileBuilder::Attribute<std::string>("name");
 
 }

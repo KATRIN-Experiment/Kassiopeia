@@ -10,6 +10,14 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! a very lightweight wrapper around a kgeobag space.
+//! can be equipped with commands that change the simulation configuration in this space.
+//! the nesting relationships here MUST coincide with the nesting relationships enjoyed by the original kgeobag objects in order for navigation to work correctly.
+//! @example
+//! <ksgeo_space name="geo_surface" spaces="assembly/outer">
+//!     <geo_side name="geo_side_nested" surfaces="assembly/outer/top"/>
+//!     <geo_surface name="geo_surface_nested" surfaces="assembly/outer/inner"/>
+//! </ksgeo_space>
 typedef KComplexElement<KSGeoSpace> KSGeoSpaceBuilder;
 
 template<> inline bool KSGeoSpaceBuilder::AddAttribute(KContainer* aContainer)

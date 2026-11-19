@@ -7,6 +7,16 @@
 namespace katrin
 {
 
+//! Generates a volume enclosed by a surface of revolution produced from rotating an arc segment.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_rotated_arc_segment_space_model.png 400pt
+//!
+//! - Works with GeometryViewer: Yes.
+//! - Works with MeshViewer: Yes.
+//! @example
+//! <rotated_arc_segment_space name="rotated_arc_segment_space" rotated_mesh_count="128" flattened_mesh_count="10" flattened_mesh_power="1.5">
+//!     <arc_segment x1="0.15" y1="0.1" x2="-0.1" y2="0.03" radius="0.5" right="true" short="true" arc_mesh_count="64"/>
+//! </rotated_arc_segment_space>
 typedef KComplexElement<KGRotatedArcSegmentSpace> KGRotatedArcSegmentSpaceBuilder;
 
 template<> inline bool KGRotatedArcSegmentSpaceBuilder::AddAttribute(KContainer* anAttribute)

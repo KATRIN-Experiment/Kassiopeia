@@ -23,6 +23,7 @@ STATICINT sKElectrostaticBoundaryField =
         "gaussian_elimination_charge_density_solver");
 
 STATICINT sKGaussianEliminationChargeDensitySolver =
+    //! @values numeric, analytic, rwg, reference, default
     KGaussianEliminationChargeDensitySolverBuilder::Attribute<std::string>("integrator");
 
 }  // namespace katrin

@@ -172,6 +172,21 @@ template<> inline bool KGPortHousingBuilder::AddElement(KContainer* anElement)
     return false;
 }
 
+//! The shape creates a tube-like surface with circular or rectangular pump ports (e.g. for vacuum chambers). The
+//! coordinates (x,y,z) are the end points of the ports. The ports can only be created in radial direction.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_port_housing_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: No.
+//! @example
+//! <port_housing_surface name="example_port_housing_surface">
+//!     <port_housing x1="0." y1="0." z1="-1." x2="0." y2="0." z2="1." radius="0.4" longitudinal_mesh_count="50" axial_mesh_count="50">
+//!         <circular_port x="1.5" y="1.5" z="-.3" radius="0.33"/>
+//!         <rectangular_port x="0." y="1." z=".3" length="0.3" width=".15"/>
+//!         <circular_port x="-1./sqrt(2.)" y="-1./sqrt(2.)" z="-.5" radius="0.053"/>
+//!     </port_housing>
+//! </port_housing_surface>
 using KGPortHousingSurfaceBuilder = KComplexElement<KGWrappedSurface<KGPortHousing>>;
 
 template<> inline bool KGPortHousingSurfaceBuilder::AddAttribute(KContainer* anAttribute)
@@ -196,6 +211,18 @@ template<> inline bool KGPortHousingSurfaceBuilder::AddElement(KContainer* anEle
 }
 
 
+//! For visualization, see :ref:`<port_housing_surface> <binding-kgwrappedsurface-kgporthousing>`.
+//!
+//! - Works with GeometryViewer: No.
+//! - Works with MeshViewer: No.
+//! @example
+//! <port_housing_space name="example_port_housing_space">
+//!     <port_housing x1="0." y1="0." z1="-1." x2="0." y2="0." z2="1." radius="0.4" longitudinal_mesh_count="50" axial_mesh_count="50">
+//!         <circular_port x="1.5" y="1.5" z="-.3" radius="0.33"/>
+//!         <rectangular_port x="0." y="1." z=".3" length="0.3" width=".15"/>
+//!         <circular_port x="-1./sqrt(2.)" y="-1./sqrt(2.)" z="-.5" radius="0.053"/>
+//!     </port_housing>
+//! </port_housing_space>
 using KGPortHousingSpaceBuilder = KComplexElement<KGWrappedSpace<KGPortHousing>>;
 
 template<> inline bool KGPortHousingSpaceBuilder::AddAttribute(KContainer* anAttribute)

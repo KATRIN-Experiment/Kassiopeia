@@ -15,6 +15,17 @@
 namespace katrin
 {
 
+//! the viewer opens a window and displays the geometry. It can also save the
+//! geometry as in the vtk XML format. If KEMField is compiled without VTK
+//! support, the viewer is simply ignored.
+//! @example
+//! <viewer
+//!     view="true"
+//!     preprocessing="true"
+//!     postprocessing="true"
+//!     file="ElectricFieldComplete.vti"
+//!     save="true"
+//! />
 typedef KComplexElement<KEMField::KVTKViewerAsBoundaryFieldVisitor> KVTKViewerVisitorBuilder;
 
 template<> inline bool KVTKViewerVisitorBuilder::AddAttribute(KContainer* aContainer)

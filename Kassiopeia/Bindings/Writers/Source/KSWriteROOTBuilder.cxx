@@ -10,9 +10,13 @@ namespace katrin
 
 template<> KSWriteROOTBuilder::~KComplexElement() = default;
 
-STATICINT sKSWriteROOTStructure = KSWriteROOTBuilder::Attribute<std::string>("name") +
-                                  KSWriteROOTBuilder::Attribute<std::string>("base") +
-                                  KSWriteROOTBuilder::Attribute<std::string>("path");
+STATICINT sKSWriteROOTStructure =
+    //! the name of this writer.
+    KSWriteROOTBuilder::Attribute<std::string>("name") +
+    //! base name of the file.
+    KSWriteROOTBuilder::Attribute<std::string>("base") +
+    //! path where the file should be written.
+    KSWriteROOTBuilder::Attribute<std::string>("path");
 
 STATICINT sKSWriteROOT = KSRootBuilder::ComplexElement<KSWriteROOT>("kswrite_root");
 

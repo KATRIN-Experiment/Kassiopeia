@@ -17,6 +17,63 @@ namespace katrin
 {
 
 
+//! the old Krylov solver only allows a single level preconditioning
+//! but the new Krylov solver cannot store intermediate results to restart
+//! after the process has been terminated externally (time limit on server, blackout,...)
+//!
+//! The parameters for the fftm_multiplication and
+//! the preconditioner_electrostatic_parameters are the same
+//! as for <fast_multipole_matrix>, see its documentation.
+//! @example
+//! <krylov_charge_density_solver_old
+//!     solver_name="gmres"
+//!     preconditioner="independent_implicit_krylov"
+//!     tolerance="1e-8"
+//!     max_iterations="500"
+//!     iterations_between_restarts="500"
+//!     preconditioner_tolerance="1e-2"
+//!     max_preconditioner_iterations="5"
+//!     preconditioner_degree="2"
+//!     intermediate_save_interval="0"
+//!     use_display="true"
+//!     show_plot="true"
+//!     use_timer="true"
+//!     time_limit_in_seconds="100"
+//!     time_check_interval="1"
+//! >
+//!     <fftm_multiplication
+//!         strategy="balanced"
+//!         top_level_divisions="4"
+//!         tree_level_divisions="2"
+//!         expansion_degree="5"
+//!         maximum_tree_depth="2"
+//!         region_expansion_factor="1.1"
+//!         use_region_size_estimation="true"
+//!         world_cube_center_x="0"
+//!         world_cube_center_y="0"
+//!         world_cube_center_z="0"
+//!         world_cube_length="10"
+//!         use_caching="false"
+//!         verbosity="3"
+//!         insertion_ratio="1.33333333333"
+//!     />
+//!     <preconditioner_electrostatic_parameters
+//!         strategy="balanced"
+//!         top_level_divisions="4"
+//!         tree_level_divisions="2"
+//!         expansion_degree="2"
+//!         maximum_tree_depth="2"
+//!         region_expansion_factor="1.1"
+//!         use_region_size_estimation="true"
+//!         world_cube_center_x="0"
+//!         world_cube_center_y="0"
+//!         world_cube_center_z="0"
+//!         world_cube_length="10"
+//!         use_caching="false"
+//!         verbosity="3"
+//!         insertion_ratio="1.33333333333"
+//!     />
+//! </krylov_charge_density_solver_old>
 typedef KComplexElement<KEMField::KKrylovChargeDensitySolverOld> KKrylovChargeDensitySolverOldBuilder;
 
 template<> inline bool KKrylovChargeDensitySolverOldBuilder::AddAttribute(KContainer* aContainer)

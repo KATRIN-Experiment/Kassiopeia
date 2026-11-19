@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this density returns a constant value computed from the ideal gas law.
+//! @example <ksint_density_constant name="density_constant" temperature="300." pressure="3.e0"/>
 typedef KComplexElement<KSIntDensityConstant> KSIntDensityConstantBuilder;
 
 template<> inline bool KSIntDensityConstantBuilder::AddAttribute(KContainer* aContainer)

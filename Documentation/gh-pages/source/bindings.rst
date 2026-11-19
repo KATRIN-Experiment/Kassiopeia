@@ -9,13 +9,13 @@ the available XML elements, their attributes and their relation to C++ classes.
 
 .. contents:: On this page
     :local:
-    :depth: 2
+    :depth: 1
 
 Overview
 ========
 
-The files below show the allowed *elements* and *attributes* that can be used
-in Kasper XML files; according to the syntax:
+The pages below show the allowed *elements* and *attributes* that can be used
+in Kasper XML files, according to the syntax:
 
 .. code-block:: xml
 
@@ -25,28 +25,35 @@ in Kasper XML files; according to the syntax:
 
 Elements can be nested according to what is shown here, and each element can
 have a number of attributes. Note that in some cases, certain child elements
-and attributes are required; in other cases, they are mutually exclusive. Note
-that this information is not represented here in the documentation.
+and attributes are required; in other cases, they are mutually exclusive. This
+is only mentioned where the element descriptions document it.
 
-Additional documentation on the XML bindings is available on GitHub:
-`Documentation/Bindings <https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Documentation/Bindings/>`_.
+The descriptions are written as ``//!`` comments next to the bindings in the
+C++ sources (see
+`Scripts/bindings/bindings_model.py <https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Scripts/bindings/bindings_model.py>`_
+for the format), so additions and corrections are welcome there.
 
-Bindings graph
-==============
+This documentation is generated from the C++ sources of the bindings by the scripts in
+`Scripts/bindings <https://github.com/KATRIN-Experiment/Kassiopeia/tree/main/Scripts/bindings>`_.
+The underlying data is also available for download:
 
-The graphs shows the relation between the available XML elements.
+* `bindings_full.json <bindings/bindings_full.json>`_: all elements, child
+  elements and attributes in machine-readable form, e.g. for editor tooling.
+* `bindings_full.xml <bindings/bindings_full.xml>`_: an XML file listing all
+  elements and attributes, with placeholder values indicating their data type.
+  It is not meant to be run, but serves as an almost-complete syntax example.
 
-.. image:: _images/bindings_full.svg
-    :width: 1000px
-    :alt: XML bindings graph
+Element reference
+=================
 
-List of bindings
-================
+The pages below document every XML element: its description, attributes and child elements, the elements it can be
+used in, and examples. For many elements, the child elements and attributes cannot be freely combined (e.g. some are
+mutually exclusive); this is described in the element descriptions where documented.
 
-The tables below show the child elements and attributes along with their type for each XML element.
-Note that the column pairs *child element / child type* and *attribute / attribute type* are linked: each listed type
-corresponds to the item on the left. The list of attributes is independent to the list of child elements. For many
-elements the child elements and attributes cannot be freely combined (e.g. some are mutually exclusive), but this is
-not reflected here.
+.. toctree::
+    :maxdepth: 1
 
-.. include:: ./bindings_full.rst
+    bindings_reference/geometry
+    bindings_reference/kemfield
+    bindings_reference/kassiopeia
+    bindings_reference/other

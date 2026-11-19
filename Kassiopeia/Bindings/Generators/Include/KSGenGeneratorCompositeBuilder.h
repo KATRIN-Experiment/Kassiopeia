@@ -12,6 +12,25 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! creates initial particle states according to the policies supplied for generating their positions, directions, energies, and times.
+//! @example
+//! <ksgen_generator_composite name="generator_composite" pid="11">
+//!     <energy_composite>
+//!         <energy_fix value="1000."/>
+//!     </energy_composite>
+//!     <position_cylindrical_composite>
+//!         <r_fix value="3.e-4"/>
+//!         <phi_fix value="0."/>
+//!         <z_fix value="-1.e-3"/>
+//!     </position_cylindrical_composite>
+//!     <direction_spherical_composite>
+//!         <theta_fix value="90."/>
+//!         <phi_fix value="0."/>
+//!     </direction_spherical_composite>
+//!     <time_composite>
+//!         <time_fix value="0."/>
+//!     </time_composite>
+//! </ksgen_generator_composite>
 typedef KComplexElement<KSGenGeneratorComposite> KSGenGeneratorCompositeBuilder;
 
 template<> inline bool KSGenGeneratorCompositeBuilder::AddAttribute(KContainer* aContainer)

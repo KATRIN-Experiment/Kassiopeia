@@ -23,12 +23,17 @@ namespace katrin
 template<> KSGenTimeCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenTimeCompositeStructure =
+    //! the name of this time creator.
     KSGenTimeCompositeBuilder::Attribute<std::string>("name") +
     KSGenTimeCompositeBuilder::Attribute<std::string>("time_value") +
+    //! creates a (fix|set|uniform|gauss|formula) value to set the time.
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueFix>("time_fix") +
+    //! creates a (fix|set|uniform|gauss|formula) value to set the time.
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueSet>("time_set") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueList>("time_list") +
+    //! creates a (fix|set|uniform|gauss|formula) value to set the time.
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueUniform>("time_uniform") +
+    //! creates a (fix|set|uniform|gauss|formula) value to set the time.
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueGauss>("time_gauss") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueGeneralizedGauss>("time_generalized_gauss") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueFermi>("time_fermi");
@@ -37,6 +42,7 @@ STATICINT sKSGenTimeComposite = KSRootBuilder::ComplexElement<KSGenTimeComposite
 
 #ifdef Kassiopeia_USE_ROOT
 STATICINT sKSGenTimeCompositeStructureROOT =
+    //! creates a (fix|set|uniform|gauss|formula) value to set the time.
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueFormula>("time_formula") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueHistogram>("time_histogram");
 #endif

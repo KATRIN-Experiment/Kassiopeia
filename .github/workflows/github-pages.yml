@@ -26,8 +26,12 @@ jobs:
       run: pip install "docutils>=0.18.1,<0.21"
 
     - name: Install dependencies
-      run: pip install sphinx_rtd_theme sphinx_design m2r2 sphinx-simplepdf 
-    
+      run: pip install sphinx_rtd_theme sphinx_design m2r2 sphinx-simplepdf
+
+    # Needed to render the graphviz diagrams in the documentation
+    - name: Install GraphViz
+      run: sudo apt-get update && sudo apt-get install -y graphviz
+
 
     - name: Build target "build"
       run: cd Documentation/gh-pages && make github

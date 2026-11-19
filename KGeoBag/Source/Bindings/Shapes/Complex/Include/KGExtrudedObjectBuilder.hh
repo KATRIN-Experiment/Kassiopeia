@@ -161,6 +161,27 @@ template<> inline bool KGExtrudedObjectBuilder::AddElement(KContainer* anElement
     return false;
 }
 
+//! With this element it is possible to create an extruded surface (from a poly-loop like curve) with arbitrary holes in it.
+//! The commands ``<inner_...>`` and ``<outer_...>`` define whether the extruded path will produce an outer or an inner
+//! surface. Therefore, they define if there will be a hole in the surface and its shape.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_extruded_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: No.
+//! @example
+//! <extruded_surface name="example_extruded_surface">
+//!     <extruded_object z_min="-1." z_max="1." longitudinal_mesh_count="40" longitudinal_mesh_power="2." closed_form="1">
+//!     <inner_line x1="-.5" y1="-.5" x2="-.5" y2=".5"/>
+//!         <inner_arc x1="-.5" y1=".5" x2=".5" y2=".5" radius="1." positive_orientation="0"/>
+//!         <inner_arc x1=".5" y1=".5" x2=".5" y2="-.5" radius="1." positive_orientation="1"/>
+//!         <inner_arc x1=".5" y1="-.5" x2="-.5" y2="-.5" radius="1." positive_orientation="0"/>
+//!         <outer_arc x1="-1." y1="-1." x2="-1." y2="1." radius="{TMath::Sqrt(2.)}" positive_orientation="0"/>
+//!         <outer_line x1="-1." y1="1." x2="1." y2="1."/>
+//!         <outer_line x1="1." y1="1." x2="1." y2="-1."/>
+//!         <outer_line x1="1." y1="-1." x2="-1." y2="-1."/>
+//!     </extruded_object>
+//! </extruded_surface>
 using KGExtrudedSurfaceBuilder = KComplexElement<KGWrappedSurface<KGExtrudedObject>>;
 
 template<> inline bool KGExtrudedSurfaceBuilder::AddAttribute(KContainer* anAttribute)
@@ -186,6 +207,23 @@ template<> inline bool KGExtrudedSurfaceBuilder::AddElement(KContainer* anElemen
 }
 
 
+//! For visualization, see :ref:`<extruded_surface> <binding-kgwrappedsurface-kgextrudedobject>`.
+//!
+//! - Works with GeometryViewer: No.
+//! - Works with MeshViewer: No.
+//! @example
+//! <extruded_space name="example_extruded_space">
+//!     <extruded_object z_min="-1." z_max="1." longitudinal_mesh_count="40" longitudinal_mesh_power="2." closed_form="1">
+//!         <inner_line x1="-.5" y1="-.5" x2="-.5" y2=".5"/>
+//!         <inner_arc x1="-.5" y1=".5" x2=".5" y2=".5" radius="1." positive_orientation="0"/>
+//!         <inner_arc x1=".5" y1=".5" x2=".5" y2="-.5" radius="1." positive_orientation="1"/>
+//!         <inner_arc x1=".5" y1="-.5" x2="-.5" y2="-.5" radius="1." positive_orientation="0"/>
+//!         <outer_arc x1="-1." y1="-1." x2="-1." y2="1." radius="{TMath::Sqrt(2.)}" positive_orientation="0"/>
+//!         <outer_line x1="-1." y1="1." x2="1." y2="1."/>
+//!         <outer_line x1="1." y1="1." x2="1." y2="-1."/>
+//!         <outer_line x1="1." y1="-1." x2="-1." y2="-1."/>
+//!     </extruded_object>
+//! </extruded_space>
 using KGExtrudedSpaceBuilder = KComplexElement<KGWrappedSpace<KGExtrudedObject>>;
 
 template<> inline bool KGExtrudedSpaceBuilder::AddAttribute(KContainer* anAttribute)

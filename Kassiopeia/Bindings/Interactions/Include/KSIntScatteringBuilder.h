@@ -20,6 +20,24 @@ class KSIntCalculatorSet
     virtual void ReleaseCalculators(KSIntScattering* aScattering) = 0;
 };
 
+//! the main scattering interaction for kassiopeia.
+//! it requires a density object and at least one calculator object to operate.
+//!
+//! in the inline form, the density and calculators are defined elsewhere and referenced by name
+//! (density, calculator and calculators attributes); in the condensed form, they are given as child elements.
+//! @example <ksint_scattering name="int_scattering_inline" split="false" density="density_constant" calculator="calculator_constant"/>
+//! @example
+//! <ksint_scattering name="int_scattering" split="false">
+//!     <density_constant temperature="300." pressure="1.e-7"/>
+//!     <calculator_constant cross_section="1.e-15"/>
+//!     <calculator_hydrogen elastic="true" excitation="true" ionisation="true"/>
+//!     <calculator_ion gas="H_2"/>
+//! </ksint_scattering>
+//! @example
+//! <ksint_scattering name="int_scattering_mott" split="false">
+//!         <density_constant temperature="80" pressure_mbar="0.5e3"/>
+//!         <calculator_mott nucleus="He-4" theta_min="40" theta_max="140"/>
+//! </ksint_scattering>
 typedef KComplexElement<KSIntScattering> KSIntScatteringBuilder;
 
 template<> inline bool KSIntScatteringBuilder::AddAttribute(KContainer* aContainer)

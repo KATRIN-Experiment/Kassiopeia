@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose position's radial coordinate rises above a given value.
+//! @example <ksterm_max_r name="term_max_r" r="1.239"/>
 typedef KComplexElement<KSTermMaxR> KSTermMaxRBuilder;
 
 template<> inline bool KSTermMaxRBuilder::AddAttribute(KContainer* aContainer)

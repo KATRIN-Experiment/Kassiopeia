@@ -23,6 +23,8 @@ class KSTermOutputData
     double fMaxValue;
 };
 
+//! this terminator kills particles depending on a specific output value.
+//! @example <ksterm_output name="term_max_scattering" group="output_track_h2" component="track_n_h2_inelastic" max_value="1"/>
 typedef KComplexElement<KSTermOutputData> KSTermOutputBuilder;
 
 template<> inline bool KSTermOutputBuilder::Begin()

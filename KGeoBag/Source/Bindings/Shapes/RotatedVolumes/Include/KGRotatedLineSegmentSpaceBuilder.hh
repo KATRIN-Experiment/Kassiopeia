@@ -7,6 +7,16 @@
 namespace katrin
 {
 
+//! Generates a volume enclosed by a surface of revolution produced from rotating a line segement.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_rotated_line_segment_space_model.png 400pt
+//!
+//! - Works with GeometryViewer: Yes.
+//! - Works with MeshViewer: Yes.
+//! @example
+//! <rotated_line_segment_space name="rotated_line_segment_space" rotated_mesh_count="100" flattened_mesh_count="10" flattened_mesh_power="2.2">
+//!     <line_segment x1="0.15" y1="0.1" x2="-0.1" y2="0.05" line_mesh_count="10" line_mesh_power="2.2"/>
+//! </rotated_line_segment_space>
 typedef KComplexElement<KGRotatedLineSegmentSpace> KGRotatedLineSegmentSpaceBuilder;
 
 template<> inline bool KGRotatedLineSegmentSpaceBuilder::AddAttribute(KContainer* anAttribute)

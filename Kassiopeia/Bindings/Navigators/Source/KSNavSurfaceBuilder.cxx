@@ -10,9 +10,13 @@ namespace katrin
 
 template<> KSNavSurfaceBuilder::~KComplexElement() = default;
 
-STATICINT sKSNavSurfaceStructure = KSNavSurfaceBuilder::Attribute<std::string>("name") +
-                                   KSNavSurfaceBuilder::Attribute<bool>("transmission_split") +
-                                   KSNavSurfaceBuilder::Attribute<bool>("reflection_split");
+STATICINT sKSNavSurfaceStructure =
+    //! the name of the navigator.
+    KSNavSurfaceBuilder::Attribute<std::string>("name") +
+    //! if true, the navigator will split tracks when particles are transmitted through surfaces.
+    KSNavSurfaceBuilder::Attribute<bool>("transmission_split") +
+    //! if true, the navigator will split tracks when particles are reflected from surfaces.
+    KSNavSurfaceBuilder::Attribute<bool>("reflection_split");
 
 STATICINT sToolboxKSNavSurface = KSRootBuilder::ComplexElement<KSNavSurface>("ksnav_surface");
 

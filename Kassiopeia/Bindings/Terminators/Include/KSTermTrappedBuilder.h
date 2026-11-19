@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose longitudinal momentum changes sign more than a given number of times.
+//! @example <ksterm_trapped name="term_trapped" max_turns="1239"/>
 typedef KComplexElement<KSTermTrapped> KSTermTrappedBuilder;
 
 template<> inline bool KSTermTrappedBuilder::AddAttribute(KContainer* aContainer)

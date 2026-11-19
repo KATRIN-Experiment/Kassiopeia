@@ -10,6 +10,7 @@ namespace katrin
 
 template<> KSTrajIntegratorRK54Builder::~KComplexElement() = default;
 
+//! the name of this integrator.
 STATICINT sKSTrajIntegratorRK54Structure = KSTrajIntegratorRK54Builder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajIntegratorRK54 = KSRootBuilder::ComplexElement<KSTrajIntegratorRK54>("kstraj_integrator_rk54");

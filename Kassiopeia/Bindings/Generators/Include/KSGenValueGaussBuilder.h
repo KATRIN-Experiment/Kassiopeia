@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! generates a single random value drawn from a portion of a gaussian distribution.
+//! @example <ksgen_value_gauss name="value_gauss" value_min="-10." value_max="10." value_mean="0." value_sigma="1."/>
 typedef KComplexElement<KSGenValueGauss> KSGenValueGaussBuilder;
 
 template<> inline bool KSGenValueGaussBuilder::AddAttribute(KContainer* aContainer)

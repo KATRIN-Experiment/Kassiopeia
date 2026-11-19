@@ -22,6 +22,9 @@ class KSWriteROOTConditionOutputData
     double fMaxValue;
 };
 
+//! a write condition for the root writer
+//! the decision to write or not to write is based on an output variable
+//! @example <kswrite_root_condition_output name="condition_initial_energy" group="output_track_world" parent="initial_energy" max_value="{1e3}"/>
 typedef KComplexElement<KSWriteROOTConditionOutputData> KSWriteROOTConditionOutputBuilder;
 
 template<> inline bool KSWriteROOTConditionOutputBuilder::Begin()

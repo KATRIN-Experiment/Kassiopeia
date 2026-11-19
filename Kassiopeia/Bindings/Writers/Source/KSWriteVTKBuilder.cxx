@@ -8,9 +8,13 @@ using namespace std;
 namespace katrin
 {
 
-STATICINT sKSWriteVTKStructure = KSWriteVTKBuilder::Attribute<std::string>("name") +
-                                 KSWriteVTKBuilder::Attribute<std::string>("base") +
-                                 KSWriteVTKBuilder::Attribute<std::string>("path");
+STATICINT sKSWriteVTKStructure =
+    //! the name of this writer.
+    KSWriteVTKBuilder::Attribute<std::string>("name") +
+    //! base name of the file.
+    KSWriteVTKBuilder::Attribute<std::string>("base") +
+    //! path where the file should be written.
+    KSWriteVTKBuilder::Attribute<std::string>("path");
 
 STATICINT sKSWriteVTK = KSRootBuilder::ComplexElement<KSWriteVTK>("kswrite_vtk");
 }  // namespace katrin

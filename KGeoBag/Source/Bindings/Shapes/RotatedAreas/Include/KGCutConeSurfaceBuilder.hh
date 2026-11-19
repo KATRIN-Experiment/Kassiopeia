@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Produces a truncated cone centered on the local z-axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_cut_cone_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <cut_cone_surface name="cut_cone_surface" z1="0.5" r1="0.6" z2="-0.1" r2="0.2" longitudinal_mesh_count="23" longitudinal_mesh_power="4." axial_mesh_count="48"/>
 typedef KComplexElement<KGCutConeSurface> KGCutConeSurfaceBuilder;
 
 template<> inline bool KGCutConeSurfaceBuilder::AddAttribute(KContainer* anAttribute)

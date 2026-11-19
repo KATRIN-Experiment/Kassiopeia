@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this term in the equation of motion moves the particle in external electromagnetic fields.
+//! @example <kstraj_term_propagation name="term_propagation" direction="forward"/>
 typedef KComplexElement<KSTrajTermPropagation> KSTrajTermPropagationBuilder;
 
 template<> inline bool KSTrajTermPropagationBuilder::AddAttribute(KContainer* aContainer)

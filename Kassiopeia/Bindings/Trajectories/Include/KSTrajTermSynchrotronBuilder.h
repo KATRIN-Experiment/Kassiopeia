@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this term in the equation of motion bleeds off energy from the particle due to radiative effects.
+//! @example <kstraj_term_synchrotron name="term_synchrotron" enhancement="1.e3"/>
 typedef KComplexElement<KSTrajTermSynchrotron> KSTrajTermSynchrotronBuilder;
 
 template<> inline bool KSTrajTermSynchrotronBuilder::AddAttribute(KContainer* aContainer)

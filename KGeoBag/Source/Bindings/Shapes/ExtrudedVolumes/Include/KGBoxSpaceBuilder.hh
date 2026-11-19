@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Produces an axis aligned rectangular prism.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_box_space_model.png 400pt
+//!
+//! - Works with MeshViewer: No.
+//! - Works with GeometryViewer: Yes.
+//! @example <box_space name="box_space" xa="0.1" xb="0.65" x_mesh_count="1000" x_mesh_power="5.5" ya="-0.4" yb="0.3" y_mesh_count="100" y_mesh_power="1.8" za="0.4" zb="-0.1" z_mesh_count="10" z_mesh_power="1."/>
 typedef KComplexElement<KGBoxSpace> KGBoxSpaceBuilder;
 
 template<> inline bool KGBoxSpaceBuilder::AddAttribute(KContainer* anAttribute)

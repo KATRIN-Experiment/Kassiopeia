@@ -9,6 +9,12 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! creates the time of a generated particle according to the value objects supplied.
+//! time is in seconds.
+//! @example
+//! <ksgen_time_composite name="time_composite">
+//!     <time_fix value="0."/>
+//! </ksgen_time_composite>
 typedef KComplexElement<KSGenTimeComposite> KSGenTimeCompositeBuilder;
 
 template<> inline bool KSGenTimeCompositeBuilder::AddAttribute(KContainer* aContainer)

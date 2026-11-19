@@ -14,6 +14,9 @@
 namespace katrin
 {
 
+//! display the number of discretized surface elements of the geometry
+//! on the console before any computation starts.
+//! @example <boundary_element_info/>
 typedef KComplexElement<KEMField::KBoundaryElementInfoDisplay> KBoundaryElementInfoDisplayBuilder;
 
 template<> inline bool KBoundaryElementInfoDisplayBuilder::AddAttribute(KContainer*)

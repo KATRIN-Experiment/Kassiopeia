@@ -75,6 +75,8 @@ inline KSComponent* BuildOutputMinimumAt(KSComponent* aComponent, KSComponent* a
     return nullptr;
 }
 
+//! the value of a component where a source component attains a minimum value over some set of simulation events.
+//! @example <output_minimum_at name="step_final_particle_position_z_minimum_position" parent="step_final_particle_position" source="step_final_particle_position_z"/>
 typedef KComplexElement<KSComponentMinimumAtData> KSComponentMinimumAtBuilder;
 
 template<> inline bool KSComponentMinimumAtBuilder::Begin()

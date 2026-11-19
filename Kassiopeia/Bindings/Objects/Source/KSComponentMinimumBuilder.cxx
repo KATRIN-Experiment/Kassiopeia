@@ -11,10 +11,14 @@ namespace katrin
 
 template<> KSComponentMinimumBuilder::~KComplexElement() = default;
 
-STATICINT sKSComponentMinimumStructure = KSComponentMinimumBuilder::Attribute<std::string>("name") +
-                                         KSComponentMinimumBuilder::Attribute<std::string>("group") +
-                                         KSComponentMinimumBuilder::Attribute<std::string>("component") +
-                                         KSComponentMinimumBuilder::Attribute<std::string>("parent");
+STATICINT sKSComponentMinimumStructure =
+    //! the name of this component.
+    KSComponentMinimumBuilder::Attribute<std::string>("name") +
+    KSComponentMinimumBuilder::Attribute<std::string>("group") +
+    KSComponentMinimumBuilder::Attribute<std::string>("component") +
+    //! the name of the analyzed component.
+    //! must be defined earlier in the configuration.
+    KSComponentMinimumBuilder::Attribute<std::string>("parent");
 
 STATICINT sKSComponentMinimum = KSComponentGroupBuilder::ComplexElement<KSComponentMinimumData>("component_minimum") +
                                 KSComponentGroupBuilder::ComplexElement<KSComponentMinimumData>("output_minimum") +

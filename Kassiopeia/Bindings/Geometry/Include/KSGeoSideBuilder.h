@@ -10,6 +10,10 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! a very lightweight wrapper around a kgeobag surface which bounds a space.
+//! sides are distinguished from surfaces in that they form a portion of the boundary of a navigationally active space.
+//! can be equipped with commands that change the simulation configuration on this surface.
+//! @example <ksgeo_side name="geo_side" surfaces="assembly/outer/top"/>
 typedef KComplexElement<KSGeoSide> KSGeoSideBuilder;
 
 template<> inline bool KSGeoSideBuilder::AddAttribute(KContainer* aContainer)

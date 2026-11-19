@@ -17,21 +17,27 @@ namespace katrin
 
 template<> KRampedElectric2FieldBuilder::~KComplexElement() = default;
 
-STATICINT sKRampedElectric2FieldStructure = KRampedElectric2FieldBuilder::Attribute<std::string>("name") +
-                                            KRampedElectric2FieldBuilder::Attribute<std::string>("root_field_1") +
-                                            KRampedElectric2FieldBuilder::Attribute<std::string>("root_field_2") +
-                                            KRampedElectric2FieldBuilder::Attribute<std::string>("ramping_type") +
-                                            KRampedElectric2FieldBuilder::Attribute<int>("num_cycles") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("ramp_up_delay") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("ramp_down_delay") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("ramp_up_time") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("ramp_down_time") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("time_constant") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("time_scaling") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("focus_time") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("focus_exponent") +
-                                            KRampedElectric2FieldBuilder::Attribute<double>("potential_scaling") +
-                                            KRampedElectric2FieldBuilder::Attribute<bool>("small_spectrometer");
+STATICINT sKRampedElectric2FieldStructure =
+    //! the name of the electric field
+    KRampedElectric2FieldBuilder::Attribute<std::string>("name") +
+    //! the name of the field before the transition starts
+    KRampedElectric2FieldBuilder::Attribute<std::string>("root_field_1") +
+    //! the name of the field after the transition starts.
+    //!
+    //! All other parameters are the same as in ``<ramped_electric_field>``.
+    KRampedElectric2FieldBuilder::Attribute<std::string>("root_field_2") +
+    KRampedElectric2FieldBuilder::Attribute<std::string>("ramping_type") +
+    KRampedElectric2FieldBuilder::Attribute<int>("num_cycles") +
+    KRampedElectric2FieldBuilder::Attribute<double>("ramp_up_delay") +
+    KRampedElectric2FieldBuilder::Attribute<double>("ramp_down_delay") +
+    KRampedElectric2FieldBuilder::Attribute<double>("ramp_up_time") +
+    KRampedElectric2FieldBuilder::Attribute<double>("ramp_down_time") +
+    KRampedElectric2FieldBuilder::Attribute<double>("time_constant") +
+    KRampedElectric2FieldBuilder::Attribute<double>("time_scaling") +
+    KRampedElectric2FieldBuilder::Attribute<double>("focus_time") +
+    KRampedElectric2FieldBuilder::Attribute<double>("focus_exponent") +
+    KRampedElectric2FieldBuilder::Attribute<double>("potential_scaling") +
+    KRampedElectric2FieldBuilder::Attribute<bool>("small_spectrometer");
 
 
 STATICINT sKRampedElectric2Field =

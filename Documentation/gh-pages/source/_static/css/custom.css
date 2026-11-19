@@ -1,3 +1,12 @@
 a {
   font-weight: bold;
 }
+
+/* tables of the XML bindings documentation (Scripts/bindings/to_rst.py): full width, and the
+   description column (the last one) wraps instead of widening the table */
+.wy-table-responsive table.xml-bindings-table {
+  width: 100%;
+}
+.wy-table-responsive table.xml-bindings-table td:last-child {
+  white-space: normal;
+}

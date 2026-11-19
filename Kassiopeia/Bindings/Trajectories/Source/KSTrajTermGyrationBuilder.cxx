@@ -10,6 +10,7 @@ namespace katrin
 
 template<> KSTrajTermGyrationBuilder::~KComplexElement() = default;
 
+//! the name of this term.
 STATICINT sKSTrajTermGyrationStructure = KSTrajTermGyrationBuilder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajTermGyration = KSRootBuilder::ComplexElement<KSTrajTermGyration>("kstraj_term_gyration");

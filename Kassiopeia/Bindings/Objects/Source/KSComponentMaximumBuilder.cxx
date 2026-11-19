@@ -11,10 +11,14 @@ namespace katrin
 
 template<> KSComponentMaximumBuilder::~KComplexElement() = default;
 
-STATICINT sKSComponentMaximumStructure = KSComponentMaximumBuilder::Attribute<std::string>("name") +
-                                         KSComponentMaximumBuilder::Attribute<std::string>("group") +
-                                         KSComponentMaximumBuilder::Attribute<std::string>("component") +
-                                         KSComponentMaximumBuilder::Attribute<std::string>("parent");
+STATICINT sKSComponentMaximumStructure =
+    //! the name of this component.
+    KSComponentMaximumBuilder::Attribute<std::string>("name") +
+    KSComponentMaximumBuilder::Attribute<std::string>("group") +
+    KSComponentMaximumBuilder::Attribute<std::string>("component") +
+    //! the name of the analyzed component.
+    //! must be defined earlier in the configuration.
+    KSComponentMaximumBuilder::Attribute<std::string>("parent");
 
 STATICINT sKSComponentMaximum = KSComponentGroupBuilder::ComplexElement<KSComponentMaximumData>("component_maximum") +
                                 KSComponentGroupBuilder::ComplexElement<KSComponentMaximumData>("output_maximum") +

@@ -15,6 +15,8 @@
 namespace katrin
 {
 
+//! provides a perfect dipole magnetic field.
+//! @example <magnetic_dipole_field name="magnetic_dipole" location="0.1 0. 0." moment="0. 0. 10."/>
 typedef KComplexElement<KEMField::KMagneticDipoleField> KMagneticDipoleFieldBuilder;
 
 template<> inline bool KMagneticDipoleFieldBuilder::AddAttribute(KContainer* aContainer)

@@ -10,6 +10,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this is the principal space navigator within kassiopeia.
+//! given a trajectory segment, it determines whether or not tracks enter or exit spaces or cross surfaces.
+//! @example <ksnav_space name="nav_space" enter_split="true" exit_split="true" tolerance="1.e-6"/>
 typedef KComplexElement<KSNavSpace> KSNavSpaceBuilder;
 
 template<> inline bool KSNavSpaceBuilder::AddAttribute(KContainer* aContainer)

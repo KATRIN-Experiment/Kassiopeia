@@ -63,6 +63,32 @@ template<> inline bool KGStlFileBuilder::AddAttribute(KContainer* anAttribute)
     return false;
 }
 
+//! @image Documentation/gh-pages/source/_images/kgeobag_teapot_mesh.png 400pt
+//!
+//! - Works with GeometryViewer: Yes.
+//! - Works with MeshViewer: Yes.
+//!
+//! An XML example is as follows:
+//!
+//! .. code-block:: xml
+//!
+//!     <stl_file_surface name="cube_surface">
+//!         <stl_file file="Menger_sponge.stl" scale="0.5" mesh_count="1"/>
+//!     </stl_file_surface>
+//!
+//!     <stl_file_surface name="teapot_lid">
+//!         <stl_file file="Utah_teapot.stl" selector="-2267"/>
+//!     </stl_file_surface>
+//!
+//!     <stl_file_surface name="teapot_solid_body">
+//!         <stl_file file="Utah_teapot.stl" selector="2268-"/>
+//!     </stl_file_surface>
+//!
+//! Note that because the geometry is defined by an external file, the possible modifications in the *KGeoBag* framework
+//! are limited. Besides the translations/rotations that can be applied to any object, one may also scale the external
+//! geometry or increase its number of mesh elements. If the triangles in the file are sufficienctly ordered, then one
+//! can use the ``selector`` attribute to specify indices of the triangles to be used in *KGeoBag*. In the case of the
+//! ``Utah_teapot.stl`` example file, this allows to split the lid from the pot's body.
 using KGStlFileSurfaceBuilder = KComplexElement<KGWrappedSurface<KGStlFile>>;
 
 template<> inline bool KGStlFileSurfaceBuilder::AddAttribute(KContainer* anAttribute)
@@ -88,6 +114,14 @@ template<> inline bool KGStlFileSurfaceBuilder::AddElement(KContainer* anElement
 }
 
 
+//! For visualization, see :ref:`<stl_file_surface> <binding-kgwrappedsurface-kgstlfile>`.
+//!
+//! - Works with GeometryViewer: Yes.
+//! - Works with MeshViewer: Yes.
+//! @example
+//! <stl_file_space name="cube_surface">
+//!     <stl_file file="Menger_sponge.stl" scale="0.5" mesh_count="1"/>
+//! </stl_file_space>
 using KGStlFileSpaceBuilder = KComplexElement<KGWrappedSpace<KGStlFile>>;
 
 template<> inline bool KGStlFileSpaceBuilder::AddAttribute(KContainer* anAttribute)

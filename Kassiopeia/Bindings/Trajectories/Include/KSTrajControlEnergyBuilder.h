@@ -8,6 +8,10 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this control suggests a temporal step based on conservation of total energy over a step.
+//! if the fractional energy conservation violation is above the upper limit, the step is rejected and a smaller stepsize is suggested.
+//! if the fractional energy conservation violation is below the lower limit, the step is accepted and a larger stepsize is suggested.
+//! @example <kstraj_control_energy name="control_energy" upper_limit="1.e-8" lower_limit="1.e-12"/>
 typedef KComplexElement<KSTrajControlEnergy> KSTrajControlEnergyBuilder;
 
 template<> inline bool KSTrajControlEnergyBuilder::AddAttribute(KContainer* aContainer)

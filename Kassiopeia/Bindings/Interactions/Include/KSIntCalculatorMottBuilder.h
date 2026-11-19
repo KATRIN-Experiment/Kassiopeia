@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! the Mott scattering calculator. Only He-4 and Ne-20 nuclei have been implemented. To add any other
+//! nucleus add Z and b values from Table 3 in [M.J Boschini, C. Consolandi, M. Gervasi, et al., J. Radiat. Phys. Chem. 90 (2013) 36-66.]
 typedef KComplexElement<KSIntCalculatorMott> KSIntCalculatorMottBuilder;
 
 template<> inline bool KSIntCalculatorMottBuilder::AddAttribute(KContainer* aContainer)

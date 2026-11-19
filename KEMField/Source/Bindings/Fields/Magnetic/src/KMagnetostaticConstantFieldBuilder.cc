@@ -21,7 +21,9 @@ STATICINT sKSFieldMagneticConstant =
     KEMToolboxBuilder::ComplexElement<KMagnetostaticConstantField>("constant_magnetic_field");
 
 STATICINT sKSFieldMagneticConstantStructure =
+    //! the name of the magnetic field.
     KSFieldMagneticConstantBuilder::Attribute<std::string>("name") +
+    //! the cartesian components of the magnetic field vector in tesla.
     KSFieldMagneticConstantBuilder::Attribute<KEMStreamableThreeVector>("field") +
     KSFieldMagneticConstantBuilder::Attribute<KEMStreamableThreeVector>("location");
 

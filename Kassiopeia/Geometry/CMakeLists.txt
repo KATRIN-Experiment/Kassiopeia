@@ -62,5 +62,4 @@ target_link_libraries( KassiopeiaGeometry
 # install
 kasper_install_headers( ${GEOMETRY_HEADER_FILENAMES} )
 kasper_install_data( ${GEOMETRY_DATA_FILENAMES} )
-kasper_install_config_subdir( Complete ${GEOMETRY_CONFIG_FILENAMES} )
 kasper_install_libraries( KassiopeiaGeometry )

@@ -15,6 +15,11 @@
 namespace katrin
 {
 
+//! performs a sum over all discretized components to obtain the final field.
+//! @example
+//! <integrating_field_solver
+//!     use_opencl="true"
+//! />
 typedef KComplexElement<KEMField::KIntegratingElectrostaticFieldSolver> KIntegratingElectrostaticFieldSolverBuilder;
 
 template<> inline bool KIntegratingElectrostaticFieldSolverBuilder::AddAttribute(KContainer* aContainer)

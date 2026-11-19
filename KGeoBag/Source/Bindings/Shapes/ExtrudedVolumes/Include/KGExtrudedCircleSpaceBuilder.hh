@@ -7,6 +7,16 @@
 namespace katrin
 {
 
+//! Generates a volume by extruding a cycle (cynlinder).
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_extruded_circle_space_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example
+//! <extruded_circle_space name="extruded_circle_space" zmin="-0.1" zmax="0.1" extruded_mesh_count="32" extruded_mesh_power="1" flattened_mesh_count="28" flattened_mesh_power="1.4">
+//!     <circle x="0.1" y="0.5" radius="0.3" circle_mesh_count="128"/>
+//! </extruded_circle_space>
 typedef KComplexElement<KGExtrudedCircleSpace> KGExtrudedCircleSpaceBuilder;
 
 template<> inline bool KGExtrudedCircleSpaceBuilder::AddAttribute(KContainer* anAttribute)

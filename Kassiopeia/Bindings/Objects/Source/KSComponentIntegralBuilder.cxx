@@ -11,10 +11,14 @@ namespace katrin
 
 template<> KSComponentIntegralBuilder::~KComplexElement() = default;
 
-STATICINT sKSComponentIntegralStructure = KSComponentIntegralBuilder::Attribute<std::string>("name") +
-                                          KSComponentIntegralBuilder::Attribute<std::string>("group") +
-                                          KSComponentIntegralBuilder::Attribute<std::string>("component") +
-                                          KSComponentIntegralBuilder::Attribute<std::string>("parent");
+STATICINT sKSComponentIntegralStructure =
+    //! the name of this component.
+    KSComponentIntegralBuilder::Attribute<std::string>("name") +
+    KSComponentIntegralBuilder::Attribute<std::string>("group") +
+    KSComponentIntegralBuilder::Attribute<std::string>("component") +
+    //! the name of the integrand.
+    //! must be defined earlier in the configuration.
+    KSComponentIntegralBuilder::Attribute<std::string>("parent");
 
 STATICINT sKSComponentIntegral =
     KSComponentGroupBuilder::ComplexElement<KSComponentIntegralData>("component_integral") +

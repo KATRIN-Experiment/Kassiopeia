@@ -14,6 +14,37 @@
 namespace katrin
 {
 
+//! the fast multipole field solver adaptively divides the
+//! world cube into smaller cube and computes multipole expansions
+//! around the cube center describing the far field for the source elements
+//! inside the cube.
+//! It then transforms these (among other things using the fast Fourier
+//! transformation) into local expansions describing the influence of
+//! sources far enough away on the electric field and potential inside the cube.
+//! These expansions are stored inside a tree structure describing the different
+//! cubes. This is the initialization procedure.
+//!
+//! After initialization the field and potential is evaluated at a point by
+//! computing the corresponding expansion and adding the directly determined
+//! contribution of nearby source elements.
+//! @example
+//! <fast_multipole_field_solver
+//!     top_level_divisions="4"
+//!     tree_level_divisions="2"
+//!     expansion_degree="5"
+//!     neighbor_order="2"
+//!     maximum_tree_depth="2"
+//!     region_expansion_factor="1.1"
+//!     use_region_size_estimation="true"
+//!     world_cube_center_x="0.1"
+//!     world_cube_center_y="0.1"
+//!     world_cube_center_z="0.1"
+//!     world_cube_length="1.5"
+//!     use_caching="true"
+//!     verbosity="3"
+//!     insertion_ratio="1.33333333333"
+//!     use_opencl="true"
+//! />
 typedef KComplexElement<KEMField::KElectricFastMultipoleFieldSolver> KElectricFastMultipoleFieldSolverBuilder;
 
 template<> inline bool KElectricFastMultipoleFieldSolverBuilder::AddAttribute(KContainer* aContainer)

@@ -11,6 +11,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! creates the direction of a generated particle according to the value objects supplied, interpreting them to be spherical coordinates.
+//! theta and phi values are in degrees.
+//! @example
+//! <ksgen_direction_spherical_composite name="direction_spherical_composite" space="world">
+//!     <theta_fix value="38."/>
+//!     <phi_gauss value_min="0." value_max="180." value_mean="90." value_sigma="10."/>
+//! </ksgen_direction_spherical_composite>
 typedef KComplexElement<KSGenDirectionSphericalComposite> KSGenDirectionSphericalCompositeBuilder;
 
 template<> inline bool KSGenDirectionSphericalCompositeBuilder::AddAttribute(KContainer* aContainer)

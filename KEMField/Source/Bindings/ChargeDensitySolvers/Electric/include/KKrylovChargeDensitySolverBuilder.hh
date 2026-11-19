@@ -19,6 +19,24 @@
 namespace katrin
 {
 
+//! the Krylov charge density solver is a solver using Krylov subspace methods
+//! to solve the linear charge densities equation.
+//! It offers the choice of GMRES and BiCGStab and requires to specify a matrix
+//! vector multiplication method to convert charge densities into potentials
+//! on the source elements. As of today only the fast multipole matrix is available.
+//! Optionally a preconditioner can be added. For details on the matrix and preconditioners
+//! see the next examples.
+//! @example
+//! <krylov_charge_density_solver
+//!     solver_name="gmres"
+//!     tolerance="1e-8"
+//!     max_iterations="500"
+//!     iterations_between_restarts="500"
+//!     use_display="true"
+//!     show_plot="true"
+//! >
+//!     <fast_multipole_matrix/>
+//! </krylov_charge_density_solver>
 typedef KComplexElement<KEMField::KKrylovChargeDensitySolver> KKrylovChargeDensitySolverBuilder;
 
 template<> inline bool KKrylovChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)

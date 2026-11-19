@@ -10,6 +10,8 @@
 namespace katrin
 {
 
+//! provides a constant, uniform electric field.
+//! @example <constant_electric_field name="electric_constant" field="2 0 -1" />
 typedef KComplexElement<KEMField::KElectrostaticConstantField> KElectrostaticConstantFieldBuilder;
 
 template<> inline bool KElectrostaticConstantFieldBuilder::AddAttribute(KContainer* aContainer)

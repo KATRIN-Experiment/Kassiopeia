@@ -45,15 +45,27 @@ extensions = [
     'sphinx_design',
     'm2r2',
     'sphinx_simplepdf',
-       
+    'xml_bindings',
 ]
+
+# XML bindings documentation (see _ext/xml_bindings.py); the JSON is written by "make bindings"
+import os, sys
+_here = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(_here, '_ext'))
+xml_bindings_json = os.path.join(_here, '..', 'build', 'bindings', 'bindings_full.json')
+xml_bindings_scripts = os.path.join(_here, '..', '..', '..', 'Scripts', 'bindings')
+xml_bindings_base_url = 'https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/'
+xml_bindings_repo_root = os.path.join(_here, '..', '..', '..')
+xml_bindings_example_files = ['Kassiopeia/XML/**/*.xml', 'KEMField/Source/XML/Examples/*.xml',
+                              'KGeoBag/Source/XML/Examples/*.xml']
+xml_bindings_example_docs = ['examples']
 
 extlinks = {
     'gh-issue':     ('https://github.com/KATRIN-Experiment/Kassiopeia/issues/%s',
                      'Issue %s'),
     'gh-pull':      ('https://github.com/KATRIN-Experiment/Kassiopeia/pull/%s',
                      'Pull request %s'),
-    'gh-code':      ('https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/%s',
+    'gh-code':      ('https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/%s',
                      'GitHub: %s'),
 }
 
@@ -65,7 +77,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 
 # Exclude link file
-exclude_patterns = ['links.rst']
+exclude_patterns = ['links.rst', '_ext']
 
 # make rst_epilog a variable, so you can add other epilog parts to it
 rst_epilog =""
@@ -124,6 +136,10 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static', '_images']
+
+# Files copied unchanged to the root of the HTML output, e.g. the generated
+# bindings data at <site>/bindings/bindings_full.json (see "make bindings").
+html_extra_path = ['_extra']
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)

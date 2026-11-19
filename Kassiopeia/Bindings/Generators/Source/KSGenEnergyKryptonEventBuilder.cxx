@@ -10,10 +10,15 @@ namespace katrin
 
 template<> KSGenEnergyKryptonEventBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenEnergyKryptonEventStructure = KSGenEnergyKryptonEventBuilder::Attribute<std::string>("name") +
-                                              KSGenEnergyKryptonEventBuilder::Attribute<bool>("force_conversion") +
-                                              KSGenEnergyKryptonEventBuilder::Attribute<bool>("do_conversion") +
-                                              KSGenEnergyKryptonEventBuilder::Attribute<bool>("do_auger");
+STATICINT sKSGenEnergyKryptonEventStructure =
+    //! the name of this energy creator.
+    KSGenEnergyKryptonEventBuilder::Attribute<std::string>("name") +
+    //! if true, conversion electrons will always be generated.
+    KSGenEnergyKryptonEventBuilder::Attribute<bool>("force_conversion") +
+    //! if true, generation of conversion electrons is enabled.
+    KSGenEnergyKryptonEventBuilder::Attribute<bool>("do_conversion") +
+    //! if true, generation of an auger cascade is enabled.
+    KSGenEnergyKryptonEventBuilder::Attribute<bool>("do_auger");
 
 
 STATICINT sKSGenEnergyKryptonEvent =

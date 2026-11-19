@@ -163,6 +163,28 @@ template<> inline bool KGConicSectPortHousingBuilder::AddElement(KContainer* anE
     return false;
 }
 
+//! This shape is a cut cone surface with circular ports. The ports can be created either orthogonal to the surface or
+//! parallel to the cone axis (paraxial). The coordinates (x,y,z) are the end points of the port.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_conic_section_port_housing_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: No.
+//! @example
+//! <conic_section_port_housing_surface name="example_conic_section_port_housing_surface">
+//!   <conic_section_port_housing r1="2.75" z1="-1.79675" r2="0.25" z2="-0.067" longitudinal_mesh_count="100" axial_mesh_count="100">
+//! <define name="offset" value="2."/>
+//! <define name="nPorts" value="6"/>
+//! <loop variable="i" start="0" end="{[nPorts]-1}" step="1">
+//!   <if condition="{([i] mod 2) eq 0}">
+//!     <orthogonal_port x="{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}" y="{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
+//!   </if>
+//!   <if condition="{([i] mod 2) eq 1}">
+//!     <paraxial_port x="{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}" y="{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
+//!   </if>
+//! </loop>
+//!   </conic_section_port_housing>
+//! </conic_section_port_housing_surface>
 using KGConicSectPortHousingSurfaceBuilder = KComplexElement<KGWrappedSurface<KGConicSectPortHousing>>;
 
 template<> inline bool KGConicSectPortHousingSurfaceBuilder::AddAttribute(KContainer* anAttribute)
@@ -187,6 +209,25 @@ template<> inline bool KGConicSectPortHousingSurfaceBuilder::AddElement(KContain
 }
 
 
+//! For visualization, see :ref:`<conic_section_port_housing_surface> <binding-kgwrappedsurface-kgconicsectporthousing>`.
+//!
+//! - Works with GeometryViewer: No.
+//! - Works with MeshViewer: No.
+//! @example
+//! <conic_section_port_housing_space name="example_conic_section_port_housing_space">
+//!     <conic_section_port_housing r1="2.75" z1="-1.79675" r2="0.25" z2="-0.067" longitudinal_mesh_count="100" axial_mesh_count="100">
+//!         <define name="offset_" value="2."/>
+//!         <define name="nPorts_" value="6"/>
+//!         <loop variable="i" start="0" end="{[nPorts_]-1}" step="1">
+//!             <if condition="{([i] mod 2) eq 0}">
+//!                 <orthogonal_port x="{[offset_]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts_])}" y="{[offset_]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts_])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
+//!             </if>
+//!             <if condition="{([i] mod 2) eq 1}">
+//!                 <paraxial_port x="{[offset_]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts_])}" y="{[offset_]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts_])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
+//!             </if>
+//!         </loop>
+//!     </conic_section_port_housing>
+//! </conic_section_port_housing_space>
 using KGConicSectPortHousingSpaceBuilder = KComplexElement<KGWrappedSpace<KGConicSectPortHousing>>;
 
 template<> inline bool KGConicSectPortHousingSpaceBuilder::AddAttribute(KContainer* anAttribute)

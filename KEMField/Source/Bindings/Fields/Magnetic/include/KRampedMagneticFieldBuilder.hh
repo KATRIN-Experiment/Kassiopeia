@@ -16,6 +16,27 @@
 namespace katrin
 {
 
+//! takes an magnetic field and modulates it with the time according
+//! to the selected profile.
+//! This field does not consider electrodynamics and just scales the
+//! underlying static field. It is only for sufficiently slowly varying
+//! fields. Don't simulate an antenna with it!
+//!
+//! For details please see the implementation of the different profiles in
+//! the code (the file is KRampedMagneticField.cc).
+//! @example
+//! <ramped_magnetic_field
+//!     name="magnetic_ramped"
+//!     root_field="magnetic_dipole"
+//!     ramping_type="linear"
+//!     num_cycles="10"
+//!     ramp_up_delay="-0.5"
+//!     ramp_down_delay="0.5"
+//!     ramp_up_time="1.0"
+//!     ramp_down_time="1.0"
+//!     time_constant="2.0"
+//!     time_scaling="1.0"
+//! />
 typedef KComplexElement<KEMField::KRampedMagneticField> KRampedMagneticFieldBuilder;
 
 template<> inline bool KRampedMagneticFieldBuilder::AddAttribute(KContainer* aContainer)

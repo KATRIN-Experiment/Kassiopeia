@@ -7,6 +7,16 @@
 namespace katrin
 {
 
+//! This generates the surfaced produced by extruding a circle (this is the same as a cylinder).
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_extruded_circle_space_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example
+//! <extruded_circle_surface name="extruded_circle_surface" zmin="-0.1" zmax="0.1" extruded_mesh_count="32" extruded_mesh_power="1">
+//!     <circle x="0.1" y="0.5" radius="0.3" circle_mesh_count="128"/>
+//! </extruded_circle_surface>
 typedef KComplexElement<KGExtrudedCircleSurface> KGExtrudedCircleSurfaceBuilder;
 
 template<> inline bool KGExtrudedCircleSurfaceBuilder::AddAttribute(KContainer* anAttribute)

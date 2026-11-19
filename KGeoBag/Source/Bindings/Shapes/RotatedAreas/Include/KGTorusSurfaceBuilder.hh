@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Generates a torus centered on the local z axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_torus_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <torus_surface name="torus_surface" z="0.2" r="0.5" radius="0.35" toroidal_mesh_count="256" axial_mesh_count="512"/>
 typedef KComplexElement<KGTorusSurface> KGTorusSurfaceBuilder;
 
 template<> inline bool KGTorusSurfaceBuilder::AddAttribute(KContainer* anAttribute)

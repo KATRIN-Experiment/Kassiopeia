@@ -15,6 +15,25 @@
 namespace katrin
 {
 
+//! as an extension to the ramped electric field this field
+//! accepts to field. The first is active from the beginning and
+//! ramped down as the second is ramped up.
+//! All configurations of the ramping profile are the same as the
+//! normal ramped electric field
+//! @example
+//! <ramped_transitional_electric_field
+//!     name="ramped_transitional_electric_field"
+//!     root_field_1="electric_constant"
+//!     root_field_2="electric_quadrupole"
+//!     ramping_type="sinus"
+//!     num_cycles="10"
+//!     ramp_up_delay="-0.1"
+//!     ramp_down_delay="0.1"
+//!     ramp_up_time="0.2"
+//!     ramp_down_time="0.2"
+//!     time_constant="2.0"
+//!     time_scaling="1.0"
+//! />
 typedef KComplexElement<KEMField::KRampedElectric2Field> KRampedElectric2FieldBuilder;
 
 template<> inline bool KRampedElectric2FieldBuilder::AddAttribute(KContainer* aContainer)

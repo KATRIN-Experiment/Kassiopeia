@@ -75,6 +75,8 @@ inline KSComponent* BuildOutputMaximumAt(KSComponent* aComponent, KSComponent* a
     return nullptr;
 }
 
+//! the value of a component where a source component attains a maximum value over some set of simulation events.
+//! @example <output_maximum_at name="step_final_particle_position_z_maximum_position" parent="step_final_particle_position" source="step_final_particle_position_z"/>
 typedef KComplexElement<KSComponentMaximumAtData> KSComponentMaximumAtBuilder;
 
 template<> inline bool KSComponentMaximumAtBuilder::Begin()

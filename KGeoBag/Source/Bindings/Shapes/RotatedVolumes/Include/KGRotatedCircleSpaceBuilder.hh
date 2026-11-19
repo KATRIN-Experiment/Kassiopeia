@@ -7,6 +7,16 @@
 namespace katrin
 {
 
+//! Generates a volume by rotating a circle (torus).
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_rotated_circle_space_model.png 400pt
+//!
+//! - Works with GeometryViewer: Yes.
+//! - Works with MeshViewer: Yes.
+//! @example
+//! <rotated_circle_space name="rotated_circle_space" rotated_mesh_count="128">
+//!     <circle x="0.1" y="0.5" radius="0.3" circle_mesh_count="128"/>
+//! </rotated_circle_space>
 typedef KComplexElement<KGRotatedCircleSpace> KGRotatedCircleSpaceBuilder;
 
 template<> inline bool KGRotatedCircleSpaceBuilder::AddAttribute(KContainer* anAttribute)

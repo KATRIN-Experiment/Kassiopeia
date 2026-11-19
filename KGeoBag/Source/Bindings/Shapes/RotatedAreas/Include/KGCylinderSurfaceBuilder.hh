@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Generates a cylinder centered on the z axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_cylinder_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <cylinder_surface name="cylinder_surface" z1="-0.3" z2="0.4" r="0.55" longitudinal_mesh_count="15" longitudinal_mesh_power="2." axial_mesh_count="32"/>
 typedef KComplexElement<KGCylinderSurface> KGCylinderSurfaceBuilder;
 
 template<> inline bool KGCylinderSurfaceBuilder::AddAttribute(KContainer* anAttribute)

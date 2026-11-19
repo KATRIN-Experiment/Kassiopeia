@@ -8,6 +8,9 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this control suggests a temporal step which would result in a step with the given length were the particle to remain at constant speed.
+//! it never rejects steps.
+//! @example <kstraj_control_length name="control_length" length="1.e-10"/>
 typedef KComplexElement<KSTrajControlLength> KSTrajControlLengthBuilder;
 
 template<> inline bool KSTrajControlLengthBuilder::AddAttribute(KContainer* aContainer)

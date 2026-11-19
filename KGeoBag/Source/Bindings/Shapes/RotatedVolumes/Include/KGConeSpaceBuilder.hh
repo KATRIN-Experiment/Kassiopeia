@@ -8,6 +8,13 @@ using namespace KGeoBag;
 namespace katrin
 {
 
+//! Generates a conical space centered on the local z axis.
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_cone_space_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example <cone_space name="cone_space" za="-0.1" zb="0.65" rb="0.4" longitudinal_mesh_count="28" longitudinal_mesh_power="1.8" radial_mesh_count="56" radial_mesh_power="1." axial_mesh_count="24"/>
 typedef KComplexElement<KGConeSpace> KGConeSpaceBuilder;
 
 template<> inline bool KGConeSpaceBuilder::AddAttribute(KContainer* anAttribute)

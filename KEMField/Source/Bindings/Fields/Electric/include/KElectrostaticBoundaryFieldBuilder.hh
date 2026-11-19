@@ -16,6 +16,29 @@
 namespace katrin
 {
 
+//! provides an electric field arising from disctretized elements computed
+//! with kemfield as initialized with kgeobag. To use this field, a valid
+//! geometry must have been constructed in the <geometry> section.
+//! The electrostatic field requires exactly one charge density solver for
+//! the boundary element method and one field solver.
+//! See the charge density solver and field solver elements for the available
+//! solvers.
+//! @example
+//! <electrostatic_field
+//!     name="field_electrostatic"
+//!     directory="."
+//!     file="Electrodes.kbd"
+//!     system="assembly"
+//!     surfaces="assembly/@electrode_tag"
+//!     symmetry="axial"
+//!     hash_masked_bits="0"
+//!     hash_threshold="1e5"
+//!     minimum_element_area="1e-3"
+//!     maximum_element_aspect_ratio="1e100"
+//! >
+//!     <gaussian_elimination_charge_density_solver/>
+//!     <integrating_field_solver/>
+//! </electrostatic_field>
 typedef KComplexElement<KEMField::KGElectrostaticBoundaryField> KElectrostaticBoundaryFieldBuilder;
 
 template<> inline bool KElectrostaticBoundaryFieldBuilder::AddAttribute(KContainer* aContainer)

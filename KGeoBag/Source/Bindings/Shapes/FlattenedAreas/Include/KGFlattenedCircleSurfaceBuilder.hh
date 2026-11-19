@@ -7,6 +7,17 @@
 namespace katrin
 {
 
+//! A flattened circle surface is just a surface with circular shape, where (x,y,z) are the coordinates for the center of
+//! the circle and r is the radius:
+//!
+//! @image Documentation/gh-pages/source/_images/kgeobag_flattened_circle_surface_model.png 400pt
+//!
+//! - Works with MeshViewer: Yes.
+//! - Works with GeometryViewer: Yes.
+//! @example
+//! <flattened_circle_surface name="flattened_circle_surface" z="0." flattened_mesh_count="10" flattened_mesh_power="4.">
+//!     <circle x="0.1" y="0.2" radius="0.5" circle_mesh_count="128"/>
+//! </flattened_circle_surface>
 typedef KComplexElement<KGFlattenedCircleSurface> KGFlattenedCircleSurfaceBuilder;
 
 template<> inline bool KGFlattenedCircleSurfaceBuilder::AddAttribute(KContainer* anAttribute)

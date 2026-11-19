@@ -23,6 +23,7 @@ STATICINT sKElectrostaticBoundaryField =
         "gauss_seidel_charge_density_solver");
 
 STATICINT sKGaussSeidelChargeDensitySolver =
+    //! @values numeric, analytic, rwg, reference, default
     KGaussSeidelChargeDensitySolverBuilder::Attribute<std::string>("integrator") +
     KGaussSeidelChargeDensitySolverBuilder::Attribute<bool>("use_opencl");
 

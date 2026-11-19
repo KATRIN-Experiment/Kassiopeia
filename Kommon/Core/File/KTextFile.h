@@ -103,6 +103,15 @@ inline KTextFile* KTextFile::CreateOutputTextFile(const std::string& aPath, cons
 namespace katrin
 {
 
+//! A text file. It is opened at the first of the following locations that works:
+//!
+//! 1. each ``path`` combined with each ``base``,
+//! 2. each ``base`` in ``default_path``,
+//! 3. each ``path`` combined with ``default_base``,
+//! 4. ``default_base`` in ``default_path``.
+//!
+//! ``path`` and ``base`` may be given several times.
+//! @example <file path="[log_path]" base="QuadrupoleTrapLog.txt"/>
 typedef KComplexElement<KTextFile> KTextFileBuilder;
 
 template<> inline bool KTextFileBuilder::AddAttribute(KContainer* aContainer)

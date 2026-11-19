@@ -8,6 +8,8 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
+//! this terminator kills particles whose longitudinal kinetic energy falls below a given value.
+//! @example <ksterm_min_long_energy name="term_min_long_energy" long_energy="1.239"/>
 typedef KComplexElement<KSTermMinLongEnergy> KSTermMinLongEnergyBuilder;
 
 template<> inline bool KSTermMinLongEnergyBuilder::AddAttribute(KContainer* aContainer)

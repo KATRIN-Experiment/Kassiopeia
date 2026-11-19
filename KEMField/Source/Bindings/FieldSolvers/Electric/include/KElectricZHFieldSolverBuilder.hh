@@ -15,6 +15,23 @@
 namespace katrin
 {
 
+//! uses the zonal harmonic expansion about an axis to compute fields.
+//! only valid if the symmetry parameter is set to axial.
+//! @example
+//! <zonal_harmonic_field_solver
+//!     number_of_bifurcations="-1"
+//!     convergence_ratio=".99"
+//!     convergence_parameter="1.e-15"
+//!     proximity_to_sourcepoint="1.e-12"
+//!     number_of_central_coefficients="500"
+//!     use_fractional_central_sourcepoint_spacing="false"
+//!     central_sourcepoint_spacing="2.e-6"
+//!     central_sourcepoint_start="-3.3e-3"
+//!     central_sourcepoint_end="3.3e-3"
+//!     number_of_remote_coefficients="200"
+//!     remote_sourcepoint_start="-1.e-1"
+//!     remote_sourcepoint_end="1.e-1"
+//! />
 typedef KComplexElement<KEMField::KElectricZHFieldSolver> KElectricZHFieldSolverBuilder;
 
 template<> inline bool KElectricZHFieldSolverBuilder::AddAttribute(KContainer* aContainer)

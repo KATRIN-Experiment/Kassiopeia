@@ -15,6 +15,22 @@
 namespace katrin
 {
 
+//! the robin hood charge density solver is an iterative linear equation
+//! solver. It redistributes the charges, so that the equation of the row
+//! where the worst error is detected is satisfied.
+//! It is a Gauss-Seidel variant.
+//! @example
+//! <robin_hood_charge_density_solver
+//!     tolerance="1e-8"
+//!     check_sub_interval="100"
+//!     display_interval="1"
+//!     write_interval="0"
+//!     plot_interval="1"
+//!     cache_matrix_elements="true"
+//!     use_opencl="true"
+//!     use_vtk="true"
+//!
+//! />
 typedef KComplexElement<KEMField::KRobinHoodChargeDensitySolver> KRobinHoodChargeDensitySolverBuilder;
 
 template<> inline bool KRobinHoodChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)
